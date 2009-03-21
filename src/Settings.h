@@ -47,8 +47,6 @@
 			_topFramePos,
 			_frameWidth,
 			_frameHeight,
-			_leftOptionsDialogPos,
-			_topOptionsDialogPos,
 			_optionsDialogWidth,
 			_optionsDialogHeight;
 		bool _isFrameMaximized;
@@ -153,10 +151,6 @@
 		int GetFrameWidth() { return _frameWidth; }
 		void SetFrameHeight(int height) { _frameHeight = height; }
 		int GetFrameHeight() { return _frameHeight; }
-		void SetLeftOptionsDialogPos(int left) { _leftOptionsDialogPos = left; }
-		int GetLeftOptionsDialogPos() { return _leftOptionsDialogPos; }
-		void SetTopOptionsDialogPos(int top) { _topOptionsDialogPos = top; }
-		int GetTopOptionsDialogPos() { return _topOptionsDialogPos; }
 		void SetOptionsDialogWidth(int width) { _optionsDialogWidth = width; }
 		int GetOptionsDialogWidth() { return _optionsDialogWidth; }
 		void SetOptionsDialogHeight(int height) { _optionsDialogHeight = height; }

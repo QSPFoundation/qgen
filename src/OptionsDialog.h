@@ -55,6 +55,7 @@
 		ID_PATH_HELP,
 		ID_PATH_TXT2GAM,
 		ID_OK_SETTINGS,
+		ID_CANCEL_SETTINGS,
 		ID_RESET_SETTINGS,
 		ID_APPLY_SETTINGS,
 		ID_AUTO_SAVE,
@@ -165,6 +166,7 @@
 		void OnPathSelect(wxCommandEvent &event);
 		void OnApplySettings(wxCommandEvent &event);
 		void OnOkSettings(wxCommandEvent &event);
+		void OnCancelSettings(wxCommandEvent &event);
 		void OnResetSettings(wxCommandEvent &event);
 		void OnStateChanged(wxCommandEvent &event);
 		void OnStateChanged(wxSpinEvent &event);
@@ -172,6 +174,7 @@
 		void OnEditHotKey(wxCommandEvent &event);
 		void OnDeleteHotKey(wxCommandEvent &event);
 		void OnDblClickHotKeysList(wxListEvent &event);
+		void OnCloseDialog(wxCloseEvent &event);
 
 		void InitFontsDialog(wxFontDialog &dialog, const wxFont &font);
 		void InitColoursDialog(wxColourDialog &dialog, const wxColour &col);

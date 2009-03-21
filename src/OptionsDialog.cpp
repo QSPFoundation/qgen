@@ -43,6 +43,7 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
 	EVT_BUTTON(ID_PATH_HELP, OptionsDialog::OnPathSelect)
 	EVT_BUTTON(ID_PATH_TXT2GAM, OptionsDialog::OnPathSelect)
 	EVT_BUTTON(ID_OK_SETTINGS, OptionsDialog::OnOkSettings)
+	EVT_BUTTON(ID_CANCEL_SETTINGS, OptionsDialog::OnCancelSettings)
 	EVT_BUTTON(ID_APPLY_SETTINGS, OptionsDialog::OnApplySettings)
 	EVT_BUTTON(ID_RESET_SETTINGS, OptionsDialog::OnResetSettings)
 	EVT_BUTTON(ID_ADD_NEW_HKEY, OptionsDialog::OnAddHotKey)
@@ -52,6 +53,7 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
 	EVT_CHECKBOX(wxID_ANY, OptionsDialog::OnStateChanged)
 	EVT_SPINCTRL(wxID_ANY, OptionsDialog::OnStateChanged)
 	EVT_LIST_ITEM_ACTIVATED(ID_LIST_HKEYS, OptionsDialog::OnDblClickHotKeysList)
+	EVT_CLOSE(OptionsDialog::OnCloseDialog)
 END_EVENT_TABLE()
 
 OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *controls, int style) : wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
@@ -349,7 +351,7 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 	notebookSizer->Add(_notebook, 1, wxALL|wxGROW, 3);
 
 	_btnOK = new wxButton(this, ID_OK_SETTINGS, wxT("OK"));
-	wxButton *_btnCancel = new wxButton(this, wxID_CANCEL, wxT("Отмена"));
+	wxButton *_btnCancel = new wxButton(this, ID_CANCEL_SETTINGS, wxT("Отмена"));
 	_btnApply = new wxButton(this, ID_APPLY_SETTINGS, wxT("Применить"));
 	_btnReset = new wxButton(this, ID_RESET_SETTINGS, wxT("Сброс"));
 
@@ -660,6 +662,11 @@ void OptionsDialog::OnOkSettings(wxCommandEvent &event)
 	Close();
 }
 
+void OptionsDialog::OnCancelSettings(wxCommandEvent &event)
+{
+	Close();
+}
+
 void OptionsDialog::OnApplySettings(wxCommandEvent &event)
 {
 	ApplySettings();
@@ -672,7 +679,7 @@ void OptionsDialog::OnResetSettings(wxCommandEvent &event)
 	_settings->NotifyAll();
 }
 
-void OptionsDialog::OnStateChanged( wxCommandEvent &event )
+void OptionsDialog::OnStateChanged(wxCommandEvent &event)
 {
 	switch (event.GetId())
 	{
@@ -686,7 +693,7 @@ void OptionsDialog::OnStateChanged( wxCommandEvent &event )
 	_btnApply->Enable(true);
 }
 
-void OptionsDialog::OnStateChanged( wxSpinEvent &event )
+void OptionsDialog::OnStateChanged(wxSpinEvent &event)
 {
 	_btnApply->Enable(true);
 }
@@ -706,11 +713,17 @@ void OptionsDialog::OnDeleteHotKey(wxCommandEvent &event)
 	DeleteHotKey();
 }
 
-void OptionsDialog::OnDblClickHotKeysList( wxListEvent &event )
+void OptionsDialog::OnDblClickHotKeysList(wxListEvent &event)
 {
 	EditHotKey();
 }
 
+void OptionsDialog::OnCloseDialog(wxCloseEvent &event)
+{
+	_settings->SetOptionsDialogWidth(GetSize().GetWidth());
+	_settings->SetOptionsDialogHeight(GetSize().GetHeight());
+	event.Skip();
+}
 void OptionsDialog::ApplySettings()
 {
 	_settings->SetAutoSave(_chkAutoSave->GetValue());
@@ -754,13 +767,7 @@ void OptionsDialog::ApplySettings()
 	_settings->SetFont(SYNTAX_LABELS, _txtFontMarks->GetFont());
 	_settings->SetFont(SYNTAX_COMMENTS, _txtFontComments->GetFont());
 	_settings->SetFont(SYNTAX_BASE, _txtFontBase->GetFont());
-
-	wxRect r = GetRect();
-	_settings->SetLeftOptionsDialogPos(r.GetLeft());
-	_settings->SetTopOptionsDialogPos(r.GetTop());
-	_settings->SetOptionsDialogWidth(r.GetWidth());
-	_settings->SetOptionsDialogHeight(r.GetHeight());
-
+	
 	wxListItem info;
 	HotKeyData hotKeyData;
 	size_t count = _lstHotKeys->GetItemCount(); 
@@ -875,10 +882,8 @@ void OptionsDialog::InitOptionsDialog()
 		_lstHotKeys->InsertItem(i, hotKeyData.HotKey);
 		_lstHotKeys->SetItem(i, 1, hotKeyData.CommandText);
 	}
+	SetSize(_settings->GetOptionsDialogWidth(), _settings->GetOptionsDialogHeight());
 	_btnApply->Enable(false);
-
-	SetSize(_settings->GetLeftOptionsDialogPos(), _settings->GetTopOptionsDialogPos(),
-					_settings->GetOptionsDialogWidth(), _settings->GetOptionsDialogHeight(), wxSIZE_USE_EXISTING);
 	Refresh();
 }
 
@@ -988,3 +993,4 @@ void OptionsDialog::DeleteHotKey()
 		_btnApply->Enable(true);
 	}
 }
+

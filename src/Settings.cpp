@@ -39,8 +39,6 @@ void Settings::InitSettings()
 	_topFramePos = 10;
 	_frameWidth = 700;
 	_frameHeight = 550;
-	_leftOptionsDialogPos = 10;
-	_topOptionsDialogPos = 10;
 	_optionsDialogWidth = 420;
 	_optionsDialogHeight = 320;
 	_isFrameMaximized = false;
@@ -111,8 +109,6 @@ void Settings::LoadSettings()
 	cfg.Read(wxT("Pos/WidthsCoef1"), &_widthsCoeff1);
 	cfg.Read(wxT("Pos/WidthsCoef2"), &_widthsCoeff2);
 	cfg.Read(wxT("Pos/Panels"), &_panelsPos);
-	cfg.Read(wxT("OptionsDialog/Left"), &_leftOptionsDialogPos);
-	cfg.Read(wxT("OptionsDialog/Top"), &_topOptionsDialogPos);
 	cfg.Read(wxT("OptionsDialog/Width"), &_optionsDialogWidth);
 	cfg.Read(wxT("OptionsDialog/Height"), &_optionsDialogHeight);
 	cfg.Read(wxT("General/AutoSave"), &_isAutoSave);
@@ -169,8 +165,6 @@ void Settings::SaveSettings()
 	cfg.Write(wxT("Pos/WidthsCoef1"), _widthsCoeff1);
 	cfg.Write(wxT("Pos/WidthsCoef2"), _widthsCoeff2);
 	cfg.Write(wxT("Pos/Panels"), _panelsPos);
-	cfg.Write(wxT("OptionsDialog/Left"), _leftOptionsDialogPos);
-	cfg.Write(wxT("OptionsDialog/Top"), _topOptionsDialogPos);
 	cfg.Write(wxT("OptionsDialog/Width"), _optionsDialogWidth);
 	cfg.Write(wxT("OptionsDialog/Height"), _optionsDialogHeight);
 	cfg.Write(wxT("General/AutoSave"), _isAutoSave);
