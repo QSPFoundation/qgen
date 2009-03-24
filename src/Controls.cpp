@@ -66,6 +66,7 @@ int Controls::AddLocationByName(const wxString &name)
 	locInd = (locInd >= 0 ? locInd + 1 : _container->GetLocationsCount());
 	if (_container->InsertLocation(name, locInd) >= 0)
 	{
+		UpdateOpenedLocationsIndexes();
 		_locListBox->Insert(name, locInd);
 		if (_settings->GetOpenNewLoc()) ShowLocation(name);
 		return locInd;
@@ -290,8 +291,8 @@ void Controls::SortLocations(bool isAscending)
 	if (_container->GetLocationsCount() > 2)
 	{
 		_container->SortLocations(isAscending);
-		UpdateLocationsList();
 		UpdateOpenedLocationsIndexes();
+		UpdateLocationsList();
 		ShowOpenedLocationsIcons();
 		InitSearchData();
 	}
