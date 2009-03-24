@@ -59,12 +59,16 @@
 		static wxString HtmlizeWhitespaces(const wxString& str);
 		static wxString ProceedAsPlain(const wxString& str);
 
+		void CreateHTMLParser() const;
 		virtual wxString OnGetItem(size_t n) const;
 	public:
 		ActionsListBox(wxWindow *owner, wxWindowID id, ILocationPage *locPage, ActionCode *actCode, IControls *controls,
 					   long style = 0);
 		~ActionsListBox();
 
+		void SetStandardFonts(int size = -1,
+			const wxString& normal_face = wxEmptyString,
+			const wxString& fixed_face = wxEmptyString);
 		void Update(bool isFromObservable = false);
 		void LoadActionData(size_t actIndex);
 		void SaveActionData();

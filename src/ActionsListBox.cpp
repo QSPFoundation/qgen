@@ -59,6 +59,28 @@ ActionsListBox::~ActionsListBox()
 	_controls->GetSettings()->RemoveObserver(this);
 }
 
+void ActionsListBox::SetStandardFonts(int size, const wxString& normal_face, const wxString& fixed_face)
+{
+	CreateHTMLParser();
+	m_htmlParser->SetStandardFonts(size, normal_face, fixed_face);
+	RefreshAll();
+}
+
+void ActionsListBox::CreateHTMLParser() const
+{
+	if (!m_htmlParser)
+	{
+		ActionsListBox *self = wxConstCast(this, ActionsListBox);
+		self->m_htmlParser = new wxHtmlWinParser(self);
+		m_htmlParser->SetDC(new wxClientDC(self));
+		m_htmlParser->SetFS(&self->m_filesystem);
+#if !wxUSE_UNICODE
+		if (GetFont().Ok()) m_htmlParser->SetInputEncoding(GetFont().GetEncoding());
+#endif
+		m_htmlParser->SetStandardFonts();
+	}
+}
+
 void ActionsListBox::Update(bool isFromObservable)
 {
 	Settings *settings = _controls->GetSettings();

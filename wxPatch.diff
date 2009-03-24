@@ -1,7 +1,7 @@
 diff -u -r d:/wx/wxWidgets/Makefile.in d:/wx/wx_qsp/Makefile.in
---- d:/wx/wxWidgets/Makefile.in	2009-02-21 14:48:30 +0000
-+++ d:/wx/wx_qsp/Makefile.in	2009-02-23 16:07:37 +0000
-@@ -15558,8 +15558,8 @@
+--- d:/wx/wxWidgets/Makefile.in	2009-03-12 18:33:36 +0000
++++ d:/wx/wx_qsp/Makefile.in	2009-03-14 09:57:54 +0000
+@@ -15557,8 +15557,8 @@
  monodll_gtk_aboutdlg.o: $(srcdir)/src/gtk/aboutdlg.cpp $(MONODLL_ODEP)
  	$(CXXC) -c -o $@ $(MONODLL_CXXFLAGS) $(srcdir)/src/gtk/aboutdlg.cpp
  
@@ -12,7 +12,7 @@ diff -u -r d:/wx/wxWidgets/Makefile.in d:/wx/wx_qsp/Makefile.in
  
  monodll_gtk_bmpcbox.o: $(srcdir)/src/gtk/bmpcbox.cpp $(MONODLL_ODEP)
  	$(CXXC) -c -o $@ $(MONODLL_CXXFLAGS) $(srcdir)/src/gtk/bmpcbox.cpp
-@@ -20235,8 +20235,8 @@
+@@ -20237,8 +20237,8 @@
  monolib_gtk_aboutdlg.o: $(srcdir)/src/gtk/aboutdlg.cpp $(MONOLIB_ODEP)
  	$(CXXC) -c -o $@ $(MONOLIB_CXXFLAGS) $(srcdir)/src/gtk/aboutdlg.cpp
  
@@ -23,7 +23,7 @@ diff -u -r d:/wx/wxWidgets/Makefile.in d:/wx/wx_qsp/Makefile.in
  
  monolib_gtk_bmpcbox.o: $(srcdir)/src/gtk/bmpcbox.cpp $(MONOLIB_ODEP)
  	$(CXXC) -c -o $@ $(MONOLIB_CXXFLAGS) $(srcdir)/src/gtk/bmpcbox.cpp
-@@ -31374,8 +31374,8 @@
+@@ -31382,8 +31382,8 @@
  advdll_gtk_aboutdlg.o: $(srcdir)/src/gtk/aboutdlg.cpp $(ADVDLL_ODEP)
  	$(CXXC) -c -o $@ $(ADVDLL_CXXFLAGS) $(srcdir)/src/gtk/aboutdlg.cpp
  
@@ -34,7 +34,7 @@ diff -u -r d:/wx/wxWidgets/Makefile.in d:/wx/wx_qsp/Makefile.in
  
  advdll_gtk_bmpcbox.o: $(srcdir)/src/gtk/bmpcbox.cpp $(ADVDLL_ODEP)
  	$(CXXC) -c -o $@ $(ADVDLL_CXXFLAGS) $(srcdir)/src/gtk/bmpcbox.cpp
-@@ -31683,8 +31683,8 @@
+@@ -31691,8 +31691,8 @@
  advlib_gtk_aboutdlg.o: $(srcdir)/src/gtk/aboutdlg.cpp $(ADVLIB_ODEP)
  	$(CXXC) -c -o $@ $(ADVLIB_CXXFLAGS) $(srcdir)/src/gtk/aboutdlg.cpp
  
@@ -47,7 +47,7 @@ diff -u -r d:/wx/wxWidgets/Makefile.in d:/wx/wx_qsp/Makefile.in
  	$(CXXC) -c -o $@ $(ADVLIB_CXXFLAGS) $(srcdir)/src/gtk/bmpcbox.cpp
 diff -u -r d:/wx/wxWidgets/include/wx/animate.h d:/wx/wx_qsp/include/wx/animate.h
 --- d:/wx/wxWidgets/include/wx/animate.h	2008-11-03 13:31:04 +0000
-+++ d:/wx/wx_qsp/include/wx/animate.h	2009-02-23 16:07:37 +0000
++++ d:/wx/wx_qsp/include/wx/animate.h	2009-03-14 09:57:54 +0000
 @@ -115,11 +115,15 @@
  // include the platform-specific version of the wxAnimationCtrl class
  // ----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ diff -u -r d:/wx/wxWidgets/include/wx/animate.h d:/wx/wx_qsp/include/wx/animate.
  
 diff -u -r d:/wx/wxWidgets/include/wx/animdecod.h d:/wx/wx_qsp/include/wx/animdecod.h
 --- d:/wx/wxWidgets/include/wx/animdecod.h	2009-01-13 20:15:44 +0000
-+++ d:/wx/wx_qsp/include/wx/animdecod.h	2009-02-23 16:07:37 +0000
++++ d:/wx/wx_qsp/include/wx/animdecod.h	2009-03-14 09:57:54 +0000
 @@ -123,6 +123,9 @@
      // the transparent colour for this frame if any or wxNullColour.
      virtual wxColour GetTransparentColour(unsigned int frame) const = 0;
@@ -79,7 +79,7 @@ diff -u -r d:/wx/wxWidgets/include/wx/animdecod.h d:/wx/wx_qsp/include/wx/animde
      wxColour GetBackgroundColour() const { return m_background; }
 diff -u -r d:/wx/wxWidgets/include/wx/aui/floatpane.h d:/wx/wx_qsp/include/wx/aui/floatpane.h
 --- d:/wx/wxWidgets/include/wx/aui/floatpane.h	2008-05-30 13:09:38 +0000
-+++ d:/wx/wx_qsp/include/wx/aui/floatpane.h	2009-02-23 16:07:37 +0000
++++ d:/wx/wx_qsp/include/wx/aui/floatpane.h	2009-03-14 09:57:54 +0000
 @@ -32,6 +32,8 @@
  class WXDLLIMPEXP_AUI wxAuiFloatingFrame : public wxAuiFloatingFrameBaseClass
  {
@@ -107,7 +107,7 @@ diff -u -r d:/wx/wxWidgets/include/wx/aui/floatpane.h d:/wx/wx_qsp/include/wx/au
      wxAuiManager* GetOwnerManager() const;
 diff -u -r d:/wx/wxWidgets/include/wx/generic/animate.h d:/wx/wx_qsp/include/wx/generic/animate.h
 --- d:/wx/wxWidgets/include/wx/generic/animate.h	2008-05-18 06:15:58 +0000
-+++ d:/wx/wx_qsp/include/wx/generic/animate.h	2009-02-23 16:07:37 +0000
++++ d:/wx/wx_qsp/include/wx/generic/animate.h	2009-03-14 09:57:54 +0000
 @@ -27,8 +27,13 @@
      wxAnimation(const wxString &name, wxAnimationType type = wxANIMATION_TYPE_ANY)
          { LoadFile(name, type); }
@@ -137,7 +137,7 @@ diff -u -r d:/wx/wxWidgets/include/wx/generic/animate.h d:/wx/wx_qsp/include/wx/
      DECLARE_DYNAMIC_CLASS(wxAnimationCtrl)
 diff -u -r d:/wx/wxWidgets/include/wx/gifdecod.h d:/wx/wx_qsp/include/wx/gifdecod.h
 --- d:/wx/wxWidgets/include/wx/gifdecod.h	2009-02-18 16:36:49 +0000
-+++ d:/wx/wx_qsp/include/wx/gifdecod.h	2009-02-23 16:07:37 +0000
++++ d:/wx/wx_qsp/include/wx/gifdecod.h	2009-03-14 09:57:54 +0000
 @@ -66,8 +66,11 @@
      virtual long GetDelay(unsigned int frame) const;
  
@@ -152,62 +152,65 @@ diff -u -r d:/wx/wxWidgets/include/wx/gifdecod.h d:/wx/wx_qsp/include/wx/gifdeco
      wxGIFErrorCode LoadGIF( wxInputStream& stream );
 diff -u -r d:/wx/wxWidgets/include/wx/html/htmlwin.h d:/wx/wx_qsp/include/wx/html/htmlwin.h
 --- d:/wx/wxWidgets/include/wx/html/htmlwin.h	2009-02-18 16:36:40 +0000
-+++ d:/wx/wx_qsp/include/wx/html/htmlwin.h	2009-02-23 16:07:37 +0000
-@@ -311,6 +311,10 @@
-                           const wxString& normal_face = wxEmptyString,
-                           const wxString& fixed_face = wxEmptyString);
++++ d:/wx/wx_qsp/include/wx/html/htmlwin.h	2009-03-14 11:07:08 +0000
+@@ -316,7 +316,10 @@
  
+     // Sets the bitmap to use for background (currnetly it will be tiled,
+     // when/if we have CSS support we could add other possibilities...)
+-    void SetBackgroundImage(const wxBitmap& bmpBg) { m_bmpBg = bmpBg; }
 +    // HzD_Byte's hack
-+    void SetLinkColor(const wxColour& clr);
-+    const wxColour& GetLinkColor() const { return m_Parser->GetLinkColor(); }
-+
-     // Sets space between text and window borders.
-     void SetBorders(int b) {m_Borders = b;}
++    // void SetBackgroundImage(const wxBitmap& bmpBg) { m_bmpBg = bmpBg; }
++    void SetBackgroundImage(const wxBitmap& bmpBg);
++    void CalcImageSize();
  
+     // Saves custom settings into cfg config. it will use the path 'path'
+     // if given, otherwise it will save info into currently selected path.
+@@ -515,6 +518,10 @@
+ 
+     // background image, may be invalid
+     wxBitmap m_bmpBg;
++    // HzD_Byte's hack
++    wxBitmap m_bmpRealBg;
++    int m_posX;
++    int m_posY;
+ 
+     // variables used when user is selecting text
+     wxPoint     m_tmpSelFromPos;
 diff -u -r d:/wx/wxWidgets/include/wx/htmllbox.h d:/wx/wx_qsp/include/wx/htmllbox.h
 --- d:/wx/wxWidgets/include/wx/htmllbox.h	2009-02-18 16:36:49 +0000
-+++ d:/wx/wx_qsp/include/wx/htmllbox.h	2009-02-23 16:07:37 +0000
-@@ -83,6 +83,15 @@
- 
-     virtual void OnInternalIdle();
- 
-+    // HzD_Byte's hack
-+    void SetFonts(wxString normal_face, wxString fixed_face,
-+        const int *sizes = NULL);
-+    void SetStandardFonts(int size = -1,
-+        const wxString& normal_face = wxEmptyString,
-+        const wxString& fixed_face = wxEmptyString);
-+    void SetLinkColor(const wxColour& clr);
-+    const wxColour& GetLinkColor() const;
-+
- protected:
-     // this method must be implemented in the derived class and should return
-     // the body (i.e. without <html>) of the HTML for the given item
-@@ -91,6 +100,11 @@
-     // this function may be overridden to decorate HTML returned by OnGetItem()
-     virtual wxString OnGetItemMarkup(size_t n) const;
- 
-+    // HzD_Byte's hack
-+    virtual wxHtmlOpeningStatus OnOpeningURL(wxHtmlURLType WXUNUSED(type),
-+        const wxString& WXUNUSED(url),
-+        wxString *WXUNUSED(redirect)) const
-+    { return wxHTML_OPEN; }
- 
-     // this method allows to customize the selection appearance: it may be used
-     // to specify the colour of the text which normally has the given colour
-@@ -130,6 +144,9 @@
++++ d:/wx/wx_qsp/include/wx/htmllbox.h	2009-03-14 09:57:54 +0000
+@@ -130,7 +130,8 @@
      // ensure that the given item is cached
      void CacheItem(size_t n) const;
  
+-private:
 +    // HzD_Byte's hack
-+    void CreateHTMLParser() const;
-+
- private:
++// private:
      // wxHtmlWindowInterface methods:
      virtual void SetHTMLWindowTitle(const wxString& title);
+     virtual void OnHTMLLinkClicked(const wxHtmlLinkInfo& link);
+@@ -163,7 +164,8 @@
+     // given cell to physical coordinates in the window
+     wxPoint CellCoordsToPhysical(const wxPoint& pos, wxHtmlCell *cell) const;
+ 
+-private:
++    // HzD_Byte's hack
++// private:
+     // this class caches the pre-parsed HTML to speed up display
+     wxHtmlListBoxCache *m_cache;
+ 
+@@ -178,6 +180,8 @@
+     // rendering style for the parser which allows us to customize our colours
+     wxHtmlListBoxStyle *m_htmlRendStyle;
+ 
++    // HzD_Byte's hack
++private:
+ 
+     // it calls our GetSelectedTextColour() and GetSelectedTextBgColour()
+     friend class wxHtmlListBoxStyle;
 diff -u -r d:/wx/wxWidgets/src/aui/floatpane.cpp d:/wx/wx_qsp/src/aui/floatpane.cpp
 --- d:/wx/wxWidgets/src/aui/floatpane.cpp	2008-08-08 14:30:08 +0000
-+++ d:/wx/wx_qsp/src/aui/floatpane.cpp	2009-02-23 16:07:37 +0000
++++ d:/wx/wx_qsp/src/aui/floatpane.cpp	2009-03-14 09:57:54 +0000
 @@ -145,10 +145,13 @@
          SetClientSize(size);
      }
@@ -224,7 +227,7 @@ diff -u -r d:/wx/wxWidgets/src/aui/floatpane.cpp d:/wx/wx_qsp/src/aui/floatpane.
  wxAuiManager* wxAuiFloatingFrame::GetOwnerManager() const
 diff -u -r d:/wx/wxWidgets/src/aui/framemanager.cpp d:/wx/wx_qsp/src/aui/framemanager.cpp
 --- d:/wx/wxWidgets/src/aui/framemanager.cpp	2009-02-18 16:36:06 +0000
-+++ d:/wx/wx_qsp/src/aui/framemanager.cpp	2009-02-23 16:07:37 +0000
++++ d:/wx/wx_qsp/src/aui/framemanager.cpp	2009-03-14 09:57:54 +0000
 @@ -2589,6 +2589,8 @@
                  p.window->Refresh();
                  p.window->Update();
@@ -235,9 +238,9 @@ diff -u -r d:/wx/wxWidgets/src/aui/framemanager.cpp d:/wx/wx_qsp/src/aui/framema
      }
  
 diff -u -r d:/wx/wxWidgets/src/common/filesys.cpp d:/wx/wx_qsp/src/common/filesys.cpp
---- d:/wx/wxWidgets/src/common/filesys.cpp	2009-01-23 23:11:57 +0000
-+++ d:/wx/wx_qsp/src/common/filesys.cpp	2009-02-23 16:07:37 +0000
-@@ -627,7 +627,8 @@
+--- d:/wx/wxWidgets/src/common/filesys.cpp	2009-03-14 09:51:51 +0000
++++ d:/wx/wx_qsp/src/common/filesys.cpp	2009-03-14 09:57:54 +0000
+@@ -633,7 +633,8 @@
          path = path.Mid(2);
  #endif
  
@@ -249,7 +252,7 @@ diff -u -r d:/wx/wxWidgets/src/common/filesys.cpp d:/wx/wx_qsp/src/common/filesy
      // file urls either start with a forward slash (local harddisk),
 diff -u -r d:/wx/wxWidgets/src/generic/animateg.cpp d:/wx/wx_qsp/src/generic/animateg.cpp
 --- d:/wx/wxWidgets/src/generic/animateg.cpp	2009-01-13 20:15:28 +0000
-+++ d:/wx/wx_qsp/src/generic/animateg.cpp	2009-02-23 16:07:37 +0000
++++ d:/wx/wx_qsp/src/generic/animateg.cpp	2009-03-14 09:57:54 +0000
 @@ -277,6 +277,8 @@
      m_currentFrame = 0;
      m_looped = false;
@@ -340,136 +343,129 @@ diff -u -r d:/wx/wxWidgets/src/generic/animateg.cpp d:/wx/wx_qsp/src/generic/ani
      }
  }
  
-diff -u -r d:/wx/wxWidgets/src/generic/htmllbox.cpp d:/wx/wx_qsp/src/generic/htmllbox.cpp
---- d:/wx/wxWidgets/src/generic/htmllbox.cpp	2009-02-18 16:36:24 +0000
-+++ d:/wx/wx_qsp/src/generic/htmllbox.cpp	2009-02-23 16:07:37 +0000
-@@ -301,6 +301,8 @@
- {
-     if ( !m_cache->Has(n) )
-     {
-+        // HzD_Byte's hack
-+        /*
-         if ( !m_htmlParser )
-         {
-             wxHtmlListBox *self = wxConstCast(this, wxHtmlListBox);
-@@ -315,6 +317,8 @@
-             // use system's default GUI font by default:
-             m_htmlParser->SetStandardFonts();
-         }
-+        */
-+        CreateHTMLParser();
- 
-         wxHtmlContainerCell *cell = (wxHtmlContainerCell *)m_htmlParser->
-                 Parse(OnGetItemMarkup(n));
-@@ -330,6 +334,52 @@
+diff -u -r d:/wx/wxWidgets/src/generic/scrlwing.cpp d:/wx/wx_qsp/src/generic/scrlwing.cpp
+--- d:/wx/wxWidgets/src/generic/scrlwing.cpp	2009-03-02 16:38:52 +0000
++++ d:/wx/wx_qsp/src/generic/scrlwing.cpp	2009-03-14 10:17:57 +0000
+@@ -550,6 +550,8 @@
+         m_win->SetScrollPos(wxVERTICAL, m_yScrollPosition);
      }
+ 
++    // HzD_Byte's hack
++    /*
+     if ( needsRefresh )
+     {
+         m_targetWindow->Refresh(true, GetScrollRect());
+@@ -558,6 +560,10 @@
+     {
+         m_targetWindow->ScrollWindow(dx, dy, GetScrollRect());
+     }
++    */
++    m_targetWindow->Refresh(true, GetScrollRect());
++    if (!needsRefresh)
++        m_targetWindow->ScrollWindow(dx, dy, GetScrollRect());
  }
  
-+// HzD_Byte's hack
-+void wxHtmlListBox::CreateHTMLParser() const
-+{
-+    if (!m_htmlParser)
-+    {
-+        wxHtmlListBox *self = wxConstCast(this, wxHtmlListBox);
-+        self->m_htmlParser = new wxHtmlWinParser(self);
-+        m_htmlParser->SetDC(new wxClientDC(self));
-+        m_htmlParser->SetFS(&self->m_filesystem);
-+#if !wxUSE_UNICODE
-+        if (GetFont().Ok())
-+            m_htmlParser->SetInputEncoding(GetFont().GetEncoding());
-+#endif
-+        m_htmlParser->SetStandardFonts();
-+    }
-+}
-+
-+void wxHtmlListBox::SetFonts(wxString normal_face, wxString fixed_face, const int *sizes)
-+{
-+    CreateHTMLParser();
-+    m_htmlParser->SetFonts(normal_face, fixed_face, sizes);
-+    RefreshAll();
-+}
-+
-+void wxHtmlListBox::SetStandardFonts(int size,
-+                                     const wxString& normal_face,
-+                                     const wxString& fixed_face)
-+{
-+    CreateHTMLParser();
-+    m_htmlParser->SetStandardFonts(size, normal_face, fixed_face);
-+    RefreshAll();
-+}
-+
-+void wxHtmlListBox::SetLinkColor(const wxColour& clr)
-+{
-+    CreateHTMLParser();
-+    m_htmlParser->SetLinkColor(clr);
-+    RefreshAll();
-+}
-+
-+const wxColour& wxHtmlListBox::GetLinkColor() const
-+{
-+    CreateHTMLParser();
-+    return m_htmlParser->GetLinkColor();
-+}
-+
- void wxHtmlListBox::OnSize(wxSizeEvent& event)
- {
-     // we need to relayout all the cached cells
-@@ -456,6 +506,8 @@
-     GetEventHandler()->ProcessEvent(event);
- }
+ int wxScrollHelperBase::CalcScrollInc(wxScrollWinEvent& event)
+@@ -1483,6 +1489,8 @@
+     // otherwise invalidated area could be updated incorrectly later when
+     // ScrollWindow() makes sure they're repainted before scrolling them
+     m_targetWindow->Update();
++    // HzD_Byte's hack
++    m_targetWindow->Refresh(true, GetScrollRect());
  
-+// HzD_Byte's hack
-+/*
- wxHtmlOpeningStatus
- wxHtmlListBox::OnHTMLOpeningURL(wxHtmlURLType WXUNUSED(type),
-                                 const wxString& WXUNUSED(url),
-@@ -463,6 +515,14 @@
- {
-     return wxHTML_OPEN;
- }
-+*/
-+wxHtmlOpeningStatus
-+wxHtmlListBox::OnHTMLOpeningURL(wxHtmlURLType type,
-+                                const wxString& url,
-+                                wxString *redirect) const
-+{
-+    return OnOpeningURL(type, url, redirect);
-+}
- 
- wxPoint wxHtmlListBox::HTMLCoordsToWindow(wxHtmlCell *cell,
-                                           const wxPoint& pos) const
+     // update the position and scroll the window now:
+     if (m_xScrollPosition != new_x)
 diff -u -r d:/wx/wxWidgets/src/html/htmlwin.cpp d:/wx/wx_qsp/src/html/htmlwin.cpp
 --- d:/wx/wxWidgets/src/html/htmlwin.cpp	2009-02-18 16:36:06 +0000
-+++ d:/wx/wx_qsp/src/html/htmlwin.cpp	2009-02-23 16:07:37 +0000
-@@ -398,6 +398,15 @@
-     DoSetPage(*(m_Parser->GetSource()));
++++ d:/wx/wx_qsp/src/html/htmlwin.cpp	2009-03-14 12:04:19 +0000
+@@ -354,7 +354,32 @@
+     delete m_backBuffer;
  }
  
 +// HzD_Byte's hack
-+void wxHtmlWindow::SetLinkColor(const wxColour& clr)
++void wxHtmlWindow::SetBackgroundImage(const wxBitmap& bmpBg)
 +{
-+    m_Parser->SetLinkColor(clr);
-+
-+    // re-layout the page after changing fonts:
-+    DoSetPage(*(m_Parser->GetSource()));
++    m_bmpBg = bmpBg;
++    CalcImageSize();
 +}
-+
- bool wxHtmlWindow::SetPage(const wxString& source)
+ 
++void wxHtmlWindow::CalcImageSize()
++{
++    if (m_bmpBg.Ok())
++    {
++        int w, h;
++        GetClientSize(&w, &h);
++        if (w < 1) w = 1;
++        if (h < 1) h = 1;
++        int srcW = m_bmpBg.GetWidth(), srcH = m_bmpBg.GetHeight();
++        int destW = srcW * h / srcH, destH = srcH * w / srcW;
++        if (destW > w)
++            destW = w;
++        else
++            destH = h;
++        m_posX = (w - destW) / 2;
++        m_posY = (h - destH) / 2;
++        m_bmpRealBg = wxBitmap(m_bmpBg.ConvertToImage().Scale(destW, destH));
++    }
++}
+ 
+ void wxHtmlWindow::SetRelatedFrame(wxFrame* frame, const wxString& format)
  {
-     m_OpenedPage = m_OpenedAnchor = m_OpenedPageTitle = wxEmptyString;
-@@ -451,7 +460,8 @@
+@@ -451,8 +476,11 @@
      // ...and run the parser on it:
      wxClientDC *dc = new wxClientDC(this);
      dc->SetMapMode(wxMM_TEXT);
--    SetBackgroundColour(wxColour(0xFF, 0xFF, 0xFF));
 +    // HzD_Byte's hack
-+    // SetBackgroundColour(wxColour(0xFF, 0xFF, 0xFF));
++    /*
+     SetBackgroundColour(wxColour(0xFF, 0xFF, 0xFF));
      SetBackgroundImage(wxNullBitmap);
++    */
  
      m_Parser->SetDC(dc);
+     if (m_Cell)
+@@ -981,6 +1009,9 @@
+ 
+ void wxHtmlWindow::OnEraseBackground(wxEraseEvent& event)
+ {
++    // HzD_Byte's hack
++    return;
++
+     if ( !m_bmpBg.Ok() )
+     {
+         // don't even skip the event, if we don't have a bg bitmap we're going
+@@ -1031,6 +1062,8 @@
+         m_backBuffer = new wxBitmap(sz.x, sz.y);
+     dcm.SelectObject(*m_backBuffer);
+ 
++    // HzD_Byte's hack
++    /*
+     if ( m_eraseBgInOnPaint )
+     {
+         dcm.SetBackground(wxBrush(GetBackgroundColour(), wxBRUSHSTYLE_SOLID));
+@@ -1048,6 +1081,11 @@
+                  &dc,
+                  0, rect.GetTop());
+     }
++    */
++    dcm.SetBackground(wxBrush(GetBackgroundColour(), wxBRUSHSTYLE_SOLID));
++    dcm.Clear();
++    if (m_bmpBg.Ok())
++        dcm.DrawBitmap(m_bmpRealBg, m_posX, m_posY, true);
+ 
+     PrepareDC(dcm);
+     dcm.SetMapMode(wxMM_TEXT);
+@@ -1116,6 +1154,8 @@
+         m_selection->ClearPrivPos();
+     }
+ 
++    // HzD_Byte's hack
++    CalcImageSize();
+     Refresh();
+ }
+ 
 diff -u -r d:/wx/wxWidgets/src/html/winpars.cpp d:/wx/wx_qsp/src/html/winpars.cpp
 --- d:/wx/wxWidgets/src/html/winpars.cpp	2008-05-09 08:42:06 +0000
-+++ d:/wx/wx_qsp/src/html/winpars.cpp	2009-02-23 16:12:33 +0000
++++ d:/wx/wx_qsp/src/html/winpars.cpp	2009-03-14 09:57:54 +0000
 @@ -55,6 +55,8 @@
      m_whitespaceMode = Whitespace_Normal;
      m_lastWordCell = NULL;
@@ -508,7 +504,7 @@ diff -u -r d:/wx/wxWidgets/src/html/winpars.cpp d:/wx/wx_qsp/src/html/winpars.cp
          status = m_windowInterface->OnHTMLOpeningURL(type, myfullurl, &redirect);
 diff -u -r d:/wx/wxWidgets/src/msw/ownerdrw.cpp d:/wx/wx_qsp/src/msw/ownerdrw.cpp
 --- d:/wx/wxWidgets/src/msw/ownerdrw.cpp	2009-01-31 18:39:11 +0000
-+++ d:/wx/wx_qsp/src/msw/ownerdrw.cpp	2009-02-23 16:07:37 +0000
++++ d:/wx/wx_qsp/src/msw/ownerdrw.cpp	2009-03-14 09:57:54 +0000
 @@ -270,6 +270,8 @@
  
      // add a 4-pixel separator, otherwise menus look cluttered
@@ -520,7 +516,7 @@ diff -u -r d:/wx/wxWidgets/src/msw/ownerdrw.cpp d:/wx/wx_qsp/src/msw/ownerdrw.cp
      // margin width above
 diff -u -r d:/wx/wxWidgets/src/stc/scintilla/src/Editor.cxx d:/wx/wx_qsp/src/stc/scintilla/src/Editor.cxx
 --- d:/wx/wxWidgets/src/stc/scintilla/src/Editor.cxx	2007-12-17 15:04:54 +0000
-+++ d:/wx/wx_qsp/src/stc/scintilla/src/Editor.cxx	2009-02-23 16:07:37 +0000
++++ d:/wx/wx_qsp/src/stc/scintilla/src/Editor.cxx	2009-03-14 09:57:54 +0000
 @@ -16,6 +16,8 @@
  #define INCLUDE_DEPRECATED_FEATURES
  #endif
@@ -586,7 +582,7 @@ diff -u -r d:/wx/wxWidgets/src/stc/scintilla/src/Editor.cxx d:/wx/wx_qsp/src/stc
  	}
 diff -u -r d:/wx/wxWidgets/src/stc/scintilla/src/LexVB.cxx d:/wx/wx_qsp/src/stc/scintilla/src/LexVB.cxx
 --- d:/wx/wxWidgets/src/stc/scintilla/src/LexVB.cxx	2008-09-03 17:19:16 +0000
-+++ d:/wx/wx_qsp/src/stc/scintilla/src/LexVB.cxx	2009-02-23 16:07:37 +0000
++++ d:/wx/wx_qsp/src/stc/scintilla/src/LexVB.cxx	2009-03-14 09:57:54 +0000
 @@ -1,8 +1,8 @@
  // Scintilla source code edit control
  /** @file LexVB.cxx
