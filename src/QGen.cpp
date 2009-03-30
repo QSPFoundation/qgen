@@ -741,6 +741,14 @@ void QGenMainFrame::OnExportTxt2Gam( wxCommandEvent &event )
 
 void QGenMainFrame::OnImportTxt2Gam( wxCommandEvent &event )
 {
+	if (!_controls->GetContainer()->IsEmpty())
+	{
+		wxMessageDialog dlgMsg(this, wxT("Импортируемый файл заменит текущий файл игры. Продолжить?"), wxT("Импорт"),
+			wxYES_NO|wxICON_QUESTION, wxDefaultPosition);
+		dlgMsg.CenterOnParent();
+		if (dlgMsg.ShowModal() == wxID_NO)
+			return;
+	}
 	wxFileDialog dialog(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString,
 		wxT("Текстовые файлы (*.txt)|*.txt"), wxFD_OPEN);
 	dialog.CenterOnParent();
@@ -809,7 +817,7 @@ bool QGenMainFrame::QuestChange()
 {
 	if (!_controls->IsGameSaved())
 	{
-		wxMessageDialog dlgMsg (this, wxT("Желаете сохранить файл?"), wxT("Файл был изменён"),
+		wxMessageDialog dlgMsg(this, wxT("Желаете сохранить файл?"), wxT("Файл был изменён"),
 			wxYES_NO|wxCANCEL|wxICON_QUESTION, wxDefaultPosition);
 		dlgMsg.CenterOnParent();
 		switch (dlgMsg.ShowModal())

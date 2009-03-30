@@ -1155,7 +1155,7 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 
 	if (saveFound || saveAsFound || playQuestFound || exportTxtFound || exportTxt2GamFound ||
 		locExpandFound || locCollapseFound)
-		res = !GetContainer()->IsEmpty();
+		res = !_container->IsEmpty();
 	if (saveFound) menu->Enable(SAVE_QUEST, res);
 	if (saveAsFound) menu->Enable(SAVE_QUESTAS, res);
 	if (playQuestFound) menu->Enable(PLAY_QUEST, res);
