@@ -22,6 +22,11 @@
 	#include "Settings.h"
 	#include "HotKeyTextCtrl.h"
 
+	enum
+	{
+		ID_INPUT_TEXT
+	};
+
 	class OptionsHotKeysDialog : public wxDialog
 	{
 		DECLARE_CLASS(OptionsHotKeysDialog)
@@ -35,9 +40,10 @@
 		HotKeyData		_hotKeyData;
 	
 		void OnOkSettings(wxCommandEvent &event);
+		void OnKeyDown(wxKeyEvent& event);
 	public:
 		OptionsHotKeysDialog(wxWindow *parent, const wxString& title, Settings *settings, 
-								int style = wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX|wxRESIZE_BORDER);
+								int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
 		void SetHotKeyData(const HotKeyData &hotKeyData);
 		HotKeyData GetHotKeyData() const { return _hotKeyData; }
 	};

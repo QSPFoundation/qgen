@@ -21,6 +21,7 @@ IMPLEMENT_CLASS(OptionsHotKeysDialog, wxDialog)
 
 BEGIN_EVENT_TABLE(OptionsHotKeysDialog, wxDialog)
 	EVT_BUTTON(wxID_OK, OptionsHotKeysDialog::OnOkSettings)
+	EVT_KEY_DOWN(OptionsHotKeysDialog::OnKeyDown)
 END_EVENT_TABLE()
 
 OptionsHotKeysDialog::OptionsHotKeysDialog(wxWindow *parent, const wxString& title, Settings *settings, int style) : wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
@@ -37,7 +38,7 @@ OptionsHotKeysDialog::OptionsHotKeysDialog(wxWindow *parent, const wxString& tit
 	hotKeySizer->Add(_txtInputHotKey, 0, wxALL, 5);
 	
 	wxStaticText *stText02 = new wxStaticText(this, wxID_ANY, wxT("Текст:"));
-	_txtInputText = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_PROCESS_TAB);
+	_txtInputText = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_TAB|wxTE_MULTILINE);
 
 	wxSizer *btnSizer = new wxBoxSizer(wxHORIZONTAL);
 	_btnOK = new wxButton(this, wxID_OK, wxT("OK"));
@@ -50,7 +51,7 @@ OptionsHotKeysDialog::OptionsHotKeysDialog(wxWindow *parent, const wxString& tit
 	topSizer->Add(stText02, 0, wxLEFT|wxTOP, 5);
 	topSizer->Add(_txtInputText, 1, wxALL|wxGROW, 5);
 	topSizer->Add(btnSizer, 0, wxALL|wxALIGN_RIGHT);
-	
+
 	SetSizerAndFit(topSizer);
 	SetAutoLayout(true);
 	SetMinClientSize(wxSize(230, 230));
