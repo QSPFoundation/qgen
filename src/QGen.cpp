@@ -822,8 +822,11 @@ bool QGenMainFrame::QuestChange()
 		dlgMsg.CenterOnParent();
 		switch (dlgMsg.ShowModal())
 		{
-		case wxID_YES: OnSaveQuestAs(wxCommandEvent()); return true;
-		case wxID_NO: return true;
+		case wxID_YES:
+			OnSaveQuest(wxCommandEvent());
+			return true;
+		case wxID_NO:
+			return true;
 		}
 		return false;
 	}
