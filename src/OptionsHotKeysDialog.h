@@ -38,13 +38,14 @@
 		wxButton		*_btnCancel;
 		Settings		*_settings;
 		HotKeyData		_hotKeyData;
-	
+
 		void OnOkSettings(wxCommandEvent &event);
-		void OnKeyDown(wxKeyEvent& event);
 	public:
-		OptionsHotKeysDialog(wxWindow *parent, const wxString& title, Settings *settings, 
+		OptionsHotKeysDialog(wxWindow *parent, const wxString& title, Settings *settings,
 								int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
+
 		void SetHotKeyData(const HotKeyData &hotKeyData);
 		HotKeyData GetHotKeyData() const { return _hotKeyData; }
 	};
+
 #endif

@@ -21,7 +21,6 @@ IMPLEMENT_CLASS(OptionsHotKeysDialog, wxDialog)
 
 BEGIN_EVENT_TABLE(OptionsHotKeysDialog, wxDialog)
 	EVT_BUTTON(wxID_OK, OptionsHotKeysDialog::OnOkSettings)
-	EVT_KEY_DOWN(OptionsHotKeysDialog::OnKeyDown)
 END_EVENT_TABLE()
 
 OptionsHotKeysDialog::OptionsHotKeysDialog(wxWindow *parent, const wxString& title, Settings *settings, int style) : wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
@@ -69,5 +68,3 @@ void OptionsHotKeysDialog::SetHotKeyData( const HotKeyData &hotKeyData )
 	_txtInputHotKey->SetValue(_hotKeyData.HotKey);
 	_txtInputText->SetValue(_hotKeyData.CommandText);
 }
-
-
