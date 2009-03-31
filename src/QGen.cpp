@@ -705,7 +705,8 @@ void QGenMainFrame::OnChmHelp( wxCommandEvent &event )
 
 void QGenMainFrame::OnSearchHelp( wxCommandEvent &event )
 {
-	wxCHMHelpController *chmHelp = new wxCHMHelpController(this);
+	DesktopWindow desktop;
+	wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
 	if (SearchHelpFile())
 	{
 		chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
