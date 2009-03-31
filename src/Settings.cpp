@@ -46,7 +46,7 @@ void Settings::InitSettings()
 
 	_panelsPos = wxT("layout2|")\
 		wxT("name=Properties Location;state=768;dir=5;layer=0;row=0;pos=0;prop=100000|")\
-		wxT("name=Standard Toolbar;caption=Панель инструментов;state=2106096;dir=1;layer=10;row=0;pos=0;prop=100000;bestw=660;besth=36|")\
+		wxT("name=Standard Toolbar;caption=Панель инструментов;state=2106096;dir=1;layer=10;row=0;pos=0;prop=100000;bestw=660;besth=34|")\
 		wxT("name=Locations;caption=Локации;state=31459324;dir=4;layer=1;row=0;pos=0;prop=100000;bestw=166|")\
 		wxT("dock_size(5,0,0)=186|dock_size(4,1,0)=168|dock_size(1,10,0)=28|");
 
