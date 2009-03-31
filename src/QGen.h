@@ -32,6 +32,7 @@
 	#include "SearchDialog.h"
 	#include "OptionsDialog.h"
 	#include "InitEvent.h"
+	#include "DesktopWindow.h"
 
 	#include "bitmaps/play.xpm"
 	#include "bitmaps/info.xpm"

@@ -450,6 +450,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\DesktopWindow.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Game.h"
 				>
 			</File>

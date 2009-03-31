@@ -693,7 +693,9 @@ void QGenMainFrame::OnPlayQuest( wxCommandEvent &event )
 
 void QGenMainFrame::OnChmHelp( wxCommandEvent &event )
 {
-	wxCHMHelpController *chmHelp = new wxCHMHelpController(this);
+	DesktopWindow desktop;
+	wxCHMHelpController *chmHelp = new wxCHMHelpController();
+	chmHelp->SetParentWindow(&desktop);
 	if (SearchHelpFile())
 	{
 		chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
