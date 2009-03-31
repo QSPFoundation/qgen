@@ -348,9 +348,9 @@ void QGenMainFrame::CreateToolBar()
 	_toolBar->AddTool(LOC_RENAME, wxT("Rename location..."), bitmaps[6], wxT("Переименовать выделенную локацию... (F6)"));
 	_toolBar->AddTool(LOC_DEL, wxT("Delete location"), bitmaps[7], wxT("Удалить выделенную локацию (F8)"));
 	_toolBar->AddSeparator();
-	_toolBar->AddTool(wxID_ANY, wxT("New action..."), bitmaps[15], wxT("Создать действие... (F7)"));
-	_toolBar->AddTool(wxID_ANY, wxT("Rename action..."), bitmaps[16], wxT("Переименовать выделенное действие... (F6)"));
-	_toolBar->AddTool(wxID_ANY, wxT("Delete action"), bitmaps[17], wxT("Удалить выделенное действие (F8)"));
+	_toolBar->AddTool(CREATE_ACTION, wxT("New action..."), bitmaps[15], wxT("Создать действие... (Alt+F7)"));
+	_toolBar->AddTool(RENAME_ACTION, wxT("Rename action..."), bitmaps[16], wxT("Переименовать выделенное действие... (Alt+F6)"));
+	_toolBar->AddTool(DEL_ACTION, wxT("Delete action"), bitmaps[17], wxT("Удалить выделенное действие (Alt+F8)"));
 	_toolBar->AddSeparator();
 	_toolBar->AddTool(OPEN_QUEST, wxT("Open..."), bitmaps[4], wxT("Открыть игру... (Ctrl+O)"));
 	_toolBar->AddTool(SAVE_QUEST, wxT("Save"), bitmaps[3], wxT("Сохранить игру (Ctrl+S)"));
@@ -809,11 +809,16 @@ void QGenMainFrame::OnTimerUpdToolBar(wxTimerEvent &event)
 	bool isCanPlay = !_controls->GetContainer()->IsEmpty();
 	bool isCanUndoText = _controls->CanUndoText();
 	bool isCanRedoText = _controls->CanRedoText();
+	bool isActsNotEmpty = !_controls->IsActionsOnSelectedLocEmpty();
+	bool isLocsNotAllClosed = !_controls->IsAllLocsClosed();
 	// ---------------------------------------------------
 	_toolBar->EnableTool(LOC_DEL, isLocSelected);
 	_toolBar->EnableTool(LOC_RENAME, isLocSelected);
 	_toolBar->EnableTool(LOC_COPY, isSelLocNotEmpty);
 	_toolBar->EnableTool(LOC_CLEAR, isSelLocNotEmpty);
+	_toolBar->EnableTool(CREATE_ACTION, isLocsNotAllClosed);
+	_toolBar->EnableTool(RENAME_ACTION, isActsNotEmpty);
+	_toolBar->EnableTool(DEL_ACTION, isActsNotEmpty);
 	_toolBar->EnableTool(PLAY_QUEST, isCanPlay);
 	_toolBar->EnableTool(SAVE_QUEST, isCanPlay);
 	_toolBar->EnableTool(SAVE_QUESTAS, isCanPlay);
