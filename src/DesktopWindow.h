@@ -6,4 +6,5 @@
 	public:
 		HWND GetHWND() const { return ::GetDesktopWindow(); }
 	};
+
 #endif
