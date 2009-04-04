@@ -15,13 +15,26 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _DESKTOP_WINDOW_H_
-	#define _DESKTOP_WINDOW_H_
+#ifndef _QUEST_GENERATOR_SEARCH_DATA_STORE_H
+	#define _QUEST_GENERATOR_SEARCH_DATA_STORE_H
 
-	class DesktopWindow : public wxWindow
+	#include <wx/wx.h>
+	#include <wx/fileconf.h>
+
+	class SearchDataStore
 	{
+		wxArrayString _searchData;
+		wxArrayString _replaceData;
+		
 	public:
-		HWND GetHWND() const { return ::GetDesktopWindow(); }
+		SearchDataStore();
+		void SetSearchData(const wxArrayString &data){ _searchData = data; }
+		void SetReplaceData(const wxArrayString &data) { _replaceData = data; }
+		void ClearStore();
+		wxArrayString GetSearchData() const { return _searchData; };
+		wxArrayString GetReplaceData() const { return _replaceData; };
+		void SaveSearchData(wxConfigBase &fileConfig);
+		void LoadSearchData(wxConfigBase &fileConfig);
 	};
 
 #endif

@@ -145,6 +145,7 @@ void Settings::LoadSettings()
 	cfg.Read(wxT("Colours/Base"), &_colour[SYNTAX_BASE]);
 	cfg.Read(wxT("Colours/Background"), &_backColour);
 	_hotKeysStore.LoadHotKeysData(cfg);
+	_searchDataStore.LoadSearchData(cfg);
 }
 
 void Settings::SaveSettings()
@@ -201,6 +202,7 @@ void Settings::SaveSettings()
 	cfg.Write(wxT("Colours/Base"), _colour[SYNTAX_BASE]);
 	cfg.Write(wxT("Colours/Background"), _backColour);
 	_hotKeysStore.SaveHotKeysData(cfg);
+	_searchDataStore.SaveSearchData(cfg);
 }
 
 void Settings::AddObserver( IObserver *obj )

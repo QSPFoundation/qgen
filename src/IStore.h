@@ -15,13 +15,14 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _DESKTOP_WINDOW_H_
-	#define _DESKTOP_WINDOW_H_
-
-	class DesktopWindow : public wxWindow
+#ifndef _QUEST_GENERATOR_INTERFACE_STORE_H
+	#define _QUEST_GENERATOR_INTERFACE_STORE_H
+	
+	class IStore
 	{
 	public:
-		HWND GetHWND() const { return ::GetDesktopWindow(); }
+		virtual void Save(wxConfigBase &fileConfig) = 0;
+		virtual void Restore(wxConfigBase &fileConfig) = 0;
 	};
 
 #endif

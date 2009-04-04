@@ -412,6 +412,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\SearchDataStore.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\SearchDialog.cpp"
 				>
 			</File>
@@ -490,6 +494,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\IStore.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\LocationActions.h"
 				>
 			</File>
@@ -527,6 +535,10 @@
 			</File>
 			<File
 				RelativePath=".\src\QGen.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\SearchDataStore.h"
 				>
 			</File>
 			<File

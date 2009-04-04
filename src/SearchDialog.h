@@ -20,13 +20,14 @@
 
 	#include <wx/wx.h>
 	#include "Controls.h"
+	#include "SearchDataStore.h"
 
 	class SearchDialog : public wxDialog
 	{
 		DECLARE_CLASS(SearchDialog)
 		DECLARE_EVENT_TABLE()
 
-		wxTextCtrl	*_textFind,
+		wxComboBox	*_textFind,
 					*_textRepl;
 		wxCheckBox  *_chkMatchCase;
 		wxButton	*_btnClose,
@@ -35,6 +36,10 @@
 					*_btnReplace,
 					*_btnSkipLoc;
 		Controls	*_controls;
+		Settings	*_settings;
+		SearchDataStore *_searchDataStore;
+		wxArrayString _searchData;
+		wxArrayString _replaceData;
 
 		void OnFindNext(wxCommandEvent &event);
 		void OnFindAgain(wxCommandEvent &event);
@@ -42,7 +47,11 @@
 		void OnSkipLoc(wxCommandEvent &event);
 		void OnUpdFindText(wxUpdateUIEvent& event);
 		void OnUpdReplText(wxUpdateUIEvent& event);
+		void OnCloseDialog(wxCloseEvent &event);
+		void OnClose(wxCommandEvent &event);
 
+		void AddSearchText(const wxString &text);
+		void AddReplaceText(const wxString &text);
 	public:
 		SearchDialog(wxWindow *parent, const wxString& title, Controls *controls, int style = 0);
 	};

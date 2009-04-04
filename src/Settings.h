@@ -25,6 +25,7 @@
 	#include <list>
 	#include "IObserver.h"
 	#include "HotKeysStore.h"
+	#include "SearchDataStore.h"
 
 	enum SyntaxType
 	{
@@ -79,8 +80,8 @@
 		wxString	_currentPlayerPath;
 		wxString	_currentHelpPath;
 		wxString	_currentTxt2GamPath;
-
 		HotKeysStore _hotKeysStore;
+		SearchDataStore _searchDataStore;
 
 		std::list<IObserver *> observers;
 
@@ -162,6 +163,7 @@
 		void SetPanelsPos(const wxString &panels) { _panelsPos = panels; }
 		wxString GetSetPanelsPos() { return _panelsPos; }
 		HotKeysStore &GetHotKeys() { return _hotKeysStore; }
+		SearchDataStore *GetSearchDataStore() {return &_searchDataStore; }
 	};
 
 #endif
