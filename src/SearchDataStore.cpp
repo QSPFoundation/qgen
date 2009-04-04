@@ -24,12 +24,12 @@ SearchDataStore::SearchDataStore()
 void SearchDataStore::SaveSearchData( wxConfigBase &fileConfig )
 {
 	size_t count = _searchStrings.GetCount();
-	fileConfig.DeleteGroup(wxT("DataSearch"));
+	fileConfig.DeleteGroup(wxT("SearchData"));
 	for (size_t i = 0; i < count; i++)
-		fileConfig.Write(wxString::Format(wxT("DataSearch/Text%d_search"), i), _searchStrings[i]);
+		fileConfig.Write(wxString::Format(wxT("SearchData/Search%d_Text"), i), _searchStrings[i]);
 	count = _replaceStrings.GetCount();
 	for (size_t i = 0; i < count; i++)
-		fileConfig.Write(wxString::Format(wxT("DataSearch/Text%d_replace"), i), _replaceStrings[i]);
+		fileConfig.Write(wxString::Format(wxT("SearchData/Replace%d_Text"), i), _replaceStrings[i]);
 }
 
 void SearchDataStore::LoadSearchData( wxConfigBase &fileConfig )
@@ -40,14 +40,14 @@ void SearchDataStore::LoadSearchData( wxConfigBase &fileConfig )
 	_replaceStrings.Clear();
 	while (1)
 	{
-		if (!fileConfig.Read(wxString::Format(wxT("DataSearch/Text%d_search"), i), &str)) break;
+		if (!fileConfig.Read(wxString::Format(wxT("SearchData/Search%d_Text"), i), &str)) break;
 		_searchStrings.Add(str);
 		++i;
 	}
 	i = 0;
 	while (1)
 	{
-		if (!fileConfig.Read(wxString::Format(wxT("DataSearch/Text%d_replace"), i), &str)) break;
+		if (!fileConfig.Read(wxString::Format(wxT("SearchData/Replace%d_Text"), i), &str)) break;
 		_replaceStrings.Add(str);
 		++i;
 	}
