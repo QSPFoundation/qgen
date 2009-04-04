@@ -124,7 +124,7 @@ void SearchDialog::AddSearchText(const wxString &text)
 	if (_searchDataStore->AddSearchString(text))
 	{
 		size_t count = _textFind->GetCount();
-		if (count == 10)
+		if (count >= 10)
 			_textFind->Delete(count - 1);
 		_textFind->Insert(text, 0);
 	}
@@ -135,7 +135,7 @@ void SearchDialog::AddReplaceText(const wxString &text)
 	if (_searchDataStore->AddReplaceString(text))
 	{
 		size_t count = _textRepl->GetCount();
-		if (count == 10)
+		if (count >= 10)
 			_textRepl->Delete(count - 1);
 		_textRepl->Insert(text, 0);
 	}

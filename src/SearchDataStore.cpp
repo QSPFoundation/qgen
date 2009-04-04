@@ -64,7 +64,7 @@ bool SearchDataStore::AddSearchString( const wxString &text )
 	if (_searchStrings.Index(text) == wxNOT_FOUND)
 	{
 		size_t count = _searchStrings.GetCount();
-		if (count == 10)
+		if (count >= 10)
 			_searchStrings.RemoveAt(count - 1);
 		_searchStrings.Insert(text, 0);
 		return true;
@@ -77,7 +77,7 @@ bool SearchDataStore::AddReplaceString( const wxString &text )
 	if (_replaceStrings.Index(text) == wxNOT_FOUND)
 	{
 		size_t count = _replaceStrings.GetCount();
-		if (count == 10)
+		if (count >= 10)
 			_replaceStrings.RemoveAt(count - 1);
 		_replaceStrings.Insert(text, 0);
 		return true;
