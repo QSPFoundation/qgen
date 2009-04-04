@@ -767,11 +767,12 @@ void OptionsDialog::ApplySettings()
 	_settings->SetFont(SYNTAX_LABELS, _txtFontMarks->GetFont());
 	_settings->SetFont(SYNTAX_COMMENTS, _txtFontComments->GetFont());
 	_settings->SetFont(SYNTAX_BASE, _txtFontBase->GetFont());
-	
+
 	wxListItem info;
 	HotKeyData hotKeyData;
-	size_t count = _lstHotKeys->GetItemCount(); 
-	_settings->GetHotKeys().ClearHotKeysData();
+	size_t count = _lstHotKeys->GetItemCount();
+	HotKeysStore *hotKeysStore = _settings->GetHotKeys();
+	hotKeysStore->ClearHotKeysData();
 	for (size_t i = 0; i < count; ++i)
 	{
 		info.SetColumn(0);
@@ -783,7 +784,7 @@ void OptionsDialog::ApplySettings()
 		info.SetId(i);
 		_lstHotKeys->GetItem(info);
 		hotKeyData.CommandText = info.GetText();
-		_settings->GetHotKeys().SetHotKeyData(hotKeyData);
+		hotKeysStore->AddHotKeyData(hotKeyData);
 	}
 	_settings->NotifyAll();
 	_btnApply->Enable(false);
@@ -874,11 +875,12 @@ void OptionsDialog::InitOptionsDialog()
 
 	_txtNameFirsLoc->Enable(_settings->GetCreateFirstLoc());
 	_spnAutoSaveMin->Enable(_settings->GetAutoSave());
-	
-	size_t count = _settings->GetHotKeys().GetCountHotKeys();
+
+	HotKeysStore *hotKeysStore = _settings->GetHotKeys();
+	size_t count = hotKeysStore->GetHotKeysCount();
 	for (size_t i = 0; i < count; ++i)
 	{
-		HotKeyData hotKeyData = _settings->GetHotKeys().GetHotKeyData(i);
+		const HotKeyData &hotKeyData = hotKeysStore->GetHotKeyData(i);
 		_lstHotKeys->InsertItem(i, hotKeyData.HotKey);
 		_lstHotKeys->SetItem(i, 1, hotKeyData.CommandText);
 	}

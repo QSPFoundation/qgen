@@ -162,8 +162,9 @@
 		bool GetShowStatusBar() { return _isShowStatusBar; }
 		void SetPanelsPos(const wxString &panels) { _panelsPos = panels; }
 		wxString GetSetPanelsPos() { return _panelsPos; }
-		HotKeysStore &GetHotKeys() { return _hotKeysStore; }
-		SearchDataStore *GetSearchDataStore() {return &_searchDataStore; }
+
+		HotKeysStore *GetHotKeys() { return &_hotKeysStore; }
+		SearchDataStore *GetSearchDataStore() { return &_searchDataStore; }
 	};
 
 #endif

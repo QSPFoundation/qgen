@@ -36,10 +36,7 @@
 					*_btnReplace,
 					*_btnSkipLoc;
 		Controls	*_controls;
-		Settings	*_settings;
 		SearchDataStore *_searchDataStore;
-		wxArrayString _searchData;
-		wxArrayString _replaceData;
 
 		void OnFindNext(wxCommandEvent &event);
 		void OnFindAgain(wxCommandEvent &event);
@@ -47,8 +44,6 @@
 		void OnSkipLoc(wxCommandEvent &event);
 		void OnUpdFindText(wxUpdateUIEvent& event);
 		void OnUpdReplText(wxUpdateUIEvent& event);
-		void OnCloseDialog(wxCloseEvent &event);
-		void OnClose(wxCommandEvent &event);
 
 		void AddSearchText(const wxString &text);
 		void AddReplaceText(const wxString &text);

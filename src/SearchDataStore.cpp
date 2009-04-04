@@ -19,52 +19,68 @@
 
 SearchDataStore::SearchDataStore()
 {
-
 }
 
 void SearchDataStore::SaveSearchData( wxConfigBase &fileConfig )
 {
-	wxString str;
-	size_t count = _searchData.GetCount();
+	size_t count = _searchStrings.GetCount();
 	fileConfig.DeleteGroup(wxT("DataSearch"));
 	for (size_t i = 0; i < count; i++)
-	{
-		str = wxString::Format(wxT("DataSearch/Text%d_search"), i);
-		fileConfig.Write(str, _searchData[i]);
-	}
-	count = _replaceData.GetCount();
+		fileConfig.Write(wxString::Format(wxT("DataSearch/Text%d_search"), i), _searchStrings[i]);
+	count = _replaceStrings.GetCount();
 	for (size_t i = 0; i < count; i++)
-	{
-		str = wxString::Format(wxT("DataSearch/Text%d_replace"), i);
-		fileConfig.Write(str, _replaceData[i]);
-	}
+		fileConfig.Write(wxString::Format(wxT("DataSearch/Text%d_replace"), i), _replaceStrings[i]);
 }
 
 void SearchDataStore::LoadSearchData( wxConfigBase &fileConfig )
 {
-	wxString str, data;
+	wxString str;
 	size_t i = 0;
-	_searchData.Clear();
-	_replaceData.Clear();
+	_searchStrings.Clear();
+	_replaceStrings.Clear();
 	while (1)
 	{
-		str = wxString::Format(wxT("DataSearch/Text%d_search"), i);
-		if (!fileConfig.Read(str, &data)) break;
-		_searchData.Add(data);
+		if (!fileConfig.Read(wxString::Format(wxT("DataSearch/Text%d_search"), i), &str)) break;
+		_searchStrings.Add(str);
 		++i;
 	}
 	i = 0;
 	while (1)
 	{
-		str = wxString::Format(wxT("DataSearch/Text%d_replace"), i);
-		if (!fileConfig.Read(str, &data)) break;
-		_replaceData.Add(data);
+		if (!fileConfig.Read(wxString::Format(wxT("DataSearch/Text%d_replace"), i), &str)) break;
+		_replaceStrings.Add(str);
 		++i;
 	}
 }
 
 void SearchDataStore::ClearStore()
 {
-	_searchData.Clear();
-	_replaceData.Clear();
+	_searchStrings.Clear();
+	_replaceStrings.Clear();
+}
+
+bool SearchDataStore::AddSearchString( const wxString &text )
+{
+	if (_searchStrings.Index(text) == wxNOT_FOUND)
+	{
+		size_t count = _searchStrings.GetCount();
+		if (count == 10)
+			_searchStrings.RemoveAt(count - 1);
+		_searchStrings.Insert(text, 0);
+		return true;
+	}
+	return false;
+}
+
+bool SearchDataStore::AddReplaceString( const wxString &text )
+{
+	if (_replaceStrings.Index(text) == wxNOT_FOUND)
+	{
+		size_t count = _replaceStrings.GetCount();
+		if (count == 10)
+			_replaceStrings.RemoveAt(count - 1);
+		_replaceStrings.Insert(text, 0);
+		return true;
+	}
+	return false;
 }

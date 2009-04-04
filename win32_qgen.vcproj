@@ -494,10 +494,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\IStore.h"
-				>
-			</File>
-			<File
 				RelativePath=".\src\LocationActions.h"
 				>
 			</File>

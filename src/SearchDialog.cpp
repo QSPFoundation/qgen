@@ -24,29 +24,25 @@ BEGIN_EVENT_TABLE(SearchDialog, wxDialog)
 	EVT_BUTTON(FIND_ANEW, SearchDialog::OnFindAgain)
 	EVT_BUTTON(FIND_REPL, SearchDialog::OnFindRepl)
 	EVT_BUTTON(FIND_SKIPLOC, SearchDialog::OnSkipLoc)
-	EVT_BUTTON(FIND_CLOSE, SearchDialog::OnClose)
 	EVT_UPDATE_UI(FIND_TEXT, SearchDialog::OnUpdFindText)
 	EVT_UPDATE_UI(REPL_TEXT, SearchDialog::OnUpdReplText)
 	EVT_TEXT_ENTER(FIND_TEXT, SearchDialog::OnFindNext)
 	EVT_TEXT_ENTER(REPL_TEXT, SearchDialog::OnFindRepl)
-	EVT_CLOSE(SearchDialog::OnCloseDialog)
 END_EVENT_TABLE()
 
 SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *controls, int style) :
 	wxDialog( parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | style )
 {
 	_controls = controls;
-	_settings = _controls->GetSettings();
-	_searchDataStore = _settings->GetSearchDataStore();
-	_searchData = _searchDataStore->GetSearchData();
-	_replaceData = _searchDataStore->GetReplaceData();
+	Settings *settings = _controls->GetSettings();
+	_searchDataStore = settings->GetSearchDataStore();
 
 	wxSizer *leftSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *rightSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *topSizer = new wxBoxSizer(wxHORIZONTAL);
 
-	_textFind = new wxComboBox(this, FIND_TEXT, wxEmptyString, wxDefaultPosition, wxDefaultSize, _searchData);
-	_textRepl = new wxComboBox(this, REPL_TEXT, wxEmptyString, wxDefaultPosition, wxDefaultSize, _replaceData);
+	_textFind = new wxComboBox(this, FIND_TEXT, wxEmptyString, wxDefaultPosition, wxDefaultSize, _searchDataStore->GetSearchStrings());
+	_textRepl = new wxComboBox(this, REPL_TEXT, wxEmptyString, wxDefaultPosition, wxDefaultSize, _searchDataStore->GetReplaceStrings());
 	_chkMatchCase = new wxCheckBox(this, wxID_ANY, wxT("Точное совпадение"));
 
 	leftSizer->Add(_textFind, 1, wxALL|wxGROW, 2);
@@ -57,7 +53,7 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 	_btnNextSearch = new wxButton(this, FIND_NEXT, wxT("Продолжить поиск"));
 	_btnSkipLoc = new wxButton(this, FIND_SKIPLOC, wxT("Пропустить локацию"));
 	_btnReplace = new wxButton(this, FIND_REPL, wxT("Заменить"));
-	_btnClose = new wxButton(this, FIND_CLOSE, wxT("Закрыть"));
+	_btnClose = new wxButton(this, wxID_CANCEL, wxT("Закрыть"));
 
 	rightSizer->Add(_btnSearchAgain, 1, wxALL|wxGROW, 1);
 	rightSizer->Add(_btnNextSearch, 1, wxALL|wxGROW, 1);
@@ -99,7 +95,6 @@ void SearchDialog::OnFindRepl( wxCommandEvent &event )
 	OnFindNext(wxCommandEvent());
 	AddReplaceText(str);
 	_textRepl->SetFocus();
-
 }
 
 void SearchDialog::OnUpdFindText( wxUpdateUIEvent& event )
@@ -124,57 +119,24 @@ void SearchDialog::OnSkipLoc( wxCommandEvent &event )
 	_textFind->SetFocus();
 }
 
-void SearchDialog::OnCloseDialog( wxCloseEvent &event )
-{
-	_searchDataStore->ClearStore();
-	if (!_searchData.IsEmpty())
-		_searchDataStore->SetSearchData(_searchData);
-	if (!_replaceData.IsEmpty())
-		_searchDataStore->SetReplaceData(_replaceData);
-	event.Skip();
-}
-
-void SearchDialog::OnClose( wxCommandEvent &event )
-{
-	Close();
-}
-
 void SearchDialog::AddSearchText(const wxString &text)
 {
-	wxArrayString temp;
-	size_t count;
-	if(_searchData.Index(text) == wxNOT_FOUND)
+	if (_searchDataStore->AddSearchString(text))
 	{
-		temp = _searchData;
-		_searchData.Clear();
-		count = temp.GetCount();
-		if (count == 10) count -= 1;
-		_searchData.Add(text);
-		for (size_t i = 0; i < count; i++)
-			_searchData.Add(temp[i]);
-		_textFind->Clear();
-		_textFind->Insert(_searchData, 0);
-		_textFind->SetValue(text);
-		_textFind->Update();
+		size_t count = _textFind->GetCount();
+		if (count == 10)
+			_textFind->Delete(count - 1);
+		_textFind->Insert(text, 0);
 	}
 }
 
 void SearchDialog::AddReplaceText(const wxString &text)
-{ 
-	wxArrayString temp;
-	size_t count;
-	if(_replaceData.Index(text) == wxNOT_FOUND)
+{
+	if (_searchDataStore->AddReplaceString(text))
 	{
-		temp = _replaceData;
-		_replaceData.Clear();
-		count = temp.GetCount();
-		if (count == 10) count -= 1;
-		_replaceData.Add(text);
-		for (size_t i = 0; i < count; i++)
-			_replaceData.Add(temp[i]);
-		_textRepl->Clear();
-		_textRepl->Insert(_replaceData, 0);
-		_textRepl->SetValue(text);
-		_textRepl->Update();
+		size_t count = _textRepl->GetCount();
+		if (count == 10)
+			_textRepl->Delete(count - 1);
+		_textRepl->Insert(text, 0);
 	}
 }

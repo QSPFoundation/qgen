@@ -42,10 +42,10 @@
 		HotKeyDataArray _hotKeysData;
 	public:
 		HotKeysStore();
-		size_t SetHotKeyData(const HotKeyData &hotKeyData);
+		size_t AddHotKeyData(const HotKeyData &hotKeyData);
 		bool DeleteHotKeyData(const wxString &hotKey);
 		void ClearHotKeysData();
-		size_t GetCountHotKeys();
+		size_t GetHotKeysCount();
 		HotKeyData &GetHotKeyData(size_t index);
 		int FindHotKeyDataIndex(const wxString &hotKey);
 		void SaveHotKeysData(wxConfigBase &fileConfig);

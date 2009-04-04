@@ -25,7 +25,7 @@ HotKeysStore::HotKeysStore()
 
 }
 
-size_t HotKeysStore::SetHotKeyData( const HotKeyData &hotKeyData )
+size_t HotKeysStore::AddHotKeyData( const HotKeyData &hotKeyData )
 {
 	int index = FindHotKeyDataIndex(hotKeyData.HotKey);
 	if (index < 0)
@@ -64,7 +64,7 @@ int HotKeysStore::FindHotKeyDataIndex(const wxString &hotKey)
 	return wxNOT_FOUND;
 }
 
-size_t HotKeysStore::GetCountHotKeys()
+size_t HotKeysStore::GetHotKeysCount()
 {
 	return _hotKeysData.GetCount();
 }
@@ -94,7 +94,7 @@ void HotKeysStore::LoadHotKeysData(wxConfigBase &fileConfig)
 		if (!fileConfig.Read(str, &keyVal)) break;
 		str = wxString::Format(wxT("HotKeys/HotKey%d_Exec"), i);
 		if (!fileConfig.Read(str, &dataVal)) break;
-		SetHotKeyData(HotKeyData(keyVal, dataVal));
+		AddHotKeyData(HotKeyData(keyVal, dataVal));
 		++i;
 	}
 }
