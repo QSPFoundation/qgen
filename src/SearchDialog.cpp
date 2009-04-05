@@ -46,10 +46,12 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 	if (_textFind->GetCount()) _textFind->Select(0);
 	if (_textRepl->GetCount()) _textRepl->Select(0);
 	_chkMatchCase = new wxCheckBox(this, wxID_ANY, wxT("Точное совпадение"));
+	_chkWholeWord = new wxCheckBox(this, wxID_ANY, wxT("Только слово целиком"));
 
-	leftSizer->Add(_textFind, 1, wxALL|wxGROW, 2);
-	leftSizer->Add(_textRepl, 1, wxALL|wxGROW, 2);
-	leftSizer->Add(_chkMatchCase, 1, wxALL|wxGROW, 2);
+	leftSizer->Add(_textFind, 1, wxGROW);
+	leftSizer->Add(_textRepl, 1, wxUP|wxGROW, 4);
+	leftSizer->Add(_chkMatchCase, 1, wxUP|wxGROW, 6);
+	leftSizer->Add(_chkWholeWord, 1, wxUP|wxGROW, 6);
 
 	_btnSearchAgain = new wxButton(this, FIND_ANEW, wxT("Начать заново"));
 	_btnNextSearch = new wxButton(this, FIND_NEXT, wxT("Продолжить поиск"));
@@ -63,7 +65,7 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 	rightSizer->Add(_btnSkipLoc, 1, wxALL|wxGROW, 1);
 	rightSizer->Add(_btnClose, 1, wxALL|wxGROW, 1);
 
-	topSizer->Add(leftSizer, 1);
+	topSizer->Add(leftSizer, 1, wxALL, 2);
 	topSizer->Add(rightSizer);
 
 	SetSizerAndFit(topSizer);
@@ -77,7 +79,7 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 void SearchDialog::OnFindNext( wxCommandEvent &event )
 {
 	wxString str = _textFind->GetValue();
-	_controls->SearchString( str, false, _chkMatchCase->GetValue() );
+	_controls->SearchString( str, false, _chkMatchCase->GetValue(), _chkWholeWord->GetValue() );
 	AddSearchText(str);
 	_textFind->SetFocus();
 }
@@ -85,7 +87,7 @@ void SearchDialog::OnFindNext( wxCommandEvent &event )
 void SearchDialog::OnFindAgain( wxCommandEvent &event )
 {
 	wxString str = _textFind->GetValue();
-	_controls->SearchString( str, true, _chkMatchCase->GetValue() );
+	_controls->SearchString( str, true, _chkMatchCase->GetValue(), _chkWholeWord->GetValue() );
 	AddSearchText(str);
 	_textFind->SetFocus();
 }
@@ -109,14 +111,14 @@ void SearchDialog::OnUpdFindText( wxUpdateUIEvent& event )
 
 void SearchDialog::OnUpdReplText( wxUpdateUIEvent& event )
 {
-	_btnReplace->Enable(!_textRepl->GetValue().IsEmpty() && !_textFind->GetValue().IsEmpty());
+	_btnReplace->Enable(!_textFind->GetValue().IsEmpty());
 }
 
 void SearchDialog::OnSkipLoc( wxCommandEvent &event )
 {
 	wxString str = _textFind->GetValue();
 	if (_controls->SearchNextLoc())
-		_controls->SearchString( str, false, _chkMatchCase->GetValue() );
+		_controls->SearchString( str, false, _chkMatchCase->GetValue(), _chkWholeWord->GetValue() );
 	AddSearchText(str);
 	_textFind->SetFocus();
 }

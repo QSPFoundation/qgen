@@ -29,7 +29,8 @@
 
 		wxComboBox	*_textFind,
 					*_textRepl;
-		wxCheckBox  *_chkMatchCase;
+		wxCheckBox  *_chkMatchCase,
+					*_chkWholeWord;
 		wxButton	*_btnClose,
 					*_btnNextSearch,
 					*_btnSearchAgain,

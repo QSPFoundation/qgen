@@ -78,6 +78,7 @@
 		wxLongLong			_lastSaveTime;
 
 		wxString ConvertSearchString(const wxString& s, bool isMatchCase);
+		int SearchSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind = 0);
 
 	public:
 		Controls(const wxString &path);
@@ -163,7 +164,7 @@
 
 		wxString GetSelectedWord();
 		void JumpToSelectedLoc();
-		bool SearchString(const wxString &str, bool findAgain, bool isMatchCase = false);
+		bool SearchString(const wxString &str, bool findAgain, bool isMatchCase = false, bool isWholeString = false);
 		void ReplaceSearchString(const wxString & replaceString);
 		bool SearchNextLoc();
 		void InitSearchData();
