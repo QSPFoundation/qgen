@@ -77,8 +77,8 @@
 		wxString			_currentGamePass;
 		wxLongLong			_lastSaveTime;
 
-		wxString ConvertSearchString(const wxString& s, bool isMatchCase);
-		int SearchSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind = 0);
+		static wxString ConvertSearchString(const wxString& s, bool isMatchCase);
+		static int SearchSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind = 0);
 
 	public:
 		Controls(const wxString &path);
