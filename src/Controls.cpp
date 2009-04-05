@@ -770,7 +770,7 @@ wxString Controls::ConvertSearchString(const wxString& s, bool isMatchCase)
 	return (isMatchCase ? s : s.Lower());
 }
 
-int Controls::SearchSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind)
+int Controls::FindSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind)
 {
 	if (isWholeString)
 	{
@@ -881,7 +881,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 		{
 			_dataSearch.findAt = SEARCH_LOCDESC;
 			_dataSearch.startPos = wxNOT_FOUND;
-			if (SearchSubString(ConvertSearchString(locName, isMatchCase), lwrStr, isWholeString) != wxNOT_FOUND)
+			if (FindSubString(ConvertSearchString(locName, isMatchCase), lwrStr, isWholeString) != wxNOT_FOUND)
 			{
 				_locListBox->Select(_dataSearch.idxLoc);
 				ShowLocation(locName);
@@ -894,7 +894,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 		if (_dataSearch.findAt == SEARCH_LOCDESC)
 		{	
 			data = _container->GetLocationDesc(_dataSearch.idxLoc);
-			startPos = SearchSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.startPos + 1);
+			startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.startPos + 1);
 			if (startPos != wxNOT_FOUND)
 			{
 				lastPos = lwrStr.Length();
@@ -917,7 +917,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 		if (_dataSearch.findAt == SEARCH_LOCCODE)
 		{
 			data = _container->GetLocationCode(_dataSearch.idxLoc);
-			startPos = SearchSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.startPos + 1);
+			startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.startPos + 1);
 			if (startPos != wxNOT_FOUND)
 			{
 				lastPos = lwrStr.Length();
@@ -947,7 +947,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 				_dataSearch.findAt = SEARCH_PATHPICT;
 				_dataSearch.startPos = wxNOT_FOUND;
 				actName = _container->GetActionName(_dataSearch.idxLoc, _dataSearch.idxAct);
-				if (SearchSubString(ConvertSearchString(actName, isMatchCase), lwrStr, isWholeString) != wxNOT_FOUND)
+				if (FindSubString(ConvertSearchString(actName, isMatchCase), lwrStr, isWholeString) != wxNOT_FOUND)
 				{
 					_locListBox->Select(_dataSearch.idxLoc);
 					page = ShowLocation(locName);
@@ -960,7 +960,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 			if (_dataSearch.findAt == SEARCH_PATHPICT)
 			{
 				data = _container->GetActionPicturePath(_dataSearch.idxLoc, _dataSearch.idxAct);
-				startPos = SearchSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.startPos + 1);
+				startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.startPos + 1);
 				if (startPos != wxNOT_FOUND)
 				{
 					lastPos = lwrStr.Length();
@@ -983,7 +983,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 			if (_dataSearch.findAt == SEARCH_ACTCODE)
 			{
 				data = _container->GetActionCode(_dataSearch.idxLoc, _dataSearch.idxAct);
-				startPos = SearchSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.startPos + 1);
+				startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.startPos + 1);
 				if (startPos != wxNOT_FOUND)
 				{
 					lastPos = lwrStr.Length();
