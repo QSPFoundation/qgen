@@ -59,28 +59,26 @@ void SearchDataStore::ClearStore()
 	_replaceStrings.Clear();
 }
 
-bool SearchDataStore::AddSearchString( const wxString &text )
+void SearchDataStore::AddSearchString( const wxString &text )
 {
 	if (_searchStrings.Index(text) == wxNOT_FOUND)
 	{
 		size_t count = _searchStrings.GetCount();
-		if (count >= 10)
-			_searchStrings.RemoveAt(count - 1);
-		_searchStrings.Insert(text, 0);
-		return true;
+		if (count >= 10) _searchStrings.RemoveAt(count - 1);
 	}
-	return false;
+	else
+		_searchStrings.Remove(text);
+	_searchStrings.Insert(text, 0);
 }
 
-bool SearchDataStore::AddReplaceString( const wxString &text )
+void SearchDataStore::AddReplaceString( const wxString &text )
 {
 	if (_replaceStrings.Index(text) == wxNOT_FOUND)
 	{
 		size_t count = _replaceStrings.GetCount();
-		if (count >= 10)
-			_replaceStrings.RemoveAt(count - 1);
-		_replaceStrings.Insert(text, 0);
-		return true;
+		if (count >= 10) _replaceStrings.RemoveAt(count - 1);
 	}
-	return false;
+	else
+		_replaceStrings.Remove(text);
+	_replaceStrings.Insert(text, 0);
 }

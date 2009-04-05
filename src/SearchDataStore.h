@@ -32,8 +32,8 @@
 
 		const wxArrayString &GetSearchStrings() const { return _searchStrings; }
 		const wxArrayString &GetReplaceStrings() const { return _replaceStrings; }
-		bool AddSearchString(const wxString &text);
-		bool AddReplaceString(const wxString &text);
+		void AddSearchString(const wxString &text);
+		void AddReplaceString(const wxString &text);
 		void ClearStore();
 		void SaveSearchData(wxConfigBase &fileConfig);
 		void LoadSearchData(wxConfigBase &fileConfig);

@@ -43,6 +43,8 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 
 	_textFind = new wxComboBox(this, FIND_TEXT, wxEmptyString, wxDefaultPosition, wxDefaultSize, _searchDataStore->GetSearchStrings());
 	_textRepl = new wxComboBox(this, REPL_TEXT, wxEmptyString, wxDefaultPosition, wxDefaultSize, _searchDataStore->GetReplaceStrings());
+	if (_textFind->GetCount()) _textFind->Select(0);
+	if (_textRepl->GetCount()) _textRepl->Select(0);
 	_chkMatchCase = new wxCheckBox(this, wxID_ANY, wxT("Точное совпадение"));
 
 	leftSizer->Add(_textFind, 1, wxALL|wxGROW, 2);
@@ -121,22 +123,16 @@ void SearchDialog::OnSkipLoc( wxCommandEvent &event )
 
 void SearchDialog::AddSearchText(const wxString &text)
 {
-	if (_searchDataStore->AddSearchString(text))
-	{
-		size_t count = _textFind->GetCount();
-		if (count >= 10)
-			_textFind->Delete(count - 1);
-		_textFind->Insert(text, 0);
-	}
+	_searchDataStore->AddSearchString(text);
+	if (_textFind->GetCount() && _textFind->GetString(0) == text)
+		return;
+	_textFind->Insert(text, 0);
 }
 
 void SearchDialog::AddReplaceText(const wxString &text)
 {
-	if (_searchDataStore->AddReplaceString(text))
-	{
-		size_t count = _textRepl->GetCount();
-		if (count >= 10)
-			_textRepl->Delete(count - 1);
-		_textRepl->Insert(text, 0);
-	}
+	_searchDataStore->AddReplaceString(text);
+	if (_textRepl->GetCount() && _textRepl->GetString(0) == text)
+		return;
+	_textRepl->Insert(text, 0);
 }
