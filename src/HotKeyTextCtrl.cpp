@@ -35,9 +35,8 @@ HotKeyTextCtrl::HotKeyTextCtrl( wxWindow *parent, wxWindowID id, const wxString 
 
 void HotKeyTextCtrl::OnKeyDown( wxKeyEvent& event )
 {
-
 	int keyCode = event.GetKeyCode();
-	if(!_isKeyDown)	_hotKey.Clear();
+	if (!_isKeyDown) _hotKey.Clear();
 	if (event.GetModifiers() != wxMOD_NONE)
 	{
 		if (event.AltDown() && !_isAltDown)

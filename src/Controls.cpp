@@ -1172,6 +1172,8 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 	bool closeAllTabsFound = menu->FindItem(ID_MENUCLOSEALLTABS) != NULL;
 	bool closeExecptSelFound = menu->FindItem(ID_MENUCLOSEEXCEPTSELECTED) != NULL;
 	bool closeSelFound = menu->FindItem(ID_MENUCLOSESELECTED) != NULL;
+	bool showHideLocDesc = menu->FindItem(ID_LOCDESCVISIBLE) != NULL;
+	bool showHideLocActs = menu->FindItem(ID_LOCACTVISIBLE) != NULL;
 	bool res = false;
 
 	if (saveFound || saveAsFound || playQuestFound || exportTxtFound || exportTxt2GamFound ||
@@ -1232,11 +1234,13 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 	if (delTextFound) menu->Enable(DEL_TEXT, res);
 	res = false;
 
-	if (closeAllTabsFound || closeExecptSelFound || closeSelFound)
+	if (closeAllTabsFound || closeExecptSelFound || closeSelFound || showHideLocDesc || showHideLocActs)
 		res = !IsAllLocsClosed();
 	if (closeAllTabsFound) menu->Enable(ID_MENUCLOSEALLTABS, res);
 	if (closeExecptSelFound) menu->Enable(ID_MENUCLOSEEXCEPTSELECTED, res);
 	if (closeSelFound) menu->Enable(ID_MENUCLOSESELECTED, res);
+	if (showHideLocDesc) menu->Enable(ID_LOCDESCVISIBLE, res);
+	if (showHideLocActs) menu->Enable(ID_LOCACTVISIBLE, res);
 }
 
 bool Controls::RenameLocation( size_t locIndex, const wxString &name )
