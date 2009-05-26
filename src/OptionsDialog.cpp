@@ -166,7 +166,7 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 	wxStaticText *stText7 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет меток:"));
 	wxStaticText *stText8 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет комментариев:"));
 	wxStaticText *stText9 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет основного шрифта:"));
-	wxStaticText *stText10 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет фон вкладок локаций:"));
+	wxStaticText *stText10 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет фона вкладок локаций:"));
 	wxStaticText *stText11 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет основного фона:"));
 
 	_colorStatements = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
