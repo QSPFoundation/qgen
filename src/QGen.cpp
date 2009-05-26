@@ -411,6 +411,7 @@ void QGenMainFrame::OnAbout( wxCommandEvent &event )
 	info.SetWebSite(wxT("http://qsp.su"));
 	info.AddDeveloper(wxT("BaxZzZz [bauer_v@mail.ru]"));
 	info.AddDeveloper(wxT("Byte [nporep@mail.ru]"));
+	info.AddDeveloper(wxT("rrock.ru [rrock.ru@gmail.com]"));
 	wxAboutBox(info);
 }
 
