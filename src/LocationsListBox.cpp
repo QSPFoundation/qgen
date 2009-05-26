@@ -56,7 +56,7 @@ void LocationsListBox::Update(bool isFromObservable)
 	Settings *settings = _controls->GetSettings();
 	SetFont(settings->GetFont(SYNTAX_BASE));
 	SetForegroundColour(settings->GetColour(SYNTAX_BASE));
-	SetBackgroundColour(settings->GetBackColour());
+	SetBackgroundColour(settings->GetBaseBackColour());
 	ApplyStatesImageList();
 	if (isFromObservable)
 	{

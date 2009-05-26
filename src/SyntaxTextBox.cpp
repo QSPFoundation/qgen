@@ -90,7 +90,7 @@ SyntaxTextBox::~SyntaxTextBox()
 void SyntaxTextBox::Update(bool isFromObservable)
 {
 	Settings *settings = _controls->GetSettings();
-	wxColour backColour = settings->GetBackColour();
+	wxColour backColour = settings->GetTextBackColour();
 
 	SetCaretForeground((backColour.Blue() << 16 | backColour.Green() << 8 | backColour.Red()) ^ 0xFFFFFF);
 	SetSelBackground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT));

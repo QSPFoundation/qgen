@@ -153,7 +153,7 @@ void LocationsNotebook::OnTabMenu( wxCommandEvent &event )
 void LocationsNotebook::Update(bool isFromObservable)
 {
 	Settings *settings = _controls->GetSettings();
-	m_mgr.GetArtProvider()->SetColour(wxAUI_DOCKART_BACKGROUND_COLOUR, settings->GetBackColour());
+	m_mgr.GetArtProvider()->SetColour(wxAUI_DOCKART_BACKGROUND_COLOUR, settings->GetBaseBackColour());
 	m_mgr.Update();
 
 }

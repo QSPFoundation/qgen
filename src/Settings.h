@@ -74,7 +74,8 @@
 		double		_widthsCoeff2;
 		wxFont		_font[SYNTAX_DUMMY];
 		wxColour	_colour[SYNTAX_DUMMY];
-		wxColour	_backColour;
+		wxColour	_textBackColour;
+		wxColour	_baseBackColour;
 		wxString	_path;
 		wxString	_currentConfigPath;
 		wxString	_currentPlayerPath;
@@ -142,8 +143,10 @@
 		void SetFont(SyntaxType type, const wxFont &font) { _font[type] = font; }
 		wxColour GetColour(SyntaxType type) { return _colour[type]; }
 		void SetColour(SyntaxType type, const wxColour &col) { _colour[type] = col; }
-		wxColour GetBackColour() { return _backColour; }
-		void SetBackColour(const wxColour &col) { _backColour = col; }
+		wxColour GetTextBackColour() { return _textBackColour; }
+		void SetTextBackColour(const wxColour &col) { _textBackColour = col; }
+		wxColour GetBaseBackColour() { return _baseBackColour; }
+		void SetBaseBackColour(const wxColour &col) { _baseBackColour = col; }
 		void SetLeftFramePos(int left) { _leftFramePos = left; }
 		int GetLeftFramePos() { return _leftFramePos; }
 		void SetTopFramePos(int top) { _topFramePos = top; }

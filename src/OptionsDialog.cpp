@@ -29,6 +29,7 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
 	EVT_BUTTON(ID_COLORS_MARKS, OptionsDialog::OnColorSelect)
 	EVT_BUTTON(ID_COLORS_COMMENTS, OptionsDialog::OnColorSelect)
 	EVT_BUTTON(ID_COLORS_BASE_FONT, OptionsDialog::OnColorSelect)
+	EVT_BUTTON(ID_COLORS_TEXT_BACK, OptionsDialog::OnColorSelect)
 	EVT_BUTTON(ID_COLORS_BASE_BACK, OptionsDialog::OnColorSelect)
 	EVT_BUTTON(ID_FONTS_STATEMENTS, OptionsDialog::OnFontSelect)
 	EVT_BUTTON(ID_FONTS_FUNCTIONS, OptionsDialog::OnFontSelect)
@@ -165,7 +166,8 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 	wxStaticText *stText7 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет меток:"));
 	wxStaticText *stText8 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет комментариев:"));
 	wxStaticText *stText9 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет основного шрифта:"));
-	wxStaticText *stText10 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет фона:"));
+	wxStaticText *stText10 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет фон вкладок локаций:"));
+	wxStaticText *stText11 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет основного фона:"));
 
 	_colorStatements = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
 	_colorFunctions = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
@@ -176,6 +178,7 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 	_colorMarks = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
 	_colorComments = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
 	_colorBaseFont = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
+	_colorTextBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
 	_colorBaseBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
 
 	_btnClrsStatements = new wxButton(_colors, ID_COLORS_STATEMENTS, wxT("Выбрать цвет..."));
@@ -187,11 +190,15 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 	_btnClrsMarks = new wxButton(_colors, ID_COLORS_MARKS, wxT("Выбрать цвет..."));
 	_btnClrsComments = new wxButton(_colors, ID_COLORS_COMMENTS, wxT("Выбрать цвет..."));
 	_btnClrsBaseFont = new wxButton(_colors, ID_COLORS_BASE_FONT, wxT("Выбрать цвет..."));
+	_btnClrsTextBack = new wxButton(_colors, ID_COLORS_TEXT_BACK, wxT("Выбрать цвет..."));
 	_btnClrsBaseBack = new wxButton(_colors, ID_COLORS_BASE_BACK, wxT("Выбрать цвет..."));
 
-	topSizerColors->Add(stText10, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerColors->Add(stText11, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorBaseBack, 0, wxALL|wxALIGN_RIGHT, 2);
 	topSizerColors->Add(_btnClrsBaseBack, 0, wxALIGN_CENTER_VERTICAL);
+	topSizerColors->Add(stText10, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerColors->Add(_colorTextBack, 0, wxALL|wxALIGN_RIGHT, 2);
+	topSizerColors->Add(_btnClrsTextBack, 0, wxALIGN_CENTER_VERTICAL);
 	topSizerColors->Add(stText9, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorBaseFont, 0, wxALL|wxALIGN_RIGHT, 2);
 	topSizerColors->Add(_btnClrsBaseFont, 0, wxALIGN_CENTER_VERTICAL);
@@ -489,13 +496,13 @@ void OptionsDialog::OnColorSelect( wxCommandEvent &event )
 			_btnApply->Enable();
 		}
 		break;
-	case ID_COLORS_BASE_BACK:
-		InitColoursDialog(dialog, _colorBaseBack->GetBackgroundColour());
+	case ID_COLORS_TEXT_BACK:
+		InitColoursDialog(dialog, _colorTextBack->GetBackgroundColour());
 		if (dialog.ShowModal() == wxID_OK)
 		{
 			wxColour col = dialog.GetColourData().GetColour();
-			_colorBaseBack->SetBackgroundColour(col);
-			_colorBaseBack->Refresh();
+			_colorTextBack->SetBackgroundColour(col);
+			_colorTextBack->Refresh();
 			_txtFontStatements->SetBackgroundColour(col);
 			_txtFontFunctions->SetBackgroundColour(col);
 			_txtFontSysVariables->SetBackgroundColour(col);
@@ -505,6 +512,17 @@ void OptionsDialog::OnColorSelect( wxCommandEvent &event )
 			_txtFontMarks->SetBackgroundColour(col);
 			_txtFontComments->SetBackgroundColour(col);
 			_txtFontBase->SetBackgroundColour(col);
+			_btnApply->Enable();
+
+		}
+		break;
+	case ID_COLORS_BASE_BACK:
+		InitColoursDialog(dialog, _colorBaseBack->GetBackgroundColour());
+		if (dialog.ShowModal() == wxID_OK)
+		{
+			wxColour col = dialog.GetColourData().GetColour();
+			_colorBaseBack->SetBackgroundColour(col);
+			_colorBaseBack->Refresh();
 			_btnApply->Enable();
 		}
 		break;
@@ -756,7 +774,8 @@ void OptionsDialog::ApplySettings()
 	_settings->SetColour(SYNTAX_LABELS, _colorMarks->GetBackgroundColour());
 	_settings->SetColour(SYNTAX_COMMENTS, _colorComments->GetBackgroundColour());
 	_settings->SetColour(SYNTAX_BASE, _colorBaseFont->GetBackgroundColour());
-	_settings->SetBackColour(_colorBaseBack->GetBackgroundColour());
+	_settings->SetTextBackColour(_colorTextBack->GetBackgroundColour());
+	_settings->SetBaseBackColour(_colorBaseBack->GetBackgroundColour());
 
 	_settings->SetFont(SYNTAX_STATEMENTS, _txtFontStatements->GetFont());
 	_settings->SetFont(SYNTAX_FUNCTIONS, _txtFontFunctions->GetFont());
@@ -824,54 +843,55 @@ void OptionsDialog::InitOptionsDialog()
 	_colorMarks->SetBackgroundColour(_settings->GetColour(SYNTAX_LABELS));
 	_colorComments->SetBackgroundColour(_settings->GetColour(SYNTAX_COMMENTS));
 	_colorBaseFont->SetBackgroundColour(_settings->GetColour(SYNTAX_BASE));
-	_colorBaseBack->SetBackgroundColour(_settings->GetBackColour());
+	_colorTextBack->SetBackgroundColour(_settings->GetTextBackColour());
+	_colorBaseBack->SetBackgroundColour(_settings->GetBaseBackColour());
 
-	wxColour backColour = _settings->GetBackColour();
+	wxColour textBackColour = _settings->GetTextBackColour();
 
 	_txtFontStatements->SetValue(_settings->GetFont(SYNTAX_STATEMENTS).GetFaceName());
 	_txtFontStatements->SetFont(_settings->GetFont(SYNTAX_STATEMENTS));
 	_txtFontStatements->SetForegroundColour(_settings->GetColour(SYNTAX_STATEMENTS));
-	_txtFontStatements->SetBackgroundColour(backColour);
+	_txtFontStatements->SetBackgroundColour(textBackColour);
 
 	_txtFontFunctions->SetValue(_settings->GetFont(SYNTAX_FUNCTIONS).GetFaceName());
 	_txtFontFunctions->SetFont(_settings->GetFont(SYNTAX_FUNCTIONS));
 	_txtFontFunctions->SetForegroundColour(_settings->GetColour(SYNTAX_FUNCTIONS));
-	_txtFontFunctions->SetBackgroundColour(backColour);
+	_txtFontFunctions->SetBackgroundColour(textBackColour);
 
 	_txtFontSysVariables->SetValue(_settings->GetFont(SYNTAX_SYS_VARIABLES).GetFaceName());
 	_txtFontSysVariables->SetFont(_settings->GetFont(SYNTAX_SYS_VARIABLES));
 	_txtFontSysVariables->SetForegroundColour(_settings->GetColour(SYNTAX_SYS_VARIABLES));
-	_txtFontSysVariables->SetBackgroundColour(backColour);
+	_txtFontSysVariables->SetBackgroundColour(textBackColour);
 
 	_txtFontStrings->SetValue(_settings->GetFont(SYNTAX_STRINGS).GetFaceName());
 	_txtFontStrings->SetFont(_settings->GetFont(SYNTAX_STRINGS));
 	_txtFontStrings->SetForegroundColour(_settings->GetColour(SYNTAX_STRINGS));
-	_txtFontStrings->SetBackgroundColour(backColour);
+	_txtFontStrings->SetBackgroundColour(textBackColour);
 
 	_txtFontNumbers->SetValue(_settings->GetFont(SYNTAX_NUMBERS).GetFaceName());
 	_txtFontNumbers->SetFont(_settings->GetFont(SYNTAX_NUMBERS));
 	_txtFontNumbers->SetForegroundColour(_settings->GetColour(SYNTAX_NUMBERS));
-	_txtFontNumbers->SetBackgroundColour(backColour);
+	_txtFontNumbers->SetBackgroundColour(textBackColour);
 
 	_txtFontOptsBrts->SetValue(_settings->GetFont(SYNTAX_OPERATIONS).GetFaceName());
 	_txtFontOptsBrts->SetFont(_settings->GetFont(SYNTAX_OPERATIONS));
 	_txtFontOptsBrts->SetForegroundColour(_settings->GetColour(SYNTAX_OPERATIONS));
-	_txtFontOptsBrts->SetBackgroundColour(backColour);
+	_txtFontOptsBrts->SetBackgroundColour(textBackColour);
 
 	_txtFontMarks->SetValue(_settings->GetFont(SYNTAX_LABELS).GetFaceName());
 	_txtFontMarks->SetFont(_settings->GetFont(SYNTAX_LABELS));
 	_txtFontMarks->SetForegroundColour(_settings->GetColour(SYNTAX_LABELS));
-	_txtFontMarks->SetBackgroundColour(backColour);
+	_txtFontMarks->SetBackgroundColour(textBackColour);
 
 	_txtFontComments->SetValue(_settings->GetFont(SYNTAX_COMMENTS).GetFaceName());
 	_txtFontComments->SetFont(_settings->GetFont(SYNTAX_COMMENTS));
 	_txtFontComments->SetForegroundColour(_settings->GetColour(SYNTAX_COMMENTS));
-	_txtFontComments->SetBackgroundColour(backColour);
+	_txtFontComments->SetBackgroundColour(textBackColour);
 
 	_txtFontBase->SetValue(_settings->GetFont(SYNTAX_BASE).GetFaceName());
 	_txtFontBase->SetFont(_settings->GetFont(SYNTAX_BASE));
 	_txtFontBase->SetForegroundColour(_settings->GetColour(SYNTAX_BASE));
-	_txtFontBase->SetBackgroundColour(backColour);
+	_txtFontBase->SetBackgroundColour(textBackColour);
 
 	_txtNameFirsLoc->Enable(_settings->GetCreateFirstLoc());
 	_spnAutoSaveMin->Enable(_settings->GetAutoSave());

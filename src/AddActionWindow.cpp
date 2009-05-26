@@ -52,7 +52,7 @@ AddActionWindow::~AddActionWindow()
 void AddActionWindow::Update( bool isFromObservable )
 {
 	Settings *settings = _controls->GetSettings();
-	wxColour backColour = settings->GetBackColour();
+	wxColour backColour = settings->GetTextBackColour();
 	SetBackgroundColour(backColour);
 	_bmpAddAction->SetBackgroundColour(backColour);
 	_label->SetForegroundColour((backColour.Blue() << 16 | backColour.Green() << 8 | backColour.Red()) ^ 0xFFFFFF);

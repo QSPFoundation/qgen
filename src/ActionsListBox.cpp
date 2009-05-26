@@ -88,7 +88,7 @@ void ActionsListBox::Update(bool isFromObservable)
 	wxString fontName(_font.GetFaceName());
 	SetStandardFonts(_font.GetPointSize(), fontName, fontName);
 	SetForegroundColour(settings->GetColour(SYNTAX_BASE));
-	SetBackgroundColour(settings->GetBackColour());
+	SetBackgroundColour(settings->GetTextBackColour());
 	RefreshAll();
 }
 

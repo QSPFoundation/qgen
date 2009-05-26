@@ -44,7 +44,7 @@ void ImagePathTextBox::Update(bool isFromObservable)
 	Settings *settings = _controls->GetSettings();
 	SetFont(settings->GetFont(SYNTAX_BASE));
 	SetForegroundColour(settings->GetColour(SYNTAX_BASE));
-	SetBackgroundColour(settings->GetBackColour());
+	SetBackgroundColour(settings->GetTextBackColour());
 	ToggleWindowStyle(wxTE_MULTILINE);
 	SetInitialSize(wxSize(1, GetBestSize().GetHeight()));
 	ToggleWindowStyle(wxTE_MULTILINE);

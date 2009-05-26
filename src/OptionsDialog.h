@@ -41,6 +41,7 @@
 		ID_COLORS_MARKS,
 		ID_COLORS_COMMENTS,
 		ID_COLORS_BASE_FONT,
+		ID_COLORS_TEXT_BACK,
 		ID_COLORS_BASE_BACK,
 		ID_FONTS_STATEMENTS,
 		ID_FONTS_FUNCTIONS,
@@ -110,6 +111,7 @@
 		wxWindow	*_colorMarks;
 		wxWindow	*_colorComments;
 		wxWindow	*_colorBaseFont;
+		wxWindow	*_colorTextBack;
 		wxWindow	*_colorBaseBack;
 
 		wxButton	*_btnClrsStatements;
@@ -121,6 +123,7 @@
 		wxButton	*_btnClrsMarks;
 		wxButton	*_btnClrsComments;
 		wxButton	*_btnClrsBaseFont;
+		wxButton	*_btnClrsTextBack;
 		wxButton	*_btnClrsBaseBack;
 
 		wxButton	*_btnFontsStatements;
