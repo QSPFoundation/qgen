@@ -16,8 +16,6 @@
 */
 
 #include "LocationsNoteBook.h"
-#include <wx/msw/private.h>
-#include <CommCtrl.h>
 
 IMPLEMENT_CLASS(LocationsNotebook, wxAuiNotebook)
 
