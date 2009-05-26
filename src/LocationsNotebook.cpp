@@ -16,6 +16,8 @@
 */
 
 #include "LocationsNoteBook.h"
+#include <wx/msw/private.h>
+#include <CommCtrl.h>
 
 IMPLEMENT_CLASS(LocationsNotebook, wxAuiNotebook)
 
@@ -32,6 +34,13 @@ LocationsNotebook::LocationsNotebook(wxWindow* parent, wxWindowID id, IControls 
 	wxAuiNotebook( parent, id, wxDefaultPosition, wxDefaultSize, style )
 {
 	_controls = controls;
+	Update();
+	_controls->GetSettings()->AddObserver(this);
+}
+
+LocationsNotebook::~LocationsNotebook()
+{
+	_controls->GetSettings()->RemoveObserver(this);
 }
 
 void LocationsNotebook::NotifyClosePage( int index )
@@ -141,4 +150,12 @@ void LocationsNotebook::OnTabMenu( wxCommandEvent &event )
 		break;
 	}
 	DeleteAllPages(type, selectedTab);
+}
+
+void LocationsNotebook::Update(bool isFromObservable)
+{
+	Settings *settings = _controls->GetSettings();
+	m_mgr.GetArtProvider()->SetColour(wxAUI_DOCKART_BACKGROUND_COLOUR, settings->GetBackColour());
+	m_mgr.Update();
+
 }

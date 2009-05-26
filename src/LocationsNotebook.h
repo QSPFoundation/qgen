@@ -29,7 +29,7 @@
 		CLOSE_SELECTED
 	};
 
-	class LocationsNotebook : public wxAuiNotebook
+	class LocationsNotebook : public wxAuiNotebook, public IObserver
 	{
 		DECLARE_CLASS(LocationsNotebook)
 		DECLARE_EVENT_TABLE()
@@ -48,6 +48,8 @@
 		LocationsNotebook(wxWindow *parent, wxWindowID id, IControls *controls,
 						  long style = wxAUI_NB_DEFAULT_STYLE|wxAUI_NB_WINDOWLIST_BUTTON);
 
+		~LocationsNotebook();
+
 		LocationPage *GetSelectedPage();
 		LocationPage *GetPageByLocName(const wxString &name);
 		int FindPageIndex(const wxString& namePage);
@@ -56,6 +58,7 @@
 		bool DeleteAllPages(CloseTypePage closeType, int selIndex);
 		void LoadOpenedPages();
 		void SaveOpenedPages();
+		void Update(bool isFromObservable = false);
 	};
 
 #endif
