@@ -130,3 +130,8 @@ void ActionCode::ReplaceCodeString( long start, long end, const wxString & str )
 {
 	_actCodeTxt->Replace(start, end, str);
 }
+
+void ActionCode::SetFocusOnActionCode()
+{
+	_actCodeTxt->SetFocus();
+}

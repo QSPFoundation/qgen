@@ -58,6 +58,7 @@
 		void SelectActionCodeString( long startPos, long lastPos );
 		void ReplacePicturePathString(long start, long end, const wxString & str);
 		void ReplaceActionCodeString(long start, long end, const wxString & str);
+		void SetFocusOnActionCode();
 	};
 
 #endif

@@ -171,7 +171,11 @@ bool Controls::AddActionOnSelectedLoc()
 				if (_container->AddAction(locIndex, name) >= 0)
 				{
 					size_t actIndex = page->AddAction(name);
-					if (_settings->GetOpenNewAct()) page->SelectAction(actIndex);
+					if (_settings->GetOpenNewAct())
+					{
+						page->SelectAction(actIndex);
+						page->SetFocusOnActionCode();
+					}
 					UpdateLocActions(locIndex);
 					return true;
 				}

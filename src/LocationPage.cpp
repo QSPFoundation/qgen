@@ -222,3 +222,8 @@ void LocationPage::RefreshActions()
 {
 	_locActs->RefreshActions();
 }
+
+void LocationPage::SetFocusOnActionCode()
+{
+	_locActs->SetFocusOnActionCode();
+}

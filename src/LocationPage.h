@@ -68,6 +68,7 @@
 		void SelectLocDescString( long startPos, long lastPos );
 		void SelectLocCodeString( long startPos, long lastPos );
 		void SelectAction( size_t actIndex );
+		void SetFocusOnActionCode();
 		void SelectPicturePathString( long startPos, long lastPos );
 		void SelectActionCodeString( long startPos, long lastPos);
 

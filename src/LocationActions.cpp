@@ -148,3 +148,8 @@ void LocationActions::RefreshActions()
 {
 	_actList->RefreshActions();
 }
+
+void LocationActions::SetFocusOnActionCode()
+{
+	_actCode->SetFocusOnActionCode();
+}
