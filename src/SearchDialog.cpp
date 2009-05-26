@@ -59,8 +59,8 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 	_btnReplace = new wxButton(this, FIND_REPL, wxT("Заменить"));
 	_btnClose = new wxButton(this, wxID_CANCEL, wxT("Закрыть"));
 
-	rightSizer->Add(_btnSearchAgain, 1, wxALL|wxGROW, 1);
 	rightSizer->Add(_btnNextSearch, 1, wxALL|wxGROW, 1);
+	rightSizer->Add(_btnSearchAgain, 1, wxALL|wxGROW, 1);
 	rightSizer->Add(_btnReplace, 1, wxALL|wxGROW, 1);
 	rightSizer->Add(_btnSkipLoc, 1, wxALL|wxGROW, 1);
 	rightSizer->Add(_btnClose, 1, wxALL|wxGROW, 1);
@@ -74,6 +74,8 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 	int maxHeight = GetClientSize().GetHeight();
 	SetMaxClientSize(wxSize(2048, maxHeight));
 	SetClientSize(350, maxHeight);
+
+	_btnNextSearch->SetDefault();
 }
 
 void SearchDialog::OnFindNext( wxCommandEvent &event )
