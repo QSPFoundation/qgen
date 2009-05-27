@@ -156,6 +156,12 @@ bool Controls::AddActionOnSelectedLoc()
 
 	wxString name;
 	size_t locIndex = page->GetLocationIndex();
+	if (_container->GetActionsCount(locIndex) >= QGEN_MAXACTIONS)
+	{
+		ShowMessage( QGEN_MSG_MAXACTIONSCOUNTREACHED );
+		return false;
+	}
+
 	while (1)
 	{
 		wxTextEntryDialog dlgEntry(_mainFrame, wxT("Введите название действия:"),
@@ -274,6 +280,7 @@ wxString Controls::GetMessageDesc( long errorNum )
 		case QGEN_MSG_NOTFOUND: str = wxT("Ничего не найдено!"); break;
 		case QGEN_MSG_SEARCHENDED: str = wxT("Указанный текст больше не найден."); break;
 		case QGEN_MSG_WRONGFORMAT: str = wxT("Неверный формат!"); break;
+		case QGEN_MSG_MAXACTIONSCOUNTREACHED: str = wxString::Format(wxT("Вы не можете добавить на локацию более чем %i действий."), QGEN_MAXACTIONS); break;
 		default: str = wxT("Неизвестная ошибка!"); break;
 	}
 	return str;
