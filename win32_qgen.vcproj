@@ -194,7 +194,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="D:\programming\wxWidgets\include;D:\programming\wxWidgets\lib\vc_lib\mswud"
 				PreprocessorDefinitions="_WINDOWS;WIN32;_UNICODE;_DEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -219,6 +219,7 @@
 				AdditionalDependencies="rpcrt4.lib wxmsw29ud_core.lib wxbase29ud.lib wxmsw29ud_html.lib wxmsw29ud_adv.lib wxmsw29ud_aui.lib wxmsw29ud_stc.lib wxscintillad.lib wxzlibd.lib wxtiffd.lib wxjpegd.lib wxpngd.lib comctl32.lib"
 				OutputFile="$(OutDir)/qgen.exe"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="D:\programming\wxWidgets\lib\vc_lib"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(OutDir)/qgen.pdb"
 				SubSystem="2"
@@ -274,7 +275,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="D:\programming\wxWidgets\include;D:\programming\wxWidgets\lib\vc_lib\mswud"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_UNICODE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -294,6 +295,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="rpcrt4.lib wxmsw29u_core.lib wxbase29u.lib wxmsw29u_html.lib wxmsw29u_adv.lib wxmsw29u_aui.lib wxmsw29u_stc.lib wxscintilla.lib wxzlib.lib wxtiff.lib wxjpeg.lib wxpng.lib comctl32.lib"
 				OutputFile="$(OutDir)/qgen.exe"
+				AdditionalLibraryDirectories="D:\programming\wxWidgets\lib\vc_lib"
 				ProgramDatabaseFile="$(OutDir)/qgen.pdb"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
@@ -340,7 +342,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\AddActionWindow.cpp"
+				RelativePath=".\src\ActionsPanel.cpp"
 				>
 			</File>
 			<File
@@ -442,7 +444,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\AddActionWindow.h"
+				RelativePath=".\src\ActionsPanel.h"
 				>
 			</File>
 			<File
