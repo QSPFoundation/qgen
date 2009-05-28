@@ -551,7 +551,7 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\TODO.txt"
+			RelativePath=".\changelog.txt"
 			>
 		</File>
 	</Files>
