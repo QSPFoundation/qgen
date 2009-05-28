@@ -27,23 +27,20 @@ LocationActions::LocationActions(wxWindow *owner, ILocationPage *locPage, IContr
 	_splitterv_down->Hide();
 
 	_actCode = new ActionCode( _splitterv_down, _locPage, _controls );
-	_actList = new ActionsListBox( _splitterv_down, wxID_ANY, _locPage, _actCode, _controls );
-	_addActWin = new AddActionWindow(this, wxID_ANY, _controls);
-	_addActWin->Hide();
-
+	_actPanel = new ActionsPanel( _splitterv_down, _locPage, _actCode, _controls );
+	
 	wxSizer *sizerDown = new wxBoxSizer( wxVERTICAL );
 	_splitterv_down->SetMinimumPaneSize(1);
-	_splitterv_down->SplitVertically(_actList, _actCode );
+	_splitterv_down->SplitVertically( _actPanel, _actCode );
 
 	sizerDown->Add( new wxStaticText( this, wxID_ANY, wxT("Базовые действия:"),
 					wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE ), 0, wxALL|wxGROW );
-	sizerDown->Add( _addActWin, 1, wxALL|wxGROW );
 	sizerDown->Add( _splitterv_down, 1, wxALL|wxGROW );
 
 	SetSizerAndFit( sizerDown );
 	SetAutoLayout( true );
 
-	_splitterv_down->Show();
+	_splitterv_down->Show( true );
 
 	Update();
 	_controls->GetSettings()->AddObserver(this);
@@ -62,61 +59,49 @@ void LocationActions::Update(bool isFromObservable)
 
 void LocationActions::SaveAction()
 {
-	_actList->SaveActionData();
-}
-
-void LocationActions::ShowActions()
-{
-	bool isAnyAction = (_actList->GetSelection() >= 0);
-	_addActWin->Show(!isAnyAction);
-	_splitterv_down->Show(isAnyAction);
-	GetSizer()->Layout();
+	_actPanel->GetActionsListBox()->SaveActionData();
 }
 
 void LocationActions::LoadAllActions()
 {
-	_actList->LoadAllActions();
-	ShowActions();
+	_actPanel->GetActionsListBox()->LoadAllActions();
 }
 
 void LocationActions::Clear()
 {
-	_actList->DeleteAllActions();
-	ShowActions();
+	_actPanel->GetActionsListBox()->DeleteAllActions();
 }
 
 size_t LocationActions::AddActionToList( const wxString& name )
 {
-	size_t idx = _actList->AddAction(name);
-	ShowActions();
+	size_t idx = _actPanel->GetActionsListBox()->AddAction(name);
 	return idx;
 }
 
 void LocationActions::DeleteActionFromList( size_t actIndex )
 {
-	_actList->DeleteAction(actIndex);
-	ShowActions();
+	_actPanel->GetActionsListBox()->DeleteAction(actIndex);
 }
 
 long LocationActions::GetSelectedAction()
 {
-	return _actList->GetSelection();
+	return _actPanel->GetActionsListBox()->GetSelection();
 }
 
 void LocationActions::RenameActionInList( size_t index, const wxString& name )
 {
-	_actList->SetString(index, name);
+	_actPanel->GetActionsListBox()->SetString(index, name);
 }
 
 bool LocationActions::IsActionsListEmpty()
 {
-	return !_actList->GetCount();
+	return !_actPanel->GetActionsListBox()->GetCount();
 }
 
 void LocationActions::SelectActionInList( size_t actIndex )
 {
-	_actList->SetFocus();
-	_actList->Select( actIndex );
+	_actPanel->GetActionsListBox()->SetFocus();
+	_actPanel->GetActionsListBox()->Select( actIndex );
 }
 
 void LocationActions::SelectPicturePathString( long startPos, long lastPos )
@@ -141,12 +126,12 @@ void LocationActions::ReplaceActionCodeString( long start, long end, const wxStr
 
 void LocationActions::MoveActionTo( size_t actIndex, size_t moveTo )
 {
-	_actList->MoveItemTo(actIndex, moveTo);
+	_actPanel->GetActionsListBox()->MoveItemTo(actIndex, moveTo);
 }
 
 void LocationActions::RefreshActions()
 {
-	_actList->RefreshActions();
+	_actPanel->GetActionsListBox()->RefreshActions();
 }
 
 void LocationActions::SetFocusOnActionCode()

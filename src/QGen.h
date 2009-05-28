@@ -51,9 +51,6 @@
 	#include "bitmaps/logo_big.xpm"
 	#include "bitmaps/undo_text.xpm"
 	#include "bitmaps/redo_text.xpm"
-	#include "bitmaps/new_action.xpm"
-	#include "bitmaps/rename_action.xpm"
-	#include "bitmaps/delete_action.xpm"
 	
 	#include "bitmaps/open_file_menu.xpm"
 	#include "bitmaps/save_file_menu.xpm"

@@ -337,9 +337,6 @@ void QGenMainFrame::CreateToolBar()
 	bitmaps[12] = wxBitmap(options_xpm);
 	bitmaps[13] = wxBitmap(undo_text_xpm);
 	bitmaps[14] = wxBitmap(redo_text_xpm);
-	bitmaps[15] = wxBitmap(new_action_xpm);
-	bitmaps[16] = wxBitmap(rename_action_xpm);
-	bitmaps[17] = wxBitmap(delete_action_xpm);
 
 	_toolBar = new wxAuiToolBar(this, ID_TOOLBAR);
 
@@ -347,10 +344,6 @@ void QGenMainFrame::CreateToolBar()
 	_toolBar->AddTool(LOC_CREAT, wxT("New location..."), bitmaps[5], wxT("Создать локацию... (F7)"));
 	_toolBar->AddTool(LOC_RENAME, wxT("Rename location..."), bitmaps[6], wxT("Переименовать выделенную локацию... (F6)"));
 	_toolBar->AddTool(LOC_DEL, wxT("Delete location"), bitmaps[7], wxT("Удалить выделенную локацию (F8)"));
-	_toolBar->AddSeparator();
-	_toolBar->AddTool(CREATE_ACTION, wxT("New action..."), bitmaps[15], wxT("Создать действие... (Alt+F7)"));
-	_toolBar->AddTool(RENAME_ACTION, wxT("Rename action..."), bitmaps[16], wxT("Переименовать выделенное действие... (Alt+F6)"));
-	_toolBar->AddTool(DEL_ACTION, wxT("Delete action"), bitmaps[17], wxT("Удалить выделенное действие (Alt+F8)"));
 	_toolBar->AddSeparator();
 	_toolBar->AddTool(OPEN_QUEST, wxT("Open..."), bitmaps[4], wxT("Открыть игру... (Ctrl+O)"));
 	_toolBar->AddTool(SAVE_QUEST, wxT("Save"), bitmaps[3], wxT("Сохранить игру (Ctrl+S)"));
@@ -368,7 +361,6 @@ void QGenMainFrame::CreateToolBar()
 	_toolBar->AddSeparator();
 	_toolBar->AddTool(UTIL_FIND, wxT("Search..."), bitmaps[11], wxT("Поиск / замена... (Ctrl+F)"));
 	_toolBar->AddTool(UTIL_OPTIONS, wxT("Options..."), bitmaps[12], wxT("Настройки... (Ctrl+P)"));
-	_toolBar->AddSeparator();
 	_toolBar->Realize();
 }
 

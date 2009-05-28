@@ -42,6 +42,8 @@ class LocationPage;
 		virtual wxString SelectPicturePath() = 0;
 
 		virtual bool AddActionOnSelectedLoc() = 0;
+		virtual bool DeleteSelectedAction() = 0;
+		virtual bool RenameSelectedAction() = 0;
 		virtual bool RenameAction(size_t locIndex, size_t actIndex, const wxString &name) = 0;
 
 		virtual void ShowMessage(long errorNum) = 0;

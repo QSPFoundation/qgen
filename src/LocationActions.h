@@ -22,8 +22,7 @@
 	#include <wx/splitter.h>
 	#include "ILocationPage.h"
 	#include "IControls.h"
-	#include "AddActionWindow.h"
-	#include "ActionsListBox.h"
+	#include "ActionsPanel.h"
 	#include "ActionCode.h"
 
 	class LocationActions : public wxPanel, public IObserver
@@ -32,8 +31,7 @@
 	private:
 		ILocationPage		*_locPage;
 		IControls			*_controls;
-		AddActionWindow		*_addActWin;
-		ActionsListBox		*_actList;
+		ActionsPanel		*_actPanel;
 		ActionCode			*_actCode;
 		wxSplitterWindow	*_splitterv_down;
 
