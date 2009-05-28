@@ -26,6 +26,7 @@ BEGIN_EVENT_TABLE(LocationsNotebook, wxAuiNotebook)
 	EVT_MENU(ID_MENUCLOSEALLTABS, LocationsNotebook::OnTabMenu)
 	EVT_MENU(ID_MENUCLOSEEXCEPTSELECTED, LocationsNotebook::OnTabMenu)
 	EVT_MENU(ID_MENUCLOSESELECTED, LocationsNotebook::OnTabMenu)
+	EVT_NAVIGATION_KEY(LocationsNotebook::OnNavigationKeyNotebook)
 END_EVENT_TABLE()
 
 LocationsNotebook::LocationsNotebook(wxWindow* parent, wxWindowID id, IControls *controls, long style) :
@@ -150,10 +151,40 @@ void LocationsNotebook::OnTabMenu( wxCommandEvent &event )
 	DeleteAllPages(type, selectedTab);
 }
 
+void LocationsNotebook::OnNavigationKeyNotebook( wxNavigationKeyEvent &event )
+{
+	if (event.IsWindowChange())
+		AdvanceSelection(event.GetDirection());
+	else
+		wxAuiNotebook::OnNavigationKeyNotebook(event);
+}
+
 void LocationsNotebook::Update(bool isFromObservable)
 {
 	Settings *settings = _controls->GetSettings();
 	m_mgr.GetArtProvider()->SetColour(wxAUI_DOCKART_BACKGROUND_COLOUR, settings->GetBaseBackColour());
 	m_mgr.Update();
+}
 
+void LocationsNotebook::AdvanceSelection( bool forward )
+{
+	int lastIndex = GetPageCount() - 1;
+	if (lastIndex <= 0)
+		return;
+	int currentSelection = GetSelection();
+	if (forward)
+	{
+		if (currentSelection >= 0 && currentSelection < lastIndex)
+			++currentSelection;
+		else
+			currentSelection = 0;
+	}
+	else
+	{
+		if (currentSelection > 0)
+			--currentSelection;
+		else
+			currentSelection = lastIndex;
+	}
+	SetSelection(currentSelection);
 }

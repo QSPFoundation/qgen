@@ -42,6 +42,7 @@
 		void OnPageChanged(wxAuiNotebookEvent &event);
 		void OnRightUpClick(wxAuiNotebookEvent &event);
 		void OnTabMenu(wxCommandEvent &event);
+		void OnNavigationKeyNotebook(wxNavigationKeyEvent &event);
 
 		void NotifyClosePage(int index);
 	public:
@@ -59,6 +60,7 @@
 		void LoadOpenedPages();
 		void SaveOpenedPages();
 		void Update(bool isFromObservable = false);
+		void AdvanceSelection(bool forward = true);
 	};
 
 #endif
