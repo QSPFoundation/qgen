@@ -17,7 +17,7 @@ ActionsPanel::ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode 
 	bitmaps[1] = wxBitmap(rename_action_xpm);
 	bitmaps[2] = wxBitmap(delete_action_xpm);
 
-	_actList = new ActionsListBox( owner, wxID_ANY, locPage, actCode, controls );
+	_actList = new ActionsListBox( this, wxID_ANY, locPage, actCode, controls );
 	wxSizer *sizer2 = new wxBoxSizer ( wxHORIZONTAL );
 
 	_addActButton = new wxBitmapButton( this, ID_ADD_ACTION, bitmaps[0], wxDefaultPosition, wxSize(24,24) );
@@ -33,24 +33,23 @@ ActionsPanel::ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode 
 	sizer1->Add( sizer2 );
 	sizer1->Add( _actList, 1, wxALL|wxGROW );
 
-	bool isAnyAction = (_actList->GetSelection() < 0);
-	_renActButton->Enable(!isAnyAction);
-	_delActButton->Enable(!isAnyAction);
+	Update( false );
 
 	SetSizerAndFit( sizer1 );
 	SetAutoLayout( true );
+
+	_controls->GetSettings()->AddObserver(this);
 }
 
 ActionsPanel::~ActionsPanel(void)
 {
+	_controls->GetSettings()->RemoveObserver(this);
 }
 
 void ActionsPanel::OnAddAction( wxCommandEvent &event )
 {
-	_controls->AddActionOnSelectedLoc();
-	bool isAnyAction = (_actList->GetSelection() < 0);
-	_renActButton->Enable(!isAnyAction);
-	_delActButton->Enable(!isAnyAction);
+	if ( _controls->AddActionOnSelectedLoc() )
+		Update( false );
 }
 
 void ActionsPanel::OnRenAction( wxCommandEvent &event )
@@ -60,7 +59,12 @@ void ActionsPanel::OnRenAction( wxCommandEvent &event )
 
 void ActionsPanel::OnDelAction( wxCommandEvent &event )
 {
-	_controls->DeleteSelectedAction();
+	if ( _controls->DeleteSelectedAction() )
+		Update( false );
+}
+
+void ActionsPanel::Update( bool isFromObservable )
+{
 	bool isAnyAction = (_actList->GetSelection() < 0);
 	_renActButton->Enable(!isAnyAction);
 	_delActButton->Enable(!isAnyAction);

@@ -15,7 +15,7 @@ enum
 	ID_DEL_ACTION
 };
 
-class ActionsPanel : public wxPanel
+class ActionsPanel : public wxPanel, public IObserver
 {
 	DECLARE_CLASS(ActionsPanel)
 	DECLARE_EVENT_TABLE()
@@ -37,4 +37,6 @@ public:
 	~ActionsPanel(void);
 
 	ActionsListBox *GetActionsListBox() { return _actList; };
+
+	void Update( bool isFromObservable );
 };
