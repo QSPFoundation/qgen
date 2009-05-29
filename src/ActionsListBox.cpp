@@ -139,6 +139,7 @@ void ActionsListBox::OnRightClick(wxMouseEvent & event)
 	menu.Append(DEL_ACTION, wxT("Удалить"));
 	menu.AppendSeparator();
 	menu.Append(DEL_ALL_ACTIONS, wxT("Удалить все"));
+	_controls->UpdateMenuItems(&menu);
 	PopupMenu(&menu);
 }
 
