@@ -205,6 +205,7 @@ bool Controls::DeleteSelectedAction()
 
 	size_t locIndex = page->GetLocationIndex();
 	long actIndex = page->GetSelectedAction();
+	if (actIndex < 0) return false;
 
 	_container->DeleteAction(locIndex, actIndex);
 	page->DeleteAction(actIndex);
@@ -242,8 +243,9 @@ bool Controls::RenameSelectedAction()
 
 	size_t locIndex = page->GetLocationIndex();
 	long actIndex = page->GetSelectedAction();
-	wxString name(_container->GetActionName(locIndex, actIndex));
+	if (actIndex < 0) return false;
 
+	wxString name(_container->GetActionName(locIndex, actIndex));
 	while (1)
 	{
 		wxTextEntryDialog dlgEntry(_mainFrame, wxT("Введите новое название действия:"),
