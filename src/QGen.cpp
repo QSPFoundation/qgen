@@ -614,20 +614,17 @@ void QGenMainFrame::OnSortLocations( wxCommandEvent &event )
 
 void QGenMainFrame::OnCreateAction( wxCommandEvent &event )
 {
-	if ( _controls->AddActionOnSelectedLoc() )
-		_controls->GetSettings()->NotifyAll();
+	_controls->AddActionOnSelectedLoc();
 }
 
 void QGenMainFrame::OnDeleteAction( wxCommandEvent &event )
 {
-	if ( _controls->DeleteSelectedAction() )
-		_controls->GetSettings()->NotifyAll();
+	_controls->DeleteSelectedAction();
 }
 
 void QGenMainFrame::OnDeleteAllActions( wxCommandEvent &event )
 {
-	if ( _controls->DeleteAllActions() )
-		_controls->GetSettings()->NotifyAll();
+	_controls->DeleteAllActions();
 }
 
 void QGenMainFrame::OnRenameAction( wxCommandEvent &event )
