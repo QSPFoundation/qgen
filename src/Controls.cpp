@@ -89,6 +89,8 @@ int Controls::AddLocation(const wxString &name)
 			locName = dlgEntry.GetValue().Trim().Trim(false);
 			if (locName.IsEmpty())
 				ShowMessage( QGEN_MSG_EMPTYDATA );
+			else if ((int)locName.Len()>QGEN_MAXLOCATIONNAMELEN)
+				ShowMessage( QGEN_MSG_TOOLONGLOCATIONNAME );
 			else
 			{
 				int index = AddLocationByName(locName);
@@ -116,6 +118,8 @@ bool Controls::RenameSelectedLocation()
 			name = dlgEntry.GetValue().Trim().Trim(false);
 			if (name.IsEmpty())
 				ShowMessage( QGEN_MSG_EMPTYDATA );
+			else if ((int)name.Len()>QGEN_MAXLOCATIONNAMELEN)
+				ShowMessage( QGEN_MSG_TOOLONGLOCATIONNAME );
 			else
 			{
 				if (RenameLocation(locIndex, name)) return true;
@@ -281,6 +285,7 @@ wxString Controls::GetMessageDesc( long errorNum )
 		case QGEN_MSG_SEARCHENDED: str = wxT("Указанный текст больше не найден."); break;
 		case QGEN_MSG_WRONGFORMAT: str = wxT("Неверный формат!"); break;
 		case QGEN_MSG_MAXACTIONSCOUNTREACHED: str = wxString::Format(wxT("Вы не можете добавить на локацию более чем %i действий."), QGEN_MAXACTIONS); break;
+		case QGEN_MSG_TOOLONGLOCATIONNAME: str = wxString::Format(wxT("Имя локации не может содержать более %i символов."), QGEN_MAXLOCATIONNAMELEN); break;
 		default: str = wxT("Неизвестная ошибка!"); break;
 	}
 	return str;
