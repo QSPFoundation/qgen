@@ -176,6 +176,8 @@ bool Controls::AddActionOnSelectedLoc()
 			name = dlgEntry.GetValue();
 			if (name.IsEmpty())
 				ShowMessage( QGEN_MSG_EMPTYDATA );
+			else if ((int)name.Len()>QGEN_MAXACTIONNAMELEN)
+				ShowMessage( QGEN_MSG_TOOLONGACTIONNAME );
 			else
 			{
 				if (_container->AddAction(locIndex, name) >= 0)
@@ -256,6 +258,8 @@ bool Controls::RenameSelectedAction()
 			name = dlgEntry.GetValue();
 			if (name.IsEmpty())
 				ShowMessage( QGEN_MSG_EMPTYDATA );
+			else if ((int)name.Len()>QGEN_MAXACTIONNAMELEN)
+				ShowMessage( QGEN_MSG_TOOLONGACTIONNAME );
 			else
 			{
 				if (RenameAction(locIndex, actIndex, name)) return true;
@@ -287,7 +291,8 @@ wxString Controls::GetMessageDesc( long errorNum )
 		case QGEN_MSG_SEARCHENDED: str = wxT("Указанный текст больше не найден."); break;
 		case QGEN_MSG_WRONGFORMAT: str = wxT("Неверный формат!"); break;
 		case QGEN_MSG_MAXACTIONSCOUNTREACHED: str = wxString::Format(wxT("Вы не можете добавить на локацию более чем %i действий."), QGEN_MAXACTIONS); break;
-		case QGEN_MSG_TOOLONGLOCATIONNAME: str = wxString::Format(wxT("Имя локации не может содержать более %i символов."), QGEN_MAXLOCATIONNAMELEN); break;
+		case QGEN_MSG_TOOLONGLOCATIONNAME: str = wxString::Format(wxT("Название локации не может содержать более %i символов."), QGEN_MAXLOCATIONNAMELEN); break;
+		case QGEN_MSG_TOOLONGACTIONNAME: str = wxString::Format(wxT("Название действия не может содержать более %i символов."), QGEN_MAXACTIONNAMELEN); break;
 		default: str = wxT("Неизвестная ошибка!"); break;
 	}
 	return str;
