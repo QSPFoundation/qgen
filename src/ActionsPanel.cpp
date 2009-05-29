@@ -50,23 +50,13 @@ ActionsPanel::ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode 
 	sizer1->Add( sizer2 );
 	sizer1->Add( _actList, 1, wxALL|wxGROW );
 
-	Update( false );
-
 	SetSizerAndFit( sizer1 );
 	SetAutoLayout( true );
-
-	_controls->GetSettings()->AddObserver(this);
-}
-
-ActionsPanel::~ActionsPanel(void)
-{
-	_controls->GetSettings()->RemoveObserver(this);
 }
 
 void ActionsPanel::OnAddAction( wxCommandEvent &event )
 {
-	if ( _controls->AddActionOnSelectedLoc() )
-		Update( false );
+	_controls->AddActionOnSelectedLoc();
 }
 
 void ActionsPanel::OnRenAction( wxCommandEvent &event )
@@ -76,13 +66,12 @@ void ActionsPanel::OnRenAction( wxCommandEvent &event )
 
 void ActionsPanel::OnDelAction( wxCommandEvent &event )
 {
-	if ( _controls->DeleteSelectedAction() )
-		Update( false );
+	_controls->DeleteSelectedAction();
 }
 
-void ActionsPanel::Update( bool isFromObservable )
+void ActionsPanel::EnableButtons()
 {
-	bool isAnyAction = (_actList->GetSelection() < 0);
-	_renActButton->Enable(!isAnyAction);
-	_delActButton->Enable(!isAnyAction);
+	bool isAnyAction = (_actList->GetCount() > 0);
+	_renActButton->Enable(isAnyAction);
+	_delActButton->Enable(isAnyAction);
 }

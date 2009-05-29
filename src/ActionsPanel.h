@@ -34,7 +34,7 @@ enum
 	ID_DEL_ACTION
 };
 
-class ActionsPanel : public wxPanel, public IObserver
+class ActionsPanel : public wxPanel
 {
 	DECLARE_CLASS(ActionsPanel)
 	DECLARE_EVENT_TABLE()
@@ -46,18 +46,15 @@ private:
 	wxBitmapButton		*_delActButton;
 	IControls			*_controls;
 
-
 	void OnAddAction( wxCommandEvent &event );
 	void OnRenAction( wxCommandEvent &event );
 	void OnDelAction( wxCommandEvent &event );
 
 public:
 	ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode *_actCode, IControls *controls );
-	~ActionsPanel(void);
 
+	void EnableButtons();
 	ActionsListBox *GetActionsListBox() { return _actList; };
-
-	void Update( bool isFromObservable );
 };
 
 #endif // _ACTION_PANEL_H

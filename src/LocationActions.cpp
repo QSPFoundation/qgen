@@ -24,7 +24,6 @@ LocationActions::LocationActions(wxWindow *owner, ILocationPage *locPage, IContr
 	_locPage = locPage;
 	_controls = controls;
 	_splitterv_down = new wxSplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3DSASH );
-	_splitterv_down->Hide();
 
 	_actCode = new ActionCode( _splitterv_down, _locPage, _controls );
 	_actPanel = new ActionsPanel( _splitterv_down, _locPage, _actCode, _controls );
@@ -39,8 +38,6 @@ LocationActions::LocationActions(wxWindow *owner, ILocationPage *locPage, IContr
 
 	SetSizerAndFit( sizerDown );
 	SetAutoLayout( true );
-
-	_splitterv_down->Show( true );
 
 	Update();
 	_controls->GetSettings()->AddObserver(this);
@@ -65,22 +62,26 @@ void LocationActions::SaveAction()
 void LocationActions::LoadAllActions()
 {
 	_actPanel->GetActionsListBox()->LoadAllActions();
+	_actPanel->EnableButtons();
 }
 
 void LocationActions::Clear()
 {
 	_actPanel->GetActionsListBox()->DeleteAllActions();
+	_actPanel->EnableButtons();
 }
 
 size_t LocationActions::AddActionToList( const wxString& name )
 {
-	size_t idx = _actPanel->GetActionsListBox()->AddAction(name);
-	return idx;
+	size_t index = _actPanel->GetActionsListBox()->AddAction(name);
+	_actPanel->EnableButtons();
+	return index;
 }
 
 void LocationActions::DeleteActionFromList( size_t actIndex )
 {
 	_actPanel->GetActionsListBox()->DeleteAction(actIndex);
+	_actPanel->EnableButtons();
 }
 
 long LocationActions::GetSelectedAction()
