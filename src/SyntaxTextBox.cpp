@@ -363,7 +363,9 @@ void SyntaxTextBox::Expand(int &line, bool doExpand, bool force, int visLevels, 
 void SyntaxTextBox::ExpandCollapseAll( bool isExpanded )
 {
 	int linesCount = GetLineCount();
+	SetProperty(wxT("fold.all"), wxT("1"));
 	wxStyledTextCtrl::Update();
+	SetProperty(wxT("fold.all"), wxT("0"));
 	Freeze();
 	for (int line = 0; line < linesCount; line++)
 	{
