@@ -306,7 +306,10 @@ LocationPage *Controls::ShowLocation(const wxString & locName)
 		_locNotebook->SetSelection(indexPage);
 		return (LocationPage *)_locNotebook->GetPage(indexPage);
 	}
-	return _locNotebook->OpenLocationPage(locName, true);
+	LocationPage *page = _locNotebook->OpenLocationPage(locName, true);
+	if (_settings->GetCollapseCode())
+		page->ExpandCollapseAll(false);
+	return page;
 }
 
 void Controls::SortLocations(bool isAscending)

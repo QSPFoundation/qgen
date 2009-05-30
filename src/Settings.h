@@ -65,6 +65,7 @@
 		bool		_isShowLinesNums;
 		bool		_isCreateFirstLoc;
 		bool		_isShowLocsIcons;
+		bool		_isCollapseCode;
 		wxString	_firstLocName;
 		wxString	_lastGamePath;
 		int			_autoSaveInterval;
@@ -123,6 +124,8 @@
 		bool GetCreateFirstLoc() { return _isCreateFirstLoc; }
 		void SetShowLocsIcons(bool status) { _isShowLocsIcons = status; }
 		bool GetShowLocsIcons() { return _isShowLocsIcons; }
+		void SetCollapseCode(bool status) { _isCollapseCode = status; }
+		bool GetCollapseCode() { return _isCollapseCode; }
 		void SetCurrentPlayerPath(const wxString &path) { _currentPlayerPath = path; }
 		wxString GetCurrentPlayerPath() { return _currentPlayerPath; }
 		void SetCurrentHelpPath(const wxString &path) { _currentHelpPath = path; }

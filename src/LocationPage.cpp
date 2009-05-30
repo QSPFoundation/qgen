@@ -227,3 +227,8 @@ void LocationPage::SetFocusOnActionCode()
 {
 	_locActs->SetFocusOnActionCode();
 }
+
+void LocationPage::ExpandCollapseAll( bool isExpanded )
+{
+	_locCode->ExpandCollapseAll(isExpanded);
+}

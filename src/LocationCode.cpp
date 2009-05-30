@@ -61,3 +61,8 @@ void LocationCode::ReplaceString( long start, long end, const wxString & str )
 {
 	_text->Replace(start, end, str);
 }
+
+void LocationCode::ExpandCollapseAll( bool isExpanded )
+{
+	_text->ExpandCollapseAll(isExpanded);
+}

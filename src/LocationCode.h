@@ -40,6 +40,7 @@
 		void Clear();
 		void SelectString( long startPos, long lastPos );
 		void ReplaceString( long start, long end, const wxString & str );
+		void ExpandCollapseAll(bool isExpanded);
 	};
 
 #endif

@@ -93,7 +93,6 @@ LocationPage * LocationsNotebook::OpenLocationPage( const wxString& namePage, bo
 	AddPage(page, namePage, isSelect);
 	page->LoadPage();
 	_controls->UpdateLocationIcon(locIndex, true);
-	wxYield();
 	return page;
 }
 

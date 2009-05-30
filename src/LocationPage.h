@@ -52,6 +52,7 @@
 		void LocActsVisible(bool isVisible);
 		void SavePage();
 		void LoadPage();
+		void ExpandCollapseAll(bool isExpanded);
 		size_t GetLocationIndex();
 		long GetSelectedAction();
 		void SetLocationIndex(size_t locIndex);

@@ -145,7 +145,10 @@ void ActionsListBox::OnRightClick(wxMouseEvent & event)
 
 void ActionsListBox::LoadActionData(size_t actIndex)
 {
+	Settings *settings = _controls->GetSettings();
 	_actCode->LoadAction(actIndex);
+	if (settings->GetCollapseCode())
+		_actCode->ExpandCollapseAll(false);
 }
 
 void ActionsListBox::SaveActionData()

@@ -94,6 +94,7 @@
 		wxCheckBox	*_chkWrapLines;
 		wxCheckBox	*_chkOpenLastGame;
 		wxCheckBox	*_chkShowLinesNums;
+		wxCheckBox	*_chkCollapseCode;
 
 		wxSpinCtrl	*_spnAutoSaveMin;
 		wxSpinCtrl	*_spnHeights;

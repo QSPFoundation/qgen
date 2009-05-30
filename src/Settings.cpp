@@ -63,6 +63,7 @@ void Settings::InitSettings()
 	_isCreateFirstLoc = false;
 	_firstLocName = wxT("Начало");
 	_isShowLocsIcons = true;
+	_isCollapseCode = false;
 	_heightsCoeff = 0.6;
 	_widthsCoeff1 = 0.3;
 	_widthsCoeff2 = 0.25;
@@ -125,6 +126,7 @@ void Settings::LoadSettings()
 	cfg.Read(wxT("General/CreateFirstLoc"), &_isCreateFirstLoc);
 	cfg.Read(wxT("General/FirstLocName"), &_firstLocName);
 	cfg.Read(wxT("General/ShowLocsIcons"), &_isShowLocsIcons);
+	cfg.Read(wxT("General/CollapseCode"), &_isCollapseCode);
 	cfg.Read(wxT("General/TabSize"), &_tabSize);
 	cfg.Read(wxT("Fonts/Statements"), &_font[SYNTAX_STATEMENTS]);
 	cfg.Read(wxT("Fonts/Functions"), &_font[SYNTAX_FUNCTIONS]);
@@ -183,6 +185,7 @@ void Settings::SaveSettings()
 	cfg.Write(wxT("General/CreateFirstLoc"), _isCreateFirstLoc);
 	cfg.Write(wxT("General/FirstLocName"), _firstLocName);
 	cfg.Write(wxT("General/ShowLocsIcons"), _isShowLocsIcons);
+	cfg.Write(wxT("General/CollapseCode"), _isCollapseCode);
 	cfg.Write(wxT("General/TabSize"), _tabSize);
 	cfg.Write(wxT("Fonts/Statements"), _font[SYNTAX_STATEMENTS]);
 	cfg.Write(wxT("Fonts/Functions"), _font[SYNTAX_FUNCTIONS]);

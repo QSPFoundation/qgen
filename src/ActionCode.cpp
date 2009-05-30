@@ -135,3 +135,8 @@ void ActionCode::SetFocusOnActionCode()
 {
 	_actCodeTxt->SetFocus();
 }
+
+void ActionCode::ExpandCollapseAll( bool isExpanded )
+{
+	_actCodeTxt->ExpandCollapseAll(isExpanded);
+}

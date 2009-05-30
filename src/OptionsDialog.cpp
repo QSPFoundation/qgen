@@ -85,6 +85,7 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 	_chkWrapLines = new wxCheckBox(_general, wxID_ANY, wxT("Перенос строк по словам в коде локаций и действий"));
 	_chkOpenLastGame = new wxCheckBox(_general, wxID_ANY, wxT("Запоминать игру при выходе"));
 	_chkShowLinesNums = new wxCheckBox(_general, wxID_ANY, wxT("Показывать номера строк"));
+	_chkCollapseCode = new wxCheckBox(_general, wxID_ANY, wxT("Сворачивать блоки кода при открытии"));
 
 	_spnAutoSaveMin = new wxSpinCtrl(_general, wxID_ANY, wxT("5"), wxDefaultPosition, wxSize(45, wxDefaultCoord),
 										wxSP_ARROW_KEYS, 1, 60, 5);
@@ -116,6 +117,8 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 	topSizerGeneral->Add(_chkOpenLastGame, 0, wxALL, 5);
 	topSizerGeneral->Add(NULL, 0);
 	topSizerGeneral->Add(_chkShowLinesNums, 0, wxALL, 5);
+	topSizerGeneral->Add(NULL, 0);
+	topSizerGeneral->Add(_chkCollapseCode, 0, wxALL, 5);
 	topSizerGeneral->Add(NULL, 0);
 	topSizerGeneral->AddGrowableCol(1, 0);
 
@@ -373,7 +376,7 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 
 	SetSizerAndFit(topSizer);
 	SetAutoLayout(true);
-	SetMinClientSize(wxSize(420, 320));
+	SetMinClientSize(wxSize(420, 340));
 	InitOptionsDialog();
 }
 
@@ -742,6 +745,7 @@ void OptionsDialog::OnCloseDialog(wxCloseEvent &event)
 	_settings->SetOptionsDialogHeight(GetSize().GetHeight());
 	event.Skip();
 }
+
 void OptionsDialog::ApplySettings()
 {
 	_settings->SetAutoSave(_chkAutoSave->GetValue());
@@ -757,6 +761,7 @@ void OptionsDialog::ApplySettings()
 	_settings->SetCreateFirstLoc(_chkFirstLoc->GetValue());
 	_settings->SetFirstLocName(_txtNameFirsLoc->GetValue());
 	_settings->SetShowLocsIcons(_chkOnLocActIcons->GetValue());
+	_settings->SetCollapseCode(_chkCollapseCode->GetValue());
 	_settings->SetHeightsCoeff((double)_spnHeights->GetValue()/100);
 	_settings->SetWidthsCoeff1((double)_spnWidth1->GetValue()/100);
 	_settings->SetWidthsCoeff2((double)_spnWidth2->GetValue()/100);
@@ -824,6 +829,7 @@ void OptionsDialog::InitOptionsDialog()
 	_chkFirstLoc->SetValue(_settings->GetCreateFirstLoc());
 	_txtNameFirsLoc->SetValue(_settings->GetFirstLocName());
 	_chkOnLocActIcons->SetValue(_settings->GetShowLocsIcons());
+	_chkCollapseCode->SetValue(_settings->GetCollapseCode());
 
 	_spnHeights->SetValue(_settings->GetHeightsCoeff()*100);
 	_spnWidth1->SetValue(_settings->GetWidthsCoeff1()*100);
@@ -1015,4 +1021,3 @@ void OptionsDialog::DeleteHotKey()
 		_btnApply->Enable(true);
 	}
 }
-

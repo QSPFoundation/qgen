@@ -49,6 +49,7 @@
 		int GetCharPosition(int startPos, int chars);
 		int GetCharIndexFromPosition(int fromPos, int pos);
 		bool StartAutoComplete();
+		void Expand(int &line, bool doExpand, bool force = false, int visLevels = 0, int level = -1);
 
 		void OnKeyDown(wxKeyEvent& event);
 		void OnRightClick(wxMouseEvent& event);
@@ -66,6 +67,7 @@
 		wxString GetStringSelection() const;
 		void RemoveSelection();
 		void Clear();
+		void ExpandCollapseAll(bool isExpanded);
 	};
 
 #endif

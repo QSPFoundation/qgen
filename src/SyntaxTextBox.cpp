@@ -322,3 +322,69 @@ void SyntaxTextBox::Clear()
 	ClearAll();
 	SetModified(false);
 }
+
+void SyntaxTextBox::Expand(int &line, bool doExpand, bool force, int visLevels, int level)
+{
+	int lineMaxSubord = GetLastChild(line, level & wxSTC_FOLDLEVELNUMBERMASK);
+	++line;
+	while (line <= lineMaxSubord)
+	{
+		if (force)
+		{
+			if (visLevels > 0)
+				ShowLines(line, line);
+			else
+				HideLines(line, line);
+		}
+		else if (doExpand)
+				ShowLines(line, line);
+		int levelLine = level;
+		if (levelLine == -1)
+			levelLine = GetFoldLevel(line);
+		if (levelLine & wxSTC_FOLDLEVELHEADERFLAG)
+		{
+			if (force)
+			{
+				SetFoldExpanded(line, visLevels > 1);
+				Expand(line, doExpand, force, visLevels - 1);
+			}
+			else
+			{
+				if (!GetFoldExpanded(line))
+					SetFoldExpanded(line, true);
+				Expand(line, doExpand, force, visLevels - 1);
+			}
+		}
+		else
+			line++;
+	}
+}
+
+void SyntaxTextBox::ExpandCollapseAll( bool isExpanded )
+{
+	int linesCount = GetLineCount();
+	wxStyledTextCtrl::Update();
+	Freeze();
+	for (int line = 0; line < linesCount; line++)
+	{
+		int level = GetFoldLevel(line);
+		if ((level & wxSTC_FOLDLEVELHEADERFLAG) &&
+			(wxSTC_FOLDLEVELBASE == (level & wxSTC_FOLDLEVELNUMBERMASK)))
+		{
+			if (isExpanded)
+			{
+				SetFoldExpanded(line, true);
+				Expand(line, true, false, 0, level);
+				line--;
+			}
+			else
+			{
+				int lineMaxSubord = GetLastChild(line, -1);
+				SetFoldExpanded(line, false);
+				if (lineMaxSubord > line)
+					HideLines(line + 1, lineMaxSubord);
+			}
+		}
+	}
+	Thaw();
+}
