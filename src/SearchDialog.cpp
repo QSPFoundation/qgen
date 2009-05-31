@@ -24,8 +24,8 @@ BEGIN_EVENT_TABLE(SearchDialog, wxDialog)
 	EVT_BUTTON(FIND_ANEW, SearchDialog::OnFindAgain)
 	EVT_BUTTON(FIND_REPL, SearchDialog::OnFindRepl)
 	EVT_BUTTON(FIND_SKIPLOC, SearchDialog::OnSkipLoc)
-	EVT_UPDATE_UI(FIND_TEXT, SearchDialog::OnUpdFindText)
-	EVT_UPDATE_UI(REPL_TEXT, SearchDialog::OnUpdReplText)
+	EVT_TEXT(FIND_TEXT, SearchDialog::OnUpdFindText)
+	EVT_TEXT(REPL_TEXT, SearchDialog::OnUpdReplText)
 	EVT_TEXT_ENTER(FIND_TEXT, SearchDialog::OnFindNext)
 	EVT_TEXT_ENTER(REPL_TEXT, SearchDialog::OnFindRepl)
 END_EVENT_TABLE()
@@ -84,6 +84,8 @@ void SearchDialog::OnFindNext( wxCommandEvent &event )
 	_controls->SearchString( str, false, _chkMatchCase->GetValue(), _chkWholeWord->GetValue() );
 	AddSearchText(str);
 	_textFind->SetFocus();
+	if (_btnNextSearch->IsEnabled())
+		_btnNextSearch->SetDefault();
 }
 
 void SearchDialog::OnFindAgain( wxCommandEvent &event )
@@ -92,6 +94,8 @@ void SearchDialog::OnFindAgain( wxCommandEvent &event )
 	_controls->SearchString( str, true, _chkMatchCase->GetValue(), _chkWholeWord->GetValue() );
 	AddSearchText(str);
 	_textFind->SetFocus();
+	if (_btnNextSearch->IsEnabled())
+		_btnNextSearch->SetDefault();
 }
 
 void SearchDialog::OnFindRepl( wxCommandEvent &event )
@@ -101,9 +105,11 @@ void SearchDialog::OnFindRepl( wxCommandEvent &event )
 	OnFindNext(wxCommandEvent());
 	AddReplaceText(str);
 	_textRepl->SetFocus();
+	if (_btnNextSearch->IsEnabled())
+		_btnNextSearch->SetDefault();
 }
 
-void SearchDialog::OnUpdFindText( wxUpdateUIEvent& event )
+void SearchDialog::OnUpdFindText( wxCommandEvent& event )
 {
 	bool status = !_textFind->GetValue().IsEmpty();
 	_btnNextSearch->Enable(status);	
@@ -111,7 +117,7 @@ void SearchDialog::OnUpdFindText( wxUpdateUIEvent& event )
 	_btnSkipLoc->Enable(status);
 }
 
-void SearchDialog::OnUpdReplText( wxUpdateUIEvent& event )
+void SearchDialog::OnUpdReplText( wxCommandEvent& event )
 {
 	_btnReplace->Enable(!_textFind->GetValue().IsEmpty());
 }
