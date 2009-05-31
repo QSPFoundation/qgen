@@ -37,13 +37,13 @@ ActionsPanel::ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode 
 	_actList = new ActionsListBox( this, wxID_ANY, locPage, actCode, controls );
 	wxSizer *sizer2 = new wxBoxSizer ( wxHORIZONTAL );
 
-	_addActButton = new wxBitmapButton( this, ID_ADD_ACTION, bitmaps[0], wxDefaultPosition, wxSize(24,24) );
-	_renActButton = new wxBitmapButton( this, ID_REN_ACTION, bitmaps[1], wxDefaultPosition, wxSize(24,24) );
-	_delActButton = new wxBitmapButton( this, ID_DEL_ACTION, bitmaps[2], wxDefaultPosition, wxSize(24,24) );
+	_addActButton = new wxBitmapButton( this, ID_ADD_ACTION, bitmaps[0], wxDefaultPosition, wxSize(26,26) );
+	_renActButton = new wxBitmapButton( this, ID_REN_ACTION, bitmaps[1], wxDefaultPosition, wxSize(26,26) );
+	_delActButton = new wxBitmapButton( this, ID_DEL_ACTION, bitmaps[2], wxDefaultPosition, wxSize(26,26) );
 
-	sizer2->Add( _addActButton );
-	sizer2->Add( _renActButton );
-	sizer2->Add( _delActButton );
+	sizer2->Add( _addActButton, 0, wxALL, 1 );
+	sizer2->Add( _renActButton, 0, wxALL, 1 );
+	sizer2->Add( _delActButton, 0, wxALL, 1 );
 
 	wxSizer *sizer1 = new wxBoxSizer( wxVERTICAL );
 
