@@ -44,7 +44,6 @@
 		void OnFindRepl(wxCommandEvent &event);
 		void OnSkipLoc(wxCommandEvent &event);
 		void OnUpdFindText(wxCommandEvent& event);
-		void OnUpdReplText(wxCommandEvent& event);
 
 		void AddSearchText(const wxString &text);
 		void AddReplaceText(const wxString &text);
