@@ -17,24 +17,16 @@
 
 #include "ToolBar.h"
 
-QGenToolBar::QGenToolBar( wxWindow* parent, wxWindowID id, wxStatusBar* statusBar ) : wxAuiToolBar( parent, id )
+QGenToolBar::QGenToolBar( wxWindow *parent, wxWindowID id, wxStatusBar *statusBar ) : wxAuiToolBar( parent, id )
 {
 	_statusBar = statusBar;
 }
 
-QGenToolBar::~QGenToolBar(void)
-{
-}
-
 void QGenToolBar::DoSetToolTip( wxToolTip *tip )
 {
-	wxWindowBase::DoSetToolTip(tip);
-
-	if (m_tooltip)
-		m_tooltip->SetWindow((wxWindow *)this);
-
+	wxAuiToolBar::DoSetToolTip(tip);
 	if (tip)
-		_statusBar->SetStatusText(tip->GetTip(), 0);
+		_statusBar->SetStatusText(tip->GetTip());
 	else
-		_statusBar->SetStatusText(_(""), 0);
+		_statusBar->SetStatusText(wxEmptyString);
 }
