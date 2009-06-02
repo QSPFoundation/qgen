@@ -32,9 +32,8 @@ QGenToolBar::QGenToolBar( wxWindow *parent, wxWindowID id, wxStatusBar *statusBa
 void QGenToolBar::OnMotion( wxMouseEvent &evt )
 {
 	wxAuiToolBar::OnMotion(evt);
-	wxAuiToolBarItem *hit_item = FindToolByPosition(evt.GetX(), evt.GetY());
-	if (hit_item)
-		_statusBar->SetStatusText(hit_item->GetShortHelp());
+	if (m_tip_item)
+		_statusBar->SetStatusText(m_tip_item->GetShortHelp());
 	else
 		_statusBar->SetStatusText(wxEmptyString);
 }
