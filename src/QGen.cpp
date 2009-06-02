@@ -126,6 +126,7 @@ QGenMainFrame::QGenMainFrame(Controls *controls) : _timerAutoSave(this, ID_TIMER
 	if (Create(wxSize(640, 480), wxDEFAULT_FRAME_STYLE)) OnNewQuest(wxCommandEvent());
 	_timerAutoSave.Start(1000);
 	_timerUpdToolBar.Start(500);
+	_fnddlg = NULL;
 }
 
 QGenMainFrame::~QGenMainFrame()
@@ -573,10 +574,16 @@ void QGenMainFrame::OnToggleStatusbar(wxCommandEvent &event)
 
 void QGenMainFrame::OnFindDialog( wxCommandEvent& event )
 {
-	SearchDialog *fnddlg = new SearchDialog(this, wxT("Поиск / замена"), _controls, wxRESIZE_BORDER);
-	fnddlg->CenterOnParent();
-	_controls->InitSearchData();
-	fnddlg->Show();
+	if (_fnddlg==NULL)
+	{
+		_fnddlg = new SearchDialog(this, wxT("Поиск / замена"), _controls, wxRESIZE_BORDER);
+		_fnddlg->CenterOnParent();
+		_controls->InitSearchData();
+	}
+	if (_fnddlg->IsShown())
+		_fnddlg->SetFocus();
+	else
+		_fnddlg->Show();
 }
 
 void QGenMainFrame::OnCreateLocation( wxCommandEvent &event )

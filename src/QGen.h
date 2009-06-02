@@ -103,6 +103,7 @@
 		LocationsListBox	*_locListBox;
 		LocationsNotebook	*_locNotebook;
 		Controls			*_controls;
+		SearchDialog		*_fnddlg;
 
 		void OnInit(InitEvent &event);
 		void OnExit(wxCommandEvent &event);
