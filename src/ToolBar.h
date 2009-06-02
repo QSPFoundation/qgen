@@ -15,16 +15,21 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#include <wx/wx.h>
-#include <wx/aui/auibar.h>
+#ifndef _TOOLBAR_H
+	#define _TOOLBAR_H
 
-class QGenToolBar :	public wxAuiToolBar
-{
-public:
-	QGenToolBar(wxWindow *parent, wxWindowID id, wxStatusBar *statusBar );
+	#include <wx/wx.h>
+	#include <wx/aui/auibar.h>
 
-	virtual void DoSetToolTip(wxToolTip *tip);
+	class QGenToolBar :	public wxAuiToolBar
+	{
+	public:
+		QGenToolBar(wxWindow *parent, wxWindowID id, wxStatusBar *statusBar );
 
-private:
-	wxStatusBar		*_statusBar;
-};
+		virtual void DoSetToolTip(wxToolTip *tip);
+
+	private:
+		wxStatusBar		*_statusBar;
+	};
+
+#endif
