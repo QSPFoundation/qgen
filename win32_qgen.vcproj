@@ -427,6 +427,10 @@
 				RelativePath=".\src\SyntaxTextBox.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\src\ToolBar.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -547,6 +551,10 @@
 			</File>
 			<File
 				RelativePath=".\src\SyntaxTextBox.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ToolBar.h"
 				>
 			</File>
 		</Filter>

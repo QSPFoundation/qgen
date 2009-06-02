@@ -170,6 +170,19 @@ void QGenMainFrame::CreateControls()
 	_manager.Update();
 }
 
+void QGenMainFrame::CreateStatusBar()
+{
+	_statusBar = new wxStatusBar( this, wxID_ANY, wxSTB_DEFAULT_STYLE, wxT( "wxStatusBar" ) );
+
+	static const int widths[2] = { -1, 100 };
+
+	_statusBar->SetFieldsCount(2);
+	_statusBar->SetStatusWidths(2, widths);
+
+	SetStatusBar( _statusBar );
+	PositionStatusBar();
+}
+
 void QGenMainFrame::CreateMenuBar()
 {
 	wxMenu *file_menu = new wxMenu;
@@ -338,7 +351,7 @@ void QGenMainFrame::CreateToolBar()
 	bitmaps[13] = wxBitmap(undo_text_xpm);
 	bitmaps[14] = wxBitmap(redo_text_xpm);
 
-	_toolBar = new wxAuiToolBar(this, ID_TOOLBAR);
+	_toolBar = new QGenToolBar(this, ID_TOOLBAR, _statusBar);
 
 	_toolBar->SetToolBitmapSize(wxSize(24, 24));
 	_toolBar->AddTool(LOC_CREAT, wxT("New location..."), bitmaps[5], wxT("Создать локацию... (F7)"));

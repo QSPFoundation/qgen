@@ -33,6 +33,7 @@
 	#include "OptionsDialog.h"
 	#include "InitEvent.h"
 	#include "DesktopWindow.h"
+	#include "ToolBar.h"
 
 	#include "bitmaps/play.xpm"
 	#include "bitmaps/info.xpm"
@@ -96,7 +97,8 @@
 		wxAuiManager		_manager;
 		wxTimer				_timerAutoSave;
 		wxTimer				_timerUpdToolBar;
-		wxAuiToolBar		*_toolBar;
+		QGenToolBar			*_toolBar;
+		wxStatusBar			*_statusBar;
 		wxMenuBar			*_menu_bar;
 		LocationsListBox	*_locListBox;
 		LocationsNotebook	*_locNotebook;
@@ -159,6 +161,7 @@
 		void OnTimerUpdToolBar(wxTimerEvent &event);
 
 		void CreateControls();
+		void CreateStatusBar();
 		void CreateMenuBar();
 		void CreateToolBar();
 		void CreateLocListBox();
