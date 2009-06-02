@@ -23,12 +23,15 @@
 
 	class QGenToolBar : public wxAuiToolBar
 	{
+		DECLARE_CLASS(QGenToolBar)
+		DECLARE_EVENT_TABLE()
 	public:
 		QGenToolBar(wxWindow *parent, wxWindowID id, wxStatusBar *statusBar);
 
-		virtual void DoSetToolTip(wxToolTip *tip);
-
 	private:
+		void OnMotion(wxMouseEvent &evt);
+		void OnLeaveWindow(wxMouseEvent &evt);
+
 		wxStatusBar		*_statusBar;
 	};
 

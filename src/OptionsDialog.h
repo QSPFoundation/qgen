@@ -188,7 +188,7 @@
 		void AddHotKey();
 		void DeleteHotKey();
 	public:
-		OptionsDialog(wxWindow *parent, const wxString& title, Controls *controls, int style = wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX|wxRESIZE_BORDER);
+		OptionsDialog(wxWindow *parent, const wxString& title, Controls *controls, int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
 	};
 
 #endif

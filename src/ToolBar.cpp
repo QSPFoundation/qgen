@@ -17,16 +17,30 @@
 
 #include "ToolBar.h"
 
+IMPLEMENT_CLASS(QGenToolBar, wxAuiToolBar)
+
+BEGIN_EVENT_TABLE(QGenToolBar, wxAuiToolBar)
+	EVT_MOTION(QGenToolBar::OnMotion)
+	EVT_LEAVE_WINDOW(QGenToolBar::OnLeaveWindow)
+END_EVENT_TABLE()
+
 QGenToolBar::QGenToolBar( wxWindow *parent, wxWindowID id, wxStatusBar *statusBar ) : wxAuiToolBar( parent, id )
 {
 	_statusBar = statusBar;
 }
 
-void QGenToolBar::DoSetToolTip( wxToolTip *tip )
+void QGenToolBar::OnMotion( wxMouseEvent &evt )
 {
-	wxAuiToolBar::DoSetToolTip(tip);
-	if (tip)
-		_statusBar->SetStatusText(tip->GetTip());
+	wxAuiToolBar::OnMotion(evt);
+	wxAuiToolBarItem *hit_item = FindToolByPosition(evt.GetX(), evt.GetY());
+	if (hit_item)
+		_statusBar->SetStatusText(hit_item->GetShortHelp());
 	else
 		_statusBar->SetStatusText(wxEmptyString);
+}
+
+void QGenToolBar::OnLeaveWindow( wxMouseEvent &evt )
+{
+	wxAuiToolBar::OnLeaveWindow(evt);
+	_statusBar->SetStatusText(wxEmptyString);
 }
