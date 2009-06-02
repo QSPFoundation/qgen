@@ -21,10 +21,10 @@
 	#include <wx/wx.h>
 	#include <wx/aui/auibar.h>
 
-	class QGenToolBar :	public wxAuiToolBar
+	class QGenToolBar : public wxAuiToolBar
 	{
 	public:
-		QGenToolBar(wxWindow *parent, wxWindowID id, wxStatusBar *statusBar );
+		QGenToolBar(wxWindow *parent, wxWindowID id, wxStatusBar *statusBar);
 
 		virtual void DoSetToolTip(wxToolTip *tip);
 
