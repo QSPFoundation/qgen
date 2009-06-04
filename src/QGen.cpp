@@ -440,7 +440,7 @@ void QGenMainFrame::OnLoadFile(wxCommandEvent &event)
 void QGenMainFrame::OnSaveQuestAs(wxCommandEvent &event)
 {
 	wxFileDialog dialog(this, wxT("Сохранить файл"), wxEmptyString, wxEmptyString,
-		_("Файлы игр QSP (*.qsp)|*.qsp|Файлы игр QSP (*.gam)|*.gam"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+		_("Файлы игр QSP (*.qsp)|*.qsp"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
 	dialog.CenterOnParent();
 	if (dialog.ShowModal() == wxID_OK)
 	{
