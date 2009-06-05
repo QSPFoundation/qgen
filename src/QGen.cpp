@@ -139,7 +139,7 @@ bool QGenMainFrame::Create(const wxSize& size, long style)
 	bool res = wxFrame::Create(NULL, wxID_ANY, wxEmptyString, wxDefaultPosition, size, style);
 	if (res)
 	{
-		SetIcon(wxIcon(wxwin16x16_xpm));
+		SetIcon(wxICON(wxwin16x16));
 		SetMinSize(wxSize(400, 300));
 		CreateControls();
 	}

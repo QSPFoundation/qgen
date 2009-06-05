@@ -2,4 +2,4 @@
 #define IDC_STATIC (-1)
 #endif
 
-#define IDI_QGEN                                112
+#define IDI_QGEN                                wxwin16x16
