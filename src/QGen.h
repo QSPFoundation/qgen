@@ -48,7 +48,11 @@
 	#include "bitmaps/paste.xpm"
 	#include "bitmaps/search.xpm"
 	#include "bitmaps/options.xpm"
+	#if defined(__WXMSW__)
+	#include "winresource.h"
+	#else
 	#include "bitmaps/wxwin16x16.xpm"
+	#endif
 	#include "bitmaps/logo_big.xpm"
 	#include "bitmaps/undo_text.xpm"
 	#include "bitmaps/redo_text.xpm"

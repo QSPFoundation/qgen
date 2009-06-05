@@ -139,7 +139,18 @@ bool QGenMainFrame::Create(const wxSize& size, long style)
 	bool res = wxFrame::Create(NULL, wxID_ANY, wxEmptyString, wxDefaultPosition, size, style);
 	if (res)
 	{
+		#if defined(__WXMSW__)
+		int cx = GetSystemMetrics ( SM_CXICON );
+		int cy = GetSystemMetrics ( SM_CYICON );
+		HICON l_hIcon = (HICON)LoadImage ( GetModuleHandle ( 0 ), MAKEINTRESOURCE ( IDI_QGEN ), IMAGE_ICON, cx, cy, LR_DEFAULTSIZE );
+		cx = GetSystemMetrics ( SM_CXSMICON );
+		cy = GetSystemMetrics ( SM_CYSMICON );
+		HICON l_hIconSmall = (HICON)LoadImage ( GetModuleHandle ( 0 ), MAKEINTRESOURCE ( IDI_QGEN ), IMAGE_ICON, cx, cy, LR_DEFAULTSIZE );
+		SendMessage ( (HWND)this->GetHWND(), WM_SETICON, ICON_BIG, (LPARAM)l_hIcon );
+		SendMessage ( (HWND)this->GetHWND(), WM_SETICON, ICON_SMALL, (LPARAM)l_hIconSmall );		
+		#else
 		SetIcon(wxIcon(wxwin16x16_xpm));
+		#endif
 		SetMinSize(wxSize(400, 300));
 		CreateControls();
 	}

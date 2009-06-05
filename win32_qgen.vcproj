@@ -562,6 +562,10 @@
 			RelativePath=".\changelog.txt"
 			>
 		</File>
+		<File
+			RelativePath=".\src\winresource.rc"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
