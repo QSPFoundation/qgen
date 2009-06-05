@@ -32,8 +32,10 @@
 	#include "SearchDialog.h"
 	#include "OptionsDialog.h"
 	#include "InitEvent.h"
-	#include "DesktopWindow.h"
 	#include "ToolBar.h"
+	#ifdef __WXMSW__
+		#include "DesktopWindow.h"
+	#endif
 
 	#include "bitmaps/play.xpm"
 	#include "bitmaps/info.xpm"
@@ -48,15 +50,11 @@
 	#include "bitmaps/paste.xpm"
 	#include "bitmaps/search.xpm"
 	#include "bitmaps/options.xpm"
-	#if defined(__WXMSW__)
-	#include "winresource.h"
-	#else
 	#include "bitmaps/wxwin16x16.xpm"
-	#endif
 	#include "bitmaps/logo_big.xpm"
 	#include "bitmaps/undo_text.xpm"
 	#include "bitmaps/redo_text.xpm"
-	
+
 	#include "bitmaps/open_file_menu.xpm"
 	#include "bitmaps/save_file_menu.xpm"
 	#include "bitmaps/play_game_menu.xpm"
@@ -107,7 +105,7 @@
 		LocationsListBox	*_locListBox;
 		LocationsNotebook	*_locNotebook;
 		Controls			*_controls;
-		SearchDialog		*_fnddlg;
+		SearchDialog		*_findDlg;
 
 		void OnInit(InitEvent &event);
 		void OnExit(wxCommandEvent &event);

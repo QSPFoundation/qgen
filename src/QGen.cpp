@@ -126,7 +126,7 @@ QGenMainFrame::QGenMainFrame(Controls *controls) : _timerAutoSave(this, ID_TIMER
 	if (Create(wxSize(640, 480), wxDEFAULT_FRAME_STYLE)) OnNewQuest(wxCommandEvent());
 	_timerAutoSave.Start(1000);
 	_timerUpdToolBar.Start(500);
-	_fnddlg = NULL;
+	_findDlg = NULL;
 }
 
 QGenMainFrame::~QGenMainFrame()
@@ -139,18 +139,7 @@ bool QGenMainFrame::Create(const wxSize& size, long style)
 	bool res = wxFrame::Create(NULL, wxID_ANY, wxEmptyString, wxDefaultPosition, size, style);
 	if (res)
 	{
-		#if defined(__WXMSW__)
-		int cx = GetSystemMetrics ( SM_CXICON );
-		int cy = GetSystemMetrics ( SM_CYICON );
-		HICON l_hIcon = (HICON)LoadImage ( GetModuleHandle ( 0 ), MAKEINTRESOURCE ( IDI_QGEN ), IMAGE_ICON, cx, cy, LR_DEFAULTSIZE );
-		cx = GetSystemMetrics ( SM_CXSMICON );
-		cy = GetSystemMetrics ( SM_CYSMICON );
-		HICON l_hIconSmall = (HICON)LoadImage ( GetModuleHandle ( 0 ), MAKEINTRESOURCE ( IDI_QGEN ), IMAGE_ICON, cx, cy, LR_DEFAULTSIZE );
-		SendMessage ( (HWND)this->GetHWND(), WM_SETICON, ICON_BIG, (LPARAM)l_hIcon );
-		SendMessage ( (HWND)this->GetHWND(), WM_SETICON, ICON_SMALL, (LPARAM)l_hIconSmall );		
-		#else
 		SetIcon(wxIcon(wxwin16x16_xpm));
-		#endif
 		SetMinSize(wxSize(400, 300));
 		CreateControls();
 	}
@@ -184,7 +173,7 @@ void QGenMainFrame::CreateControls()
 
 void QGenMainFrame::CreateStatusBar()
 {
-	_statusBar = new wxStatusBar( this, wxID_ANY, wxSTB_DEFAULT_STYLE, wxT( "wxStatusBar" ) );
+	_statusBar = new wxStatusBar( this, wxID_ANY, wxSTB_DEFAULT_STYLE, wxT("wxStatusBar") );
 
 	static const int widths[2] = { -1, 100 };
 
@@ -585,16 +574,16 @@ void QGenMainFrame::OnToggleStatusbar(wxCommandEvent &event)
 
 void QGenMainFrame::OnFindDialog( wxCommandEvent& event )
 {
-	if (_fnddlg==NULL)
+	if (!_findDlg)
 	{
-		_fnddlg = new SearchDialog(this, wxT("Поиск / замена"), _controls, wxRESIZE_BORDER);
-		_fnddlg->CenterOnParent();
+		_findDlg = new SearchDialog(this, wxT("Поиск / замена"), _controls, wxRESIZE_BORDER);
+		_findDlg->CenterOnParent();
 		_controls->InitSearchData();
 	}
-	if (_fnddlg->IsShown())
-		_fnddlg->SetFocus();
+	if (_findDlg->IsShown())
+		_findDlg->SetFocus();
 	else
-		_fnddlg->Show();
+		_findDlg->Show();
 }
 
 void QGenMainFrame::OnCreateLocation( wxCommandEvent &event )
@@ -725,8 +714,12 @@ void QGenMainFrame::OnPlayQuest( wxCommandEvent &event )
 
 void QGenMainFrame::OnChmHelp( wxCommandEvent &event )
 {
-	DesktopWindow desktop;
-	wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
+	#ifdef __WXMSW__
+		DesktopWindow desktop;
+		wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
+	#else
+		wxCHMHelpController *chmHelp = new wxCHMHelpController();
+	#endif
 	if (SearchHelpFile())
 	{
 		chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
@@ -737,8 +730,12 @@ void QGenMainFrame::OnChmHelp( wxCommandEvent &event )
 
 void QGenMainFrame::OnSearchHelp( wxCommandEvent &event )
 {
-	DesktopWindow desktop;
-	wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
+	#ifdef __WXMSW__
+		DesktopWindow desktop;
+		wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
+	#else
+		wxCHMHelpController *chmHelp = new wxCHMHelpController();
+	#endif
 	if (SearchHelpFile())
 	{
 		chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
