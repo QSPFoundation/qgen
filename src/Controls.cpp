@@ -1316,7 +1316,7 @@ void Controls::MoveLocationTo( size_t locIndex, size_t moveTo )
 void Controls::MoveActionTo( size_t locIndex, size_t actIndex, size_t moveTo )
 {
 	_container->MoveActionTo(locIndex, actIndex, moveTo);
-	LocationPage *page = _locNotebook->GetPageByLocName(_locListBox->GetString(locIndex));
+	LocationPage *page = _locNotebook->GetPageByLocName(_container->GetLocationName(locIndex));
 	if (page) page->MoveActionTo(actIndex, moveTo);
 	UpdateLocActions(locIndex);
 	InitSearchData();
