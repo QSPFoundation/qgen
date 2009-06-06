@@ -77,6 +77,7 @@
 		Controls	*_controls;
 
 		wxNotebookPage *_general;
+		wxNotebookPage *_editor;
 		wxNotebookPage *_sizes;
 		wxNotebookPage *_colors;
 		wxNotebookPage *_fonts;

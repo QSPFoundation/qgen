@@ -82,10 +82,7 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 	_chkOnLocActIcons = new wxCheckBox(_general, wxID_ANY, wxT("Отображать иконки в списке локаций"));
 	_chkLocDescVisible = new wxCheckBox(_general, wxID_ANY, wxT("Показывать базовые описания локаций"));
 	_chkLocActsVisible = new wxCheckBox(_general, wxID_ANY, wxT("Показывать базовые действия локаций"));
-	_chkWrapLines = new wxCheckBox(_general, wxID_ANY, wxT("Перенос строк по словам в коде локаций и действий"));
 	_chkOpenLastGame = new wxCheckBox(_general, wxID_ANY, wxT("Запоминать игру при выходе"));
-	_chkShowLinesNums = new wxCheckBox(_general, wxID_ANY, wxT("Показывать номера строк"));
-	_chkCollapseCode = new wxCheckBox(_general, wxID_ANY, wxT("Сворачивать блоки кода при открытии"));
 
 	_spnAutoSaveMin = new wxSpinCtrl(_general, wxID_ANY, wxT("5"), wxDefaultPosition, wxSize(45, wxDefaultCoord),
 										wxSP_ARROW_KEYS, 1, 60, 5);
@@ -112,18 +109,32 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 	topSizerGeneral->Add(NULL, 0);
 	topSizerGeneral->Add(_chkLocActsVisible, 0, wxALL, 5);
 	topSizerGeneral->Add(NULL, 0);
-	topSizerGeneral->Add(_chkWrapLines, 0, wxALL, 5);
-	topSizerGeneral->Add(NULL, 0);
 	topSizerGeneral->Add(_chkOpenLastGame, 0, wxALL, 5);
-	topSizerGeneral->Add(NULL, 0);
-	topSizerGeneral->Add(_chkShowLinesNums, 0, wxALL, 5);
-	topSizerGeneral->Add(NULL, 0);
-	topSizerGeneral->Add(_chkCollapseCode, 0, wxALL, 5);
 	topSizerGeneral->Add(NULL, 0);
 	topSizerGeneral->AddGrowableCol(1, 0);
 
 	_general->SetSizerAndFit(topSizerGeneral);
 	_general->SetAutoLayout(true);
+
+	_editor = new wxPanel(_notebook);
+	_notebook->AddPage(_editor, wxT("Редактор кода"));
+
+	wxFlexGridSizer *topSizerEditor = new wxFlexGridSizer(2);
+
+	_chkWrapLines = new wxCheckBox(_editor, wxID_ANY, wxT("Перенос строк по словам в коде локаций и действий"));
+	_chkShowLinesNums = new wxCheckBox(_editor, wxID_ANY, wxT("Показывать номера строк"));
+	_chkCollapseCode = new wxCheckBox(_editor, wxID_ANY, wxT("Сворачивать блоки кода при открытии"));
+
+	topSizerEditor->Add(_chkWrapLines, 0, wxALL, 5);
+	topSizerEditor->Add(NULL, 0);
+	topSizerEditor->Add(_chkShowLinesNums, 0, wxALL, 5);
+	topSizerEditor->Add(NULL, 0);
+	topSizerEditor->Add(_chkCollapseCode, 0, wxALL, 5);
+	topSizerEditor->Add(NULL, 0);
+	topSizerEditor->AddGrowableCol(1, 0);
+
+	_editor->SetSizerAndFit(topSizerEditor);
+	_editor->SetAutoLayout(true);
 
 	_sizes = new wxPanel(_notebook);
 	_notebook->AddPage(_sizes, wxT("Размеры"));
@@ -376,7 +387,7 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 
 	SetSizerAndFit(topSizer);
 	SetAutoLayout(true);
-	SetMinClientSize(wxSize(420, 340));
+	SetMinClientSize(wxSize(500, 340));
 	InitOptionsDialog();
 }
 
