@@ -557,7 +557,12 @@ void Controls::PasteLocFromClipboard( PasteType type )
 	{
 		UpdateLocActions(locIndex);
 		LocationPage *page = _locNotebook->GetPageByLocName(locName);
-		if (page) page->LoadPage();
+		if (page)
+		{
+			page->LoadPage();
+			if (_settings->GetCollapseCode())
+				page->ExpandCollapseAll(false);
+		}
 	}
 }
 
