@@ -82,7 +82,7 @@
 		wxString	_currentPlayerPath;
 		wxString	_currentHelpPath;
 		wxString	_currentTxt2GamPath;
-		HotKeysStore _hotKeysStore;
+		HotkeysStore _hotkeysStore;
 		SearchDataStore _searchDataStore;
 
 		std::list<IObserver *> observers;
@@ -169,7 +169,7 @@
 		void SetPanelsPos(const wxString &panels) { _panelsPos = panels; }
 		wxString GetSetPanelsPos() { return _panelsPos; }
 
-		HotKeysStore *GetHotKeys() { return &_hotKeysStore; }
+		HotkeysStore *GetHotKeys() { return &_hotkeysStore; }
 		SearchDataStore *GetSearchDataStore() { return &_searchDataStore; }
 	};
 

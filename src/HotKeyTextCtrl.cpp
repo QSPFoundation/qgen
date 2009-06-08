@@ -22,7 +22,7 @@ IMPLEMENT_CLASS(HotKeyTextCtrl, wxTextCtrl)
 BEGIN_EVENT_TABLE(HotKeyTextCtrl, wxTextCtrl)
 	EVT_KEY_DOWN(HotKeyTextCtrl::OnKeyDown)
 	EVT_KEY_UP(HotKeyTextCtrl::OnKeyUp)
-	END_EVENT_TABLE()
+END_EVENT_TABLE()
 
 HotKeyTextCtrl::HotKeyTextCtrl( wxWindow *parent, wxWindowID id, const wxString &value/*=wxEmptyString*/ ) : wxTextCtrl( parent, id, value)
 {
@@ -36,7 +36,8 @@ HotKeyTextCtrl::HotKeyTextCtrl( wxWindow *parent, wxWindowID id, const wxString 
 void HotKeyTextCtrl::OnKeyDown( wxKeyEvent& event )
 {
 	int keyCode = event.GetKeyCode();
-	if (!_isKeyDown) _hotKey.Clear();
+	if(!_isKeyDown)	
+		_hotKey.Clear();
 	if (event.GetModifiers() != wxMOD_NONE)
 	{
 		if (event.AltDown() && !_isAltDown)
@@ -57,7 +58,7 @@ void HotKeyTextCtrl::OnKeyDown( wxKeyEvent& event )
 			_isShiftDown = true;
 			_isKeyDown = true;
 		}
-		if (keyCode >= 'A' && keyCode <= 'Z' && !_isSymbolDown)
+		if (keyCode >= wxT('A') && keyCode <= wxT('Z') && !_isSymbolDown)
 		{
 			_hotKey = wxString::Format(wxT("%s + %c"), _hotKey.wx_str(), keyCode);
 			_isSymbolDown = true;

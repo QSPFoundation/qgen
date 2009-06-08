@@ -17,27 +17,27 @@
 
 #include "OptionsHotKeysDialog.h"
 
-IMPLEMENT_CLASS(OptionsHotKeysDialog, wxDialog)
+IMPLEMENT_CLASS(OptionsHotkeysDialog, wxDialog)
 
-BEGIN_EVENT_TABLE(OptionsHotKeysDialog, wxDialog)
-	EVT_BUTTON(wxID_OK, OptionsHotKeysDialog::OnOkSettings)
+BEGIN_EVENT_TABLE(OptionsHotkeysDialog, wxDialog)
+	EVT_BUTTON(wxID_OK, OptionsHotkeysDialog::OnOkSettings)
 END_EVENT_TABLE()
 
-OptionsHotKeysDialog::OptionsHotKeysDialog(wxWindow *parent, const wxString& title, Settings *settings, int style) : wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
+OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& title, Controls *controls, int style) : wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
 {
-	_settings = settings;
 
 	wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *hotKeySizer = new wxBoxSizer(wxHORIZONTAL);
 	
 	wxStaticText *stText01 = new wxStaticText(this, wxID_ANY, wxT("Комбинация клавиш:"));
-	_txtInputHotKey = new HotKeyTextCtrl(this, wxID_ANY);
+	_txtInputHotkey = new HotKeyTextCtrl(this, wxID_ANY);
 
 	hotKeySizer->Add(stText01, 0, wxALL, 5);
-	hotKeySizer->Add(_txtInputHotKey, 0, wxALL, 5);
+	hotKeySizer->Add(_txtInputHotkey, 0, wxALL, 5);
 	
 	wxStaticText *stText02 = new wxStaticText(this, wxID_ANY, wxT("Текст:"));
-	_txtInputText = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_TAB|wxTE_MULTILINE);
+	_txtInputText = new SyntaxTextBox(this, controls, SYNTAX_STYLE_COLORED);
+	_txtInputText->SetMaxLength(0);
 
 	wxSizer *btnSizer = new wxBoxSizer(wxHORIZONTAL);
 	_btnOK = new wxButton(this, wxID_OK, wxT("OK"));
@@ -54,17 +54,18 @@ OptionsHotKeysDialog::OptionsHotKeysDialog(wxWindow *parent, const wxString& tit
 	SetSizerAndFit(topSizer);
 	SetAutoLayout(true);
 	SetMinClientSize(wxSize(230, 230));
+	SetSize(wxSize(630, 430));
 }
 
-void OptionsHotKeysDialog::OnOkSettings(wxCommandEvent &event)
-{
-	_hotKeyData = HotKeyData(_txtInputHotKey->GetValue(), _txtInputText->GetValue());
+void OptionsHotkeysDialog::OnOkSettings(wxCommandEvent &event)
+{	
+	_hotkeyData = HotkeyData(_txtInputHotkey->GetValue(), _txtInputText->GetValue());
 	event.Skip();
 }
 
-void OptionsHotKeysDialog::SetHotKeyData( const HotKeyData &hotKeyData )
+void OptionsHotkeysDialog::SetHotkeyData( const HotkeyData &hotKeyData )
 {
-	_hotKeyData = hotKeyData;
-	_txtInputHotKey->SetValue(_hotKeyData.HotKey);
-	_txtInputText->SetValue(_hotKeyData.CommandText);
+	_hotkeyData = hotKeyData;
+	_txtInputHotkey->SetValue(_hotkeyData.Hotkey);
+	_txtInputText->SetValue(_hotkeyData.CommandText);
 }

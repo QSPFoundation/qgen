@@ -22,34 +22,34 @@
 	#include <wx/fileconf.h>
 	#include <wx/dynarray.h> 
 
-	struct HotKeyData
+	struct HotkeyData
 	{
-		wxString HotKey;
+		wxString Hotkey;
 		wxString CommandText;
-		HotKeyData(){ }
-		HotKeyData(const wxString &keys, const wxString &data)
+		HotkeyData(){ }
+		HotkeyData(const wxString &keys, const wxString &data)
 		{
-			HotKey = keys;
+			Hotkey = keys;
 			CommandText = data;
 		}
 	};
 
-	WX_DECLARE_OBJARRAY(HotKeyData, HotKeyDataArray);
+	WX_DECLARE_OBJARRAY(HotkeyData, HotkeyDataArray);
 
-	class HotKeysStore
+	class HotkeysStore
 	{
 	private:
-		HotKeyDataArray _hotKeysData;
+		HotkeyDataArray _hotkeysData;
 	public:
-		HotKeysStore();
-		size_t AddHotKeyData(const HotKeyData &hotKeyData);
-		bool DeleteHotKeyData(const wxString &hotKey);
-		void ClearHotKeysData();
-		size_t GetHotKeysCount();
-		HotKeyData &GetHotKeyData(size_t index);
-		int FindHotKeyDataIndex(const wxString &hotKey);
-		void SaveHotKeysData(wxConfigBase &fileConfig);
-		void LoadHotKeysData(wxConfigBase &fileConfig);
+		HotkeysStore();
+		size_t AddHotkeyData(const HotkeyData &hotkeyData);
+		bool DeleteHotkeyData(const wxString &hotkey);
+		void ClearHotkeysData();
+		size_t GetHotkeysCount();
+		HotkeyData &GetHotkeyData(size_t index);
+		int FindHotkeyDataIndex(const wxString &hotkey);
+		void SaveHotkeysData(wxConfigBase &fileConfig);
+		void LoadHotkeysData(wxConfigBase &fileConfig);
 	};
 
 #endif

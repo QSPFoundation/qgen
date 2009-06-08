@@ -30,6 +30,7 @@
 	#include "IControls.h"
 	#include "MergeDialog.h"
 	#include "Game.h"
+	#include "KeysParser.h"
 
 	enum PasteType
 	{
@@ -71,6 +72,7 @@
 		LocationsNotebook	*_locNotebook;
 		DataContainer		*_container;
 		Settings			*_settings;
+		KeysParser			*_keysParser;
 		DataSearch			_dataSearch;
 		wxString			_currentPath;
 		wxString			_currentGamePath;
@@ -181,6 +183,7 @@
 
 		void SetLastSaveTime(wxLongLong lastSaveTime) { _lastSaveTime = lastSaveTime; }
 		wxLongLong GetLastSaveTime() { return _lastSaveTime; }
+		bool ExecuteHotkey(int keyCode, int modifiers);
 	};
 
 #endif

@@ -106,6 +106,7 @@
 		LocationsNotebook	*_locNotebook;
 		Controls			*_controls;
 		SearchDialog		*_findDlg;
+		
 
 		void OnInit(InitEvent &event);
 		void OnExit(wxCommandEvent &event);
@@ -162,6 +163,8 @@
 
 		void OnTimerAutoSave(wxTimerEvent &event);
 		void OnTimerUpdToolBar(wxTimerEvent &event);
+
+		void OnKeyDown(wxKeyEvent& event);
 
 		void CreateControls();
 		void CreateStatusBar();

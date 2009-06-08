@@ -372,6 +372,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\KeysParser.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\LocationActions.cpp"
 				>
 			</File>
@@ -495,6 +499,10 @@
 			</File>
 			<File
 				RelativePath=".\src\IObserver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\KeysParser.h"
 				>
 			</File>
 			<File

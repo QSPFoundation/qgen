@@ -77,6 +77,7 @@ BEGIN_EVENT_TABLE(QGenMainFrame, wxFrame)
 
 	EVT_TIMER(ID_TIMER_AUTO_SAVE, QGenMainFrame::OnTimerAutoSave)
 	EVT_TIMER(ID_TIMER_UPD_TOOLBAR, QGenMainFrame::OnTimerUpdToolBar)
+	EVT_KEY_DOWN(QGenMainFrame::OnKeyDown)
 END_EVENT_TABLE()
 
 bool QGenApp::OnInit()
@@ -931,4 +932,9 @@ void QGenMainFrame::OnCollapseLocation( wxCommandEvent &event )
 void QGenMainFrame::OnJumpLocation( wxCommandEvent &event )
 {
 	_controls->JumpToSelectedLoc();
+}
+
+void QGenMainFrame::OnKeyDown( wxKeyEvent& event )
+{
+	_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers());
 }

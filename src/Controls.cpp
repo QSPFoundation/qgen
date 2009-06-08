@@ -23,12 +23,14 @@ Controls::Controls(const wxString &path)
 
 	_settings = new Settings(_currentPath);
 	_container = new DataContainer();
+	_keysParser = new KeysParser(_settings->GetHotKeys());
 }
 
 Controls::~Controls()
 {
 	delete _settings;
 	delete _container;
+	delete _keysParser;
 }
 
 void Controls::SetMainFrame(wxWindow *mainFrame)
@@ -1416,4 +1418,9 @@ void Controls::SwitchLocActs()
 {
 	LocationPage *page = _locNotebook->GetSelectedPage();
 	if (page) page->LocActsVisible(!page->IsActsShown());
+}
+
+bool Controls::ExecuteHotkey( int keyCode, int modifiers )
+{
+	return _keysParser->ExecuteHotkeyAction(keyCode, modifiers);
 }

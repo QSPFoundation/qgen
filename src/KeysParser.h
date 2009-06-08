@@ -15,38 +15,34 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_OPTIONS_HOT_KEYS_DIALOG_H
-	#define _QUEST_GENERATOR_OPTIONS_HOT_KEYS_DIALOG_H
-
+#ifndef _QUEST_GENERATOR_KEYS_PARSER_H
+	#define _QUEST_GENERATOR_KEYS_PARSER_H
+	
 	#include <wx/wx.h>
-	#include "Settings.h"
-	#include "HotKeyTextCtrl.h"
-	#include "SyntaxTextBox.h"
-	#include "Controls.h"
+	#include <wx/dynarray.h>
+	#include <map>
 
-	enum
+	#ifdef __WXMSW__
+		#include <Windows.h>
+	#endif
+	
+	#include "HotKeysStore.h"
+
+	WX_DECLARE_OBJARRAY(INPUT, KeysArray);
+
+	class KeysParser
 	{
-		ID_INPUT_TEXT
-	};
+		std::map<wxString, int> _keysTable;
+		HotkeysStore *_hotKeysStore;
 
-	class OptionsHotkeysDialog : public wxDialog
-	{
-		DECLARE_CLASS(OptionsHotkeysDialog)
-		DECLARE_EVENT_TABLE()
-	private:
-		wxTextCtrl		*_txtInputHotkey;
-		SyntaxTextBox	*_txtInputText;
-		wxButton		*_btnOK;
-		wxButton		*_btnCancel;
-		HotkeyData		_hotkeyData;
-
-		void OnOkSettings(wxCommandEvent &event);
+		void InitKeysTable();
+		void OnKeyPress(int keyCode);
+		void OnKeysPress(const wxString &text);
+		bool IsHotkeyMatches(int keyCode, int modifiers, const wxString &hotkey);
 	public:
-		OptionsHotkeysDialog(wxWindow *parent, const wxString& title, Controls *controls,
-								int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
+		KeysParser(HotkeysStore *hotKeysStore);
+		bool ExecuteHotkeyAction(int keyCode, int modifiers);	
+		void ParseText(const wxString &text);
 
-		void SetHotkeyData(const HotkeyData &hotkeyData);
-		HotkeyData GetHotkeyData() const { return _hotkeyData; }
 	};
-
 #endif

@@ -57,14 +57,15 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
 	EVT_CLOSE(OptionsDialog::OnCloseDialog)
 END_EVENT_TABLE()
 
-OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *controls, int style) : wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
+OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *controls, int style) : 
+					wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
 {
 	_settings = controls->GetSettings();
 	_controls = controls;
 
 	wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *notebookSizer = new wxBoxSizer(wxHORIZONTAL);
-	wxSizer *btnSizer =new wxBoxSizer(wxHORIZONTAL);
+	wxSizer *btnSizer = new wxBoxSizer(wxHORIZONTAL);
 
 	_notebook = new wxNotebook(this, wxID_ANY);
 
@@ -150,7 +151,6 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 	_spnWidth2 = new wxSpinCtrl(_sizes, wxID_ANY, wxT("100"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 1, 100, 100);
 	_spnTabSize = new wxSpinCtrl(_sizes, wxID_ANY, wxT("8"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 2, 8, 8);
 	
-
 	topSizerSizes->Add(stTextHeights, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerSizes->Add(_spnHeights, 0, wxALL, 5);
 	topSizerSizes->Add(stTextWidth1, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
@@ -159,7 +159,6 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 	topSizerSizes->Add(_spnWidth2, 0, wxALL, 5);
 	topSizerSizes->Add(stTextTabSize, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerSizes->Add(_spnTabSize, 0, wxALL, 5);
-
 
 	topSizerSizes->AddGrowableCol(0, 1);
 
@@ -372,14 +371,14 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 	notebookSizer->Add(_notebook, 1, wxALL|wxGROW, 3);
 
 	_btnOK = new wxButton(this, ID_OK_SETTINGS, wxT("OK"));
-	wxButton *_btnCancel = new wxButton(this, ID_CANCEL_SETTINGS, wxT("Отмена"));
+	wxButton *btnCancel = new wxButton(this, ID_CANCEL_SETTINGS, wxT("Отмена"));
 	_btnApply = new wxButton(this, ID_APPLY_SETTINGS, wxT("Применить"));
 	_btnReset = new wxButton(this, ID_RESET_SETTINGS, wxT("Сброс"));
 
 	btnSizer->Add(_btnReset, 0, wxLEFT|wxBOTTOM, 5);
 	btnSizer->AddStretchSpacer(1);
 	btnSizer->Add(_btnOK, 0, wxRIGHT|wxBOTTOM, 5);
-	btnSizer->Add(_btnCancel, 0, wxRIGHT|wxBOTTOM, 5);
+	btnSizer->Add(btnCancel, 0, wxRIGHT|wxBOTTOM, 5);
 	btnSizer->Add(_btnApply, 0, wxRIGHT|wxBOTTOM, 5);
 
 	topSizer->Add(notebookSizer, 1, wxGROW);
@@ -804,22 +803,22 @@ void OptionsDialog::ApplySettings()
 	_settings->SetFont(SYNTAX_BASE, _txtFontBase->GetFont());
 
 	wxListItem info;
-	HotKeyData hotKeyData;
+	HotkeyData hotKeyData;
 	size_t count = _lstHotKeys->GetItemCount();
-	HotKeysStore *hotKeysStore = _settings->GetHotKeys();
-	hotKeysStore->ClearHotKeysData();
+	HotkeysStore *hotKeysStore = _settings->GetHotKeys();
+	hotKeysStore->ClearHotkeysData();
 	for (size_t i = 0; i < count; ++i)
 	{
 		info.SetColumn(0);
 		info.SetMask(wxLIST_MASK_TEXT);
 		info.SetId(i);
 		_lstHotKeys->GetItem(info);
-		hotKeyData.HotKey = info.GetText();
+		hotKeyData.Hotkey = info.GetText();
 		info.SetColumn(1);
 		info.SetId(i);
 		_lstHotKeys->GetItem(info);
 		hotKeyData.CommandText = info.GetText();
-		hotKeysStore->AddHotKeyData(hotKeyData);
+		hotKeysStore->AddHotkeyData(hotKeyData);
 	}
 	_settings->NotifyAll();
 	_btnApply->Enable(false);
@@ -913,12 +912,12 @@ void OptionsDialog::InitOptionsDialog()
 	_txtNameFirsLoc->Enable(_settings->GetCreateFirstLoc());
 	_spnAutoSaveMin->Enable(_settings->GetAutoSave());
 
-	HotKeysStore *hotKeysStore = _settings->GetHotKeys();
-	size_t count = hotKeysStore->GetHotKeysCount();
+	HotkeysStore *hotKeysStore = _settings->GetHotKeys();
+	size_t count = hotKeysStore->GetHotkeysCount();
 	for (size_t i = 0; i < count; ++i)
 	{
-		const HotKeyData &hotKeyData = hotKeysStore->GetHotKeyData(i);
-		_lstHotKeys->InsertItem(i, hotKeyData.HotKey);
+		const HotkeyData &hotKeyData = hotKeysStore->GetHotkeyData(i);
+		_lstHotKeys->InsertItem(i, hotKeyData.Hotkey);
 		_lstHotKeys->SetItem(i, 1, hotKeyData.CommandText);
 	}
 	SetSize(_settings->GetOptionsDialogWidth(), _settings->GetOptionsDialogHeight());
@@ -928,7 +927,7 @@ void OptionsDialog::InitOptionsDialog()
 
 void OptionsDialog::EditHotKey()
 {
-	HotKeyData hotKeyData;
+	HotkeyData hotKeyData;
 	wxListItem info;
 	bool isError = true;
 	long index = _lstHotKeys->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
@@ -938,26 +937,26 @@ void OptionsDialog::EditHotKey()
 		info.SetColumn(0);
 		info.SetId(index);
 		_lstHotKeys->GetItem(info);
-		hotKeyData.HotKey = info.GetText();
+		hotKeyData.Hotkey = info.GetText();
 		info.SetColumn(1);
 		info.SetId(index);
 		_lstHotKeys->GetItem(info);
 		hotKeyData.CommandText = info.GetText();
-		OptionsHotKeysDialog dialog(this, wxT("Новая команда"), _settings);
-		dialog.SetHotKeyData(hotKeyData);
+		OptionsHotkeysDialog dialog(this, wxT("Новая команда"), _controls);
+		dialog.SetHotkeyData(hotKeyData);
 		dialog.CenterOnParent();
 		do 
 		{
 			if (dialog.ShowModal() == wxID_OK)
 			{
-				hotKeyData = dialog.GetHotKeyData();
-				if (!hotKeyData.HotKey.IsEmpty() && !hotKeyData.CommandText.IsEmpty())
+				hotKeyData = dialog.GetHotkeyData();
+				if (!hotKeyData.Hotkey.IsEmpty() && !hotKeyData.CommandText.IsEmpty())
 				{
-					long idx = _lstHotKeys->FindItem(-1, hotKeyData.HotKey);
+					long idx = _lstHotKeys->FindItem(-1, hotKeyData.Hotkey);
 					if (idx == wxNOT_FOUND || idx == index)
 					{
 						_lstHotKeys->DeleteItem(index);
-						_lstHotKeys->InsertItem(index, hotKeyData.HotKey);
+						_lstHotKeys->InsertItem(index, hotKeyData.Hotkey);
 						_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
 						_btnApply->Enable(true);
 						isError = false;
@@ -977,24 +976,24 @@ void OptionsDialog::EditHotKey()
 void OptionsDialog::AddHotKey()
 {
 	wxListItem info;
-	HotKeyData hotKeyData;
+	HotkeyData hotKeyData;
 	long index;
 	bool isError = true;
-	OptionsHotKeysDialog dialog(this, wxT("Новая команда"), _settings);
+	OptionsHotkeysDialog dialog(this, wxT("Новая команда"), _controls);
 	dialog.CenterOnParent();
 	do 
 	{
 		if (dialog.ShowModal() == wxID_OK)
 		{
-			hotKeyData = dialog.GetHotKeyData();
-			if (!hotKeyData.HotKey.IsEmpty() && !hotKeyData.CommandText.IsEmpty())
+			hotKeyData = dialog.GetHotkeyData();
+			if (!hotKeyData.Hotkey.IsEmpty() && !hotKeyData.CommandText.IsEmpty())
 			{
-				if (_lstHotKeys->FindItem(-1, hotKeyData.HotKey) == wxNOT_FOUND)
+				if (_lstHotKeys->FindItem(-1, hotKeyData.Hotkey) == wxNOT_FOUND)
 				{
 					index = _lstHotKeys->GetItemCount();
 					info.SetColumn(0);
 					info.SetId(index);
-					info.SetText(hotKeyData.HotKey);
+					info.SetText(hotKeyData.Hotkey);
 					_lstHotKeys->InsertItem(info);
 					info.SetColumn(1);
 					info.SetId(index);

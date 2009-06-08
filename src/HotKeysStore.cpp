@@ -18,83 +18,83 @@
 #include "HotKeysStore.h"
 #include "wx/arrimpl.cpp"
 
-WX_DEFINE_OBJARRAY(HotKeyDataArray);
+WX_DEFINE_OBJARRAY(HotkeyDataArray);
 
-HotKeysStore::HotKeysStore()
+HotkeysStore::HotkeysStore()
 {
 
 }
 
-size_t HotKeysStore::AddHotKeyData( const HotKeyData &hotKeyData )
+size_t HotkeysStore::AddHotkeyData( const HotkeyData &hotKeyData )
 {
-	int index = FindHotKeyDataIndex(hotKeyData.HotKey);
+	int index = FindHotkeyDataIndex(hotKeyData.Hotkey);
 	if (index < 0)
 	{
-		_hotKeysData.Add(hotKeyData);
-		return _hotKeysData.GetCount() - 1;
+		_hotkeysData.Add(hotKeyData);
+		return _hotkeysData.GetCount() - 1;
 	}
-	_hotKeysData[index] = hotKeyData;
+	_hotkeysData[index] = hotKeyData;
 	return (size_t)index;
 }
 
-bool HotKeysStore::DeleteHotKeyData( const wxString &hotKey )
+bool HotkeysStore::DeleteHotkeyData( const wxString &hotKey )
 {
-	int index = FindHotKeyDataIndex(hotKey);
+	int index = FindHotkeyDataIndex(hotKey);
 	if ( index < 0) return false;
-	_hotKeysData.RemoveAt(index);
+	_hotkeysData.RemoveAt(index);
 	return true;
 }
 
-void HotKeysStore::ClearHotKeysData()
+void HotkeysStore::ClearHotkeysData()
 {
-	_hotKeysData.Clear();
+	_hotkeysData.Clear();
 }
 
-HotKeyData & HotKeysStore::GetHotKeyData( size_t index )
+HotkeyData & HotkeysStore::GetHotkeyData( size_t index )
 {
-	return _hotKeysData[index];
+	return _hotkeysData[index];
 }
 
-int HotKeysStore::FindHotKeyDataIndex(const wxString &hotKey)
+int HotkeysStore::FindHotkeyDataIndex(const wxString &hotKey)
 {
 	wxString stHotKey(hotKey.Lower());
-	size_t i, count = _hotKeysData.GetCount();
+	size_t i, count = _hotkeysData.GetCount();
 	for (i = 0; i < count; i++)
-		if (stHotKey == _hotKeysData[i].HotKey.Lower()) return (int)i;
+		if (stHotKey == _hotkeysData[i].Hotkey.Lower()) return (int)i;
 	return wxNOT_FOUND;
 }
 
-size_t HotKeysStore::GetHotKeysCount()
+size_t HotkeysStore::GetHotkeysCount()
 {
-	return _hotKeysData.GetCount();
+	return _hotkeysData.GetCount();
 }
 
-void HotKeysStore::SaveHotKeysData(wxConfigBase &fileConfig)
+void HotkeysStore::SaveHotkeysData(wxConfigBase &fileConfig)
 {
 	wxString str;
-	size_t count = _hotKeysData.GetCount();
+	size_t count = _hotkeysData.GetCount();
 	fileConfig.DeleteGroup(wxT("HotKeys"));
 	for (size_t i = 0; i < count; i++)
 	{
-		str = wxString::Format(wxT("HotKeys/HotKey%d_Keys"), i);
-		fileConfig.Write(str, _hotKeysData[i].HotKey);
-		str = wxString::Format(wxT("HotKeys/HotKey%d_Exec"), i);
-		fileConfig.Write(str, _hotKeysData[i].CommandText);
+		str = wxString::Format(wxT("HotKeys/Hotkey%d_Keys"), i);
+		fileConfig.Write(str, _hotkeysData[i].Hotkey);
+		str = wxString::Format(wxT("HotKeys/Hotkey%d_Exec"), i);
+		fileConfig.Write(str, _hotkeysData[i].CommandText);
 	}
 }
 
-void HotKeysStore::LoadHotKeysData(wxConfigBase &fileConfig)
+void HotkeysStore::LoadHotkeysData(wxConfigBase &fileConfig)
 {
 	wxString str, keyVal, dataVal;
 	size_t i = 0;
-	_hotKeysData.Clear();
+	_hotkeysData.Clear();
 	while (1)
 	{
-		str = wxString::Format(wxT("HotKeys/HotKey%d_Keys"), i);
+		str = wxString::Format(wxT("HotKeys/Hotkey%d_Keys"), i);
 		if (!fileConfig.Read(str, &keyVal)) break;
-		str = wxString::Format(wxT("HotKeys/HotKey%d_Exec"), i);
+		str = wxString::Format(wxT("HotKeys/Hotkey%d_Exec"), i);
 		if (!fileConfig.Read(str, &dataVal)) break;
-		AddHotKeyData(HotKeyData(keyVal, dataVal));
+		AddHotkeyData(HotkeyData(keyVal, dataVal));
 		++i;
 	}
 }

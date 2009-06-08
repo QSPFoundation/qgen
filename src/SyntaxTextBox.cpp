@@ -209,7 +209,8 @@ void SyntaxTextBox::OnKeyDown( wxKeyEvent& event )
 			break;
 		}
 	}
-	event.Skip();
+	if(!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
+		event.Skip();
 }
 
 void SyntaxTextBox::OnRightClick(wxMouseEvent& event)
