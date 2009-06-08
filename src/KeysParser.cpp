@@ -69,9 +69,9 @@ void KeysParser::OnKeyPress(int keyCode)
 	input.ki.dwFlags = KEYEVENTF_UNICODE;
 	SendInput(1, &input, sizeof(INPUT));
 	input.ki.dwFlags |= KEYEVENTF_KEYUP;
-	wxYield();
+	wxYieldIfNeeded();
 	SendInput(1, &input, sizeof(INPUT));
-	wxYield();
+	wxYieldIfNeeded();
 }
 
 void KeysParser::ParseText(const wxString &text)
@@ -80,8 +80,7 @@ void KeysParser::ParseText(const wxString &text)
 	wxString::const_iterator i = text.begin();
 	BYTE states[256];
 	memset(states, 0, sizeof(states));
-	SetKeyboardState(states); 
-	BlockInput(TRUE);
+	SetKeyboardState(states);
 	while (i != text.end())
 	{
 		if (*i == wxT('{'))
@@ -102,7 +101,6 @@ void KeysParser::ParseText(const wxString &text)
 			OnKeyPress(*i);
 		++i;
 	}
-	BlockInput(FALSE);
 }
 
 void KeysParser::OnKeysPress(const wxString &text)
@@ -129,9 +127,9 @@ void KeysParser::OnKeysPress(const wxString &text)
 		SendInput(count, inputs, sizeof(INPUT));
 		for (int i = 0; i < count; ++i)
 			inputs[i].ki.dwFlags |= KEYEVENTF_KEYUP;
-		wxYield();
+		wxYieldIfNeeded();
 		SendInput(count, inputs, sizeof(INPUT));
-		wxYield();
+		wxYieldIfNeeded();
 	}
 }
 
