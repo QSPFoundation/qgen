@@ -157,6 +157,7 @@
 		wxButton	*_btnPathTxt2Gam;
 
 		wxListCtrl	*_lstHotKeys;
+		wxArrayString _hotkeysCmds;
 
 		wxButton	*_btnAddNewHotKey;
 		wxButton	*_btnEditHotKey;

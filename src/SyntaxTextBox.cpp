@@ -35,7 +35,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 	SetWrapMode(wxSTC_WRAP_WORD);
 	SetMarginWidth(1, 0);
 	UsePopUp(false);
-	if (_style == SYNTAX_STYLE_COLORED)
+	if (_style & SYNTAX_STYLE_COLORED)
 	{
 		SetScrollWidth(-1);
 		SetScrollWidthTracking(true);
@@ -101,7 +101,7 @@ void SyntaxTextBox::Update(bool isFromObservable)
 	SetTabWidth(settings->GetTabSize());
 	StyleClearAll();
 
-	if (_style == SYNTAX_STYLE_COLORED)
+	if (_style & SYNTAX_STYLE_COLORED)
 	{
 		SetWrapMode(settings->GetWrapLines() ? wxSTC_WRAP_WORD : wxSTC_WRAP_NONE);
 		SetFoldMarginColour(true, backColour);
@@ -177,7 +177,7 @@ void SyntaxTextBox::OnMarginClicked( wxStyledTextEvent &event )
 
 void SyntaxTextBox::OnCharAdded( wxStyledTextEvent &event )
 {
-	if (_style == SYNTAX_STYLE_COLORED && event.GetKey() == '\n')
+	if ((_style & SYNTAX_STYLE_COLORED) && event.GetKey() == '\n')
 	{
 		int curLine = GetCurrentLine();
 		if (curLine > 0 && GetLineLength(curLine) <= 2)
@@ -196,7 +196,7 @@ void SyntaxTextBox::OnCharAdded( wxStyledTextEvent &event )
 
 void SyntaxTextBox::OnKeyDown( wxKeyEvent& event )
 {
-	if (_style == SYNTAX_STYLE_COLORED)
+	if (_style & SYNTAX_STYLE_COLORED)
 	{
 		switch (event.GetKeyCode())
 		{
@@ -209,8 +209,13 @@ void SyntaxTextBox::OnKeyDown( wxKeyEvent& event )
 			break;
 		}
 	}
-	if(!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
+	if (_style & SYNTAX_STYLE_NOHOTKEYS)
 		event.Skip();
+	else
+	{
+		if (!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
+			event.Skip();
+	}
 }
 
 void SyntaxTextBox::OnRightClick(wxMouseEvent& event)
@@ -225,7 +230,7 @@ void SyntaxTextBox::OnRightClick(wxMouseEvent& event)
 	menu.Append(DEL_TEXT, wxT("Удалить"));
 	menu.AppendSeparator();
 	menu.Append(SELALL_TEXT, wxT("Выделить всё"));
-	if (_style == SYNTAX_STYLE_COLORED)
+	if ((_style & SYNTAX_STYLE_COLORED) && !(_style & SYNTAX_STYLE_SIMPLEMENU))
 	{
 		menu.AppendSeparator();
 		menu.Append(LOC_JUMP_LOC, wxT("Перейти на выбранную локацию"));

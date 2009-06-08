@@ -31,8 +31,10 @@
 
 	enum
 	{
-		 SYNTAX_STYLE_SIMPLE,
-		 SYNTAX_STYLE_COLORED
+		 SYNTAX_STYLE_SIMPLE = 0,
+		 SYNTAX_STYLE_COLORED = 1,
+		 SYNTAX_STYLE_NOHOTKEYS = 2,
+		 SYNTAX_STYLE_SIMPLEMENU = 4
 	};
 
 	class SyntaxTextBox : public wxStyledTextCtrl, public IObserver

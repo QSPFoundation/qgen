@@ -349,9 +349,9 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 
 	wxStaticText *stText0001 = new wxStaticText(_hotkeys, wxID_ANY, wxT("Список команд:"));
 	_lstHotKeys = new wxListCtrl(_hotkeys, ID_LIST_HKEYS, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
-	_lstHotKeys->InsertColumn(0, wxT("Комбинация клавиш:"), wxLIST_FORMAT_LEFT, 150);
-	_lstHotKeys->InsertColumn(1, wxT("Исполняемая команда:"), wxLIST_FORMAT_LEFT, 150);
-	
+	_lstHotKeys->InsertColumn(0, wxT("Комбинация клавиш"), wxLIST_FORMAT_LEFT, 150);
+	_lstHotKeys->InsertColumn(1, wxT("Исполняемая команда"), wxLIST_FORMAT_LEFT, 150);
+
 	wxBoxSizer *btnHotkKeysSizer = new wxBoxSizer(wxHORIZONTAL);
 	_btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEW_HKEY, wxT("Добавить"));
 	_btnEditHotKey = new wxButton(_hotkeys, ID_EDIT_HKEY, wxT("Редактировать"));
@@ -802,22 +802,14 @@ void OptionsDialog::ApplySettings()
 	_settings->SetFont(SYNTAX_COMMENTS, _txtFontComments->GetFont());
 	_settings->SetFont(SYNTAX_BASE, _txtFontBase->GetFont());
 
-	wxListItem info;
 	HotkeyData hotKeyData;
 	size_t count = _lstHotKeys->GetItemCount();
 	HotkeysStore *hotKeysStore = _settings->GetHotKeys();
 	hotKeysStore->ClearHotkeysData();
 	for (size_t i = 0; i < count; ++i)
 	{
-		info.SetColumn(0);
-		info.SetMask(wxLIST_MASK_TEXT);
-		info.SetId(i);
-		_lstHotKeys->GetItem(info);
-		hotKeyData.Hotkey = info.GetText();
-		info.SetColumn(1);
-		info.SetId(i);
-		_lstHotKeys->GetItem(info);
-		hotKeyData.CommandText = info.GetText();
+		hotKeyData.Hotkey = _lstHotKeys->GetItemText(i);
+		hotKeyData.CommandText = _hotkeysCmds[i];
 		hotKeysStore->AddHotkeyData(hotKeyData);
 	}
 	_settings->NotifyAll();
@@ -914,11 +906,14 @@ void OptionsDialog::InitOptionsDialog()
 
 	HotkeysStore *hotKeysStore = _settings->GetHotKeys();
 	size_t count = hotKeysStore->GetHotkeysCount();
+	_lstHotKeys->DeleteAllItems();
+	_hotkeysCmds.Clear();
 	for (size_t i = 0; i < count; ++i)
 	{
 		const HotkeyData &hotKeyData = hotKeysStore->GetHotkeyData(i);
 		_lstHotKeys->InsertItem(i, hotKeyData.Hotkey);
 		_lstHotKeys->SetItem(i, 1, hotKeyData.CommandText);
+		_hotkeysCmds.Add(hotKeyData.CommandText);
 	}
 	SetSize(_settings->GetOptionsDialogWidth(), _settings->GetOptionsDialogHeight());
 	_btnApply->Enable(false);
@@ -928,24 +923,16 @@ void OptionsDialog::InitOptionsDialog()
 void OptionsDialog::EditHotKey()
 {
 	HotkeyData hotKeyData;
-	wxListItem info;
 	bool isError = true;
 	long index = _lstHotKeys->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	if (index != wxNOT_FOUND)
 	{
-		info.SetMask(wxLIST_MASK_TEXT);
-		info.SetColumn(0);
-		info.SetId(index);
-		_lstHotKeys->GetItem(info);
-		hotKeyData.Hotkey = info.GetText();
-		info.SetColumn(1);
-		info.SetId(index);
-		_lstHotKeys->GetItem(info);
-		hotKeyData.CommandText = info.GetText();
+		hotKeyData.Hotkey = _lstHotKeys->GetItemText(index);
+		hotKeyData.CommandText = _hotkeysCmds[index];
 		OptionsHotkeysDialog dialog(this, wxT("Новая команда"), _controls);
 		dialog.SetHotkeyData(hotKeyData);
 		dialog.CenterOnParent();
-		do 
+		do
 		{
 			if (dialog.ShowModal() == wxID_OK)
 			{
@@ -958,6 +945,7 @@ void OptionsDialog::EditHotKey()
 						_lstHotKeys->DeleteItem(index);
 						_lstHotKeys->InsertItem(index, hotKeyData.Hotkey);
 						_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
+						_hotkeysCmds[index] = hotKeyData.CommandText;
 						_btnApply->Enable(true);
 						isError = false;
 					}
@@ -975,13 +963,12 @@ void OptionsDialog::EditHotKey()
 
 void OptionsDialog::AddHotKey()
 {
-	wxListItem info;
 	HotkeyData hotKeyData;
 	long index;
 	bool isError = true;
 	OptionsHotkeysDialog dialog(this, wxT("Новая команда"), _controls);
 	dialog.CenterOnParent();
-	do 
+	do
 	{
 		if (dialog.ShowModal() == wxID_OK)
 		{
@@ -991,14 +978,9 @@ void OptionsDialog::AddHotKey()
 				if (_lstHotKeys->FindItem(-1, hotKeyData.Hotkey) == wxNOT_FOUND)
 				{
 					index = _lstHotKeys->GetItemCount();
-					info.SetColumn(0);
-					info.SetId(index);
-					info.SetText(hotKeyData.Hotkey);
-					_lstHotKeys->InsertItem(info);
-					info.SetColumn(1);
-					info.SetId(index);
-					info.SetText(hotKeyData.CommandText);
-					_lstHotKeys->SetItem(info);
+					_lstHotKeys->InsertItem(index, hotKeyData.Hotkey);
+					_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
+					_hotkeysCmds.Add(hotKeyData.CommandText);
 					_btnApply->Enable(true);
 					isError = false;
 				}
@@ -1015,12 +997,11 @@ void OptionsDialog::AddHotKey()
 
 void OptionsDialog::DeleteHotKey()
 {
-	int count;
 	long index = _lstHotKeys->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-	if(index >= 0)
+	if (index >= 0)
 	{
 		_lstHotKeys->DeleteItem(index);
-		count = _lstHotKeys->GetItemCount();
+		_hotkeysCmds.RemoveAt(index);
 		if (_lstHotKeys->GetItemCount() == index)
 			--index;
 		if (index >= 0)
