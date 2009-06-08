@@ -144,10 +144,14 @@ bool KeysParser::IsHotkeyMatches(int keyCode, int modifiers, const wxString &hot
 	for (size_t i = 0; i < strs.GetCount(); ++i)
 	{
 		str = strs[i].Trim().Trim(false);
-		if (str.length() == 1) code = str[0];
-		if (str == wxT("CTRL")) isCtrlDown = true;
-		if (str == wxT("ALT")) isAltDown = true;
-		if (str == wxT("SHIFT")) isShiftDown = true;
+		if (str.length() == 1)
+			code = str[0];
+		else if (str == wxT("CTRL"))
+			isCtrlDown = true;
+		else if (str == wxT("ALT"))
+			isAltDown = true;
+		else if (str == wxT("SHIFT"))
+			isShiftDown = true;
 	}
 	int a = modifiers & wxMOD_CONTROL;
 	return
@@ -157,7 +161,7 @@ bool KeysParser::IsHotkeyMatches(int keyCode, int modifiers, const wxString &hot
 		(isShiftDown == ((modifiers & wxMOD_SHIFT) != 0)) &&
 		keyCode == code
 	);
-} 
+}
 
 bool KeysParser::ExecuteHotkeyAction( int keyCode, int modifiers )
 {

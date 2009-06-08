@@ -17,7 +17,7 @@
 
 #ifndef _QUEST_GENERATOR_KEYS_PARSER_H
 	#define _QUEST_GENERATOR_KEYS_PARSER_H
-	
+
 	#include <wx/wx.h>
 	#include <wx/dynarray.h>
 	#include <map>
@@ -25,7 +25,7 @@
 	#ifdef __WXMSW__
 		#include <Windows.h>
 	#endif
-	
+
 	#include "HotKeysStore.h"
 
 	WX_DECLARE_OBJARRAY(INPUT, KeysArray);
@@ -39,10 +39,11 @@
 		void OnKeyPress(int keyCode);
 		void OnKeysPress(const wxString &text);
 		bool IsHotkeyMatches(int keyCode, int modifiers, const wxString &hotkey);
+
 	public:
 		KeysParser(HotkeysStore *hotKeysStore);
 		bool ExecuteHotkeyAction(int keyCode, int modifiers);	
 		void ParseText(const wxString &text);
-
 	};
+
 #endif
