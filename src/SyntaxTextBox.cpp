@@ -34,7 +34,10 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 	SetEOLMode(wxSTC_EOL_LF);
 	SetWrapMode(wxSTC_WRAP_WORD);
 	SetMarginWidth(1, 0);
-	UsePopUp(false);
+	if (!(_style & SYNTAX_STYLE_SIMPLEMENU))
+	{
+		UsePopUp(false);
+	}
 	if (_style & SYNTAX_STYLE_COLORED)
 	{
 		SetScrollWidth(-1);
@@ -220,23 +223,28 @@ void SyntaxTextBox::OnKeyDown( wxKeyEvent& event )
 
 void SyntaxTextBox::OnRightClick(wxMouseEvent& event)
 {
-	wxMenu menu;
-	menu.Append(UNDO_TEXT, wxT("Отменить"));
-	menu.Append(REDO_TEXT, wxT("Повторить"));
-	menu.AppendSeparator();
-	menu.Append(CUT_TEXT, wxT("Вырезать"));
-	menu.Append(COPY_TEXT, wxT("Копировать"));
-	menu.Append(PASTE_TEXT, wxT("Вставить"));
-	menu.Append(DEL_TEXT, wxT("Удалить"));
-	menu.AppendSeparator();
-	menu.Append(SELALL_TEXT, wxT("Выделить всё"));
-	if ((_style & SYNTAX_STYLE_COLORED) && !(_style & SYNTAX_STYLE_SIMPLEMENU))
+	if (_style & SYNTAX_STYLE_SIMPLEMENU)
+		event.Skip();
+	else
 	{
+		wxMenu menu;
+		menu.Append(UNDO_TEXT, wxT("Отменить"));
+		menu.Append(REDO_TEXT, wxT("Повторить"));
 		menu.AppendSeparator();
-		menu.Append(LOC_JUMP_LOC, wxT("Перейти на выбранную локацию"));
+		menu.Append(CUT_TEXT, wxT("Вырезать"));
+		menu.Append(COPY_TEXT, wxT("Копировать"));
+		menu.Append(PASTE_TEXT, wxT("Вставить"));
+		menu.Append(DEL_TEXT, wxT("Удалить"));
+		menu.AppendSeparator();
+		menu.Append(SELALL_TEXT, wxT("Выделить всё"));
+		if (_style & SYNTAX_STYLE_COLORED)
+		{
+			menu.AppendSeparator();
+			menu.Append(LOC_JUMP_LOC, wxT("Перейти на выбранную локацию"));
+		}
+		_controls->UpdateMenuItems(&menu);
+		PopupMenu(&menu);
 	}
-	_controls->UpdateMenuItems(&menu);
-	PopupMenu(&menu);
 }
 
 void SyntaxTextBox::SetValue( const wxString &str )

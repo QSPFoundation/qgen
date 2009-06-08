@@ -353,8 +353,8 @@ OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *
 	_lstHotKeys->InsertColumn(1, wxT("Исполняемая команда"), wxLIST_FORMAT_LEFT, 150);
 
 	wxBoxSizer *btnHotkKeysSizer = new wxBoxSizer(wxHORIZONTAL);
-	_btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEW_HKEY, wxT("Добавить"));
-	_btnEditHotKey = new wxButton(_hotkeys, ID_EDIT_HKEY, wxT("Редактировать"));
+	_btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEW_HKEY, wxT("Добавить..."));
+	_btnEditHotKey = new wxButton(_hotkeys, ID_EDIT_HKEY, wxT("Редактировать..."));
 	_btnDelHotKey = new wxButton(_hotkeys, ID_DELETE_HKEY, wxT("Удалить"));
 
 	btnHotkKeysSizer->Add(_btnAddNewHotKey, wxALL, 5);
@@ -929,7 +929,7 @@ void OptionsDialog::EditHotKey()
 	{
 		hotKeyData.Hotkey = _lstHotKeys->GetItemText(index);
 		hotKeyData.CommandText = _hotkeysCmds[index];
-		OptionsHotkeysDialog dialog(this, wxT("Новая команда"), _controls);
+		OptionsHotkeysDialog dialog(this, wxT("Редактирование команды"), _controls);
 		dialog.SetHotkeyData(hotKeyData);
 		dialog.CenterOnParent();
 		do
@@ -966,7 +966,7 @@ void OptionsDialog::AddHotKey()
 	HotkeyData hotKeyData;
 	long index;
 	bool isError = true;
-	OptionsHotkeysDialog dialog(this, wxT("Новая команда"), _controls);
+	OptionsHotkeysDialog dialog(this, wxT("Добавление команды"), _controls);
 	dialog.CenterOnParent();
 	do
 	{
