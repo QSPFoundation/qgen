@@ -85,12 +85,12 @@ void KeysParser::ParseText(const wxString &text)
 	{
 		if (*i == wxT('{'))
 		{
+			keys.clear();
 			while (++i != text.end())
 			{
 				if (*i == wxT('}'))
 				{
-					OnKeysPress(keys);	
-					keys.clear();
+					OnKeysPress(keys);
 					break;
 				}
 				keys.append(*i);
