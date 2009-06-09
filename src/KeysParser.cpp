@@ -69,9 +69,7 @@ void KeysParser::OnKeyPress(int keyCode)
 	input.ki.dwFlags = KEYEVENTF_UNICODE;
 	SendInput(1, &input, sizeof(INPUT));
 	input.ki.dwFlags |= KEYEVENTF_KEYUP;
-	wxYieldIfNeeded();
 	SendInput(1, &input, sizeof(INPUT));
-	wxYieldIfNeeded();
 }
 
 void KeysParser::ParseText(const wxString &text)
@@ -127,9 +125,7 @@ void KeysParser::OnKeysPress(const wxString &text)
 		SendInput(count, inputs, sizeof(INPUT));
 		for (int i = 0; i < count; ++i)
 			inputs[i].ki.dwFlags |= KEYEVENTF_KEYUP;
-		wxYieldIfNeeded();
 		SendInput(count, inputs, sizeof(INPUT));
-		wxYieldIfNeeded();
 	}
 }
 

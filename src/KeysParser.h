@@ -32,6 +32,7 @@
 
 	class KeysParser
 	{
+	private:
 		std::map<wxString, int> _keysTable;
 		HotkeysStore *_hotKeysStore;
 
