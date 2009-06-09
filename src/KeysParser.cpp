@@ -110,7 +110,7 @@ void KeysParser::OnKeysPress(const wxString &text)
 	wxString str;
 	for (size_t i = 0; i < strs.GetCount(); ++i)
 	{
-		if (count == 9) break;
+		if (count >= 9) break;
 		str = strs[i].Trim().Trim(false);
 		length = str.length();
 		if (length == 0) continue;
@@ -123,7 +123,7 @@ void KeysParser::OnKeysPress(const wxString &text)
 	if (count > 0)
 	{
 		SendInput(count, inputs, sizeof(INPUT));
-		for (int i = 0; i < count; ++i)
+		for (size_t i = 0; i < count; ++i)
 			inputs[i].ki.dwFlags |= KEYEVENTF_KEYUP;
 		SendInput(count, inputs, sizeof(INPUT));
 	}
@@ -166,7 +166,7 @@ bool KeysParser::ExecuteHotkeyAction( int keyCode, int modifiers )
 	for (size_t i = 0; i < countHotKeys; ++i)
 	{
 		hotKey = _hotKeysStore->GetHotkeyData(i);
-		if(IsHotkeyMatches(keyCode, modifiers, hotKey.Hotkey))
+		if (IsHotkeyMatches(keyCode, modifiers, hotKey.Hotkey))
 		{
 			ParseText(hotKey.CommandText);
 			return true;
