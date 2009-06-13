@@ -16,9 +16,6 @@
 */
 
 #include "LocationsListBox.h"
-#include "wx/arrimpl.cpp"
-
-WX_DEFINE_OBJARRAY(wxTreeItemIdArray);
 
 IMPLEMENT_CLASS(LocationsListBox, wxTreeCtrl)
 
@@ -124,19 +121,31 @@ void LocationsListBox::OnDoubleClick(wxMouseEvent &event )
 void LocationsListBox::Insert(const wxString &text, size_t pos)
 {
 	if (_controls->GetSettings()->GetShowLocsIcons())
-		_items.Insert(InsertItem(GetRootItem(), pos, text, ICON_NOTACTIVELOCATION), pos);
+		InsertItem(GetRootItem(), pos, text, ICON_NOTACTIVELOCATION);
 	else
-		_items.Insert(InsertItem(GetRootItem(), pos, text), pos);
+		InsertItem(GetRootItem(), pos, text);
+}
+
+wxTreeItemId LocationsListBox::GetItemByPos(const wxTreeItemId &parent, size_t index)
+{
+	wxTreeItemIdValue cookie;
+	wxTreeItemId idCur = GetFirstChild(parent, cookie);
+	while (index != 0 && idCur.IsOk())
+	{
+		index--;
+		idCur = GetNextChild(parent, cookie);
+	}
+	return idCur;
 }
 
 void LocationsListBox::Select( size_t index )
 {
-	SelectItem(_items[index]);
+	SelectItem(GetItemByPos(GetRootItem(), index));
 }
 
 wxString LocationsListBox::GetString( size_t index )
 {
-	return GetItemText(_items[index]);
+	return GetItemText(GetItemByPos(GetRootItem(), index));
 }
 
 wxString LocationsListBox::GetStringSelection()
@@ -155,14 +164,21 @@ wxString LocationsListBox::GetStringSelection()
 
 long LocationsListBox::GetStringIndex( const wxString &text )
 {
-	for (size_t i = 0; i < _items.GetCount(); ++i)
-		if (GetItemText(_items[i]) == text) return (long)i;
+	long index = 0;
+	wxTreeItemIdValue cookie;
+	wxTreeItemId idCur = GetFirstChild(GetRootItem(), cookie);
+	while (idCur.IsOk())
+	{
+		if (GetItemText(idCur) == text)
+			return index;
+		index++;
+		idCur = GetNextChild(GetRootItem(), cookie);
+	}
 	return wxNOT_FOUND;
 }
 
 void LocationsListBox::Clear()
 {
-	_items.Clear();
 	Freeze();
 	DeleteChildren(GetRootItem());
 	Thaw();
@@ -171,7 +187,7 @@ void LocationsListBox::Clear()
 void LocationsListBox::UpdateLocationActions( size_t locIndex, const wxArrayString & actions )
 {
 	size_t i, count = actions.GetCount();
-	wxTreeItemId id = _items[locIndex];
+	wxTreeItemId id = GetItemByPos(GetRootItem(), locIndex);
 	DeleteChildren(id);
 	if (_controls->GetSettings()->GetShowLocsIcons())
 		for (i = 0; i < count; ++i) AppendItem(id, actions[i], ICON_ACTION);
@@ -181,37 +197,48 @@ void LocationsListBox::UpdateLocationActions( size_t locIndex, const wxArrayStri
 
 size_t LocationsListBox::GetCount()
 {
-	return _items.GetCount();
+	return GetChildrenCount(GetRootItem(), false);
 }
 
 void LocationsListBox::Delete( size_t index )
 {
-	wxTreeCtrl::Delete(_items[index]);
-	_items.RemoveAt(index);
+	wxTreeCtrl::Delete(GetItemByPos(GetRootItem(), index));
 }
 
 void LocationsListBox::SetString( size_t index, const wxString & text )
 {
-	SetItemText(_items[index], text);
+	SetItemText(GetItemByPos(GetRootItem(), index), text);
 }
 
 void LocationsListBox::ExpandItems()
 {
-	if (!_items.GetCount()) return;
+	if (!GetCount()) return;
 	Freeze();
-	for (size_t i = 0; i < _items.GetCount(); ++i)
-		ExpandAllChildren(_items[i]);
-	ScrollTo(_items[0]);
+	wxTreeItemIdValue cookie;
+	wxTreeItemId id = GetFirstChild(GetRootItem(), cookie);
+	wxTreeItemId idFirst = id;
+	while (id.IsOk())
+	{
+		ExpandAllChildren(id);
+		id = GetNextChild(GetRootItem(), cookie);
+	}
+	ScrollTo(idFirst);
 	Thaw();
 }
 
 void LocationsListBox::CollapseItems()
 {
-	if (!_items.GetCount()) return;
+	if (!GetCount()) return;
 	Freeze();
-	for (size_t i = 0; i < _items.GetCount(); ++i)
-		CollapseAllChildren(_items[i]);
-	ScrollTo(_items[0]);
+	wxTreeItemIdValue cookie;
+	wxTreeItemId id = GetFirstChild(GetRootItem(), cookie);
+	wxTreeItemId idFirst = id;
+	while (id.IsOk())
+	{
+		CollapseAllChildren(id);
+		id = GetNextChild(GetRootItem(), cookie);
+	}
+	ScrollTo(idFirst);
 	Thaw();
 }
 
@@ -282,17 +309,18 @@ void LocationsListBox::OnEndDrag( wxTreeEvent &event )
 
 void LocationsListBox::MoveItemTo( size_t locIndex, size_t moveTo )
 {
-	wxString label(GetString(locIndex));
-	int image = GetItemImage(_items[locIndex]);
-	Delete(locIndex);
-	_items.Insert(InsertItem(GetRootItem(), moveTo, label, image), moveTo);
+	wxTreeItemId id(GetItemByPos(GetRootItem(), locIndex));
+	wxString label(GetItemText(id));
+	int image = GetItemImage(id);
+	wxTreeCtrl::Delete(id);
+	InsertItem(GetRootItem(), moveTo, label, image);
 	Select(moveTo);
 }
 
 void LocationsListBox::SetLocStatus( size_t locIndex, bool isOpened )
 {
 	if (_controls->GetSettings()->GetShowLocsIcons())
-		SetItemImage(_items[locIndex], isOpened ? ICON_ACTIVELOCATION : ICON_NOTACTIVELOCATION);
+		SetItemImage(GetItemByPos(GetRootItem(), locIndex), isOpened ? ICON_ACTIVELOCATION : ICON_NOTACTIVELOCATION);
 }
 
 void LocationsListBox::ApplyStatesImageList()

@@ -28,8 +28,6 @@
 	#include "bitmaps/location.xpm"
 	#include "bitmaps/action.xpm"
 
-	WX_DECLARE_OBJARRAY(wxTreeItemId, wxTreeItemIdArray);
-
 	enum
 	{
 		ICON_NOTACTIVELOCATION,
@@ -43,7 +41,6 @@
 		DECLARE_EVENT_TABLE()
 	private:
 		IControls *_controls;
-		wxTreeItemIdArray _items;
 		wxImageList _statesImageList;
 		long _draggedLocIndex;
 		long _draggedActIndex;
@@ -54,6 +51,7 @@
 		void OnBeginDrag(wxTreeEvent &event);
 		void OnEndDrag(wxTreeEvent &event);
 		bool IsItemOk(wxTreeItemId id, int flags);
+		wxTreeItemId GetItemByPos(const wxTreeItemId &parent, size_t index);
 	public:
 		LocationsListBox(wxWindow *parent, wxWindowID id, IControls *controls,
 						 long style = wxTR_HAS_BUTTONS|wxTR_LINES_AT_ROOT|
