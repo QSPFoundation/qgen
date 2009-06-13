@@ -108,6 +108,7 @@ void KeysParser::OnKeysPress(const wxString &text)
 	wxArrayString strs = wxSplit(text.Upper(), wxT('+'));
 	int length, code, count = 0;
 	wxString str;
+	bool hasEnter = false;
 	for (size_t i = 0; i < strs.GetCount(); ++i)
 	{
 		if (count >= 9) break;
@@ -118,6 +119,7 @@ void KeysParser::OnKeysPress(const wxString &text)
 		if (code == 0) continue;
 		inputs[count].type = INPUT_KEYBOARD;
 		inputs[count].ki.wVk = code;
+		if (code == VK_RETURN) hasEnter = true;
 		++count;
 	}
 	if (count > 0)
@@ -126,6 +128,7 @@ void KeysParser::OnKeysPress(const wxString &text)
 		for (size_t i = 0; i < count; ++i)
 			inputs[i].ki.dwFlags |= KEYEVENTF_KEYUP;
 		SendInput(count, inputs, sizeof(INPUT));
+		if (hasEnter) wxYieldIfNeeded();
 	}
 }
 
