@@ -28,6 +28,7 @@ KeysParser::KeysParser(HotkeysStore *hotKeysStore)
 
 void KeysParser::InitKeysTable()
 {
+	_keysTable["EVENT"] = 0xFF;
 	_keysTable["LEFT"] = VK_LEFT;
 	_keysTable["RIGHT"] = VK_RIGHT;
 	_keysTable["UP"] = VK_UP;
@@ -108,7 +109,7 @@ void KeysParser::OnKeysPress(const wxString &text)
 	wxArrayString strs = wxSplit(text.Upper(), wxT('+'));
 	int length, code, count = 0;
 	wxString str;
-	bool hasEnter = false;
+	bool hasEvent = false;
 	for (size_t i = 0; i < strs.GetCount(); ++i)
 	{
 		if (count >= 9) break;
@@ -116,10 +117,15 @@ void KeysParser::OnKeysPress(const wxString &text)
 		length = str.length();
 		if (length == 0) continue;
 		code = (length > 1 ? _keysTable[str] : str[0]);
-		if (code == 0) continue;
+		switch (code)
+		{
+		case 0xFF:
+			hasEvent = true;
+		case 0:
+			continue;
+		}
 		inputs[count].type = INPUT_KEYBOARD;
 		inputs[count].ki.wVk = code;
-		if (code == VK_RETURN) hasEnter = true;
 		++count;
 	}
 	if (count > 0)
@@ -128,8 +134,8 @@ void KeysParser::OnKeysPress(const wxString &text)
 		for (size_t i = 0; i < count; ++i)
 			inputs[i].ki.dwFlags |= KEYEVENTF_KEYUP;
 		SendInput(count, inputs, sizeof(INPUT));
-		if (hasEnter) wxYieldIfNeeded();
 	}
+	if (hasEvent) wxYieldIfNeeded();
 }
 
 bool KeysParser::IsHotkeyMatches(int keyCode, int modifiers, const wxString &hotkey)
