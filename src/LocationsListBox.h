@@ -51,7 +51,7 @@
 		void OnBeginDrag(wxTreeEvent &event);
 		void OnEndDrag(wxTreeEvent &event);
 		bool IsItemOk(wxTreeItemId id, int flags);
-		wxTreeItemId GetItemByPos(const wxTreeItemId &parent, size_t index);
+		wxTreeItemId GetLocByPos(size_t index);
 	public:
 		LocationsListBox(wxWindow *parent, wxWindowID id, IControls *controls,
 						 long style = wxTR_HAS_BUTTONS|wxTR_LINES_AT_ROOT|

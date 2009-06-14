@@ -126,8 +126,9 @@ void LocationsListBox::Insert(const wxString &text, size_t pos)
 		InsertItem(GetRootItem(), pos, text);
 }
 
-wxTreeItemId LocationsListBox::GetItemByPos(const wxTreeItemId &parent, size_t index)
+wxTreeItemId LocationsListBox::GetLocByPos(size_t index)
 {
+	wxTreeItemId parent(GetRootItem());
 	wxTreeItemIdValue cookie;
 	wxTreeItemId idCur = GetFirstChild(parent, cookie);
 	while (index != 0 && idCur.IsOk())
@@ -140,12 +141,12 @@ wxTreeItemId LocationsListBox::GetItemByPos(const wxTreeItemId &parent, size_t i
 
 void LocationsListBox::Select( size_t index )
 {
-	SelectItem(GetItemByPos(GetRootItem(), index));
+	SelectItem(GetLocByPos(index));
 }
 
 wxString LocationsListBox::GetString( size_t index )
 {
-	return GetItemText(GetItemByPos(GetRootItem(), index));
+	return GetItemText(GetLocByPos(index));
 }
 
 wxString LocationsListBox::GetStringSelection()
@@ -164,15 +165,16 @@ wxString LocationsListBox::GetStringSelection()
 
 long LocationsListBox::GetStringIndex( const wxString &text )
 {
+	wxTreeItemId parent(GetRootItem());
 	long index = 0;
 	wxTreeItemIdValue cookie;
-	wxTreeItemId idCur = GetFirstChild(GetRootItem(), cookie);
+	wxTreeItemId idCur = GetFirstChild(parent, cookie);
 	while (idCur.IsOk())
 	{
 		if (GetItemText(idCur) == text)
 			return index;
 		index++;
-		idCur = GetNextChild(GetRootItem(), cookie);
+		idCur = GetNextChild(parent, cookie);
 	}
 	return wxNOT_FOUND;
 }
@@ -187,7 +189,7 @@ void LocationsListBox::Clear()
 void LocationsListBox::UpdateLocationActions( size_t locIndex, const wxArrayString & actions )
 {
 	size_t i, count = actions.GetCount();
-	wxTreeItemId id = GetItemByPos(GetRootItem(), locIndex);
+	wxTreeItemId id = GetLocByPos(locIndex);
 	DeleteChildren(id);
 	if (_controls->GetSettings()->GetShowLocsIcons())
 		for (i = 0; i < count; ++i) AppendItem(id, actions[i], ICON_ACTION);
@@ -202,25 +204,26 @@ size_t LocationsListBox::GetCount()
 
 void LocationsListBox::Delete( size_t index )
 {
-	wxTreeCtrl::Delete(GetItemByPos(GetRootItem(), index));
+	wxTreeCtrl::Delete(GetLocByPos(index));
 }
 
 void LocationsListBox::SetString( size_t index, const wxString & text )
 {
-	SetItemText(GetItemByPos(GetRootItem(), index), text);
+	SetItemText(GetLocByPos(index), text);
 }
 
 void LocationsListBox::ExpandItems()
 {
 	if (!GetCount()) return;
 	Freeze();
+	wxTreeItemId parent(GetRootItem());
 	wxTreeItemIdValue cookie;
-	wxTreeItemId id = GetFirstChild(GetRootItem(), cookie);
+	wxTreeItemId id = GetFirstChild(parent, cookie);
 	wxTreeItemId idFirst = id;
 	while (id.IsOk())
 	{
 		ExpandAllChildren(id);
-		id = GetNextChild(GetRootItem(), cookie);
+		id = GetNextChild(parent, cookie);
 	}
 	ScrollTo(idFirst);
 	Thaw();
@@ -230,13 +233,14 @@ void LocationsListBox::CollapseItems()
 {
 	if (!GetCount()) return;
 	Freeze();
+	wxTreeItemId parent(GetRootItem());
 	wxTreeItemIdValue cookie;
-	wxTreeItemId id = GetFirstChild(GetRootItem(), cookie);
+	wxTreeItemId id = GetFirstChild(parent, cookie);
 	wxTreeItemId idFirst = id;
 	while (id.IsOk())
 	{
 		CollapseAllChildren(id);
-		id = GetNextChild(GetRootItem(), cookie);
+		id = GetNextChild(parent, cookie);
 	}
 	ScrollTo(idFirst);
 	Thaw();
@@ -309,7 +313,7 @@ void LocationsListBox::OnEndDrag( wxTreeEvent &event )
 
 void LocationsListBox::MoveItemTo( size_t locIndex, size_t moveTo )
 {
-	wxTreeItemId id(GetItemByPos(GetRootItem(), locIndex));
+	wxTreeItemId id(GetLocByPos(locIndex));
 	wxString label(GetItemText(id));
 	int image = GetItemImage(id);
 	wxTreeCtrl::Delete(id);
@@ -320,7 +324,7 @@ void LocationsListBox::MoveItemTo( size_t locIndex, size_t moveTo )
 void LocationsListBox::SetLocStatus( size_t locIndex, bool isOpened )
 {
 	if (_controls->GetSettings()->GetShowLocsIcons())
-		SetItemImage(GetItemByPos(GetRootItem(), locIndex), isOpened ? ICON_ACTIVELOCATION : ICON_NOTACTIVELOCATION);
+		SetItemImage(GetLocByPos(locIndex), isOpened ? ICON_ACTIVELOCATION : ICON_NOTACTIVELOCATION);
 }
 
 void LocationsListBox::ApplyStatesImageList()
