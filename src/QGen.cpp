@@ -921,12 +921,12 @@ bool QGenMainFrame::SearchHelpFile()
 
 void QGenMainFrame::OnExpandLocation( wxCommandEvent &event )
 {
-	_locListBox->ExpandItems();
+	_locListBox->ExpandCollapseItems(true);
 }
 
 void QGenMainFrame::OnCollapseLocation( wxCommandEvent &event )
 {
-	_locListBox->CollapseItems();
+	_locListBox->ExpandCollapseItems(false);
 }
 
 void QGenMainFrame::OnJumpLocation( wxCommandEvent &event )

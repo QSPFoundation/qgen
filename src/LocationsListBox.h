@@ -70,8 +70,7 @@
 		wxString GetStringSelection();
 		void Clear();
 		size_t GetCount();
-		void ExpandItems();
-		void CollapseItems();
+		void ExpandCollapseItems(bool isExpand);
 		void ApplyStatesImageList();
 
 		void UpdateLocationActions(size_t locIndex, const wxArrayString & actions);
