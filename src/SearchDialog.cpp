@@ -23,6 +23,7 @@ BEGIN_EVENT_TABLE(SearchDialog, wxDialog)
 	EVT_BUTTON(FIND_NEXT, SearchDialog::OnFindNext)
 	EVT_BUTTON(FIND_ANEW, SearchDialog::OnFindAgain)
 	EVT_BUTTON(FIND_REPL, SearchDialog::OnFindRepl)
+	EVT_BUTTON(FIND_REPLALL, SearchDialog::OnFindReplAll)
 	EVT_BUTTON(FIND_SKIPLOC, SearchDialog::OnSkipLoc)
 	EVT_TEXT(FIND_TEXT, SearchDialog::OnUpdFindText)
 	EVT_TEXT_ENTER(FIND_TEXT, SearchDialog::OnFindNext)
@@ -56,11 +57,13 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 	_btnNextSearch = new wxButton(this, FIND_NEXT, wxT("Продолжить поиск"));
 	_btnSkipLoc = new wxButton(this, FIND_SKIPLOC, wxT("Пропустить локацию"));
 	_btnReplace = new wxButton(this, FIND_REPL, wxT("Заменить"));
+	_btnReplaceAll = new wxButton(this, FIND_REPLALL, wxT("Заменить все"));
 	_btnClose = new wxButton(this, wxID_CANCEL, wxT("Закрыть"));
 
 	rightSizer->Add(_btnNextSearch, 1, wxALL|wxGROW, 1);
 	rightSizer->Add(_btnSearchAgain, 1, wxALL|wxGROW, 1);
 	rightSizer->Add(_btnReplace, 1, wxALL|wxGROW, 1);
+	rightSizer->Add(_btnReplaceAll, 1, wxALL|wxGROW, 1);
 	rightSizer->Add(_btnSkipLoc, 1, wxALL|wxGROW, 1);
 	rightSizer->Add(_btnClose, 1, wxALL|wxGROW, 1);
 
@@ -106,6 +109,23 @@ void SearchDialog::OnFindRepl( wxCommandEvent &event )
 	_btnNextSearch->SetDefault();
 }
 
+void SearchDialog::OnFindReplAll( wxCommandEvent &event )
+{
+	wxString str = _textRepl->GetValue();
+	_controls->ReplaceSearchString(str);
+	wxString str1 = _textFind->GetValue();
+	bool flag = _controls->SearchString( str1, true, _chkMatchCase->GetValue(), _chkWholeWord->GetValue() );
+	AddSearchText(str1);
+	AddReplaceText(str);
+	while (flag)
+	{
+		_controls->ReplaceSearchString(str);
+		flag = _controls->SearchString( str1, false, _chkMatchCase->GetValue(), _chkWholeWord->GetValue() );
+	}
+	_textRepl->SetFocus();
+	_btnNextSearch->SetDefault();
+}
+
 void SearchDialog::OnUpdFindText( wxCommandEvent& event )
 {
 	bool status = !_textFind->GetValue().IsEmpty();
@@ -113,6 +133,7 @@ void SearchDialog::OnUpdFindText( wxCommandEvent& event )
 	_btnSearchAgain->Enable(status);
 	_btnSkipLoc->Enable(status);
 	_btnReplace->Enable(status);
+	_btnReplaceAll->Enable(status);
 }
 
 void SearchDialog::OnSkipLoc( wxCommandEvent &event )

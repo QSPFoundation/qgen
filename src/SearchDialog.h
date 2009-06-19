@@ -35,6 +35,7 @@
 					*_btnNextSearch,
 					*_btnSearchAgain,
 					*_btnReplace,
+					*_btnReplaceAll,
 					*_btnSkipLoc;
 		Controls	*_controls;
 		SearchDataStore *_searchDataStore;
@@ -42,6 +43,7 @@
 		void OnFindNext(wxCommandEvent &event);
 		void OnFindAgain(wxCommandEvent &event);
 		void OnFindRepl(wxCommandEvent &event);
+		void OnFindReplAll(wxCommandEvent &event);
 		void OnSkipLoc(wxCommandEvent &event);
 		void OnUpdFindText(wxCommandEvent& event);
 
