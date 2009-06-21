@@ -20,20 +20,30 @@
 
 WX_DEFINE_OBJARRAY(ActionDataArray);
 WX_DEFINE_OBJARRAY(LocationDataArray);
+WX_DEFINE_OBJARRAY(SectionDataArray);
 
-int CmpLocationsAsc(LocationData **loc1, LocationData **loc2)
+int CmpLocationsAsc(const wxString &first, const wxString &second)
 {
-	return (*loc1)->name.Cmp((*loc2)->name);
+	return first.CmpNoCase(second);
 }
 
-int CmpLocationsDesc(LocationData **loc1, LocationData **loc2)
+int CmpLocationsDesc(const wxString &first, const wxString &second)
 {
-	return (*loc2)->name.Cmp((*loc1)->name);
+	return second.CmpNoCase(first);
 }
 
 DataContainer::DataContainer()
 {
 	_isSaved = true;
+}
+
+int DataContainer::FindSectionIndex( const wxString &name )
+{
+	wxString lwrName(name.Lower());
+	int i, count = _sections.GetCount();
+	for (i = 0; i < count; ++i)
+		if (lwrName == _sections[i].name.Lower()) return i;
+	return wxNOT_FOUND;
 }
 
 int DataContainer::FindLocationIndex(const wxString & nameLocation)
@@ -60,6 +70,7 @@ int DataContainer::InsertLocation(const wxString &name, size_t pos)
 	if (FindLocationIndex(name) >= 0) return wxNOT_FOUND;
 	LocationData *loc = new LocationData;
 	loc->name = name;
+	loc->sectionIndex = wxNOT_FOUND;
 	locationArray.Insert(loc, pos);
 	_isSaved = false;
 	return (int)pos;
@@ -68,7 +79,7 @@ int DataContainer::InsertLocation(const wxString &name, size_t pos)
 bool DataContainer::RenameLocation(size_t locIndex, const wxString& newName)
 {
 	int index = FindLocationIndex(newName);
-	if (locIndex < 0 || (index >= 0 && index != locIndex)) return false;
+	if (index >= 0 && index != locIndex) return false;
 	locationArray[locIndex].name = newName;
 	_isSaved = false;
 	return true;
@@ -99,7 +110,7 @@ int DataContainer::AddAction(size_t indexLoc, const wxString& actName)
 bool DataContainer::RenameAction(size_t locIndex, size_t actIndex, const wxString& actNewName)
 {
 	int index = FindActionIndex(locIndex, actNewName);
-	if (actIndex < 0 || (index >= 0 && index != actIndex)) return false;
+	if (index >= 0 && index != actIndex) return false;
 	locationArray[locIndex].actionArray[actIndex].description = actNewName;
 	_isSaved = false;
 	return true;
@@ -146,20 +157,6 @@ wxString DataContainer::GetLocationDesc(size_t indexLoc)
 wxString DataContainer::GetLocationCode(size_t indexLoc)
 {
 	return locationArray[indexLoc].onVisit;
-}
-
-void DataContainer::SortLocations(bool isAscending)
-{
-	if (locationArray.GetCount() > 2)
-	{
-		LocationData *data = locationArray.Detach(0);
-		if (isAscending)
-			locationArray.Sort(CmpLocationsAsc);
-		else
-			locationArray.Sort(CmpLocationsDesc);
-		locationArray.Insert(data, 0);
-		_isSaved = false;
-	}
 }
 
 void DataContainer::ClearLocation(size_t locIndex)
@@ -209,6 +206,7 @@ size_t DataContainer::GetLocationsCount()
 void DataContainer::Clear()
 {
 	locationArray.Clear();
+	_sections.Clear();
 	_isSaved = false;
 }
 
@@ -228,6 +226,7 @@ bool DataContainer::GetLocActions( size_t indexLoc, wxArrayString & actions )
 
 void DataContainer::MoveLocationTo( size_t locIndex, size_t moveTo )
 {
+	if (locIndex == moveTo) return;
 	LocationData *data = locationArray.Detach(locIndex);
 	locationArray.Insert(data, moveTo);
 	_isSaved = false;
@@ -238,4 +237,122 @@ void DataContainer::MoveActionTo( size_t locIndex, size_t actIndex, size_t moveT
 	ActionData *data = locationArray[locIndex].actionArray.Detach(actIndex);
 	locationArray[locIndex].actionArray.Insert(data, moveTo);
 	_isSaved = false;
+}
+
+void DataContainer::SetLocSection( size_t locIndex, int sectionIndex )
+{
+	if (locationArray[locIndex].sectionIndex == sectionIndex)
+		return;
+	locationArray[locIndex].sectionIndex = sectionIndex;
+	_isSaved = false;
+}
+
+int DataContainer::GetLocSection( size_t locIndex )
+{
+	return locationArray[locIndex].sectionIndex;
+}
+
+bool DataContainer::AddSection( const wxString &name )
+{
+	if (FindSectionIndex(name) >= 0) return false;
+	SectionData *data = new SectionData;
+	data->name = name;
+	data->pos = wxNOT_FOUND;
+	_sections.Add(data);
+	_isSaved = false;
+	return true;
+}
+
+bool DataContainer::RenameSection( size_t sectionIndex, const wxString &newName )
+{
+	int index = FindSectionIndex(newName);
+	if (index >= 0 && index != sectionIndex) return false;
+	_sections[sectionIndex].name = newName;
+	_isSaved = false;
+	return true;
+}
+
+void DataContainer::DeleteSection( size_t sectionIndex )
+{
+	long count = locationArray.GetCount();
+	for (long i = count - 1; i >= 0; --i)
+	{
+		if (locationArray[i].sectionIndex == sectionIndex)
+			locationArray[i].sectionIndex = -1;
+		else if (locationArray[i].sectionIndex > (int)sectionIndex)
+			locationArray[i].sectionIndex--;
+	}
+	count = _sections.GetCount();
+	for (long i = count - 1; i >= 0; --i)
+	{
+		if (i > sectionIndex)
+			_sections[i].pos--;
+	}
+	_sections.RemoveAt(sectionIndex);
+	_isSaved = false;
+}
+
+void DataContainer::MoveSection( size_t sectionIndex, long moveToSecPos, long pos )
+{
+	if (sectionIndex == moveToSecPos && _sections[sectionIndex].pos == pos)
+		return;
+	SectionData *data = _sections.Detach(sectionIndex);
+	_sections.Insert(data, moveToSecPos);
+	_sections[moveToSecPos].pos = pos;
+	_isSaved = false;
+}
+
+size_t DataContainer::GetSectionsCount()
+{
+	return _sections.GetCount();
+}
+
+wxString DataContainer::GetSectionName( size_t index )
+{
+	return _sections[index].name;
+}
+
+int DataContainer::FindSectionForPos( size_t pos )
+{
+	size_t count = _sections.GetCount();
+	for (size_t i = 0; i < count; ++i)
+	{
+		if (_sections[i].pos == pos)
+			return i;
+	}
+	return wxNOT_FOUND;
+}
+
+void DataContainer::SortLocsInFolder( int folderIndex, bool isAscending )
+{
+	wxArrayString names;
+	wxArrayInt positions;
+	LocationData *data = locationArray.Detach(0);
+	size_t count = locationArray.GetCount();
+	long startIndex = -1;
+	for (size_t i = 0; i < count; ++i)
+	{
+		if (locationArray[i].sectionIndex == folderIndex)
+		{
+			if (startIndex < 0) startIndex = i;
+			positions.Add(startIndex);
+			names.Add(locationArray[i].name);
+		}
+		else
+			startIndex = -1;
+	}
+	if (isAscending)
+		names.Sort(CmpLocationsAsc);
+	else
+		names.Sort(CmpLocationsDesc);
+	size_t namesCount = names.GetCount();
+	for (size_t i = 0; i < namesCount; ++i)
+	{
+		long index = FindLocationIndex(names[i]);
+		long moveTo = i + positions[i];
+		if (moveTo >= count)
+			moveTo = count - 1;
+		MoveLocationTo(index, moveTo);
+	}
+	locationArray.Insert(data, 0);
 }

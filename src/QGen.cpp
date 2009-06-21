@@ -35,6 +35,9 @@ BEGIN_EVENT_TABLE(QGenMainFrame, wxFrame)
 	EVT_MENU(HELP_ABOUT, QGenMainFrame::OnAbout)
 	EVT_MENU(HELP_HELP, QGenMainFrame::OnChmHelp)
 	EVT_MENU(HELP_SEARCH_INDEX, QGenMainFrame::OnSearchHelp)
+	EVT_MENU(FOLDER_CREAT, QGenMainFrame::OnCreateFolder)
+	EVT_MENU(FOLDER_RENAME, QGenMainFrame::OnRenameFolder)
+	EVT_MENU(FOLDER_DEL, QGenMainFrame::OnDeleteFolder)
 	EVT_MENU(LOC_CREAT, QGenMainFrame::OnCreateLocation)
 	EVT_MENU(LOC_DEL, QGenMainFrame::OnDeleteLocation)
 	EVT_MENU(LOC_RENAME, QGenMainFrame::OnRenameLocation)
@@ -937,4 +940,19 @@ void QGenMainFrame::OnJumpLocation( wxCommandEvent &event )
 void QGenMainFrame::OnKeyDown( wxKeyEvent& event )
 {
 	_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers());
+}
+
+void QGenMainFrame::OnCreateFolder( wxCommandEvent &event )
+{
+	_controls->AddFolder();
+}
+
+void QGenMainFrame::OnRenameFolder( wxCommandEvent &event )
+{
+	_controls->RenameSelectedFolder();
+}
+
+void QGenMainFrame::OnDeleteFolder( wxCommandEvent &event )
+{
+	_controls->DeleteSelectedFolder();
 }

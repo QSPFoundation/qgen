@@ -97,12 +97,13 @@
 		wxString GetGamePass() const { return _currentGamePass; }
 
 		int GetSelectedLocationIndex();
+		int GetSelectedFolderIndex();
 		void SelectLocation(size_t locIndex);
+		bool RenameFolder(size_t folderIndex, const wxString &name);
 		bool RenameLocation(size_t locIndex, const wxString &name);
 		bool RenameAction(size_t locIndex, size_t actIndex, const wxString &name);
 		int AddLocationByName(const wxString &name);
 		int AddLocation(const wxString &name = wxEmptyString);
-		void UpdateLocActions(size_t locIndex);
 		void UpdateActionsOnAllLocs();
 
 		bool DeleteSelectedLocation();
@@ -114,6 +115,7 @@
 		void UpdateLocationIcon(size_t locIndex, bool isOpened);
 		void UpdateMenuItems(wxMenu *menu);
 		void ShowOpenedLocationsIcons();
+		void SyncWithLocationsList();
 
 		bool AddActionOnSelectedLoc();
 		bool DeleteSelectedAction();
@@ -178,12 +180,15 @@
 		void SwitchLocActs();
 
 		LocationPage *ShowLocation(const wxString & locName);
-		void MoveLocationTo(size_t locIndex, size_t moveTo);
 		void MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo);
 
 		void SetLastSaveTime(wxLongLong lastSaveTime) { _lastSaveTime = lastSaveTime; }
 		wxLongLong GetLastSaveTime() { return _lastSaveTime; }
 		bool ExecuteHotkey(int keyCode, int modifiers);
+
+		bool AddFolder();
+		bool DeleteSelectedFolder();
+		bool RenameSelectedFolder();
 	};
 
 #endif

@@ -57,19 +57,20 @@ int Controls::GetSelectedLocationIndex()
 	return wxNOT_FOUND;
 }
 
-void Controls::SelectLocation(size_t locIndex)
-{
-	_locListBox->Select(locIndex);
-}
-
 int Controls::AddLocationByName(const wxString &name)
 {
-	int locInd = _locListBox->GetStringIndex(_locListBox->GetStringSelection());
-	locInd = (locInd >= 0 ? locInd + 1 : _container->GetLocationsCount());
+	wxString locName(_locListBox->GetStringSelection());
+	wxString folder(_locListBox->GetSelectedFolder());
+	int locInd = _container->FindLocationIndex(locName);
+	if (locInd >= 0)
+		++locInd;
+	else
+		locInd = _container->GetLocationsCount();
 	if (_container->InsertLocation(name, locInd) >= 0)
 	{
+		_container->SetLocSection(locInd, _container->FindSectionIndex(folder));
 		UpdateOpenedLocationsIndexes();
-		_locListBox->Insert(name, locInd);
+		_locListBox->Insert(name, locName, folder);
 		if (_settings->GetOpenNewLoc()) ShowLocation(name);
 		return locInd;
 	}
@@ -146,7 +147,7 @@ bool Controls::DeleteSelectedLocation()
 	{
 		int index = _locNotebook->FindPageIndex(locName);
 		if ( index >= 0 ) _locNotebook->DeletePage(index);
-		_locListBox->Delete(locIndex);
+		_locListBox->Delete(locName);
 		_container->DeleteLocation(locIndex);
 		UpdateOpenedLocationsIndexes();
 		InitSearchData();
@@ -190,7 +191,7 @@ bool Controls::AddActionOnSelectedLoc()
 						page->SelectAction(actIndex);
 						page->SetFocusOnActionCode();
 					}
-					UpdateLocActions(locIndex);
+					_locListBox->UpdateLocationActions(_container->GetLocationName(locIndex));
 					return true;
 				}
 				else
@@ -213,7 +214,7 @@ bool Controls::DeleteSelectedAction()
 
 	_container->DeleteAction(locIndex, actIndex);
 	page->DeleteAction(actIndex);
-	UpdateLocActions(locIndex);
+	_locListBox->UpdateLocationActions(_container->GetLocationName(locIndex));
 	InitSearchData();
 	return true;
 }
@@ -224,16 +225,17 @@ bool Controls::DeleteAllActions()
 	if (!page) return false;
 
 	size_t locIndex = page->GetLocationIndex();
+	wxString locName(_container->GetLocationName(locIndex));
 
 	wxMessageDialog dlgMsg(_mainFrame,
-		wxString::Format(wxT("Желаете удалить все действия на локации %s?"), _container->GetLocationName(locIndex)),
+		wxString::Format(wxT("Желаете удалить все действия на локации %s?"), locName),
 		wxT("Удалить все действия"), wxYES_NO|wxICON_QUESTION);
 	dlgMsg.CenterOnParent();
 	if (dlgMsg.ShowModal() == wxID_YES)
 	{
 		_container->DeleteAllActions(locIndex);
 		page->DeleteAllActions();
-		UpdateLocActions(locIndex);
+		_locListBox->UpdateLocationActions(locName);
 		InitSearchData();
 		return true;
 	}
@@ -295,6 +297,7 @@ wxString Controls::GetMessageDesc( long errorNum )
 		case QGEN_MSG_MAXACTIONSCOUNTREACHED: str = wxString::Format(wxT("Вы не можете добавить на локацию более чем %i действий."), QGEN_MAXACTIONS); break;
 		case QGEN_MSG_TOOLONGLOCATIONNAME: str = wxString::Format(wxT("Название локации не может содержать более %i символов."), QGEN_MAXLOCATIONNAMELEN); break;
 		case QGEN_MSG_TOOLONGACTIONNAME: str = wxString::Format(wxT("Название действия не может содержать более %i символов."), QGEN_MAXACTIONNAMELEN); break;
+		case QGEN_MSG_TOOLONGFOLDERNAME: str = wxString::Format(wxT("Название папки не может содержать более %i символов."), QGEN_MAXFOLDERNAMELEN); break;
 		default: str = wxT("Неизвестная ошибка!"); break;
 	}
 	return str;
@@ -316,9 +319,10 @@ LocationPage *Controls::ShowLocation(const wxString & locName)
 
 void Controls::SortLocations(bool isAscending)
 {
-	if (_container->GetLocationsCount() > 2)
+	if (_container->GetLocationsCount() > 1)
 	{
-		_container->SortLocations(isAscending);
+		SyncWithLocationsList();
+		_container->SortLocsInFolder(GetSelectedFolderIndex(), isAscending);
 		UpdateOpenedLocationsIndexes();
 		UpdateLocationsList();
 		ShowOpenedLocationsIcons();
@@ -557,7 +561,7 @@ void Controls::PasteLocFromClipboard( PasteType type )
 	}
 	if ( locIndex >= 0 && DeserializeLocData(locIndex, buffer) )
 	{
-		UpdateLocActions(locIndex);
+		_locListBox->UpdateLocationActions(locName);
 		LocationPage *page = _locNotebook->GetPageByLocName(locName);
 		if (page)
 		{
@@ -603,7 +607,7 @@ void Controls::ClearSelectedLocation()
 		_container->ClearLocation(locIndex);
 		LocationPage *page = _locNotebook->GetPageByLocName(locName);
 		if (page) page->Clear();
-		UpdateLocActions(locIndex);
+		_locListBox->UpdateLocationActions(locName);
 	}
 }
 
@@ -730,11 +734,23 @@ bool Controls::SaveGameWithCheck()
 	return true;
 }
 
+void Controls::SyncWithLocationsList()
+{
+	if (_locListBox->IsNeedForUpdate())
+	{
+		_locListBox->UpdateDataContainer();
+		UpdateOpenedLocationsIndexes();
+		InitSearchData();
+	}
+}
+
 bool Controls::SaveGame(const wxString &filename, const wxString &password)
 {
+	SyncWithLocationsList();
 	_locNotebook->SaveOpenedPages();
 	if (qspSaveQuest(filename.wx_str(), password, this))
 	{
+		SaveConfigFile(_container, wxFileName(filename).GetPathWithSep() + wxT("project.qproj"));
 		_container->Save();
 		_lastSaveTime = wxGetLocalTimeMillis();
 		_currentGamePath = filename;
@@ -749,6 +765,7 @@ bool Controls::LoadGame(const wxString &filename)
 	_locNotebook->DeleteAllPages(CLOSE_ALL, wxNOT_FOUND);
 	if (qspOpenQuest(filename.wx_str(), _mainFrame, this, _currentGamePass, false))
 	{
+		OpenConfigFile(_container, wxFileName(filename).GetPathWithSep() + wxT("project.qproj"));
 		InitSearchData();
 		_currentGamePath = filename;
 		UpdateLocationsList();
@@ -773,11 +790,42 @@ bool Controls::JoinGame( const wxString &filename )
 
 void Controls::UpdateLocationsList()
 {
-	size_t count = _container->GetLocationsCount();
+	size_t locsCount = _container->GetLocationsCount();
 	_locListBox->Freeze();
 	_locListBox->Clear();
-	for (size_t i = 0; i < count; ++i)
-		_locListBox->Insert(_container->GetLocationName(i), i);
+	wxString folderName;
+	wxArrayInt locs;
+	long oldPos = -1, pos = 0, folderIndex;
+	while (pos != oldPos)
+	{
+		oldPos = pos;
+		folderIndex = _container->FindSectionForPos(pos);
+		if (folderIndex >= 0)
+		{
+			_locListBox->AddFolder(_container->GetSectionName(folderIndex));
+			++pos;
+		}
+		if (locs.GetCount() < locsCount)
+		{
+			for (size_t i = 0; i < locsCount; ++i)
+			{
+				if (locs.Index(i) < 0 && _container->GetLocSection(i) == folderIndex)
+				{
+					if (folderIndex >= 0)
+						folderName = _container->GetSectionName(folderIndex);
+					else
+					{
+						if (_container->FindSectionForPos(pos) >= 0)
+							break;
+						folderName = wxEmptyString;
+					}
+					_locListBox->Insert(_container->GetLocationName(i), wxEmptyString, folderName);
+					locs.Add(i);
+					++pos;
+				}
+			}
+		}
+	}
 	UpdateActionsOnAllLocs();
 	_locListBox->Thaw();
 }
@@ -891,6 +939,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 	int lastPos;
 	int locIndex, countLocs = _container->GetLocationsCount();
 	if (!countLocs) return false;
+	SyncWithLocationsList();
 
 	wxString lwrStr = ConvertSearchString(str, isMatchCase);
 
@@ -916,7 +965,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 			_dataSearch.startPos = wxNOT_FOUND;
 			if (FindSubString(ConvertSearchString(locName, isMatchCase), lwrStr, isWholeString) != wxNOT_FOUND)
 			{
-				_locListBox->Select(_dataSearch.idxLoc);
+				_locListBox->Select(locName);
 				ShowLocation(locName);
 				_locListBox->SetFocus();
 				_dataSearch.foundAt = SEARCH_LOCNAME;
@@ -932,7 +981,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 			{
 				lastPos = lwrStr.Length();
 				lastPos += startPos;
-				_locListBox->Select(_dataSearch.idxLoc);
+				_locListBox->Select(locName);
 				page = ShowLocation(locName);
 				page->SelectLocDescString(startPos, lastPos);
 				_dataSearch.startPos = startPos;
@@ -955,7 +1004,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 			{
 				lastPos = lwrStr.Length();
 				lastPos += startPos;
-				_locListBox->Select(_dataSearch.idxLoc);
+				_locListBox->Select(locName);
 				page = ShowLocation(locName);
 				page->SelectLocCodeString(startPos, lastPos);
 				_dataSearch.startPos = startPos;
@@ -982,7 +1031,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 				actName = _container->GetActionName(_dataSearch.idxLoc, _dataSearch.idxAct);
 				if (FindSubString(ConvertSearchString(actName, isMatchCase), lwrStr, isWholeString) != wxNOT_FOUND)
 				{
-					_locListBox->Select(_dataSearch.idxLoc);
+					_locListBox->Select(locName);
 					page = ShowLocation(locName);
 					page->SelectAction(_dataSearch.idxAct);
 					_dataSearch.foundAt = SEARCH_ACTNAME;
@@ -998,7 +1047,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 				{
 					lastPos = lwrStr.Length();
 					lastPos += startPos;
-					_locListBox->Select(_dataSearch.idxLoc);
+					_locListBox->Select(locName);
 					page = ShowLocation(locName);
 					page->SelectAction(_dataSearch.idxAct);
 					page->SelectPicturePathString(startPos, lastPos);
@@ -1021,7 +1070,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 				{
 					lastPos = lwrStr.Length();
 					lastPos += startPos;
-					_locListBox->Select(_dataSearch.idxLoc);
+					_locListBox->Select(locName);
 					page = ShowLocation(locName);
 					page->SelectAction( _dataSearch.idxAct );
 					page->SelectActionCodeString(startPos, lastPos);
@@ -1113,7 +1162,7 @@ void Controls::NewGame()
 	if (_settings->GetCreateFirstLoc() && !locName.IsEmpty())
 	{
 		_container->InsertLocation(locName, 0);
-		_locListBox->Insert(locName, 0);
+		_locListBox->Insert(locName, wxEmptyString, wxEmptyString);
 		_container->Save();
 	}
 	_lastSaveTime = 0;
@@ -1121,26 +1170,16 @@ void Controls::NewGame()
 
 bool Controls::IsGameSaved()
 {
+	SyncWithLocationsList();
 	_locNotebook->SaveOpenedPages();
 	return _container->IsSaved();
 }
 
-void Controls::UpdateLocActions(size_t locIndex)
-{
-	wxArrayString actions;
-	_container->GetLocActions(locIndex, actions);
-	_locListBox->UpdateLocationActions(locIndex, actions);
-}
-
 void Controls::UpdateActionsOnAllLocs()
 {
-	wxArrayString actions;
 	size_t count = _container->GetLocationsCount();
 	for (size_t i = 0; i < count; ++i)
-	{
-		_container->GetLocActions(i, actions);
-		_locListBox->UpdateLocationActions(i, actions);
-	}
+		_locListBox->UpdateLocationActions(_container->GetLocationName(i));
 }
 
 void Controls::UpdateOpenedLocationsIndexes()
@@ -1156,18 +1195,14 @@ void Controls::UpdateOpenedLocationsIndexes()
 
 void Controls::UpdateLocationIcon( size_t locIndex, bool isOpened )
 {
-	_locListBox->SetLocStatus(locIndex, isOpened);
+	_locListBox->SetLocStatus(_container->GetLocationName(locIndex), isOpened);
 }
 
 void Controls::ShowOpenedLocationsIcons()
 {
-	LocationPage *page;
 	size_t index, count = _locNotebook->GetPageCount();
 	for (index = 0; index < count; ++index)
-	{
-		page = ( LocationPage * )_locNotebook->GetPage(index);
-		_locListBox->SetLocStatus(page->GetLocationIndex(), true);
-	}
+		_locListBox->SetLocStatus(_locNotebook->GetPageText(index), true);
 }
 
 void Controls::UpdateMenuItems(wxMenu *menu)
@@ -1179,6 +1214,8 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 	bool playQuestFound = menu->FindItem(PLAY_QUEST) != NULL;
 	bool exportTxtFound = menu->FindItem(EXPORT_QUEST_TXT) != NULL;
 	bool exportTxt2GamFound = menu->FindItem(EXPORT_QUEST_TXT2GAM) != NULL;
+	bool folderDelFound = menu->FindItem(FOLDER_DEL) != NULL;
+	bool folderRenameFound = menu->FindItem(FOLDER_RENAME) != NULL;
 	bool locDelFound = menu->FindItem(LOC_DEL) != NULL;
 	bool locRenameFound = menu->FindItem(LOC_RENAME) != NULL;
 	bool locClearFound = menu->FindItem(LOC_CLEAR) != NULL;
@@ -1227,6 +1264,12 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 	if (locRenameFound) menu->Enable(LOC_RENAME, res);
 	res = false;
 
+	if (folderDelFound || folderRenameFound)
+		res = GetSelectedFolderIndex() >= 0;
+	if (folderDelFound) menu->Enable(FOLDER_DEL, res);
+	if (folderRenameFound) menu->Enable(FOLDER_RENAME, res);
+	res = false;
+
 	if (delActFound || delAllActFound || renameActFound)
 		res = !IsActionsOnSelectedLocEmpty();
 	if (delActFound) menu->Enable(DEL_ACTION, res);
@@ -1248,7 +1291,7 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 	res = false;
 
 	if (locSortAscFound || locSortDescFound)
-		res = _locListBox->GetCount() > 2;
+		res = _locListBox->GetCount() > 1;
 	if (locSortAscFound) menu->Enable(LOC_SORT_ASC, res);
 	if (locSortDescFound) menu->Enable(LOC_SORT_DESC, res);
 	res = false;
@@ -1276,12 +1319,25 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 	if (showHideLocActs) menu->Enable(ID_LOCACTVISIBLE, res);
 }
 
+bool Controls::RenameFolder( size_t folderIndex, const wxString &name )
+{
+	wxString oldName(_container->GetSectionName(folderIndex));
+	if (_container->RenameSection(folderIndex, name))
+	{
+		_locListBox->SetFolderName(oldName, name);
+		return true;
+	}
+	else
+		ShowMessage( QGEN_MSG_EXISTS );
+	return false;
+}
+
 bool Controls::RenameLocation( size_t locIndex, const wxString &name )
 {
 	wxString oldName(_container->GetLocationName(locIndex));
 	if (_container->RenameLocation(locIndex, name))
 	{
-		_locListBox->SetString(locIndex, name);
+		_locListBox->SetLocName(oldName, name);
 		int pageIndex = _locNotebook->FindPageIndex(oldName);
 		if (pageIndex >= 0) _locNotebook->SetPageText(pageIndex, name);
 		return true;
@@ -1293,12 +1349,11 @@ bool Controls::RenameLocation( size_t locIndex, const wxString &name )
 
 bool Controls::RenameAction( size_t locIndex, size_t actIndex, const wxString &name )
 {
-	LocationPage *page;
 	if (_container->RenameAction(locIndex, actIndex, name))
 	{
-		page = _locNotebook->GetPageByLocName(_container->GetLocationName(locIndex));
+		LocationPage *page = _locNotebook->GetPageByLocName(_container->GetLocationName(locIndex));
 		if (page) page->RenameAction(actIndex, name);
-		UpdateLocActions(locIndex);
+		_locListBox->UpdateLocationActions(_container->GetLocationName(locIndex));
 		return true;
 	}
 	else
@@ -1306,21 +1361,13 @@ bool Controls::RenameAction( size_t locIndex, size_t actIndex, const wxString &n
 	return false;
 }
 
-void Controls::MoveLocationTo( size_t locIndex, size_t moveTo )
-{
-	_container->MoveLocationTo(locIndex, moveTo);
-	UpdateOpenedLocationsIndexes();
-	_locListBox->MoveItemTo(locIndex, moveTo);
-	UpdateLocActions(moveTo);
-	InitSearchData();
-}
-
 void Controls::MoveActionTo( size_t locIndex, size_t actIndex, size_t moveTo )
 {
 	_container->MoveActionTo(locIndex, actIndex, moveTo);
-	LocationPage *page = _locNotebook->GetPageByLocName(_container->GetLocationName(locIndex));
+	wxString locName(_container->GetLocationName(locIndex));
+	LocationPage *page = _locNotebook->GetPageByLocName(locName);
 	if (page) page->MoveActionTo(actIndex, moveTo);
-	UpdateLocActions(locIndex);
+	_locListBox->UpdateLocationActions(locName);
 	InitSearchData();
 }
 
@@ -1423,4 +1470,96 @@ void Controls::SwitchLocActs()
 bool Controls::ExecuteHotkey( int keyCode, int modifiers )
 {
 	return _keysParser->ExecuteHotkeyAction(keyCode, modifiers);
+}
+
+void Controls::SelectLocation( size_t locIndex )
+{
+	_locListBox->Select(_container->GetLocationName(locIndex));
+}
+
+bool Controls::AddFolder()
+{
+	wxString name;
+	while (1)
+	{
+		wxTextEntryDialog dlgEntry(_mainFrame, wxT("Введите название новой папки:"),
+			wxT("Добавить новую папку"), name, wxOK | wxCANCEL);
+		dlgEntry.CenterOnParent();
+		if (dlgEntry.ShowModal() == wxID_OK)
+		{
+			name = dlgEntry.GetValue().Trim().Trim(false);
+			if (name.IsEmpty())
+				ShowMessage( QGEN_MSG_EMPTYDATA );
+			else if ((int)name.Len() > QGEN_MAXFOLDERNAMELEN)
+				ShowMessage( QGEN_MSG_TOOLONGFOLDERNAME );
+			else
+			{
+				_container->AddSection(name);
+				_locListBox->AddFolder(name);
+				break;
+			}
+		}
+		else
+			return false;
+	}
+	return true;
+}
+
+bool Controls::DeleteSelectedFolder()
+{
+	int section = GetSelectedFolderIndex();
+	if (section < 0) return false;
+
+	wxString folderName(_container->GetSectionName(section));
+	wxMessageDialog dlgMsg(_mainFrame,
+		wxString::Format(wxT("Желаете удалить папку %s?"), folderName),
+		wxT("Удалить папку"), wxYES_NO|wxICON_QUESTION);
+	dlgMsg.CenterOnParent();
+	if (dlgMsg.ShowModal() == wxID_YES)
+	{
+		SyncWithLocationsList();
+		_locListBox->DeleteFolder(folderName);
+		_container->DeleteSection(section);
+		UpdateLocationsList();
+		return true;
+	}
+	return false;
+}
+
+bool Controls::RenameSelectedFolder()
+{
+	int section = GetSelectedFolderIndex();
+	if (section < 0) return false;
+
+	wxString name(_container->GetSectionName(section));
+	while (1)
+	{
+		wxTextEntryDialog dlgEntry(_mainFrame, wxT("Введите новое название папки:"),
+			wxT("Переименовать папку"), name, wxOK | wxCANCEL);
+		dlgEntry.CenterOnParent();
+		if (dlgEntry.ShowModal() == wxID_OK)
+		{
+			name = dlgEntry.GetValue().Trim().Trim(false);
+			if (name.IsEmpty())
+				ShowMessage( QGEN_MSG_EMPTYDATA );
+			else if ((int)name.Len() > QGEN_MAXFOLDERNAMELEN)
+				ShowMessage( QGEN_MSG_TOOLONGFOLDERNAME );
+			else
+			{
+				if (RenameFolder(section, name)) break;
+			}
+		}
+		else
+			return false;
+	}
+	return true;
+}
+
+int Controls::GetSelectedFolderIndex()
+{
+	int locIndex = GetSelectedLocationIndex();
+	if (locIndex >= 0)
+		return _container->GetLocSection(locIndex);
+	else
+		return _container->FindSectionIndex(_locListBox->GetSelectedFolder());
 }

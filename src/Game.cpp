@@ -693,7 +693,113 @@ bool qspExportTxt2Game(const QGEN_CHAR *fileName, Controls *controls)
 
 bool qspImportTxt2Game(const QGEN_CHAR *fileName, Controls  *controls)
 {
-	if (!wxExecute(wxString::Format("\"%s\" \"%s\" \"%s\" u", controls->GetSettings()->GetCurrentTxt2GamPath(), fileName, controls->GetGamePath()), wxEXEC_SYNC))
+	if (!wxExecute(wxString::Format(wxT("\"%s\" \"%s\" \"%s\" u"), controls->GetSettings()->GetCurrentTxt2GamPath(), fileName, controls->GetGamePath()), wxEXEC_SYNC))
 		return true;
 	return false;
+}
+
+bool ParseConfigFile(DataContainer *container, wxXmlNode *node, long folder, long *locPos, long *folderPos, long *pos)
+{
+	wxString folderName;
+	node = node->GetChildren();
+	while (node)
+	{
+		if (node->GetName() == wxT("Folder"))
+		{
+			folderName = node->GetAttribute(wxT("name"));
+			long curInd = container->FindSectionIndex(folderName);
+			if (curInd < 0)
+			{
+				++(*pos);
+				++(*folderPos);
+				curInd = container->GetSectionsCount();
+				container->AddSection(folderName);
+				container->MoveSection(curInd, *folderPos, *pos);
+				if (!ParseConfigFile(container, node, curInd, locPos, folderPos, pos))
+					return false;
+			}
+		}
+		else if (node->GetName() == wxT("Location"))
+		{
+			long curInd = container->FindLocationIndex(node->GetAttribute(wxT("name")));
+			if (curInd >= 0)
+			{
+				++(*pos);
+				++(*locPos);
+				container->SetLocSection(curInd, folder);
+				container->MoveLocationTo(curInd, *locPos);
+			}
+		}
+		node = node->GetNext();
+	}
+	return true;
+}
+
+bool OpenConfigFile( DataContainer *container, const wxString &file )
+{
+	wxXmlDocument doc;
+	if (!(wxFileExists(file) && doc.Load(file))) return false;
+	wxXmlNode *root = doc.GetRoot();
+	if (root == NULL || root->GetName() != wxT("QGen-project")) return false;
+	wxXmlNode *structure = root->GetChildren();
+	if (structure == NULL) return false;
+	long locPos = -1, folderPos = -1, pos = -1;
+	while (structure)
+	{
+		if (structure->GetName() == wxT("Structure"))
+		{
+			return ParseConfigFile(container, structure, -1, &locPos, &folderPos, &pos);
+		}
+		structure = structure->GetNext();
+	}
+	return false;
+}
+
+bool SaveConfigFile( DataContainer *container, const wxString &file )
+{
+	wxXmlDocument doc;
+	doc.SetVersion(wxT("1.0"));
+	doc.SetFileEncoding(wxT("utf-8"));
+	wxXmlNode *node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("QGen-project"));
+	node->AddAttribute(wxT("version"), QGEN_VER);
+	doc.SetRoot(node);
+	node = new wxXmlNode(node, wxXML_ELEMENT_NODE, wxT("Structure"));
+	size_t locsCount = container->GetLocationsCount();
+	wxArrayInt locs;
+	long oldPos = -1, pos = 0, folderIndex;
+	wxXmlNode *structure = node;
+	while (pos != oldPos)
+	{
+		oldPos = pos;
+		folderIndex = container->FindSectionForPos(pos);
+		if (folderIndex >= 0)
+		{
+			node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("Folder"));
+			node->AddAttribute(wxT("name"), container->GetSectionName(folderIndex));
+			structure->AddChild(node);
+			++pos;
+		}
+		else
+			node = structure;
+		if (locs.GetCount() < locsCount)
+		{
+			for (size_t i = 0; i < locsCount; ++i)
+			{
+				if (locs.Index(i) < 0 && container->GetLocSection(i) == folderIndex)
+				{
+					if (folderIndex < 0)
+					{
+						if (container->FindSectionForPos(pos) >= 0)
+							break;
+					}
+					wxXmlNode *temp = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("Location"));
+					temp->AddAttribute(wxT("name"), container->GetLocationName(i));
+					node->AddChild(temp);
+					locs.Add(i);
+					++pos;
+				}
+			}
+		}
+	}
+	return doc.Save(file);
 }

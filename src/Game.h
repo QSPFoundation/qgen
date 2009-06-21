@@ -19,7 +19,9 @@
 	#define _QGEN_GAME_H_
 
 	#include <wx/wx.h>
+	#include <wx/xml/xml.h>
 	#include "Idents.h"
+	#include "DataContainer.h"
 
 	class Controls;
 
@@ -28,5 +30,8 @@
 	bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls);
 	bool qspExportTxt2Game(const QGEN_CHAR *fileName, Controls *controls);
 	bool qspImportTxt2Game(const QGEN_CHAR *fileName, Controls *controls);
-	
+
+	bool OpenConfigFile(DataContainer *container, const wxString &file);
+	bool SaveConfigFile(DataContainer *container, const wxString &file);
+
 #endif

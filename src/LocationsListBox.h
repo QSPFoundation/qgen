@@ -24,15 +24,30 @@
 	#include "IControls.h"
 	#include "LocationPage.h"
 
+	#include "bitmaps/folder.xpm"
+	#include "bitmaps/folder_opened.xpm"
 	#include "bitmaps/location_closed.xpm"
 	#include "bitmaps/location.xpm"
 	#include "bitmaps/action.xpm"
 
 	enum
 	{
+		ICON_FOLDER,
+		ICON_FOLDER_OPENED,
 		ICON_NOTACTIVELOCATION,
 		ICON_ACTIVELOCATION,
 		ICON_ACTION
+	};
+
+	enum
+	{
+		DRAG_ACTION,
+		DRAG_LOCATION,
+		DRAG_FOLDER
+	};
+
+	class FolderItem : public wxTreeItemData
+	{
 	};
 
 	class LocationsListBox : public wxTreeCtrl, public IObserver
@@ -42,8 +57,9 @@
 	private:
 		IControls *_controls;
 		wxImageList _statesImageList;
-		long _draggedLocIndex;
-		long _draggedActIndex;
+		wxTreeItemId _draggedId;
+		long _draggedType;
+		bool _needForUpdate;
 
 		void OnRightClick(wxMouseEvent &event);
 		void OnDoubleClick(wxMouseEvent &event);
@@ -51,7 +67,12 @@
 		void OnBeginDrag(wxTreeEvent &event);
 		void OnEndDrag(wxTreeEvent &event);
 		bool IsItemOk(wxTreeItemId id, int flags);
-		wxTreeItemId GetLocByPos(size_t index);
+		wxTreeItemId GetLocByName(const wxTreeItemId &parent, const wxString &name);
+		wxTreeItemId GetFolderByName(const wxString &name);
+		long GetItemType(const wxTreeItemId &id);
+		long GetItemPos(const wxTreeItemId &parent, const wxTreeItemId &id);
+		void UpdateDataContainer(const wxTreeItemId &parent, long folder, long *locPos, long *folderPos, long *pos);
+		bool IsFolderItem(const wxTreeItemId &id);
 	public:
 		LocationsListBox(wxWindow *parent, wxWindowID id, IControls *controls,
 						 long style = wxTR_HAS_BUTTONS|wxTR_LINES_AT_ROOT|
@@ -60,22 +81,27 @@
 									  wxTR_FULL_ROW_HIGHLIGHT);
 		~LocationsListBox();
 
+		bool IsNeedForUpdate() const { return _needForUpdate; }
 		void Update(bool isFromObservable = false);
-		void Insert(const wxString &text, size_t pos);
-		void Delete(size_t index);
-		void Select(size_t index);
-		wxString GetString(size_t index);
-		void SetString(size_t index, const wxString & text);
-		long GetStringIndex(const wxString &text);
+		void Insert(const wxString &name, const wxString &pos, const wxString &folder);
+		void Delete(const wxString &name);
+		void Select(const wxString &name);
+		void SetLocName(const wxString &name, const wxString &newName);
+		void SetFolderName(const wxString &name, const wxString &newName);
 		wxString GetStringSelection();
+		wxString GetSelectedFolder();
 		void Clear();
-		size_t GetCount();
 		void ExpandCollapseItems(bool isExpand);
 		void ApplyStatesImageList();
 
-		void UpdateLocationActions(size_t locIndex, const wxArrayString & actions);
-		void MoveItemTo(size_t locIndex, size_t moveTo);
-		void SetLocStatus(size_t locIndex, bool isOpened);
+		void UpdateLocationActions(const wxString &name);
+		void UpdateFolderLocations(const wxString &name);
+		void SetLocStatus(const wxString &name, bool isOpened);
+
+		void AddFolder(const wxString &name);
+		void DeleteFolder(const wxString &name);
+
+		void UpdateDataContainer();
 	};
 
 #endif

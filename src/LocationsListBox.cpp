@@ -31,11 +31,14 @@ LocationsListBox::LocationsListBox(wxWindow *parent, wxWindowID id, IControls *c
 	wxTreeCtrl(parent, id, wxDefaultPosition, wxDefaultSize, style)
 {
 	_controls = controls;
+	_needForUpdate = false;
 
-	_statesImageList.Create(15, 15);
-	_statesImageList.Add(wxBitmap(location_closed_xpm));
-	_statesImageList.Add(wxBitmap(location_xpm));
-	_statesImageList.Add(wxBitmap(action_xpm));
+	_statesImageList.Create(16, 16);
+	_statesImageList.Add(wxIcon(folder_xpm));
+	_statesImageList.Add(wxIcon(folder_opened_xpm));
+	_statesImageList.Add(wxIcon(location_closed_xpm));
+	_statesImageList.Add(wxIcon(location_xpm));
+	_statesImageList.Add(wxIcon(action_xpm));
 
 	AddRoot(wxT("Locs"));
 	Update();
@@ -85,6 +88,10 @@ void LocationsListBox::OnRightClick( wxMouseEvent &event )
 	menu.Append(LOC_RENAME, wxT("Переименовать..."));
 	menu.Append(LOC_DEL, wxT("Удалить"));
 	menu.AppendSeparator();
+	menu.Append(FOLDER_CREAT, wxT("Создать папку..."));
+	menu.Append(FOLDER_RENAME, wxT("Переименовать папку..."));
+	menu.Append(FOLDER_DEL, wxT("Удалить папку"));
+	menu.AppendSeparator();
 	menu.Append(LOC_COPY, wxT("Копировать"));
 	menu.Append(LOC_PASTE, wxT("Вставить"));
 	menu.Append(LOC_REPLACE, wxT("Заменить"));
@@ -106,47 +113,77 @@ void LocationsListBox::OnDoubleClick(wxMouseEvent &event )
 	wxTreeItemId id(HitTest(event.GetPosition(), flags));
 	if (IsItemOk(id, flags))
 	{
-		if (GetItemParent(id) == GetRootItem())
-			_controls->ShowLocation(GetItemText(id));
-		else
+		switch (GetItemType(id))
 		{
-			LocationPage *page = _controls->ShowLocation(GetItemText(GetItemParent(id)));
-			page->SelectAction(_controls->GetContainer()->FindActionIndex(page->GetLocationIndex(), GetItemText(id)));
+		case DRAG_LOCATION:
+			_controls->ShowLocation(GetItemText(id));
+			break;
+		case DRAG_ACTION:
+			wxTreeItemId parent(GetItemParent(id));
+			LocationPage *page = _controls->ShowLocation(GetItemText(parent));
+			page->SelectAction(GetItemPos(parent, id));
+			break;
 		}
 	}
 	else
 		event.Skip();
 }
 
-void LocationsListBox::Insert(const wxString &text, size_t pos)
+void LocationsListBox::Insert(const wxString &name, const wxString &pos, const wxString &folder)
 {
-	if (_controls->GetSettings()->GetShowLocsIcons())
-		InsertItem(GetRootItem(), pos, text, ICON_NOTACTIVELOCATION);
+	int image = -1;
+	wxTreeItemId parent;
+	if (folder.Length() > 0)
+		parent = GetFolderByName(folder);
 	else
-		InsertItem(GetRootItem(), pos, text);
+		parent = GetRootItem();
+	if (_controls->GetSettings()->GetShowLocsIcons())
+		image = ICON_NOTACTIVELOCATION;
+	if (pos.Length() > 0)
+		InsertItem(parent, GetLocByName(GetRootItem(), pos), name, image);
+	else
+		InsertItem(parent, -1, name, image);
 }
 
-wxTreeItemId LocationsListBox::GetLocByPos(size_t index)
+wxTreeItemId LocationsListBox::GetLocByName( const wxTreeItemId &parent, const wxString &name )
+{
+	wxTreeItemIdValue cookie;
+	wxTreeItemId idCur(GetFirstChild(parent, cookie));
+	while (idCur.IsOk())
+	{
+		if (IsFolderItem(idCur))
+		{
+			idCur = GetLocByName(idCur, name);
+			if (idCur.IsOk()) return idCur;
+		}
+		else
+		{
+			if (GetItemText(idCur) == name) return idCur;
+		}
+		idCur = GetNextChild(parent, cookie);
+	}
+	return wxTreeItemId();
+}
+
+wxTreeItemId LocationsListBox::GetFolderByName( const wxString &name )
 {
 	wxTreeItemIdValue cookie;
 	wxTreeItemId parent(GetRootItem());
 	wxTreeItemId idCur(GetFirstChild(parent, cookie));
-	while (index != 0 && idCur.IsOk())
+	while (idCur.IsOk())
 	{
-		index--;
+		if (IsFolderItem(idCur))
+		{
+			if (GetItemText(idCur) == name) break;
+		}
 		idCur = GetNextChild(parent, cookie);
 	}
 	return idCur;
 }
 
-void LocationsListBox::Select( size_t index )
+void LocationsListBox::Select( const wxString &name )
 {
-	SelectItem(GetLocByPos(index));
-}
-
-wxString LocationsListBox::GetString( size_t index )
-{
-	return GetItemText(GetLocByPos(index));
+	SelectItem(GetLocByName(GetRootItem(), name));
 }
 
 wxString LocationsListBox::GetStringSelection()
@@ -155,28 +192,42 @@ wxString LocationsListBox::GetStringSelection()
 	if (id.IsOk())
 	{
 		if (GetItemParent(id) == GetRootItem())
-			return GetItemText(id);
+		{
+			if (!IsFolderItem(id))
+				return GetItemText(id);
+		}
 		else
-			return GetItemText(GetItemParent(id));
+		{
+			wxTreeItemId parent(GetItemParent(id));
+			if (IsFolderItem(parent))
+				return GetItemText(id);
+			else
+				return GetItemText(parent);
+		}
 	}
-	else
-		return wxEmptyString;
+	return wxEmptyString;
 }
 
-long LocationsListBox::GetStringIndex( const wxString &text )
+wxString LocationsListBox::GetSelectedFolder()
 {
-	long index = 0;
-	wxTreeItemIdValue cookie;
-	wxTreeItemId parent(GetRootItem());
-	wxTreeItemId idCur(GetFirstChild(parent, cookie));
-	while (idCur.IsOk())
+	wxTreeItemId id(GetSelection());
+	if (id.IsOk())
 	{
-		if (GetItemText(idCur) == text)
-			return index;
-		index++;
-		idCur = GetNextChild(parent, cookie);
+		if (GetItemParent(id) == GetRootItem())
+		{
+			if (IsFolderItem(id))
+				return GetItemText(id);
+		}
+		else
+		{
+			wxTreeItemId parent(GetItemParent(id));
+			if (IsFolderItem(parent))
+				return GetItemText(parent);
+			else
+				return GetItemText(GetItemParent(parent));
+		}
 	}
-	return wxNOT_FOUND;
+	return wxEmptyString;
 }
 
 void LocationsListBox::Clear()
@@ -186,10 +237,13 @@ void LocationsListBox::Clear()
 	Thaw();
 }
 
-void LocationsListBox::UpdateLocationActions( size_t locIndex, const wxArrayString & actions )
+void LocationsListBox::UpdateLocationActions( const wxString &name )
 {
+	wxArrayString actions;
+	long locIndex = _controls->GetContainer()->FindLocationIndex(name);
+	_controls->GetContainer()->GetLocActions(locIndex, actions);
 	size_t i, count = actions.GetCount();
-	wxTreeItemId id(GetLocByPos(locIndex));
+	wxTreeItemId id(GetLocByName(GetRootItem(), name));
 	DeleteChildren(id);
 	if (_controls->GetSettings()->GetShowLocsIcons())
 		for (i = 0; i < count; ++i) AppendItem(id, actions[i], ICON_ACTION);
@@ -197,24 +251,13 @@ void LocationsListBox::UpdateLocationActions( size_t locIndex, const wxArrayStri
 		for (i = 0; i < count; ++i) AppendItem(id, actions[i]);
 }
 
-size_t LocationsListBox::GetCount()
+void LocationsListBox::Delete( const wxString &name )
 {
-	return GetChildrenCount(GetRootItem(), false);
-}
-
-void LocationsListBox::Delete( size_t index )
-{
-	wxTreeCtrl::Delete(GetLocByPos(index));
-}
-
-void LocationsListBox::SetString( size_t index, const wxString & text )
-{
-	SetItemText(GetLocByPos(index), text);
+	wxTreeCtrl::Delete(GetLocByName(GetRootItem(), name));
 }
 
 void LocationsListBox::ExpandCollapseItems(bool isExpand)
 {
-	if (!GetCount()) return;
 	Freeze();
 	wxTreeItemIdValue cookie;
 	wxTreeItemId parent(GetRootItem());
@@ -239,16 +282,23 @@ void LocationsListBox::OnEndLabelEdit( wxTreeEvent &event )
 	wxString label(event.GetLabel());
 	wxString oldLabel(GetItemText(id));
 	DataContainer *container = _controls->GetContainer();
-	if (GetItemParent(id) == GetRootItem()) // Локация
+	switch (GetItemType(id))
 	{
+	case DRAG_FOLDER:
+		label = label.Trim().Trim(false);
+		if (label.IsEmpty())
+			_controls->ShowMessage( QGEN_MSG_EMPTYDATA );
+		else
+			_controls->RenameFolder(container->FindSectionIndex(oldLabel), label);
+		break;
+	case DRAG_LOCATION:
 		label = label.Trim().Trim(false);
 		if (label.IsEmpty())
 			_controls->ShowMessage( QGEN_MSG_EMPTYDATA );
 		else
 			_controls->RenameLocation(container->FindLocationIndex(oldLabel), label);
-	}
-	else // Действие
-	{
+		break;
+	case DRAG_ACTION:
 		if (label.IsEmpty())
 			_controls->ShowMessage( QGEN_MSG_EMPTYDATA );
 		else
@@ -256,23 +306,15 @@ void LocationsListBox::OnEndLabelEdit( wxTreeEvent &event )
 			size_t locIndex = container->FindLocationIndex(GetItemText(GetItemParent(id)));
 			_controls->RenameAction(locIndex, container->FindActionIndex(locIndex, oldLabel), label);
 		}
+		break;
 	}
 	event.Veto();
 }
 
 void LocationsListBox::OnBeginDrag( wxTreeEvent &event )
 {
-	wxTreeItemId id(event.GetItem());
-	if (GetItemParent(id) == GetRootItem()) // Локация
-	{
-		_draggedLocIndex = GetStringIndex(GetItemText(id));
-		_draggedActIndex = wxNOT_FOUND;
-	}
-	else // Действие
-	{
-		_draggedLocIndex = GetStringIndex(GetItemText(GetItemParent(id)));
-		_draggedActIndex = _controls->GetContainer()->FindActionIndex(_draggedLocIndex, GetItemText(id));
-	}
+	_draggedId = event.GetItem();
+	_draggedType = GetItemType(_draggedId);
 	SetImageList(&_statesImageList);
 	event.Allow();
 }
@@ -282,35 +324,67 @@ void LocationsListBox::OnEndDrag( wxTreeEvent &event )
 	ApplyStatesImageList();
 	wxTreeItemId id(event.GetItem());
 	if (!id.IsOk()) return;
-	if (_draggedActIndex < 0)
+	long pos;
+	wxTreeItemId parent(GetItemParent(id));
+	long dropOnType = GetItemType(id);
+	wxString name(GetItemText(_draggedId));
+	long image = GetItemImage(_draggedId);
+	long openedImage = GetItemImage(_draggedId, wxTreeItemIcon_Expanded);
+	switch (_draggedType)
 	{
-		if (GetItemParent(id) == GetRootItem()) // Локация
-			_controls->MoveLocationTo(_draggedLocIndex, GetStringIndex(GetItemText(id)));
-	}
-	else
-	{
-		if (GetItemParent(id) != GetRootItem()) // Действие
+	case DRAG_FOLDER:
+		switch (dropOnType)
 		{
-			if (GetStringIndex(GetItemText(GetItemParent(id))) == _draggedLocIndex)
-				_controls->MoveActionTo(_draggedLocIndex, _draggedActIndex, _controls->GetContainer()->FindActionIndex(_draggedLocIndex, GetItemText(id)));
+		case DRAG_LOCATION:
+			if (parent != GetRootItem()) break;
+		case DRAG_FOLDER:
+			pos = GetItemPos(parent, id);
+			wxTreeCtrl::Delete(_draggedId);
+			id = InsertItem(parent, pos, name, image, -1, new FolderItem());
+			SelectItem(id);
+			SetItemImage(id, openedImage, wxTreeItemIcon_Expanded);
+			UpdateFolderLocations(name);
+			_needForUpdate = true;
+			break;
 		}
+		break;
+	case DRAG_LOCATION:
+		switch (dropOnType)
+		{
+		case DRAG_FOLDER:
+			wxTreeCtrl::Delete(_draggedId);
+			SelectItem(InsertItem(id, -1, name, image));
+			UpdateLocationActions(name);
+			_needForUpdate = true;
+			break;
+		case DRAG_LOCATION:
+			pos = GetItemPos(parent, id);
+			wxTreeCtrl::Delete(_draggedId);
+			SelectItem(InsertItem(parent, pos, name, image));
+			UpdateLocationActions(name);
+			_needForUpdate = true;
+			break;
+		}
+		break;
+	case DRAG_ACTION:
+		switch (dropOnType)
+		{
+		case DRAG_ACTION:
+			if (parent == GetItemParent(_draggedId))
+			{
+				long locIndex = _controls->GetContainer()->FindLocationIndex(GetItemText(parent));
+				_controls->MoveActionTo(locIndex, GetItemPos(parent, _draggedId), GetItemPos(parent, id));
+			}
+			break;
+		}
+		break;
 	}
 }
 
-void LocationsListBox::MoveItemTo( size_t locIndex, size_t moveTo )
-{
-	wxTreeItemId id(GetLocByPos(locIndex));
-	wxString label(GetItemText(id));
-	int image = GetItemImage(id);
-	wxTreeCtrl::Delete(id);
-	InsertItem(GetRootItem(), moveTo, label, image);
-	Select(moveTo);
-}
-
-void LocationsListBox::SetLocStatus( size_t locIndex, bool isOpened )
+void LocationsListBox::SetLocStatus( const wxString &name, bool isOpened )
 {
 	if (_controls->GetSettings()->GetShowLocsIcons())
-		SetItemImage(GetLocByPos(locIndex), isOpened ? ICON_ACTIVELOCATION : ICON_NOTACTIVELOCATION);
+		SetItemImage(GetLocByName(GetRootItem(), name), isOpened ? ICON_ACTIVELOCATION : ICON_NOTACTIVELOCATION);
 }
 
 void LocationsListBox::ApplyStatesImageList()
@@ -319,4 +393,129 @@ void LocationsListBox::ApplyStatesImageList()
 		SetImageList(&_statesImageList);
 	else
 		SetImageList(NULL);
+}
+
+void LocationsListBox::AddFolder( const wxString &name )
+{
+	if (_controls->GetSettings()->GetShowLocsIcons())
+	{
+		wxTreeItemId id = AppendItem(GetRootItem(), name, ICON_FOLDER, -1, new FolderItem());
+		SetItemImage(id, ICON_FOLDER_OPENED, wxTreeItemIcon_Expanded);
+	}
+	else
+		AppendItem(GetRootItem(), name, -1, -1, new FolderItem());
+}
+
+long LocationsListBox::GetItemType( const wxTreeItemId &id )
+{
+	if (GetItemParent(id) == GetRootItem()) // Локация или папка
+	{
+		if (IsFolderItem(id)) // Папка
+			return DRAG_FOLDER;
+		else // Локация
+			return DRAG_LOCATION;
+	}
+	else // Локация или действие
+	{
+		if (IsFolderItem(GetItemParent(id))) // Локация
+			return DRAG_LOCATION;
+		else // Действие
+			return DRAG_ACTION;
+	}
+}
+
+void LocationsListBox::UpdateFolderLocations( const wxString &name )
+{
+	wxString text;
+	wxTreeItemId parent(GetFolderByName(name));
+	DeleteChildren(parent);
+	DataContainer *container = _controls->GetContainer();
+	long folderIndex = container->FindSectionIndex(name);
+	for (size_t i = 0; i < container->GetLocationsCount(); ++i)
+	{
+		if (container->GetLocSection(i) == folderIndex)
+		{
+			text = container->GetLocationName(i);
+			if (_controls->GetSettings()->GetShowLocsIcons())
+				AppendItem(parent, text, ICON_NOTACTIVELOCATION);
+			else
+				AppendItem(parent, text);
+			UpdateLocationActions(text);
+		}
+	}
+	_controls->ShowOpenedLocationsIcons();
+}
+
+long LocationsListBox::GetItemPos( const wxTreeItemId &parent, const wxTreeItemId &id )
+{
+	long pos = 0;
+	wxTreeItemIdValue cookie;
+	wxTreeItemId idCur(GetFirstChild(parent, cookie));
+	while (idCur.IsOk())
+	{
+		if (idCur == id) return pos;
+		++pos;
+		idCur = GetNextChild(parent, cookie);
+	}
+	return -1;
+}
+
+void LocationsListBox::SetLocName( const wxString &name, const wxString &newName )
+{
+	wxTreeItemId id(GetLocByName(GetRootItem(), name));
+	if (id.IsOk())
+		SetItemText(id, newName);
+}
+
+void LocationsListBox::SetFolderName( const wxString &name, const wxString &newName )
+{
+	wxTreeItemId id(GetFolderByName(name));
+	if (id.IsOk())
+		SetItemText(id, newName);
+}
+
+void LocationsListBox::UpdateDataContainer()
+{
+	long locPos = -1, folderPos = -1, pos = -1;
+	UpdateDataContainer(GetRootItem(), -1, &locPos, &folderPos, &pos);
+	_needForUpdate = false;
+}
+
+void LocationsListBox::UpdateDataContainer( const wxTreeItemId &parent, long folder, long *locPos, long *folderPos, long *pos )
+{
+	DataContainer *container = _controls->GetContainer();
+	wxTreeItemIdValue cookie;
+	wxTreeItemId idCur(GetFirstChild(parent, cookie));
+	while (idCur.IsOk())
+	{
+		++(*pos);
+		if (IsFolderItem(idCur))
+		{
+			++(*folderPos);
+			long curInd = container->FindSectionIndex(GetItemText(idCur));
+			container->MoveSection(curInd, *folderPos, *pos);
+			UpdateDataContainer(idCur, curInd, locPos, folderPos, pos);
+		}
+		else
+		{
+			++(*locPos);
+			long curInd = container->FindLocationIndex(GetItemText(idCur));
+			container->SetLocSection(curInd, folder);
+			container->MoveLocationTo(curInd, *locPos);
+		}
+		idCur = GetNextChild(parent, cookie);
+	}
+}
+
+void LocationsListBox::DeleteFolder( const wxString &name )
+{
+	wxTreeItemId id(GetFolderByName(name));
+	if (id.IsOk())
+		wxTreeCtrl::Delete(id);
+}
+
+bool LocationsListBox::IsFolderItem( const wxTreeItemId &id )
+{
+	FolderItem *data = dynamic_cast<FolderItem *>(GetItemData(id));
+	return (data != NULL);
 }

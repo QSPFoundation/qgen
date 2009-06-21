@@ -124,6 +124,9 @@
 		void OnExportTxtFile(wxCommandEvent &event);
 		void OnExportTxt2Gam(wxCommandEvent &event);
 		void OnImportTxt2Gam(wxCommandEvent &event);
+		void OnCreateFolder(wxCommandEvent &event);
+		void OnRenameFolder(wxCommandEvent &event);
+		void OnDeleteFolder(wxCommandEvent &event);
 		void OnCreateLocation(wxCommandEvent &event);
 		void OnDeleteLocation(wxCommandEvent &event);
 		void OnRenameLocation(wxCommandEvent &event);

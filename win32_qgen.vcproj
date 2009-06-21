@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="rpcrt4.lib wxmsw29d_core.lib wxbase29d.lib wxmsw29d_html.lib wxmsw29d_adv.lib wxmsw29d_aui.lib wxmsw29d_stc.lib wxscintillad.lib wxzlibd.lib wxtiffd.lib wxjpegd.lib wxpngd.lib comctl32.lib"
+				AdditionalDependencies="rpcrt4.lib wxmsw29d_core.lib wxbase29d.lib wxmsw29d_html.lib wxmsw29d_adv.lib wxmsw29d_aui.lib wxbase29d_xml.lib wxexpatd.lib wxmsw29d_stc.lib wxscintillad.lib wxzlibd.lib wxtiffd.lib wxjpegd.lib wxpngd.lib comctl32.lib"
 				OutputFile="$(OutDir)/qgen.exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
@@ -216,7 +216,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="rpcrt4.lib wxmsw29ud_core.lib wxbase29ud.lib wxmsw29ud_html.lib wxmsw29ud_adv.lib wxmsw29ud_aui.lib wxmsw29ud_stc.lib wxscintillad.lib wxzlibd.lib wxtiffd.lib wxjpegd.lib wxpngd.lib comctl32.lib"
+				AdditionalDependencies="rpcrt4.lib wxmsw29ud_core.lib wxbase29ud.lib wxmsw29ud_html.lib wxmsw29ud_adv.lib wxmsw29ud_aui.lib wxbase29ud_xml.lib wxexpatd.lib wxmsw29ud_stc.lib wxscintillad.lib wxzlibd.lib wxtiffd.lib wxjpegd.lib wxpngd.lib comctl32.lib"
 				OutputFile="$(OutDir)/qgen.exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
@@ -292,7 +292,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="rpcrt4.lib wxmsw29u_core.lib wxbase29u.lib wxmsw29u_html.lib wxmsw29u_adv.lib wxmsw29u_aui.lib wxmsw29u_stc.lib wxscintilla.lib wxzlib.lib wxtiff.lib wxjpeg.lib wxpng.lib comctl32.lib"
+				AdditionalDependencies="rpcrt4.lib wxmsw29u_core.lib wxbase29u.lib wxmsw29u_html.lib wxmsw29u_adv.lib wxmsw29u_aui.lib wxbase29u_xml.lib wxexpat.lib wxmsw29u_stc.lib wxscintilla.lib wxzlib.lib wxtiff.lib wxjpeg.lib wxpng.lib comctl32.lib"
 				OutputFile="$(OutDir)/qgen.exe"
 				ProgramDatabaseFile="$(OutDir)/qgen.pdb"
 				SubSystem="2"

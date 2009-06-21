@@ -30,6 +30,8 @@ class LocationPage;
 		virtual DataContainer *GetContainer() const = 0;
 		virtual wxString GetGamePath() const = 0;
 
+		virtual bool RenameFolder(size_t folderIndex, const wxString &name) = 0;
+
 		virtual void UpdateLocationsList() = 0;
 		virtual void UpdateMenuItems(wxMenu *menu) = 0;
 		virtual void ShowOpenedLocationsIcons() = 0;
@@ -37,7 +39,6 @@ class LocationPage;
 		virtual LocationPage *ShowLocation(const wxString &locName) = 0;
 		virtual void SelectLocation(size_t locIndex) = 0;
 		virtual bool RenameLocation(size_t locIndex, const wxString &name) = 0;
-		virtual void MoveLocationTo(size_t locIndex, size_t moveTo) = 0;
 
 		virtual wxString SelectPicturePath() = 0;
 

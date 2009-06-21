@@ -23,9 +23,9 @@
 
 	struct ActionData
 	{
-		wxString pathPicture;			//изображение для действия - относительный путь к файлу
+		wxString pathPicture;			//Изображение для действия - относительный путь к файлу
 		wxString description;			//Описание действия
-		wxString onPress;				//код события "выбор действия"		
+		wxString onPress;				//Код события "выбор действия"		
 	};
 
 	WX_DECLARE_OBJARRAY(ActionData, ActionDataArray);
@@ -36,14 +36,24 @@
 		wxString description;			//Описание локации
 		wxString onVisit;				//Код события "посещение локации"
 		ActionDataArray actionArray;	//Массив действий
+		int sectionIndex;				//Индекс секции
 	};
 
 	WX_DECLARE_OBJARRAY(LocationData, LocationDataArray);
+
+	struct SectionData
+	{
+		wxString name;					//Имя секции
+		int pos;						//Позиция секции
+	};
+
+	WX_DECLARE_OBJARRAY(SectionData, SectionDataArray);
 
 	class DataContainer
 	{
 	private:
 		LocationDataArray locationArray;
+		SectionDataArray _sections;
 		bool _isSaved;
 
 	public:
@@ -70,7 +80,7 @@
 		void SetLocationCode(size_t indexLoc, const wxString& code);
 		wxString GetLocationDesc(size_t indexLoc);
 		wxString GetLocationCode(size_t indexLoc);
-		void SortLocations(bool isAscending);
+		void SortLocsInFolder(int folderIndex, bool isAscending);
 		bool IsEmptyLoc(size_t locIndex);
 		wxString GetLocationName(const size_t &locIndex);
 		bool SetActionPicturePath( size_t indexLoc, size_t indexAct, const wxString &pathPict );
@@ -81,6 +91,17 @@
 		bool GetLocActions( size_t indexLoc, wxArrayString & actions );
 		void MoveLocationTo(size_t locIndex, size_t moveTo);
 		void MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo);
+
+		size_t GetSectionsCount();
+		wxString GetSectionName(size_t index);
+		void SetLocSection(size_t locIndex, int sectionIndex);
+		int GetLocSection(size_t locIndex);
+		bool AddSection(const wxString &name);
+		bool RenameSection(size_t sectionIndex, const wxString &newName);
+		void DeleteSection(size_t sectionIndex);
+		int FindSectionIndex(const wxString &name);
+		void MoveSection(size_t sectionIndex, long moveToSecPos, long pos);
+		int FindSectionForPos(size_t pos);
 	};
 
 #endif
