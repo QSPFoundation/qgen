@@ -750,7 +750,8 @@ bool Controls::SaveGame(const wxString &filename, const wxString &password)
 	_locNotebook->SaveOpenedPages();
 	if (qspSaveQuest(filename.wx_str(), password, this))
 	{
-		SaveConfigFile(_container, wxFileName(filename).GetPathWithSep() + wxT("project.qproj"));
+		wxFileName file(filename);
+		SaveConfigFile(_container, file.GetPathWithSep() + file.GetName() + wxT(".qproj"));
 		_container->Save();
 		_lastSaveTime = wxGetLocalTimeMillis();
 		_currentGamePath = filename;
@@ -765,7 +766,8 @@ bool Controls::LoadGame(const wxString &filename)
 	_locNotebook->DeleteAllPages(CLOSE_ALL, wxNOT_FOUND);
 	if (qspOpenQuest(filename.wx_str(), _mainFrame, this, _currentGamePass, false))
 	{
-		OpenConfigFile(_container, wxFileName(filename).GetPathWithSep() + wxT("project.qproj"));
+		wxFileName file(filename);
+		OpenConfigFile(_container, file.GetPathWithSep() + file.GetName() + wxT(".qproj"));
 		InitSearchData();
 		_currentGamePath = filename;
 		UpdateLocationsList();
