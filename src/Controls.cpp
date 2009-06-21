@@ -1521,7 +1521,7 @@ bool Controls::DeleteSelectedFolder()
 	{
 		SyncWithLocationsList();
 		_locListBox->DeleteFolder(folderName);
-		_container->DeleteSection(section);
+		_container->DeleteSection(_container->FindSectionIndex(folderName));
 		UpdateLocationsList();
 		return true;
 	}
