@@ -115,7 +115,7 @@
 		void UpdateLocationIcon(size_t locIndex, bool isOpened);
 		void UpdateMenuItems(wxMenu *menu);
 		void ShowOpenedLocationsIcons();
-		void SyncWithLocationsList();
+		void SyncWithLocationsList(bool isForce = false);
 
 		bool AddActionOnSelectedLoc();
 		bool DeleteSelectedAction();

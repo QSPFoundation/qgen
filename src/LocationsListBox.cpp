@@ -338,6 +338,7 @@ void LocationsListBox::OnEndDrag( wxTreeEvent &event )
 		case DRAG_LOCATION:
 			if (parent != GetRootItem()) break;
 		case DRAG_FOLDER:
+			_controls->SyncWithLocationsList(true);
 			pos = GetItemPos(parent, id);
 			wxTreeCtrl::Delete(_draggedId);
 			id = InsertItem(parent, pos, name, image, -1, new FolderItem());
@@ -494,7 +495,7 @@ void LocationsListBox::UpdateDataContainer( const wxTreeItemId &parent, long fol
 			++(*folderPos);
 			long curInd = container->FindSectionIndex(GetItemText(idCur));
 			container->MoveSection(curInd, *folderPos, *pos);
-			UpdateDataContainer(idCur, curInd, locPos, folderPos, pos);
+			UpdateDataContainer(idCur, *folderPos, locPos, folderPos, pos);
 		}
 		else
 		{

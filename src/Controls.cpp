@@ -734,9 +734,9 @@ bool Controls::SaveGameWithCheck()
 	return true;
 }
 
-void Controls::SyncWithLocationsList()
+void Controls::SyncWithLocationsList(bool isForce)
 {
-	if (_locListBox->IsNeedForUpdate())
+	if (isForce || _locListBox->IsNeedForUpdate())
 	{
 		_locListBox->UpdateDataContainer();
 		UpdateOpenedLocationsIndexes();
@@ -1520,7 +1520,6 @@ bool Controls::DeleteSelectedFolder()
 	if (dlgMsg.ShowModal() == wxID_YES)
 	{
 		SyncWithLocationsList();
-		_locListBox->DeleteFolder(folderName);
 		_container->DeleteSection(_container->FindSectionIndex(folderName));
 		UpdateLocationsList();
 		return true;

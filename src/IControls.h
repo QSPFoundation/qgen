@@ -31,6 +31,7 @@ class LocationPage;
 		virtual wxString GetGamePath() const = 0;
 
 		virtual bool RenameFolder(size_t folderIndex, const wxString &name) = 0;
+		virtual void SyncWithLocationsList(bool isForce) = 0;
 
 		virtual void UpdateLocationsList() = 0;
 		virtual void UpdateMenuItems(wxMenu *menu) = 0;
