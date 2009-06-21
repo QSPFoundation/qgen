@@ -715,7 +715,7 @@ bool ParseConfigFile(DataContainer *container, wxXmlNode *node, long folder, lon
 				curInd = container->GetSectionsCount();
 				container->AddSection(folderName);
 				container->MoveSection(curInd, *folderPos, *pos);
-				if (!ParseConfigFile(container, node, curInd, locPos, folderPos, pos))
+				if (!ParseConfigFile(container, node, *folderPos, locPos, folderPos, pos))
 					return false;
 			}
 		}
