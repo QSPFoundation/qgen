@@ -1499,10 +1499,14 @@ bool Controls::AddFolder()
 				ShowMessage( QGEN_MSG_TOOLONGFOLDERNAME );
 			else
 			{
-				_container->AddSection(name);
-				_locListBox->AddFolder(name);
-				_isNeedSyncWithLocsList = true;
-				break;
+				if (_container->AddSection(name))
+				{
+					_locListBox->AddFolder(name);
+					_isNeedSyncWithLocsList = true;
+					break;
+				}
+				else
+					ShowMessage(QGEN_MSG_EXISTS);
 			}
 		}
 		else
