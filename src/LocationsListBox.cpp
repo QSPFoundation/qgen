@@ -60,6 +60,7 @@ void LocationsListBox::Update(bool isFromObservable)
 	ApplyStatesImageList();
 	if (isFromObservable)
 	{
+		_controls->SyncWithLocationsList();
 		_controls->UpdateLocationsList();
 		_controls->ShowOpenedLocationsIcons();
 	}
@@ -344,7 +345,7 @@ void LocationsListBox::OnEndDrag( wxTreeEvent &event )
 		case DRAG_LOCATION:
 			if (parent != GetRootItem()) break;
 		case DRAG_FOLDER:
-			_controls->SyncWithLocationsList(true);
+			_controls->SyncWithLocationsList();
 			pos = GetItemPos(parent, id);
 			wxTreeCtrl::Delete(_draggedId);
 			id = InsertItem(parent, pos, name, image, -1, new FolderItem());

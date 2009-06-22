@@ -728,9 +728,9 @@ bool Controls::SaveGameWithCheck()
 	return true;
 }
 
-void Controls::SyncWithLocationsList(bool isForce)
+void Controls::SyncWithLocationsList()
 {
-	if (isForce || _locListBox->IsNeedForUpdate())
+	if (_locListBox->IsNeedForUpdate())
 	{
 		_locListBox->UpdateDataContainer();
 		UpdateOpenedLocationsIndexes();
