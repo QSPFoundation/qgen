@@ -350,7 +350,6 @@ bool Controls::IsClipboardEmpty()
 
 bool Controls::SerializeLocData( size_t locIndex, wxString &buffer )
 {
-	wxString cntActs;
 	size_t countActs;
 	buffer.Append(QGEN_GAMEID);
 	buffer.Append(QGEN_STRSDELIM);
@@ -365,8 +364,7 @@ bool Controls::SerializeLocData( size_t locIndex, wxString &buffer )
 	buffer.Append(EncodeString(_container->GetLocationCode(locIndex)));
 	buffer.Append(QGEN_STRSDELIM);
 	countActs = _container->GetActionsCount(locIndex);
-	cntActs.Printf(wxT("%ld"), countActs);
-	buffer.Append(EncodeString(cntActs));
+	buffer.Append(EncodeString(wxString::Format(wxT("%ld"), countActs)));
 	buffer.Append(QGEN_STRSDELIM);
 	for (size_t i = 0; i < countActs; ++i)
 	{
