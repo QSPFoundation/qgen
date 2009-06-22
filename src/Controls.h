@@ -78,7 +78,6 @@
 		wxString			_currentGamePath;
 		wxString			_currentGamePass;
 		wxLongLong			_lastSaveTime;
-		bool				_isNeedSyncWithLocsList;
 
 		static wxString ConvertSearchString(const wxString& s, bool isMatchCase);
 		static int FindSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind = 0);

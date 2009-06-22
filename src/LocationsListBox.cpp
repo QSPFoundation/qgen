@@ -143,6 +143,7 @@ void LocationsListBox::Insert(const wxString &name, const wxString &pos, const w
 		InsertItem(parent, GetLocByName(GetRootItem(), pos), name, image);
 	else
 		InsertItem(parent, -1, name, image);
+	_needForUpdate = true;
 }
 
 wxTreeItemId LocationsListBox::GetLocByName( const wxTreeItemId &parent, const wxString &name )
@@ -253,7 +254,12 @@ void LocationsListBox::UpdateLocationActions( const wxString &name )
 
 void LocationsListBox::Delete( const wxString &name )
 {
-	wxTreeCtrl::Delete(GetLocByName(GetRootItem(), name));
+	wxTreeItemId id(GetLocByName(GetRootItem(), name));
+	if (id.IsOk())
+	{
+		wxTreeCtrl::Delete(id);
+		_needForUpdate = true;
+	}
 }
 
 void LocationsListBox::ExpandCollapseItems(bool isExpand)
@@ -405,6 +411,7 @@ void LocationsListBox::AddFolder( const wxString &name )
 	}
 	else
 		AppendItem(GetRootItem(), name, -1, -1, new FolderItem());
+	_needForUpdate = true;
 }
 
 long LocationsListBox::GetItemType( const wxTreeItemId &id )
@@ -494,7 +501,8 @@ void LocationsListBox::UpdateDataContainer( const wxTreeItemId &parent, long fol
 		{
 			++(*folderPos);
 			long curInd = container->FindSectionIndex(GetItemText(idCur));
-			container->MoveSection(curInd, *folderPos, *pos);
+			container->SetFolderPos(curInd, *pos);
+			container->MoveSection(curInd, *folderPos);
 			UpdateDataContainer(idCur, *folderPos, locPos, folderPos, pos);
 		}
 		else
@@ -512,7 +520,10 @@ void LocationsListBox::DeleteFolder( const wxString &name )
 {
 	wxTreeItemId id(GetFolderByName(name));
 	if (id.IsOk())
+	{
 		wxTreeCtrl::Delete(id);
+		_needForUpdate = true;
+	}
 }
 
 bool LocationsListBox::IsFolderItem( const wxTreeItemId &id )

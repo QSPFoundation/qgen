@@ -62,7 +62,7 @@
 		void Save() { _isSaved = true; }
 		bool IsSaved() { return _isSaved; }
 
-		int InsertLocation(const wxString &name, size_t pos);
+		int AddLocation(const wxString &name);
 		bool RenameLocation(size_t locIndex, const wxString& newName);
 		void DeleteLocation(size_t locIndex);
 		void ClearLocation(size_t locIndex);
@@ -96,11 +96,12 @@
 		wxString GetSectionName(size_t index);
 		void SetLocSection(size_t locIndex, int sectionIndex);
 		int GetLocSection(size_t locIndex);
-		bool AddSection(const wxString &name);
+		int AddSection(const wxString &name);
 		bool RenameSection(size_t sectionIndex, const wxString &newName);
 		void DeleteSection(size_t sectionIndex);
 		int FindSectionIndex(const wxString &name);
-		void MoveSection(size_t sectionIndex, long moveToSecPos, long pos);
+		void MoveSection(size_t sectionIndex, size_t moveToSecPos);
+		void SetFolderPos(size_t sectionIndex, long pos);
 		int FindSectionForPos(size_t pos);
 	};
 

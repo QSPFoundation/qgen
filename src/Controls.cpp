@@ -20,7 +20,6 @@
 Controls::Controls(const wxString &path)
 {
 	_currentPath = path;
-	_isNeedSyncWithLocsList = false;
 
 	_settings = new Settings(_currentPath);
 	_container = new DataContainer();
@@ -62,15 +61,9 @@ int Controls::AddLocationByName(const wxString &name)
 {
 	wxString locName(_locListBox->GetStringSelection());
 	wxString folder(_locListBox->GetSelectedFolder());
-	int locInd = _container->FindLocationIndex(locName);
+	int locInd = _container->AddLocation(name);
 	if (locInd >= 0)
-		++locInd;
-	else
-		locInd = _container->GetLocationsCount();
-	if (_container->InsertLocation(name, locInd) >= 0)
 	{
-		_container->SetLocSection(locInd, _container->FindSectionIndex(folder));
-		UpdateOpenedLocationsIndexes();
 		_locListBox->Insert(name, locName, folder);
 		if (_settings->GetOpenNewLoc()) ShowLocation(name);
 		return locInd;
@@ -152,7 +145,6 @@ bool Controls::DeleteSelectedLocation()
 		_container->DeleteLocation(locIndex);
 		UpdateOpenedLocationsIndexes();
 		InitSearchData();
-		_isNeedSyncWithLocsList = true;
 		return true;
 	}
 	return false;
@@ -738,12 +730,11 @@ bool Controls::SaveGameWithCheck()
 
 void Controls::SyncWithLocationsList(bool isForce)
 {
-	if (isForce || _isNeedSyncWithLocsList || _locListBox->IsNeedForUpdate())
+	if (isForce || _locListBox->IsNeedForUpdate())
 	{
 		_locListBox->UpdateDataContainer();
 		UpdateOpenedLocationsIndexes();
 		InitSearchData();
-		_isNeedSyncWithLocsList = false;
 	}
 }
 
@@ -1166,7 +1157,7 @@ void Controls::NewGame()
 	wxString locName = _settings->GetFirstLocName().Trim().Trim(false);
 	if (_settings->GetCreateFirstLoc() && !locName.IsEmpty())
 	{
-		_container->InsertLocation(locName, 0);
+		_container->AddLocation(locName);
 		_locListBox->Insert(locName, wxEmptyString, wxEmptyString);
 		_container->Save();
 	}
@@ -1499,10 +1490,9 @@ bool Controls::AddFolder()
 				ShowMessage( QGEN_MSG_TOOLONGFOLDERNAME );
 			else
 			{
-				if (_container->AddSection(name))
+				if (_container->AddSection(name) >= 0)
 				{
 					_locListBox->AddFolder(name);
-					_isNeedSyncWithLocsList = true;
 					break;
 				}
 				else

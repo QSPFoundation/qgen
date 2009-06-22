@@ -342,7 +342,7 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *_mainFrame, Controls *con
 		}
 		if (indexLoc < 0)
 		{
-			indexLoc = container->InsertLocation(data, container->GetLocationsCount());
+			indexLoc = container->AddLocation(data);
 			canAddLoc = true;
 		}
 		free(data);
@@ -714,7 +714,8 @@ bool ParseConfigFile(DataContainer *container, wxXmlNode *node, long folder, lon
 				++(*folderPos);
 				curInd = container->GetSectionsCount();
 				container->AddSection(folderName);
-				container->MoveSection(curInd, *folderPos, *pos);
+				container->SetFolderPos(curInd, *pos);
+				container->MoveSection(curInd, *folderPos);
 				if (!ParseConfigFile(container, node, *folderPos, locPos, folderPos, pos))
 					return false;
 			}

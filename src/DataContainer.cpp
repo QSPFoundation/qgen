@@ -65,15 +65,15 @@ int DataContainer::FindActionIndex(size_t indexLoc, const wxString& actName)
 	return wxNOT_FOUND;
 }
 
-int DataContainer::InsertLocation(const wxString &name, size_t pos)
+int DataContainer::AddLocation(const wxString &name)
 {
 	if (FindLocationIndex(name) >= 0) return wxNOT_FOUND;
 	LocationData *loc = new LocationData;
 	loc->name = name;
 	loc->sectionIndex = wxNOT_FOUND;
-	locationArray.Insert(loc, pos);
+	locationArray.Add(loc);
 	_isSaved = false;
-	return (int)pos;
+	return locationArray.GetCount() - 1;
 }
 
 bool DataContainer::RenameLocation(size_t locIndex, const wxString& newName)
@@ -252,15 +252,15 @@ int DataContainer::GetLocSection( size_t locIndex )
 	return locationArray[locIndex].sectionIndex;
 }
 
-bool DataContainer::AddSection( const wxString &name )
+int DataContainer::AddSection( const wxString &name )
 {
-	if (FindSectionIndex(name) >= 0) return false;
+	if (FindSectionIndex(name) >= 0) return wxNOT_FOUND;
 	SectionData *data = new SectionData;
 	data->name = name;
 	data->pos = wxNOT_FOUND;
 	_sections.Add(data);
 	_isSaved = false;
-	return true;
+	return _sections.GetCount() - 1;
 }
 
 bool DataContainer::RenameSection( size_t sectionIndex, const wxString &newName )
@@ -292,13 +292,18 @@ void DataContainer::DeleteSection( size_t sectionIndex )
 	_isSaved = false;
 }
 
-void DataContainer::MoveSection( size_t sectionIndex, long moveToSecPos, long pos )
+void DataContainer::MoveSection( size_t sectionIndex, size_t moveToSecPos )
 {
-	if (sectionIndex == moveToSecPos && _sections[sectionIndex].pos == pos)
-		return;
+	if (sectionIndex == moveToSecPos) return;
 	SectionData *data = _sections.Detach(sectionIndex);
 	_sections.Insert(data, moveToSecPos);
-	_sections[moveToSecPos].pos = pos;
+	_isSaved = false;
+}
+
+void DataContainer::SetFolderPos( size_t sectionIndex, long pos )
+{
+	if (_sections[sectionIndex].pos == pos) return;
+	_sections[sectionIndex].pos = pos;
 	_isSaved = false;
 }
 
