@@ -20,6 +20,7 @@
 Controls::Controls(const wxString &path)
 {
 	_currentPath = path;
+	_isNeedSyncWithLocsList = false;
 
 	_settings = new Settings(_currentPath);
 	_container = new DataContainer();
@@ -151,6 +152,7 @@ bool Controls::DeleteSelectedLocation()
 		_container->DeleteLocation(locIndex);
 		UpdateOpenedLocationsIndexes();
 		InitSearchData();
+		_isNeedSyncWithLocsList = true;
 		return true;
 	}
 	return false;
@@ -736,11 +738,12 @@ bool Controls::SaveGameWithCheck()
 
 void Controls::SyncWithLocationsList(bool isForce)
 {
-	if (isForce || _locListBox->IsNeedForUpdate())
+	if (isForce || _isNeedSyncWithLocsList || _locListBox->IsNeedForUpdate())
 	{
 		_locListBox->UpdateDataContainer();
 		UpdateOpenedLocationsIndexes();
 		InitSearchData();
+		_isNeedSyncWithLocsList = false;
 	}
 }
 
@@ -1498,6 +1501,7 @@ bool Controls::AddFolder()
 			{
 				_container->AddSection(name);
 				_locListBox->AddFolder(name);
+				_isNeedSyncWithLocsList = true;
 				break;
 			}
 		}
