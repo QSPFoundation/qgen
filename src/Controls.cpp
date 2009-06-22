@@ -1281,7 +1281,7 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 
 	if (locReplaceFound || locPasteFound || locPasteNewFound)
 		res = !IsClipboardEmpty();
-	if (locReplaceFound) menu->Enable(LOC_REPLACE, res);
+	if (locReplaceFound) menu->Enable(LOC_REPLACE, res && GetSelectedLocationIndex() >= 0);
 	if (locPasteFound) menu->Enable(LOC_PASTE, res);
 	if (locPasteNewFound) menu->Enable(LOC_PASTE_NEW, res);
 	res = false;
