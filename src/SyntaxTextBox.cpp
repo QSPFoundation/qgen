@@ -413,7 +413,7 @@ void SyntaxTextBox::OnMouseMove(wxMouseEvent& event)
 {
 	wxStyledTextCtrl::OnMouseMove(event);
 	if (_statusBar)
-		Tip(PositionFromPoint(event.GetPosition()));	
+		Tip(PositionFromPoint(event.GetPosition()));
 }
 
 wxString SyntaxTextBox::GetWordFromPos(int pos)
@@ -423,7 +423,7 @@ wxString SyntaxTextBox::GetWordFromPos(int pos)
 
 	int lineInd = LineFromPosition(pos);
 	int realPos = GetCharIndexFromPosition(PositionFromLine(lineInd), pos);
-	wxString lineStr = GetLine(lineInd);
+	wxString lineStr = GetLine(lineInd).Trim();
 
 	if (!lineStr.IsEmpty())
 	{
