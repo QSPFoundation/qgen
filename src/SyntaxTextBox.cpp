@@ -448,7 +448,7 @@ wxString SyntaxTextBox::GetWordFromPos(int pos)
 
 void SyntaxTextBox::Tip(int pos)
 {
-	_statusBar->SetStatusText(wxEmptyString);
+	bool tipFound = false;
 	wxString str = GetWordFromPos(pos).Lower();
 	if (!str.IsEmpty())
 	{
@@ -457,10 +457,13 @@ void SyntaxTextBox::Tip(int pos)
 			if (str == i->word)
 			{
 				_statusBar->SetStatusText(i->tip);
+				tipFound = true;
 				break;
 			}
 		}
 	}
+	if (!tipFound)
+		_statusBar->SetStatusText(wxEmptyString);
 }
 
 void SyntaxTextBox::LoadTips()
