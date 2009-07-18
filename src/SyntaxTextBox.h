@@ -37,10 +37,14 @@
 		 SYNTAX_STYLE_SIMPLEMENU = 4
 	};
 
-	struct tips
+	struct HelpTip
 	{
 		wxString word;
 		wxString tip;
+
+		HelpTip(const wxString &w, const wxString &t) : word(w), tip(t)
+		{
+		}
 	};
 
 	class SyntaxTextBox : public wxStyledTextCtrl, public IObserver
@@ -52,7 +56,7 @@
 		wxStatusBar *_statusBar;
 		wxArrayString keywords;
 		int _style;
-		tips tooltips[110];
+		std::list<HelpTip> _tooltips;
 
 		void FillKeywords(const wxString &str);
 		wxString GetArrayAsString(const wxArrayString &arr) const;
@@ -69,7 +73,7 @@
 		void OnRightClick(wxMouseEvent& event);
 		void OnMarginClicked(wxStyledTextEvent &event);
 		void OnCharAdded(wxStyledTextEvent &event);
-		void OnMouseMove(wxMouseEvent& evt);
+		void OnMouseMove(wxMouseEvent& event);
 	public:
 		SyntaxTextBox(wxWindow *owner, IControls *controls, wxStatusBar *statusBar, int style);
 		~SyntaxTextBox();
