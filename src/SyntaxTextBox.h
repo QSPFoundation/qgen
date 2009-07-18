@@ -37,14 +37,22 @@
 		 SYNTAX_STYLE_SIMPLEMENU = 4
 	};
 
+	struct tips
+	{
+		wxString word;
+		wxString tip;
+	};
+
 	class SyntaxTextBox : public wxStyledTextCtrl, public IObserver
 	{
 		DECLARE_CLASS(SyntaxTextBox)
 		DECLARE_EVENT_TABLE()
 	private:
 		IControls *_controls;
+		wxStatusBar *_statusBar;
 		wxArrayString keywords;
 		int _style;
+		tips tooltips[110];
 
 		void FillKeywords(const wxString &str);
 		wxString GetArrayAsString(const wxArrayString &arr) const;
@@ -52,13 +60,18 @@
 		int GetCharIndexFromPosition(int fromPos, int pos);
 		bool StartAutoComplete();
 		void Expand(int &line, bool doExpand, bool force = false, int visLevels = 0, int level = -1);
+		wxString GetWordFromPos(int pos);
+
+		void LoadTips();
+		void Tip(int pos);
 
 		void OnKeyDown(wxKeyEvent& event);
 		void OnRightClick(wxMouseEvent& event);
 		void OnMarginClicked(wxStyledTextEvent &event);
 		void OnCharAdded(wxStyledTextEvent &event);
+		void OnMouseMove(wxMouseEvent& evt);
 	public:
-		SyntaxTextBox(wxWindow *owner, IControls *controls, int style);
+		SyntaxTextBox(wxWindow *owner, IControls *controls, wxStatusBar *statusBar, int style);
 		~SyntaxTextBox();
 
 		void Update(bool isFromObservable = false);

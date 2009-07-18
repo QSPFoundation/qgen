@@ -36,6 +36,7 @@
 	private:
 		IControls		*_controls;
 		DataContainer	*_container;
+		wxStatusBar		*_statusBar;
 		int selectedTab;
 
 		void OnClosePage(wxAuiNotebookEvent &event);
@@ -46,7 +47,7 @@
 
 		void NotifyClosePage(int index);
 	public:
-		LocationsNotebook(wxWindow *parent, wxWindowID id, IControls *controls,
+		LocationsNotebook(wxWindow *parent, wxWindowID id, IControls *controls, wxStatusBar *statusBar,
 						  long style = wxAUI_NB_DEFAULT_STYLE|wxAUI_NB_WINDOWLIST_BUTTON);
 
 		~LocationsNotebook();

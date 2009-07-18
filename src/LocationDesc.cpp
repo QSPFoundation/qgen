@@ -25,7 +25,7 @@ LocationDesc::LocationDesc( wxWindow *owner, ILocationPage *locPage, IControls *
 	_locPage  = locPage;
 	_controls = controls;
 
-	_text = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_SIMPLE);
+	_text = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_SIMPLE);
 	wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
 	sizer->Add(new wxStaticText(this, wxID_ANY, wxT("Описание:"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE), 0, wxALL|wxGROW, 1);
 	sizer->Add(_text, 1, wxALL|wxGROW, 1);

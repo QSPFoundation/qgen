@@ -29,10 +29,11 @@ BEGIN_EVENT_TABLE(LocationsNotebook, wxAuiNotebook)
 	EVT_NAVIGATION_KEY(LocationsNotebook::OnNavigationKeyNotebook)
 END_EVENT_TABLE()
 
-LocationsNotebook::LocationsNotebook(wxWindow* parent, wxWindowID id, IControls *controls, long style) :
+LocationsNotebook::LocationsNotebook(wxWindow* parent, wxWindowID id, IControls *controls, wxStatusBar *statusBar, long style) :
 	wxAuiNotebook( parent, id, wxDefaultPosition, wxDefaultSize, style )
 {
 	_controls = controls;
+	_statusBar = statusBar;
 	Update();
 	_controls->GetSettings()->AddObserver(this);
 }
@@ -88,7 +89,7 @@ int LocationsNotebook::FindPageIndex(const wxString& namePage)
 LocationPage * LocationsNotebook::OpenLocationPage( const wxString& namePage, bool isSelect )
 {
 	size_t locIndex = _controls->GetContainer()->FindLocationIndex(namePage);
-	LocationPage *page = new LocationPage(this, _controls);
+	LocationPage *page = new LocationPage(this, _controls, _statusBar);
 	page->SetLocationIndex(locIndex);
 	AddPage(page, namePage, isSelect);
 	page->LoadPage();

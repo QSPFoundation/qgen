@@ -19,9 +19,10 @@
 
 IMPLEMENT_CLASS(LocationPage, wxPanel);
 
-LocationPage::LocationPage(wxAuiNotebook *owner, IControls *controls ) : wxPanel(owner)
+LocationPage::LocationPage(wxAuiNotebook *owner, IControls *controls, wxStatusBar *statusBar ) : wxPanel(owner)
 {
 	_controls = controls;
+	_statusBar = statusBar;
 	_settings = _controls->GetSettings();
 	_descWidth = _actsHeight = -1;
 
@@ -29,7 +30,7 @@ LocationPage::LocationPage(wxAuiNotebook *owner, IControls *controls ) : wxPanel
 
 	_splitterv_up = new wxSplitterWindow(_splitterh, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3DSASH);
 	_locDesc = new LocationDesc( _splitterv_up, this, _controls );
-	_locCode = new LocationCode( _splitterv_up, this, _controls );
+	_locCode = new LocationCode( _splitterv_up, this, _controls, _statusBar );
 	_splitterv_up->SetMinimumPaneSize(1);
 	_splitterv_up->SplitVertically(_locDesc, _locCode);
 
@@ -39,7 +40,7 @@ LocationPage::LocationPage(wxAuiNotebook *owner, IControls *controls ) : wxPanel
 	_splitterv_up->SetAutoLayout(true);
 
 	// ----------------------------------------
-	_locActs = new LocationActions( _splitterh, this, _controls );
+	_locActs = new LocationActions( _splitterh, this, _controls, _statusBar );
 
 	_splitterh->SetMinimumPaneSize(1);
 	_splitterh->SplitHorizontally(_splitterv_up, _locActs);

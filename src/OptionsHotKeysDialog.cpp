@@ -36,7 +36,7 @@ OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& tit
 	hotKeySizer->Add(_txtInputHotkey, 0, wxALL, 5);
 
 	wxStaticText *stText02 = new wxStaticText(this, wxID_ANY, wxT("Текст:"));
-	_txtInputText = new SyntaxTextBox(this, controls, SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU);
+	_txtInputText = new SyntaxTextBox(this, controls, NULL, SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU);
 
 	wxSizer *btnSizer = new wxBoxSizer(wxHORIZONTAL);
 	_btnOK = new wxButton(this, wxID_OK, wxT("OK"));

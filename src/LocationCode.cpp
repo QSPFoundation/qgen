@@ -19,13 +19,14 @@
 
 IMPLEMENT_CLASS(LocationCode, wxPanel)
 
-LocationCode::LocationCode( wxWindow *owner, ILocationPage *locPage, IControls *controls ) :
+LocationCode::LocationCode( wxWindow *owner, ILocationPage *locPage, IControls *controls, wxStatusBar *statusBar ) :
 	wxPanel(owner, wxID_ANY)
 {
 	_locPage  = locPage;
 	_controls = controls;
+	_statusBar = statusBar;
 
-	_text = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_COLORED);
+	_text = new SyntaxTextBox(this, _controls, _statusBar, SYNTAX_STYLE_COLORED);
 	wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
 	sizer->Add(new wxStaticText(this, wxID_ANY, wxT("Выполнить при посещении:"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE), 0, wxALL|wxGROW, 1);
 	sizer->Add(_text, 1, wxALL|wxGROW, 1);

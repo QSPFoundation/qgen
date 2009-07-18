@@ -179,11 +179,6 @@ void QGenMainFrame::CreateStatusBar()
 {
 	_statusBar = new wxStatusBar( this, wxID_ANY, wxSTB_DEFAULT_STYLE, wxT("wxStatusBar") );
 
-	static const int widths[2] = { -1, 100 };
-
-	_statusBar->SetFieldsCount(2);
-	_statusBar->SetStatusWidths(2, widths);
-
 	SetStatusBar( _statusBar );
 	PositionStatusBar();
 }
@@ -474,7 +469,7 @@ void QGenMainFrame::CreateLocListBox()
 
 void QGenMainFrame::CreateNotebook()
 {
-	_locNotebook = new LocationsNotebook(this, wxID_ANY, _controls);
+	_locNotebook = new LocationsNotebook(this, wxID_ANY, _controls, _statusBar);
 	_controls->SetNotebook(_locNotebook);
 }
 
