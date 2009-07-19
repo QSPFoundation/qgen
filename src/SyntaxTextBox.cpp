@@ -217,7 +217,6 @@ void SyntaxTextBox::OnKeyDown( wxKeyEvent& event )
 			break;
 		}
 	}
-
 	if (_style & SYNTAX_STYLE_NOHOTKEYS)
 		event.Skip();
 	else
@@ -420,19 +419,15 @@ void SyntaxTextBox::OnMouseMove(wxMouseEvent& event)
 
 wxString SyntaxTextBox::GetWordFromPos(int pos)
 {
-	wxString str, lineStr;
+	wxString str;
 	int beginPos, lastPos;
-
 	int lineInd = LineFromPosition(pos);
 	int realPos = GetCharIndexFromPosition(PositionFromLine(lineInd), pos);
-	if (pos != GetCurrentPos())
-		lineStr = GetLine(lineInd).Trim();
-	else
-		lineStr = GetLine(lineInd);
-
+	wxString lineStr = GetLine(lineInd).Trim();
 	if (!lineStr.IsEmpty())
 	{
-		if (realPos == lineStr.Length()) --realPos;
+		if (realPos >= lineStr.Length())
+			realPos = lineStr.Length() - 1;
 		beginPos = realPos;
 		lastPos = realPos;
 		while (beginPos >= 0)
@@ -602,6 +597,7 @@ void SyntaxTextBox::LoadTips()
 
 void SyntaxTextBox::OnKeyUp(wxKeyEvent& event)
 {
-	if(_statusBar)
+	if (_statusBar)
 		Tip(GetCurrentPos());
+	event.Skip();
 }
