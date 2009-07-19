@@ -70,6 +70,7 @@
 		void Tip(int pos);
 
 		void OnKeyDown(wxKeyEvent& event);
+		void OnKeyUp(wxKeyEvent& event);
 		void OnRightClick(wxMouseEvent& event);
 		void OnMarginClicked(wxStyledTextEvent &event);
 		void OnCharAdded(wxStyledTextEvent &event);

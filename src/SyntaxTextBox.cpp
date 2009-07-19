@@ -21,6 +21,7 @@ IMPLEMENT_CLASS(SyntaxTextBox, wxStyledTextCtrl)
 
 BEGIN_EVENT_TABLE(SyntaxTextBox, wxStyledTextCtrl)
 	EVT_KEY_DOWN(SyntaxTextBox::OnKeyDown)
+	EVT_KEY_UP(SyntaxTextBox::OnKeyUp)
 	EVT_RIGHT_DOWN(SyntaxTextBox::OnRightClick)
 	EVT_STC_MARGINCLICK(wxID_ANY, SyntaxTextBox::OnMarginClicked)
 	EVT_STC_CHARADDED(wxID_ANY, SyntaxTextBox::OnCharAdded)
@@ -216,6 +217,7 @@ void SyntaxTextBox::OnKeyDown( wxKeyEvent& event )
 			break;
 		}
 	}
+
 	if (_style & SYNTAX_STYLE_NOHOTKEYS)
 		event.Skip();
 	else
@@ -418,12 +420,15 @@ void SyntaxTextBox::OnMouseMove(wxMouseEvent& event)
 
 wxString SyntaxTextBox::GetWordFromPos(int pos)
 {
-	wxString str;
+	wxString str, lineStr;
 	int beginPos, lastPos;
 
 	int lineInd = LineFromPosition(pos);
 	int realPos = GetCharIndexFromPosition(PositionFromLine(lineInd), pos);
-	wxString lineStr = GetLine(lineInd).Trim();
+	if (pos != GetCurrentPos())
+		lineStr = GetLine(lineInd).Trim();
+	else
+		lineStr = GetLine(lineInd);
 
 	if (!lineStr.IsEmpty())
 	{
@@ -520,31 +525,46 @@ void SyntaxTextBox::LoadTips()
 	_tooltips.push_back(HelpTip(wxT("close"), wxT("CLOSE [$путь к звуковому файлу] / CLOSE ALL - остановка проигрывания звукового файла с заданным названием / всех звуковых файлов.")));
 	_tooltips.push_back(HelpTip(wxT("view"), wxT("VIEW [$путь к графическому файлу] - просмотр картинки из указанного файла.")));
 	_tooltips.push_back(HelpTip(wxT("desc"), wxT("DESC([$выражение]) - возвращает текст базового описания локации с заданным в [$выражение] названием.")));
+	_tooltips.push_back(HelpTip(wxT("$desc"), wxT("DESC([$выражение]) - возвращает текст базового описания локации с заданным в [$выражение] названием.")));
 	_tooltips.push_back(HelpTip(wxT("iif"), wxT("IIF([#выражение],[выражение_да],[выражение_нет]) - возвращает значение выражения [выражение_да], если [#выражение] верно, иначе значение выражения [выражение_нет].")));
+	_tooltips.push_back(HelpTip(wxT("$iif"), wxT("IIF([#выражение],[выражение_да],[выражение_нет]) - возвращает значение выражения [выражение_да], если [#выражение] верно, иначе значение выражения [выражение_нет].")));
 	_tooltips.push_back(HelpTip(wxT("input"), wxT("INPUT([выражение]) - выводит окно ввода с приглашением [выражение].")));
+	_tooltips.push_back(HelpTip(wxT("$input"), wxT("INPUT([выражение]) - выводит окно ввода с приглашением [выражение].")));
 	_tooltips.push_back(HelpTip(wxT("isplay"), wxT("ISPLAY([$выражение]) - проверяет, проигрывается ли файл с заданным названием в текущий момент.")));
 	_tooltips.push_back(HelpTip(wxT("max"), wxT("MAX([выражение 1],[выражение 2]) - возвращает максимальное из значений выражений-аргументов.")));
+	_tooltips.push_back(HelpTip(wxT("$max"), wxT("MAX([выражение 1],[выражение 2]) - возвращает максимальное из значений выражений-аргументов.")));
 	_tooltips.push_back(HelpTip(wxT("min"), wxT("MIN([выражение 1],[выражение 2]) - возвращает минимальное из значений выражений-аргументов.")));
+	_tooltips.push_back(HelpTip(wxT("$min"), wxT("MIN([выражение 1],[выражение 2]) - возвращает минимальное из значений выражений-аргументов.")));
 	_tooltips.push_back(HelpTip(wxT("rand"), wxT("RAND([#выражение 1],[#выражение 2]) - возвращает случайное число между числами [#выражение 1] и [#выражение 2].")));
 	_tooltips.push_back(HelpTip(wxT("rgb"), wxT("RGB([#выражение 1],[#выражение 2],[#выражение 3]) - возвращает код цвета на основе 3-х числовых аргументов.")));
 	_tooltips.push_back(HelpTip(wxT("getobj"), wxT("GETOBJ([#выражение]) - возвращает название предмета в рюкзаке, расположенного в заданной позиции.")));
+	_tooltips.push_back(HelpTip(wxT("$getobj"), wxT("GETOBJ([#выражение]) - возвращает название предмета в рюкзаке, расположенного в заданной позиции.")));
 	_tooltips.push_back(HelpTip(wxT("dyneval"), wxT("DYNEVAL([$выражение]) - возвращает значение указанного выражения.")));
+	_tooltips.push_back(HelpTip(wxT("$dyneval"), wxT("DYNEVAL([$выражение]) - возвращает значение указанного выражения.")));
 	_tooltips.push_back(HelpTip(wxT("func"), wxT("FUNC([$выражение],[параметр1],[параметр2], ...) - обработка локации с названием [$выражение].")));
+	_tooltips.push_back(HelpTip(wxT("$func"), wxT("FUNC([$выражение],[параметр1],[параметр2], ...) - обработка локации с названием [$выражение].")));
 	_tooltips.push_back(HelpTip(wxT("arrsize"), wxT("ARRSIZE([$выражение]) - возвращает число элементов в массиве с названием [$выражение].")));
 	_tooltips.push_back(HelpTip(wxT("arrpos"), wxT("ARRPOS([#выражение 1],[$выражение 2],[выражение 3]) - возвращает индекс элемента массива с названием [$выражение 2], равного значению выражения [выражение 3].")));
 	_tooltips.push_back(HelpTip(wxT("instr"), wxT("INSTR([#выражение 1],[$выражение 2],[$выражение 3]) - возвращает номер позиции символа, с которого начинается вхождение строки [$выражение 3] в строку [$выражение 2].")));
 	_tooltips.push_back(HelpTip(wxT("isnum"), wxT("ISNUM([$выражение]) - функция проверяет, все ли символы в строке являются цифрами.")));
 	_tooltips.push_back(HelpTip(wxT("trim"), wxT("TRIM([$выражение]) - удаляет прилегающие пробелы и символы табуляции из [$выражение].")));
+	_tooltips.push_back(HelpTip(wxT("$trim"), wxT("TRIM([$выражение]) - удаляет прилегающие пробелы и символы табуляции из [$выражение].")));
 	_tooltips.push_back(HelpTip(wxT("ucase"), wxT("UCASE([$выражение]) - возвращает строку больших букв, полученную изменением регистра букв исходной строки [$выражение].")));
+	_tooltips.push_back(HelpTip(wxT("$ucase"), wxT("UCASE([$выражение]) - возвращает строку больших букв, полученную изменением регистра букв исходной строки [$выражение].")));
 	_tooltips.push_back(HelpTip(wxT("lcase"), wxT("LCASE([$выражение]) - возвращает строку маленьких букв, полученную изменением регистра букв исходной строки [$выражение].")));
+	_tooltips.push_back(HelpTip(wxT("$lcase"), wxT("LCASE([$выражение]) - возвращает строку маленьких букв, полученную изменением регистра букв исходной строки [$выражение].")));
 	_tooltips.push_back(HelpTip(wxT("len"), wxT("LEN([$выражение]) - возвращает длину строки [$выражение].")));
 	_tooltips.push_back(HelpTip(wxT("mid"), wxT("MID([$выражение],[#выражение 1],[#выражение 2]) - вырезает из строки [$выражение] строку, которая начинается с символа номер [#выражение 1] и имеет длину [#выражение 2].")));
+	_tooltips.push_back(HelpTip(wxT("$mid"), wxT("MID([$выражение],[#выражение 1],[#выражение 2]) - вырезает из строки [$выражение] строку, которая начинается с символа номер [#выражение 1] и имеет длину [#выражение 2].")));
 	_tooltips.push_back(HelpTip(wxT("replace"), wxT("REPLACE([$выражение 1],[$выражение 2],[$выражение 3]) - заменяет в строке [$выражение 1] все вхождения строки [$выражение 2] строкой [$выражение 3].")));
+	_tooltips.push_back(HelpTip(wxT("$replace"), wxT("REPLACE([$выражение 1],[$выражение 2],[$выражение 3]) - заменяет в строке [$выражение 1] все вхождения строки [$выражение 2] строкой [$выражение 3].")));
 	_tooltips.push_back(HelpTip(wxT("str"), wxT("STR([#выражение]) - переводит число (числовое выражение) [#выражение] в соответствующую строку.")));
+	_tooltips.push_back(HelpTip(wxT("$str"), wxT("STR([#выражение]) - переводит число (числовое выражение) [#выражение] в соответствующую строку.")));
 	_tooltips.push_back(HelpTip(wxT("val"), wxT("VAL([$выражение]) - переводит строку цифр [$выражение] в соответствующее число.")));
 	_tooltips.push_back(HelpTip(wxT("arrcomp"), wxT("ARRCOMP([#выражение 1],[$выражение 2],[$выражение 3]) - возвращает индекс элемента массива с названием [$выражение 2], соответствующего регулярному выражению [$выражение 3].")));
 	_tooltips.push_back(HelpTip(wxT("strcomp"), wxT("STRCOMP([$выражение],[$шаблон]) - проводит сравнение строки [$выражение] на соответствие регулярному выражению [$шаблон].")));
 	_tooltips.push_back(HelpTip(wxT("strfind"), wxT("STRFIND([$выражение],[$шаблон],[#номер]) - возвращает подстроку в строке [$выражение], соответствующую группе с номером [#номер] регулярного выражения [$шаблон].")));
+	_tooltips.push_back(HelpTip(wxT("$strfind"), wxT("STRFIND([$выражение],[$шаблон],[#номер]) - возвращает подстроку в строке [$выражение], соответствующую группе с номером [#номер] регулярного выражения [$шаблон].")));
 	_tooltips.push_back(HelpTip(wxT("strpos"), wxT("STRPOS([$выражение],[$шаблон],[#номер]) - возвращает позицию символа, с которого начинается вхождение подстроки в строке [$выражение], соответствующей группе с номером [#номер] регулярного выражения [$шаблон].")));
 	_tooltips.push_back(HelpTip(wxT("countobj"), wxT("COUNTOBJ - имеет значение, равное числу предметов в рюкзаке.")));
 	_tooltips.push_back(HelpTip(wxT("nosave"), wxT("NOSAVE - если её значение отлично от 0, то сохранение состояния игры пользователем невозможно.")));
@@ -578,4 +598,10 @@ void SyntaxTextBox::LoadTips()
 	_tooltips.push_back(HelpTip(wxT("fsize"), wxT("FSIZE - содержит размер используемого в данный момент шрифта.")));
 	_tooltips.push_back(HelpTip(wxT("$fname"), wxT("$FNAME - содержит название используемого в данный момент шрифта.")));
 	_tooltips.push_back(HelpTip(wxT("$backimage"), wxT("$BACKIMAGE - содержит путь к файлу изображения локации.")));
+}
+
+void SyntaxTextBox::OnKeyUp(wxKeyEvent& event)
+{
+	if(_statusBar)
+		Tip(GetCurrentPos());
 }
