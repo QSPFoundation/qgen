@@ -23,6 +23,7 @@
 	#include "Idents.h"
 	#include "IControls.h"
 	#include "LocationPage.h"
+	#include "LocationTip.h"
 
 	#include "bitmaps/folder.xpm"
 	#include "bitmaps/folder_opened.xpm"
@@ -37,6 +38,11 @@
 		ICON_NOTACTIVELOCATION,
 		ICON_ACTIVELOCATION,
 		ICON_ACTION
+	};
+
+	enum
+	{
+		ID_SHOW_TIMER = 10000
 	};
 
 	enum
@@ -58,14 +64,22 @@
 		IControls *_controls;
 		wxImageList _statesImageList;
 		wxTreeItemId _draggedId;
+		LocationTip *_tip;
 		long _draggedType;
 		bool _needForUpdate;
+		wxWindow *_mainFrame;
+		wxPoint _prevMousePos;
+		wxTimer _showTimer;
+		wxString _prevLocName;
 
 		void OnRightClick(wxMouseEvent &event);
 		void OnDoubleClick(wxMouseEvent &event);
 		void OnEndLabelEdit(wxTreeEvent &event);
 		void OnBeginDrag(wxTreeEvent &event);
 		void OnEndDrag(wxTreeEvent &event);
+		void OnMouseMove(wxMouseEvent &event);
+		void OnLeaveWindow(wxMouseEvent &event);
+		void OnTimer(wxTimerEvent &event);
 		bool IsItemOk(wxTreeItemId id, int flags);
 		wxTreeItemId GetLocByName(const wxTreeItemId &parent, const wxString &name);
 		wxTreeItemId GetFolderByName(const wxString &name);

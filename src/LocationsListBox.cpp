@@ -25,13 +25,18 @@ BEGIN_EVENT_TABLE(LocationsListBox, wxTreeCtrl)
 	EVT_TREE_END_LABEL_EDIT(wxID_ANY, LocationsListBox::OnEndLabelEdit)
 	EVT_TREE_BEGIN_DRAG(wxID_ANY, LocationsListBox::OnBeginDrag)
 	EVT_TREE_END_DRAG(wxID_ANY, LocationsListBox::OnEndDrag)
+	EVT_MOTION(LocationsListBox::OnMouseMove)
+	EVT_LEAVE_WINDOW(LocationsListBox::OnLeaveWindow)
+	EVT_TIMER(ID_SHOW_TIMER, LocationsListBox::OnTimer)
 END_EVENT_TABLE()
 
 LocationsListBox::LocationsListBox(wxWindow *parent, wxWindowID id, IControls *controls, long style) :
-	wxTreeCtrl(parent, id, wxDefaultPosition, wxDefaultSize, style)
+	wxTreeCtrl(parent, id, wxDefaultPosition, wxDefaultSize, style), _showTimer(this, ID_SHOW_TIMER)
 {
 	_controls = controls;
+	_mainFrame = parent;
 	_needForUpdate = false;
+	_tip = NULL;
 
 	_statesImageList.Create(16, 16);
 	_statesImageList.Add(wxIcon(folder_xpm));
@@ -42,6 +47,7 @@ LocationsListBox::LocationsListBox(wxWindow *parent, wxWindowID id, IControls *c
 
 	AddRoot(wxT("Locs"));
 	Update();
+	_tip = new LocationTip(_mainFrame, _controls);
 	_controls->GetSettings()->AddObserver(this);
 }
 
@@ -531,4 +537,51 @@ bool LocationsListBox::IsFolderItem( const wxTreeItemId &id )
 {
 	FolderItem *data = dynamic_cast<FolderItem *>(GetItemData(id));
 	return (data != NULL);
+}
+
+void LocationsListBox::OnMouseMove(wxMouseEvent &event)
+{
+	int flags;
+	wxPoint _mousePos = event.GetPosition();
+	if (_prevMousePos != _mousePos)
+	{	
+		wxTreeItemId id(HitTest(_mousePos, flags));
+		if (IsItemOk(id, flags))
+		{
+			if (GetItemText(id) != _prevLocName)
+			{
+				_tip->HideTip();
+				_showTimer.Start(1000);
+				_prevLocName = GetItemText(id);
+			} 
+		} else {
+			if (_showTimer.IsRunning())
+				_showTimer.Stop();
+			_tip->HideTip();
+		}
+		_prevMousePos = _mousePos;
+	}
+
+	event.Skip();
+}
+
+void LocationsListBox::OnLeaveWindow(wxMouseEvent &event)
+{
+	wxPoint _mousePos = event.GetPosition();
+	if (_prevMousePos != _mousePos)
+	{
+		if (_showTimer.IsRunning())
+			_showTimer.Stop();
+		_tip->HideTip();
+		_prevMousePos = _mousePos;
+	}
+
+	event.Skip();
+}
+
+void LocationsListBox::OnTimer(wxTimerEvent &event)
+{	
+	if (_showTimer.IsRunning())
+		_showTimer.Stop();
+	_tip->MoveTip(ClientToScreen(_prevMousePos), _prevLocName);
 }

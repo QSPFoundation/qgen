@@ -400,6 +400,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\LocationTip.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\MergeDialog.cpp"
 				>
 			</File>
@@ -527,6 +531,10 @@
 			</File>
 			<File
 				RelativePath=".\src\LocationsNotebook.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\LocationTip.h"
 				>
 			</File>
 			<File

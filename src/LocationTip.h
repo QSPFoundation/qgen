@@ -15,31 +15,44 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#include "ToolBar.h"
+#ifndef _QUEST_GENERATOR_LOCATION_TIP_H
+	#define _QUEST_GENERATOR_LOCATION_TIP_H
 
-IMPLEMENT_CLASS(QGenToolBar, wxAuiToolBar)
+#include <wx/wx.h>
+#include "IControls.h"
+#include "SyntaxTextBox.h"
 
-BEGIN_EVENT_TABLE(QGenToolBar, wxAuiToolBar)
-	EVT_MOTION(QGenToolBar::OnMotion)
-	EVT_LEAVE_WINDOW(QGenToolBar::OnLeaveWindow)
-END_EVENT_TABLE()
-
-QGenToolBar::QGenToolBar( wxWindow *parent, wxWindowID id, wxStatusBar *statusBar ) : wxAuiToolBar( parent, id )
+enum
 {
-	_statusBar = statusBar;
-}
+	ID_DESC_TEXT,
+	ID_DESC_LOC,
+	ID_CODE_TEXT,
+	ID_CODE_LOC
+};
 
-void QGenToolBar::OnMotion( wxMouseEvent &evt )
-{
-	wxAuiToolBar::OnMotion(evt);
-	if (m_tip_item)
-		_statusBar->SetStatusText(m_tip_item->GetShortHelp());
-	else
-		_statusBar->SetStatusText(wxEmptyString);
-}
+#define TIP_SIZE_X 300
+#define TIP_SIZE_Y 350
 
-void QGenToolBar::OnLeaveWindow( wxMouseEvent &evt )
+class LocationTip :	public wxFrame
 {
-	wxAuiToolBar::OnLeaveWindow(evt);
-	_statusBar->SetStatusText(wxEmptyString);
-}
+	DECLARE_CLASS(LocationTip)
+
+private:
+	wxWindow *_mainFrame;
+	IControls *_controls;
+	wxString _prevLocName;
+	wxTextCtrl *_desc;
+	SyntaxTextBox *_locDesc;
+	SyntaxTextBox *_locCode;
+
+	void LoadTip(wxString locationName);
+
+public:
+	LocationTip(wxWindow *parent, IControls *controls);
+	~LocationTip();
+
+	void MoveTip(wxPoint pos,  wxString locationName);
+	void HideTip();
+};
+
+#endif
