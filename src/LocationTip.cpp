@@ -95,6 +95,7 @@ void LocationTip::HideTip()
 				SetTransparent(trans);
 		}
 		Hide();
+		_prevLocName.Clear();
 	}
 }
 

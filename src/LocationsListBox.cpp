@@ -571,12 +571,15 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 						if (_showTimer.IsRunning())
 							_showTimer.Stop();
 						_tip->HideTip();
+						_prevLocName.Clear();
 					}
 				}
 				else
 				{
 					if (_showTimer.IsRunning())
 						_showTimer.Stop();
+					_tip->HideTip();
+					_prevLocName.Clear();
 				}
 			}
 		}
@@ -596,6 +599,7 @@ void LocationsListBox::OnLeaveWindow(wxMouseEvent &event)
 			if (_showTimer.IsRunning())
 				_showTimer.Stop();
 			_tip->HideTip();
+			_prevLocName.Clear();
 		}
 	}
 
