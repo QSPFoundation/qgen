@@ -68,6 +68,8 @@ void LocationTip::MoveTip(wxPoint pos, wxString locationName)
 			Move( pos.x + 5, pos.y + 20 );
 		if (!IsShown())
 		{
+			if (CanSetTransparent())
+				SetTransparent(255);
 			Show();
 		}
 	}	
@@ -77,6 +79,9 @@ void LocationTip::HideTip()
 {
 	if (IsShown())
 	{
+		if (CanSetTransparent())
+			for (int trans = 255; trans > 0; trans--)
+				SetTransparent(trans);
 		Show(false);
 	}
 }
