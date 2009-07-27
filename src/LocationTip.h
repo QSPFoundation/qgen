@@ -49,13 +49,13 @@ private:
 	SyntaxTextBox *_locDesc;
 	SyntaxTextBox *_locCode;
 
-	void LoadTip(wxString locationName);
+	void LoadTip(const wxString &locationName);
 
 public:
 	LocationTip(wxWindow *parent, IControls *controls);
 	~LocationTip();
 
-	void MoveTip(wxPoint pos,  wxString locationName);
+	void MoveTip(wxPoint pos, const wxString &locationName);
 	void HideTip();
 };
 

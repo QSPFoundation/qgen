@@ -54,7 +54,7 @@ LocationTip::~LocationTip()
 
 }
 
-void LocationTip::MoveTip(wxPoint pos, wxString locationName)
+void LocationTip::MoveTip(wxPoint pos, const wxString &locationName)
 {
 	if (locationName != _prevLocName)
 	{
@@ -94,7 +94,7 @@ void LocationTip::HideTip()
 	}
 }
 
-void LocationTip::LoadTip(wxString locationName)
+void LocationTip::LoadTip(const wxString &locationName)
 {
 	wxSizer *_sizer = GetSizer();
 	size_t locIndex = _controls->GetContainer()->FindLocationIndex(locationName);
