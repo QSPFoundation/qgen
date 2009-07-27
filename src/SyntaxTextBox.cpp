@@ -59,9 +59,9 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, wxStatusBar *
 
 		//	SetViewEOL(true);
 		//	SetViewWhiteSpace(true);
+		SetIndentationGuides(true);
 		if (!(_style & SYNTAX_STYLE_NOMARGINS))
 		{
-			SetIndentationGuides(true);
 			SetProperty(wxT("fold"), wxT("1"));
 			//	SetProperty(wxT("fold.compact"), wxT("0"));
 			//	SetProperty(wxT("fold.comment"), wxT("1"));
