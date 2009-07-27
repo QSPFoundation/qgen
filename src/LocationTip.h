@@ -45,6 +45,7 @@ private:
 	wxWindow *_mainFrame;
 	IControls *_controls;
 	wxString _locName;
+	wxStaticText *_title;
 	wxStaticText *_desc;
 	SyntaxTextBox *_locDesc;
 	SyntaxTextBox *_locCode;
