@@ -27,16 +27,21 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) : wxFrame(parent
 {
 	_mainFrame = parent;
 	_controls = controls;
+	wxColour backColor(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOBK));
+	wxColour textColor(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOTEXT));
 
-	SetBackgroundColour(wxColour(255,255,190));
+	SetBackgroundColour(backColor);
 	wxBoxSizer *_sizer= new wxBoxSizer(wxVERTICAL);
 	_sizer->SetMinSize(TIP_SIZE_X, TIP_SIZE_Y);
-
-	_desc = new wxTextCtrl(this, ID_DESC_TEXT, wxT("Описание:"), wxDefaultPosition, wxDefaultSize, wxTE_READONLY|wxBORDER_NONE);
-	_desc->SetBackgroundColour(wxColour(255,255,190));
+	_desc = new wxStaticText(this, ID_DESC_TEXT, wxT("Описание:"));
+	_desc->SetFont(_desc->GetFont().Bold());
+	_desc->SetBackgroundColour(backColor);
+	_desc->SetForegroundColour(textColor);
 	_locDesc = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_SIMPLE | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU);
-	wxTextCtrl *_code = new wxTextCtrl(this, ID_CODE_TEXT, wxT("Код локации:"), wxDefaultPosition, wxDefaultSize, wxTE_READONLY|wxBORDER_NONE);
-	_code->SetBackgroundColour(wxColour(255,255,190));
+	wxStaticText *_code = new wxStaticText(this, ID_CODE_TEXT, wxT("Код локации:"));
+	_code->SetFont(_code->GetFont().Bold());
+	_code->SetBackgroundColour(backColor);
+	_code->SetForegroundColour(textColor);
 	_locCode = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOMARGINS);
 
 	_sizer->Add(_desc, 0, wxTOP|wxLEFT|wxRIGHT|wxGROW, 5);
