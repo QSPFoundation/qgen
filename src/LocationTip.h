@@ -26,21 +26,12 @@
 #include "IControls.h"
 #include "SyntaxTextBox.h"
 
-enum
-{
-	ID_DESC_TEXT,
-	ID_DESC_LOC,
-	ID_CODE_TEXT,
-	ID_CODE_LOC
-};
-
 #define TIP_SIZE_X 300
 #define TIP_SIZE_Y 350
 
 class LocationTip :	public wxFrame
 {
 	DECLARE_CLASS(LocationTip)
-
 private:
 	wxWindow *_mainFrame;
 	IControls *_controls;
@@ -55,7 +46,6 @@ private:
 
 public:
 	LocationTip(wxWindow *parent, IControls *controls);
-	~LocationTip();
 
 	void MoveTip(const wxPoint &pos);
 	void HideTip();

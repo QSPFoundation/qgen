@@ -36,11 +36,11 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) : wxFrame(parent
 	_title = new wxStaticText(this, wxID_ANY, wxEmptyString);
 	_title->SetFont(_title->GetFont().MakeBold().MakeLarger());
 	_title->SetForegroundColour(textColor);
-	_desc = new wxStaticText(this, ID_DESC_TEXT, wxT("Описание:"));
+	_desc = new wxStaticText(this, wxID_ANY, wxT("Описание:"));
 	_desc->SetFont(_desc->GetFont().MakeBold());
 	_desc->SetForegroundColour(textColor);
 	_locDesc = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_SIMPLE | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU);
-	_code = new wxStaticText(this, ID_CODE_TEXT, wxT("Код локации:"));
+	_code = new wxStaticText(this, wxID_ANY, wxT("Код локации:"));
 	_code->SetFont(_code->GetFont().MakeBold());
 	_code->SetForegroundColour(textColor);
 	_locCode = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOMARGINS);
@@ -54,10 +54,6 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) : wxFrame(parent
 	SetSizer(_sizer);
 	SetAutoLayout( true );
 	Layout();
-}
-
-LocationTip::~LocationTip()
-{
 }
 
 void LocationTip::MoveTip(const wxPoint &pos)
