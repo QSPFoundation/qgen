@@ -546,29 +546,36 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 	if (_prevMousePos != _mousePos)
 	{	
 		wxTreeItemId id(HitTest(_mousePos, flags));
-		if (GetItemType(id) == DRAG_ACTION)
+		if (id.IsOk())
 		{
-			id = GetItemParent(id);
-		}
-		if (GetItemType(id) != DRAG_FOLDER)
-		{
-			if (IsItemOk(id, flags))
+			if (GetItemType(id) == DRAG_ACTION)
 			{
-				if (GetItemText(id) != _prevLocName)
+				id = GetItemParent(id);
+			}
+			if (GetItemType(id) != DRAG_FOLDER)
+			{
+				if (IsItemOk(id, flags))
 				{
+					if (GetItemText(id) != _prevLocName)
+					{
+						_tip->HideTip();
+						_showTimer.Start(1000);
+						_prevLocName = GetItemText(id);
+					}
+				}
+				else
+				{
+					if (_showTimer.IsRunning())
+						_showTimer.Stop();
 					_tip->HideTip();
-					_showTimer.Start(1000);
-					_prevLocName = GetItemText(id);
-				} 
-			} else {
+				}
+				_prevMousePos = _mousePos;
+			}
+			else
+			{
 				if (_showTimer.IsRunning())
 					_showTimer.Stop();
-				_tip->HideTip();
 			}
-			_prevMousePos = _mousePos;
-		} else {
-			if (_showTimer.IsRunning())
-				_showTimer.Stop();
 		}
 	}
 
@@ -590,7 +597,7 @@ void LocationsListBox::OnLeaveWindow(wxMouseEvent &event)
 }
 
 void LocationsListBox::OnTimer(wxTimerEvent &event)
-{	
+{
 	if (_showTimer.IsRunning())
 		_showTimer.Stop();
 	_tip->MoveTip(ClientToScreen(_prevMousePos), _prevLocName);
