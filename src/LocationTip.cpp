@@ -33,7 +33,7 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) : wxFrame(parent
 	_locDesc = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_SIMPLE | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU);
 	wxTextCtrl *_code = new wxTextCtrl(this, ID_CODE_TEXT, wxT("Код локации:"), wxDefaultPosition, wxDefaultSize, wxTE_READONLY|wxBORDER_NONE);
 	_code->SetBackgroundColour(wxColour(255,255,190));
-	_locCode = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_SIMPLE | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU);
+	_locCode = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU);
 
 	_sizer->Add(_desc, 0, wxTOP|wxLEFT|wxRIGHT|wxGROW, 5);
 	_sizer->Add(_locDesc, 1, wxTOP|wxLEFT|wxRIGHT|wxGROW, 5);
