@@ -37,7 +37,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, wxStatusBar *
 	SetEOLMode(wxSTC_EOL_LF);
 	SetWrapMode(wxSTC_WRAP_WORD);
 	SetMarginWidth(1, 0);
-	if (_style & SYNTAX_STYLE_SIMPLEMENU)
+	if (_style & SYNTAX_STYLE_NOSCROLLBARS)
 	{
 		SetUseHorizontalScrollBar(false);
 		SetUseVerticalScrollBar(false);
