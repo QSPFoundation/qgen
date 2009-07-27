@@ -59,30 +59,32 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, wxStatusBar *
 
 		//	SetViewEOL(true);
 		//	SetViewWhiteSpace(true);
-		SetIndentationGuides(true);
-		SetProperty(wxT("fold"), wxT("1"));
-		//	SetProperty(wxT("fold.compact"), wxT("0"));
-		//	SetProperty(wxT("fold.comment"), wxT("1"));
-		SetFoldFlags(wxSTC_FOLDLEVELBASE);
+		if (!(_style & SYNTAX_STYLE_NOMARGINS))
+		{
+			SetIndentationGuides(true);
+			SetProperty(wxT("fold"), wxT("1"));
+			//	SetProperty(wxT("fold.compact"), wxT("0"));
+			//	SetProperty(wxT("fold.comment"), wxT("1"));
+			SetFoldFlags(wxSTC_FOLDLEVELBASE);
 
-		SetMarginType(SYNTAX_FOLD_MARGIN, wxSTC_MARGIN_SYMBOL);
-		SetMarginMask(SYNTAX_FOLD_MARGIN, wxSTC_MASK_FOLDERS);
-		SetMarginWidth(SYNTAX_FOLD_MARGIN, 20);
+			SetMarginType(SYNTAX_FOLD_MARGIN, wxSTC_MARGIN_SYMBOL);
+			SetMarginMask(SYNTAX_FOLD_MARGIN, wxSTC_MASK_FOLDERS);
+			SetMarginWidth(SYNTAX_FOLD_MARGIN, 20);
 
-		SetMarginType(SYNTAX_NUM_MARGIN, wxSTC_MARGIN_NUMBER);
+			SetMarginType(SYNTAX_NUM_MARGIN, wxSTC_MARGIN_NUMBER);
 
-		MarkerDefine(wxSTC_MARKNUM_FOLDER, wxSTC_MARK_PLUS);
-		MarkerDefine(wxSTC_MARKNUM_FOLDEROPEN, wxSTC_MARK_MINUS);
-		MarkerDefine(wxSTC_MARKNUM_FOLDEREND, wxSTC_MARK_EMPTY);
-		MarkerDefine(wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_EMPTY);
-		MarkerDefine(wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_EMPTY);
-		MarkerDefine(wxSTC_MARKNUM_FOLDERSUB, wxSTC_MARK_EMPTY);
-		MarkerDefine(wxSTC_MARKNUM_FOLDERTAIL, wxSTC_MARK_EMPTY);
+			MarkerDefine(wxSTC_MARKNUM_FOLDER, wxSTC_MARK_PLUS);
+			MarkerDefine(wxSTC_MARKNUM_FOLDEROPEN, wxSTC_MARK_MINUS);
+			MarkerDefine(wxSTC_MARKNUM_FOLDEREND, wxSTC_MARK_EMPTY);
+			MarkerDefine(wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_EMPTY);
+			MarkerDefine(wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_EMPTY);
+			MarkerDefine(wxSTC_MARKNUM_FOLDERSUB, wxSTC_MARK_EMPTY);
+			MarkerDefine(wxSTC_MARKNUM_FOLDERTAIL, wxSTC_MARK_EMPTY);
 
-		SetFoldFlags(wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED);
+			SetFoldFlags(wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED);
 
-		SetMarginSensitive(SYNTAX_FOLD_MARGIN, true);
-
+			SetMarginSensitive(SYNTAX_FOLD_MARGIN, true);
+		}
 		AutoCompSetChooseSingle(true);
 		AutoCompSetIgnoreCase(true);
 		AutoCompSetDropRestOfWord(true);
@@ -117,9 +119,12 @@ void SyntaxTextBox::Update(bool isFromObservable)
 	if (_style & SYNTAX_STYLE_COLORED)
 	{
 		SetWrapMode(settings->GetWrapLines() ? wxSTC_WRAP_WORD : wxSTC_WRAP_NONE);
-		SetFoldMarginColour(true, backColour);
-		// Нумерация строк
-		SetMarginWidth(SYNTAX_NUM_MARGIN, settings->GetShowLinesNums() ? 40 : 0);
+		if (!(_style & SYNTAX_STYLE_NOMARGINS))
+		{
+			SetFoldMarginColour(true, backColour);
+			// Нумерация строк
+			SetMarginWidth(SYNTAX_NUM_MARGIN, settings->GetShowLinesNums() ? 40 : 0);
+		}
 		// Ключевые слова
 		StyleSetFont(wxSTC_B_KEYWORD, settings->GetFont(SYNTAX_STATEMENTS));
 		StyleSetForeground(wxSTC_B_KEYWORD, settings->GetColour(SYNTAX_STATEMENTS));
