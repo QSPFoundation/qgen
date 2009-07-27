@@ -561,9 +561,9 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 					{
 						if (GetItemText(id) != _prevLocName)
 						{
+							_prevLocName = GetItemText(id);
 							_tip->HideTip();
 							_showTimer.Start(500);
-							_prevLocName = GetItemText(id);
 						}
 					}
 					else

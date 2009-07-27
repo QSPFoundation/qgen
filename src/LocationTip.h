@@ -55,7 +55,7 @@ public:
 	LocationTip(wxWindow *parent, IControls *controls);
 	~LocationTip();
 
-	void MoveTip(wxPoint pos, const wxString &locationName);
+	void MoveTip(const wxPoint &pos, const wxString &locationName);
 	void HideTip();
 };
 
