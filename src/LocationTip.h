@@ -47,6 +47,7 @@ private:
 	wxString _locName;
 	wxStaticText *_title;
 	wxStaticText *_desc;
+	wxStaticText *_code;
 	SyntaxTextBox *_locDesc;
 	SyntaxTextBox *_locCode;
 

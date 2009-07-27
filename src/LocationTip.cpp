@@ -40,16 +40,16 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) : wxFrame(parent
 	_desc->SetFont(_desc->GetFont().MakeBold());
 	_desc->SetForegroundColour(textColor);
 	_locDesc = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_SIMPLE | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU);
-	wxStaticText *_code = new wxStaticText(this, ID_CODE_TEXT, wxT("Код локации:"));
+	_code = new wxStaticText(this, ID_CODE_TEXT, wxT("Код локации:"));
 	_code->SetFont(_code->GetFont().MakeBold());
 	_code->SetForegroundColour(textColor);
 	_locCode = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOMARGINS);
 
-	_sizer->Add(_title, 0, wxTOP|wxLEFT|wxRIGHT|wxALIGN_CENTER, 2);
-	_sizer->Add(_desc, 0, wxTOP|wxLEFT|wxRIGHT|wxGROW, 5);
-	_sizer->Add(_locDesc, 1, wxTOP|wxLEFT|wxRIGHT|wxGROW, 5);
-	_sizer->Add(_code, 0, wxTOP|wxLEFT|wxRIGHT|wxGROW, 5);
-	_sizer->Add(_locCode, 1, wxALL|wxGROW, 5);
+	_sizer->Add(_title, 0, wxALL|wxALIGN_CENTER, 2);
+	_sizer->Add(_desc, 0, wxALL|wxGROW, 4);
+	_sizer->Add(_locDesc, 1, wxALL|wxGROW, 4);
+	_sizer->Add(_code, 0, wxALL|wxGROW, 4);
+	_sizer->Add(_locCode, 1, wxALL|wxGROW, 4);
 
 	SetSizer(_sizer);
 	SetAutoLayout( true );
@@ -99,9 +99,10 @@ void LocationTip::HideTip()
 void LocationTip::LoadTip(const wxString &locationName)
 {
 	wxSizer *_sizer = GetSizer();
-	size_t locIndex = _controls->GetContainer()->FindLocationIndex(locationName);
-	_title->SetLabel(_controls->GetContainer()->GetLocationName(locIndex));
-	wxString descText = _controls->GetContainer()->GetLocationDesc(locIndex);
+	DataContainer *container = _controls->GetContainer();
+	size_t locIndex = container->FindLocationIndex(locationName);
+	_title->SetLabel(container->GetLocationName(locIndex));
+	wxString descText(container->GetLocationDesc(locIndex));
 	if (descText.IsEmpty())
 	{
 		if (_sizer->IsShown(_desc))
@@ -119,7 +120,24 @@ void LocationTip::LoadTip(const wxString &locationName)
 		}
 		_locDesc->SetValue(descText);
 	}
-	_locCode->SetValue(_controls->GetContainer()->GetLocationCode(locIndex));
+	wxString codeText(container->GetLocationCode(locIndex));
+	if (codeText.IsEmpty())
+	{
+		if (_sizer->IsShown(_code))
+		{
+			_sizer->Hide(_code);
+			_sizer->Hide(_locCode);
+		}
+	}
+	else
+	{
+		if (!_sizer->IsShown(_code))
+		{
+			_sizer->Show(_code);
+			_sizer->Show(_locCode);
+		}
+		_locCode->SetValue(codeText);
+	}
 
 	Layout();
 }
