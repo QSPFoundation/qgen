@@ -559,11 +559,11 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 				{
 					if (IsItemOk(id, flags))
 					{
-						if (GetItemText(id) != _prevLocName)
+						if (GetItemText(id) != _tip->GetLocName())
 						{
-							_prevLocName = GetItemText(id);
 							_tip->HideTip();
-							_showTimer.Start(300);
+							_tip->SetLocName(GetItemText(id));
+							_showTimer.Start(300, true);
 						}
 					}
 					else
@@ -571,7 +571,6 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 						if (_showTimer.IsRunning())
 							_showTimer.Stop();
 						_tip->HideTip();
-						_prevLocName.Clear();
 					}
 				}
 				else
@@ -579,7 +578,6 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 					if (_showTimer.IsRunning())
 						_showTimer.Stop();
 					_tip->HideTip();
-					_prevLocName.Clear();
 				}
 			}
 		}
@@ -599,7 +597,6 @@ void LocationsListBox::OnLeaveWindow(wxMouseEvent &event)
 			if (_showTimer.IsRunning())
 				_showTimer.Stop();
 			_tip->HideTip();
-			_prevLocName.Clear();
 		}
 	}
 
@@ -608,6 +605,5 @@ void LocationsListBox::OnLeaveWindow(wxMouseEvent &event)
 
 void LocationsListBox::OnTimer(wxTimerEvent &event)
 {
-	_showTimer.Stop();
-	_tip->MoveTip(ClientToScreen(_prevMousePos), _prevLocName);
+	_tip->MoveTip(ClientToScreen(_prevMousePos));
 }

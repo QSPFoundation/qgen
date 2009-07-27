@@ -44,7 +44,7 @@ class LocationTip :	public wxFrame
 private:
 	wxWindow *_mainFrame;
 	IControls *_controls;
-	wxString _prevLocName;
+	wxString _locName;
 	wxStaticText *_desc;
 	SyntaxTextBox *_locDesc;
 	SyntaxTextBox *_locCode;
@@ -55,8 +55,13 @@ public:
 	LocationTip(wxWindow *parent, IControls *controls);
 	~LocationTip();
 
-	void MoveTip(const wxPoint &pos, const wxString &locationName);
+	void MoveTip(const wxPoint &pos);
 	void HideTip();
+	void SetLocName(const wxString &name);
+	wxString GetLocName() const
+	{
+		return _locName;
+	}
 };
 
 #endif

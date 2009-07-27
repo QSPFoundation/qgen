@@ -59,29 +59,25 @@ LocationTip::~LocationTip()
 
 }
 
-void LocationTip::MoveTip(const wxPoint &pos, const wxString &locationName)
+void LocationTip::MoveTip(const wxPoint &pos)
 {
-	if (locationName != _prevLocName)
+	wxPoint position(pos);
+	LoadTip(_locName);
+	wxRect displaySize(wxGetClientDisplayRect());
+	if (displaySize.GetHeight() <= (position.y + TIP_SIZE_Y))
+		position.y -= TIP_SIZE_Y;
+	else
+		position.y += 20;
+	if (displaySize.GetWidth() <= (position.x + TIP_SIZE_X))
+		position.x -= TIP_SIZE_X;
+	else
+		position.x += 5;
+	Move(position.x, position.y);
+	if (!IsShown())
 	{
-		_prevLocName = locationName;
-		wxPoint position(pos);
-		LoadTip(locationName);
-		wxRect displaySize(wxGetClientDisplayRect());
-		if (displaySize.GetHeight() <= (position.y + TIP_SIZE_Y))
-			position.y -= TIP_SIZE_Y;
-		else
-			position.y += 20;
-		if (displaySize.GetWidth() <= (position.x + TIP_SIZE_X))
-			position.x -= TIP_SIZE_X;
-		else
-			position.x += 5;
-		Move(position.x, position.y);
-		if (!IsShown())
-		{
-			if (CanSetTransparent())
-				SetTransparent(255);
-			Show();
-		}
+		if (CanSetTransparent())
+			SetTransparent(255);
+		Show();
 	}
 }
 
@@ -95,7 +91,7 @@ void LocationTip::HideTip()
 				SetTransparent(trans);
 		}
 		Hide();
-		_prevLocName.Clear();
+		_locName.Clear();
 	}
 }
 
@@ -126,4 +122,9 @@ void LocationTip::LoadTip(const wxString &locationName)
 	_locCode->SetValue(str);
 
 	Layout();
+}
+
+void LocationTip::SetLocName( const wxString &name )
+{
+	_locName = name;
 }

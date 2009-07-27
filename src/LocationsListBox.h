@@ -70,7 +70,6 @@
 		wxWindow *_mainFrame;
 		wxPoint _prevMousePos;
 		wxTimer _showTimer;
-		wxString _prevLocName;
 
 		void OnRightClick(wxMouseEvent &event);
 		void OnDoubleClick(wxMouseEvent &event);
