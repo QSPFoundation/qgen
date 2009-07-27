@@ -545,39 +545,42 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 	wxPoint _mousePos = event.GetPosition();
 	if (_prevMousePos != _mousePos)
 	{	
-		wxTreeItemId id(HitTest(_mousePos, flags));
-		if (id.IsOk())
+		if (_controls->GetSettings()->GetShowShortLocsDescs())
 		{
-			if (GetItemType(id) == DRAG_ACTION)
+			wxTreeItemId id(HitTest(_mousePos, flags));
+			if (id.IsOk())
 			{
-				id = GetItemParent(id);
-			}
-			if (GetItemType(id) != DRAG_FOLDER)
-			{
-				if (IsItemOk(id, flags))
+				if (GetItemType(id) == DRAG_ACTION)
 				{
-					if (GetItemText(id) != _prevLocName)
+					id = GetItemParent(id);
+				}
+				if (GetItemType(id) != DRAG_FOLDER)
+				{
+					if (IsItemOk(id, flags))
 					{
-						_tip->HideTip();
-						_showTimer.Start(1000);
-						_prevLocName = GetItemText(id);
+						if (GetItemText(id) != _prevLocName)
+						{
+							_tip->HideTip();
+							_showTimer.Start(500);
+							_prevLocName = GetItemText(id);
+						}
 					}
+					else
+					{
+						if (_showTimer.IsRunning())
+							_showTimer.Stop();
+						_tip->HideTip();
+					}
+					_prevMousePos = _mousePos;
 				}
 				else
 				{
 					if (_showTimer.IsRunning())
 						_showTimer.Stop();
-					_tip->HideTip();
 				}
-				_prevMousePos = _mousePos;
-			}
-			else
-			{
-				if (_showTimer.IsRunning())
-					_showTimer.Stop();
 			}
 		}
-	}
+	}	
 
 	event.Skip();
 }
@@ -587,11 +590,14 @@ void LocationsListBox::OnLeaveWindow(wxMouseEvent &event)
 	wxPoint _mousePos = event.GetPosition();
 	if (_prevMousePos != _mousePos)
 	{
-		if (_showTimer.IsRunning())
-			_showTimer.Stop();
-		_tip->HideTip();
-		_prevMousePos = _mousePos;
-	}
+		if (_controls->GetSettings()->GetShowShortLocsDescs())
+		{
+			if (_showTimer.IsRunning())
+				_showTimer.Stop();
+			_tip->HideTip();
+			_prevMousePos = _mousePos;
+		}
+	}	
 
 	event.Skip();
 }

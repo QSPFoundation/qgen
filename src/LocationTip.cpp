@@ -58,14 +58,20 @@ void LocationTip::MoveTip(wxPoint pos, wxString locationName)
 {
 	if (locationName != _prevLocName)
 	{
+		wxPoint position = pos;
 		LoadTip(locationName);
 		_prevLocName = locationName;
 
 		wxRect displaySize = wxGetClientDisplayRect();
-		if (displaySize.GetHeight() <= (pos.y + TIP_SIZE_Y))
-			Move( pos.x, pos.y -  TIP_SIZE_Y);
+		if (displaySize.GetHeight() <= (position.y + TIP_SIZE_Y))
+			position.y -= TIP_SIZE_Y;
 		else
-			Move( pos.x + 5, pos.y + 20 );
+			position.y += 20;
+		if (displaySize.GetWidth() <= (position.x + TIP_SIZE_X))
+			position.x -= TIP_SIZE_X;
+		else 
+			position.x += 5;
+		Move(position.x, position.y);
 		if (!IsShown())
 		{
 			if (CanSetTransparent())
