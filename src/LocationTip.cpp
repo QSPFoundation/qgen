@@ -86,8 +86,10 @@ void LocationTip::HideTip()
 	if (IsShown())
 	{
 		if (CanSetTransparent())
-			for (int trans = 255; trans > 0; trans--)
+		{
+			for (int trans = 255; trans > 0; trans -= 3)
 				SetTransparent(trans);
+		}
 		Show(false);
 	}
 }
