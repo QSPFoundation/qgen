@@ -89,6 +89,7 @@ void LocationTip::HideTip()
 		}
 		Hide();
 		_locName.Clear();
+		_actName.Clear();
 	}
 }
 
@@ -99,54 +100,29 @@ void LocationTip::LoadTip()
 	size_t locIndex = container->FindLocationIndex(_locName);
 	if (_actName.IsEmpty())
 	{
-		_title->SetLabel(container->GetLocationName(locIndex));
+		_title->SetLabel(_locName);
 		wxString descText(container->GetLocationDesc(locIndex));
-		if (descText.IsEmpty())
-		{
-			if (_sizer->IsShown(_desc))
-			{
-				_sizer->Hide(_desc);
-				_sizer->Hide(_locDesc);
-			}
-		}
-		else
-		{
-			if (!_sizer->IsShown(_desc))
-			{
-				_sizer->Show(_desc);
-				_sizer->Show(_locDesc);
-			}
-			_locDesc->SetValue(descText);
-		}
+		bool hasDesc = !descText.IsEmpty();
+		_sizer->Show(_desc, hasDesc);
+		_sizer->Show(_locDesc, hasDesc);
+		_locDesc->SetValue(descText);
 		_code->SetLabel(wxT("Код локации:"));
 		wxString codeText(container->GetLocationCode(locIndex));
-		if (codeText.IsEmpty())
-		{
-			if (_sizer->IsShown(_code))
-			{
-				_sizer->Hide(_code);
-				_sizer->Hide(_locCode);
-			}
-		}
-		else
-		{
-			if (!_sizer->IsShown(_code))
-			{
-				_sizer->Show(_code);
-				_sizer->Show(_locCode);
-			}
-			_locCode->SetValue(codeText);
-		}
-	} else {
+		bool hasCode = !codeText.IsEmpty();
+		_sizer->Show(_code, hasCode);
+		_sizer->Show(_locCode, hasCode);
+		_locCode->SetValue(codeText);
+	}
+	else
+	{
+		_title->SetLabel(_actName);
 		size_t actIndex = container->FindActionIndex(locIndex, _actName);
 		_sizer->Hide(_desc);
 		_sizer->Hide(_locDesc);
 		_sizer->Show(_code);
 		_sizer->Show(_locCode);
-		_title->SetLabel(container->GetActionName(locIndex, actIndex));
 		_code->SetLabel(wxT("Код действия:"));
 		_locCode->SetValue(container->GetActionCode(locIndex, actIndex));
-		_locName = wxEmptyString;
 	}
 
 	Layout();
