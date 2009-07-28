@@ -67,7 +67,7 @@
 		LocationTip *_tip;
 		long _draggedType;
 		bool _needForUpdate;
-		wxWindow *_mainFrame;
+		wxTopLevelWindow *_mainFrame;
 		wxPoint _prevMousePos;
 		wxTimer _showTimer;
 
@@ -87,7 +87,7 @@
 		void UpdateDataContainer(const wxTreeItemId &parent, long folder, long *locPos, long *folderPos, long *pos);
 		bool IsFolderItem(const wxTreeItemId &id);
 	public:
-		LocationsListBox(wxWindow *parent, wxWindowID id, IControls *controls,
+		LocationsListBox(wxTopLevelWindow *parent, wxWindowID id, IControls *controls,
 						 long style = wxTR_HAS_BUTTONS|wxTR_LINES_AT_ROOT|
 									  wxTR_HIDE_ROOT|wxTR_NO_LINES|
 									  wxTR_ROW_LINES|wxTR_EDIT_LABELS|
