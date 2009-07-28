@@ -45,10 +45,10 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) : wxFrame(parent
 	_code->SetForegroundColour(textColor);
 	_locCode = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOMARGINS);
 
-	_sizer->Add(_title, 0, wxALL|wxALIGN_CENTER, 2);
-	_sizer->Add(_desc, 0, wxALL|wxGROW, 4);
+	_sizer->Add(_title, 0, wxALL|wxALIGN_CENTER, 4);
+	_sizer->Add(_desc, 0, wxLEFT|wxRIGHT|wxGROW, 4);
 	_sizer->Add(_locDesc, 1, wxALL|wxGROW, 4);
-	_sizer->Add(_code, 0, wxALL|wxGROW, 4);
+	_sizer->Add(_code, 0, wxLEFT|wxRIGHT|wxGROW, 4);
 	_sizer->Add(_locCode, 1, wxALL|wxGROW, 4);
 
 	SetSizer(_sizer);
