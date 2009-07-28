@@ -53,6 +53,8 @@ LocationsListBox::LocationsListBox(wxTopLevelWindow *parent, wxWindowID id, ICon
 
 LocationsListBox::~LocationsListBox()
 {
+	if (_showTimer.IsRunning())
+		_showTimer.Stop();
 	Clear();
 	_controls->GetSettings()->RemoveObserver(this);
 }
@@ -91,9 +93,10 @@ void LocationsListBox::OnRightClick( wxMouseEvent &event )
 		SetFocus();
 		SelectItem(id);
 	}
+
 	menu.Append(LOC_CREAT, wxT("Создать..."));
 	menu.Append(LOC_RENAME, wxT("Переименовать..."));
-	menu.Append(LOC_DEL, wxT("Удалить"));
+	menu.Append(LOC_DEL, wxT("Удалить"));				
 	menu.AppendSeparator();
 	menu.Append(FOLDER_CREAT, wxT("Создать папку..."));
 	menu.Append(FOLDER_RENAME, wxT("Переименовать папку..."));
@@ -111,6 +114,7 @@ void LocationsListBox::OnRightClick( wxMouseEvent &event )
 	menu.Append(LOC_EXPAND, wxT("Развернуть все"));
 	menu.Append(LOC_COLLAPSE, wxT("Свернуть все"));
 	_controls->UpdateMenuItems(&menu);
+
 	PopupMenu(&menu);
 }
 
@@ -553,19 +557,29 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 				wxTreeItemId id(HitTest(_mousePos, flags));
 				if (id.IsOk())
 				{
-					if (GetItemType(id) == DRAG_ACTION)
-					{
-						id = GetItemParent(id);
-					}
 					if (GetItemType(id) != DRAG_FOLDER)
 					{
 						if (IsItemOk(id, flags))
 						{
-							if (GetItemText(id) != _tip->GetLocName())
+							if (GetItemType(id) == DRAG_ACTION)
 							{
-								_tip->HideTip();
-								_tip->SetLocName(GetItemText(id));
-								_showTimer.Start(300, true);
+								if (GetItemText(id) != _tip->GetActName())
+								{
+									_tip->HideTip();
+									_tip->SetActName(GetItemText(id));
+									_tip->SetLocName(GetItemText(GetItemParent(id)));
+									_showTimer.Start(300, true);
+								}
+							}
+							if (GetItemType(id) == DRAG_LOCATION)
+							{
+								if (GetItemText(id) != _tip->GetLocName())
+								{
+									_tip->HideTip();
+									_tip->SetLocName(GetItemText(id));
+									_tip->SetActName(wxEmptyString);
+									_showTimer.Start(300, true);
+								}
 							}
 						}
 						else

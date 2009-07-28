@@ -36,13 +36,14 @@ private:
 	wxWindow *_mainFrame;
 	IControls *_controls;
 	wxString _locName;
+	wxString _actName;
 	wxStaticText *_title;
 	wxStaticText *_desc;
 	wxStaticText *_code;
 	SyntaxTextBox *_locDesc;
 	SyntaxTextBox *_locCode;
 
-	void LoadTip(const wxString &locationName);
+	void LoadTip();
 
 public:
 	LocationTip(wxWindow *parent, IControls *controls);
@@ -53,6 +54,11 @@ public:
 	wxString GetLocName() const
 	{
 		return _locName;
+	}
+	void SetActName(const wxString &name);
+	wxString GetActName() const
+	{
+		return _actName;
 	}
 };
 
