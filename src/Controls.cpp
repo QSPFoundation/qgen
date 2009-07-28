@@ -316,9 +316,13 @@ void Controls::SortLocations(bool isAscending)
 	if (_container->GetLocationsCount() > 1)
 	{
 		SyncWithLocationsList();
-		_container->SortLocsInFolder(GetSelectedFolderIndex(), isAscending);
+		int selFolder = GetSelectedFolderIndex();
+		_container->SortLocsInFolder(selFolder, isAscending);
 		UpdateOpenedLocationsIndexes();
-		UpdateLocationsList();
+		if (selFolder >= 0)
+			_locListBox->UpdateFolderLocations(_container->GetSectionName(selFolder));
+		else
+			UpdateLocationsList();
 		ShowOpenedLocationsIcons();
 		InitSearchData();
 	}
