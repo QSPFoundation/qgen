@@ -758,6 +758,9 @@ bool OpenConfigFile( DataContainer *container, const wxString &file )
 
 bool SaveConfigFile( DataContainer *container, const wxString &file )
 {
+	// Now config stores only folders structure that's why we can simply skip
+	// saving file if there are no folders
+	if (!container->GetSectionsCount()) return true;
 	wxXmlDocument doc;
 	doc.SetVersion(wxT("1.0"));
 	doc.SetFileEncoding(wxT("utf-8"));
