@@ -88,9 +88,9 @@ void LocationTip::HideTip()
 				SetTransparent(trans);
 		}
 		Hide();
-		_locName.Clear();
-		_actName.Clear();
 	}
+	_locName.Clear();
+	_actName.Clear();
 }
 
 void LocationTip::LoadTip()
