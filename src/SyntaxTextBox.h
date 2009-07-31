@@ -54,21 +54,23 @@
 		DECLARE_CLASS(SyntaxTextBox)
 		DECLARE_EVENT_TABLE()
 	private:
+		static wxArrayString _keywords;
+		static std::list<HelpTip> _tooltips;
+
+		static void FillKeywords(const wxString &str);
+		static wxString GetArrayAsString(const wxArrayString &arr);
+		static void LoadTips();
+
 		IControls *_controls;
 		wxStatusBar *_statusBar;
-		wxArrayString keywords;
 		int _style;
-		std::list<HelpTip> _tooltips;
 
-		void FillKeywords(const wxString &str);
-		wxString GetArrayAsString(const wxArrayString &arr) const;
 		int GetCharPosition(int startPos, int chars);
 		int GetCharIndexFromPosition(int fromPos, int pos);
 		bool StartAutoComplete();
 		void Expand(int &line, bool doExpand, bool force = false, int visLevels = 0, int level = -1);
 		wxString GetWordFromPos(int pos);
 
-		void LoadTips();
 		void Tip(int pos);
 
 		void OnKeyDown(wxKeyEvent& event);
