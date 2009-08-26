@@ -56,9 +56,21 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, wxStatusBar *
 
 		SetLexer(wxSTC_LEX_VB);
 
-		SetKeyWords(0, wxT("clear clr nl p pl msg wait act delact del cla cmdclear cmdclr cls set let killvar dynamic copyarr add obj addobj delobj killobj unselect unsel killall menu opengame openqst addqst killqst savegame refint settimer showacts showinput showobjs showstat if else end exit jump gosub gs goto gt xgoto xgt play close all view"));
-		SetKeyWords(1, wxT("and or no desc iif input $desc $iif $input isplay max min $max $min rand rgb getobj $getobj dyneval $dyneval func $func arrpos arrsize instr isnum trim $trim ucase lcase $ucase $lcase len mid str $mid $str val arrcomp strcomp strfind $strfind strpos replace $replace"));
-		SetKeyWords(2, wxT("countobj nosave disablescroll disablesubex msecscount rnd debug $curloc $qspver $selobj $selact $lastobj $user_text $usrtxt $maintxt $stattxt $counter $ongload $ongsave $onnewloc $onactsel $onobjsel $onobjadd $onobjdel $usercom usehtml bcolor fcolor lcolor fsize $fname $backimage args $args result $result"));
+		SetKeyWords(0, wxT("clear clr nl p pl msg wait act delact del cla cmdclear cmdclr cls set ") \
+					   wxT("let killvar dynamic copyarr add obj addobj delobj killobj unselect unsel ") \
+					   wxT("killall menu opengame openqst addqst killqst savegame refint settimer showacts ") \
+					   wxT("showinput showobjs showstat if else end exit jump gosub gs goto gt xgoto xgt play close all view"));
+
+		SetKeyWords(1, wxT("and or no desc iif input $desc $iif $input isplay max min $max $min rand rgb ") \
+					   wxT("getobj $getobj dyneval $dyneval func $func arrpos arrsize instr isnum trim $trim ") \
+					   wxT("ucase lcase $ucase $lcase len mid str $mid $str val arrcomp strcomp strfind $strfind ") \
+					   wxT("strpos replace $replace user_text $user_text usrtxt $usrtxt maintxt $maintxt ") \
+					   wxT("stattxt $stattxt countobj msecscount rnd curloc $curloc qspver $qspver selobj $selobj ") \
+					   wxT("selact $selact curacts $curacts"));
+
+		SetKeyWords(2, wxT("nosave disablescroll disablesubex debug $lastobj $counter $ongload $ongsave ") \
+					   wxT("$onnewloc $onactsel $onobjsel $onobjadd $onobjdel $usercom usehtml bcolor ") \
+					   wxT("fcolor lcolor fsize $fname $backimage args $args result $result"));
 
 		//	SetViewEOL(true);
 		//	SetViewWhiteSpace(true);
@@ -92,7 +104,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, wxStatusBar *
 		AutoCompSetIgnoreCase(true);
 		AutoCompSetDropRestOfWord(true);
 
-		FillKeywords(wxT("CLEAR CLR NL P PL MSG WAIT ACT DELACT DEL CLA CMDCLEAR CMDCLR CLS SET LET KILLVAR DYNAMIC COPYARR ADD OBJ ADDOBJ DELOBJ KILLOBJ UNSELECT UNSEL KILLALL MENU OPENGAME OPENQST ADDQST KILLQST SAVEGAME REFINT SETTIMER SHOWACTS SHOWINPUT SHOWOBJS SHOWSTAT IF ELSE END EXIT JUMP GOSUB GS GOTO GT XGOTO XGT PLAY CLOSE ALL VIEW AND OR NO DESC IIF INPUT $DESC $IIF $INPUT ISPLAY MAX MIN $MAX $MIN RAND RGB GETOBJ $GETOBJ DYNEVAL $DYNEVAL FUNC $FUNC ARRPOS ARRSIZE INSTR ISNUM TRIM $TRIM UCASE LCASE $UCASE $LCASE LEN MID STR REPLACE $REPLACE $MID $STR VAL ARRCOMP STRCOMP STRFIND $STRFIND STRPOS COUNTOBJ NOSAVE DISABLESCROLL DISABLESUBEX MSECSCOUNT RND DEBUG $CURLOC $QSPVER $SELOBJ $SELACT $LASTOBJ $USER_TEXT $USRTXT $COUNTER $ONGLOAD $ONGSAVE $ONNEWLOC $ONACTSEL $ONOBJSEL $ONOBJADD $ONOBJDEL $USERCOM USEHTML BCOLOR FCOLOR LCOLOR FSIZE $FNAME $BACKIMAGE ARGS $ARGS RESULT $RESULT"));
+		FillKeywords(wxT("CLEAR CLR NL P PL MSG WAIT ACT DELACT DEL CLA CMDCLEAR CMDCLR CLS SET LET KILLVAR DYNAMIC COPYARR ADD OBJ ADDOBJ DELOBJ KILLOBJ UNSELECT UNSEL KILLALL MENU OPENGAME OPENQST ADDQST KILLQST SAVEGAME REFINT SETTIMER SHOWACTS SHOWINPUT SHOWOBJS SHOWSTAT IF ELSE END EXIT JUMP GOSUB GS GOTO GT XGOTO XGT PLAY CLOSE ALL VIEW AND OR NO DESC IIF INPUT $DESC $IIF $INPUT ISPLAY MAX MIN $MAX $MIN RAND RGB GETOBJ $GETOBJ DYNEVAL $DYNEVAL FUNC $FUNC ARRPOS ARRSIZE INSTR ISNUM TRIM $TRIM UCASE LCASE $UCASE $LCASE LEN MID STR REPLACE $REPLACE $MID $STR VAL ARRCOMP STRCOMP STRFIND $STRFIND STRPOS COUNTOBJ NOSAVE DISABLESCROLL DISABLESUBEX MSECSCOUNT RND DEBUG CURLOC $CURLOC QSPVER $QSPVER SELOBJ $SELOBJ SELACT $SELACT $LASTOBJ USER_TEXT $USER_TEXT USRTXT $USRTXT MAINTXT $MAINTXT STATTXT $STATTXT $COUNTER $ONGLOAD $ONGSAVE $ONNEWLOC $ONACTSEL $ONOBJSEL $ONOBJADD $ONOBJDEL $USERCOM USEHTML BCOLOR FCOLOR LCOLOR FSIZE $FNAME $BACKIMAGE ARGS $ARGS RESULT $RESULT CURACTS $CURACTS"));
 	}
 	Update();
 	if (_statusBar) LoadTips();
@@ -584,14 +596,22 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("msecscount"), wxT("MSECSCOUNT - содержит количество миллисекунд, прошедших с момента начала игры.")));
 		_tooltips.push_back(HelpTip(wxT("rnd"), wxT("RND - имеет случайное значение от 1 до 1000.")));
 		_tooltips.push_back(HelpTip(wxT("debug"), wxT("DEBUG - если значение переменной не равно 0, то отключается проверка идентификатора игры при загрузке состояния.")));
+		_tooltips.push_back(HelpTip(wxT("curloc"), wxT("CURLOC - содержит название текущей локации.")));
 		_tooltips.push_back(HelpTip(wxT("$curloc"), wxT("$CURLOC - содержит название текущей локации.")));
+		_tooltips.push_back(HelpTip(wxT("qspver"), wxT("QSPVER - содержит версию интерпретатора в формате 'X.Y.Z'.")));
 		_tooltips.push_back(HelpTip(wxT("$qspver"), wxT("$QSPVER - содержит версию интерпретатора в формате 'X.Y.Z'.")));
+		_tooltips.push_back(HelpTip(wxT("selobj"), wxT("SELOBJ - содержит название выделенного предмета.")));
 		_tooltips.push_back(HelpTip(wxT("$selobj"), wxT("$SELOBJ - содержит название выделенного предмета.")));
+		_tooltips.push_back(HelpTip(wxT("selact"), wxT("SELACT - содержит название выделенного действия.")));
 		_tooltips.push_back(HelpTip(wxT("$selact"), wxT("$SELACT - содержит название выделенного действия.")));
 		_tooltips.push_back(HelpTip(wxT("$lastobj"), wxT("$LASTOBJ - содержит название последнего добавленного / удалённого предмета.")));
+		_tooltips.push_back(HelpTip(wxT("user_text"), wxT("USER_TEXT и USRTXT - содержат текст, находящийся в строке ввода.")));
 		_tooltips.push_back(HelpTip(wxT("$user_text"), wxT("$USER_TEXT и $USRTXT - содержат текст, находящийся в строке ввода.")));
+		_tooltips.push_back(HelpTip(wxT("usrtxt"), wxT("USER_TEXT и USRTXT - содержат текст, находящийся в строке ввода.")));
 		_tooltips.push_back(HelpTip(wxT("$usrtxt"), wxT("$USER_TEXT и $USRTXT - содержат текст, находящийся в строке ввода.")));
+		_tooltips.push_back(HelpTip(wxT("maintxt"), wxT("MAINTXT - содержит текст, находящийся в основном окне описаний.")));
 		_tooltips.push_back(HelpTip(wxT("$maintxt"), wxT("$MAINTXT - содержит текст, находящийся в основном окне описаний.")));
+		_tooltips.push_back(HelpTip(wxT("stattxt"), wxT("STATTXT - содержит текст, находящийся в окне пользователя.")));
 		_tooltips.push_back(HelpTip(wxT("$stattxt"), wxT("$STATTXT - содержит текст, находящийся в окне пользователя.")));
 		_tooltips.push_back(HelpTip(wxT("$counter"), wxT("$COUNTER - содержит название локации-счётчика.")));
 		_tooltips.push_back(HelpTip(wxT("$ongload"), wxT("$ONGLOAD - содержит название локации-обработчика загрузки состояния.")));
@@ -609,6 +629,8 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("fsize"), wxT("FSIZE - содержит размер используемого в данный момент шрифта.")));
 		_tooltips.push_back(HelpTip(wxT("$fname"), wxT("$FNAME - содержит название используемого в данный момент шрифта.")));
 		_tooltips.push_back(HelpTip(wxT("$backimage"), wxT("$BACKIMAGE - содержит путь к файлу изображения локации.")));
+		_tooltips.push_back(HelpTip(wxT("curacts"), wxT("CURACTS - возвращает в виде кода все текущие действия")));
+		_tooltips.push_back(HelpTip(wxT("$curacts"), wxT("$CURACTS - возвращает в виде кода все текущие действия")));
 	}
 }
 
