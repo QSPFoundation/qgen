@@ -21,11 +21,13 @@ IMPLEMENT_CLASS(OptionsHotkeysDialog, wxDialog)
 
 BEGIN_EVENT_TABLE(OptionsHotkeysDialog, wxDialog)
 	EVT_BUTTON(wxID_OK, OptionsHotkeysDialog::OnOkSettings)
+	EVT_BUTTON(ID_HELP_BUTTON, OptionsHotkeysDialog::OnHelpHotKeys)
 END_EVENT_TABLE()
 
 OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& title, Controls *controls, int style) : wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
 {
 
+	_controls = controls;
 	wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *hotKeySizer = new wxBoxSizer(wxHORIZONTAL);
 	
@@ -39,20 +41,23 @@ OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& tit
 	_txtInputText = new SyntaxTextBox(this, controls, NULL, SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU);
 
 	wxSizer *btnSizer = new wxBoxSizer(wxHORIZONTAL);
+	_btnHelp = new wxButton(this, ID_HELP_BUTTON, wxT("Справка"));
 	_btnOK = new wxButton(this, wxID_OK, wxT("OK"));
 	_btnCancel = new wxButton(this, wxID_CANCEL, wxT("Отмена"));
 
-	btnSizer->Add(_btnOK, 0, wxALL, 5);
-	btnSizer->Add(_btnCancel, 0, wxALL, 5);
+	btnSizer->Add(_btnHelp, 0, wxLEFT|wxBOTTOM, 5);
+	btnSizer->AddStretchSpacer(1);
+	btnSizer->Add(_btnOK, 0, wxRIGHT|wxBOTTOM, 5);
+	btnSizer->Add(_btnCancel, 0, wxRIGHT|wxBOTTOM, 5);
 
-	topSizer->Add(hotKeySizer, 0, wxALL);
+	topSizer->Add(hotKeySizer, 0, wxALL, 5);
 	topSizer->Add(stText02, 0, wxLEFT|wxTOP, 5);
 	topSizer->Add(_txtInputText, 1, wxALL|wxGROW, 5);
-	topSizer->Add(btnSizer, 0, wxALL|wxALIGN_RIGHT);
+	topSizer->Add(btnSizer, 0, wxGROW);
 
 	SetSizerAndFit(topSizer);
 	SetAutoLayout(true);
-	SetMinClientSize(wxSize(230, 230));
+	SetMinClientSize(wxSize(330, 230));
 	SetSize(wxSize(630, 430));
 }
 
@@ -67,4 +72,20 @@ void OptionsHotkeysDialog::SetHotkeyData( const HotkeyData &hotKeyData )
 	_hotkeyData = hotKeyData;
 	_txtInputHotkey->SetValue(_hotkeyData.Hotkey);
 	_txtInputText->SetValue(_hotkeyData.CommandText);
+}
+
+void OptionsHotkeysDialog::OnHelpHotKeys( wxCommandEvent &event )
+{
+	#ifdef __WXMSW__
+		DesktopWindow desktop;
+		wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
+	#else
+		wxCHMHelpController *chmHelp = new wxCHMHelpController();
+	#endif
+	if (_controls->SearchHelpFile())
+	{
+		chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
+		chmHelp->KeywordSearch(wxT("Hot keys"));
+	}
+	delete chmHelp;
 }

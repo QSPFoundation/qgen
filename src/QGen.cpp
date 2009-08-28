@@ -719,7 +719,7 @@ void QGenMainFrame::OnChmHelp( wxCommandEvent &event )
 	#else
 		wxCHMHelpController *chmHelp = new wxCHMHelpController();
 	#endif
-	if (SearchHelpFile())
+	if (_controls->SearchHelpFile())
 	{
 		chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
 		chmHelp->DisplayContents();
@@ -735,7 +735,7 @@ void QGenMainFrame::OnSearchHelp( wxCommandEvent &event )
 	#else
 		wxCHMHelpController *chmHelp = new wxCHMHelpController();
 	#endif
-	if (SearchHelpFile())
+	if (_controls->SearchHelpFile())
 	{
 		chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
 		chmHelp->KeywordSearch(_controls->GetSelectedWord());
@@ -901,20 +901,6 @@ void QGenMainFrame::OnLocDescVisible(wxCommandEvent &event)
 void QGenMainFrame::OnLocActsVisible(wxCommandEvent &event)
 {
 	_controls->SwitchLocActs();
-}
-
-bool QGenMainFrame::SearchHelpFile()
-{
-	Settings *settings = _controls->GetSettings();
-	if (!wxFile::Exists(settings->GetCurrentHelpPath()))
-	{
-		wxFileDialog dialog(this, wxT("Выберите файл справки"), wxEmptyString, wxEmptyString,
-			wxT("Файл справки (*.chm)|*.chm"), wxFD_OPEN);
-		dialog.CenterOnParent();
-		if (dialog.ShowModal() == wxID_CANCEL) return false;
-		settings->SetCurrentHelpPath(dialog.GetPath());
-	}
-	return true;
 }
 
 void QGenMainFrame::OnExpandLocation( wxCommandEvent &event )

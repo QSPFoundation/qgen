@@ -19,14 +19,19 @@
 	#define _QUEST_GENERATOR_OPTIONS_HOT_KEYS_DIALOG_H
 
 	#include <wx/wx.h>
+	#include <wx/help.h> 
 	#include "Settings.h"
 	#include "HotKeyTextCtrl.h"
 	#include "SyntaxTextBox.h"
 	#include "Controls.h"
+	#ifdef __WXMSW__
+		#include "DesktopWindow.h"
+	#endif
 
 	enum
 	{
-		ID_INPUT_TEXT
+		ID_INPUT_TEXT,
+		ID_HELP_BUTTON
 	};
 
 	class OptionsHotkeysDialog : public wxDialog
@@ -38,9 +43,12 @@
 		SyntaxTextBox	*_txtInputText;
 		wxButton		*_btnOK;
 		wxButton		*_btnCancel;
+		wxButton		*_btnHelp;
 		HotkeyData		_hotkeyData;
+		Controls		*_controls;
 
 		void OnOkSettings(wxCommandEvent &event);
+		void OnHelpHotKeys(wxCommandEvent &event);
 	public:
 		OptionsHotkeysDialog(wxWindow *parent, const wxString& title, Controls *controls,
 								int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);

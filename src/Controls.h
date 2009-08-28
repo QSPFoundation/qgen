@@ -189,6 +189,8 @@
 		bool AddFolder();
 		bool DeleteSelectedFolder();
 		bool RenameSelectedFolder();
+
+		bool SearchHelpFile();
 	};
 
 #endif

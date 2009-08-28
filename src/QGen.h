@@ -181,7 +181,6 @@
 
 		void UpdateTitle();
 		bool QuestChange();
-		bool SearchHelpFile();
 
 	public:
 		QGenMainFrame( Controls *controls );
