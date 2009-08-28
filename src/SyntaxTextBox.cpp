@@ -68,7 +68,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, wxStatusBar *
 					   wxT("stattxt $stattxt countobj msecscount rnd curloc $curloc qspver $qspver selobj $selobj ") \
 					   wxT("selact $selact curacts $curacts"));
 
-		SetKeyWords(2, wxT("nosave disablescroll disablesubex debug $lastobj $counter $ongload $ongsave ") \
+		SetKeyWords(2, wxT("nosave disablescroll disablesubex debug $counter $ongload $ongsave ") \
 					   wxT("$onnewloc $onactsel $onobjsel $onobjadd $onobjdel $usercom usehtml bcolor ") \
 					   wxT("fcolor lcolor fsize $fname $backimage args $args result $result"));
 
@@ -113,7 +113,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, wxStatusBar *
 					 wxT("INSTR ISNUM TRIM $TRIM UCASE LCASE $UCASE $LCASE LEN MID STR REPLACE $REPLACE ") \
 					 wxT("$MID $STR VAL ARRCOMP STRCOMP STRFIND $STRFIND STRPOS COUNTOBJ NOSAVE DISABLESCROLL ") \
 					 wxT("DISABLESUBEX MSECSCOUNT RND DEBUG CURLOC $CURLOC QSPVER $QSPVER SELOBJ $SELOBJ ") \
-					 wxT("SELACT $SELACT $LASTOBJ USER_TEXT $USER_TEXT USRTXT $USRTXT MAINTXT $MAINTXT ") \
+					 wxT("SELACT $SELACT USER_TEXT $USER_TEXT USRTXT $USRTXT MAINTXT $MAINTXT ") \
 					 wxT("STATTXT $STATTXT $COUNTER $ONGLOAD $ONGSAVE $ONNEWLOC $ONACTSEL $ONOBJSEL ") \
 					 wxT("$ONOBJADD $ONOBJDEL $USERCOM USEHTML BCOLOR FCOLOR LCOLOR FSIZE $FNAME ") \
 					 wxT("$BACKIMAGE ARGS $ARGS RESULT $RESULT CURACTS $CURACTS"));
@@ -568,10 +568,10 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("input"), wxT("INPUT([выражение]) - показывает окно ввода текста и возвращает введенное значение")));
 		_tooltips.push_back(HelpTip(wxT("$input"), wxT("$INPUT([выражение]) - показывает окно ввода текста и возвращает введенное значение")));
 		_tooltips.push_back(HelpTip(wxT("isplay"), wxT("ISPLAY([$выражение]) - проверяет, проигрывается ли в текущий момент указанный файл")));
-		_tooltips.push_back(HelpTip(wxT("max"), wxT("MAX([выражение 1],[выражение 2]) - возвращает максимальное из значений аргументов")));
-		_tooltips.push_back(HelpTip(wxT("$max"), wxT("$MAX([выражение 1],[выражение 2]) - возвращает максимальное из значений аргументов")));
-		_tooltips.push_back(HelpTip(wxT("min"), wxT("MIN([выражение 1],[выражение 2]) - возвращает минимальное из значений аргументов")));
-		_tooltips.push_back(HelpTip(wxT("$min"), wxT("$MIN([выражение 1],[выражение 2]) - возвращает минимальное из значений аргументов")));
+		_tooltips.push_back(HelpTip(wxT("max"), wxT("MAX([выражение 1],[выражение 2], ...) - возвращает максимальное из значений аргументов")));
+		_tooltips.push_back(HelpTip(wxT("$max"), wxT("$MAX([выражение 1],[выражение 2], ...) - возвращает максимальное из значений аргументов")));
+		_tooltips.push_back(HelpTip(wxT("min"), wxT("MIN([выражение 1],[выражение 2], ...) - возвращает минимальное из значений аргументов")));
+		_tooltips.push_back(HelpTip(wxT("$min"), wxT("$MIN([выражение 1],[выражение 2], ...) - возвращает минимальное из значений аргументов")));
 		_tooltips.push_back(HelpTip(wxT("rand"), wxT("RAND([#выражение 1],[#выражение 2]) - возвращает случайное число между заданными")));
 		_tooltips.push_back(HelpTip(wxT("rgb"), wxT("RGB([#красный],[#зеленый],[#синий]) - возвращает код цвета на основе 3-х составляющих")));
 		_tooltips.push_back(HelpTip(wxT("getobj"), wxT("GETOBJ([#выражение]) - возвращает название предмета, расположенного в заданной позиции")));
@@ -629,7 +629,6 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("disablesubex"), wxT("DISABLESUBEX - если переменная не равна 0, то запрещает использование 'подвыражений' в тексте")));
 		_tooltips.push_back(HelpTip(wxT("nosave"), wxT("NOSAVE - если переменная не равна 0, то сохранение состояния игры пользователем невозможно")));
 		_tooltips.push_back(HelpTip(wxT("debug"), wxT("DEBUG - если переменная не равна 0, то отключается проверка идентификатора игры при загрузке состояния")));
-		_tooltips.push_back(HelpTip(wxT("$lastobj"), wxT("$LASTOBJ - переменная содержит название последнего добавленного / удалённого предмета")));
 		_tooltips.push_back(HelpTip(wxT("$counter"), wxT("$COUNTER - переменная содержит название локации-счётчика")));
 		_tooltips.push_back(HelpTip(wxT("$ongload"), wxT("$ONGLOAD - переменная содержит название локации-обработчика загрузки состояния")));
 		_tooltips.push_back(HelpTip(wxT("$ongsave"), wxT("$ONGSAVE - переменная содержит название локации-обработчика сохранения состояния")));
