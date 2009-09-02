@@ -39,7 +39,7 @@
 		DECLARE_CLASS(OptionsHotkeysDialog)
 		DECLARE_EVENT_TABLE()
 	private:
-		wxTextCtrl		*_txtInputHotkey;
+		HotKeyTextCtrl		*_txtInputHotkey;
 		SyntaxTextBox	*_txtInputText;
 		wxButton		*_btnOK;
 		wxButton		*_btnCancel;

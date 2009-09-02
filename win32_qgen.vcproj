@@ -344,6 +344,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\ChkSysHotKey.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Controls.cpp"
 				>
 			</File>
@@ -455,6 +459,10 @@
 			</File>
 			<File
 				RelativePath=".\src\ActionsPanel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ChkSysHotKey.h"
 				>
 			</File>
 			<File

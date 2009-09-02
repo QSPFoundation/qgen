@@ -31,10 +31,16 @@
 		bool			_isCtrlDown;
 		bool			_isShiftDown;
 		bool			_isSymbolDown;
+		int				_hotKeyCode;
+		int				_flags;
 		void OnKeyDown(wxKeyEvent& event);
 		void OnKeyUp(wxKeyEvent& event);
+
 	public:
 		HotKeyTextCtrl(wxWindow *parent, wxWindowID id, const wxString &value = wxEmptyString);
+
+		int GetFlags() { return _flags; }
+		int GetHotKeyCode() { return _hotKeyCode; }
 	};
 
 #endif

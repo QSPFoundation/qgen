@@ -26,10 +26,43 @@
 	{
 		wxString Hotkey;
 		wxString CommandText;
+		int hotKeyCode;
+		int flags;
 		HotkeyData(){ }
-		HotkeyData(const wxString &keys, const wxString &data)
+		HotkeyData(const int &_hotKeyCode, const int &_flags, const wxString &data)
 		{
-			Hotkey = keys;
+			wxString tmp;
+			bool first = true;
+
+			hotKeyCode = _hotKeyCode;
+			flags = _flags;
+
+			if (flags & wxACCEL_ALT) 
+			{
+				tmp.Append(wxT("Alt"));
+				first = false;
+			}
+
+			if (flags & wxACCEL_CTRL) 
+				if (first) 
+				{
+					tmp.Append(wxT("Ctrl"));
+					first = false;
+				}
+				else
+					tmp.Append(wxT(" + Ctrl"));
+
+			if (flags & wxACCEL_SHIFT)
+				if (first)
+				{
+					tmp.Append(wxT("Shift"));
+					first = false;
+				}
+				else
+					tmp.Append(wxT(" + Shift"));
+
+			Hotkey = wxString::Format(wxT("%s + %c"), tmp, hotKeyCode);
+
 			CommandText = data;
 		}
 	};

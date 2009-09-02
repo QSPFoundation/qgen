@@ -63,7 +63,7 @@ OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& tit
 
 void OptionsHotkeysDialog::OnOkSettings(wxCommandEvent &event)
 {	
-	_hotkeyData = HotkeyData(_txtInputHotkey->GetValue(), _txtInputText->GetValue());
+	_hotkeyData = HotkeyData(_txtInputHotkey->GetHotKeyCode(), _txtInputHotkey->GetFlags(), _txtInputText->GetValue());
 	event.Skip();
 }
 

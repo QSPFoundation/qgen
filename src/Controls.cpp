@@ -281,7 +281,7 @@ wxString Controls::GetMessageDesc( long errorNum )
 	switch (errorNum)
 	{
 		case QGEN_MSG_EXISTS: str = wxT("Такое название уже существует, введите другое название!"); break;
-		case QGEN_MSG_EXISTS_HKEY: str = wxT("Такая комбинация клавиш уже используется, введите другую комбинацию!"); break;
+		case QGEN_MSG_EXISTS_S_HKEY: str = wxT("Такая комбинация клавиш уже используется системой, введите другую комбинацию!"); break;
 		case QGEN_MSG_EMPTYDATA: str = wxT("Пустое поле, введите значение!"); break;
 		case QGEN_MSG_WRONGPASSWORD: str = wxT("Неверный пароль!"); break;
 		case QGEN_MSG_CANTSAVEGAME: str = wxT("Ошибка записи файла!"); break;

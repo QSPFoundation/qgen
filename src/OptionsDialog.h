@@ -29,6 +29,7 @@
 	#include "Settings.h"
 	#include "Controls.h"
 	#include "OptionsHotKeysDialog.h"
+	#include "ChkSysHotKey.h"
 
 	enum
 	{
@@ -75,6 +76,7 @@
 		wxNotebook	*_notebook;
 		Settings	*_settings;
 		Controls	*_controls;
+		wxFrame		*_parent;
 
 		wxNotebookPage *_general;
 		wxNotebookPage *_editor;
@@ -190,7 +192,7 @@
 		void AddHotKey();
 		void DeleteHotKey();
 	public:
-		OptionsDialog(wxWindow *parent, const wxString& title, Controls *controls, int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
+		OptionsDialog(wxFrame *parent, const wxString& title, Controls *controls, int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
 	};
 
 #endif

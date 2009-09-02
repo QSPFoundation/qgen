@@ -57,11 +57,12 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
 	EVT_CLOSE(OptionsDialog::OnCloseDialog)
 END_EVENT_TABLE()
 
-OptionsDialog::OptionsDialog(wxWindow *parent, const wxString &title, Controls *controls, int style) : 
-					wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
+OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *controls, int style) : 
+					wxDialog((wxWindow *)parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
 {
 	_settings = controls->GetSettings();
 	_controls = controls;
+	_parent = parent;
 
 	wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *notebookSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -966,6 +967,7 @@ void OptionsDialog::AddHotKey()
 	HotkeyData hotKeyData;
 	long index;
 	bool isError = true;
+	bool isExistInMenu = false;
 	OptionsHotkeysDialog dialog(this, wxT("Добавление команды"), _controls);
 	dialog.CenterOnParent();
 	do
@@ -975,17 +977,26 @@ void OptionsDialog::AddHotKey()
 			hotKeyData = dialog.GetHotkeyData();
 			if (!hotKeyData.Hotkey.IsEmpty() && !hotKeyData.CommandText.IsEmpty())
 			{
-				if (_lstHotKeys->FindItem(-1, hotKeyData.Hotkey) == wxNOT_FOUND)
+				ChkSysHotKey chkHKey;
+				isExistInMenu = chkHKey.CheckSystemHotKeys(_parent->GetMenuBar(), hotKeyData.hotKeyCode, hotKeyData.flags);				
+					
+				if(!isExistInMenu)
 				{
-					index = _lstHotKeys->GetItemCount();
-					_lstHotKeys->InsertItem(index, hotKeyData.Hotkey);
-					_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
-					_hotkeysCmds.Add(hotKeyData.CommandText);
-					_btnApply->Enable(true);
-					isError = false;
+					if (_lstHotKeys->FindItem(-1, hotKeyData.Hotkey) == wxNOT_FOUND)
+					{
+						index = _lstHotKeys->GetItemCount();
+						_lstHotKeys->InsertItem(index, hotKeyData.Hotkey);
+						_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
+						_hotkeysCmds.Add(hotKeyData.CommandText);
+						_btnApply->Enable(true);
+						isError = false;
+						isExistInMenu = false;
+					}
+					else
+						_controls->ShowMessage(QGEN_MSG_EXISTS_HKEY);
 				}
 				else
-					_controls->ShowMessage(QGEN_MSG_EXISTS_HKEY);
+					_controls->ShowMessage(QGEN_MSG_EXISTS_S_HKEY);
 			}
 			else
 				_controls->ShowMessage(QGEN_MSG_EMPTYDATA);
