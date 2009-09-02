@@ -85,7 +85,7 @@ void OptionsHotkeysDialog::OnHelpHotKeys( wxCommandEvent &event )
 	if (_controls->SearchHelpFile())
 	{
 		chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
-		chmHelp->KeywordSearch(wxT("Hot keys"));
+		chmHelp->KeywordSearch(wxT("Macros"));
 	}
 	delete chmHelp;
 }
