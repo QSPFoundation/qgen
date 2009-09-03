@@ -243,6 +243,10 @@ void QGenMainFrame::CreateMenuBar()
 	loc_menu->Append(LOC_RENAME, wxT("&Переименовать...\tF6"), wxT("Переименовать локацию"));
 	loc_menu->Append(LOC_DEL, wxT("&Удалить\tF8"), wxT("Удалить локацию"));
 	loc_menu->AppendSeparator();
+	loc_menu->Append(FOLDER_CREAT, wxT("Создать папку..."), wxT("Создать папку для локаций"));
+	loc_menu->Append(FOLDER_RENAME, wxT("Переименовать папку..."), wxT("Переименовать выбранную папку"));
+	loc_menu->Append(FOLDER_DEL, wxT("Удалить папку"), wxT("Удалить папку, но сохранить локации"));
+	loc_menu->AppendSeparator();
 	loc_menu->Append(LOC_COPY, wxT("&Копировать\tCtrl+Shift+C"), wxT("Копировать локацию в буфер"));
 	loc_menu->Append(LOC_PASTE, wxT("&Вставить\tCtrl+Shift+V"), wxT("Вставить локацию из буфера"));
 	loc_menu->Append(LOC_REPLACE, wxT("&Заменить\tCtrl+Shift+R"), wxT("Заменить выбранную локацию локацией из буфера"));
