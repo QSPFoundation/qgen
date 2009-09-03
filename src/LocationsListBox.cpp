@@ -342,12 +342,27 @@ void LocationsListBox::OnEndDrag( wxTreeEvent &event )
 {
 	ApplyStatesImageList();
 	wxTreeItemId id(event.GetItem());
-	if (!id.IsOk()) return;
+	wxString name(GetItemText(_draggedId));
+	long image = GetItemImage(_draggedId);
+	if (!id.IsOk())
+	{
+		if (_draggedType == DRAG_LOCATION)
+		{
+			wxPoint p = event.GetPoint();
+			wxSize size = GetSize();
+			if (p.x >= 0 && p.y >= 0 && p.x < size.GetWidth() && p.y < size.GetHeight())
+			{
+				wxTreeCtrl::Delete(_draggedId);
+				SelectItem(AppendItem(GetRootItem(), name, image));
+				UpdateLocationActions(name);
+				_needForUpdate = true;
+			}
+		}
+		return;
+	}
 	long pos;
 	wxTreeItemId parent(GetItemParent(id));
 	long dropOnType = GetItemType(id);
-	wxString name(GetItemText(_draggedId));
-	long image = GetItemImage(_draggedId);
 	long openedImage = GetItemImage(_draggedId, wxTreeItemIcon_Expanded);
 	switch (_draggedType)
 	{
