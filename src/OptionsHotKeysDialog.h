@@ -43,7 +43,7 @@
 		DECLARE_CLASS(OptionsHotkeysDialog)
 		DECLARE_EVENT_TABLE()
 	private:
-		HotKeyTextCtrl		*_txtInputHotkey;
+		HotKeyTextCtrl	*_txtInputHotkey;
 		SyntaxTextBox	*_txtInputText;
 		wxButton		*_btnOK;
 		wxButton		*_btnCancel;
@@ -55,7 +55,7 @@
 		void OnHelpHotKeys(wxCommandEvent &event);
 	public:
 		OptionsHotkeysDialog(wxWindow *parent, const wxString& title, Controls *controls,
-								int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
+							 int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
 
 		void SetHotkeyData(const HotkeyData &hotkeyData);
 		HotkeyData GetHotkeyData() const { return _hotkeyData; }

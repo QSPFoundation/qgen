@@ -163,7 +163,6 @@
 		wxButton	*_btnPathTxt2Gam;
 
 		wxListCtrl	*_lstHotKeys;
-		wxArrayString _hotkeysCmds;
 
 		wxButton	*_btnAddNewHotKey;
 		wxButton	*_btnEditHotKey;
@@ -174,7 +173,7 @@
 		wxButton	*_btnReset;
 
 		HotkeyDataArray _hotkeysData;
-		
+
 		void OnColorSelect(wxCommandEvent &event);
 		void OnFontSelect(wxCommandEvent &event);
 		void OnPathSelect(wxCommandEvent &event);

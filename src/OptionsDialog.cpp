@@ -61,8 +61,8 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
 	EVT_CLOSE(OptionsDialog::OnCloseDialog)
 END_EVENT_TABLE()
 
-OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *controls, int style) : 
-					wxDialog((wxWindow *)parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
+OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *controls, int style) :
+	wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
 {
 	_settings = controls->GetSettings();
 	_controls = controls;
@@ -910,13 +910,12 @@ void OptionsDialog::InitOptionsDialog()
 	HotkeysStore *hotKeysStore = _settings->GetHotKeys();
 	size_t count = hotKeysStore->GetHotkeysCount();
 	_lstHotKeys->DeleteAllItems();
-	_hotkeysCmds.Clear();
+	_hotkeysData.Clear();
 	for (size_t i = 0; i < count; ++i)
 	{
 		const HotkeyData &hotKeyData = hotKeysStore->GetHotkeyData(i);
 		_lstHotKeys->InsertItem(i, hotKeyData.HkeyString);
 		_lstHotKeys->SetItem(i, 1, hotKeyData.CommandText);
-		_hotkeysCmds.Add(hotKeyData.CommandText);
 		_hotkeysData.Add(hotKeyData);
 	}
 	SetSize(_settings->GetOptionsDialogWidth(), _settings->GetOptionsDialogHeight());
@@ -928,14 +927,11 @@ void OptionsDialog::EditHotKey()
 {
 	HotkeyData hotKeyData;
 	bool isError = true;
-	bool isExistInMenu;
 	long index = _lstHotKeys->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	if (index != wxNOT_FOUND)
 	{
-		hotKeyData.HkeyString = _lstHotKeys->GetItemText(index);
-		hotKeyData.CommandText = _hotkeysCmds[index];
 		OptionsHotkeysDialog dialog(this, wxT("Редактирование команды"), _controls);
-		dialog.SetHotkeyData(hotKeyData);
+		dialog.SetHotkeyData(_hotkeysData[index]);
 		dialog.CenterOnParent();
 		do
 		{
@@ -945,9 +941,7 @@ void OptionsDialog::EditHotKey()
 				if (!hotKeyData.HkeyString.IsEmpty() && !hotKeyData.CommandText.IsEmpty())
 				{
 					ChkSysHotKey chkHKey;
-					isExistInMenu = chkHKey.CheckSystemHotKeys(_parent->GetMenuBar(), hotKeyData.HotKeyCode, hotKeyData.Flags);				
-
-					if(!isExistInMenu)
+					if (!chkHKey.CheckSystemHotKeys(_parent->GetMenuBar(), hotKeyData.HotKeyCode, hotKeyData.Flags))
 					{
 						long idx = _lstHotKeys->FindItem(-1, hotKeyData.HkeyString);
 						if (idx == wxNOT_FOUND || idx == index)
@@ -955,7 +949,6 @@ void OptionsDialog::EditHotKey()
 							_lstHotKeys->DeleteItem(index);
 							_lstHotKeys->InsertItem(index, hotKeyData.HkeyString);
 							_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
-							_hotkeysCmds[index] = hotKeyData.CommandText;
 							_hotkeysData[index] = hotKeyData;
 							_btnApply->Enable(true);
 							isError = false;
@@ -980,7 +973,6 @@ void OptionsDialog::AddHotKey()
 	HotkeyData hotKeyData;
 	long index;
 	bool isError = true;
-	bool isExistInMenu = false;
 	OptionsHotkeysDialog dialog(this, wxT("Добавление команды"), _controls);
 	dialog.CenterOnParent();
 	do
@@ -991,19 +983,16 @@ void OptionsDialog::AddHotKey()
 			if (!hotKeyData.HkeyString.IsEmpty() && !hotKeyData.CommandText.IsEmpty())
 			{
 				ChkSysHotKey chkHKey;
-				isExistInMenu = chkHKey.CheckSystemHotKeys(_parent->GetMenuBar(), hotKeyData.HotKeyCode, hotKeyData.Flags);
-				if (!isExistInMenu)
+				if (!chkHKey.CheckSystemHotKeys(_parent->GetMenuBar(), hotKeyData.HotKeyCode, hotKeyData.Flags))
 				{
 					if (_lstHotKeys->FindItem(-1, hotKeyData.HkeyString) == wxNOT_FOUND)
 					{
 						index = _lstHotKeys->GetItemCount();
 						_lstHotKeys->InsertItem(index, hotKeyData.HkeyString);
 						_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
-						_hotkeysCmds.Add(hotKeyData.CommandText);
 						_hotkeysData.Add(hotKeyData);
 						_btnApply->Enable(true);
 						isError = false;
-						isExistInMenu = false;
 					}
 					else
 						_controls->ShowMessage(QGEN_MSG_EXISTS_HKEY);
@@ -1025,7 +1014,6 @@ void OptionsDialog::DeleteHotKey()
 	if (index >= 0)
 	{
 		_lstHotKeys->DeleteItem(index);
-		_hotkeysCmds.RemoveAt(index);
 		_hotkeysData.RemoveAt(index);
 		if (_lstHotKeys->GetItemCount() == index)
 			--index;
