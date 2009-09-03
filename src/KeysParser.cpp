@@ -175,7 +175,7 @@ bool KeysParser::ExecuteHotkeyAction( int keyCode, int modifiers )
 	for (size_t i = 0; i < countHotKeys; ++i)
 	{
 		hotKey = _hotKeysStore->GetHotkeyData(i);
-		if (IsHotkeyMatches(keyCode, modifiers, hotKey.Hotkey))
+		if (IsHotkeyMatches(keyCode, modifiers, hotKey.HkeyString))
 		{
 			ParseText(hotKey.CommandText);
 			return true;

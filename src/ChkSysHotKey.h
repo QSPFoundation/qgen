@@ -5,18 +5,16 @@
 
 	class ChkSysHotKey
 	{
-		bool isInMenu;
-		int keyCode;
-		int flags;
+	private:
+		bool _isInMenu;
+		int _keyCode;
+		int _flags;
 		void WalkMenuBar(wxMenuBar *m);
 		void WalkMenu(wxMenu *m);
 		void WalkMenuItem(wxMenuItem *m);
 
 	public:
-		ChkSysHotKey(void) { isInMenu = false; }
-		~ChkSysHotKey(void) {}
-
-		bool CheckSystemHotKeys(wxMenuBar *m, int _keyCode, int _flags);
+		bool CheckSystemHotKeys(wxMenuBar *m, int keyCode, int flags);
 	};
 
 #endif //_QUEST_GENERATOR_CHECK_SYSTEM_HOTKEYS_H

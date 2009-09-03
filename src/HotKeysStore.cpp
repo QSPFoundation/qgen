@@ -22,12 +22,11 @@ WX_DEFINE_OBJARRAY(HotkeyDataArray);
 
 HotkeysStore::HotkeysStore()
 {
-
 }
 
 size_t HotkeysStore::AddHotkeyData( const HotkeyData &hotKeyData )
 {
-	int index = FindHotkeyDataIndex(hotKeyData.Hotkey);
+	int index = FindHotkeyDataIndex(hotKeyData.HkeyString);
 	if (index < 0)
 	{
 		_hotkeysData.Add(hotKeyData);
@@ -60,7 +59,7 @@ int HotkeysStore::FindHotkeyDataIndex(const wxString &hotKey)
 	wxString stHotKey(hotKey.Lower());
 	size_t i, count = _hotkeysData.GetCount();
 	for (i = 0; i < count; i++)
-		if (stHotKey == _hotkeysData[i].Hotkey.Lower()) return (int)i;
+		if (stHotKey == _hotkeysData[i].HkeyString.Lower()) return (int)i;
 	return wxNOT_FOUND;
 }
 
@@ -77,9 +76,9 @@ void HotkeysStore::SaveHotkeysData(wxConfigBase &fileConfig)
 	for (size_t i = 0; i < count; i++)
 	{
 		str = wxString::Format(wxT("HotKeys/Hotkey%d_KeyCode"), i);
-		fileConfig.Write(str, _hotkeysData[i].hotKeyCode);
+		fileConfig.Write(str, _hotkeysData[i].HotKeyCode);
 		str = wxString::Format(wxT("HotKeys/Hotkey%d_Flags"), i);
-		fileConfig.Write(str, _hotkeysData[i].flags);
+		fileConfig.Write(str, _hotkeysData[i].Flags);
 		str = wxString::Format(wxT("HotKeys/Hotkey%d_Exec"), i);
 		fileConfig.Write(str, _hotkeysData[i].CommandText);
 	}

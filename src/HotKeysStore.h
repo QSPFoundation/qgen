@@ -20,50 +20,46 @@
 
 	#include <wx/wx.h>
 	#include <wx/fileconf.h>
-	#include <wx/dynarray.h> 
+	#include <wx/dynarray.h>
 
 	struct HotkeyData
 	{
-		wxString Hotkey;
+		wxString HkeyString;
 		wxString CommandText;
-		int hotKeyCode;
-		int flags;
-		HotkeyData(){ }
-		HotkeyData(const int &_hotKeyCode, const int &_flags, const wxString &data)
+		int HotKeyCode;
+		int Flags;
+
+		HotkeyData()
+		{
+			HotKeyCode = 0;
+			Flags = 0;
+		}
+
+		HotkeyData(int hotKeyCode, int flags, const wxString &data)
 		{
 			wxString tmp;
-			bool first = true;
 
-			hotKeyCode = _hotKeyCode;
-			flags = _flags;
-
-			if (flags & wxACCEL_ALT) 
-			{
-				tmp.Append(wxT("Alt"));
-				first = false;
-			}
-
-			if (flags & wxACCEL_CTRL) 
-				if (first) 
-				{
-					tmp.Append(wxT("Ctrl"));
-					first = false;
-				}
-				else
-					tmp.Append(wxT(" + Ctrl"));
-
-			if (flags & wxACCEL_SHIFT)
-				if (first)
-				{
-					tmp.Append(wxT("Shift"));
-					first = false;
-				}
-				else
-					tmp.Append(wxT(" + Shift"));
-
-			Hotkey = wxString::Format(wxT("%s + %c"), tmp, hotKeyCode);
-
+			HotKeyCode = hotKeyCode;
+			Flags = flags;
 			CommandText = data;
+
+			if (flags & wxACCEL_ALT)
+				AppendAccel(tmp, wxT("Alt"));
+			if (flags & wxACCEL_CTRL)
+				AppendAccel(tmp, wxT("Ctrl"));
+			if (flags & wxACCEL_SHIFT)
+				AppendAccel(tmp, wxT("Shift"));
+
+			HkeyString = wxString::Format(wxT("%s + %c"), tmp, HotKeyCode);
+		}
+
+	private:
+		void AppendAccel(wxString &data, const wxString &key)
+		{
+			if (data.IsEmpty())
+				data.Append(key);
+			else
+				data.Append(wxString::Format(wxT("+ %s"), key.wx_str()));
 		}
 	};
 

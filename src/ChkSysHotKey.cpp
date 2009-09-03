@@ -1,48 +1,41 @@
 #include "ChkSysHotKey.h"
 
-bool ChkSysHotKey::CheckSystemHotKeys(wxMenuBar *m, int _keyCode, int _flags)
+bool ChkSysHotKey::CheckSystemHotKeys(wxMenuBar *m, int keyCode, int flags)
 {
-	keyCode = _keyCode;
-	flags = _flags;
+	_isInMenu = false;
+	_keyCode = keyCode;
+	_flags = flags;
 
 	WalkMenuBar(m);
 
-	return isInMenu;
+	return _isInMenu;
 }
 
 void ChkSysHotKey::WalkMenuBar(wxMenuBar *m)
 {
-	for (int i = 0; i < (int)m->GetMenuCount(); i++)
-	{
+	for (size_t i = 0; i < m->GetMenuCount(); ++i)
 		WalkMenu(m->GetMenu(i));
-	}
 }
 
 void ChkSysHotKey::WalkMenu(wxMenu *m)
 {
-	for (int j = 0; j < (int)m->GetMenuItemCount(); j++)
+	wxMenuItemList &list = m->GetMenuItems();
+	for (int i = 0; i < list.GetCount(); ++i)
 	{
-		wxMenuItem *menuItem = m->GetMenuItems().Item(j)->GetData();
-		if (menuItem->GetKind() != wxITEM_SEPARATOR && 
-			menuItem->GetLabel() != wxEmptyString)
+		wxMenuItem *menuItem = list.Item(i)->GetData();
+		if (menuItem->GetKind() != wxITEM_SEPARATOR)
 			WalkMenuItem(menuItem);
-			
 	}
 }
 
 void ChkSysHotKey::WalkMenuItem(wxMenuItem *m)
 {
-	if (m->GetSubMenu()) 
+	if (m->GetSubMenu())
 	{
 		WalkMenu(m->GetSubMenu());
 		return;
 	}
 	wxAcceleratorEntry *a = m->GetAccel();
-	if(a)
-	{
-		if (keyCode == a->GetKeyCode() && flags == a->GetFlags())
-		{
-			isInMenu = true;
-		}
-	}
+	if (a && _keyCode == a->GetKeyCode() && _flags == a->GetFlags())
+		_isInMenu = true;
 }
