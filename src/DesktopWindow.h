@@ -22,6 +22,8 @@
 #ifndef _DESKTOP_WINDOW_H_
 	#define _DESKTOP_WINDOW_H_
 
+	#include <wx/wx.h>
+
 	class DesktopWindow : public wxWindow
 	{
 	public:
