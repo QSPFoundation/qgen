@@ -62,6 +62,8 @@ OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& tit
 	SetAutoLayout(true);
 	SetMinClientSize(wxSize(330, 230));
 	SetSize(wxSize(630, 430));
+
+	_txtInputHotkey->SetFocus();
 }
 
 void OptionsHotkeysDialog::OnOkSettings(wxCommandEvent &event)
