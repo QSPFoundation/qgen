@@ -35,12 +35,12 @@ HotKeyTextCtrl::HotKeyTextCtrl( wxWindow *parent, wxWindowID id, const wxString 
 	_flags = 0;
 }
 
-void HotKeyTextCtrl::AppendAccel(wxString &data, const wxString &key)
+void HotKeyTextCtrl::AppendAccel(wxString &data, const wxString &key) const
 {
 	if (data.IsEmpty())
 		data.Append(key);
 	else
-		data.Append(wxString::Format(wxT(" + %s"), key.wx_str()));
+		data.Append(wxString::Format(wxT("+%s"), key.wx_str()));
 }
 
 void HotKeyTextCtrl::OnKeyDown( wxKeyEvent& event )
@@ -71,7 +71,7 @@ void HotKeyTextCtrl::OnKeyDown( wxKeyEvent& event )
 		}
 		if (keyCode >= wxT('A') && keyCode <= wxT('Z') && !_hotKeyCode)
 		{
-			_hotKey = wxString::Format(wxT("%s + %c"), _hotKey.wx_str(), keyCode);
+			_hotKey = wxString::Format(wxT("%s+%c"), _hotKey.wx_str(), keyCode);
 			_hotKeyCode = keyCode;
 		}
 		SetValue(_hotKey);

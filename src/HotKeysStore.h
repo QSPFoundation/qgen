@@ -54,7 +54,7 @@
 				AppendAccel(tmp, wxT("Ctrl"));
 			if (Flags & wxACCEL_SHIFT)
 				AppendAccel(tmp, wxT("Shift"));
-			return wxString::Format(wxT("%s + %c"), tmp.wx_str(), HotKeyCode);
+			return wxString::Format(wxT("%s+%c"), tmp.wx_str(), HotKeyCode);
 		}
 
 	private:
@@ -63,7 +63,7 @@
 			if (data.IsEmpty())
 				data.Append(key);
 			else
-				data.Append(wxString::Format(wxT(" + %s"), key.wx_str()));
+				data.Append(wxString::Format(wxT("+%s"), key.wx_str()));
 		}
 	};
 

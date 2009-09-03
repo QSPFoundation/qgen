@@ -35,7 +35,7 @@
 		void OnKeyDown(wxKeyEvent& event);
 		void OnKeyUp(wxKeyEvent& event);
 
-		void AppendAccel(wxString &data, const wxString &key);
+		void AppendAccel(wxString &data, const wxString &key) const;
 	public:
 		HotKeyTextCtrl(wxWindow *parent, wxWindowID id, const wxString &value = wxEmptyString);
 
