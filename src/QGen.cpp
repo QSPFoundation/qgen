@@ -94,9 +94,8 @@ bool QGenApp::OnInit()
 	wxFileName appPath(argv[0]);
 	appPath.MakeAbsolute();
 	_controls = new Controls(appPath.GetPath());
-	QGenMainFrame *main_frame = new QGenMainFrame(_controls);
-	_controls->SetMainFrame(main_frame);
-	main_frame->Show();
+	QGenMainFrame *mainFrame = new QGenMainFrame(_controls);
+	mainFrame->Show();
 	wxCmdLineParser cmdParser(argc, argv);
 	if (argc > 1)
 	{
@@ -105,7 +104,7 @@ bool QGenApp::OnInit()
 		wxFileName path(cmdParser.GetParam());
 		path.MakeAbsolute();
 		initEvent.SetInitString(path.GetFullPath());
-		wxPostEvent(main_frame, initEvent);
+		wxPostEvent(mainFrame, initEvent);
 	}
 	else
 	{
@@ -113,7 +112,7 @@ bool QGenApp::OnInit()
 		if (settings->GetOpenLastGame())
 		{
 			initEvent.SetInitString(settings->GetLastGamePath());
-			wxPostEvent(main_frame, initEvent);
+			wxPostEvent(mainFrame, initEvent);
 		}
 	}
 	return true;

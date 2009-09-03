@@ -29,7 +29,7 @@
 
 	class Controls;
 
-	bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *_mainFrame, Controls *controls, wxString &password, bool merge);
+	bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *controls, wxString &password, bool merge);
 	bool qspSaveQuest(const QGEN_CHAR *fileName, const wxString &passwd, Controls *controls);
 	bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls);
 	bool qspExportTxt2Game(const QGEN_CHAR *fileName, Controls *controls);

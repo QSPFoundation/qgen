@@ -245,7 +245,7 @@ bool qspCheckQuest(char **strs, long count, bool isUCS2)
 	return true;
 }
 
-bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *_mainFrame, Controls *controls, wxString &password, bool merge)
+bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *controls, wxString &password, bool merge)
 {
 	FILE *f;
 	bool isOldFormat, isUCS2;
@@ -285,7 +285,7 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *_mainFrame, Controls *con
 	data = qspGameToQSPString(isOldFormat ? strs[1] : strs[2], isUCS2, true);
 	if (QGEN_STRCMP(data, QGEN_PASSWD))
 	{
-		wxPasswordEntryDialog dlgEntry(_mainFrame, wxT("Введите пароль:"),
+		wxPasswordEntryDialog dlgEntry(parent, wxT("Введите пароль:"),
 			wxT("Ввод пароля"), wxEmptyString, wxOK | wxCANCEL);
 		dlgEntry.CenterOnParent();
 		if ( dlgEntry.ShowModal() == wxID_OK )
@@ -331,7 +331,7 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *_mainFrame, Controls *con
 			{
 				if (!(mergeType & MergeAll))
 				{
-					MergeDialog dialog(_mainFrame, wxT("Подтвердить замену"), wxString::Format(wxT("Локация с таким именем уже существует!\nНазвание локации: %s\nЗаменить существующую локацию?"), data));
+					MergeDialog dialog(parent, wxT("Подтвердить замену"), wxString::Format(wxT("Локация с таким именем уже существует!\nНазвание локации: %s\nЗаменить существующую локацию?"), data));
 					mergeType = dialog.ShowModal();
 					if (mergeType & MergeCancel)
 					{

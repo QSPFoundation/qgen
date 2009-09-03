@@ -71,7 +71,6 @@
 	class Controls : public IControls
 	{
 	private:
-		wxWindow			*_mainFrame;
 		LocationsListBox	*_locListBox;
 		LocationsNotebook	*_locNotebook;
 		DataContainer		*_container;
@@ -85,6 +84,7 @@
 
 		static wxString ConvertSearchString(const wxString& s, bool isMatchCase);
 		static int FindSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind = 0);
+		static wxWindow *GetParent();
 
 	public:
 		Controls(const wxString &path);
@@ -93,7 +93,6 @@
 		Settings *GetSettings() const { return _settings; }
 		DataContainer *GetContainer() const { return _container; }
 
-		void SetMainFrame(wxWindow *mainFrame);
 		void SetLocListBox(LocationsListBox *locListBox);
 		void SetNotebook(LocationsNotebook *locNotebook);
 
