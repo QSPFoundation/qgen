@@ -105,6 +105,7 @@ void KeysParser::ParseText(const wxString &text)
 			OnKeyPress(*i);
 		++i;
 	}
+	wxYieldIfNeeded();
 	::SetKeyboardState(oldStates);
 }
 
