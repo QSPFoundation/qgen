@@ -391,7 +391,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 
 	SetSizerAndFit(topSizer);
 	SetAutoLayout(true);
-	SetMinClientSize(wxSize(500, 340));
+	SetMinClientSize(wxSize(500, 380));
 	InitOptionsDialog();
 }
 
