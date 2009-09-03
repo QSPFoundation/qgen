@@ -59,7 +59,7 @@
 			if (data.IsEmpty())
 				data.Append(key);
 			else
-				data.Append(wxString::Format(wxT("+ %s"), key.wx_str()));
+				data.Append(wxString::Format(wxT(" + %s"), key.wx_str()));
 		}
 	};
 

@@ -24,21 +24,25 @@ BEGIN_EVENT_TABLE(HotKeyTextCtrl, wxTextCtrl)
 	EVT_KEY_UP(HotKeyTextCtrl::OnKeyUp)
 END_EVENT_TABLE()
 
-HotKeyTextCtrl::HotKeyTextCtrl( wxWindow *parent, wxWindowID id, const wxString &value/*=wxEmptyString*/ ) : wxTextCtrl( parent, id, value)
+HotKeyTextCtrl::HotKeyTextCtrl( wxWindow *parent, wxWindowID id, const wxString &value ) :
+	wxTextCtrl( parent, id, value, wxDefaultPosition, wxDefaultSize, wxTE_READONLY)
 {
 	_hotKeyCode = 0;
 	_flags = 0;
-	_isKeyDown = false;
-	_isAltDown = false;
-	_isCtrlDown = false;
-	_isShiftDown = false;
-	_isSymbolDown = false;
+}
+
+void HotKeyTextCtrl::AppendAccel(wxString &data, const wxString &key)
+{
+	if (data.IsEmpty())
+		data.Append(key);
+	else
+		data.Append(wxString::Format(wxT(" + %s"), key.wx_str()));
 }
 
 void HotKeyTextCtrl::OnKeyDown( wxKeyEvent& event )
 {
 	int keyCode = event.GetKeyCode();
-	if(!_isKeyDown)	
+	if (_hotKeyCode)
 	{
 		_hotKey.Clear();
 		_flags = 0;
@@ -46,49 +50,36 @@ void HotKeyTextCtrl::OnKeyDown( wxKeyEvent& event )
 	}
 	if (event.GetModifiers() != wxMOD_NONE)
 	{
-		if (event.AltDown() && !_isAltDown)
+		if (event.AltDown() && !(_flags & wxACCEL_ALT))
 		{
-			(_isKeyDown) ? _hotKey.Append(wxT(" + Alt")) : _hotKey.Append(wxT("Alt"));
-			_isAltDown = true;
-			_isKeyDown = true;
+			AppendAccel(_hotKey, wxT("Alt"));
 			_flags |= wxACCEL_ALT;
 		}
-		if (event.ControlDown() && !_isCtrlDown)
+		if (event.ControlDown() && !(_flags & wxACCEL_CTRL))
 		{
-			(_isKeyDown) ? _hotKey.Append(wxT(" + Ctrl")) : _hotKey.Append(wxT("Ctrl"));
-			_isCtrlDown = true;
-			_isKeyDown = true;
+			AppendAccel(_hotKey, wxT("Ctrl"));
 			_flags |= wxACCEL_CTRL;
 		}
-		if (event.ShiftDown() && !_isShiftDown)
+		if (event.ShiftDown() && !(_flags & wxACCEL_SHIFT))
 		{
-			(_isKeyDown) ? _hotKey.Append(wxT(" + Shift")) : _hotKey.Append(wxT("Shift"));
-			_isShiftDown = true;
-			_isKeyDown = true;
+			AppendAccel(_hotKey, wxT("Shift"));
 			_flags |= wxACCEL_SHIFT;
 		}
-		if (keyCode >= wxT('A') && keyCode <= wxT('Z') && !_isSymbolDown)
+		if (keyCode >= wxT('A') && keyCode <= wxT('Z') && !_hotKeyCode)
 		{
 			_hotKey = wxString::Format(wxT("%s + %c"), _hotKey.wx_str(), keyCode);
-			_isSymbolDown = true;
 			_hotKeyCode = keyCode;
 		}
 		SetValue(_hotKey);
-	} 
+	}
 }
 
 void HotKeyTextCtrl::OnKeyUp( wxKeyEvent& event )
 {
-	if(!_isSymbolDown && _isKeyDown)
+	if (!_hotKeyCode)
 	{
+		Clear();
 		_hotKey.Clear();
-		SetValue(_hotKey);
 		_flags = 0;
-		_hotKeyCode = 0;
 	}
-	_isKeyDown = false;
-	_isAltDown = false;
-	_isCtrlDown = false;
-	_isShiftDown = false;
-	_isSymbolDown = false;
 }

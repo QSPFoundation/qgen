@@ -26,11 +26,10 @@ END_EVENT_TABLE()
 
 OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& title, Controls *controls, int style) : wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
 {
-
 	_controls = controls;
 	wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *hotKeySizer = new wxBoxSizer(wxHORIZONTAL);
-	
+
 	wxStaticText *stText01 = new wxStaticText(this, wxID_ANY, wxT("Комбинация клавиш:"));
 	_txtInputHotkey = new HotKeyTextCtrl(this, wxID_ANY);
 
