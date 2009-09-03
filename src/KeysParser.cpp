@@ -72,9 +72,9 @@ void KeysParser::OnKeyPress(int keyCode)
 	input.type = INPUT_KEYBOARD;
 	input.ki.wScan = keyCode;
 	input.ki.dwFlags = KEYEVENTF_UNICODE;
-	SendInput(1, &input, sizeof(INPUT));
+	::SendInput(1, &input, sizeof(INPUT));
 	input.ki.dwFlags |= KEYEVENTF_KEYUP;
-	SendInput(1, &input, sizeof(INPUT));
+	::SendInput(1, &input, sizeof(INPUT));
 }
 
 void KeysParser::ParseText(const wxString &text)
@@ -82,9 +82,9 @@ void KeysParser::ParseText(const wxString &text)
 	wxString keys;
 	wxString::const_iterator i = text.begin();
 	BYTE oldStates[256], newStates[256];
-	GetKeyboardState(oldStates);
+	::GetKeyboardState(oldStates);
 	memset(newStates, 0, sizeof(newStates));
-	SetKeyboardState(newStates);
+	::SetKeyboardState(newStates);
 	while (i != text.end())
 	{
 		if (*i == wxT('{'))
@@ -105,7 +105,7 @@ void KeysParser::ParseText(const wxString &text)
 			OnKeyPress(*i);
 		++i;
 	}
-	SetKeyboardState(oldStates);
+	::SetKeyboardState(oldStates);
 }
 
 void KeysParser::OnKeysPress(const wxString &text)
@@ -136,10 +136,10 @@ void KeysParser::OnKeysPress(const wxString &text)
 	}
 	if (count > 0)
 	{
-		SendInput(count, inputs, sizeof(INPUT));
+		::SendInput(count, inputs, sizeof(INPUT));
 		for (size_t i = 0; i < count; ++i)
 			inputs[i].ki.dwFlags |= KEYEVENTF_KEYUP;
-		SendInput(count, inputs, sizeof(INPUT));
+		::SendInput(count, inputs, sizeof(INPUT));
 	}
 	if (hasEvent) wxYieldIfNeeded();
 }
