@@ -1577,7 +1577,7 @@ bool Controls::SearchHelpFile()
 	return true;
 }
 
-wxWindow * Controls::GetParent()
+wxWindow *Controls::GetParent()
 {
 	return wxGetTopLevelParent(wxGetActiveWindow());
 }

@@ -189,7 +189,7 @@ void QGenMainFrame::CreateStatusBar()
 void QGenMainFrame::CreateMenuBar()
 {
 	wxMenu *file_menu = new wxMenu;
-	wxMenuItem *newGameItem = new wxMenuItem(file_menu, NEW_QUEST, wxT("&Новая\tCtrl+N"), wxT("Создание новой игры"));
+	wxMenuItem *newGameItem = new wxMenuItem(file_menu, NEW_QUEST, wxT("&Новая\tCtrl+N"), wxT("Создать новую игру"));
 	newGameItem->SetBitmap(wxBitmap(new_game_menu_xpm));
 	file_menu->Append(newGameItem);
 
@@ -197,7 +197,7 @@ void QGenMainFrame::CreateMenuBar()
 	openFileItem->SetBitmap(wxBitmap(open_file_menu_xpm));
 	file_menu->Append(openFileItem);
 
-	file_menu->Append(JOIN_QUEST, wxT("&Присоединить игру...\tCtrl+M"));
+	file_menu->Append(JOIN_QUEST, wxT("&Присоединить игру...\tCtrl+M"), wxT("Добавить локации другой игры"));
 
 	wxMenuItem *saveFileItem = new wxMenuItem(file_menu, SAVE_QUEST, wxT("&Сохранить\tCtrl+S"), wxT("Сохранить игру"));
 	saveFileItem->SetBitmap(wxBitmap(save_file_menu_xpm));
@@ -217,13 +217,13 @@ void QGenMainFrame::CreateMenuBar()
 	file_menu->AppendSubMenu(file_sub_imp_menu, wxT("&Импорт"));
 	file_menu->AppendSeparator();
 
-	wxMenuItem *exitItem = new wxMenuItem(file_menu, EXIT_QGEN, wxT("&Выход\tAlt+X"), wxT("Выход из программы"));
+	wxMenuItem *exitItem = new wxMenuItem(file_menu, EXIT_QGEN, wxT("&Выход\tAlt+X"), wxT("Выйти из программы"));
 	exitItem->SetBitmap(wxBitmap(exit_menu_xpm));
 	file_menu->Append(exitItem);
 
 	wxMenu *util_menu = new wxMenu;
 
-	wxMenuItem *playGameItem = new wxMenuItem(util_menu, PLAY_QUEST, wxT("&Запуск игры\tF5"), wxT("Запуск текущей игры"));
+	wxMenuItem *playGameItem = new wxMenuItem(util_menu, PLAY_QUEST, wxT("&Запуск игры\tF5"), wxT("Запустить текущую игру"));
 	playGameItem->SetBitmap(wxBitmap(play_game_menu_xpm));
 	util_menu->Append(playGameItem);
 
@@ -231,7 +231,7 @@ void QGenMainFrame::CreateMenuBar()
 	searchTextItem->SetBitmap(wxBitmap(search_text_menu_xpm));
 	util_menu->Append(searchTextItem);
 
-	wxMenuItem *gameInfoItem = new wxMenuItem(util_menu, UTIL_INF, wxT("&Информация об игре\tCtrl+I"));
+	wxMenuItem *gameInfoItem = new wxMenuItem(util_menu, UTIL_INF, wxT("&Информация об игре\tCtrl+I"), wxT("Показать краткую статистику"));
 	gameInfoItem->SetBitmap(wxBitmap(game_info_menu_xpm));
 	util_menu->Append(gameInfoItem);
 
@@ -239,9 +239,9 @@ void QGenMainFrame::CreateMenuBar()
 	util_menu->Append(UTIL_OPTIONS, wxT("&Настройки...\tCtrl+P"));
 
 	wxMenu *loc_menu = new wxMenu;
-	loc_menu->Append(LOC_CREAT, wxT("&Создать...\tF7"), wxT("Создание локации"));
-	loc_menu->Append(LOC_RENAME, wxT("&Переименовать...\tF6"), wxT("Переименование локации"));
-	loc_menu->Append(LOC_DEL, wxT("&Удалить\tF8"), wxT("Удаление локации"));
+	loc_menu->Append(LOC_CREAT, wxT("&Создать...\tF7"), wxT("Создать локацию"));
+	loc_menu->Append(LOC_RENAME, wxT("&Переименовать...\tF6"), wxT("Переименовать локацию"));
+	loc_menu->Append(LOC_DEL, wxT("&Удалить\tF8"), wxT("Удалить локацию"));
 	loc_menu->AppendSeparator();
 	loc_menu->Append(LOC_COPY, wxT("&Копировать\tCtrl+Shift+C"), wxT("Копировать локацию в буфер"));
 	loc_menu->Append(LOC_PASTE, wxT("&Вставить\tCtrl+Shift+V"), wxT("Вставить локацию из буфера"));
@@ -252,9 +252,9 @@ void QGenMainFrame::CreateMenuBar()
 
 	wxMenu *loc_action_sub_menu = new wxMenu;
 
-	loc_action_sub_menu->Append(CREATE_ACTION, wxT("&Создать...\tAlt+F7"));
-	loc_action_sub_menu->Append(RENAME_ACTION, wxT("&Переименовать...\tAlt+F6"));
-	loc_action_sub_menu->Append(DEL_ACTION, wxT("&Удалить\tAlt+F8"));
+	loc_action_sub_menu->Append(CREATE_ACTION, wxT("&Создать...\tAlt+F7"), wxT("Создать действие на локации"));
+	loc_action_sub_menu->Append(RENAME_ACTION, wxT("&Переименовать...\tAlt+F6"), wxT("Переименовать действие"));
+	loc_action_sub_menu->Append(DEL_ACTION, wxT("&Удалить\tAlt+F8"), wxT("Удалить действие"));
 	loc_action_sub_menu->AppendSeparator();
 	loc_action_sub_menu->Append(DEL_ALL_ACTIONS, wxT("У&далить все\tAlt+F10"));
 	loc_menu->Append(SUB_MENU_ACT, wxT("&Действия"), loc_action_sub_menu);
