@@ -44,6 +44,7 @@
 		void OnKeyPress(int keyCode);
 		void OnKeysPress(const wxString &text);
 
+		void ReleaseAlt();
 	public:
 		KeysParser(HotkeysStore *hotKeysStore);
 		bool ExecuteHotkeyAction(int keyCode, int modifiers);	

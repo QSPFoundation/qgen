@@ -65,6 +65,16 @@ void KeysParser::InitKeysTable()
 	_keysTable["F12"] = VK_F12;
 }
 
+void KeysParser::ReleaseAlt()
+{
+	INPUT input;
+	memset(&input, 0, sizeof(input));
+	input.type = INPUT_KEYBOARD;
+	input.ki.wVk = VK_MENU;
+	input.ki.dwFlags = KEYEVENTF_KEYUP;
+	::SendInput(1, &input, sizeof(INPUT));
+}
+
 void KeysParser::OnKeyPress(int keyCode)
 {
 	INPUT input;
@@ -85,6 +95,7 @@ void KeysParser::ParseText(const wxString &text)
 	::GetKeyboardState(oldStates);
 	memset(newStates, 0, sizeof(newStates));
 	::SetKeyboardState(newStates);
+	if (oldStates[VK_MENU]) ReleaseAlt();
 	while (i != text.end())
 	{
 		if (*i == wxT('{'))
