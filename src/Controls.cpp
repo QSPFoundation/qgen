@@ -274,7 +274,7 @@ bool Controls::RenameSelectedAction()
 
 void Controls::ShowMessage( long errorNum )
 {
-	wxMessageDialog dlgMsg (_mainFrame, GetMessageDesc(errorNum), wxT("Инфо"), wxOK | wxICON_INFORMATION);
+	wxMessageDialog dlgMsg(NULL, GetMessageDesc(errorNum), wxT("Инфо"), wxOK | wxICON_INFORMATION);
 	dlgMsg.CenterOnParent();
 	dlgMsg.ShowModal();
 }
