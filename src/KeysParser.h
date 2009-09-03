@@ -43,7 +43,6 @@
 		void InitKeysTable();
 		void OnKeyPress(int keyCode);
 		void OnKeysPress(const wxString &text);
-		bool IsHotkeyMatches(int keyCode, int modifiers, const wxString &hotkey);
 
 	public:
 		KeysParser(HotkeysStore *hotKeysStore);

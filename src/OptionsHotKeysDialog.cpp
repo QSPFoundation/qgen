@@ -73,7 +73,7 @@ void OptionsHotkeysDialog::OnOkSettings(wxCommandEvent &event)
 void OptionsHotkeysDialog::SetHotkeyData( const HotkeyData &hotKeyData )
 {
 	_hotkeyData = hotKeyData;
-	_txtInputHotkey->SetValue(_hotkeyData.HkeyString);
+	_txtInputHotkey->SetValue(_hotkeyData.GetKeysAsString());
 	_txtInputHotkey->SetFlags(_hotkeyData.Flags);
 	_txtInputHotkey->SetHotKeyCode(_hotkeyData.HotKeyCode);
 	_txtInputText->SetValue(_hotkeyData.CommandText);

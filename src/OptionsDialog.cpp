@@ -812,9 +812,7 @@ void OptionsDialog::ApplySettings()
 	HotkeysStore *hotKeysStore = _settings->GetHotKeys();
 	hotKeysStore->ClearHotkeysData();
 	for (size_t i = 0; i < count; ++i)
-	{
 		hotKeysStore->AddHotkeyData(_hotkeysData[i]);
-	}
 	_settings->NotifyAll();
 	_btnApply->Enable(false);
 }
@@ -914,7 +912,7 @@ void OptionsDialog::InitOptionsDialog()
 	for (size_t i = 0; i < count; ++i)
 	{
 		const HotkeyData &hotKeyData = hotKeysStore->GetHotkeyData(i);
-		_lstHotKeys->InsertItem(i, hotKeyData.HkeyString);
+		_lstHotKeys->InsertItem(i, hotKeyData.GetKeysAsString());
 		_lstHotKeys->SetItem(i, 1, hotKeyData.CommandText);
 		_hotkeysData.Add(hotKeyData);
 	}
@@ -938,16 +936,16 @@ void OptionsDialog::EditHotKey()
 			if (dialog.ShowModal() == wxID_OK)
 			{
 				hotKeyData = dialog.GetHotkeyData();
-				if (!hotKeyData.HkeyString.IsEmpty() && !hotKeyData.CommandText.IsEmpty())
+				if (hotKeyData.HotKeyCode && !hotKeyData.CommandText.IsEmpty())
 				{
 					ChkSysHotKey chkHKey;
 					if (!chkHKey.CheckSystemHotKeys(_parent->GetMenuBar(), hotKeyData.HotKeyCode, hotKeyData.Flags))
 					{
-						long idx = _lstHotKeys->FindItem(-1, hotKeyData.HkeyString);
+						long idx = _lstHotKeys->FindItem(-1, hotKeyData.GetKeysAsString());
 						if (idx == wxNOT_FOUND || idx == index)
 						{
 							_lstHotKeys->DeleteItem(index);
-							_lstHotKeys->InsertItem(index, hotKeyData.HkeyString);
+							_lstHotKeys->InsertItem(index, hotKeyData.GetKeysAsString());
 							_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
 							_hotkeysData[index] = hotKeyData;
 							_btnApply->Enable(true);
@@ -980,15 +978,15 @@ void OptionsDialog::AddHotKey()
 		if (dialog.ShowModal() == wxID_OK)
 		{
 			hotKeyData = dialog.GetHotkeyData();
-			if (!hotKeyData.HkeyString.IsEmpty() && !hotKeyData.CommandText.IsEmpty())
+			if (hotKeyData.HotKeyCode && !hotKeyData.CommandText.IsEmpty())
 			{
 				ChkSysHotKey chkHKey;
 				if (!chkHKey.CheckSystemHotKeys(_parent->GetMenuBar(), hotKeyData.HotKeyCode, hotKeyData.Flags))
 				{
-					if (_lstHotKeys->FindItem(-1, hotKeyData.HkeyString) == wxNOT_FOUND)
+					if (_lstHotKeys->FindItem(-1, hotKeyData.GetKeysAsString()) == wxNOT_FOUND)
 					{
 						index = _lstHotKeys->GetItemCount();
-						_lstHotKeys->InsertItem(index, hotKeyData.HkeyString);
+						_lstHotKeys->InsertItem(index, hotKeyData.GetKeysAsString());
 						_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
 						_hotkeysData.Add(hotKeyData);
 						_btnApply->Enable(true);

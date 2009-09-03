@@ -28,7 +28,6 @@
 
 	struct HotkeyData
 	{
-		wxString HkeyString;
 		wxString CommandText;
 		int HotKeyCode;
 		int Flags;
@@ -41,24 +40,25 @@
 
 		HotkeyData(int hotKeyCode, int flags, const wxString &data)
 		{
-			wxString tmp;
-
 			HotKeyCode = hotKeyCode;
 			Flags = flags;
 			CommandText = data;
+		}
 
-			if (flags & wxACCEL_ALT)
+		wxString GetKeysAsString() const
+		{
+			wxString tmp;
+			if (Flags & wxACCEL_ALT)
 				AppendAccel(tmp, wxT("Alt"));
-			if (flags & wxACCEL_CTRL)
+			if (Flags & wxACCEL_CTRL)
 				AppendAccel(tmp, wxT("Ctrl"));
-			if (flags & wxACCEL_SHIFT)
+			if (Flags & wxACCEL_SHIFT)
 				AppendAccel(tmp, wxT("Shift"));
-
-			HkeyString = wxString::Format(wxT("%s + %c"), tmp, HotKeyCode);
+			return wxString::Format(wxT("%s + %c"), tmp.wx_str(), HotKeyCode);
 		}
 
 	private:
-		void AppendAccel(wxString &data, const wxString &key)
+		void AppendAccel(wxString &data, const wxString &key) const
 		{
 			if (data.IsEmpty())
 				data.Append(key);
@@ -76,11 +76,11 @@
 	public:
 		HotkeysStore();
 		size_t AddHotkeyData(const HotkeyData &hotkeyData);
-		bool DeleteHotkeyData(const wxString &hotkey);
+		bool DeleteHotkeyData(const HotkeyData &hotkey);
 		void ClearHotkeysData();
 		size_t GetHotkeysCount();
 		HotkeyData &GetHotkeyData(size_t index);
-		int FindHotkeyDataIndex(const wxString &hotkey);
+		int FindHotkeyDataIndex(const HotkeyData &hotkey);
 		void SaveHotkeysData(wxConfigBase &fileConfig);
 		void LoadHotkeysData(wxConfigBase &fileConfig);
 	};

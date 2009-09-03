@@ -142,36 +142,6 @@ void KeysParser::OnKeysPress(const wxString &text)
 	if (hasEvent) wxYieldIfNeeded();
 }
 
-bool KeysParser::IsHotkeyMatches(int keyCode, int modifiers, const wxString &hotkey)
-{
-	bool isCtrlDown = false;
-	bool isAltDown = false;
-	bool isShiftDown = false;
-	int code = 0;
-	wxArrayString strs = wxSplit(hotkey.Upper(), wxT('+'));
-	wxString str;
-	for (size_t i = 0; i < strs.GetCount(); ++i)
-	{
-		str = strs[i].Trim().Trim(false);
-		if (str.length() == 1)
-			code = str[0];
-		else if (str == wxT("CTRL"))
-			isCtrlDown = true;
-		else if (str == wxT("ALT"))
-			isAltDown = true;
-		else if (str == wxT("SHIFT"))
-			isShiftDown = true;
-	}
-	int a = modifiers & wxMOD_CONTROL;
-	return
-	(
-		(isCtrlDown == ((modifiers & wxMOD_CONTROL) != 0)) &&
-		(isAltDown == ((modifiers & wxMOD_ALT) != 0)) &&
-		(isShiftDown == ((modifiers & wxMOD_SHIFT) != 0)) &&
-		keyCode == code
-	);
-}
-
 bool KeysParser::ExecuteHotkeyAction( int keyCode, int modifiers )
 {
 	HotkeyData hotKey;
@@ -179,7 +149,7 @@ bool KeysParser::ExecuteHotkeyAction( int keyCode, int modifiers )
 	for (size_t i = 0; i < countHotKeys; ++i)
 	{
 		hotKey = _hotKeysStore->GetHotkeyData(i);
-		if (IsHotkeyMatches(keyCode, modifiers, hotKey.HkeyString))
+		if (keyCode == hotKey.HotKeyCode && modifiers == hotKey.Flags)
 		{
 			ParseText(hotKey.CommandText);
 			return true;

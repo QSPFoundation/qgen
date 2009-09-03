@@ -30,7 +30,7 @@ HotkeysStore::HotkeysStore()
 
 size_t HotkeysStore::AddHotkeyData( const HotkeyData &hotKeyData )
 {
-	int index = FindHotkeyDataIndex(hotKeyData.HkeyString);
+	int index = FindHotkeyDataIndex(hotKeyData);
 	if (index < 0)
 	{
 		_hotkeysData.Add(hotKeyData);
@@ -40,7 +40,7 @@ size_t HotkeysStore::AddHotkeyData( const HotkeyData &hotKeyData )
 	return (size_t)index;
 }
 
-bool HotkeysStore::DeleteHotkeyData( const wxString &hotKey )
+bool HotkeysStore::DeleteHotkeyData( const HotkeyData &hotKey )
 {
 	int index = FindHotkeyDataIndex(hotKey);
 	if ( index < 0) return false;
@@ -53,17 +53,19 @@ void HotkeysStore::ClearHotkeysData()
 	_hotkeysData.Clear();
 }
 
-HotkeyData & HotkeysStore::GetHotkeyData( size_t index )
+HotkeyData &HotkeysStore::GetHotkeyData( size_t index )
 {
 	return _hotkeysData[index];
 }
 
-int HotkeysStore::FindHotkeyDataIndex(const wxString &hotKey)
+int HotkeysStore::FindHotkeyDataIndex(const HotkeyData &hotKey)
 {
-	wxString stHotKey(hotKey.Lower());
-	size_t i, count = _hotkeysData.GetCount();
-	for (i = 0; i < count; i++)
-		if (stHotKey == _hotkeysData[i].HkeyString.Lower()) return (int)i;
+	int count = _hotkeysData.GetCount();
+	for (int i = 0; i < count; i++)
+	{
+		if (hotKey.HotKeyCode == _hotkeysData[i].HotKeyCode && hotKey.Flags == _hotkeysData[i].Flags)
+			return i;
+	}
 	return wxNOT_FOUND;
 }
 
