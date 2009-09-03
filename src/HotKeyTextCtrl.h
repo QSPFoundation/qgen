@@ -39,7 +39,9 @@
 	public:
 		HotKeyTextCtrl(wxWindow *parent, wxWindowID id, const wxString &value = wxEmptyString);
 
+		void SetFlags(int flags) { _flags = flags; }
 		int GetFlags() { return _flags; }
+		void SetHotKeyCode(int hotKeyCode) { _hotKeyCode = hotKeyCode; }
 		int GetHotKeyCode() { return _hotKeyCode; }
 	};
 

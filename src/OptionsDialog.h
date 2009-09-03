@@ -168,6 +168,8 @@
 		wxButton	*_btnOK;
 		wxButton	*_btnApply;
 		wxButton	*_btnReset;
+
+		HotkeyDataArray _hotkeysData;
 		
 		void OnColorSelect(wxCommandEvent &event);
 		void OnFontSelect(wxCommandEvent &event);

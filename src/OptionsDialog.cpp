@@ -809,9 +809,7 @@ void OptionsDialog::ApplySettings()
 	hotKeysStore->ClearHotkeysData();
 	for (size_t i = 0; i < count; ++i)
 	{
-		hotKeyData.Hotkey = _lstHotKeys->GetItemText(i);
-		hotKeyData.CommandText = _hotkeysCmds[i];
-		hotKeysStore->AddHotkeyData(hotKeyData);
+		hotKeysStore->AddHotkeyData(_hotkeysData[i]);
 	}
 	_settings->NotifyAll();
 	_btnApply->Enable(false);
@@ -915,6 +913,7 @@ void OptionsDialog::InitOptionsDialog()
 		_lstHotKeys->InsertItem(i, hotKeyData.Hotkey);
 		_lstHotKeys->SetItem(i, 1, hotKeyData.CommandText);
 		_hotkeysCmds.Add(hotKeyData.CommandText);
+		_hotkeysData.Add(hotKeyData);
 	}
 	SetSize(_settings->GetOptionsDialogWidth(), _settings->GetOptionsDialogHeight());
 	_btnApply->Enable(false);
@@ -925,6 +924,7 @@ void OptionsDialog::EditHotKey()
 {
 	HotkeyData hotKeyData;
 	bool isError = true;
+	bool isExistInMenu;
 	long index = _lstHotKeys->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	if (index != wxNOT_FOUND)
 	{
@@ -940,18 +940,27 @@ void OptionsDialog::EditHotKey()
 				hotKeyData = dialog.GetHotkeyData();
 				if (!hotKeyData.Hotkey.IsEmpty() && !hotKeyData.CommandText.IsEmpty())
 				{
-					long idx = _lstHotKeys->FindItem(-1, hotKeyData.Hotkey);
-					if (idx == wxNOT_FOUND || idx == index)
+					ChkSysHotKey chkHKey;
+					isExistInMenu = chkHKey.CheckSystemHotKeys(_parent->GetMenuBar(), hotKeyData.hotKeyCode, hotKeyData.flags);				
+
+					if(!isExistInMenu)
 					{
-						_lstHotKeys->DeleteItem(index);
-						_lstHotKeys->InsertItem(index, hotKeyData.Hotkey);
-						_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
-						_hotkeysCmds[index] = hotKeyData.CommandText;
-						_btnApply->Enable(true);
-						isError = false;
+						long idx = _lstHotKeys->FindItem(-1, hotKeyData.Hotkey);
+						if (idx == wxNOT_FOUND || idx == index)
+						{
+							_lstHotKeys->DeleteItem(index);
+							_lstHotKeys->InsertItem(index, hotKeyData.Hotkey);
+							_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
+							_hotkeysCmds[index] = hotKeyData.CommandText;
+							_hotkeysData[index] = hotKeyData;
+							_btnApply->Enable(true);
+							isError = false;
+						}
+						else
+							_controls->ShowMessage(QGEN_MSG_EXISTS_HKEY);
 					}
 					else
-						_controls->ShowMessage(QGEN_MSG_EXISTS_HKEY);
+						_controls->ShowMessage(QGEN_MSG_EXISTS_S_HKEY);
 				}
 				else
 					_controls->ShowMessage(QGEN_MSG_EMPTYDATA);
@@ -988,6 +997,7 @@ void OptionsDialog::AddHotKey()
 						_lstHotKeys->InsertItem(index, hotKeyData.Hotkey);
 						_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
 						_hotkeysCmds.Add(hotKeyData.CommandText);
+						_hotkeysData.Add(hotKeyData);
 						_btnApply->Enable(true);
 						isError = false;
 						isExistInMenu = false;
@@ -1013,6 +1023,7 @@ void OptionsDialog::DeleteHotKey()
 	{
 		_lstHotKeys->DeleteItem(index);
 		_hotkeysCmds.RemoveAt(index);
+		_hotkeysData.RemoveAt(index);
 		if (_lstHotKeys->GetItemCount() == index)
 			--index;
 		if (index >= 0)

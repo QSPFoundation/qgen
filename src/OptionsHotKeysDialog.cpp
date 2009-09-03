@@ -71,6 +71,8 @@ void OptionsHotkeysDialog::SetHotkeyData( const HotkeyData &hotKeyData )
 {
 	_hotkeyData = hotKeyData;
 	_txtInputHotkey->SetValue(_hotkeyData.Hotkey);
+	_txtInputHotkey->SetFlags(_hotkeyData.flags);
+	_txtInputHotkey->SetHotKeyCode(_hotkeyData.hotKeyCode);
 	_txtInputText->SetValue(_hotkeyData.CommandText);
 }
 
