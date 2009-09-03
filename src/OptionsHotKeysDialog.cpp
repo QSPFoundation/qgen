@@ -37,7 +37,7 @@ OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& tit
 	wxStaticText *stText01 = new wxStaticText(this, wxID_ANY, wxT("Комбинация клавиш:"));
 	_txtInputHotkey = new HotKeyTextCtrl(this, wxID_ANY);
 
-	hotKeySizer->Add(stText01, 0, wxALL, 5);
+	hotKeySizer->Add(stText01, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
 	hotKeySizer->Add(_txtInputHotkey, 0, wxALL, 5);
 
 	wxStaticText *stText02 = new wxStaticText(this, wxID_ANY, wxT("Текст:"));
@@ -53,7 +53,7 @@ OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& tit
 	btnSizer->Add(_btnOK, 0, wxRIGHT|wxBOTTOM, 5);
 	btnSizer->Add(_btnCancel, 0, wxRIGHT|wxBOTTOM, 5);
 
-	topSizer->Add(hotKeySizer, 0, wxALL, 5);
+	topSizer->Add(hotKeySizer, 0);
 	topSizer->Add(stText02, 0, wxLEFT|wxTOP, 5);
 	topSizer->Add(_txtInputText, 1, wxALL|wxGROW, 5);
 	topSizer->Add(btnSizer, 0, wxGROW);

@@ -29,7 +29,7 @@ BEGIN_EVENT_TABLE(HotKeyTextCtrl, wxTextCtrl)
 END_EVENT_TABLE()
 
 HotKeyTextCtrl::HotKeyTextCtrl( wxWindow *parent, wxWindowID id, const wxString &value ) :
-	wxTextCtrl( parent, id, value, wxDefaultPosition, wxDefaultSize, wxTE_READONLY)
+	wxTextCtrl( parent, id, value, wxDefaultPosition, wxSize(150, -1), wxTE_READONLY)
 {
 	_hotKeyCode = 0;
 	_flags = 0;
