@@ -565,6 +565,9 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("close"), wxT("CLOSE [$путь к звуковому файлу] / CLOSE ALL - остановка проигрывания звукового файла / всех звуковых файлов")));
 		_tooltips.push_back(HelpTip(wxT("view"), wxT("VIEW [$путь к графическому файлу] - просмотр изображения")));
 		// Functions
+		_tooltips.push_back(HelpTip(wxT("and"), wxT("[#выражение 1] AND [#выражение 2] - логическое \"и\"")));
+		_tooltips.push_back(HelpTip(wxT("or"), wxT("[#выражение 1] OR [#выражение 2] - логическое \"или\"")));
+		_tooltips.push_back(HelpTip(wxT("no"), wxT("NO [#выражение] - отрицание")));
 		_tooltips.push_back(HelpTip(wxT("desc"), wxT("DESC([$выражение]) - возвращает текст базового описания локации")));
 		_tooltips.push_back(HelpTip(wxT("$desc"), wxT("$DESC([$выражение]) - возвращает текст базового описания локации")));
 		_tooltips.push_back(HelpTip(wxT("iif"), wxT("IIF([#выражение],[выражение_да],[выражение_нет]) - возвращает одно из выражений по условию")));
