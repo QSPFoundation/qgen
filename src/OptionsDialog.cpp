@@ -354,7 +354,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	wxStaticText *stText0001 = new wxStaticText(_hotkeys, wxID_ANY, wxT("Список команд:"));
 	_lstHotKeys = new wxListCtrl(_hotkeys, ID_LIST_HKEYS, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
 	_lstHotKeys->InsertColumn(0, wxT("Комбинация клавиш"), wxLIST_FORMAT_LEFT, 150);
-	_lstHotKeys->InsertColumn(1, wxT("Исполняемая команда"), wxLIST_FORMAT_LEFT, 150);
+	_lstHotKeys->InsertColumn(1, wxT("Исполняемая команда"), wxLIST_FORMAT_LEFT, 300);
 
 	wxBoxSizer *btnHotkKeysSizer = new wxBoxSizer(wxHORIZONTAL);
 	_btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEW_HKEY, wxT("Добавить..."));

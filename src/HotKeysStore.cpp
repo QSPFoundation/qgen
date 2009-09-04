@@ -92,7 +92,7 @@ void HotkeysStore::SaveHotkeysData(wxConfigBase &fileConfig)
 
 void HotkeysStore::LoadHotkeysData(wxConfigBase &fileConfig)
 {
-	wxString str, keyVal, dataVal;
+	wxString str, dataVal;
 	int keyCode, flags;
 	size_t i = 0;
 	_hotkeysData.Clear();
