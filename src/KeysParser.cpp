@@ -116,6 +116,7 @@ void KeysParser::ParseText(const wxString &text)
 			OnKeyPress(*i);
 		++i;
 	}
+	if (oldStates[VK_MENU]) ReleaseAlt();
 	wxYieldIfNeeded();
 	::SetKeyboardState(oldStates);
 }
