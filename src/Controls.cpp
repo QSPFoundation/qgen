@@ -320,7 +320,7 @@ void Controls::SortLocations(bool isAscending)
 		_container->SortLocsInFolder(selFolder, isAscending);
 		UpdateOpenedLocationsIndexes();
 		if (selFolder >= 0)
-			_locListBox->UpdateFolderLocations(_container->GetSectionName(selFolder));
+			_locListBox->UpdateFolderLocations(_container->GetFolderName(selFolder));
 		else
 			UpdateLocationsList();
 		ShowOpenedLocationsIcons();
@@ -797,23 +797,23 @@ void Controls::UpdateLocationsList()
 	while (pos != oldPos)
 	{
 		oldPos = pos;
-		folderIndex = _container->FindSectionForPos(pos);
+		folderIndex = _container->FindFolderForPos(pos);
 		if (folderIndex >= 0)
 		{
-			_locListBox->AddFolder(_container->GetSectionName(folderIndex));
+			_locListBox->AddFolder(_container->GetFolderName(folderIndex));
 			++pos;
 		}
 		if (locs.GetCount() < locsCount)
 		{
 			for (size_t i = 0; i < locsCount; ++i)
 			{
-				if (locs.Index(i) < 0 && _container->GetLocSection(i) == folderIndex)
+				if (locs.Index(i) < 0 && _container->GetLocFolder(i) == folderIndex)
 				{
 					if (folderIndex >= 0)
-						folderName = _container->GetSectionName(folderIndex);
+						folderName = _container->GetFolderName(folderIndex);
 					else
 					{
-						if (_container->FindSectionForPos(pos) >= 0)
+						if (_container->FindFolderForPos(pos) >= 0)
 							break;
 						folderName = wxEmptyString;
 					}
@@ -1319,8 +1319,8 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 
 bool Controls::RenameFolder( size_t folderIndex, const wxString &name )
 {
-	wxString oldName(_container->GetSectionName(folderIndex));
-	if (_container->RenameSection(folderIndex, name))
+	wxString oldName(_container->GetFolderName(folderIndex));
+	if (_container->RenameFolder(folderIndex, name))
 	{
 		_locListBox->SetFolderName(oldName, name);
 		return true;
@@ -1492,7 +1492,7 @@ bool Controls::AddFolder()
 				ShowMessage( QGEN_MSG_TOOLONGFOLDERNAME );
 			else
 			{
-				if (_container->AddSection(name) >= 0)
+				if (_container->AddFolder(name) >= 0)
 				{
 					_locListBox->AddFolder(name);
 					break;
@@ -1509,10 +1509,10 @@ bool Controls::AddFolder()
 
 bool Controls::DeleteSelectedFolder()
 {
-	int section = GetSelectedFolderIndex();
-	if (section < 0) return false;
+	int folder = GetSelectedFolderIndex();
+	if (folder < 0) return false;
 
-	wxString folderName(_container->GetSectionName(section));
+	wxString folderName(_container->GetFolderName(folder));
 	wxMessageDialog dlgMsg(GetParent(),
 		wxString::Format(wxT("Желаете удалить папку %s?"), folderName),
 		wxT("Удалить папку"), wxYES_NO|wxICON_QUESTION);
@@ -1520,7 +1520,7 @@ bool Controls::DeleteSelectedFolder()
 	if (dlgMsg.ShowModal() == wxID_YES)
 	{
 		SyncWithLocationsList();
-		_container->DeleteSection(_container->FindSectionIndex(folderName));
+		_container->DeleteFolder(_container->FindFolderIndex(folderName));
 		UpdateLocationsList();
 		return true;
 	}
@@ -1529,10 +1529,10 @@ bool Controls::DeleteSelectedFolder()
 
 bool Controls::RenameSelectedFolder()
 {
-	int section = GetSelectedFolderIndex();
-	if (section < 0) return false;
+	int folder = GetSelectedFolderIndex();
+	if (folder < 0) return false;
 
-	wxString name(_container->GetSectionName(section));
+	wxString name(_container->GetFolderName(folder));
 	while (1)
 	{
 		wxTextEntryDialog dlgEntry(GetParent(), wxT("Введите новое название папки:"),
@@ -1547,7 +1547,7 @@ bool Controls::RenameSelectedFolder()
 				ShowMessage( QGEN_MSG_TOOLONGFOLDERNAME );
 			else
 			{
-				if (RenameFolder(section, name)) break;
+				if (RenameFolder(folder, name)) break;
 			}
 		}
 		else
@@ -1560,9 +1560,9 @@ int Controls::GetSelectedFolderIndex()
 {
 	int locIndex = GetSelectedLocationIndex();
 	if (locIndex >= 0)
-		return _container->GetLocSection(locIndex);
+		return _container->GetLocFolder(locIndex);
 	else
-		return _container->FindSectionIndex(_locListBox->GetSelectedFolder());
+		return _container->FindFolderIndex(_locListBox->GetSelectedFolder());
 }
 
 bool Controls::SearchHelpFile()

@@ -40,24 +40,24 @@
 		wxString description;			//Описание локации
 		wxString onVisit;				//Код события "посещение локации"
 		ActionDataArray actionArray;	//Массив действий
-		int sectionIndex;				//Индекс секции
+		int folderIndex;				//Индекс секции
 	};
 
 	WX_DECLARE_OBJARRAY(LocationData, LocationDataArray);
 
-	struct SectionData
+	struct FolderData
 	{
 		wxString name;					//Имя секции
 		int pos;						//Позиция секции
 	};
 
-	WX_DECLARE_OBJARRAY(SectionData, SectionDataArray);
+	WX_DECLARE_OBJARRAY(FolderData, FolderDataArray);
 
 	class DataContainer
 	{
 	private:
 		LocationDataArray locationArray;
-		SectionDataArray _sections;
+		FolderDataArray _folders;
 		bool _isSaved;
 
 	public:
@@ -96,17 +96,17 @@
 		void MoveLocationTo(size_t locIndex, size_t moveTo);
 		void MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo);
 
-		size_t GetSectionsCount();
-		wxString GetSectionName(size_t index);
-		void SetLocSection(size_t locIndex, int sectionIndex);
-		int GetLocSection(size_t locIndex);
-		int AddSection(const wxString &name);
-		bool RenameSection(size_t sectionIndex, const wxString &newName);
-		void DeleteSection(size_t sectionIndex);
-		int FindSectionIndex(const wxString &name);
-		void MoveSection(size_t sectionIndex, size_t moveToSecPos);
-		void SetFolderPos(size_t sectionIndex, long pos);
-		int FindSectionForPos(size_t pos);
+		size_t GetFoldersCount();
+		wxString GetFolderName(size_t index);
+		void SetLocFolder(size_t locIndex, int folderIndex);
+		int GetLocFolder(size_t locIndex);
+		int AddFolder(const wxString &name);
+		bool RenameFolder(size_t folderIndex, const wxString &newName);
+		void DeleteFolder(size_t folderIndex);
+		int FindFolderIndex(const wxString &name);
+		void MoveFolder(size_t folderIndex, size_t moveToSecPos);
+		void SetFolderPos(size_t folderIndex, long pos);
+		int FindFolderForPos(size_t pos);
 	};
 
 #endif

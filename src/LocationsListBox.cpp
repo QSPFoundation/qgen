@@ -309,7 +309,7 @@ void LocationsListBox::OnEndLabelEdit( wxTreeEvent &event )
 		if (label.IsEmpty())
 			_controls->ShowMessage( QGEN_MSG_EMPTYDATA );
 		else
-			_controls->RenameFolder(container->FindSectionIndex(oldLabel), label);
+			_controls->RenameFolder(container->FindFolderIndex(oldLabel), label);
 		break;
 	case DRAG_LOCATION:
 		label = label.Trim().Trim(false);
@@ -467,10 +467,10 @@ void LocationsListBox::UpdateFolderLocations( const wxString &name )
 	wxTreeItemId parent(GetFolderByName(name));
 	DeleteChildren(parent);
 	DataContainer *container = _controls->GetContainer();
-	long folderIndex = container->FindSectionIndex(name);
+	long folderIndex = container->FindFolderIndex(name);
 	for (size_t i = 0; i < container->GetLocationsCount(); ++i)
 	{
-		if (container->GetLocSection(i) == folderIndex)
+		if (container->GetLocFolder(i) == folderIndex)
 		{
 			text = container->GetLocationName(i);
 			if (_controls->GetSettings()->GetShowLocsIcons())
@@ -529,16 +529,16 @@ void LocationsListBox::UpdateDataContainer( const wxTreeItemId &parent, long fol
 		if (IsFolderItem(idCur))
 		{
 			++(*folderPos);
-			long curInd = container->FindSectionIndex(GetItemText(idCur));
+			long curInd = container->FindFolderIndex(GetItemText(idCur));
 			container->SetFolderPos(curInd, *pos);
-			container->MoveSection(curInd, *folderPos);
+			container->MoveFolder(curInd, *folderPos);
 			UpdateDataContainer(idCur, *folderPos, locPos, folderPos, pos);
 		}
 		else
 		{
 			++(*locPos);
 			long curInd = container->FindLocationIndex(GetItemText(idCur));
-			container->SetLocSection(curInd, folder);
+			container->SetLocFolder(curInd, folder);
 			container->MoveLocationTo(curInd, *locPos);
 		}
 		idCur = GetNextChild(parent, cookie);

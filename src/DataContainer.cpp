@@ -24,7 +24,7 @@
 
 WX_DEFINE_OBJARRAY(ActionDataArray);
 WX_DEFINE_OBJARRAY(LocationDataArray);
-WX_DEFINE_OBJARRAY(SectionDataArray);
+WX_DEFINE_OBJARRAY(FolderDataArray);
 
 int CmpLocationsAsc(const wxString &first, const wxString &second)
 {
@@ -41,12 +41,12 @@ DataContainer::DataContainer()
 	_isSaved = true;
 }
 
-int DataContainer::FindSectionIndex( const wxString &name )
+int DataContainer::FindFolderIndex( const wxString &name )
 {
 	wxString lwrName(name.Lower());
-	int i, count = _sections.GetCount();
+	int i, count = _folders.GetCount();
 	for (i = 0; i < count; ++i)
-		if (lwrName == _sections[i].name.Lower()) return i;
+		if (lwrName == _folders[i].name.Lower()) return i;
 	return wxNOT_FOUND;
 }
 
@@ -74,7 +74,7 @@ int DataContainer::AddLocation(const wxString &name)
 	if (FindLocationIndex(name) >= 0) return wxNOT_FOUND;
 	LocationData *loc = new LocationData;
 	loc->name = name;
-	loc->sectionIndex = wxNOT_FOUND;
+	loc->folderIndex = wxNOT_FOUND;
 	locationArray.Add(loc);
 	_isSaved = false;
 	return locationArray.GetCount() - 1;
@@ -210,7 +210,7 @@ size_t DataContainer::GetLocationsCount()
 void DataContainer::Clear()
 {
 	locationArray.Clear();
-	_sections.Clear();
+	_folders.Clear();
 	_isSaved = false;
 }
 
@@ -243,90 +243,90 @@ void DataContainer::MoveActionTo( size_t locIndex, size_t actIndex, size_t moveT
 	_isSaved = false;
 }
 
-void DataContainer::SetLocSection( size_t locIndex, int sectionIndex )
+void DataContainer::SetLocFolder( size_t locIndex, int folderIndex )
 {
-	if (locationArray[locIndex].sectionIndex == sectionIndex)
+	if (locationArray[locIndex].folderIndex == folderIndex)
 		return;
-	locationArray[locIndex].sectionIndex = sectionIndex;
+	locationArray[locIndex].folderIndex = folderIndex;
 	_isSaved = false;
 }
 
-int DataContainer::GetLocSection( size_t locIndex )
+int DataContainer::GetLocFolder( size_t locIndex )
 {
-	return locationArray[locIndex].sectionIndex;
+	return locationArray[locIndex].folderIndex;
 }
 
-int DataContainer::AddSection( const wxString &name )
+int DataContainer::AddFolder( const wxString &name )
 {
-	if (FindSectionIndex(name) >= 0) return wxNOT_FOUND;
-	SectionData *data = new SectionData;
+	if (FindFolderIndex(name) >= 0) return wxNOT_FOUND;
+	FolderData *data = new FolderData;
 	data->name = name;
 	data->pos = wxNOT_FOUND;
-	_sections.Add(data);
+	_folders.Add(data);
 	_isSaved = false;
-	return _sections.GetCount() - 1;
+	return _folders.GetCount() - 1;
 }
 
-bool DataContainer::RenameSection( size_t sectionIndex, const wxString &newName )
+bool DataContainer::RenameFolder( size_t folderIndex, const wxString &newName )
 {
-	int index = FindSectionIndex(newName);
-	if (index >= 0 && index != sectionIndex) return false;
-	_sections[sectionIndex].name = newName;
+	int index = FindFolderIndex(newName);
+	if (index >= 0 && index != folderIndex) return false;
+	_folders[folderIndex].name = newName;
 	_isSaved = false;
 	return true;
 }
 
-void DataContainer::DeleteSection( size_t sectionIndex )
+void DataContainer::DeleteFolder( size_t folderIndex )
 {
 	long count = locationArray.GetCount();
 	for (long i = count - 1; i >= 0; --i)
 	{
-		if (locationArray[i].sectionIndex == sectionIndex)
-			locationArray[i].sectionIndex = -1;
-		else if (locationArray[i].sectionIndex > (int)sectionIndex)
-			locationArray[i].sectionIndex--;
+		if (locationArray[i].folderIndex == folderIndex)
+			locationArray[i].folderIndex = -1;
+		else if (locationArray[i].folderIndex > (int)folderIndex)
+			locationArray[i].folderIndex--;
 	}
-	count = _sections.GetCount();
+	count = _folders.GetCount();
 	for (long i = count - 1; i >= 0; --i)
 	{
-		if (i > sectionIndex)
-			_sections[i].pos--;
+		if (i > folderIndex)
+			_folders[i].pos--;
 	}
-	_sections.RemoveAt(sectionIndex);
+	_folders.RemoveAt(folderIndex);
 	_isSaved = false;
 }
 
-void DataContainer::MoveSection( size_t sectionIndex, size_t moveToSecPos )
+void DataContainer::MoveFolder( size_t folderIndex, size_t moveToSecPos )
 {
-	if (sectionIndex == moveToSecPos) return;
-	SectionData *data = _sections.Detach(sectionIndex);
-	_sections.Insert(data, moveToSecPos);
+	if (folderIndex == moveToSecPos) return;
+	FolderData *data = _folders.Detach(folderIndex);
+	_folders.Insert(data, moveToSecPos);
 	_isSaved = false;
 }
 
-void DataContainer::SetFolderPos( size_t sectionIndex, long pos )
+void DataContainer::SetFolderPos( size_t folderIndex, long pos )
 {
-	if (_sections[sectionIndex].pos == pos) return;
-	_sections[sectionIndex].pos = pos;
+	if (_folders[folderIndex].pos == pos) return;
+	_folders[folderIndex].pos = pos;
 	_isSaved = false;
 }
 
-size_t DataContainer::GetSectionsCount()
+size_t DataContainer::GetFoldersCount()
 {
-	return _sections.GetCount();
+	return _folders.GetCount();
 }
 
-wxString DataContainer::GetSectionName( size_t index )
+wxString DataContainer::GetFolderName( size_t index )
 {
-	return _sections[index].name;
+	return _folders[index].name;
 }
 
-int DataContainer::FindSectionForPos( size_t pos )
+int DataContainer::FindFolderForPos( size_t pos )
 {
-	size_t count = _sections.GetCount();
+	size_t count = _folders.GetCount();
 	for (size_t i = 0; i < count; ++i)
 	{
-		if (_sections[i].pos == pos)
+		if (_folders[i].pos == pos)
 			return i;
 	}
 	return wxNOT_FOUND;
@@ -341,7 +341,7 @@ void DataContainer::SortLocsInFolder( int folderIndex, bool isAscending )
 	long startIndex = -1;
 	for (size_t i = 0; i < count; ++i)
 	{
-		if (locationArray[i].sectionIndex == folderIndex)
+		if (locationArray[i].folderIndex == folderIndex)
 		{
 			if (startIndex < 0) startIndex = i;
 			positions.Add(startIndex);

@@ -711,15 +711,15 @@ bool ParseConfigFile(DataContainer *container, wxXmlNode *node, long folder, lon
 		if (node->GetName() == wxT("Folder"))
 		{
 			folderName = node->GetAttribute(wxT("name"));
-			long curInd = container->FindSectionIndex(folderName);
+			long curInd = container->FindFolderIndex(folderName);
 			if (curInd < 0)
 			{
 				++(*pos);
 				++(*folderPos);
-				curInd = container->GetSectionsCount();
-				container->AddSection(folderName);
+				curInd = container->GetFoldersCount();
+				container->AddFolder(folderName);
 				container->SetFolderPos(curInd, *pos);
-				container->MoveSection(curInd, *folderPos);
+				container->MoveFolder(curInd, *folderPos);
 				if (!ParseConfigFile(container, node, *folderPos, locPos, folderPos, pos))
 					return false;
 			}
@@ -731,7 +731,7 @@ bool ParseConfigFile(DataContainer *container, wxXmlNode *node, long folder, lon
 			{
 				++(*pos);
 				++(*locPos);
-				container->SetLocSection(curInd, folder);
+				container->SetLocFolder(curInd, folder);
 				container->MoveLocationTo(curInd, *locPos);
 			}
 		}
@@ -764,7 +764,7 @@ bool SaveConfigFile( DataContainer *container, const wxString &file )
 {
 	// Now config stores only folders structure that's why we can simply skip
 	// saving file if there are no folders
-	if (!container->GetSectionsCount())
+	if (!container->GetFoldersCount())
 	{
 		// We must remove old file if such exists
 		if (wxFileExists(file)) wxRemoveFile(file);
@@ -784,11 +784,11 @@ bool SaveConfigFile( DataContainer *container, const wxString &file )
 	while (pos != oldPos)
 	{
 		oldPos = pos;
-		folderIndex = container->FindSectionForPos(pos);
+		folderIndex = container->FindFolderForPos(pos);
 		if (folderIndex >= 0)
 		{
 			node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("Folder"));
-			node->AddAttribute(wxT("name"), container->GetSectionName(folderIndex));
+			node->AddAttribute(wxT("name"), container->GetFolderName(folderIndex));
 			structure->AddChild(node);
 			++pos;
 		}
@@ -798,11 +798,11 @@ bool SaveConfigFile( DataContainer *container, const wxString &file )
 		{
 			for (size_t i = 0; i < locsCount; ++i)
 			{
-				if (locs.Index(i) < 0 && container->GetLocSection(i) == folderIndex)
+				if (locs.Index(i) < 0 && container->GetLocFolder(i) == folderIndex)
 				{
 					if (folderIndex < 0)
 					{
-						if (container->FindSectionForPos(pos) >= 0)
+						if (container->FindFolderForPos(pos) >= 0)
 							break;
 					}
 					wxXmlNode *temp = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("Location"));
