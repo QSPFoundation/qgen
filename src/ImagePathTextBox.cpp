@@ -63,5 +63,7 @@ void ImagePathTextBox::OnLostFocus( wxFocusEvent &event )
 
 void ImagePathTextBox::OnKeyDown( wxKeyEvent& event )
 {
-	if (event.GetKeyCode() != WXK_RETURN) event.Skip();
+	if (!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
+		event.Skip();
+	if (event.GetKeyCode() == WXK_RETURN) event.Skip(false);
 }

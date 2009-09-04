@@ -91,11 +91,12 @@ void KeysParser::ParseText(const wxString &text)
 {
 	wxString keys;
 	wxString::const_iterator i = text.begin();
-	BYTE oldStates[256], newStates[256];
+	BYTE oldStates[256];
 	::GetKeyboardState(oldStates);
-	memset(newStates, 0, sizeof(newStates));
-	::SetKeyboardState(newStates);
 	if (oldStates[VK_MENU]) ReleaseAlt();
+	for (int key = 0; key < 256; ++key)
+		oldStates[key] &= 0x7F;
+	::SetKeyboardState(oldStates);
 	while (i != text.end())
 	{
 		if (*i == wxT('{'))
@@ -116,9 +117,6 @@ void KeysParser::ParseText(const wxString &text)
 			OnKeyPress(*i);
 		++i;
 	}
-	if (oldStates[VK_MENU]) ReleaseAlt();
-	wxYieldIfNeeded();
-	::SetKeyboardState(oldStates);
 }
 
 void KeysParser::OnKeysPress(const wxString &text)

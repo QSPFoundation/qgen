@@ -54,6 +54,7 @@
 		wxFont			  _font;
 
 		void OnRightClick(wxMouseEvent &event);
+		void OnKeyDown(wxKeyEvent &event);
 		void OnMouseMove(wxMouseEvent &event);
 		void OnMouseLeftUp(wxMouseEvent &event);
 		void OnMouseCaptureLost(wxMouseCaptureLostEvent &event);

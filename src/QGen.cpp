@@ -927,7 +927,8 @@ void QGenMainFrame::OnJumpLocation( wxCommandEvent &event )
 
 void QGenMainFrame::OnKeyDown( wxKeyEvent& event )
 {
-	_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers());
+	if (!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
+		event.Skip();
 }
 
 void QGenMainFrame::OnCreateFolder( wxCommandEvent &event )

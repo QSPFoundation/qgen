@@ -24,6 +24,7 @@
 IMPLEMENT_CLASS(LocationsListBox, wxTreeCtrl)
 
 BEGIN_EVENT_TABLE(LocationsListBox, wxTreeCtrl)
+	EVT_KEY_DOWN(LocationsListBox::OnKeyDown)
 	EVT_RIGHT_DOWN(LocationsListBox::OnRightClick)
 	EVT_LEFT_DCLICK(LocationsListBox::OnDoubleClick)
 	EVT_TREE_END_LABEL_EDIT(wxID_ANY, LocationsListBox::OnEndLabelEdit)
@@ -641,4 +642,10 @@ void LocationsListBox::OnLeaveWindow(wxMouseEvent &event)
 void LocationsListBox::OnTimer(wxTimerEvent &event)
 {
 	_tip->MoveTip(ClientToScreen(_prevMousePos));
+}
+
+void LocationsListBox::OnKeyDown(wxKeyEvent &event)
+{
+	if (!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
+		event.Skip();
 }

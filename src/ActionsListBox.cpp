@@ -24,6 +24,7 @@
 IMPLEMENT_CLASS(ActionsListBox, wxHtmlListBox)
 
 BEGIN_EVENT_TABLE(ActionsListBox, wxHtmlListBox)
+	EVT_KEY_DOWN(ActionsListBox::OnKeyDown)
 	EVT_RIGHT_DOWN(ActionsListBox::OnRightClick)
 	EVT_MOTION(ActionsListBox::OnMouseMove)
 	EVT_MOUSE_CAPTURE_LOST(ActionsListBox::OnMouseCaptureLost)
@@ -427,4 +428,10 @@ void ActionsListBox::OnMouseLeftUp( wxMouseEvent &event )
 		SetCursor(wxNullCursor);
 		_isDragging = false;
 	}
+}
+
+void ActionsListBox::OnKeyDown( wxKeyEvent &event )
+{
+	if (!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
+		event.Skip();
 }

@@ -76,6 +76,7 @@
 		wxTimer _showTimer;
 
 		void OnRightClick(wxMouseEvent &event);
+		void OnKeyDown(wxKeyEvent &event);
 		void OnDoubleClick(wxMouseEvent &event);
 		void OnEndLabelEdit(wxTreeEvent &event);
 		void OnBeginDrag(wxTreeEvent &event);
