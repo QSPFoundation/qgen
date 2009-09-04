@@ -69,6 +69,7 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 	rightSizer->Add(_btnReplace, 1, wxALL|wxGROW, 1);
 	rightSizer->Add(_btnReplaceAll, 1, wxALL|wxGROW, 1);
 	rightSizer->Add(_btnSkipLoc, 1, wxALL|wxGROW, 1);
+	rightSizer->AddSpacer(10);
 	rightSizer->Add(_btnClose, 1, wxALL|wxGROW, 1);
 
 	topSizer->Add(leftSizer, 1, wxALL, 2);
