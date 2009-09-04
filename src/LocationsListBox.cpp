@@ -572,6 +572,7 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 	wxPoint mousePos = event.GetPosition();
 	if (_prevMousePos != mousePos)
 	{
+		bool hideTip = true;
 		_prevMousePos = mousePos;
 		wxTreeItemId id(HitTest(mousePos, flags));
 		if (id.IsOk())
@@ -600,20 +601,15 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 						}
 						break;
 					}
-				}
-				else
-				{
-					if (_showTimer.IsRunning())
-						_showTimer.Stop();
-					_tip->HideTip();
+					hideTip = false;
 				}
 			}
-			else
-			{
-				if (_showTimer.IsRunning())
-					_showTimer.Stop();
-				_tip->HideTip();
-			}
+		}
+		if (hideTip)
+		{
+			if (_showTimer.IsRunning())
+				_showTimer.Stop();
+			_tip->HideTip();
 		}
 	}
 

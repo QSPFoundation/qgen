@@ -22,44 +22,45 @@
 #ifndef _QUEST_GENERATOR_LOCATION_TIP_H
 	#define _QUEST_GENERATOR_LOCATION_TIP_H
 
-#include <wx/wx.h>
-#include "IControls.h"
-#include "SyntaxTextBox.h"
+	#include <wx/wx.h>
+	#include "IControls.h"
+	#include "SyntaxTextBox.h"
 
-#define TIP_SIZE_X 300
-#define TIP_SIZE_Y 350
+	#define TIP_SIZE_X 300
+	#define TIP_SIZE_Y 350
 
-class LocationTip :	public wxFrame
-{
-	DECLARE_CLASS(LocationTip)
-private:
-	wxWindow *_mainFrame;
-	IControls *_controls;
-	wxString _locName;
-	wxString _actName;
-	wxStaticText *_title;
-	wxStaticText *_desc;
-	wxStaticText *_code;
-	SyntaxTextBox *_locDesc;
-	SyntaxTextBox *_locCode;
-
-	void LoadTip();
-
-public:
-	LocationTip(wxWindow *parent, IControls *controls);
-
-	void MoveTip(const wxPoint &pos);
-	void HideTip();
-	void SetLocName(const wxString &name);
-	wxString GetLocName() const
+	class LocationTip :	public wxFrame
 	{
-		return _locName;
-	}
-	void SetActName(const wxString &name);
-	wxString GetActName() const
-	{
-		return _actName;
-	}
-};
+		DECLARE_CLASS(LocationTip)
+	private:
+		wxWindow *_mainFrame;
+		IControls *_controls;
+		wxString _locName;
+		wxString _actName;
+		wxStaticText *_title;
+		wxStaticText *_desc;
+		wxStaticText *_code;
+		SyntaxTextBox *_locDesc;
+		SyntaxTextBox *_locCode;
+		wxButton *_emptyLabel;
+
+		void LoadTip();
+
+	public:
+		LocationTip(wxWindow *parent, IControls *controls);
+
+		void MoveTip(const wxPoint &pos);
+		void HideTip();
+		void SetLocName(const wxString &name);
+		wxString GetLocName() const
+		{
+			return _locName;
+		}
+		void SetActName(const wxString &name);
+		wxString GetActName() const
+		{
+			return _actName;
+		}
+	};
 
 #endif

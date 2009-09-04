@@ -28,28 +28,37 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) : wxFrame(parent
 	_mainFrame = parent;
 	_controls = controls;
 	wxColour textColor(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOTEXT));
+	wxColour backColor(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOBK));
 
-	SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOBK));
+	SetBackgroundColour(backColor);
 	wxBoxSizer *_sizer = new wxBoxSizer(wxVERTICAL);
 	_sizer->SetMinSize(TIP_SIZE_X, TIP_SIZE_Y);
 
 	_title = new wxStaticText(this, wxID_ANY, wxEmptyString);
 	_title->SetFont(_title->GetFont().MakeBold().MakeLarger());
 	_title->SetForegroundColour(textColor);
+
 	_desc = new wxStaticText(this, wxID_ANY, wxT("Описание:"));
 	_desc->SetFont(_desc->GetFont().MakeBold());
 	_desc->SetForegroundColour(textColor);
 	_locDesc = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_SIMPLE | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU);
+
 	_code = new wxStaticText(this, wxID_ANY, wxEmptyString);
 	_code->SetFont(_code->GetFont().MakeBold());
 	_code->SetForegroundColour(textColor);
 	_locCode = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOMARGINS);
+
+	_emptyLabel = new wxButton(this, wxID_ANY, wxT("(пусто)"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+	_emptyLabel->SetFont(_emptyLabel->GetFont().MakeLarger().MakeLarger());
+	_emptyLabel->SetBackgroundColour(backColor);
+	_emptyLabel->SetForegroundColour(textColor);
 
 	_sizer->Add(_title, 0, wxALL|wxALIGN_CENTER, 4);
 	_sizer->Add(_desc, 0, wxLEFT|wxRIGHT|wxGROW, 4);
 	_sizer->Add(_locDesc, 1, wxALL|wxGROW, 4);
 	_sizer->Add(_code, 0, wxLEFT|wxRIGHT|wxGROW, 4);
 	_sizer->Add(_locCode, 1, wxALL|wxGROW, 4);
+	_sizer->Add(_emptyLabel, 1, wxGROW);
 
 	SetSizer(_sizer);
 	SetAutoLayout( true );
@@ -95,34 +104,40 @@ void LocationTip::HideTip()
 
 void LocationTip::LoadTip()
 {
+	bool hasDesc, hasCode;
 	wxSizer *_sizer = GetSizer();
 	DataContainer *container = _controls->GetContainer();
 	size_t locIndex = container->FindLocationIndex(_locName);
+	_sizer->Hide(_emptyLabel);
 	if (_actName.IsEmpty())
 	{
 		_title->SetLabel(_locName);
 		wxString descText(container->GetLocationDesc(locIndex));
-		bool hasDesc = !descText.IsEmpty();
+		hasDesc = !descText.IsEmpty();
 		_sizer->Show(_desc, hasDesc);
 		_sizer->Show(_locDesc, hasDesc);
 		_locDesc->SetValue(descText);
 		_code->SetLabel(wxT("Код локации:"));
 		wxString codeText(container->GetLocationCode(locIndex));
-		bool hasCode = !codeText.IsEmpty();
+		hasCode = !codeText.IsEmpty();
 		_sizer->Show(_code, hasCode);
 		_sizer->Show(_locCode, hasCode);
 		_locCode->SetValue(codeText);
+		if (!(hasCode || hasDesc)) _sizer->Show(_emptyLabel);
 	}
 	else
 	{
 		_title->SetLabel(_actName);
 		size_t actIndex = container->FindActionIndex(locIndex, _actName);
+		wxString actCode(container->GetActionCode(locIndex, actIndex));
+		hasCode = !actCode.IsEmpty();
 		_sizer->Hide(_desc);
 		_sizer->Hide(_locDesc);
-		_sizer->Show(_code);
-		_sizer->Show(_locCode);
+		_sizer->Show(_code, hasCode);
+		_sizer->Show(_locCode, hasCode);
 		_code->SetLabel(wxT("Код действия:"));
-		_locCode->SetValue(container->GetActionCode(locIndex, actIndex));
+		_locCode->SetValue(actCode);
+		if (!hasCode) _sizer->Show(_emptyLabel);
 	}
 
 	Layout();
