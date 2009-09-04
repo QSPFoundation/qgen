@@ -64,6 +64,7 @@ OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& tit
 	SetSize(wxSize(630, 430));
 
 	_txtInputHotkey->SetFocus();
+	_btnOK->SetDefault();
 }
 
 void OptionsHotkeysDialog::OnOkSettings(wxCommandEvent &event)

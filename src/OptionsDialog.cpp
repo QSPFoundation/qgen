@@ -48,7 +48,6 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
 	EVT_BUTTON(ID_PATH_HELP, OptionsDialog::OnPathSelect)
 	EVT_BUTTON(ID_PATH_TXT2GAM, OptionsDialog::OnPathSelect)
 	EVT_BUTTON(ID_OK_SETTINGS, OptionsDialog::OnOkSettings)
-	EVT_BUTTON(ID_CANCEL_SETTINGS, OptionsDialog::OnCancelSettings)
 	EVT_BUTTON(ID_APPLY_SETTINGS, OptionsDialog::OnApplySettings)
 	EVT_BUTTON(ID_RESET_SETTINGS, OptionsDialog::OnResetSettings)
 	EVT_BUTTON(ID_ADD_NEW_HKEY, OptionsDialog::OnAddHotKey)
@@ -376,7 +375,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	notebookSizer->Add(_notebook, 1, wxALL|wxGROW, 3);
 
 	_btnOK = new wxButton(this, ID_OK_SETTINGS, wxT("OK"));
-	wxButton *btnCancel = new wxButton(this, ID_CANCEL_SETTINGS, wxT("Отмена"));
+	wxButton *btnCancel = new wxButton(this, wxID_CANCEL, wxT("Отмена"));
 	_btnApply = new wxButton(this, ID_APPLY_SETTINGS, wxT("Применить"));
 	_btnReset = new wxButton(this, ID_RESET_SETTINGS, wxT("Сброс"));
 
@@ -393,6 +392,8 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	SetAutoLayout(true);
 	SetMinClientSize(wxSize(500, 380));
 	InitOptionsDialog();
+
+	_btnOK->SetDefault();
 }
 
 void OptionsDialog::InitColoursDialog(wxColourDialog &dialog, const wxColour &col)
@@ -695,11 +696,6 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
 void OptionsDialog::OnOkSettings(wxCommandEvent &event)
 {
 	ApplySettings();
-	Close();
-}
-
-void OptionsDialog::OnCancelSettings(wxCommandEvent &event)
-{
 	Close();
 }
 
