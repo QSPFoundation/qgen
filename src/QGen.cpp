@@ -162,17 +162,14 @@ void QGenMainFrame::CreateControls()
 	CreateNotebook();
 	CreateLocListBox();
 
-	_manager.AddPane(_locNotebook, wxAuiPaneInfo().CenterPane().
-		Name(wxT("Properties Location")));
+	_manager.AddPane(_locNotebook, wxAuiPaneInfo().CenterPane().Name(wxT("LocationsNotebook")));
 
 	_manager.AddPane(_toolBar, wxAuiPaneInfo().ToolbarPane().
-		Name(wxT("Standard Toolbar")).Caption(wxT("Toolbar")).
-		Top().LeftDockable(false).RightDockable(false).Floatable(true));
+		Name(wxT("Toolbar")).Top().LeftDockable(false).RightDockable(false).Floatable(true));
 
 	_manager.AddPane(_locListBox, wxAuiPaneInfo().Left().
-						Layer(1).PinButton().MinimizeButton().
-						MaximizeButton().Name(wxT("Locations")).
-						Caption(wxT("Список локаций:")));
+		Layer(1).PinButton().MinimizeButton().MaximizeButton().Name(wxT("LocationsList")).
+		Caption(wxT("Список локаций")));
 
 	LoadLayout();
 	_manager.Update();
@@ -180,8 +177,7 @@ void QGenMainFrame::CreateControls()
 
 void QGenMainFrame::CreateStatusBar()
 {
-	_statusBar = new wxStatusBar( this, wxID_ANY, wxSTB_DEFAULT_STYLE, wxT("wxStatusBar") );
-
+	_statusBar = new wxStatusBar(this);
 	SetStatusBar( _statusBar );
 	PositionStatusBar();
 }
@@ -500,8 +496,8 @@ void QGenMainFrame::LoadLayout()
 	}
 	_manager.LoadPerspective(settings->GetSetPanelsPos());
 	_manager.RestoreMaximizedPane();
-	_menu_bar->Check(ID_TOGGLE_TOOLBAR, _manager.GetPane(wxT("Standard Toolbar")).IsShown());
-	_menu_bar->Check(ID_TOGGLE_LISTBOX, _manager.GetPane(wxT("Locations")).IsShown());
+	_menu_bar->Check(ID_TOGGLE_TOOLBAR, _manager.GetPane(wxT("Toolbar")).IsShown());
+	_menu_bar->Check(ID_TOGGLE_LISTBOX, _manager.GetPane(wxT("LocationsList")).IsShown());
 	_menu_bar->Check(ID_TOGGLE_STATUSBAR, settings->GetShowStatusBar());
 }
 
@@ -556,13 +552,13 @@ void QGenMainFrame::OnPaneClose( wxAuiManagerEvent& event )
 
 void QGenMainFrame::OnToggleToolbar(wxCommandEvent &event)
 {
-	TogglePaneVisibility(wxT("Standard Toolbar"));
+	TogglePaneVisibility(wxT("Toolbar"));
 	_manager.Update();
 }
 
 void QGenMainFrame::OnToggleLocations(wxCommandEvent &event)
 {
-	TogglePaneVisibility(wxT("Locations"));
+	TogglePaneVisibility(wxT("LocationsList"));
 	_manager.Update();
 }
 
