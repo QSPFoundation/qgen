@@ -531,7 +531,7 @@ void QGenMainFrame::TogglePaneVisibility(wxString pane_name)
 	wxAuiPaneInfoArray& all_panes = _manager.GetAllPanes();
 	size_t i, count;
 	for (i = 0, count = all_panes.GetCount(); i < count; ++i)
-	{		
+	{
 		if(all_panes.Item(i).name == pane_name)
 		{
 			all_panes.Item(i).Show(!all_panes.Item(i).IsShown());

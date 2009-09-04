@@ -110,7 +110,7 @@
 		LocationsNotebook	*_locNotebook;
 		Controls			*_controls;
 		SearchDialog		*_findDlg;
-		
+
 
 		void OnInit(InitEvent &event);
 		void OnExit(wxCommandEvent &event);

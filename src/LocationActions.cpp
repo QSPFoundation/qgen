@@ -32,7 +32,7 @@ LocationActions::LocationActions(wxWindow *owner, ILocationPage *locPage, IContr
 
 	_actCode = new ActionCode( _splitterv_down, _locPage, _controls, _statusBar );
 	_actPanel = new ActionsPanel( _splitterv_down, _locPage, _actCode, _controls );
-	
+
 	wxSizer *sizerDown = new wxBoxSizer( wxVERTICAL );
 	_splitterv_down->SetMinimumPaneSize(1);
 	_splitterv_down->SplitVertically( _actPanel, _actCode );

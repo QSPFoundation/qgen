@@ -29,7 +29,7 @@
 	{
 		wxString pathPicture;			//Изображение для действия - относительный путь к файлу
 		wxString description;			//Описание действия
-		wxString onPress;				//Код события "выбор действия"		
+		wxString onPress;				//Код события "выбор действия"
 	};
 
 	WX_DECLARE_OBJARRAY(ActionData, ActionDataArray);

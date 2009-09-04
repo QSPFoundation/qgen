@@ -972,7 +972,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 			}
 		}
 		if (_dataSearch.findAt == SEARCH_LOCDESC)
-		{	
+		{
 			data = _container->GetLocationDesc(_dataSearch.idxLoc);
 			startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.startPos + 1);
 			if (startPos != wxNOT_FOUND)
@@ -1398,7 +1398,7 @@ wxString Controls::GetGameInfo()
 			data = _container->GetLocationCode(i);
 			currentSizeLoc += data.Length();
 			if (data.Trim().Trim(false).IsEmpty()) ++cntEmptyCode;
-			currentCntActs += _container->GetActionsCount(i);			
+			currentCntActs += _container->GetActionsCount(i);
 			if (currentCntActs)
 			{
 				cntGenActs += currentCntActs;

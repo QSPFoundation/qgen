@@ -154,7 +154,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	_spnWidth1 = new wxSpinCtrl(_sizes, wxID_ANY, wxT("100"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 1, 100, 100);
 	_spnWidth2 = new wxSpinCtrl(_sizes, wxID_ANY, wxT("100"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 1, 100, 100);
 	_spnTabSize = new wxSpinCtrl(_sizes, wxID_ANY, wxT("8"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 2, 8, 8);
-	
+
 	topSizerSizes->Add(stTextHeights, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerSizes->Add(_spnHeights, 0, wxALL, 5);
 	topSizerSizes->Add(stTextWidth1, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
@@ -368,7 +368,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	topSizerHotKeys->Add(stText0001, 0, wxTOP|wxLEFT, 5);
 	topSizerHotKeys->Add(_lstHotKeys, 1, wxALL|wxGROW, 5);
 	topSizerHotKeys->Add(btnHotkKeysSizer, 0, wxGROW);
-	
+
 	_hotkeys->SetSizerAndFit(topSizerHotKeys);
 	_hotkeys->SetAutoLayout(true);
 

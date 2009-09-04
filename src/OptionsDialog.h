@@ -166,7 +166,7 @@
 		wxButton	*_btnAddNewHotKey;
 		wxButton	*_btnEditHotKey;
 		wxButton	*_btnDelHotKey;
-		
+
 		wxButton	*_btnOK;
 		wxButton	*_btnApply;
 		wxButton	*_btnReset;

@@ -30,7 +30,7 @@ BEGIN_EVENT_TABLE(MergeDialog, wxDialog)
 END_EVENT_TABLE()
 
 MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString &message, int style /* = 0 */) :
-			wxDialog( parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE |style|wxICON_INFORMATION )
+			wxDialog( parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style|wxDEFAULT_DIALOG_STYLE|wxICON_INFORMATION )
 {
 	wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *msgSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -46,7 +46,7 @@ MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString
 	_cancel = new wxButton(this, ID_CANCEL_BUTTON, wxT("Отмена"));
 
 	_chkToAll= new wxCheckBox(this, wxID_ANY, wxT("для всех"));
-	
+
 	msgSizer->Add(info_icon, 0, wxALIGN_LEFT);
 	msgSizer->AddSpacer(8);
 	msgSizer->Add(msgText, 0, wxGROW);

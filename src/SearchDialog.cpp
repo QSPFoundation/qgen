@@ -133,7 +133,7 @@ void SearchDialog::OnFindReplAll( wxCommandEvent &event )
 void SearchDialog::OnUpdFindText( wxCommandEvent& event )
 {
 	bool status = !_textFind->GetValue().IsEmpty();
-	_btnNextSearch->Enable(status);	
+	_btnNextSearch->Enable(status);
 	_btnSearchAgain->Enable(status);
 	_btnSkipLoc->Enable(status);
 	_btnReplace->Enable(status);

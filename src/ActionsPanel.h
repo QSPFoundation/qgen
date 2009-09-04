@@ -42,18 +42,16 @@
 	{
 		DECLARE_CLASS(ActionsPanel)
 		DECLARE_EVENT_TABLE()
-
 	private:
-		ActionsListBox		*_actList;
-		wxBitmapButton		*_addActButton;
-		wxBitmapButton		*_renActButton;
-		wxBitmapButton		*_delActButton;
-		IControls			*_controls;
+		ActionsListBox	*_actList;
+		wxButton		*_addActButton;
+		wxButton		*_renActButton;
+		wxButton		*_delActButton;
+		IControls		*_controls;
 
 		void OnAddAction( wxCommandEvent &event );
 		void OnRenAction( wxCommandEvent &event );
 		void OnDelAction( wxCommandEvent &event );
-
 	public:
 		ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode *_actCode, IControls *controls );
 
@@ -61,4 +59,4 @@
 		ActionsListBox *GetActionsListBox() { return _actList; };
 	};
 
-#endif // _ACTION_PANEL_H
+#endif

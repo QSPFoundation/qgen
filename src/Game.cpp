@@ -676,7 +676,7 @@ bool qspExportTxt2Game(const QGEN_CHAR *fileName, Controls *controls)
 
 			len = qspGameCodeWriteVal(&buf, len, str, true, false);
 			masStrings = wxSplit(container->GetActionCode(idxLoc, idxAct), '\n');
-			
+
 			for (size_t i = 0; i < masStrings.GetCount(); ++i)
 			{
 				str = wxString::Format(wxT("\t%s"), masStrings[i].wx_str());
