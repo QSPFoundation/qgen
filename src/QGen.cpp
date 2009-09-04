@@ -337,46 +337,28 @@ void QGenMainFrame::CreateMenuBar()
 
 void QGenMainFrame::CreateToolBar()
 {
-	wxBitmap bitmaps[18];
-	bitmaps[0]	= wxBitmap(play_xpm);
-	bitmaps[1]	= wxBitmap(info_xpm);
-	bitmaps[2]	= wxBitmap(filesaveas_xpm);
-	bitmaps[3]	= wxBitmap(filesave_xpm);
-	bitmaps[4]	= wxBitmap(fileopen_xpm);
-	bitmaps[5]	= wxBitmap(new_xpm);
-	bitmaps[6]	= wxBitmap(rename_xpm);
-	bitmaps[7]	= wxBitmap(delete_xpm);
-	bitmaps[8]	= wxBitmap(copy_xpm);
-	bitmaps[9]	= wxBitmap(paste_xpm);
-	bitmaps[10] = wxBitmap(clear_xpm);
-	bitmaps[11] = wxBitmap(search_xpm);
-	bitmaps[12] = wxBitmap(options_xpm);
-	bitmaps[13] = wxBitmap(undo_text_xpm);
-	bitmaps[14] = wxBitmap(redo_text_xpm);
-
 	_toolBar = new QGenToolBar(this, ID_TOOLBAR, _statusBar);
-
 	_toolBar->SetToolBitmapSize(wxSize(24, 24));
-	_toolBar->AddTool(LOC_CREAT, wxT("New location..."), bitmaps[5], wxT("Создать локацию... (F7)"));
-	_toolBar->AddTool(LOC_RENAME, wxT("Rename location..."), bitmaps[6], wxT("Переименовать выделенную локацию... (F6)"));
-	_toolBar->AddTool(LOC_DEL, wxT("Delete location"), bitmaps[7], wxT("Удалить выделенную локацию (F8)"));
+	_toolBar->AddTool(LOC_CREAT, wxT("New location..."), wxBitmap(new_xpm), wxT("Создать локацию... (F7)"));
+	_toolBar->AddTool(LOC_RENAME, wxT("Rename location..."), wxBitmap(rename_xpm), wxT("Переименовать выделенную локацию... (F6)"));
+	_toolBar->AddTool(LOC_DEL, wxT("Delete location"), wxBitmap(delete_xpm), wxT("Удалить выделенную локацию (F8)"));
 	_toolBar->AddSeparator();
-	_toolBar->AddTool(OPEN_QUEST, wxT("Open..."), bitmaps[4], wxT("Открыть игру... (Ctrl+O)"));
-	_toolBar->AddTool(SAVE_QUEST, wxT("Save"), bitmaps[3], wxT("Сохранить игру (Ctrl+S)"));
-	_toolBar->AddTool(SAVE_QUESTAS, wxT("Save as..."), bitmaps[2], wxT("Сохранить игру как... (Ctrl+W)"));
+	_toolBar->AddTool(OPEN_QUEST, wxT("Open..."), wxBitmap(fileopen_xpm), wxT("Открыть игру... (Ctrl+O)"));
+	_toolBar->AddTool(SAVE_QUEST, wxT("Save"), wxBitmap(filesave_xpm), wxT("Сохранить игру (Ctrl+S)"));
+	_toolBar->AddTool(SAVE_QUESTAS, wxT("Save as..."), wxBitmap(filesaveas_xpm), wxT("Сохранить игру как... (Ctrl+W)"));
 	_toolBar->AddSeparator();
-	_toolBar->AddTool(PLAY_QUEST, wxT("Play"), bitmaps[0], wxT("Запуск игры (F5)"));
-	_toolBar->AddTool(UTIL_INF, wxT("Information"), bitmaps[1], wxT("Краткая информация об игре (Ctrl+I)"));
+	_toolBar->AddTool(PLAY_QUEST, wxT("Play"), wxBitmap(play_xpm), wxT("Запуск игры (F5)"));
+	_toolBar->AddTool(UTIL_INF, wxT("Information"), wxBitmap(info_xpm), wxT("Краткая информация об игре (Ctrl+I)"));
 	_toolBar->AddSeparator();
-	_toolBar->AddTool(UNDO_TEXT, wxT("Undo text"), bitmaps[13], wxT("Отменить (Ctrl+Z)"));
-	_toolBar->AddTool(REDO_TEXT, wxT("Redo text"), bitmaps[14], wxT("Повторить (Ctrl+Y)"));
+	_toolBar->AddTool(UNDO_TEXT, wxT("Undo text"), wxBitmap(undo_text_xpm), wxT("Отменить (Ctrl+Z)"));
+	_toolBar->AddTool(REDO_TEXT, wxT("Redo text"), wxBitmap(redo_text_xpm), wxT("Повторить (Ctrl+Y)"));
 	_toolBar->AddSeparator();
-	_toolBar->AddTool(LOC_COPY, wxT("Copy location"), bitmaps[8], wxT("Копировать выделенную локацию (Ctrl+Shift+C)"));
-	_toolBar->AddTool(LOC_PASTE, wxT("Paste location"), bitmaps[9], wxT("Вставить локацию (Ctrl+Shift+V)"));
-	_toolBar->AddTool(LOC_CLEAR, wxT("Clear location"), bitmaps[10], wxT("Очистить выделенную локацию (Ctrl+Shift+D)"));
+	_toolBar->AddTool(LOC_COPY, wxT("Copy location"), wxBitmap(copy_xpm), wxT("Копировать выделенную локацию (Ctrl+Shift+C)"));
+	_toolBar->AddTool(LOC_PASTE, wxT("Paste location"), wxBitmap(paste_xpm), wxT("Вставить локацию (Ctrl+Shift+V)"));
+	_toolBar->AddTool(LOC_CLEAR, wxT("Clear location"), wxBitmap(clear_xpm), wxT("Очистить выделенную локацию (Ctrl+Shift+D)"));
 	_toolBar->AddSeparator();
-	_toolBar->AddTool(UTIL_FIND, wxT("Search..."), bitmaps[11], wxT("Поиск / замена... (Ctrl+F)"));
-	_toolBar->AddTool(UTIL_OPTIONS, wxT("Options..."), bitmaps[12], wxT("Настройки... (Ctrl+P)"));
+	_toolBar->AddTool(UTIL_FIND, wxT("Search..."), wxBitmap(search_xpm), wxT("Поиск / замена... (Ctrl+F)"));
+	_toolBar->AddTool(UTIL_OPTIONS, wxT("Options..."), wxBitmap(options_xpm), wxT("Настройки... (Ctrl+P)"));
 	_toolBar->Realize();
 }
 
