@@ -64,7 +64,7 @@
 		DataContainer();
 
 		void Save() { _isSaved = true; }
-		bool IsSaved() { return _isSaved; }
+		bool IsSaved() const { return _isSaved; }
 
 		int AddLocation(const wxString &name);
 		bool RenameLocation(size_t locIndex, const wxString& newName);
@@ -75,38 +75,38 @@
 		int AddAction(size_t indexLoc, const wxString& actName);
 		bool RenameAction(size_t locIndex, size_t actIndex, const wxString& actNewName);
 		void SetActionCode( size_t indexLoc,size_t indexAct, const wxString& actCode );
-		wxString GetActionCode(size_t locIndex, size_t actIndex);
-		int FindLocationIndex(const wxString& locName);
-		int FindActionIndex(size_t indexLoc, const wxString& actName);
-		size_t GetActionsCount(size_t locIndex);
-		wxString GetActionName(size_t locIndex, size_t actIndex);
+		wxString GetActionCode(size_t locIndex, size_t actIndex) const;
+		int FindLocationIndex(const wxString& locName) const;
+		int FindActionIndex(size_t indexLoc, const wxString& actName) const;
+		size_t GetActionsCount(size_t locIndex) const;
+		wxString GetActionName(size_t locIndex, size_t actIndex) const;
 		void SetLocationDesc(size_t indexLoc, const wxString& desc);
 		void SetLocationCode(size_t indexLoc, const wxString& code);
-		wxString GetLocationDesc(size_t indexLoc);
-		wxString GetLocationCode(size_t indexLoc);
+		wxString GetLocationDesc(size_t indexLoc) const;
+		wxString GetLocationCode(size_t indexLoc) const;
 		void SortLocsInFolder(int folderIndex, bool isAscending);
-		bool IsEmptyLoc(size_t locIndex);
-		wxString GetLocationName(const size_t &locIndex);
+		bool IsEmptyLoc(size_t locIndex) const;
+		wxString GetLocationName(const size_t &locIndex) const;
 		bool SetActionPicturePath( size_t indexLoc, size_t indexAct, const wxString &pathPict );
-		wxString GetActionPicturePath( size_t locIndex, size_t actIndex );
-		size_t GetLocationsCount();
+		wxString GetActionPicturePath( size_t locIndex, size_t actIndex ) const;
+		size_t GetLocationsCount() const;
 		void Clear();
-		bool IsEmpty();
-		bool GetLocActions( size_t indexLoc, wxArrayString & actions );
+		bool IsEmpty() const;
+		bool GetLocActions( size_t indexLoc, wxArrayString & actions ) const;
 		void MoveLocationTo(size_t locIndex, size_t moveTo);
 		void MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo);
 
-		size_t GetFoldersCount();
-		wxString GetFolderName(size_t index);
+		size_t GetFoldersCount() const;
+		wxString GetFolderName(size_t index) const;
 		void SetLocFolder(size_t locIndex, int folderIndex);
-		int GetLocFolder(size_t locIndex);
+		int GetLocFolder(size_t locIndex) const;
 		int AddFolder(const wxString &name);
 		bool RenameFolder(size_t folderIndex, const wxString &newName);
 		void DeleteFolder(size_t folderIndex);
-		int FindFolderIndex(const wxString &name);
+		int FindFolderIndex(const wxString &name) const;
 		void MoveFolder(size_t folderIndex, size_t moveToSecPos);
 		void SetFolderPos(size_t folderIndex, long pos);
-		int FindFolderForPos(size_t pos);
+		int FindFolderForPos(size_t pos) const;
 	};
 
 #endif

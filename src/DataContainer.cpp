@@ -41,7 +41,7 @@ DataContainer::DataContainer()
 	_isSaved = true;
 }
 
-int DataContainer::FindFolderIndex( const wxString &name )
+int DataContainer::FindFolderIndex( const wxString &name ) const
 {
 	wxString lwrName(name.Lower());
 	int i, count = _folders.GetCount();
@@ -50,7 +50,7 @@ int DataContainer::FindFolderIndex( const wxString &name )
 	return wxNOT_FOUND;
 }
 
-int DataContainer::FindLocationIndex(const wxString & nameLocation)
+int DataContainer::FindLocationIndex(const wxString & nameLocation) const
 {
 	wxString lwrName(nameLocation.Lower());
 	int i, count = locationArray.GetCount();
@@ -59,7 +59,7 @@ int DataContainer::FindLocationIndex(const wxString & nameLocation)
 	return wxNOT_FOUND;
 }
 
-int DataContainer::FindActionIndex(size_t indexLoc, const wxString& actName)
+int DataContainer::FindActionIndex(size_t indexLoc, const wxString& actName) const
 {
 	wxString lwrName(actName.Lower());
 	LocationData &loc = locationArray[indexLoc];
@@ -126,17 +126,17 @@ void DataContainer::SetActionCode( size_t indexLoc,size_t indexAct, const wxStri
 	_isSaved = false;
 }
 
-wxString DataContainer::GetActionCode(size_t locIndex, size_t actIndex)
+wxString DataContainer::GetActionCode(size_t locIndex, size_t actIndex) const
 {
 	return locationArray[locIndex].actionArray[actIndex].onPress;
 }
 
-size_t DataContainer::GetActionsCount( size_t locIndex )
+size_t DataContainer::GetActionsCount( size_t locIndex ) const
 {
 	return locationArray[locIndex].actionArray.GetCount();
 }
 
-wxString DataContainer::GetActionName(size_t locIndex, size_t actIndex)
+wxString DataContainer::GetActionName(size_t locIndex, size_t actIndex) const
 {
 	return locationArray[locIndex].actionArray[actIndex].description;
 }
@@ -153,12 +153,12 @@ void DataContainer::SetLocationCode(size_t indexLoc, const wxString& code)
 	_isSaved = false;
 }
 
-wxString DataContainer::GetLocationDesc(size_t indexLoc)
+wxString DataContainer::GetLocationDesc(size_t indexLoc) const
 {
 	return locationArray[indexLoc].description;
 }
 
-wxString DataContainer::GetLocationCode(size_t indexLoc)
+wxString DataContainer::GetLocationCode(size_t indexLoc) const
 {
 	return locationArray[indexLoc].onVisit;
 }
@@ -177,7 +177,7 @@ void DataContainer::DeleteAllActions( size_t locIndex )
 	_isSaved = false;
 }
 
-bool DataContainer::IsEmptyLoc(size_t locIndex)
+bool DataContainer::IsEmptyLoc(size_t locIndex) const
 {
 	if (locationArray[locIndex].onVisit.IsEmpty() &&
 		locationArray[locIndex].description.IsEmpty() &&
@@ -185,12 +185,12 @@ bool DataContainer::IsEmptyLoc(size_t locIndex)
 	return false;
 }
 
-wxString DataContainer::GetLocationName(const size_t &locIndex)
+wxString DataContainer::GetLocationName(const size_t &locIndex) const
 {
 	return locationArray[locIndex].name;
 }
 
-wxString DataContainer::GetActionPicturePath( size_t locIndex, size_t actIndex )
+wxString DataContainer::GetActionPicturePath( size_t locIndex, size_t actIndex ) const
 {
 	return locationArray[locIndex].actionArray[actIndex].pathPicture;
 }
@@ -202,7 +202,7 @@ bool DataContainer::SetActionPicturePath( size_t indexLoc, size_t indexAct, cons
 	return true;
 }
 
-size_t DataContainer::GetLocationsCount()
+size_t DataContainer::GetLocationsCount() const
 {
 	return locationArray.GetCount();
 }
@@ -214,12 +214,12 @@ void DataContainer::Clear()
 	_isSaved = false;
 }
 
-bool DataContainer::IsEmpty()
+bool DataContainer::IsEmpty() const
 {
 	return locationArray.IsEmpty();
 }
 
-bool DataContainer::GetLocActions( size_t indexLoc, wxArrayString & actions )
+bool DataContainer::GetLocActions( size_t indexLoc, wxArrayString & actions ) const
 {
 	if (indexLoc < 0) return false;
 	actions.Clear();
@@ -251,7 +251,7 @@ void DataContainer::SetLocFolder( size_t locIndex, int folderIndex )
 	_isSaved = false;
 }
 
-int DataContainer::GetLocFolder( size_t locIndex )
+int DataContainer::GetLocFolder( size_t locIndex ) const
 {
 	return locationArray[locIndex].folderIndex;
 }
@@ -311,17 +311,17 @@ void DataContainer::SetFolderPos( size_t folderIndex, long pos )
 	_isSaved = false;
 }
 
-size_t DataContainer::GetFoldersCount()
+size_t DataContainer::GetFoldersCount() const
 {
 	return _folders.GetCount();
 }
 
-wxString DataContainer::GetFolderName( size_t index )
+wxString DataContainer::GetFolderName( size_t index ) const
 {
 	return _folders[index].name;
 }
 
-int DataContainer::FindFolderForPos( size_t pos )
+int DataContainer::FindFolderForPos( size_t pos ) const
 {
 	size_t count = _folders.GetCount();
 	for (size_t i = 0; i < count; ++i)
