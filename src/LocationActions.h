@@ -35,14 +35,13 @@
 	private:
 		ILocationPage		*_locPage;
 		IControls			*_controls;
-		wxStatusBar			*_statusBar;
 		ActionsPanel		*_actPanel;
 		ActionCode			*_actCode;
 		wxSplitterWindow	*_splitterv_down;
 
 		void ShowActions();
 	public:
-		LocationActions( wxWindow *owner, ILocationPage *locPage, IControls *controls, wxStatusBar *statusBar );
+		LocationActions( wxWindow *owner, ILocationPage *locPage, IControls *controls );
 		~LocationActions();
 
 		void Update(bool isFromObservable = false);

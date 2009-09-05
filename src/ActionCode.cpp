@@ -27,11 +27,10 @@ BEGIN_EVENT_TABLE(ActionCode, wxPanel)
 	EVT_BUTTON(OPEN_PICT, ActionCode::OnOpenPicture)
 END_EVENT_TABLE()
 
-ActionCode::ActionCode( wxWindow *owner, ILocationPage *locPage, IControls *controls, wxStatusBar *statusBar ) : wxPanel( owner )
+ActionCode::ActionCode( wxWindow *owner, ILocationPage *locPage, IControls *controls ) : wxPanel( owner )
 {
 	_locPage = locPage;
 	_controls = controls;
-	_statusBar = statusBar;
 
 	wxBoxSizer *topSizer = new wxBoxSizer( wxVERTICAL );
 	wxBoxSizer *sizerPathPict = new wxBoxSizer( wxHORIZONTAL );
@@ -42,7 +41,7 @@ ActionCode::ActionCode( wxWindow *owner, ILocationPage *locPage, IControls *cont
 	sizerPathPict->Add( _pathPicTxtCtrl, 1, wxALL|wxGROW, 1 );
 	sizerPathPict->Add( _button, 0, wxALL|wxGROW, 1 );
 
-	_actCodeTxt = new SyntaxTextBox( this, _controls, _statusBar, SYNTAX_STYLE_COLORED );
+	_actCodeTxt = new SyntaxTextBox( this, _controls, SYNTAX_STYLE_COLORED );
 
 	topSizer->Add( sizerPathPict, 0, wxALL|wxGROW );
 	topSizer->Add( _actCodeTxt, 1, wxALL|wxGROW, 1 );

@@ -28,7 +28,8 @@ BEGIN_EVENT_TABLE(OptionsHotkeysDialog, wxDialog)
 	EVT_BUTTON(ID_HELP_BUTTON, OptionsHotkeysDialog::OnHelpHotKeys)
 END_EVENT_TABLE()
 
-OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& title, Controls *controls, int style) : wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
+OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& title, Controls *controls, int style) :
+	wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
 {
 	_controls = controls;
 	wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
@@ -41,7 +42,7 @@ OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& tit
 	hotKeySizer->Add(_txtInputHotkey, 0, wxALL, 5);
 
 	wxStaticText *stText02 = new wxStaticText(this, wxID_ANY, wxT("Текст:"));
-	_txtInputText = new SyntaxTextBox(this, controls, NULL, SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU);
+	_txtInputText = new SyntaxTextBox(this, controls, SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOHELPTIPS);
 
 	wxSizer *btnSizer = new wxBoxSizer(wxHORIZONTAL);
 	_btnHelp = new wxButton(this, ID_HELP_BUTTON, wxT("Справка"));

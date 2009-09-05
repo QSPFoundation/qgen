@@ -28,22 +28,22 @@ BEGIN_EVENT_TABLE(QGenToolBar, wxAuiToolBar)
 	EVT_LEAVE_WINDOW(QGenToolBar::OnLeaveWindow)
 END_EVENT_TABLE()
 
-QGenToolBar::QGenToolBar( wxWindow *parent, wxWindowID id, wxStatusBar *statusBar ) : wxAuiToolBar( parent, id )
+QGenToolBar::QGenToolBar( wxWindow *parent, wxWindowID id, IControls *controls ) : wxAuiToolBar( parent, id )
 {
-	_statusBar = statusBar;
+	_controls = controls;
 }
 
 void QGenToolBar::OnMotion( wxMouseEvent &evt )
 {
 	wxAuiToolBar::OnMotion(evt);
 	if (m_tip_item)
-		_statusBar->SetStatusText(m_tip_item->GetShortHelp());
+		_controls->SetStatusText(m_tip_item->GetShortHelp());
 	else
-		_statusBar->SetStatusText(wxEmptyString);
+		_controls->SetStatusText(wxEmptyString);
 }
 
 void QGenToolBar::OnLeaveWindow( wxMouseEvent &evt )
 {
 	wxAuiToolBar::OnLeaveWindow(evt);
-	_statusBar->SetStatusText(wxEmptyString);
+	_controls->SetStatusText(wxEmptyString);
 }

@@ -36,9 +36,8 @@
 		ILocationPage		*_locPage;
 		SyntaxTextBox		*_text;
 		IControls			*_controls;
-		wxStatusBar			*_statusBar;
 	public:
-		LocationCode( wxWindow *owner, ILocationPage *locPage, IControls *controls, wxStatusBar *statusBar );
+		LocationCode( wxWindow *owner, ILocationPage *locPage, IControls *controls );
 
 		void SaveCode();
 		void LoadCode();

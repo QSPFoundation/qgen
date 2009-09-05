@@ -37,7 +37,6 @@
 		DECLARE_CLASS(LocationPage)
 	private:
 		IControls		*_controls;
-		wxStatusBar		*_statusBar;
 		LocationCode	*_locCode;
 		LocationDesc	*_locDesc;
 		LocationActions *_locActs;
@@ -49,7 +48,7 @@
 		int				_actsHeight;
 
 	public:
-		LocationPage( wxAuiNotebook *owner, IControls *controls, wxStatusBar *statusBar );
+		LocationPage( wxAuiNotebook *owner, IControls *controls );
 		~LocationPage();
 
 		void Update(bool isFromObservable = false);

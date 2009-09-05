@@ -40,7 +40,8 @@
 		 SYNTAX_STYLE_NOHOTKEYS = 2,
 		 SYNTAX_STYLE_SIMPLEMENU = 4,
 		 SYNTAX_STYLE_NOSCROLLBARS = 8,
-		 SYNTAX_STYLE_NOMARGINS = 16
+		 SYNTAX_STYLE_NOMARGINS = 16,
+		 SYNTAX_STYLE_NOHELPTIPS = 32
 	};
 
 	struct HelpTip
@@ -66,7 +67,6 @@
 		static void LoadTips();
 
 		IControls *_controls;
-		wxStatusBar *_statusBar;
 		int _style;
 
 		int GetCharPosition(int startPos, int chars);
@@ -84,7 +84,7 @@
 		void OnCharAdded(wxStyledTextEvent &event);
 		void OnMouseMove(wxMouseEvent& event);
 	public:
-		SyntaxTextBox(wxWindow *owner, IControls *controls, wxStatusBar *statusBar, int style);
+		SyntaxTextBox(wxWindow *owner, IControls *controls, int style);
 		~SyntaxTextBox();
 
 		void Update(bool isFromObservable = false);

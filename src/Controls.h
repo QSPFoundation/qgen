@@ -71,6 +71,7 @@
 	class Controls : public IControls
 	{
 	private:
+		wxFrame				*_mainFrame;
 		LocationsListBox	*_locListBox;
 		LocationsNotebook	*_locNotebook;
 		DataContainer		*_container;
@@ -93,6 +94,7 @@
 		Settings *GetSettings() const { return _settings; }
 		DataContainer *GetContainer() const { return _container; }
 
+		void SetMainFrame(wxFrame *mainFrame);
 		void SetLocListBox(LocationsListBox *locListBox);
 		void SetNotebook(LocationsNotebook *locNotebook);
 
@@ -188,6 +190,7 @@
 		void SetLastSaveTime(wxLongLong lastSaveTime) { _lastSaveTime = lastSaveTime; }
 		wxLongLong GetLastSaveTime() { return _lastSaveTime; }
 		bool ExecuteHotkey(int keyCode, int modifiers);
+		void SetStatusText(const wxString &text);
 
 		bool AddFolder();
 		bool DeleteSelectedFolder();

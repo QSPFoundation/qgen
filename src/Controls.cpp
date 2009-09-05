@@ -23,6 +23,9 @@
 
 Controls::Controls(const wxString &path)
 {
+	_mainFrame = NULL;
+	_locListBox = NULL;
+	_locNotebook = NULL;
 	_currentPath = path;
 
 	_settings = new Settings(_currentPath);
@@ -35,6 +38,11 @@ Controls::~Controls()
 	delete _settings;
 	delete _container;
 	delete _keysParser;
+}
+
+void Controls::SetMainFrame(wxFrame *mainFrame)
+{
+	_mainFrame = mainFrame;
 }
 
 void Controls::SetLocListBox(LocationsListBox *locListBox)
@@ -1468,6 +1476,12 @@ void Controls::SwitchLocActs()
 bool Controls::ExecuteHotkey( int keyCode, int modifiers )
 {
 	return _keysParser->ExecuteHotkeyAction(keyCode, modifiers);
+}
+
+void Controls::SetStatusText( const wxString &text )
+{
+	wxStatusBar *statusBar = _mainFrame->GetStatusBar();
+	if (statusBar) statusBar->SetStatusText(text);
 }
 
 void Controls::SelectLocation( size_t locIndex )

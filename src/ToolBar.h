@@ -24,19 +24,20 @@
 
 	#include <wx/wx.h>
 	#include <wx/aui/auibar.h>
+	#include "IControls.h"
 
 	class QGenToolBar : public wxAuiToolBar
 	{
 		DECLARE_CLASS(QGenToolBar)
 		DECLARE_EVENT_TABLE()
 	public:
-		QGenToolBar(wxWindow *parent, wxWindowID id, wxStatusBar *statusBar);
+		QGenToolBar(wxWindow *parent, wxWindowID id, IControls *controls);
 
 	private:
 		void OnMotion(wxMouseEvent &evt);
 		void OnLeaveWindow(wxMouseEvent &evt);
 
-		wxStatusBar		*_statusBar;
+		IControls *_controls;
 	};
 
 #endif

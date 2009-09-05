@@ -95,6 +95,7 @@ bool QGenApp::OnInit()
 	appPath.MakeAbsolute();
 	_controls = new Controls(appPath.GetPath());
 	QGenMainFrame *mainFrame = new QGenMainFrame(_controls);
+	_controls->SetMainFrame(mainFrame);
 	mainFrame->Show();
 	wxCmdLineParser cmdParser(argc, argv);
 	if (argc > 1)
@@ -177,8 +178,7 @@ void QGenMainFrame::CreateControls()
 
 void QGenMainFrame::CreateStatusBar()
 {
-	_statusBar = new wxStatusBar(this);
-	SetStatusBar( _statusBar );
+	SetStatusBar(new wxStatusBar(this));
 	PositionStatusBar();
 }
 
@@ -337,7 +337,7 @@ void QGenMainFrame::CreateMenuBar()
 
 void QGenMainFrame::CreateToolBar()
 {
-	_toolBar = new QGenToolBar(this, ID_TOOLBAR, _statusBar);
+	_toolBar = new QGenToolBar(this, ID_TOOLBAR, _controls);
 	_toolBar->SetToolBitmapSize(wxSize(24, 24));
 	_toolBar->AddTool(LOC_CREAT, wxT("New location..."), wxBitmap(new_xpm), wxT("Создать локацию... (F7)"));
 	_toolBar->AddTool(LOC_RENAME, wxT("Rename location..."), wxBitmap(rename_xpm), wxT("Переименовать выделенную локацию... (F6)"));
@@ -454,7 +454,7 @@ void QGenMainFrame::CreateLocListBox()
 
 void QGenMainFrame::CreateNotebook()
 {
-	_locNotebook = new LocationsNotebook(this, wxID_ANY, _controls, _statusBar);
+	_locNotebook = new LocationsNotebook(this, wxID_ANY, _controls);
 	_controls->SetNotebook(_locNotebook);
 }
 

@@ -55,6 +55,7 @@ class LocationPage;
 		virtual void ShowMessage(long errorNum) = 0;
 		virtual void MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo) = 0;
 		virtual bool ExecuteHotkey(int keyCode, int modifiers) = 0;
+		virtual void SetStatusText(const wxString &text) = 0;
 	};
 
 #endif

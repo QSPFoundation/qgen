@@ -35,14 +35,13 @@
 		SyntaxTextBox		*_actCodeTxt;
 		wxButton			*_button;
 		IControls			*_controls;
-		wxStatusBar			*_statusBar;
 		ILocationPage		*_locPage;
 
 		void OnOpenPicture(wxCommandEvent &event);
 
 		bool Enable(bool status = true);
 	public:
-		ActionCode(wxWindow *owner, ILocationPage *locPage, IControls *controls, wxStatusBar *statusBar );
+		ActionCode(wxWindow *owner, ILocationPage *locPage, IControls *controls );
 		~ActionCode();
 
 		void Update(bool isFromObservable = false);

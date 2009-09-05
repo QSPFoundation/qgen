@@ -23,14 +23,13 @@
 
 IMPLEMENT_CLASS(LocationActions, wxPanel)
 
-LocationActions::LocationActions(wxWindow *owner, ILocationPage *locPage, IControls *controls, wxStatusBar *statusBar ) : wxPanel( owner )
+LocationActions::LocationActions(wxWindow *owner, ILocationPage *locPage, IControls *controls ) : wxPanel( owner )
 {
 	_locPage = locPage;
 	_controls = controls;
-	_statusBar = statusBar;
 	_splitterv_down = new wxSplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3DSASH );
 
-	_actCode = new ActionCode( _splitterv_down, _locPage, _controls, _statusBar );
+	_actCode = new ActionCode( _splitterv_down, _locPage, _controls );
 	_actPanel = new ActionsPanel( _splitterv_down, _locPage, _actCode, _controls );
 
 	wxSizer *sizerDown = new wxBoxSizer( wxVERTICAL );

@@ -40,12 +40,12 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) : wxFrame(parent
 	_desc = new wxStaticText(this, wxID_ANY, wxT("Описание:"));
 	_desc->SetFont(_desc->GetFont().MakeBold());
 	_desc->SetForegroundColour(textColor);
-	_locDesc = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_SIMPLE | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU);
+	_locDesc = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_SIMPLE | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOHELPTIPS);
 
 	_code = new wxStaticText(this, wxID_ANY, wxEmptyString);
 	_code->SetFont(_code->GetFont().MakeBold());
 	_code->SetForegroundColour(textColor);
-	_locCode = new SyntaxTextBox(this, _controls, NULL, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOMARGINS);
+	_locCode = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOMARGINS | SYNTAX_STYLE_NOHELPTIPS);
 
 	_emptyLabel = new wxButton(this, wxID_ANY, wxT("(пусто)"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
 	_emptyLabel->SetFont(_emptyLabel->GetFont().MakeLarger().MakeLarger());

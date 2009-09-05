@@ -104,7 +104,6 @@
 		wxTimer				_timerAutoSave;
 		wxTimer				_timerUpdToolBar;
 		QGenToolBar			*_toolBar;
-		wxStatusBar			*_statusBar;
 		wxMenuBar			*_menu_bar;
 		LocationsListBox	*_locListBox;
 		LocationsNotebook	*_locNotebook;

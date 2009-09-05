@@ -35,11 +35,10 @@ END_EVENT_TABLE()
 wxArrayString SyntaxTextBox::_keywords;
 std::list<HelpTip> SyntaxTextBox::_tooltips;
 
-SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, wxStatusBar *statusBar, int style) :
+SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 	wxStyledTextCtrl(owner, wxID_ANY, wxDefaultPosition, wxSize(1, 1))
 {
 	_controls = controls;
-	_statusBar = statusBar;
 	_style = style;
 	SetEOLMode(wxSTC_EOL_LF);
 	SetWrapMode(wxSTC_WRAP_WORD);
@@ -123,7 +122,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, wxStatusBar *
 					 wxT("$BACKIMAGE ARGS $ARGS RESULT $RESULT CURACTS $CURACTS"));
 	}
 	Update();
-	if (_statusBar) LoadTips();
+	if (!(_style & SYNTAX_STYLE_NOHELPTIPS)) LoadTips();
 
 	_controls->GetSettings()->AddObserver(this);
 }
@@ -456,7 +455,7 @@ void SyntaxTextBox::ExpandCollapseAll( bool isExpanded )
 void SyntaxTextBox::OnMouseMove(wxMouseEvent& event)
 {
 	wxStyledTextCtrl::OnMouseMove(event);
-	if (_statusBar)
+	if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
 		Tip(PositionFromPoint(event.GetPosition()));
 }
 
@@ -499,14 +498,14 @@ void SyntaxTextBox::Tip(int pos)
 		{
 			if (str == i->word)
 			{
-				_statusBar->SetStatusText(i->tip);
+				_controls->SetStatusText(i->tip);
 				tipFound = true;
 				break;
 			}
 		}
 	}
 	if (!tipFound)
-		_statusBar->SetStatusText(wxEmptyString);
+		_controls->SetStatusText(wxEmptyString);
 }
 
 void SyntaxTextBox::LoadTips()
@@ -661,7 +660,7 @@ void SyntaxTextBox::LoadTips()
 
 void SyntaxTextBox::OnKeyUp(wxKeyEvent& event)
 {
-	if (_statusBar)
+	if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
 		Tip(GetCurrentPos());
 	event.Skip();
 }
