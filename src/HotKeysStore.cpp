@@ -53,12 +53,12 @@ void HotkeysStore::ClearHotkeysData()
 	_hotkeysData.Clear();
 }
 
-HotkeyData &HotkeysStore::GetHotkeyData( size_t index )
+HotkeyData &HotkeysStore::GetHotkeyData( size_t index ) const
 {
 	return _hotkeysData[index];
 }
 
-int HotkeysStore::FindHotkeyDataIndex(const HotkeyData &hotKey)
+int HotkeysStore::FindHotkeyDataIndex(const HotkeyData &hotKey) const
 {
 	int count = _hotkeysData.GetCount();
 	for (int i = 0; i < count; i++)
@@ -69,7 +69,7 @@ int HotkeysStore::FindHotkeyDataIndex(const HotkeyData &hotKey)
 	return wxNOT_FOUND;
 }
 
-size_t HotkeysStore::GetHotkeysCount()
+size_t HotkeysStore::GetHotkeysCount() const
 {
 	return _hotkeysData.GetCount();
 }

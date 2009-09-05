@@ -78,9 +78,9 @@
 		size_t AddHotkeyData(const HotkeyData &hotkeyData);
 		bool DeleteHotkeyData(const HotkeyData &hotkey);
 		void ClearHotkeysData();
-		size_t GetHotkeysCount();
-		HotkeyData &GetHotkeyData(size_t index);
-		int FindHotkeyDataIndex(const HotkeyData &hotkey);
+		size_t GetHotkeysCount() const;
+		HotkeyData &GetHotkeyData(size_t index) const;
+		int FindHotkeyDataIndex(const HotkeyData &hotkey) const;
 		void SaveHotkeysData(wxConfigBase &fileConfig);
 		void LoadHotkeysData(wxConfigBase &fileConfig);
 	};

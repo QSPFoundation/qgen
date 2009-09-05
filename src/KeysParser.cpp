@@ -157,11 +157,10 @@ void KeysParser::OnKeysPress(const wxString &text)
 
 bool KeysParser::ExecuteHotkeyAction( int keyCode, int modifiers )
 {
-	HotkeyData hotKey;
 	size_t countHotKeys = _hotKeysStore->GetHotkeysCount();
 	for (size_t i = 0; i < countHotKeys; ++i)
 	{
-		hotKey = _hotKeysStore->GetHotkeyData(i);
+		const HotkeyData &hotKey = _hotKeysStore->GetHotkeyData(i);
 		if (keyCode == hotKey.HotKeyCode && modifiers == hotKey.Flags)
 		{
 			ParseText(hotKey.CommandText);
