@@ -1379,66 +1379,60 @@ void Controls::MoveActionTo( size_t locIndex, size_t actIndex, size_t moveTo )
 
 wxString Controls::GetGameInfo()
 {
-	int cntGenLocs,
-		cntEmptyDesc = 0,
-		cntEmptyCode = 0,
-		cntEmptyActsCode = 0,
-		sizeLocs = 0,
-		cntGenActs = 0,
-		maxSizeLoc = 0,
-		currentSizeLoc = 0,
-		currentCntActs;
+	int totalLocsCount,
+		totalEmptyDesc = 0,
+		totalEmptyCode = 0,
+		totalEmptyActsCode = 0,
+		totalLocsSize = 0,
+		totalActs = 0,
+		maxLocSize = 0,
+		avgActions = 0,
+		avgSize = 0,
+		locSize,
+		actsCount;
 	wxString locName, actName, data;
 
-	cntGenLocs = _container->GetLocationsCount();
-
-	if (cntGenLocs > 0)
+	totalLocsCount = _container->GetLocationsCount();
+	if (totalLocsCount > 0)
 	{
-		for (int i = 0; i < cntGenLocs; ++i)
+		for (int i = 0; i < totalLocsCount; ++i)
 		{
-			currentSizeLoc = 0;
-			currentCntActs = 0;
 			locName = _container->GetLocationName(i);
-			currentSizeLoc = locName.Length();
+			locSize = locName.Length();
 			data = _container->GetLocationDesc(i);
-			currentSizeLoc += data.Length();
-			if (data.Trim().Trim(false).IsEmpty()) ++cntEmptyDesc;
+			locSize += data.Length();
+			if (data.Trim().Trim(false).IsEmpty()) ++totalEmptyDesc;
 			data = _container->GetLocationCode(i);
-			currentSizeLoc += data.Length();
-			if (data.Trim().Trim(false).IsEmpty()) ++cntEmptyCode;
-			currentCntActs += _container->GetActionsCount(i);
-			if (currentCntActs)
+			locSize += data.Length();
+			if (data.Trim().Trim(false).IsEmpty()) ++totalEmptyCode;
+			actsCount = _container->GetActionsCount(i);
+			if (actsCount)
 			{
-				cntGenActs += currentCntActs;
-				for (int j = 0; j < currentCntActs; ++j)
+				totalActs += actsCount;
+				for (int j = 0; j < actsCount; ++j)
 				{
 					actName = _container->GetActionName(i, j);
-					currentSizeLoc += actName.Length();
-					currentSizeLoc += _container->GetActionPicturePath(i, j).Length();
+					locSize += actName.Length();
+					locSize += _container->GetActionPicturePath(i, j).Length();
 					data = _container->GetActionCode(i, j);
-					currentSizeLoc += data.Length();
-					if(data.Trim().Trim(false).IsEmpty()) ++cntEmptyActsCode;
+					locSize += data.Length();
+					if (data.Trim().Trim(false).IsEmpty()) ++totalEmptyActsCode;
 				}
 			}
-			if (currentSizeLoc > maxSizeLoc) maxSizeLoc =  currentSizeLoc;
-			sizeLocs += currentSizeLoc;
+			if (locSize > maxLocSize) maxLocSize = locSize;
+			totalLocsSize += locSize;
 		}
+		avgActions = (int)((float)totalActs / totalLocsCount + 0.5);
+		avgSize = (int)((float)totalLocsSize / totalLocsCount + 0.5);
 	}
-	int cntMiddle = 0;
-	int sizeMiddle = 0;
-	if (cntGenLocs > 0)
-	{
-		cntMiddle = (int) ((float) cntGenActs / cntGenLocs + 0.5);
-		sizeMiddle = (int) ((float) sizeLocs / cntGenLocs + 0.5);
-	}
-	wxString message = wxString::Format(wxT("Игра содержит %i локаци(ю/й/и)\n"), cntGenLocs);
-	message += wxString::Format(wxT("Из них локаций, не содержащих текст описания: %i\n"), cntEmptyDesc);
-	message += wxString::Format(wxT("Локаций, не имеющих кода обработки события \"Посещение\": %i\n"), cntEmptyCode);
-	message += wxString::Format(wxT("Среднее число базовых действий на 1 локацию: %i\n"), cntMiddle);
-	message += wxString::Format(wxT("Базовых действий не имеющих кода обработки события \"Выбор\": %i\n"), cntEmptyActsCode);
-	message += wxString::Format(wxT("Максимальный размер локации: %i символ(а/ов)\n"), maxSizeLoc);
-	message += wxString::Format(wxT("Средний размер локации: %i символ(а/ов)\n"), sizeMiddle);
-	message += wxString::Format(wxT("Всего локации игры содержат: %i символ(а/ов)"), sizeLocs);
+	wxString message = wxString::Format(wxT("Игра содержит %i локаци(ю/й/и)\n"), totalLocsCount);
+	message += wxString::Format(wxT("Из них локаций, не содержащих текст описания: %i\n"), totalEmptyDesc);
+	message += wxString::Format(wxT("Локаций, не имеющих кода обработки события \"Посещение\": %i\n"), totalEmptyCode);
+	message += wxString::Format(wxT("Среднее число базовых действий на 1 локацию: %i\n"), avgActions);
+	message += wxString::Format(wxT("Базовых действий не имеющих кода обработки события \"Выбор\": %i\n"), totalEmptyActsCode);
+	message += wxString::Format(wxT("Максимальный размер локации: %i символ(а/ов)\n"), maxLocSize);
+	message += wxString::Format(wxT("Средний размер локации: %i символ(а/ов)\n"), avgSize);
+	message += wxString::Format(wxT("Всего локации игры содержат: %i символ(а/ов)"), totalLocsSize);
 	return message;
 }
 
