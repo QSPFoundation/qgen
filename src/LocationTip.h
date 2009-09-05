@@ -28,6 +28,10 @@
 
 	#define TIP_SIZE_X 300
 	#define TIP_SIZE_Y 350
+	#define TIP_EMPTY_SIZE_X 300
+	#define TIP_EMPTY_SIZE_Y 150
+	#define TIP_X_OFFSET 5
+	#define TIP_Y_OFFSET 20
 
 	class LocationTip :	public wxFrame
 	{

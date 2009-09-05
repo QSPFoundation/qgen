@@ -32,7 +32,6 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) : wxFrame(parent
 
 	SetBackgroundColour(backColor);
 	wxBoxSizer *_sizer = new wxBoxSizer(wxVERTICAL);
-	_sizer->SetMinSize(TIP_SIZE_X, TIP_SIZE_Y);
 
 	_title = new wxStaticText(this, wxID_ANY, wxEmptyString);
 	_title->SetFont(_title->GetFont().MakeBold().MakeLarger());
@@ -70,14 +69,16 @@ void LocationTip::MoveTip(const wxPoint &pos)
 	wxPoint position(pos);
 	LoadTip();
 	wxRect displaySize(wxGetClientDisplayRect());
-	if (displaySize.GetHeight() <= (position.y + TIP_SIZE_Y))
-		position.y -= TIP_SIZE_Y;
+	int curWidth, curHeight;
+	GetSize(&curWidth, &curHeight);
+	if (displaySize.GetHeight() < (position.y + curHeight + TIP_Y_OFFSET))
+		position.y -= curHeight;
 	else
-		position.y += 20;
-	if (displaySize.GetWidth() <= (position.x + TIP_SIZE_X))
-		position.x -= TIP_SIZE_X;
+		position.y += TIP_Y_OFFSET;
+	if (displaySize.GetWidth() < (position.x + curWidth + TIP_X_OFFSET))
+		position.x -= curWidth;
 	else
-		position.x += 5;
+		position.x += TIP_X_OFFSET;
 	Move(position.x, position.y);
 	if (!IsShown())
 	{
@@ -104,7 +105,7 @@ void LocationTip::HideTip()
 
 void LocationTip::LoadTip()
 {
-	bool hasDesc, hasCode;
+	bool hasDesc, hasCode, showEmpty = false;
 	wxSizer *_sizer = GetSizer();
 	DataContainer *container = _controls->GetContainer();
 	size_t locIndex = container->FindLocationIndex(_locName);
@@ -123,7 +124,7 @@ void LocationTip::LoadTip()
 		_sizer->Show(_code, hasCode);
 		_sizer->Show(_locCode, hasCode);
 		_locCode->SetValue(codeText);
-		if (!(hasCode || hasDesc)) _sizer->Show(_emptyLabel);
+		if (!(hasCode || hasDesc)) showEmpty = true;
 	}
 	else
 	{
@@ -137,8 +138,15 @@ void LocationTip::LoadTip()
 		_sizer->Show(_locCode, hasCode);
 		_code->SetLabel(wxT("Код действия:"));
 		_locCode->SetValue(actCode);
-		if (!hasCode) _sizer->Show(_emptyLabel);
+		if (!hasCode) showEmpty = true;
 	}
+	if (showEmpty)
+	{
+		_sizer->Show(_emptyLabel);
+		SetSize(TIP_EMPTY_SIZE_X, TIP_EMPTY_SIZE_Y);
+	}
+	else
+		SetSize(TIP_SIZE_X, TIP_SIZE_Y);
 
 	Layout();
 }
