@@ -589,7 +589,7 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 							_tip->HideTip();
 							_tip->SetActName(GetItemText(id));
 							_tip->SetLocName(GetItemText(GetItemParent(id)));
-							_showTimer.Start(300, true);
+							_showTimer.Start(500, true);
 						}
 						break;
 					case DRAG_LOCATION:
@@ -597,7 +597,7 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 						{
 							_tip->HideTip();
 							_tip->SetLocName(GetItemText(id));
-							_showTimer.Start(300, true);
+							_showTimer.Start(500, true);
 						}
 						break;
 					}
