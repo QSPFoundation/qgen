@@ -65,7 +65,6 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
 
 	SetSizer(_sizer);
 	SetAutoLayout( true );
-	Layout();
 }
 
 void LocationTip::MoveTip(const wxPoint &pos)
@@ -84,25 +83,12 @@ void LocationTip::MoveTip(const wxPoint &pos)
 	else
 		position.x += TIP_X_OFFSET;
 	Move(position.x, position.y);
-	if (!IsShown())
-	{
-		if (CanSetTransparent())
-			SetTransparent(255);
-		Show();
-	}
+	if (!IsShown()) Show();
 }
 
 void LocationTip::HideTip()
 {
-	if (IsShown())
-	{
-		if (CanSetTransparent())
-		{
-			for (int trans = 255; trans > 0; trans -= 5)
-				SetTransparent(trans);
-		}
-		Hide();
-	}
+	if (IsShown()) Hide();
 	_locName.Clear();
 	_actName.Clear();
 }
