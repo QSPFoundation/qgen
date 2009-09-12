@@ -528,7 +528,7 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("cls"), wxT("CLS - очищает экран, оставляя только список предметов")));
 		_tooltips.push_back(HelpTip(wxT("menu"), wxT("MENU [$выражение] - показ меню с заданным названием")));
 		_tooltips.push_back(HelpTip(wxT("settimer"), wxT("SETTIMER [#выражение] - задает интервал таймера для локации-счетчика")));
-		_tooltips.push_back(HelpTip(wxT("dynamic"), wxT("DYNAMIC [$строка кода] - динамическое выполнение кода")));
+		_tooltips.push_back(HelpTip(wxT("dynamic"), wxT("DYNAMIC [$строка кода],[параметр1],[параметр2], ... - динамическое выполнение кода")));
 		_tooltips.push_back(HelpTip(wxT("set"), wxT("SET [название переменной]=[выражение] - установка значения переменной")));
 		_tooltips.push_back(HelpTip(wxT("let"), wxT("LET [название переменной]=[выражение] - установка значения переменной")));
 		_tooltips.push_back(HelpTip(wxT("killvar"), wxT("KILLVAR [$название],[#индекс] - удаление всех переменных / указанной переменной")));
@@ -582,8 +582,8 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("rgb"), wxT("RGB([#красный],[#зеленый],[#синий]) - возвращает код цвета на основе 3-х составляющих")));
 		_tooltips.push_back(HelpTip(wxT("getobj"), wxT("GETOBJ([#выражение]) - возвращает название предмета, расположенного в заданной позиции")));
 		_tooltips.push_back(HelpTip(wxT("$getobj"), wxT("$GETOBJ([#выражение]) - возвращает название предмета, расположенного в заданной позиции")));
-		_tooltips.push_back(HelpTip(wxT("dyneval"), wxT("DYNEVAL([$выражение]) - возвращает значение динамически вычисленного выражения")));
-		_tooltips.push_back(HelpTip(wxT("$dyneval"), wxT("$DYNEVAL([$выражение]) - возвращает значение динамически вычисленного выражения")));
+		_tooltips.push_back(HelpTip(wxT("dyneval"), wxT("DYNEVAL([$выражение],[параметр1],[параметр2], ...) - возвращает значение динамически вычисленного выражения")));
+		_tooltips.push_back(HelpTip(wxT("$dyneval"), wxT("$DYNEVAL([$выражение],[параметр1],[параметр2], ...) - возвращает значение динамически вычисленного выражения")));
 		_tooltips.push_back(HelpTip(wxT("func"), wxT("FUNC([$выражение],[параметр1],[параметр2], ...) - обработка указанной локации как функции")));
 		_tooltips.push_back(HelpTip(wxT("$func"), wxT("$FUNC([$выражение],[параметр1],[параметр2], ...) - обработка указанной локации как функции")));
 		_tooltips.push_back(HelpTip(wxT("arrsize"), wxT("ARRSIZE([$выражение]) - возвращает число элементов в указанном массиве")));
