@@ -189,7 +189,7 @@
 		void MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo);
 
 		void SetLastSaveTime(wxLongLong lastSaveTime) { _lastSaveTime = lastSaveTime; }
-		wxLongLong GetLastSaveTime() { return _lastSaveTime; }
+		wxLongLong GetLastSaveTime() const { return _lastSaveTime; }
 		bool ExecuteHotkey(int keyCode, int modifiers);
 		bool IsInHotkeyExecution() const { return _execHotkeyEnters != 0; }
 		void SetStatusText(const wxString &text);
