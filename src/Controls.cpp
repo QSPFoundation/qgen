@@ -26,6 +26,7 @@ Controls::Controls(const wxString &path)
 	_mainFrame = NULL;
 	_locListBox = NULL;
 	_locNotebook = NULL;
+	_execHotkeyEnters = 0;
 	_currentPath = path;
 
 	_settings = new Settings(_currentPath);
@@ -1469,7 +1470,11 @@ void Controls::SwitchLocActs()
 
 bool Controls::ExecuteHotkey( int keyCode, int modifiers )
 {
-	return _keysParser->ExecuteHotkeyAction(keyCode, modifiers);
+	bool res;
+	++_execHotkeyEnters;
+	res = _keysParser->ExecuteHotkeyAction(keyCode, modifiers);
+	--_execHotkeyEnters;
+	return res;
 }
 
 void Controls::SetStatusText( const wxString &text )

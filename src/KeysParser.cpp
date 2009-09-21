@@ -117,6 +117,7 @@ void KeysParser::ParseText(const wxString &text)
 			OnKeyPress(*i);
 		++i;
 	}
+	wxYieldIfNeeded();
 }
 
 void KeysParser::OnKeysPress(const wxString &text)

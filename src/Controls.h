@@ -82,6 +82,7 @@
 		wxString			_currentGamePath;
 		wxString			_currentGamePass;
 		wxLongLong			_lastSaveTime;
+		long				_execHotkeyEnters;
 
 		static wxString ConvertSearchString(const wxString& s, bool isMatchCase);
 		static int FindSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind = 0);
@@ -190,6 +191,7 @@
 		void SetLastSaveTime(wxLongLong lastSaveTime) { _lastSaveTime = lastSaveTime; }
 		wxLongLong GetLastSaveTime() { return _lastSaveTime; }
 		bool ExecuteHotkey(int keyCode, int modifiers);
+		bool IsInHotkeyExecution() const { return _execHotkeyEnters != 0; }
 		void SetStatusText(const wxString &text);
 
 		bool AddFolder();

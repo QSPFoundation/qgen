@@ -225,7 +225,7 @@ void SyntaxTextBox::OnMarginClicked( wxStyledTextEvent &event )
 
 void SyntaxTextBox::OnCharAdded( wxStyledTextEvent &event )
 {
-	if ((_style & SYNTAX_STYLE_COLORED) && event.GetKey() == '\n')
+	if ((_style & SYNTAX_STYLE_COLORED) && event.GetKey() == '\n' && !_controls->IsInHotkeyExecution())
 	{
 		int curLine = GetCurrentLine();
 		if (curLine > 0 && GetLineLength(curLine) <= 2)
