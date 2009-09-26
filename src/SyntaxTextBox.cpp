@@ -64,7 +64,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 					   wxT("killall menu opengame openqst addqst killqst savegame refint settimer showacts ") \
 					   wxT("showinput showobjs showstat if else end exit jump gosub gs goto gt xgoto xgt play close all view"));
 
-		SetKeyWords(1, wxT("and or no desc iif input $desc $iif $input isplay max min $max $min rand rgb ") \
+		SetKeyWords(1, wxT("and or no mod desc iif input $desc $iif $input isplay max min $max $min rand rgb ") \
 					   wxT("getobj $getobj dyneval $dyneval func $func arrpos arrsize instr isnum trim $trim ") \
 					   wxT("ucase lcase $ucase $lcase len mid str $mid $str val arrcomp strcomp strfind $strfind ") \
 					   wxT("strpos replace $replace user_text $user_text usrtxt $usrtxt maintxt $maintxt ") \
@@ -111,7 +111,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 					 wxT("KILLVAR DYNAMIC COPYARR ADD OBJ ADDOBJ DELOBJ KILLOBJ UNSELECT UNSEL KILLALL ") \
 					 wxT("MENU OPENGAME OPENQST ADDQST KILLQST SAVEGAME REFINT SETTIMER SHOWACTS SHOWINPUT ") \
 					 wxT("SHOWOBJS SHOWSTAT IF ELSE END EXIT JUMP GOSUB GS GOTO GT XGOTO XGT PLAY ") \
-					 wxT("CLOSE ALL VIEW AND OR NO DESC IIF INPUT $DESC $IIF $INPUT ISPLAY MAX MIN ") \
+					 wxT("CLOSE ALL VIEW AND OR NO MOD DESC IIF INPUT $DESC $IIF $INPUT ISPLAY MAX MIN ") \
 					 wxT("$MAX $MIN RAND RGB GETOBJ $GETOBJ DYNEVAL $DYNEVAL FUNC $FUNC ARRPOS ARRSIZE ") \
 					 wxT("INSTR ISNUM TRIM $TRIM UCASE LCASE $UCASE $LCASE LEN MID STR REPLACE $REPLACE ") \
 					 wxT("$MID $STR VAL ARRCOMP STRCOMP STRFIND $STRFIND STRPOS COUNTOBJ NOSAVE DISABLESCROLL ") \
@@ -567,6 +567,7 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("and"), wxT("[#выражение 1] AND [#выражение 2] - логическое \"и\"")));
 		_tooltips.push_back(HelpTip(wxT("or"), wxT("[#выражение 1] OR [#выражение 2] - логическое \"или\"")));
 		_tooltips.push_back(HelpTip(wxT("no"), wxT("NO [#выражение] - отрицание")));
+		_tooltips.push_back(HelpTip(wxT("mod"), wxT("[#выражение 1] MOD [#выражение 2] - вычисление остатка от деления")));
 		_tooltips.push_back(HelpTip(wxT("desc"), wxT("DESC([$выражение]) - возвращает текст базового описания локации")));
 		_tooltips.push_back(HelpTip(wxT("$desc"), wxT("$DESC([$выражение]) - возвращает текст базового описания локации")));
 		_tooltips.push_back(HelpTip(wxT("iif"), wxT("IIF([#выражение],[выражение_да],[выражение_нет]) - возвращает одно из выражений по условию")));
