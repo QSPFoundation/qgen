@@ -46,12 +46,15 @@
 		Settings		*_settings;
 		int				_descWidth;
 		int				_actsHeight;
+		bool			_isFixed;
 
 	public:
 		LocationPage( wxAuiNotebook *owner, IControls *controls );
 		~LocationPage();
 
 		void Update(bool isFromObservable = false);
+		void SetFixed(bool isFix);
+		bool IsFixed() const { return _isFixed; }
 		void LocDescVisible(bool isVisible);
 		void LocActsVisible(bool isVisible);
 		void SavePage();

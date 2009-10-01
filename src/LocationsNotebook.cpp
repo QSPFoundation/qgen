@@ -30,6 +30,7 @@ BEGIN_EVENT_TABLE(LocationsNotebook, wxAuiNotebook)
 	EVT_MENU(ID_MENUCLOSEALLTABS, LocationsNotebook::OnTabMenu)
 	EVT_MENU(ID_MENUCLOSEEXCEPTSELECTED, LocationsNotebook::OnTabMenu)
 	EVT_MENU(ID_MENUCLOSESELECTED, LocationsNotebook::OnTabMenu)
+	EVT_MENU(ID_MENUFIXTAB, LocationsNotebook::OnFixTab)
 	EVT_NAVIGATION_KEY(LocationsNotebook::OnNavigationKeyNotebook)
 END_EVENT_TABLE()
 
@@ -71,12 +72,19 @@ void LocationsNotebook::OnPageChanged( wxAuiNotebookEvent &event )
 
 bool LocationsNotebook::DeleteAllPages( CloseTypePage closeType, int selIndex )
 {
+	LocationPage *page;
 	int i, count = GetPageCount();
 	for (i = count - 1; i >= 0; --i)
 	{
-		if ((closeType == CLOSE_ALL) ||
-			(closeType == CLOSE_ALLEXCEPTSELECTED && i != selIndex) ||
-			(closeType == CLOSE_SELECTED && i == selIndex)) DeletePage(i);
+		if (selIndex < 0)
+			DeletePage(i);
+		else
+		{
+			page = (LocationPage *)GetPage(i);
+			if ((closeType == CLOSE_ALL && !page->IsFixed()) ||
+				(closeType == CLOSE_ALLEXCEPTSELECTED && i != selIndex && !page->IsFixed()) ||
+				(closeType == CLOSE_SELECTED && i == selIndex)) DeletePage(i);
+		}
 	}
 	return true;
 }
@@ -133,6 +141,11 @@ void LocationsNotebook::OnRightUpClick( wxAuiNotebookEvent &event )
 	menu.Append(ID_MENUCLOSESELECTED, wxT("Закрыть выбранную"));
 	menu.Append(ID_MENUCLOSEEXCEPTSELECTED, wxT("Закрыть все кроме выбранной"));
 	menu.Append(ID_MENUCLOSEALLTABS, wxT("Закрыть все"));
+	menu.AppendSeparator();
+	if (((LocationPage *)GetPage(selectedTab))->IsFixed())
+		menu.Append(ID_MENUFIXTAB, wxT("Открепить"));
+	else
+		menu.Append(ID_MENUFIXTAB, wxT("Закрепить вкладку"));
 	PopupMenu(&menu);
 }
 
@@ -154,12 +167,23 @@ void LocationsNotebook::OnTabMenu( wxCommandEvent &event )
 	DeleteAllPages(type, selectedTab);
 }
 
+void LocationsNotebook::OnFixTab( wxCommandEvent &event )
+{
+	SwitchTabFixed(selectedTab);
+}
+
 void LocationsNotebook::OnNavigationKeyNotebook( wxNavigationKeyEvent &event )
 {
 	if (event.IsWindowChange())
 		AdvanceSelection(event.GetDirection());
 	else
 		wxAuiNotebook::OnNavigationKeyNotebook(event);
+}
+
+void LocationsNotebook::SwitchTabFixed( size_t selTab )
+{
+	LocationPage *page = (LocationPage *)GetPage(selTab);
+	page->SetFixed(!page->IsFixed());
 }
 
 void LocationsNotebook::Update(bool isFromObservable)

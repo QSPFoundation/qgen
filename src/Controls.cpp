@@ -1249,6 +1249,7 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 	bool closeAllTabsFound = menu->FindItem(ID_MENUCLOSEALLTABS) != NULL;
 	bool closeExecptSelFound = menu->FindItem(ID_MENUCLOSEEXCEPTSELECTED) != NULL;
 	bool closeSelFound = menu->FindItem(ID_MENUCLOSESELECTED) != NULL;
+	bool fixTabFound = menu->FindItem(ID_MENUFIXTAB) != NULL;
 	bool showHideLocDesc = menu->FindItem(ID_LOCDESCVISIBLE) != NULL;
 	bool showHideLocActs = menu->FindItem(ID_LOCACTVISIBLE) != NULL;
 	bool res = false;
@@ -1322,6 +1323,7 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 	if (closeAllTabsFound) menu->Enable(ID_MENUCLOSEALLTABS, res);
 	if (closeExecptSelFound) menu->Enable(ID_MENUCLOSEEXCEPTSELECTED, res);
 	if (closeSelFound) menu->Enable(ID_MENUCLOSESELECTED, res);
+	if (fixTabFound) menu->Enable(ID_MENUFIXTAB, res);
 	if (showHideLocDesc) menu->Enable(ID_LOCDESCVISIBLE, res);
 	if (showHideLocActs) menu->Enable(ID_LOCACTVISIBLE, res);
 }

@@ -28,6 +28,7 @@ LocationPage::LocationPage(wxAuiNotebook *owner, IControls *controls ) : wxPanel
 	_controls = controls;
 	_settings = _controls->GetSettings();
 	_descWidth = _actsHeight = -1;
+	_isFixed = false;
 
 	_splitterh = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_NOBORDER);
 
@@ -107,6 +108,11 @@ void LocationPage::LocActsVisible(bool isVisible)
 		_actsHeight = _splitterh->GetSashPosition();
 		_splitterh->Unsplit(_locActs);
 	}
+}
+
+void LocationPage::SetFixed(bool isFix)
+{
+	_isFixed = isFix;
 }
 
 void LocationPage::SavePage()

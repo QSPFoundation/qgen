@@ -46,6 +46,7 @@
 		void OnPageChanged(wxAuiNotebookEvent &event);
 		void OnRightUpClick(wxAuiNotebookEvent &event);
 		void OnTabMenu(wxCommandEvent &event);
+		void OnFixTab(wxCommandEvent &event);
 		void OnNavigationKeyNotebook(wxNavigationKeyEvent &event);
 
 		void NotifyClosePage(int index);
@@ -65,6 +66,7 @@
 		void SaveOpenedPages();
 		void Update(bool isFromObservable = false);
 		void AdvanceSelection(bool forward = true);
+		void SwitchTabFixed(size_t selTab);
 	};
 
 #endif
