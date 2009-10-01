@@ -142,6 +142,7 @@ void LocationsNotebook::OnRightUpClick( wxAuiNotebookEvent &event )
 		return;
 	}
 	selectedPage = event.GetSelection();
+	if (selectedPage < 0) return;
 	wxMenu menu;
 	menu.Append(ID_MENUCLOSESELECTED, wxT("Закрыть выбранную"));
 	menu.Append(ID_MENUCLOSEEXCEPTSELECTED, wxT("Закрыть все кроме выбранной"));
