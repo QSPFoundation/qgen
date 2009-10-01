@@ -34,7 +34,7 @@ BEGIN_EVENT_TABLE(QGenMainFrame, wxFrame)
 	EVT_MENU(ID_MENUCLOSEALLTABS, QGenMainFrame::OnTabMenu)
 	EVT_MENU(ID_MENUCLOSEEXCEPTSELECTED, QGenMainFrame::OnTabMenu)
 	EVT_MENU(ID_MENUCLOSESELECTED, QGenMainFrame::OnTabMenu)
-	EVT_MENU(ID_MENUFIXTAB, QGenMainFrame::OnFixTab)
+	EVT_MENU(ID_MENUFIXTAB, QGenMainFrame::OnFixPage)
 	EVT_MENU(ID_LOCDESCVISIBLE, QGenMainFrame::OnLocDescVisible)
 	EVT_MENU(ID_LOCACTVISIBLE, QGenMainFrame::OnLocActsVisible)
 	EVT_MENU(HELP_ABOUT, QGenMainFrame::OnAbout)
@@ -866,8 +866,8 @@ void QGenMainFrame::UpdateTitle()
 void QGenMainFrame::OnTabMenu( wxCommandEvent &event )
 {
 	CloseTypePage type;
-	int selTab = _locNotebook->GetSelection();
-	if (selTab < 0) return;
+	int selPage = _locNotebook->GetSelection();
+	if (selPage < 0) return;
 	switch (event.GetId())
 	{
 	case ID_MENUCLOSEALLTABS:
@@ -880,14 +880,14 @@ void QGenMainFrame::OnTabMenu( wxCommandEvent &event )
 		type = CLOSE_SELECTED;
 		break;
 	}
-	_locNotebook->DeleteAllPages(type, selTab);
+	_locNotebook->DeleteAllPages(type, selPage);
 }
 
-void QGenMainFrame::OnFixTab( wxCommandEvent &event )
+void QGenMainFrame::OnFixPage( wxCommandEvent &event )
 {
-	int selTab = _locNotebook->GetSelection();
-	if (selTab < 0) return;
-	_locNotebook->SwitchTabFixed(selTab);
+	int selPage = _locNotebook->GetSelection();
+	if (selPage < 0) return;
+	_locNotebook->SwitchPageFixed(selPage);
 }
 
 void QGenMainFrame::OnLocDescVisible(wxCommandEvent &event)

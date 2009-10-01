@@ -161,7 +161,7 @@
 		void OnDeleteText(wxCommandEvent &event);
 		void OnSelectAllText(wxCommandEvent &event);
 		void OnTabMenu(wxCommandEvent &event);
-		void OnFixTab(wxCommandEvent &event);
+		void OnFixPage(wxCommandEvent &event);
 		void OnLocDescVisible(wxCommandEvent &event);
 		void OnLocActsVisible(wxCommandEvent &event);
 		void OnPaneClose(wxAuiManagerEvent& event);

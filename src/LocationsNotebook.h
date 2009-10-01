@@ -26,6 +26,8 @@
 	#include "Idents.h"
 	#include "LocationPage.h"
 
+	#include "bitmaps/fixed_page.xpm"
+
 	enum CloseTypePage
 	{
 		CLOSE_ALL,
@@ -40,13 +42,13 @@
 	private:
 		IControls		*_controls;
 		DataContainer	*_container;
-		int selectedTab;
+		int selectedPage;
 
 		void OnClosePage(wxAuiNotebookEvent &event);
 		void OnPageChanged(wxAuiNotebookEvent &event);
 		void OnRightUpClick(wxAuiNotebookEvent &event);
 		void OnTabMenu(wxCommandEvent &event);
-		void OnFixTab(wxCommandEvent &event);
+		void OnFixPage(wxCommandEvent &event);
 		void OnNavigationKeyNotebook(wxNavigationKeyEvent &event);
 
 		void NotifyClosePage(int index);
@@ -66,7 +68,7 @@
 		void SaveOpenedPages();
 		void Update(bool isFromObservable = false);
 		void AdvanceSelection(bool forward = true);
-		void SwitchTabFixed(size_t selTab);
+		void SwitchPageFixed(size_t selPage);
 	};
 
 #endif
