@@ -1,7 +1,7 @@
 /* XPM */
 static char *fixed_page_xpm[] = {
 /* columns rows colors chars-per-pixel */
-"16 16 75 1",
+"14 14 75 1",
 "; c #2D2D2D",
 "C c #DCA10B",
 "a c #F6E67F",
@@ -78,20 +78,18 @@ static char *fixed_page_xpm[] = {
 "X c #707070",
 "2 c #F0EAB4",
 /* pixels */
-"                ",
-"       .X.      ",
-"      Xo.XO     ",
-"     +@X##O.    ",
-"     $%&#.*+    ",
-"    .$* =-;:    ",
-"    >,<123456   ",
-"   78@90qwert   ",
-"   yuipasdfgh   ",
-"   jklzxcvbnt   ",
-"   jxmMNBVCfh   ",
-"   jxMZNASfgh   ",
-"   DFGmNHJKL    ",
-"    PIUHYT      ",
-"     @R         ",
-"                "
+"      .X.     ",
+"     Xo.XO    ",
+"    +@X##O.   ",
+"    $%&#.*+   ",
+"   .$* =-;:   ",
+"   >,<123456  ",
+"  78@90qwert  ",
+"  yuipasdfgh  ",
+"  jklzxcvbnt  ",
+"  jxmMNBVCfh  ",
+"  jxMZNASfgh  ",
+"  DFGmNHJKL   ",
+"   PIUHYT     ",
+"    @R        "
 };
