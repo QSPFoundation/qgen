@@ -134,43 +134,102 @@ char *qspFromQSPString(const QGEN_CHAR *s)
 
 char *qspQSPToGameString(const QGEN_CHAR *s, bool isUCS2, bool isCode)
 {
-	unsigned short *ptr;
-	long offset, len = (long)QGEN_STRLEN(s);
-	char *ret = (char *)malloc((len + 1) * (isUCS2 ? 2 : 1));
-	offset = (isCode ? -QGEN_CODREMOV : 0);
+	unsigned short uCh, *ptr;
+	long len = (long)QGEN_STRLEN(s);
+	char ch, *ret = (char *)malloc((len + 1) * (isUCS2 ? 2 : 1));
 	if (isUCS2)
 	{
 		ptr = (unsigned short *)ret;
 		ptr[len] = 0;
-		while (--len >= 0)
-			ptr[len] = (unsigned short)(QGEN_BTOWC(s[len]) + offset);
+		if (isCode)
+		{
+			while (--len >= 0)
+			{
+				uCh = QGEN_BTOWC(s[len]);
+				if (uCh == QGEN_CODREMOV)
+					uCh = (unsigned short)-QGEN_CODREMOV;
+				else
+					uCh -= QGEN_CODREMOV;
+				ptr[len] = uCh;
+			}
+		}
+		else
+		{
+			while (--len >= 0)
+				ptr[len] = QGEN_BTOWC(s[len]);
+		}
 	}
 	else
 	{
 		ret[len] = 0;
-		while (--len >= 0)
-			ret[len] = (char)(QGEN_FROM_OS_CHAR(s[len]) + offset);
+		if (isCode)
+		{
+			while (--len >= 0)
+			{
+				ch = QGEN_FROM_OS_CHAR(s[len]);
+				if (ch == QGEN_CODREMOV)
+					ch = -QGEN_CODREMOV;
+				else
+					ch -= QGEN_CODREMOV;
+				ret[len] = ch;
+			}
+		}
+		else
+		{
+			while (--len >= 0)
+				ret[len] = QGEN_FROM_OS_CHAR(s[len]);
+		}
 	}
 	return ret;
 }
 
 QGEN_CHAR *qspGameToQSPString(char *s, bool isUCS2, bool isCoded)
 {
-	unsigned short *ptr;
-	long offset, len = (isUCS2 ? qspUCS2StrLen(s) : (long)strlen(s));
+	char ch;
+	unsigned short uCh, *ptr;
+	long len = (isUCS2 ? qspUCS2StrLen(s) : (long)strlen(s));
 	QGEN_CHAR *ret = (QGEN_CHAR *)malloc((len + 1) * sizeof(QGEN_CHAR));
-	offset = (isCoded ? QGEN_CODREMOV : 0);
 	ret[len] = 0;
 	if (isUCS2)
 	{
 		ptr = (unsigned short *)s;
-		while (--len >= 0)
-			ret[len] = QGEN_WCTOB((wchar_t)(ptr[len] + offset));
+		if (isCoded)
+		{
+			while (--len >= 0)
+			{
+				uCh = ptr[len];
+				if (uCh == (unsigned short)-QGEN_CODREMOV)
+					uCh = QGEN_CODREMOV;
+				else
+					uCh += QGEN_CODREMOV;
+				ret[len] = QGEN_WCTOB(uCh);
+			}
+		}
+		else
+		{
+			while (--len >= 0)
+				ret[len] = QGEN_WCTOB(ptr[len]);
+		}
 	}
 	else
 	{
-		while (--len >= 0)
-			ret[len] = QGEN_TO_OS_CHAR((char)(s[len] + offset));
+		if (isCoded)
+		{
+			while (--len >= 0)
+			{
+				ch = s[len];
+				if (ch == -QGEN_CODREMOV)
+					ch = QGEN_CODREMOV;
+				else
+					ch += QGEN_CODREMOV;
+				ret[len] = QGEN_TO_OS_CHAR(ch);
+			}
+		}
+		else
+		{
+			while (--len >= 0)
+				ret[len] = QGEN_TO_OS_CHAR(s[len]);
+		}
 	}
 	return ret;
 }

@@ -577,21 +577,35 @@ void Controls::PasteLocFromClipboard( PasteType type )
 	}
 }
 
-wxString Controls::EncodeString( const wxString &str )
+wxString Controls::EncodeString(const wxString &str)
 {
 	wxString result;
-	long lstr = str.Len();
-	for (long i = 0; i < lstr; i++)
-		result.Append((wxChar)((wxChar)str[i] - QGEN_CODREMOV));
+	wxChar ch;
+	for (long i = 0; i < str.Length(); i++)
+	{
+		ch = str[i];
+		if (ch == QGEN_CODREMOV)
+			ch = -QGEN_CODREMOV;
+		else
+			ch -= QGEN_CODREMOV;
+		result.Append(ch);
+	}
 	return result;
 }
 
 wxString Controls::DecodeString(const wxString &str)
 {
 	wxString result;
-	long lstr = str.Len();
-	for (long i = 0; i < lstr; i++)
-		result.Append((wxChar)((wxChar)str[i] + QGEN_CODREMOV));
+	wxChar ch;
+	for (long i = 0; i < str.Length(); i++)
+	{
+		ch = str[i];
+		if (ch == (wxChar)-QGEN_CODREMOV)
+			ch = QGEN_CODREMOV;
+		else
+			ch += QGEN_CODREMOV;
+		result.Append(ch);
+	}
 	return result;
 }
 
