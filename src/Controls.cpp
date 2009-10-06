@@ -348,22 +348,23 @@ bool Controls::IsSelectedLocationEmpty()
 bool Controls::IsClipboardEmpty()
 {
 	wxTextDataObject data;
-	bool res = true;
+	bool canGetData = false, res = true;
 	if ( !wxTheClipboard->IsOpened() && wxTheClipboard->Open() )
 	{
 		if (wxTheClipboard->IsSupported(wxDF_TEXT))
 		{
-			wxTheClipboard->GetData( data );
-			res = !IsCorrectDataFormat( data.GetText().Mid(0, 7) );
+			wxTheClipboard->GetData(data);
+			canGetData = true;
 		}
 		wxTheClipboard->Close();
+		if (canGetData) res = !IsCorrectDataFormat(data.GetText());
 	}
 	return res;
 }
 
 bool Controls::SerializeLocData( size_t locIndex, wxString &buffer )
 {
-	size_t countActs;
+	size_t actsCount;
 	buffer.Append(QGEN_GAMEID);
 	buffer.Append(QGEN_STRSDELIM);
 	buffer.Append(QGEN_NAME);
@@ -376,10 +377,10 @@ bool Controls::SerializeLocData( size_t locIndex, wxString &buffer )
 	buffer.Append(QGEN_STRSDELIM);
 	buffer.Append(EncodeString(_container->GetLocationCode(locIndex)));
 	buffer.Append(QGEN_STRSDELIM);
-	countActs = _container->GetActionsCount(locIndex);
-	buffer.Append(EncodeString(wxString::Format(wxT("%ld"), countActs)));
+	actsCount = _container->GetActionsCount(locIndex);
+	buffer.Append(EncodeString(wxString::Format(wxT("%ld"), actsCount)));
 	buffer.Append(QGEN_STRSDELIM);
-	for (size_t i = 0; i < countActs; ++i)
+	for (size_t i = 0; i < actsCount; ++i)
 	{
 		buffer.Append(EncodeString(_container->GetActionPicturePath(locIndex, i)));
 		buffer.Append(QGEN_STRSDELIM);
@@ -394,21 +395,15 @@ bool Controls::SerializeLocData( size_t locIndex, wxString &buffer )
 bool Controls::GetBufferedLocName(const wxString &buffer, wxString &locName)
 {
 	size_t first = 0, last = 0;
-	wxString str;
-
-	//ID формата файла
-	last = buffer.find(QGEN_STRSDELIM);
-	str = buffer.Mid(first, last);
-	if (!IsCorrectDataFormat(str))
+	if (!IsCorrectDataFormat(buffer))
 	{
 		ShowMessage(QGEN_MSG_WRONGFORMAT);
 		return false;
 	}
+	//ID формата файла
+	last = buffer.find(QGEN_STRSDELIM);
 	//Данные о версии редактора
-	first = last + 2;
-	last = buffer.find(QGEN_STRSDELIM, first);
-	str = buffer.Mid(first, last - first);
-
+	last = buffer.find(QGEN_STRSDELIM, last + 2);
 	//Имя локации
 	first = last + 2;
 	last = buffer.find(QGEN_STRSDELIM, first);
@@ -420,30 +415,22 @@ bool Controls::DeserializeLocData(size_t locIndex, const wxString &buffer)
 {
 	size_t first = 0, last = 0;
 	wxString str;
-	wxString actName;
-	wxString pathPictAct;
-	wxVariant convCount;
-	size_t countActs;
+	wxString actImage;
+	long actsCount;
 
-	//ID формата файла
-	last = buffer.find(QGEN_STRSDELIM);
-	str = buffer.Mid(first, last);
-	if (!IsCorrectDataFormat(str))
+	if (!IsCorrectDataFormat(buffer))
 	{
 		ShowMessage(QGEN_MSG_WRONGFORMAT);
 		return false;
 	}
 	_container->ClearLocation(locIndex);
 
+	//ID формата файла
+	last = buffer.find(QGEN_STRSDELIM);
 	//Данные о версии редактора
-	first = last + 2;
-	last = buffer.find(QGEN_STRSDELIM, first);
-	str = buffer.Mid(first, last - first);
-
+	last = buffer.find(QGEN_STRSDELIM, last + 2);
 	//Имя локации
-	first = last + 2;
-	last = buffer.find(QGEN_STRSDELIM, first);
-	str = buffer.Mid(first, last - first);
+	last = buffer.find(QGEN_STRSDELIM, last + 2);
 
 	//Описание локации
 	first = last + 2;
@@ -460,25 +447,23 @@ bool Controls::DeserializeLocData(size_t locIndex, const wxString &buffer)
 	//Количество действий
 	first = last + 2;
 	last = buffer.find(QGEN_STRSDELIM, first);
-	str = buffer.Mid(first, last - first);
-	convCount = DecodeString(str);
-	countActs = convCount.GetLong();
+	str = DecodeString(buffer.Mid(first, last - first));
+	str.ToLong(&actsCount);
 
-	for (size_t i = 0; i < countActs; ++i)
+	for (size_t i = 0; i < actsCount; ++i)
 	{
 		//Изображение
 		first = last + 2;
 		last = buffer.find(QGEN_STRSDELIM, first);
 		str = buffer.Mid(first, last - first);
-		pathPictAct = DecodeString(str);
+		actImage = DecodeString(str);
 
 		//Название
 		first = last + 2;
 		last = buffer.find(QGEN_STRSDELIM, first);
 		str = buffer.Mid(first, last - first);
-		actName = DecodeString(str);
-		_container->AddAction(locIndex, actName);
-		_container->SetActionPicturePath(locIndex, i, pathPictAct);
+		_container->AddAction(locIndex, DecodeString(str));
+		_container->SetActionPicturePath(locIndex, i, actImage);
 
 		//Код
 		first = last + 2;
@@ -864,7 +849,7 @@ bool Controls::IsAllLocsClosed()
 
 bool Controls::IsCorrectDataFormat(const wxString &str)
 {
-	return (str == QGEN_GAMEID);
+	return (str.Mid(0, 7) == QGEN_GAMEID);
 }
 
 wxString Controls::ConvertSearchString(const wxString& s, bool isMatchCase)
