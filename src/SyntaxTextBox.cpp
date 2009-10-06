@@ -62,7 +62,8 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 		SetKeyWords(0, wxT("clear clr nl p pl msg wait act delact del cla cmdclear cmdclr cls set ") \
 					   wxT("let killvar dynamic copyarr add obj addobj delobj killobj unselect unsel ") \
 					   wxT("killall menu opengame openqst addqst killqst savegame refint settimer showacts ") \
-					   wxT("showinput showobjs showstat if else end exit jump gosub gs goto gt xgoto xgt play close all view"));
+					   wxT("showinput showobjs showstat if else end exit jump gosub gs goto gt xgoto xgt play ") \
+					   wxT("close all view exec"));
 
 		SetKeyWords(1, wxT("and or no mod desc iif input $desc $iif $input isplay max min $max $min rand rgb ") \
 					   wxT("getobj $getobj dyneval $dyneval func $func arrpos arrsize instr isnum trim $trim ") \
@@ -110,7 +111,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 		FillKeywords(wxT("CLEAR CLR NL P PL MSG WAIT ACT DELACT DEL CLA CMDCLEAR CMDCLR CLS SET LET ") \
 					 wxT("KILLVAR DYNAMIC COPYARR ADD OBJ ADDOBJ DELOBJ KILLOBJ UNSELECT UNSEL KILLALL ") \
 					 wxT("MENU OPENGAME OPENQST ADDQST KILLQST SAVEGAME REFINT SETTIMER SHOWACTS SHOWINPUT ") \
-					 wxT("SHOWOBJS SHOWSTAT IF ELSE END EXIT JUMP GOSUB GS GOTO GT XGOTO XGT PLAY ") \
+					 wxT("SHOWOBJS SHOWSTAT IF ELSE END EXIT JUMP GOSUB GS GOTO GT XGOTO XGT PLAY EXEC ") \
 					 wxT("CLOSE ALL VIEW AND OR NO MOD DESC IIF INPUT $DESC $IIF $INPUT ISPLAY MAX MIN ") \
 					 wxT("$MAX $MIN RAND RGB GETOBJ $GETOBJ DYNEVAL $DYNEVAL FUNC $FUNC ARRPOS ARRSIZE ") \
 					 wxT("INSTR ISNUM TRIM $TRIM UCASE LCASE $UCASE $LCASE LEN MID STR REPLACE $REPLACE ") \
@@ -610,27 +611,27 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("strfind"), wxT("STRFIND([$выражение],[$шаблон],[#номер]) - возвращает подстроку, соответствующую группе с номером [#номер] регулярного выражения")));
 		_tooltips.push_back(HelpTip(wxT("$strfind"), wxT("$STRFIND([$выражение],[$шаблон],[#номер]) - возвращает подстроку, соответствующую группе с номером [#номер] регулярного выражения")));
 		_tooltips.push_back(HelpTip(wxT("strpos"), wxT("STRPOS([$выражение],[$шаблон],[#номер]) - возвращает позицию подстроки, соответствующей группе с номером [#номер] регулярного выражения")));
-		_tooltips.push_back(HelpTip(wxT("countobj"), wxT("COUNTOBJ() - возвращает текущее число предметов")));
-		_tooltips.push_back(HelpTip(wxT("msecscount"), wxT("MSECSCOUNT() - возвращает количество миллисекунд, прошедших с момента начала игры")));
-		_tooltips.push_back(HelpTip(wxT("rnd"), wxT("RND() - возвращает случайное значение от 1 до 1000")));
-		_tooltips.push_back(HelpTip(wxT("curloc"), wxT("CURLOC() - возвращает название текущей локации")));
-		_tooltips.push_back(HelpTip(wxT("$curloc"), wxT("$CURLOC() - возвращает название текущей локации")));
-		_tooltips.push_back(HelpTip(wxT("qspver"), wxT("QSPVER() - возвращает версию интерпретатора")));
-		_tooltips.push_back(HelpTip(wxT("$qspver"), wxT("$QSPVER() - возвращает версию интерпретатора")));
-		_tooltips.push_back(HelpTip(wxT("selobj"), wxT("SELOBJ() - возвращает название выделенного предмета")));
-		_tooltips.push_back(HelpTip(wxT("$selobj"), wxT("$SELOBJ() - возвращает название выделенного предмета")));
-		_tooltips.push_back(HelpTip(wxT("selact"), wxT("SELACT() - возвращает название выделенного действия")));
-		_tooltips.push_back(HelpTip(wxT("$selact"), wxT("$SELACT() - возвращает название выделенного действия")));
-		_tooltips.push_back(HelpTip(wxT("curacts"), wxT("CURACTS() - возвращает в виде кода все текущие действия")));
-		_tooltips.push_back(HelpTip(wxT("$curacts"), wxT("$CURACTS() - возвращает в виде кода все текущие действия")));
-		_tooltips.push_back(HelpTip(wxT("user_text"), wxT("USER_TEXT() - возвращает текст в строке ввода")));
-		_tooltips.push_back(HelpTip(wxT("$user_text"), wxT("$USER_TEXT() - возвращает текст в строке ввода")));
-		_tooltips.push_back(HelpTip(wxT("usrtxt"), wxT("USRTXT() - возвращает текст в строке ввода")));
-		_tooltips.push_back(HelpTip(wxT("$usrtxt"), wxT("$USRTXT() - возвращает текст в строке ввода")));
-		_tooltips.push_back(HelpTip(wxT("maintxt"), wxT("MAINTXT() - возвращает текст в основном окне описания")));
-		_tooltips.push_back(HelpTip(wxT("$maintxt"), wxT("$MAINTXT() - возвращает текст в основном окне описания")));
-		_tooltips.push_back(HelpTip(wxT("stattxt"), wxT("STATTXT() - возвращает текст в дополнительном окне описания")));
-		_tooltips.push_back(HelpTip(wxT("$stattxt"), wxT("$STATTXT() - возвращает текст в дополнительном окне описания")));
+		_tooltips.push_back(HelpTip(wxT("countobj"), wxT("COUNTOBJ( ) - возвращает текущее число предметов")));
+		_tooltips.push_back(HelpTip(wxT("msecscount"), wxT("MSECSCOUNT( ) - возвращает количество миллисекунд, прошедших с момента начала игры")));
+		_tooltips.push_back(HelpTip(wxT("rnd"), wxT("RND( ) - возвращает случайное значение от 1 до 1000")));
+		_tooltips.push_back(HelpTip(wxT("curloc"), wxT("CURLOC( ) - возвращает название текущей локации")));
+		_tooltips.push_back(HelpTip(wxT("$curloc"), wxT("$CURLOC( ) - возвращает название текущей локации")));
+		_tooltips.push_back(HelpTip(wxT("qspver"), wxT("QSPVER( ) - возвращает версию интерпретатора")));
+		_tooltips.push_back(HelpTip(wxT("$qspver"), wxT("$QSPVER( ) - возвращает версию интерпретатора")));
+		_tooltips.push_back(HelpTip(wxT("selobj"), wxT("SELOBJ( ) - возвращает название выделенного предмета")));
+		_tooltips.push_back(HelpTip(wxT("$selobj"), wxT("$SELOBJ( ) - возвращает название выделенного предмета")));
+		_tooltips.push_back(HelpTip(wxT("selact"), wxT("SELACT( ) - возвращает название выделенного действия")));
+		_tooltips.push_back(HelpTip(wxT("$selact"), wxT("$SELACT( ) - возвращает название выделенного действия")));
+		_tooltips.push_back(HelpTip(wxT("curacts"), wxT("CURACTS( ) - возвращает в виде кода все текущие действия")));
+		_tooltips.push_back(HelpTip(wxT("$curacts"), wxT("$CURACTS( ) - возвращает в виде кода все текущие действия")));
+		_tooltips.push_back(HelpTip(wxT("user_text"), wxT("USER_TEXT( ) - возвращает текст в строке ввода")));
+		_tooltips.push_back(HelpTip(wxT("$user_text"), wxT("$USER_TEXT( ) - возвращает текст в строке ввода")));
+		_tooltips.push_back(HelpTip(wxT("usrtxt"), wxT("USRTXT( ) - возвращает текст в строке ввода")));
+		_tooltips.push_back(HelpTip(wxT("$usrtxt"), wxT("$USRTXT( ) - возвращает текст в строке ввода")));
+		_tooltips.push_back(HelpTip(wxT("maintxt"), wxT("MAINTXT( ) - возвращает текст в основном окне описания")));
+		_tooltips.push_back(HelpTip(wxT("$maintxt"), wxT("$MAINTXT( ) - возвращает текст в основном окне описания")));
+		_tooltips.push_back(HelpTip(wxT("stattxt"), wxT("STATTXT( ) - возвращает текст в дополнительном окне описания")));
+		_tooltips.push_back(HelpTip(wxT("$stattxt"), wxT("$STATTXT( ) - возвращает текст в дополнительном окне описания")));
 		// Variables
 		_tooltips.push_back(HelpTip(wxT("args"), wxT("ARGS - массив с параметрами процедуры / функции")));
 		_tooltips.push_back(HelpTip(wxT("$args"), wxT("$ARGS - массив с параметрами процедуры / функции")));
