@@ -332,7 +332,6 @@ void Controls::SortLocations(bool isAscending)
 			_locListBox->UpdateFolderLocations(_container->GetFolderName(selFolder));
 		else
 			UpdateLocationsList();
-		ShowOpenedLocationsIcons();
 		InitSearchData();
 	}
 }
@@ -833,6 +832,7 @@ void Controls::UpdateLocationsList()
 		}
 	}
 	UpdateActionsOnAllLocs();
+	ShowOpenedLocationsIcons();
 	_locListBox->Thaw();
 }
 

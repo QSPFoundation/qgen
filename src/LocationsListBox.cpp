@@ -75,7 +75,6 @@ void LocationsListBox::Update(bool isFromObservable)
 	{
 		_controls->SyncWithLocationsList();
 		_controls->UpdateLocationsList();
-		_controls->ShowOpenedLocationsIcons();
 	}
 }
 
