@@ -38,6 +38,7 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 	wxDialog( parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | style )
 {
 	_controls = controls;
+	_parent = parent;
 	Settings *settings = _controls->GetSettings();
 	_searchDataStore = settings->GetSearchDataStore();
 
@@ -165,4 +166,15 @@ void SearchDialog::AddReplaceText(const wxString &text)
 	if (_textRepl->GetCount() && _textRepl->GetString(0) == text)
 		return;
 	_textRepl->Insert(text, 0);
+}
+
+bool SearchDialog::Show(bool show)
+{
+	if (wxDialog::Show(show))
+		if (show)
+			_textFind->SetFocus();
+		else
+			_parent->SetFocus();
+
+	return true;
 }

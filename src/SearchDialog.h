@@ -41,6 +41,7 @@
 					*_btnReplace,
 					*_btnReplaceAll,
 					*_btnSkipLoc;
+		wxWindow	*_parent;
 		Controls	*_controls;
 		SearchDataStore *_searchDataStore;
 
@@ -55,6 +56,8 @@
 		void AddReplaceText(const wxString &text);
 	public:
 		SearchDialog(wxWindow *parent, const wxString& title, Controls *controls, int style = 0);
+
+		bool Show(bool show = true);
 	};
 
 #endif
