@@ -297,6 +297,7 @@ void SyntaxTextBox::SetValue( const wxString &str )
 {
 	SetText(str);
 	SetModified(false);
+	EmptyUndoBuffer();
 }
 
 void SyntaxTextBox::FillKeywords( const wxString &str )

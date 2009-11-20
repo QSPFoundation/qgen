@@ -171,10 +171,11 @@ void SearchDialog::AddReplaceText(const wxString &text)
 bool SearchDialog::Show(bool show)
 {
 	if (wxDialog::Show(show))
+	{
 		if (show)
 			_textFind->SetFocus();
 		else
 			_parent->SetFocus();
-
+	}
 	return true;
 }
