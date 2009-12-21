@@ -186,17 +186,17 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	wxStaticText *stText10 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет фона вкладок локаций:"));
 	wxStaticText *stText11 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет основного фона:"));
 
-	_colorStatements = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
-	_colorFunctions = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
-	_colorSysVariables = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
-	_colorStrings = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
-	_colorNumbers = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
-	_colorOptsBrts = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
-	_colorMarks = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
-	_colorComments = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
-	_colorBaseFont = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
-	_colorTextBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
-	_colorBaseBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, wxDefaultCoord));
+	_colorStatements = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+	_colorFunctions = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+	_colorSysVariables = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+	_colorStrings = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+	_colorNumbers = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+	_colorOptsBrts = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+	_colorMarks = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+	_colorComments = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+	_colorBaseFont = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+	_colorTextBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+	_colorBaseBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
 
 	_btnClrsStatements = new wxButton(_colors, ID_COLORS_STATEMENTS, wxT("Выбрать цвет..."));
 	_btnClrsFunctions = new wxButton(_colors, ID_COLORS_FUNCTIONS, wxT("Выбрать цвет..."));
