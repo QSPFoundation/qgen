@@ -413,6 +413,7 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
 		{
 			container->Clear();
 			qspFreeStrs(strs, count, false);
+			controls->ShowMessage( QGEN_MSG_CANTLOADGAME );
 			return true;
 		}
 		data = qspGameToQSPString(strs[ind++], isUCS2, true);

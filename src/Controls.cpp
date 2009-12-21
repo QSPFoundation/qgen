@@ -294,6 +294,7 @@ wxString Controls::GetMessageDesc( long errorNum )
 		case QGEN_MSG_EMPTYDATA: str = wxT("Пустое поле, введите значение!"); break;
 		case QGEN_MSG_WRONGPASSWORD: str = wxT("Неверный пароль!"); break;
 		case QGEN_MSG_CANTSAVEGAME: str = wxT("Ошибка записи файла!"); break;
+		case QGEN_MSG_CANTLOADGAME: str = wxT("Нельзя загрузить игру! Найдены 2 локации с одинаковым именем!"); break;
 		case QGEN_MSG_NOTFOUND: str = wxT("Ничего не найдено!"); break;
 		case QGEN_MSG_SEARCHENDED: str = wxT("Указанный текст больше не найден."); break;
 		case QGEN_MSG_WRONGFORMAT: str = wxT("Неверный формат!"); break;
