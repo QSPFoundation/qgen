@@ -69,7 +69,9 @@ void HotKeyTextCtrl::OnKeyDown( wxKeyEvent& event )
 			AppendAccel(_hotKey, wxT("Shift"));
 			_flags |= wxACCEL_SHIFT;
 		}
-		if (keyCode >= wxT('A') && keyCode <= wxT('Z') && !_hotKeyCode)
+		if (((keyCode >= wxT('A') && keyCode <= wxT('Z')) || 
+			(keyCode >= wxT('0') && keyCode <= wxT('9'))) && 
+			!_hotKeyCode)
 		{
 			_hotKey = wxString::Format(wxT("%s+%c"), _hotKey.wx_str(), keyCode);
 			_hotKeyCode = keyCode;
