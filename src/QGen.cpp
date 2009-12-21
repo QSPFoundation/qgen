@@ -402,7 +402,7 @@ void QGenMainFrame::OnAbout( wxCommandEvent &event )
 	info.SetDescription(wxString::Format( _("Version: %s\nCompiled: %s"),
 		QGEN_VER, wxT(__DATE__) wxT(", ") wxT(__TIME__)));
 	info.SetWebSite(wxT("http://qsp.su"));
-	info.AddDeveloper(wxT("BaxZzZz [bauer_v@mail.ru]"));
+	info.AddDeveloper(wxT("BaxZzZz [baxzzzz@gmail.com]"));
 	info.AddDeveloper(wxT("Byte [nporep@mail.ru]"));
 	info.AddDeveloper(wxT("Nex [nex@otaku.ru]"));
 	info.AddDeveloper(wxT("rrock.ru [rrock.ru@gmail.com]"));

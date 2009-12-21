@@ -179,7 +179,7 @@
 	#define QGEN_SPACES QGEN_FMT(" \t")
 	#define QGEN_STRSDELIM QGEN_FMT("\r\n")
 	#define QGEN_GAMEID QGEN_FMT("QSPGAME")
-	#define QGEN_VER QGEN_FMT("4.0.0 alpha 13")
+	#define QGEN_VER QGEN_FMT("4.0.0 beta 1")
 	#define QGEN_NAME QGEN_FMT("QGEN")
 	#define QGEN_PASSWD QGEN_FMT("No")
 	#define QGEN_MAXACTIONS 50
