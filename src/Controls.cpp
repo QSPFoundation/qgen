@@ -1585,7 +1585,7 @@ bool Controls::SearchHelpFile()
 	if (!wxFile::Exists(_settings->GetCurrentHelpPath()))
 	{
 		wxFileDialog dialog(GetParent(), wxT("Выберите файл справки"), wxEmptyString, wxEmptyString,
-			wxT("Файл справки (*.chm)|*.chm"), wxFD_OPEN);
+			wxT("Файл справки (*.chm)|*.chm|Все файлы (*.*)|*.*"), wxFD_OPEN);
 		dialog.CenterOnParent();
 		if (dialog.ShowModal() == wxID_CANCEL) return false;
 		_settings->SetCurrentHelpPath(dialog.GetPath());

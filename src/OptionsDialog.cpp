@@ -545,7 +545,6 @@ void OptionsDialog::OnColorSelect( wxCommandEvent &event )
 			_btnApply->Enable();
 		}
 		break;
-	default: break;
 	}
 }
 
@@ -653,7 +652,6 @@ void OptionsDialog::OnFontSelect( wxCommandEvent &event )
 			_btnApply->Enable();
 		}
 		break;
-	default: break;
 	}
 }
 
@@ -664,7 +662,7 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
 	{
 	case ID_PATH_PLAYER:
 		dialog.Create(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString, 
-			wxT("Файл плеера (*.exe)|*.exe"), wxFD_OPEN);
+			wxT("Файл плеера (*.exe)|*.exe|Все файлы (*.*)|*.*"), wxFD_OPEN);
 		if (dialog.ShowModal() == wxID_OK) 
 		{
 			_txtPathPlayer->SetValue(dialog.GetPath());
@@ -673,7 +671,7 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
 		break;
 	case ID_PATH_HELP:
 		dialog.Create(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString, 
-			wxT("Файл справки (*.chm)|*.chm"), wxFD_OPEN);
+			wxT("Файл справки (*.chm)|*.chm|Все файлы (*.*)|*.*"), wxFD_OPEN);
 		if (dialog.ShowModal() == wxID_OK) 
 		{
 			_txtPathHelp->SetValue(dialog.GetPath());
@@ -682,14 +680,13 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
 		break;
 	case ID_PATH_TXT2GAM:
 		dialog.Create(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString, 
-			wxT("Файл конвертора (*.exe)|*.exe"), wxFD_OPEN);
+			wxT("Файл конвертора (*.exe)|*.exe|Все файлы (*.*)|*.*"), wxFD_OPEN);
 		if (dialog.ShowModal() == wxID_OK) 
 		{
 			_txtPathTxt2Gam->SetValue(dialog.GetPath());
 			_btnApply->Enable();
 		}
 		break;
-	default: break;
 	}
 }
 

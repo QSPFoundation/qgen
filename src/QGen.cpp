@@ -689,7 +689,7 @@ void QGenMainFrame::OnPlayQuest( wxCommandEvent &event )
 	if (!wxFile::Exists(settings->GetCurrentPlayerPath()))
 	{
 		wxFileDialog dialog(this, wxT("Âûבונטעו פאיכ ןכוונא"), wxEmptyString, wxEmptyString,
-			wxT("Ôאיכ ןכוונא (*.exe)|*.exe"), wxFD_OPEN);
+			wxT("Ôאיכ ןכוונא (*.exe)|*.exe|Âסו פאיכû (*.*)|*.*"), wxFD_OPEN);
 		dialog.CenterOnParent();
 		if (dialog.ShowModal() == wxID_CANCEL) return;
 		settings->SetCurrentPlayerPath(dialog.GetPath());
@@ -776,7 +776,7 @@ void QGenMainFrame::OnImportTxt2Gam( wxCommandEvent &event )
 		if (!wxFile::Exists(settings->GetCurrentTxt2GamPath()))
 		{
 			wxFileDialog dialog2(this, wxT("Âûבונטעו פאיכ"), wxEmptyString, wxEmptyString,
-				wxT("Ôאיכ ךמםגונעמנא (*.exe)|*.exe"), wxFD_OPEN);
+				wxT("Ôאיכ ךמםגונעמנא (*.exe)|*.exe|Âסו פאיכû (*.*)|*.*"), wxFD_OPEN);
 			dialog2.CenterOnParent();
 			if (dialog2.ShowModal() == wxID_CANCEL) return;
 			settings->SetCurrentTxt2GamPath(dialog2.GetPath());
