@@ -30,6 +30,7 @@
 	#include <wx/fdrepdlg.h>
 	#include <wx/aboutdlg.h>
 	#include <wx/help.h>
+	#include <wx/mstream.h>
 
 	#include "Controls.h"
 	#include "Idents.h"
@@ -76,6 +77,13 @@
 	#include "bitmaps/exit_menu.xpm"
 
 	#define QGEN_TITLE wxT("Quests Generator")
+
+	#define wxGetBitmapFromMemory(name) _wxGetBitmapFromMemory(name ## _png, sizeof(name ## _png))
+		inline wxBitmap _wxGetBitmapFromMemory(const unsigned char *data, int length)
+		{
+			wxMemoryInputStream is(data, length);
+			return wxBitmap(wxImage(is, wxBITMAP_TYPE_ANY, -1), -1);
+		}
 
 	class QGenApp : public wxApp
 	{
