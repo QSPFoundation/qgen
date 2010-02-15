@@ -44,11 +44,11 @@ LocationsListBox::LocationsListBox(wxTopLevelWindow *parent, wxWindowID id, ICon
 	_tip = NULL;
 
 	_statesImageList.Create(16, 16);
-	_statesImageList.Add(wxIcon(folder_xpm));
-	_statesImageList.Add(wxIcon(folder_opened_xpm));
-	_statesImageList.Add(wxIcon(location_closed_xpm));
-	_statesImageList.Add(wxIcon(location_xpm));
-	_statesImageList.Add(wxIcon(action_xpm));
+	_statesImageList.Add(wxIcon(locslist_folder_closed_xpm));
+	_statesImageList.Add(wxIcon(locslist_folder_opened_xpm));
+	_statesImageList.Add(wxIcon(locslist_location_ball_closed_xpm));
+	_statesImageList.Add(wxIcon(locslist_location_ball_opened_xpm));
+	_statesImageList.Add(wxIcon(locslist_action_ball_xpm));
 
 	AddRoot(wxT("Locs"));
 	Update();

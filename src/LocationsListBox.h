@@ -29,11 +29,11 @@
 	#include "LocationPage.h"
 	#include "LocationTip.h"
 
-	#include "bitmaps/folder.xpm"
-	#include "bitmaps/folder_opened.xpm"
-	#include "bitmaps/location_closed.xpm"
-	#include "bitmaps/location.xpm"
-	#include "bitmaps/action.xpm"
+	#include "bitmaps/locslist_folder_closed.xpm"
+	#include "bitmaps/locslist_folder_opened.xpm"
+	#include "bitmaps/locslist_location_ball_closed.xpm"
+	#include "bitmaps/locslist_location_ball_opened.xpm"
+	#include "bitmaps/locslist_action_ball.xpm"
 
 	enum
 	{

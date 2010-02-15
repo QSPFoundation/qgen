@@ -27,9 +27,9 @@
 	#include "ActionCode.h"
 	#include "ActionsListBox.h"
 
-	#include "bitmaps/new_action.xpm"
-	#include "bitmaps/rename_action.xpm"
-	#include "bitmaps/delete_action.xpm"
+	#include "bitmaps/toolbar_action_new.xpm"
+	#include "bitmaps/toolbar_action_rename.xpm"
+	#include "bitmaps/toolbar_action_delete.xpm"
 
 	enum
 	{

@@ -8,7 +8,7 @@
 //
 // Icon resources
 //
-IDI_QGEN           ICON           "bitmaps\\wxwin16x16.ico"
+IDI_QGEN           ICON           "bitmaps\\qgen.ico"
 
 #ifdef _DEBUG
 	#define wxUSE_NO_MANIFEST 1

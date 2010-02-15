@@ -26,7 +26,7 @@
 	#include "Idents.h"
 	#include "LocationPage.h"
 
-	#include "bitmaps/fixed_page.xpm"
+	#include "bitmaps/locstabs_page_fixed.xpm"
 
 	enum CloseTypePage
 	{

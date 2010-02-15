@@ -1,0 +1,33 @@
+/* XPM */
+static char *locslist_location_ball_opened_xpm[] = {
+/* columns rows colors chars-per-pixel */
+"15 15 12 1",
+"@ c #395FFF",
+"X c #003BD7",
+"o c #5886FF",
+"  c None",
+"O c #6893FF",
+"$ c #264FFF",
+"# c #101B70",
+"% c #173AFF",
+"& c #092CF4",
+"+ c #4970FF",
+". c #074CFF",
+"* c #0022ED",
+/* pixels */
+"               ",
+"               ",
+"               ",
+"               ",
+"               ",
+"      ..X      ",
+"    .oO+@X#    ",
+"    oOo@$%#    ",
+"   .Oo+$%&*#   ",
+"   .+@$&***#   ",
+"   X@$%****#   ",
+"    X%&***#    ",
+"    ##***##    ",
+"      ###      ",
+"               "
+};

@@ -191,7 +191,7 @@ void LocationsNotebook::SwitchPageFixed( size_t selPage )
 	LocationPage *page = (LocationPage *)GetPage(selPage);
 	bool isFixed = !page->IsFixed();
 	page->SetFixed(isFixed);
-	SetPageBitmap(selPage, isFixed ? wxBitmap(fixed_page_xpm) : wxNullBitmap);
+	SetPageBitmap(selPage, isFixed ? wxBitmap(locstabs_page_fixed_xpm) : wxNullBitmap);
 }
 
 void LocationsNotebook::Update(bool isFromObservable)

@@ -36,9 +36,9 @@ ActionsPanel::ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode 
 	_actList = new ActionsListBox( this, wxID_ANY, locPage, actCode, controls );
 	wxSizer *sizer2 = new wxBoxSizer ( wxHORIZONTAL );
 
-	_addActButton = new wxBitmapButton( this, ID_ADD_ACTION, wxBitmap(new_action_xpm), wxDefaultPosition, wxSize(32,26) );
-	_renActButton = new wxBitmapButton( this, ID_REN_ACTION, wxBitmap(rename_action_xpm), wxDefaultPosition, wxSize(32,26) );
-	_delActButton = new wxBitmapButton( this, ID_DEL_ACTION, wxBitmap(delete_action_xpm), wxDefaultPosition, wxSize(32,26) );
+	_addActButton = new wxBitmapButton( this, ID_ADD_ACTION, wxBitmap(toolbar_action_new_xpm), wxDefaultPosition, wxSize(32,26) );
+	_renActButton = new wxBitmapButton( this, ID_REN_ACTION, wxBitmap(toolbar_action_rename_xpm), wxDefaultPosition, wxSize(32,26) );
+	_delActButton = new wxBitmapButton( this, ID_DEL_ACTION, wxBitmap(toolbar_action_delete_xpm), wxDefaultPosition, wxSize(32,26) );
 
 	sizer2->Add( _addActButton, 0, wxALL, 1 );
 	sizer2->Add( _renActButton, 0, wxALL, 1 );
