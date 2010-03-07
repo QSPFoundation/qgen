@@ -63,7 +63,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 					   wxT("let killvar dynamic copyarr add obj addobj delobj killobj unselect unsel ") \
 					   wxT("killall menu opengame openqst addqst killqst savegame refint settimer showacts ") \
 					   wxT("showinput showobjs showstat if else end exit jump gosub gs goto gt xgoto xgt play ") \
-					   wxT("close all view exec"));
+					   wxT("close all view exec setobj"));
 
 		SetKeyWords(1, wxT("and or no mod desc iif input $desc $iif $input isplay max min $max $min rand rgb ") \
 					   wxT("getobj $getobj dyneval $dyneval func $func arrpos arrsize instr isnum trim $trim ") \
@@ -109,7 +109,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 		AutoCompSetDropRestOfWord(true);
 
 		FillKeywords(wxT("CLEAR CLR NL P PL MSG WAIT ACT DELACT DEL CLA CMDCLEAR CMDCLR CLS SET LET ") \
-					 wxT("KILLVAR DYNAMIC COPYARR ADD OBJ ADDOBJ DELOBJ KILLOBJ UNSELECT UNSEL KILLALL ") \
+					 wxT("KILLVAR DYNAMIC COPYARR ADD OBJ ADDOBJ DELOBJ KILLOBJ SETOBJ UNSELECT UNSEL KILLALL ") \
 					 wxT("MENU OPENGAME OPENQST ADDQST KILLQST SAVEGAME REFINT SETTIMER SHOWACTS SHOWINPUT ") \
 					 wxT("SHOWOBJS SHOWSTAT IF ELSE END EXIT JUMP GOSUB GS GOTO GT XGOTO XGT PLAY EXEC ") \
 					 wxT("CLOSE ALL VIEW AND OR NO MOD DESC IIF INPUT $DESC $IIF $INPUT ISPLAY MAX MIN ") \
@@ -537,7 +537,8 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("copyarr"), wxT("COPYARR [$массив-приемник],[$массив-источник] - копирование содержимого массива в другой массив")));
 		_tooltips.push_back(HelpTip(wxT("addobj"), wxT("ADDOBJ [$название],[$путь к файлу изображения] / ADD OBJ [$название],[$путь к файлу изображения] - добавление предмета")));
 		_tooltips.push_back(HelpTip(wxT("delobj"), wxT("DELOBJ [$название] / DEL OBJ [$название] - удаление предмета")));
-		_tooltips.push_back(HelpTip(wxT("killobj"), wxT("KILLOBJ - удаление всех предметов")));
+		_tooltips.push_back(HelpTip(wxT("killobj"), wxT("KILLOBJ [#выражение] - удаление всех предметов / предмета в заданной позиции")));
+		_tooltips.push_back(HelpTip(wxT("setobj"), wxT("SETOBJ [#выражение],[$название],[$путь к файлу изображения] - изменение названия / изображения у предмета")));
 		_tooltips.push_back(HelpTip(wxT("unselect"), wxT("UNSELECT - отмена выбора предмета")));
 		_tooltips.push_back(HelpTip(wxT("unsel"), wxT("UNSEL - отмена выбора предмета")));
 		_tooltips.push_back(HelpTip(wxT("killall"), wxT("KILLALL - удаление всех переменных и предметов")));
