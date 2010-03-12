@@ -63,7 +63,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 					   wxT("let killvar dynamic copyarr add obj addobj delobj killobj unselect unsel ") \
 					   wxT("killall menu opengame openqst addqst killqst savegame refint settimer showacts ") \
 					   wxT("showinput showobjs showstat if else end exit jump gosub gs goto gt xgoto xgt play ") \
-					   wxT("close all view exec setobj"));
+					   wxT("close all view exec"));
 
 		SetKeyWords(1, wxT("and or no mod desc iif input $desc $iif $input isplay max min $max $min rand rgb ") \
 					   wxT("getobj $getobj dyneval $dyneval func $func arrpos arrsize instr isnum trim $trim ") \
@@ -109,7 +109,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 		AutoCompSetDropRestOfWord(true);
 
 		FillKeywords(wxT("CLEAR CLR NL P PL MSG WAIT ACT DELACT DEL CLA CMDCLEAR CMDCLR CLS SET LET ") \
-					 wxT("KILLVAR DYNAMIC COPYARR ADD OBJ ADDOBJ DELOBJ KILLOBJ SETOBJ UNSELECT UNSEL KILLALL ") \
+					 wxT("KILLVAR DYNAMIC COPYARR ADD OBJ ADDOBJ DELOBJ KILLOBJ UNSELECT UNSEL KILLALL ") \
 					 wxT("MENU OPENGAME OPENQST ADDQST KILLQST SAVEGAME REFINT SETTIMER SHOWACTS SHOWINPUT ") \
 					 wxT("SHOWOBJS SHOWSTAT IF ELSE END EXIT JUMP GOSUB GS GOTO GT XGOTO XGT PLAY EXEC ") \
 					 wxT("CLOSE ALL VIEW AND OR NO MOD DESC IIF INPUT $DESC $IIF $INPUT ISPLAY MAX MIN ") \
@@ -522,7 +522,7 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("nl"), wxT("NL [выражение] / *NL [выражение] - переход на новую строку, затем вывод текста в дополнительное / основное окно описания")));
 		_tooltips.push_back(HelpTip(wxT("msg"), wxT("MSG [выражение] - вывод сообщения в информационном окне")));
 		_tooltips.push_back(HelpTip(wxT("wait"), wxT("WAIT [#выражение] - остановка выполнения программы на заданное количество миллисекунд")));
-		_tooltips.push_back(HelpTip(wxT("act"), wxT("ACT [$название],[$путь к файлу изображения]:[оператор] & [оператор] & ... - добавление действия")));
+		_tooltips.push_back(HelpTip(wxT("act"), wxT("ACT [$название],[$путь к изображению]:[оператор] & [оператор] & ... - добавление действия")));
 		_tooltips.push_back(HelpTip(wxT("delact"), wxT("DELACT [$название] / DEL ACT [$название] - удаление действия")));
 		_tooltips.push_back(HelpTip(wxT("cla"), wxT("CLA - очистка списка действий")));
 		_tooltips.push_back(HelpTip(wxT("cmdclear"), wxT("CMDCLEAR - очистка строки ввода")));
@@ -535,10 +535,9 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("let"), wxT("LET [название переменной]=[выражение] - установка значения переменной")));
 		_tooltips.push_back(HelpTip(wxT("killvar"), wxT("KILLVAR [$название],[#индекс] - удаление всех переменных / указанной переменной")));
 		_tooltips.push_back(HelpTip(wxT("copyarr"), wxT("COPYARR [$массив-приемник],[$массив-источник] - копирование содержимого массива в другой массив")));
-		_tooltips.push_back(HelpTip(wxT("addobj"), wxT("ADDOBJ [$название],[$путь к файлу изображения] / ADD OBJ [$название],[$путь к файлу изображения] - добавление предмета")));
+		_tooltips.push_back(HelpTip(wxT("addobj"), wxT("ADDOBJ [$название],[$путь к изображению],[#позиция] / ADD OBJ [$название],[$путь к изображению],[#позиция] - добавление предмета")));
 		_tooltips.push_back(HelpTip(wxT("delobj"), wxT("DELOBJ [$название] / DEL OBJ [$название] - удаление предмета")));
-		_tooltips.push_back(HelpTip(wxT("killobj"), wxT("KILLOBJ [#выражение] - удаление всех предметов / предмета в заданной позиции")));
-		_tooltips.push_back(HelpTip(wxT("setobj"), wxT("SETOBJ [#выражение],[$название],[$путь к файлу изображения] - изменение названия / изображения у предмета")));
+		_tooltips.push_back(HelpTip(wxT("killobj"), wxT("KILLOBJ [#позиция] - удаление всех предметов / предмета в заданной позиции")));
 		_tooltips.push_back(HelpTip(wxT("unselect"), wxT("UNSELECT - отмена выбора предмета")));
 		_tooltips.push_back(HelpTip(wxT("unsel"), wxT("UNSEL - отмена выбора предмета")));
 		_tooltips.push_back(HelpTip(wxT("killall"), wxT("KILLALL - удаление всех переменных и предметов")));
@@ -584,8 +583,8 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("$min"), wxT("$MIN([выражение 1],[выражение 2], ...) - возвращает минимальное из значений аргументов")));
 		_tooltips.push_back(HelpTip(wxT("rand"), wxT("RAND([#выражение 1],[#выражение 2]) - возвращает случайное число между заданными")));
 		_tooltips.push_back(HelpTip(wxT("rgb"), wxT("RGB([#красный],[#зеленый],[#синий]) - возвращает код цвета на основе 3-х составляющих")));
-		_tooltips.push_back(HelpTip(wxT("getobj"), wxT("GETOBJ([#выражение]) - возвращает название предмета, расположенного в заданной позиции")));
-		_tooltips.push_back(HelpTip(wxT("$getobj"), wxT("$GETOBJ([#выражение]) - возвращает название предмета, расположенного в заданной позиции")));
+		_tooltips.push_back(HelpTip(wxT("getobj"), wxT("GETOBJ([#позиция]) - возвращает название предмета, расположенного в заданной позиции")));
+		_tooltips.push_back(HelpTip(wxT("$getobj"), wxT("$GETOBJ([#позиция]) - возвращает название предмета, расположенного в заданной позиции")));
 		_tooltips.push_back(HelpTip(wxT("dyneval"), wxT("DYNEVAL([$выражение],[параметр 1],[параметр 2], ...) - возвращает значение динамически вычисленного выражения")));
 		_tooltips.push_back(HelpTip(wxT("$dyneval"), wxT("$DYNEVAL([$выражение],[параметр 1],[параметр 2], ...) - возвращает значение динамически вычисленного выражения")));
 		_tooltips.push_back(HelpTip(wxT("func"), wxT("FUNC([$выражение],[параметр 1],[параметр 2], ...) - обработка указанной локации как функции")));
@@ -658,7 +657,7 @@ void SyntaxTextBox::LoadTips()
 		_tooltips.push_back(HelpTip(wxT("lcolor"), wxT("LCOLOR - переменная содержит основной цвет ссылок")));
 		_tooltips.push_back(HelpTip(wxT("fsize"), wxT("FSIZE - переменная содержит основной размер шрифта")));
 		_tooltips.push_back(HelpTip(wxT("$fname"), wxT("$FNAME - переменная содержит название основного шрифта")));
-		_tooltips.push_back(HelpTip(wxT("$backimage"), wxT("$BACKIMAGE - переменная содержит путь к файлу изображения локации")));
+		_tooltips.push_back(HelpTip(wxT("$backimage"), wxT("$BACKIMAGE - переменная содержит путь к фоновому изображению")));
 	}
 }
 
