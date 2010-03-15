@@ -21,8 +21,8 @@
 
 class LocationPage;
 
-#ifndef _QUEST_GENERATOR_CONCRETE_COMMAND_
-	#define _QUEST_GENERATOR_CONCRETE_COMMAND_
+#ifndef _QGEN_ICONTROLS_H_
+	#define _QGEN_ICONTROLS_H_
 
 	#include "Settings.h"
 	#include "DataContainer.h"

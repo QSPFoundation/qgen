@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_MAIN_FRAME_H
-	#define _QUEST_GENERATOR_MAIN_FRAME_H
+#ifndef _QGEN_MAIN_FRAME_H_
+	#define _QGEN_MAIN_FRAME_H_
 
 	#include <wx/filedlg.h>
 	#include <wx/wfstream.h>
@@ -94,12 +94,11 @@
 
 	enum
 	{
-		ID_LOCSLIST,
+		ID_LOCSLIST = 10000,
 		ID_TOOLBAR,
 		ID_TIMER_AUTO_SAVE,
 		ID_TIMER_UPD_TOOLBAR,
-
-		ID_TOGGLE_TOOLBAR = 10001,
+		ID_TOGGLE_TOOLBAR,
 		ID_TOGGLE_STATUSBAR,
 		ID_TOGGLE_LISTBOX,
 		ID_QUEST_NEW,
@@ -134,8 +133,8 @@
 		ID_LOC_SELECT,
 		ID_LOC_DESCVISIBLE,
 		ID_LOC_ACTVISIBLE,
-		ID_ACTION_CREATE,
-		ID_ACTION_RENAME,
+		ID_ACTION_ADD,
+		ID_ACTION_REN,
 		ID_ACTION_DEL,
 		ID_ACTION_DELALL,
 		ID_ACTION_SUBMENU,
@@ -174,7 +173,6 @@
 		void OnExit(wxCommandEvent &event);
 		void OnQuit(wxCloseEvent &event);
 		void OnChmHelp(wxCommandEvent &event);
-
 		void OnSearchHelp(wxCommandEvent &event);
 		void OnAbout(wxCommandEvent &event);
 		void OnLoadFile(wxCommandEvent &event);
@@ -203,7 +201,6 @@
 		void OnToggleToolbar(wxCommandEvent &event);
 		void OnToggleLocations(wxCommandEvent &event);
 		void OnToggleStatusbar(wxCommandEvent &event);
-		void TogglePaneVisibility(wxString pane_name);
 		void OnFindDialog(wxCommandEvent&event);
 		void OnInformationQuest(wxCommandEvent &event);
 		void OnOptionsDialog(wxCommandEvent &event);
@@ -224,12 +221,9 @@
 		void OnLocDescVisible(wxCommandEvent &event);
 		void OnLocActsVisible(wxCommandEvent &event);
 		void OnPaneClose(wxAuiManagerEvent& event);
-
 		void OnUpdMenuItems(wxMenuEvent& event);
-
 		void OnTimerAutoSave(wxTimerEvent &event);
 		void OnTimerUpdToolBar(wxTimerEvent &event);
-
 		void OnKeyDown(wxKeyEvent& event);
 
 		void CreateControls();
@@ -238,12 +232,11 @@
 		void CreateToolBar();
 		void CreateLocListBox();
 		void CreateNotebook();
-
 		void LoadLayout();
 		void SaveLayout();
-
 		void UpdateTitle();
 		bool QuestChange();
+		void TogglePaneVisibility(wxString pane_name);
 
 	public:
 		QGenMainFrame( Controls *controls );

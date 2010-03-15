@@ -19,25 +19,25 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef	_QGEN_MERGE_DIALOG_
-	#define _QGEN_MERGE_DIALOG_
+#ifndef	_QGEN_MERGE_DIALOG_H_
+	#define _QGEN_MERGE_DIALOG_H_
 
 	#include <wx/wx.h>
 	#include <wx/artprov.h>
 
 	enum
 	{
-		ID_REPLACE_BUTTON,
-		ID_SKIP_BUTTON,
-		ID_CANCEL_BUTTON
+		ID_MERGE_REPLACE = 10600,
+		ID_MERGE_SKIP,
+		ID_MERGE_CANCEL
 	};
 
 	enum
 	{
-		MergeAll = 1 << 0,
-		MergeReplace = 1 << 1,
-		MergeSkip = 1 << 2,
-		MergeCancel = 1 << 30
+		MERGE_ALL = 1 << 0,
+		MERGE_REPLACE = 1 << 1,
+		MERGE_SKIP = 1 << 2,
+		MERGE_CANCEL = 1 << 30
 	};
 
 	class MergeDialog : public wxDialog

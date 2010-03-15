@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_KEYS_PARSER_H
-	#define _QUEST_GENERATOR_KEYS_PARSER_H
+#ifndef _QGEN_KEYS_PARSER_H_
+	#define _QGEN_KEYS_PARSER_H_
 
 	#include <wx/wx.h>
 	#include <wx/dynarray.h>
@@ -38,13 +38,13 @@
 	{
 	private:
 		std::map<wxString, int> _keysTable;
-		HotkeysStore *_hotKeysStore;
+		HotkeysStore			*_hotKeysStore;
 
-		void InitKeysTable();
 		void OnKeyPress(int keyCode);
 		void OnKeysPress(const wxString &text);
 
 		void ReleaseAlt();
+		void InitKeysTable();
 	public:
 		KeysParser(HotkeysStore *hotKeysStore);
 		bool ExecuteHotkeyAction(int keyCode, int modifiers);

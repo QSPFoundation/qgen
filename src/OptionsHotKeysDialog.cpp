@@ -25,7 +25,7 @@ IMPLEMENT_CLASS(OptionsHotkeysDialog, wxDialog)
 
 BEGIN_EVENT_TABLE(OptionsHotkeysDialog, wxDialog)
 	EVT_BUTTON(wxID_OK, OptionsHotkeysDialog::OnOkSettings)
-	EVT_BUTTON(ID_HELP_BUTTON, OptionsHotkeysDialog::OnHelpHotKeys)
+	EVT_BUTTON(ID_HOTKEY_HELP, OptionsHotkeysDialog::OnHelpHotKeys)
 END_EVENT_TABLE()
 
 OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& title, Controls *controls, int style) :
@@ -36,7 +36,7 @@ OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& tit
 	wxSizer *hotKeySizer = new wxBoxSizer(wxHORIZONTAL);
 
 	wxStaticText *stText01 = new wxStaticText(this, wxID_ANY, wxT("Комбинация клавиш:"));
-	_txtInputHotkey = new HotKeyTextCtrl(this, wxID_ANY);
+	_txtInputHotkey = new HotKeyTextBox(this, wxID_ANY);
 
 	hotKeySizer->Add(stText01, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
 	hotKeySizer->Add(_txtInputHotkey, 0, wxALL, 5);
@@ -46,7 +46,7 @@ OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& tit
 													  SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOHELPTIPS);
 
 	wxSizer *btnSizer = new wxBoxSizer(wxHORIZONTAL);
-	_btnHelp = new wxButton(this, ID_HELP_BUTTON, wxT("Справка"));
+	_btnHelp = new wxButton(this, ID_HOTKEY_HELP, wxT("Справка"));
 	_btnOK = new wxButton(this, wxID_OK, wxT("OK"));
 	_btnCancel = new wxButton(this, wxID_CANCEL, wxT("Отмена"));
 

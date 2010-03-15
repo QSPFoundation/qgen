@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _TOOLBAR_H
-	#define _TOOLBAR_H
+#ifndef _QGEN_TOOLBAR_H_
+	#define _QGEN_TOOLBAR_H_
 
 	#include <wx/wx.h>
 	#include <wx/aui/auibar.h>

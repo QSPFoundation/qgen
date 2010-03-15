@@ -388,19 +388,19 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
 			indexLoc = container->FindLocationIndex(data);
 			if (indexLoc >= 0)
 			{
-				if (!(mergeType & MergeAll))
+				if (!(mergeType & MERGE_ALL))
 				{
 					MergeDialog dialog(parent, wxT("Подтвердить замену"), wxString::Format(wxT("Локация с таким именем уже существует!\nНазвание локации: %s\nЗаменить существующую локацию?"), data));
 					mergeType = dialog.ShowModal();
-					if (mergeType & MergeCancel)
+					if (mergeType & MERGE_CANCEL)
 					{
 						free(data);
 						qspFreeStrs(strs, count, false);
 						return true;
 					}
 				}
-				if (mergeType & MergeReplace) container->ClearLocation(indexLoc);
-				canAddLoc = !(mergeType & MergeSkip);
+				if (mergeType & MERGE_REPLACE) container->ClearLocation(indexLoc);
+				canAddLoc = !(mergeType & MERGE_SKIP);
 			}
 		}
 		if (indexLoc < 0)

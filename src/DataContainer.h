@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_DATA_CONTAINER_
-	#define _QUEST_GENERATOR_DATA_CONTAINER_
+#ifndef _QGEN_DATA_CONTAINER_H_
+	#define _QGEN_DATA_CONTAINER_H_
 
 	#include <wx/wx.h>
 	#include <wx/dynarray.h>
@@ -36,19 +36,19 @@
 
 	struct LocationData
 	{
-		wxString name;					//Название локации
-		wxString description;			//Описание локации
-		wxString onVisit;				//Код события "посещение локации"
-		ActionDataArray actionArray;	//Массив действий
-		int folderIndex;				//Индекс секции
+		wxString		name;			//Название локации
+		wxString		description;	//Описание локации
+		wxString		onVisit;		//Код события "посещение локации"
+		ActionDataArray	actionArray;	//Массив действий
+		int				folderIndex;	//Индекс секции
 	};
 
 	WX_DECLARE_OBJARRAY(LocationData, LocationDataArray);
 
 	struct FolderData
 	{
-		wxString name;					//Имя секции
-		int pos;						//Позиция секции
+		wxString	name;				//Имя секции
+		int			pos;				//Позиция секции
 	};
 
 	WX_DECLARE_OBJARRAY(FolderData, FolderDataArray);
@@ -56,10 +56,9 @@
 	class DataContainer
 	{
 	private:
-		LocationDataArray locationArray;
-		FolderDataArray _folders;
-		bool _isSaved;
-
+		LocationDataArray	locationArray;
+		FolderDataArray		_folders;
+		bool				_isSaved;
 	public:
 		DataContainer();
 

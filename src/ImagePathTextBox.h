@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _IMAGEPATH_TEXTBOX_H
-	#define _IMAGEPATH_TEXTBOX_H
+#ifndef _QGEN_IMAGE_PATH_TEXT_BOX_H_
+	#define _QGEN_IMAGE_PATH_TEXT_BOX_H_
 
 	#include <wx/wx.h>
 	#include "ILocationPage.h"
@@ -31,13 +31,13 @@
 		DECLARE_CLASS(ImagePathTextBox)
 		DECLARE_EVENT_TABLE()
 	private:
-		ILocationPage *_locPage;
-		IControls *_controls;
+		ILocationPage	*_locPage;
+		IControls		*_controls;
 
 		void OnLostFocus(wxFocusEvent &event);
 		void OnKeyDown(wxKeyEvent& event);
 	public:
-		ImagePathTextBox( wxWindow *owner, wxWindowID id, ILocationPage *locPage, IControls *controls );
+		ImagePathTextBox(wxWindow *owner, wxWindowID id, ILocationPage *locPage, IControls *controls);
 		~ImagePathTextBox();
 
 		void Update(bool isFromObservable = false);

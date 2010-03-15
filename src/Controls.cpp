@@ -1236,10 +1236,10 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 	bool locJumpLocFound = menu->FindItem(ID_LOC_JUMPLOC) != NULL;
 	bool locExpandFound = menu->FindItem(ID_LOC_EXPAND) != NULL;
 	bool locCollapseFound = menu->FindItem(ID_LOC_COLLAPSE) != NULL;
-	bool createActFound = menu->FindItem(ID_ACTION_CREATE) != NULL;
+	bool createActFound = menu->FindItem(ID_ACTION_ADD) != NULL;
 	bool delActFound = menu->FindItem(ID_ACTION_DEL) != NULL;
 	bool delAllActFound = menu->FindItem(ID_ACTION_DELALL) != NULL;
-	bool renameActFound = menu->FindItem(ID_ACTION_RENAME) != NULL;
+	bool renameActFound = menu->FindItem(ID_ACTION_REN) != NULL;
 	bool undoTextFound = menu->FindItem(ID_TEXT_UNDO) != NULL;
 	bool redoTextFound = menu->FindItem(ID_TEXT_REDO) != NULL;
 	bool copyTextFound = menu->FindItem(ID_TEXT_COPY) != NULL;
@@ -1283,7 +1283,7 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 		res = !IsActionsOnSelectedLocEmpty();
 	if (delActFound) menu->Enable(ID_ACTION_DEL, res);
 	if (delAllActFound) menu->Enable(ID_ACTION_DELALL, res);
-	if (renameActFound) menu->Enable(ID_ACTION_RENAME, res);
+	if (renameActFound) menu->Enable(ID_ACTION_REN, res);
 	res = false;
 
 	if (locClearFound || locCopyFound)
@@ -1306,7 +1306,7 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 	res = false;
 
 	if (locJumpLocFound) menu->Enable(ID_LOC_JUMPLOC, GetCurrentTextBox() != NULL);
-	if (createActFound)	menu->Enable(ID_ACTION_CREATE, !IsAllLocsClosed());
+	if (createActFound)	menu->Enable(ID_ACTION_ADD, !IsAllLocsClosed());
 	if (undoTextFound) menu->Enable(ID_TEXT_UNDO, CanUndoText());
 	if (redoTextFound) menu->Enable(ID_TEXT_REDO, CanRedoText());
 	if (pasteTextFound) menu->Enable(ID_TEXT_PASTE, CanPasteText());

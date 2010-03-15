@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_SEARCH_DATA_STORE_H
-	#define _QUEST_GENERATOR_SEARCH_DATA_STORE_H
+#ifndef _QGEN_SEARCH_DATA_STORE_H_
+	#define _QGEN_SEARCH_DATA_STORE_H_
 
 	#include <wx/wx.h>
 	#include <wx/fileconf.h>

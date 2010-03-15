@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _ACTION_ON_LOCATION_H
-	#define _ACTION_ON_LOCATION_H
+#ifndef _QGEN_ACTIONS_LIST_BOX_H_
+	#define _QGEN_ACTIONS_LIST_BOX_H_
 
 	#include <wx/wx.h>
 	#include <wx/fontmap.h>
@@ -35,7 +35,6 @@
 	private:
 		ILocationPage	  *_locPage;
 		IControls		  *_controls;
-		int				  _prevActionIndex;
 		ActionCode		  *_actCode;
 		DataContainer	  *_container;
 		wxString		  _outFormat;
@@ -49,6 +48,7 @@
 		wxArrayString	  _items;
 		bool			  _isDragging;
 		int				  _draggedAction;
+		int				  _prevActionIndex;
 		wxFont			  _font;
 
 		void OnRightClick(wxMouseEvent &event);

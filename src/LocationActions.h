@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_ACTIONS_H
-	#define _QUEST_GENERATOR_ACTIONS_H
+#ifndef _QGEN_LOCATION_ACTIONS_H_
+	#define _QGEN_LOCATION_ACTIONS_H_
 
 	#include <wx/wx.h>
 	#include <wx/splitter.h>
@@ -41,7 +41,7 @@
 
 		void ShowActions();
 	public:
-		LocationActions( wxWindow *owner, ILocationPage *locPage, IControls *controls );
+		LocationActions(wxWindow *owner, ILocationPage *locPage, IControls *controls);
 		~LocationActions();
 
 		void Update(bool isFromObservable = false);
@@ -55,9 +55,9 @@
 		void MoveActionTo(size_t actIndex, size_t moveTo);
 		void Clear();
 		bool IsActionsListEmpty();
-		void SelectActionInList( size_t actIndex );
-		void SelectPicturePathString( long startPos, long lastPos );
-		void SelectActionCodeString( long startPos, long lastPos );
+		void SelectActionInList(size_t actIndex);
+		void SelectPicturePathString(long startPos, long lastPos);
+		void SelectActionCodeString(long startPos, long lastPos);
 		void ReplacePicturePathString(long start, long end, const wxString & str);
 		void ReplaceActionCodeString(long start, long end, const wxString & str);
 		void SetFocusOnActionCode();

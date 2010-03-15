@@ -19,15 +19,15 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _ACTION_CODE_H
-	#define _ACTION_CODE_H
+#ifndef _QGEN_ACTION_CODE_H_
+	#define _QGEN_ACTION_CODE_H_
 
 	#include "SyntaxTextBox.h"
 	#include "ImagePathTextBox.h"
 
 	enum
 	{
-		ID_PICT_OPEN
+		ID_PICT_OPEN = 11000
 	};
 
 	class ActionCode : public wxPanel, public IObserver

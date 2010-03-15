@@ -24,9 +24,9 @@
 IMPLEMENT_CLASS(MergeDialog, wxDialog)
 
 BEGIN_EVENT_TABLE(MergeDialog, wxDialog)
-	EVT_BUTTON(ID_REPLACE_BUTTON, MergeDialog::OnButton)
-	EVT_BUTTON(ID_SKIP_BUTTON, MergeDialog::OnButton)
-	EVT_BUTTON(ID_CANCEL_BUTTON, MergeDialog::OnButton)
+	EVT_BUTTON(ID_MERGE_REPLACE, MergeDialog::OnButton)
+	EVT_BUTTON(ID_MERGE_SKIP, MergeDialog::OnButton)
+	EVT_BUTTON(ID_MERGE_CANCEL, MergeDialog::OnButton)
 END_EVENT_TABLE()
 
 MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString &message, int style) :
@@ -42,9 +42,9 @@ MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString
 
 	wxStaticText *msgText = new wxStaticText(this, wxID_ANY, message);
 
-	_replace = new wxButton(this, ID_REPLACE_BUTTON, wxT("Заменить"));
-	_skip = new wxButton(this, ID_SKIP_BUTTON, wxT("Пропустить"));
-	_cancel = new wxButton(this, ID_CANCEL_BUTTON, wxT("Отмена"));
+	_replace = new wxButton(this, ID_MERGE_REPLACE, wxT("Заменить"));
+	_skip = new wxButton(this, ID_MERGE_SKIP, wxT("Пропустить"));
+	_cancel = new wxButton(this, ID_MERGE_CANCEL, wxT("Отмена"));
 
 	_chkToAll= new wxCheckBox(this, wxID_ANY, wxT("для всех"));
 
@@ -68,16 +68,16 @@ void MergeDialog::OnButton(wxCommandEvent &event)
 	int ret;
 	switch (event.GetId())
 	{
-	case ID_REPLACE_BUTTON:
-		ret = MergeReplace;
+	case ID_MERGE_REPLACE:
+		ret = MERGE_REPLACE;
 		break;
-	case ID_SKIP_BUTTON:
-		ret = MergeSkip;
+	case ID_MERGE_SKIP:
+		ret = MERGE_SKIP;
 		break;
-	case ID_CANCEL_BUTTON:
-		ret = MergeCancel;
+	case ID_MERGE_CANCEL:
+		ret = MERGE_CANCEL;
 		break;
 	}
-	if (_chkToAll->IsChecked()) ret |= MergeAll;
+	if (_chkToAll->IsChecked()) ret |= MERGE_ALL;
 	EndModal(ret);
 }

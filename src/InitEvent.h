@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_INITEVENT_H
-	#define _QUEST_GENERATOR_INITEVENT_H
+#ifndef _QGEN_INITEVENT_H_
+	#define _QGEN_INITEVENT_H_
 
 	#include <wx/wx.h>
 

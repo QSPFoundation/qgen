@@ -152,7 +152,7 @@ void LocationsListBox::Insert(const wxString &name, const wxString &pos, const w
 	else
 		parent = GetRootItem();
 	if (_controls->GetSettings()->GetShowLocsIcons())
-		image = ICON_NOTACTIVELOCATION;
+		image = ICON_NOTACTIVELOC;
 	if (pos.Length() > 0)
 		InsertItem(parent, GetLocByName(GetRootItem(), pos), name, image);
 	else
@@ -420,7 +420,7 @@ void LocationsListBox::OnEndDrag( wxTreeEvent &event )
 void LocationsListBox::SetLocStatus( const wxString &name, bool isOpened )
 {
 	if (_controls->GetSettings()->GetShowLocsIcons())
-		SetItemImage(GetLocByName(GetRootItem(), name), isOpened ? ICON_ACTIVELOCATION : ICON_NOTACTIVELOCATION);
+		SetItemImage(GetLocByName(GetRootItem(), name), isOpened ? ICON_ACTIVELOC : ICON_NOTACTIVELOC);
 }
 
 void LocationsListBox::ApplyStatesImageList()
@@ -436,7 +436,7 @@ void LocationsListBox::AddFolder( const wxString &name )
 	if (_controls->GetSettings()->GetShowLocsIcons())
 	{
 		wxTreeItemId id = AppendItem(GetRootItem(), name, ICON_FOLDER, -1, new FolderItem());
-		SetItemImage(id, ICON_FOLDER_OPENED, wxTreeItemIcon_Expanded);
+		SetItemImage(id, ICON_FOLDEROPENED, wxTreeItemIcon_Expanded);
 	}
 	else
 		AppendItem(GetRootItem(), name, -1, -1, new FolderItem());
@@ -474,7 +474,7 @@ void LocationsListBox::UpdateFolderLocations( const wxString &name )
 		{
 			text = container->GetLocationName(i);
 			if (_controls->GetSettings()->GetShowLocsIcons())
-				AppendItem(parent, text, ICON_NOTACTIVELOCATION);
+				AppendItem(parent, text, ICON_NOTACTIVELOC);
 			else
 				AppendItem(parent, text);
 			UpdateLocationActions(text);

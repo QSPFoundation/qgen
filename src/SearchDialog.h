@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef	_QGEN_SEARCH_REPLACE_DIALOG_
-	#define _QGEN_SEARCH_REPLACE_DIALOG_
+#ifndef	_QGEN_SEARCH_REPLACE_DIALOG_H_
+	#define _QGEN_SEARCH_REPLACE_DIALOG_H_
 
 	#include <wx/wx.h>
 	#include "Controls.h"
@@ -28,7 +28,7 @@
 
 	enum
 	{
-		ID_FIND_NEXT,
+		ID_FIND_NEXT = 10400,
 		ID_FIND_REPL,
 		ID_FIND_REPLALL,
 		ID_FIND_ANEW,

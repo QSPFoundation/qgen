@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _ACTIONS_PANEL_H
-	#define _ACTIONS_PANEL_H
+#ifndef _QGEN_ACTIONS_PANEL_H_
+	#define _QGEN_ACTIONS_PANEL_H_
 
 	#include "wx/wx.h"
 	#include "IControls.h"
@@ -30,13 +30,6 @@
 	#include "bitmaps/toolbar_action_new.xpm"
 	#include "bitmaps/toolbar_action_rename.xpm"
 	#include "bitmaps/toolbar_action_delete.xpm"
-
-	enum
-	{
-		ID_ADD_ACTION,
-		ID_REN_ACTION,
-		ID_DEL_ACTION
-	};
 
 	class ActionsPanel : public wxPanel
 	{

@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef  _DESCRIPTION_LOCATION_H
-	#define _DESCRIPTION_LOCATION_H
+#ifndef _QGEN_LOCATION_DESCRIPTION_H_
+	#define _QGEN_LOCATION_DESCRIPTION_H_
 
 	#include <wx/wx.h>
 	#include <wx/aui/aui.h>
@@ -37,13 +37,13 @@
 		SyntaxTextBox		*_text;
 		IControls			*_controls;
 	public:
-		LocationDesc( wxWindow *owner, ILocationPage *locPage, IControls *controls );
+		LocationDesc(wxWindow *owner, ILocationPage *locPage, IControls *controls);
 
 		void SaveDesc();
 		void LoadDesc();
 		void Clear();
 		void SelectString(long startPos, long lastPos);
-		void ReplaceString( long start, long end, const wxString & str );
+		void ReplaceString(long start, long end, const wxString &str);
 	};
 
 #endif

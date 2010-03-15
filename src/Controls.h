@@ -19,13 +19,12 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUESTE_GENERATOR_CONTROLS_
-	#define _QUESTE_GENERATOR_CONTROLS_
+#ifndef _QGEN_CONTROLS_H_
+	#define _QGEN_CONTROLS_H_
 
 	#include <wx/wx.h>
 	#include <wx/clipbrd.h>
 	#include <wx/filename.h>
-
 	#include "DataContainer.h"
 	#include "LocationsListBox.h"
 	#include "LocationsNotebook.h"
@@ -55,7 +54,7 @@
 
 	enum MessageType
 	{
-		QGEN_MSG_EXISTS = 100,
+		QGEN_MSG_EXISTS,
 		QGEN_MSG_EXISTS_HKEY,
 		QGEN_MSG_EXISTS_S_HKEY,
 		QGEN_MSG_EMPTYDATA,

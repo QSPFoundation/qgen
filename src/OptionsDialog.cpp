@@ -26,21 +26,21 @@ IMPLEMENT_CLASS(OptionsDialog, wxDialog)
 BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
 	EVT_BUTTON(ID_COLORS_STATEMENTS, OptionsDialog::OnColorSelect)
 	EVT_BUTTON(ID_COLORS_FUNCTIONS, OptionsDialog::OnColorSelect)
-	EVT_BUTTON(ID_COLORS_SYS_VARIABLES, OptionsDialog::OnColorSelect)
+	EVT_BUTTON(ID_COLORS_SYSVARIABLES, OptionsDialog::OnColorSelect)
 	EVT_BUTTON(ID_COLORS_STRINGS, OptionsDialog::OnColorSelect)
 	EVT_BUTTON(ID_COLORS_NUMBERS, OptionsDialog::OnColorSelect)
-	EVT_BUTTON(ID_COLORS_OPERATIONS_BRACKETS, OptionsDialog::OnColorSelect)
+	EVT_BUTTON(ID_COLORS_OPERATIONSBRACKETS, OptionsDialog::OnColorSelect)
 	EVT_BUTTON(ID_COLORS_MARKS, OptionsDialog::OnColorSelect)
 	EVT_BUTTON(ID_COLORS_COMMENTS, OptionsDialog::OnColorSelect)
-	EVT_BUTTON(ID_COLORS_BASE_FONT, OptionsDialog::OnColorSelect)
-	EVT_BUTTON(ID_COLORS_TEXT_BACK, OptionsDialog::OnColorSelect)
-	EVT_BUTTON(ID_COLORS_BASE_BACK, OptionsDialog::OnColorSelect)
+	EVT_BUTTON(ID_COLORS_BASEFONT, OptionsDialog::OnColorSelect)
+	EVT_BUTTON(ID_COLORS_TEXTBACK, OptionsDialog::OnColorSelect)
+	EVT_BUTTON(ID_COLORS_BASEBACK, OptionsDialog::OnColorSelect)
 	EVT_BUTTON(ID_FONTS_STATEMENTS, OptionsDialog::OnFontSelect)
 	EVT_BUTTON(ID_FONTS_FUNCTIONS, OptionsDialog::OnFontSelect)
-	EVT_BUTTON(ID_FONTS_SYS_VARIABLES, OptionsDialog::OnFontSelect)
+	EVT_BUTTON(ID_FONTS_SYSVARIABLES, OptionsDialog::OnFontSelect)
 	EVT_BUTTON(ID_FONTS_STRINGS, OptionsDialog::OnFontSelect)
 	EVT_BUTTON(ID_FONTS_NUMBERS, OptionsDialog::OnFontSelect)
-	EVT_BUTTON(ID_FONTS_OPERATIONS_BRACKETS, OptionsDialog::OnFontSelect)
+	EVT_BUTTON(ID_FONTS_OPERATIONSBRACKETS, OptionsDialog::OnFontSelect)
 	EVT_BUTTON(ID_FONTS_MARKS, OptionsDialog::OnFontSelect)
 	EVT_BUTTON(ID_FONTS_COMMENTS, OptionsDialog::OnFontSelect)
 	EVT_BUTTON(ID_FONTS_BASE, OptionsDialog::OnFontSelect)
@@ -50,7 +50,7 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
 	EVT_BUTTON(ID_OK_SETTINGS, OptionsDialog::OnOkSettings)
 	EVT_BUTTON(ID_APPLY_SETTINGS, OptionsDialog::OnApplySettings)
 	EVT_BUTTON(ID_RESET_SETTINGS, OptionsDialog::OnResetSettings)
-	EVT_BUTTON(ID_ADD_NEW_HKEY, OptionsDialog::OnAddHotKey)
+	EVT_BUTTON(ID_ADD_NEWHKEY, OptionsDialog::OnAddHotKey)
 	EVT_BUTTON(ID_EDIT_HKEY, OptionsDialog::OnEditHotKey)
 	EVT_BUTTON(ID_DELETE_HKEY, OptionsDialog::OnDeleteHotKey)
 	EVT_TEXT(wxID_ANY, OptionsDialog::OnStateChanged)
@@ -200,15 +200,15 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 
 	_btnClrsStatements = new wxButton(_colors, ID_COLORS_STATEMENTS, wxT("Выбрать цвет..."));
 	_btnClrsFunctions = new wxButton(_colors, ID_COLORS_FUNCTIONS, wxT("Выбрать цвет..."));
-	_btnClrsSysVariables = new wxButton(_colors, ID_COLORS_SYS_VARIABLES, wxT("Выбрать цвет..."));
+	_btnClrsSysVariables = new wxButton(_colors, ID_COLORS_SYSVARIABLES, wxT("Выбрать цвет..."));
 	_btnClrsStrings = new wxButton(_colors, ID_COLORS_STRINGS, wxT("Выбрать цвет..."));
 	_btnClrsNumbers = new wxButton(_colors, ID_COLORS_NUMBERS, wxT("Выбрать цвет..."));
-	_btnClrsOptsBrts = new wxButton(_colors, ID_COLORS_OPERATIONS_BRACKETS, wxT("Выбрать цвет..."));
+	_btnClrsOptsBrts = new wxButton(_colors, ID_COLORS_OPERATIONSBRACKETS, wxT("Выбрать цвет..."));
 	_btnClrsMarks = new wxButton(_colors, ID_COLORS_MARKS, wxT("Выбрать цвет..."));
 	_btnClrsComments = new wxButton(_colors, ID_COLORS_COMMENTS, wxT("Выбрать цвет..."));
-	_btnClrsBaseFont = new wxButton(_colors, ID_COLORS_BASE_FONT, wxT("Выбрать цвет..."));
-	_btnClrsTextBack = new wxButton(_colors, ID_COLORS_TEXT_BACK, wxT("Выбрать цвет..."));
-	_btnClrsBaseBack = new wxButton(_colors, ID_COLORS_BASE_BACK, wxT("Выбрать цвет..."));
+	_btnClrsBaseFont = new wxButton(_colors, ID_COLORS_BASEFONT, wxT("Выбрать цвет..."));
+	_btnClrsTextBack = new wxButton(_colors, ID_COLORS_TEXTBACK, wxT("Выбрать цвет..."));
+	_btnClrsBaseBack = new wxButton(_colors, ID_COLORS_BASEBACK, wxT("Выбрать цвет..."));
 
 	topSizerColors->Add(stText11, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorBaseBack, 0, wxALL|wxALIGN_RIGHT, 2);
@@ -275,10 +275,10 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 
 	_btnFontsStatements = new wxButton(_fonts, ID_FONTS_STATEMENTS, wxT("Выбрать шрифт..."));
 	_btnFontsFunctions = new wxButton(_fonts, ID_FONTS_FUNCTIONS, wxT("Выбрать шрифт..."));
-	_btnFontsSysVariables = new wxButton(_fonts, ID_FONTS_SYS_VARIABLES, wxT("Выбрать шрифт..."));
+	_btnFontsSysVariables = new wxButton(_fonts, ID_FONTS_SYSVARIABLES, wxT("Выбрать шрифт..."));
 	_btnFontsStrings = new wxButton(_fonts, ID_FONTS_STRINGS, wxT("Выбрать шрифт..."));
 	_btnFontsNumbers = new wxButton(_fonts, ID_FONTS_NUMBERS, wxT("Выбрать шрифт..."));
-	_btnFontsOptsBrts = new wxButton(_fonts, ID_FONTS_OPERATIONS_BRACKETS, wxT("Выбрать шрифт..."));
+	_btnFontsOptsBrts = new wxButton(_fonts, ID_FONTS_OPERATIONSBRACKETS, wxT("Выбрать шрифт..."));
 	_btnFontsMarks = new wxButton(_fonts, ID_FONTS_MARKS, wxT("Выбрать шрифт..."));
 	_btnFontsComments = new wxButton(_fonts, ID_FONTS_COMMENTS, wxT("Выбрать шрифт..."));
 	_btnFontsBase = new wxButton(_fonts, ID_FONTS_BASE, wxT("Выбрать шрифт..."));
@@ -357,7 +357,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	_lstHotKeys->InsertColumn(1, wxT("Исполняемая команда"), wxLIST_FORMAT_LEFT, 300);
 
 	wxBoxSizer *btnHotkKeysSizer = new wxBoxSizer(wxHORIZONTAL);
-	_btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEW_HKEY, wxT("Добавить..."));
+	_btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEWHKEY, wxT("Добавить..."));
 	_btnEditHotKey = new wxButton(_hotkeys, ID_EDIT_HKEY, wxT("Редактировать..."));
 	_btnDelHotKey = new wxButton(_hotkeys, ID_DELETE_HKEY, wxT("Удалить"));
 
@@ -438,7 +438,7 @@ void OptionsDialog::OnColorSelect( wxCommandEvent &event )
 			_btnApply->Enable();
 		}
 		break;
-	case ID_COLORS_SYS_VARIABLES:
+	case ID_COLORS_SYSVARIABLES:
 		InitColoursDialog(dialog, _colorSysVariables->GetBackgroundColour());
 		if (dialog.ShowModal() == wxID_OK)
 		{
@@ -471,7 +471,7 @@ void OptionsDialog::OnColorSelect( wxCommandEvent &event )
 			_btnApply->Enable();
 		}
 		break;
-	case ID_COLORS_OPERATIONS_BRACKETS:
+	case ID_COLORS_OPERATIONSBRACKETS:
 		InitColoursDialog(dialog, _colorOptsBrts->GetBackgroundColour());
 		if (dialog.ShowModal() == wxID_OK)
 		{
@@ -504,7 +504,7 @@ void OptionsDialog::OnColorSelect( wxCommandEvent &event )
 			_btnApply->Enable();
 		}
 		break;
-	case ID_COLORS_BASE_FONT:
+	case ID_COLORS_BASEFONT:
 		InitColoursDialog(dialog, _colorBaseFont->GetBackgroundColour());
 		if (dialog.ShowModal() == wxID_OK)
 		{
@@ -515,7 +515,7 @@ void OptionsDialog::OnColorSelect( wxCommandEvent &event )
 			_btnApply->Enable();
 		}
 		break;
-	case ID_COLORS_TEXT_BACK:
+	case ID_COLORS_TEXTBACK:
 		InitColoursDialog(dialog, _colorTextBack->GetBackgroundColour());
 		if (dialog.ShowModal() == wxID_OK)
 		{
@@ -535,7 +535,7 @@ void OptionsDialog::OnColorSelect( wxCommandEvent &event )
 
 		}
 		break;
-	case ID_COLORS_BASE_BACK:
+	case ID_COLORS_BASEBACK:
 		InitColoursDialog(dialog, _colorBaseBack->GetBackgroundColour());
 		if (dialog.ShowModal() == wxID_OK)
 		{
@@ -575,7 +575,7 @@ void OptionsDialog::OnFontSelect( wxCommandEvent &event )
 			_btnApply->Enable();
 		}
 		break;
-	case ID_FONTS_SYS_VARIABLES:
+	case ID_FONTS_SYSVARIABLES:
 		InitFontsDialog(dialog, _txtFontSysVariables->GetFont());
 		if (dialog.ShowModal() == wxID_OK)
 		{
@@ -608,7 +608,7 @@ void OptionsDialog::OnFontSelect( wxCommandEvent &event )
 			_btnApply->Enable();
 		}
 		break;
-	case ID_FONTS_OPERATIONS_BRACKETS:
+	case ID_FONTS_OPERATIONSBRACKETS:
 		InitFontsDialog(dialog, _txtFontOptsBrts->GetFont());
 		if (dialog.ShowModal() == wxID_OK)
 		{

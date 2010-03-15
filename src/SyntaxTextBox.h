@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _SYNTAX_TEXTBOX_H
-	#define _SYNTAX_TEXTBOX_H
+#ifndef _QGEN_SYNTAX_TEXT_BOX_H_
+	#define _QGEN_SYNTAX_TEXT_BOX_H_
 
 	#include <wx/wx.h>
 	#include <wx/stc/stc.h>

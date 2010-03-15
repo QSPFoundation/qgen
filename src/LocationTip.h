@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_LOCATION_TIP_H
-	#define _QUEST_GENERATOR_LOCATION_TIP_H
+#ifndef _QGEN_LOCATION_TIP_H_
+	#define _QGEN_LOCATION_TIP_H_
 
 	#include <wx/wx.h>
 	#include "IControls.h"
@@ -37,34 +37,27 @@
 	{
 		DECLARE_CLASS(LocationTip)
 	private:
-		wxWindow *_mainFrame;
-		IControls *_controls;
-		wxString _locName;
-		wxString _actName;
-		wxStaticText *_title;
-		wxStaticText *_desc;
-		wxStaticText *_code;
-		SyntaxTextBox *_locDesc;
-		SyntaxTextBox *_locCode;
-		wxButton *_emptyLabel;
+		wxWindow		*_mainFrame;
+		IControls		*_controls;
+		wxString		_locName;
+		wxString		_actName;
+		wxStaticText	*_title;
+		wxStaticText	*_desc;
+		wxStaticText	*_code;
+		SyntaxTextBox	*_locDesc;
+		SyntaxTextBox	*_locCode;
+		wxButton		*_emptyLabel;
 
 		void LoadTip();
-
 	public:
 		LocationTip(wxWindow *parent, IControls *controls);
 
 		void MoveTip(const wxPoint &pos);
 		void HideTip();
 		void SetLocName(const wxString &name);
-		wxString GetLocName() const
-		{
-			return _locName;
-		}
+		wxString GetLocName() const { return _locName; }
 		void SetActName(const wxString &name);
-		wxString GetActName() const
-		{
-			return _actName;
-		}
+		wxString GetActName() const { return _actName; }
 	};
 
 #endif

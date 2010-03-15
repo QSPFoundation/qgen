@@ -19,14 +19,14 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_HOT_KEY_TEXT_CONTROL_H
-	#define _QUEST_GENERATOR_HOT_KEY_TEXT_CONTROL_H
+#ifndef _QGEN_HOTKEY_TEXT_BOX_H_
+	#define _QGEN_HOTKEY_TEXT_BOX_H_
 
 	#include <wx/wx.h>
 
-	class HotKeyTextCtrl : public wxTextCtrl
+	class HotKeyTextBox : public wxTextCtrl
 	{
-		DECLARE_CLASS(HotKeyTextCtrl)
+		DECLARE_CLASS(HotKeyTextBox)
 		DECLARE_EVENT_TABLE()
 	private:
 		wxString		_hotKey;
@@ -37,7 +37,7 @@
 		void OnKeyUp(wxKeyEvent& event);
 		void AppendAccel(wxString &data, const wxString &key) const;
 	public:
-		HotKeyTextCtrl(wxWindow *parent, wxWindowID id, const wxString &value = wxEmptyString);
+		HotKeyTextBox(wxWindow *parent, wxWindowID id, const wxString &value = wxEmptyString);
 
 		void SetFlags(int flags) { _flags = flags; }
 		int GetFlags() const { return _flags; }

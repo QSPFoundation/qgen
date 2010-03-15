@@ -56,10 +56,10 @@ BEGIN_EVENT_TABLE(QGenMainFrame, wxFrame)
 	EVT_MENU(ID_LOC_JUMPLOC, QGenMainFrame::OnJumpLocation)
 	EVT_MENU(ID_LOC_EXPAND, QGenMainFrame::OnExpandLocation)
 	EVT_MENU(ID_LOC_COLLAPSE, QGenMainFrame::OnCollapseLocation)
-	EVT_MENU(ID_ACTION_CREATE, QGenMainFrame::OnCreateAction)
+	EVT_MENU(ID_ACTION_ADD, QGenMainFrame::OnCreateAction)
 	EVT_MENU(ID_ACTION_DEL, QGenMainFrame::OnDeleteAction)
 	EVT_MENU(ID_ACTION_DELALL, QGenMainFrame::OnDeleteAllActions)
-	EVT_MENU(ID_ACTION_RENAME, QGenMainFrame::OnRenameAction)
+	EVT_MENU(ID_ACTION_REN, QGenMainFrame::OnRenameAction)
 	EVT_MENU(ID_QUEST_NEW, QGenMainFrame::OnNewQuest)
 	EVT_MENU(ID_QUEST_OPEN, QGenMainFrame::OnLoadFile)
 	EVT_MENU(ID_QUEST_SAVE, QGenMainFrame::OnSaveQuest)
@@ -255,8 +255,8 @@ void QGenMainFrame::CreateMenuBar()
 
 	wxMenu *loc_action_sub_menu = new wxMenu;
 
-	loc_action_sub_menu->Append(ID_ACTION_CREATE, wxT("&Создать...\tAlt+F7"), wxT("Создать действие на локации"));
-	loc_action_sub_menu->Append(ID_ACTION_RENAME, wxT("&Переименовать...\tAlt+F6"), wxT("Переименовать действие"));
+	loc_action_sub_menu->Append(ID_ACTION_ADD, wxT("&Создать...\tAlt+F7"), wxT("Создать действие на локации"));
+	loc_action_sub_menu->Append(ID_ACTION_REN, wxT("&Переименовать...\tAlt+F6"), wxT("Переименовать действие"));
 	loc_action_sub_menu->Append(ID_ACTION_DEL, wxT("&Удалить\tAlt+F8"), wxT("Удалить действие"));
 	loc_action_sub_menu->AppendSeparator();
 	loc_action_sub_menu->Append(ID_ACTION_DELALL, wxT("У&далить все\tAlt+F10"));
@@ -827,8 +827,8 @@ void QGenMainFrame::OnTimerUpdToolBar(wxTimerEvent &event)
 	_toolBar->EnableTool(ID_LOC_RENAME, isLocSelected);
 	_toolBar->EnableTool(ID_LOC_COPY, isSelLocNotEmpty);
 	_toolBar->EnableTool(ID_LOC_CLEAR, isSelLocNotEmpty);
-	_toolBar->EnableTool(ID_ACTION_CREATE, isLocsNotAllClosed);
-	_toolBar->EnableTool(ID_ACTION_RENAME, isActsNotEmpty);
+	_toolBar->EnableTool(ID_ACTION_ADD, isLocsNotAllClosed);
+	_toolBar->EnableTool(ID_ACTION_REN, isActsNotEmpty);
 	_toolBar->EnableTool(ID_ACTION_DEL, isActsNotEmpty);
 	_toolBar->EnableTool(ID_QUEST_PLAY, isCanPlay);
 	_toolBar->EnableTool(ID_QUEST_SAVE, isCanPlay);

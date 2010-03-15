@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_NOTEBOOK_H
-	#define _QUEST_GENERATOR_NOTEBOOK_H
+#ifndef _QGEN_LOCATIONS_NOTEBOOK_H_
+	#define _QGEN_LOCATIONS_NOTEBOOK_H_
 
 	#include <wx/aui/aui.h>
 	#include "LocationPage.h"
@@ -41,7 +41,7 @@
 	private:
 		IControls		*_controls;
 		DataContainer	*_container;
-		int selectedPage;
+		int				selectedPage;
 
 		void OnClosePage(wxAuiNotebookEvent &event);
 		void OnPageChanged(wxAuiNotebookEvent &event);

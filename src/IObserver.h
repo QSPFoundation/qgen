@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_IOBSERVER_
-	#define _QUEST_GENERATOR_IOBSERVER_
+#ifndef _QGEN_IOBSERVER_H_
+	#define _QGEN_IOBSERVER_H_
 
 	class IObserver
 	{
