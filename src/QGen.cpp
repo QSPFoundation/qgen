@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -27,59 +27,59 @@ BEGIN_EVENT_TABLE(QGenMainFrame, wxFrame)
 	EVT_INIT(QGenMainFrame::OnInit)
 	EVT_CLOSE(QGenMainFrame::OnQuit)
 	EVT_AUI_PANE_CLOSE(QGenMainFrame::OnPaneClose)
-	EVT_MENU(EXIT_QGEN, QGenMainFrame::OnExit)
+	EVT_MENU(ID_QGEN_EXIT, QGenMainFrame::OnExit)
 	EVT_MENU(ID_TOGGLE_TOOLBAR, QGenMainFrame::OnToggleToolbar)
 	EVT_MENU(ID_TOGGLE_LISTBOX, QGenMainFrame::OnToggleLocations)
 	EVT_MENU(ID_TOGGLE_STATUSBAR, QGenMainFrame::OnToggleStatusbar)
-	EVT_MENU(ID_MENUCLOSEALLTABS, QGenMainFrame::OnTabMenu)
-	EVT_MENU(ID_MENUCLOSEEXCEPTSELECTED, QGenMainFrame::OnTabMenu)
-	EVT_MENU(ID_MENUCLOSESELECTED, QGenMainFrame::OnTabMenu)
-	EVT_MENU(ID_MENUFIXTAB, QGenMainFrame::OnFixPage)
-	EVT_MENU(ID_LOCDESCVISIBLE, QGenMainFrame::OnLocDescVisible)
-	EVT_MENU(ID_LOCACTVISIBLE, QGenMainFrame::OnLocActsVisible)
-	EVT_MENU(HELP_ABOUT, QGenMainFrame::OnAbout)
-	EVT_MENU(HELP_HELP, QGenMainFrame::OnChmHelp)
-	EVT_MENU(HELP_SEARCH_INDEX, QGenMainFrame::OnSearchHelp)
-	EVT_MENU(FOLDER_CREAT, QGenMainFrame::OnCreateFolder)
-	EVT_MENU(FOLDER_RENAME, QGenMainFrame::OnRenameFolder)
-	EVT_MENU(FOLDER_DEL, QGenMainFrame::OnDeleteFolder)
-	EVT_MENU(LOC_CREAT, QGenMainFrame::OnCreateLocation)
-	EVT_MENU(LOC_DEL, QGenMainFrame::OnDeleteLocation)
-	EVT_MENU(LOC_RENAME, QGenMainFrame::OnRenameLocation)
-	EVT_MENU(LOC_CLEAR, QGenMainFrame::OnClearLocation)
-	EVT_MENU(LOC_COPY, QGenMainFrame::OnCopyLocation)
-	EVT_MENU(LOC_REPLACE, QGenMainFrame::OnPasteLocation)
-	EVT_MENU(LOC_PASTE, QGenMainFrame::OnPasteLocation)
-	EVT_MENU(LOC_PASTE_NEW, QGenMainFrame::OnPasteLocation)
-	EVT_MENU(LOC_SORT_ASC, QGenMainFrame::OnSortLocations)
-	EVT_MENU(LOC_SORT_DESC, QGenMainFrame::OnSortLocations)
-	EVT_MENU(LOC_JUMP_LOC, QGenMainFrame::OnJumpLocation)
-	EVT_MENU(LOC_EXPAND, QGenMainFrame::OnExpandLocation)
-	EVT_MENU(LOC_COLLAPSE, QGenMainFrame::OnCollapseLocation)
-	EVT_MENU(CREATE_ACTION, QGenMainFrame::OnCreateAction)
-	EVT_MENU(DEL_ACTION, QGenMainFrame::OnDeleteAction)
-	EVT_MENU(DEL_ALL_ACTIONS, QGenMainFrame::OnDeleteAllActions)
-	EVT_MENU(RENAME_ACTION, QGenMainFrame::OnRenameAction)
-	EVT_MENU(NEW_QUEST, QGenMainFrame::OnNewQuest)
-	EVT_MENU(OPEN_QUEST, QGenMainFrame::OnLoadFile)
-	EVT_MENU(SAVE_QUEST, QGenMainFrame::OnSaveQuest)
-	EVT_MENU(SAVE_QUESTAS, QGenMainFrame::OnSaveQuestAs)
-	EVT_MENU(JOIN_QUEST, QGenMainFrame::OnJoinQuest)
-	EVT_MENU(PLAY_QUEST, QGenMainFrame::OnPlayQuest)
-	EVT_MENU(UTIL_FIND, QGenMainFrame::OnFindDialog)
-	EVT_MENU(UTIL_INF, QGenMainFrame::OnInformationQuest)
-	EVT_MENU(UTIL_OPTIONS, QGenMainFrame::OnOptionsDialog)
-	EVT_MENU(UNDO_TEXT, QGenMainFrame::OnUndoText)
-	EVT_MENU(REDO_TEXT, QGenMainFrame::OnRedoText)
-	EVT_MENU(COPY_TEXT, QGenMainFrame::OnCopyText)
-	EVT_MENU(PASTE_TEXT, QGenMainFrame::OnPasteText)
-	EVT_MENU(CUT_TEXT, QGenMainFrame::OnCutText)
-	EVT_MENU(DEL_TEXT, QGenMainFrame::OnDeleteText)
-	EVT_MENU(SELALL_TEXT, QGenMainFrame::OnSelectAllText)
+	EVT_MENU(ID_TAB_CLOSEALL, QGenMainFrame::OnTabMenu)
+	EVT_MENU(ID_TAB_CLOSEEXCEPTSELECTED, QGenMainFrame::OnTabMenu)
+	EVT_MENU(ID_TAB_CLOSESELECTED, QGenMainFrame::OnTabMenu)
+	EVT_MENU(ID_TAB_FIX, QGenMainFrame::OnFixPage)
+	EVT_MENU(ID_LOC_DESCVISIBLE, QGenMainFrame::OnLocDescVisible)
+	EVT_MENU(ID_LOC_ACTVISIBLE, QGenMainFrame::OnLocActsVisible)
+	EVT_MENU(ID_ABOUT, QGenMainFrame::OnAbout)
+	EVT_MENU(ID_HELP, QGenMainFrame::OnChmHelp)
+	EVT_MENU(ID_HELP_SEARCH, QGenMainFrame::OnSearchHelp)
+	EVT_MENU(ID_FOLDER_CREAT, QGenMainFrame::OnCreateFolder)
+	EVT_MENU(ID_FOLDER_RENAME, QGenMainFrame::OnRenameFolder)
+	EVT_MENU(ID_FOLDER_DEL, QGenMainFrame::OnDeleteFolder)
+	EVT_MENU(ID_LOC_CREATE, QGenMainFrame::OnCreateLocation)
+	EVT_MENU(ID_LOC_DEL, QGenMainFrame::OnDeleteLocation)
+	EVT_MENU(ID_LOC_RENAME, QGenMainFrame::OnRenameLocation)
+	EVT_MENU(ID_LOC_CLEAR, QGenMainFrame::OnClearLocation)
+	EVT_MENU(ID_LOC_COPY, QGenMainFrame::OnCopyLocation)
+	EVT_MENU(ID_LOC_REPLACE, QGenMainFrame::OnPasteLocation)
+	EVT_MENU(ID_LOC_PASTE, QGenMainFrame::OnPasteLocation)
+	EVT_MENU(ID_LOC_PASTENEW, QGenMainFrame::OnPasteLocation)
+	EVT_MENU(ID_LOC_SORTASC, QGenMainFrame::OnSortLocations)
+	EVT_MENU(ID_LOC_SORTDESC, QGenMainFrame::OnSortLocations)
+	EVT_MENU(ID_LOC_JUMPLOC, QGenMainFrame::OnJumpLocation)
+	EVT_MENU(ID_LOC_EXPAND, QGenMainFrame::OnExpandLocation)
+	EVT_MENU(ID_LOC_COLLAPSE, QGenMainFrame::OnCollapseLocation)
+	EVT_MENU(ID_ACTION_CREATE, QGenMainFrame::OnCreateAction)
+	EVT_MENU(ID_ACTION_DEL, QGenMainFrame::OnDeleteAction)
+	EVT_MENU(ID_ACTION_DELALL, QGenMainFrame::OnDeleteAllActions)
+	EVT_MENU(ID_ACTION_RENAME, QGenMainFrame::OnRenameAction)
+	EVT_MENU(ID_QUEST_NEW, QGenMainFrame::OnNewQuest)
+	EVT_MENU(ID_QUEST_OPEN, QGenMainFrame::OnLoadFile)
+	EVT_MENU(ID_QUEST_SAVE, QGenMainFrame::OnSaveQuest)
+	EVT_MENU(ID_QUEST_SAVEAS, QGenMainFrame::OnSaveQuestAs)
+	EVT_MENU(ID_QUEST_JOIN, QGenMainFrame::OnJoinQuest)
+	EVT_MENU(ID_QUEST_PLAY, QGenMainFrame::OnPlayQuest)
+	EVT_MENU(ID_UTIL_FIND, QGenMainFrame::OnFindDialog)
+	EVT_MENU(ID_UTIL_INF, QGenMainFrame::OnInformationQuest)
+	EVT_MENU(ID_UTIL_OPTIONS, QGenMainFrame::OnOptionsDialog)
+	EVT_MENU(ID_TEXT_UNDO, QGenMainFrame::OnUndoText)
+	EVT_MENU(ID_TEXT_REDO, QGenMainFrame::OnRedoText)
+	EVT_MENU(ID_TEXT_COPY, QGenMainFrame::OnCopyText)
+	EVT_MENU(ID_TEXT_PASTE, QGenMainFrame::OnPasteText)
+	EVT_MENU(ID_TEXT_CUT, QGenMainFrame::OnCutText)
+	EVT_MENU(ID_TEXT_DEL, QGenMainFrame::OnDeleteText)
+	EVT_MENU(ID_TEXT_SELALL, QGenMainFrame::OnSelectAllText)
 
-	EVT_MENU(EXPORT_QUEST_TXT, QGenMainFrame::OnExportTxtFile)
-	EVT_MENU(EXPORT_QUEST_TXT2GAM, QGenMainFrame::OnExportTxt2Gam)
-	EVT_MENU(IMPORT_QUEST, QGenMainFrame::OnImportTxt2Gam)
+	EVT_MENU(ID_QUEST_EXPORTTXT, QGenMainFrame::OnExportTxtFile)
+	EVT_MENU(ID_QUEST_EXPORTTXT2GAM, QGenMainFrame::OnExportTxt2Gam)
+	EVT_MENU(ID_QUEST_IMPORT, QGenMainFrame::OnImportTxt2Gam)
 
 	EVT_MENU_OPEN(QGenMainFrame::OnUpdMenuItems)
 
@@ -129,7 +129,9 @@ int QGenApp::OnExit()
 	return wxApp::OnExit();
 }
 
-QGenMainFrame::QGenMainFrame(Controls *controls) : _timerAutoSave(this, ID_TIMER_AUTO_SAVE), _timerUpdToolBar(this, ID_TIMER_UPD_TOOLBAR)
+QGenMainFrame::QGenMainFrame(Controls *controls) : 
+	_timerAutoSave(this, ID_TIMER_AUTO_SAVE), 
+	_timerUpdToolBar(this, ID_TIMER_UPD_TOOLBAR)
 {
 	_controls = controls;
 	if (Create(wxSize(640, 480), wxDEFAULT_FRAME_STYLE)) OnNewQuest(wxCommandEvent());
@@ -186,117 +188,117 @@ void QGenMainFrame::CreateStatusBar()
 void QGenMainFrame::CreateMenuBar()
 {
 	wxMenu *file_menu = new wxMenu;
-	wxMenuItem *newGameItem = new wxMenuItem(file_menu, NEW_QUEST, wxT("&Новая\tCtrl+N"), wxT("Создать новую игру"));
+	wxMenuItem *newGameItem = new wxMenuItem(file_menu, ID_QUEST_NEW, wxT("&Новая\tCtrl+N"), wxT("Создать новую игру"));
 	newGameItem->SetBitmap(wxBitmap(menu_game_new_xpm));
 	file_menu->Append(newGameItem);
 
-	wxMenuItem *openFileItem = new wxMenuItem(file_menu, OPEN_QUEST, wxT("&Открыть...\tCtrl+O"), wxT("Открыть игру"));
+	wxMenuItem *openFileItem = new wxMenuItem(file_menu, ID_QUEST_OPEN, wxT("&Открыть...\tCtrl+O"), wxT("Открыть игру"));
 	openFileItem->SetBitmap(wxBitmap(menu_file_open_xpm));
 	file_menu->Append(openFileItem);
 
-	file_menu->Append(JOIN_QUEST, wxT("&Присоединить игру...\tCtrl+M"), wxT("Добавить локации другой игры"));
+	file_menu->Append(ID_QUEST_JOIN, wxT("&Присоединить игру...\tCtrl+M"), wxT("Добавить локации другой игры"));
 
-	wxMenuItem *saveFileItem = new wxMenuItem(file_menu, SAVE_QUEST, wxT("&Сохранить\tCtrl+S"), wxT("Сохранить игру"));
+	wxMenuItem *saveFileItem = new wxMenuItem(file_menu, ID_QUEST_SAVE, wxT("&Сохранить\tCtrl+S"), wxT("Сохранить игру"));
 	saveFileItem->SetBitmap(wxBitmap(menu_file_save_xpm));
 	file_menu->Append(saveFileItem);
 
-	file_menu->Append(SAVE_QUESTAS, wxT("Сохранить &как...\tCtrl+W"), wxT("Сохранить игру под другим именем"));
+	file_menu->Append(ID_QUEST_SAVEAS, wxT("Сохранить &как...\tCtrl+W"), wxT("Сохранить игру под другим именем"));
 
 	file_menu->AppendSeparator();
 
 	wxMenu *file_sub_exp_menu = new wxMenu;
 	wxMenu *file_sub_imp_menu = new wxMenu;
-	file_sub_exp_menu->Append(EXPORT_QUEST_TXT, wxT("Текстовый файл..."));
-	file_sub_exp_menu->Append(EXPORT_QUEST_TXT2GAM, wxT("Текстовый файл формата TXT2GAM..."));
-	file_sub_imp_menu->Append(IMPORT_QUEST, wxT("Текстовый файл формата TXT2GAM..."));
+	file_sub_exp_menu->Append(ID_QUEST_EXPORTTXT, wxT("Текстовый файл..."));
+	file_sub_exp_menu->Append(ID_QUEST_EXPORTTXT2GAM, wxT("Текстовый файл формата TXT2GAM..."));
+	file_sub_imp_menu->Append(ID_QUEST_IMPORT, wxT("Текстовый файл формата TXT2GAM..."));
 
 	file_menu->AppendSubMenu(file_sub_exp_menu, wxT("&Экспорт"));
 	file_menu->AppendSubMenu(file_sub_imp_menu, wxT("&Импорт"));
 	file_menu->AppendSeparator();
 
-	wxMenuItem *exitItem = new wxMenuItem(file_menu, EXIT_QGEN, wxT("&Выход\tAlt+X"), wxT("Выйти из программы"));
+	wxMenuItem *exitItem = new wxMenuItem(file_menu, ID_QGEN_EXIT, wxT("&Выход\tAlt+X"), wxT("Выйти из программы"));
 	exitItem->SetBitmap(wxBitmap(menu_exit_xpm));
 	file_menu->Append(exitItem);
 
 	wxMenu *util_menu = new wxMenu;
 
-	wxMenuItem *playGameItem = new wxMenuItem(util_menu, PLAY_QUEST, wxT("&Запуск игры\tF5"), wxT("Запустить текущую игру"));
+	wxMenuItem *playGameItem = new wxMenuItem(util_menu, ID_QUEST_PLAY, wxT("&Запуск игры\tF5"), wxT("Запустить текущую игру"));
 	playGameItem->SetBitmap(wxBitmap(menu_game_play_xpm));
 	util_menu->Append(playGameItem);
 
-	wxMenuItem *searchTextItem = new wxMenuItem(util_menu, UTIL_FIND, wxT("&Поиск / замена\tCtrl+F"), wxT("Поиск и замена текста"));
+	wxMenuItem *searchTextItem = new wxMenuItem(util_menu, ID_UTIL_FIND, wxT("&Поиск / замена\tCtrl+F"), wxT("Поиск и замена текста"));
 	searchTextItem->SetBitmap(wxBitmap(menu_text_search_xpm));
 	util_menu->Append(searchTextItem);
 
-	wxMenuItem *gameInfoItem = new wxMenuItem(util_menu, UTIL_INF, wxT("&Информация об игре\tCtrl+I"), wxT("Показать краткую статистику"));
+	wxMenuItem *gameInfoItem = new wxMenuItem(util_menu, ID_UTIL_INF, wxT("&Информация об игре\tCtrl+I"), wxT("Показать краткую статистику"));
 	gameInfoItem->SetBitmap(wxBitmap(menu_game_info_xpm));
 	util_menu->Append(gameInfoItem);
 
 	util_menu->AppendSeparator();
-	util_menu->Append(UTIL_OPTIONS, wxT("&Настройки...\tCtrl+P"));
+	util_menu->Append(ID_UTIL_OPTIONS, wxT("&Настройки...\tCtrl+P"));
 
 	wxMenu *loc_menu = new wxMenu;
-	loc_menu->Append(LOC_CREAT, wxT("&Создать...\tF7"), wxT("Создать локацию"));
-	loc_menu->Append(LOC_RENAME, wxT("&Переименовать...\tF6"), wxT("Переименовать локацию"));
-	loc_menu->Append(LOC_DEL, wxT("&Удалить\tF8"), wxT("Удалить локацию"));
+	loc_menu->Append(ID_LOC_CREATE, wxT("&Создать...\tF7"), wxT("Создать локацию"));
+	loc_menu->Append(ID_LOC_RENAME, wxT("&Переименовать...\tF6"), wxT("Переименовать локацию"));
+	loc_menu->Append(ID_LOC_DEL, wxT("&Удалить\tF8"), wxT("Удалить локацию"));
 	loc_menu->AppendSeparator();
-	loc_menu->Append(FOLDER_CREAT, wxT("Создать папку..."), wxT("Создать папку для локаций"));
-	loc_menu->Append(FOLDER_RENAME, wxT("Переименовать папку..."), wxT("Переименовать выбранную папку"));
-	loc_menu->Append(FOLDER_DEL, wxT("Удалить папку"), wxT("Удалить папку, но сохранить локации"));
+	loc_menu->Append(ID_FOLDER_CREAT, wxT("Создать папку..."), wxT("Создать папку для локаций"));
+	loc_menu->Append(ID_FOLDER_RENAME, wxT("Переименовать папку..."), wxT("Переименовать выбранную папку"));
+	loc_menu->Append(ID_FOLDER_DEL, wxT("Удалить папку"), wxT("Удалить папку, но сохранить локации"));
 	loc_menu->AppendSeparator();
-	loc_menu->Append(LOC_COPY, wxT("&Копировать\tCtrl+Shift+C"), wxT("Копировать локацию в буфер"));
-	loc_menu->Append(LOC_PASTE, wxT("&Вставить\tCtrl+Shift+V"), wxT("Вставить локацию из буфера"));
-	loc_menu->Append(LOC_REPLACE, wxT("&Заменить\tCtrl+Shift+R"), wxT("Заменить выбранную локацию локацией из буфера"));
-	loc_menu->Append(LOC_PASTE_NEW, wxT("Вс&тавить в...\tCtrl+Shift+N"), wxT("Вставить локацию из буфера в новую локацию"));
-	loc_menu->Append(LOC_CLEAR, wxT("&Очистить\tCtrl+Shift+D"), wxT("Очистить локацию"));
+	loc_menu->Append(ID_LOC_COPY, wxT("&Копировать\tCtrl+Shift+C"), wxT("Копировать локацию в буфер"));
+	loc_menu->Append(ID_LOC_PASTE, wxT("&Вставить\tCtrl+Shift+V"), wxT("Вставить локацию из буфера"));
+	loc_menu->Append(ID_LOC_REPLACE, wxT("&Заменить\tCtrl+Shift+R"), wxT("Заменить выбранную локацию локацией из буфера"));
+	loc_menu->Append(ID_LOC_PASTENEW, wxT("Вс&тавить в...\tCtrl+Shift+N"), wxT("Вставить локацию из буфера в новую локацию"));
+	loc_menu->Append(ID_LOC_CLEAR, wxT("&Очистить\tCtrl+Shift+D"), wxT("Очистить локацию"));
 	loc_menu->AppendSeparator();
 
 	wxMenu *loc_action_sub_menu = new wxMenu;
 
-	loc_action_sub_menu->Append(CREATE_ACTION, wxT("&Создать...\tAlt+F7"), wxT("Создать действие на локации"));
-	loc_action_sub_menu->Append(RENAME_ACTION, wxT("&Переименовать...\tAlt+F6"), wxT("Переименовать действие"));
-	loc_action_sub_menu->Append(DEL_ACTION, wxT("&Удалить\tAlt+F8"), wxT("Удалить действие"));
+	loc_action_sub_menu->Append(ID_ACTION_CREATE, wxT("&Создать...\tAlt+F7"), wxT("Создать действие на локации"));
+	loc_action_sub_menu->Append(ID_ACTION_RENAME, wxT("&Переименовать...\tAlt+F6"), wxT("Переименовать действие"));
+	loc_action_sub_menu->Append(ID_ACTION_DEL, wxT("&Удалить\tAlt+F8"), wxT("Удалить действие"));
 	loc_action_sub_menu->AppendSeparator();
-	loc_action_sub_menu->Append(DEL_ALL_ACTIONS, wxT("У&далить все\tAlt+F10"));
-	loc_menu->Append(SUB_MENU_ACT, wxT("&Действия"), loc_action_sub_menu);
+	loc_action_sub_menu->Append(ID_ACTION_DELALL, wxT("У&далить все\tAlt+F10"));
+	loc_menu->Append(ID_ACTION_SUBMENU, wxT("&Действия"), loc_action_sub_menu);
 
 	loc_menu->AppendSeparator();
 
-	loc_menu->Append(LOC_SORT_ASC, wxT("Со&ртировать по алфавиту\tCtrl+Shift+O"));
-	loc_menu->Append(LOC_SORT_DESC, wxT("Сор&тировать в обратном порядке\tCtrl+Shift+P"));
+	loc_menu->Append(ID_LOC_SORTASC, wxT("Со&ртировать по алфавиту\tCtrl+Shift+O"));
+	loc_menu->Append(ID_LOC_SORTDESC, wxT("Сор&тировать в обратном порядке\tCtrl+Shift+P"));
 	loc_menu->AppendSeparator();
-	loc_menu->Append(LOC_JUMP_LOC, wxT("П&ерейти на выбранную локацию\tCtrl+G"));
+	loc_menu->Append(ID_LOC_JUMPLOC, wxT("П&ерейти на выбранную локацию\tCtrl+G"));
 
 	wxMenu *text_menu = new wxMenu;
 
-	wxMenuItem *undoTextItem = new wxMenuItem(text_menu, UNDO_TEXT, wxT("&Отменить\tCtrl+Z"));
+	wxMenuItem *undoTextItem = new wxMenuItem(text_menu, ID_TEXT_UNDO, wxT("&Отменить\tCtrl+Z"));
 	undoTextItem->SetBitmap(wxBitmap(menu_undo_xpm));
 	text_menu->Append(undoTextItem);
 
-	wxMenuItem *redoTextItem = new wxMenuItem(text_menu, REDO_TEXT, wxT("&Повторить\tCtrl+Y"));
+	wxMenuItem *redoTextItem = new wxMenuItem(text_menu, ID_TEXT_REDO, wxT("&Повторить\tCtrl+Y"));
 	redoTextItem->SetBitmap(wxBitmap(menu_redo_xpm));
 	text_menu->Append(redoTextItem);
 
 	text_menu->AppendSeparator();
 
-	wxMenuItem *cutTextItem = new wxMenuItem(text_menu, CUT_TEXT, wxT("&Вырезать\tCtrl+X"));
+	wxMenuItem *cutTextItem = new wxMenuItem(text_menu, ID_TEXT_CUT, wxT("&Вырезать\tCtrl+X"));
 	cutTextItem->SetBitmap(wxBitmap(menu_text_cut_xpm));
 	text_menu->Append(cutTextItem);
 
-	wxMenuItem *copyTextItem = new wxMenuItem(text_menu, COPY_TEXT, wxT("&Копировать\tCtrl+C"));
+	wxMenuItem *copyTextItem = new wxMenuItem(text_menu, ID_TEXT_COPY, wxT("&Копировать\tCtrl+C"));
 	copyTextItem->SetBitmap(wxBitmap(menu_text_copy_xpm));
 	text_menu->Append(copyTextItem);
 
-	wxMenuItem *pasteTextItem = new wxMenuItem(text_menu, PASTE_TEXT, wxT("В&ставить\tCtrl+V"));
+	wxMenuItem *pasteTextItem = new wxMenuItem(text_menu, ID_TEXT_PASTE, wxT("В&ставить\tCtrl+V"));
 	pasteTextItem->SetBitmap(wxBitmap(menu_text_paste_xpm));
 	text_menu->Append(pasteTextItem);
 
-	wxMenuItem *deleteTextItem = new wxMenuItem(text_menu, DEL_TEXT, wxT("&Удалить\tCtrl+D"));
+	wxMenuItem *deleteTextItem = new wxMenuItem(text_menu, ID_TEXT_DEL, wxT("&Удалить\tCtrl+D"));
 	deleteTextItem->SetBitmap(wxBitmap(menu_text_delete_xpm));
 	text_menu->Append(deleteTextItem);
 
 	text_menu->AppendSeparator();
-	text_menu->Append(SELALL_TEXT, wxT("В&ыделить всё\tCtrl+A"));
+	text_menu->Append(ID_TEXT_SELALL, wxT("В&ыделить всё\tCtrl+A"));
 
 	wxMenu *list_controls= new wxMenu;
 	list_controls->Append(ID_TOGGLE_TOOLBAR, wxT("&Панель инструментов"), wxEmptyString, wxITEM_CHECK);
@@ -304,29 +306,29 @@ void QGenMainFrame::CreateMenuBar()
 	list_controls->Append(ID_TOGGLE_STATUSBAR, wxT("&Строка состояния"), wxEmptyString, wxITEM_CHECK);
 
 	wxMenu *view_menu= new wxMenu;
-	view_menu->Append(LIST_WINDOWS, wxT("&Список окон"), list_controls);
+	view_menu->Append(wxID_ANY, wxT("&Список окон"), list_controls);
 	view_menu->AppendSeparator();
-	view_menu->Append(ID_MENUCLOSEALLTABS, wxT("&Закрыть все вкладки\tCtrl+Alt+F4"));
-	view_menu->Append(ID_MENUCLOSEEXCEPTSELECTED, wxT("Закрыть все &кроме текущей"));
-	view_menu->Append(ID_MENUCLOSESELECTED, wxT("Закрыть &текущую\tCtrl+F4"));
+	view_menu->Append(ID_TAB_CLOSEALL, wxT("&Закрыть все вкладки\tCtrl+Alt+F4"));
+	view_menu->Append(ID_TAB_CLOSEEXCEPTSELECTED, wxT("Закрыть все &кроме текущей"));
+	view_menu->Append(ID_TAB_CLOSESELECTED, wxT("Закрыть &текущую\tCtrl+F4"));
 	view_menu->AppendSeparator();
-	view_menu->Append(ID_MENUFIXTAB, wxT("Закрепить/открепить &вкладку"));
+	view_menu->Append(ID_TAB_FIX, wxT("Закрепить/открепить &вкладку"));
 	view_menu->AppendSeparator();
-	view_menu->Append(ID_LOCDESCVISIBLE, wxT("Показать/скрыть &описание локации\tCtrl+Alt+D"));
-	view_menu->Append(ID_LOCACTVISIBLE, wxT("Показать/скрыть &действия локации\tCtrl+Alt+A"));
+	view_menu->Append(ID_LOC_DESCVISIBLE, wxT("Показать/скрыть &описание локации\tCtrl+Alt+D"));
+	view_menu->Append(ID_LOC_ACTVISIBLE, wxT("Показать/скрыть &действия локации\tCtrl+Alt+A"));
 
 	wxMenu *help_menu = new wxMenu;
 
-	wxMenuItem *contentsHelpItem = new wxMenuItem(help_menu, HELP_HELP, wxT("&Помощь\tF1"));
+	wxMenuItem *contentsHelpItem = new wxMenuItem(help_menu, ID_HELP, wxT("&Помощь\tF1"));
 	contentsHelpItem->SetBitmap(wxBitmap(menu_help_xpm));
 	help_menu->Append(contentsHelpItem);
 
-	wxMenuItem *indexSearchHelpItem = new wxMenuItem(help_menu, HELP_SEARCH_INDEX, wxT("Помощь по ключевому &слову\tCtrl+F1"));
+	wxMenuItem *indexSearchHelpItem = new wxMenuItem(help_menu, ID_HELP_SEARCH, wxT("Помощь по ключевому &слову\tCtrl+F1"));
 	indexSearchHelpItem->SetBitmap(wxBitmap(menu_help_search_xpm));
 	help_menu->Append(indexSearchHelpItem);
 
 	help_menu->AppendSeparator();
-	help_menu->Append(HELP_ABOUT, wxT("&О программе..."));
+	help_menu->Append(ID_ABOUT, wxT("&О программе..."));
 
 	_menu_bar = new wxMenuBar;
 	_menu_bar->Append(file_menu, wxT("&Игра"));
@@ -342,32 +344,32 @@ void QGenMainFrame::CreateToolBar()
 {
 	_toolBar = new QGenToolBar(this, ID_TOOLBAR, _controls);
 	_toolBar->SetToolBitmapSize(wxSize(24, 24));
-	_toolBar->AddTool(LOC_CREAT, wxT("New location..."), wxBitmap(toolbar_location_new_xpm), wxT("Создать локацию... (F7)"));
-	_toolBar->AddTool(LOC_RENAME, wxT("Rename location..."), wxBitmap(toolbar_location_rename_xpm), wxT("Переименовать выделенную локацию... (F6)"));
-	_toolBar->AddTool(LOC_DEL, wxT("Delete location"), wxBitmap(toolbar_location_delete_xpm), wxT("Удалить выделенную локацию (F8)"));
+	_toolBar->AddTool(ID_LOC_CREATE, wxT("New location..."), wxBitmap(toolbar_location_new_xpm), wxT("Создать локацию... (F7)"));
+	_toolBar->AddTool(ID_LOC_RENAME, wxT("Rename location..."), wxBitmap(toolbar_location_rename_xpm), wxT("Переименовать выделенную локацию... (F6)"));
+	_toolBar->AddTool(ID_LOC_DEL, wxT("Delete location"), wxBitmap(toolbar_location_delete_xpm), wxT("Удалить выделенную локацию (F8)"));
 	_toolBar->AddSeparator();
-	_toolBar->AddTool(OPEN_QUEST, wxT("Open..."), wxBitmap(toolbar_file_open_xpm), wxT("Открыть игру... (Ctrl+O)"));
-	_toolBar->AddTool(SAVE_QUEST, wxT("Save"), wxBitmap(toolbar_file_save_xpm), wxT("Сохранить игру (Ctrl+S)"));
-	_toolBar->AddTool(SAVE_QUESTAS, wxT("Save as..."), wxBitmap(toolbar_file_saveas_xpm), wxT("Сохранить игру как... (Ctrl+W)"));
+	_toolBar->AddTool(ID_QUEST_OPEN, wxT("Open..."), wxBitmap(toolbar_file_open_xpm), wxT("Открыть игру... (Ctrl+O)"));
+	_toolBar->AddTool(ID_QUEST_SAVE, wxT("Save"), wxBitmap(toolbar_file_save_xpm), wxT("Сохранить игру (Ctrl+S)"));
+	_toolBar->AddTool(ID_QUEST_SAVEAS, wxT("Save as..."), wxBitmap(toolbar_file_saveas_xpm), wxT("Сохранить игру как... (Ctrl+W)"));
 	_toolBar->AddSeparator();
-	_toolBar->AddTool(PLAY_QUEST, wxT("Play"), wxBitmap(toolbar_game_play_xpm), wxT("Запуск игры (F5)"));
-	_toolBar->AddTool(UTIL_INF, wxT("Information"), wxBitmap(toolbar_game_info_xpm), wxT("Краткая информация об игре (Ctrl+I)"));
+	_toolBar->AddTool(ID_QUEST_PLAY, wxT("Play"), wxBitmap(toolbar_game_play_xpm), wxT("Запуск игры (F5)"));
+	_toolBar->AddTool(ID_UTIL_INF, wxT("Information"), wxBitmap(toolbar_game_info_xpm), wxT("Краткая информация об игре (Ctrl+I)"));
 	_toolBar->AddSeparator();
-	_toolBar->AddTool(UNDO_TEXT, wxT("Undo text"), wxBitmap(toolbar_undo_xpm), wxT("Отменить (Ctrl+Z)"));
-	_toolBar->AddTool(REDO_TEXT, wxT("Redo text"), wxBitmap(toolbar_redo_xpm), wxT("Повторить (Ctrl+Y)"));
+	_toolBar->AddTool(ID_TEXT_UNDO, wxT("Undo text"), wxBitmap(toolbar_undo_xpm), wxT("Отменить (Ctrl+Z)"));
+	_toolBar->AddTool(ID_TEXT_REDO, wxT("Redo text"), wxBitmap(toolbar_redo_xpm), wxT("Повторить (Ctrl+Y)"));
 	_toolBar->AddSeparator();
-	_toolBar->AddTool(LOC_COPY, wxT("Copy location"), wxBitmap(toolbar_location_copy_xpm), wxT("Копировать выделенную локацию (Ctrl+Shift+C)"));
-	_toolBar->AddTool(LOC_PASTE, wxT("Paste location"), wxBitmap(toolbar_location_paste_xpm), wxT("Вставить локацию (Ctrl+Shift+V)"));
-	_toolBar->AddTool(LOC_CLEAR, wxT("Clear location"), wxBitmap(toolbar_location_clear_xpm), wxT("Очистить выделенную локацию (Ctrl+Shift+D)"));
+	_toolBar->AddTool(ID_LOC_COPY, wxT("Copy location"), wxBitmap(toolbar_location_copy_xpm), wxT("Копировать выделенную локацию (Ctrl+Shift+C)"));
+	_toolBar->AddTool(ID_LOC_PASTE, wxT("Paste location"), wxBitmap(toolbar_location_paste_xpm), wxT("Вставить локацию (Ctrl+Shift+V)"));
+	_toolBar->AddTool(ID_LOC_CLEAR, wxT("Clear location"), wxBitmap(toolbar_location_clear_xpm), wxT("Очистить выделенную локацию (Ctrl+Shift+D)"));
 	_toolBar->AddSeparator();
-	_toolBar->AddTool(UTIL_FIND, wxT("Search..."), wxBitmap(toolbar_text_search_xpm), wxT("Поиск / замена... (Ctrl+F)"));
-	_toolBar->AddTool(UTIL_OPTIONS, wxT("Options..."), wxBitmap(toolbar_options_xpm), wxT("Настройки... (Ctrl+P)"));
+	_toolBar->AddTool(ID_UTIL_FIND, wxT("Search..."), wxBitmap(toolbar_text_search_xpm), wxT("Поиск / замена... (Ctrl+F)"));
+	_toolBar->AddTool(ID_UTIL_OPTIONS, wxT("Options..."), wxBitmap(toolbar_options_xpm), wxT("Настройки... (Ctrl+P)"));
 	_toolBar->Realize();
 }
 
 void QGenMainFrame::OnInit( InitEvent &event )
 {
-	if ( _controls->LoadGame(event.GetInitString()) ) UpdateTitle();
+	if (_controls->LoadGame(event.GetInitString())) UpdateTitle();
 }
 
 void QGenMainFrame::OnExit( wxCommandEvent &event )
@@ -437,10 +439,10 @@ void QGenMainFrame::OnSaveQuestAs(wxCommandEvent &event)
 		dlgEntry.CenterOnParent();
 		if (dlgEntry.ShowModal() != wxID_CANCEL) password = dlgEntry.GetValue();
 		if (password.IsEmpty()) password = QGEN_PASSWD;
-		if ( _controls->SaveGame(dialog.GetPath(), password ) )
+		if (_controls->SaveGame(dialog.GetPath(), password))
 			UpdateTitle();
 		else
-			_controls->ShowMessage( QGEN_MSG_CANTSAVEGAME );
+			_controls->ShowMessage(QGEN_MSG_CANTSAVEGAME);
 	}
 }
 
@@ -602,13 +604,13 @@ void QGenMainFrame::OnPasteLocation( wxCommandEvent &event )
 {
 	switch (event.GetId())
 	{
-	case LOC_REPLACE:
+	case ID_LOC_REPLACE:
 		_controls->PasteLocFromClipboard(PASTE_REPLACE);
 		break;
-	case LOC_PASTE:
+	case ID_LOC_PASTE:
 		_controls->PasteLocFromClipboard(PASTE_NEW_AUTO);
 		break;
-	case LOC_PASTE_NEW:
+	case ID_LOC_PASTENEW:
 		_controls->PasteLocFromClipboard(PASTE_NEW);
 		break;
 	}
@@ -616,7 +618,7 @@ void QGenMainFrame::OnPasteLocation( wxCommandEvent &event )
 
 void QGenMainFrame::OnSortLocations( wxCommandEvent &event )
 {
-	_controls->SortLocations(event.GetId() == LOC_SORT_ASC);
+	_controls->SortLocations(event.GetId() == ID_LOC_SORTASC);
 }
 
 void QGenMainFrame::OnCreateAction( wxCommandEvent &event )
@@ -821,18 +823,18 @@ void QGenMainFrame::OnTimerUpdToolBar(wxTimerEvent &event)
 	bool isActsNotEmpty = !_controls->IsActionsOnSelectedLocEmpty();
 	bool isLocsNotAllClosed = !_controls->IsAllLocsClosed();
 	// ---------------------------------------------------
-	_toolBar->EnableTool(LOC_DEL, isLocSelected);
-	_toolBar->EnableTool(LOC_RENAME, isLocSelected);
-	_toolBar->EnableTool(LOC_COPY, isSelLocNotEmpty);
-	_toolBar->EnableTool(LOC_CLEAR, isSelLocNotEmpty);
-	_toolBar->EnableTool(CREATE_ACTION, isLocsNotAllClosed);
-	_toolBar->EnableTool(RENAME_ACTION, isActsNotEmpty);
-	_toolBar->EnableTool(DEL_ACTION, isActsNotEmpty);
-	_toolBar->EnableTool(PLAY_QUEST, isCanPlay);
-	_toolBar->EnableTool(SAVE_QUEST, isCanPlay);
-	_toolBar->EnableTool(SAVE_QUESTAS, isCanPlay);
-	_toolBar->EnableTool(UNDO_TEXT, isCanUndoText);
-	_toolBar->EnableTool(REDO_TEXT, isCanRedoText);
+	_toolBar->EnableTool(ID_LOC_DEL, isLocSelected);
+	_toolBar->EnableTool(ID_LOC_RENAME, isLocSelected);
+	_toolBar->EnableTool(ID_LOC_COPY, isSelLocNotEmpty);
+	_toolBar->EnableTool(ID_LOC_CLEAR, isSelLocNotEmpty);
+	_toolBar->EnableTool(ID_ACTION_CREATE, isLocsNotAllClosed);
+	_toolBar->EnableTool(ID_ACTION_RENAME, isActsNotEmpty);
+	_toolBar->EnableTool(ID_ACTION_DEL, isActsNotEmpty);
+	_toolBar->EnableTool(ID_QUEST_PLAY, isCanPlay);
+	_toolBar->EnableTool(ID_QUEST_SAVE, isCanPlay);
+	_toolBar->EnableTool(ID_QUEST_SAVEAS, isCanPlay);
+	_toolBar->EnableTool(ID_TEXT_UNDO, isCanUndoText);
+	_toolBar->EnableTool(ID_TEXT_REDO, isCanRedoText);
 	_toolBar->Realize();
 }
 
@@ -870,13 +872,13 @@ void QGenMainFrame::OnTabMenu( wxCommandEvent &event )
 	if (selPage < 0) return;
 	switch (event.GetId())
 	{
-	case ID_MENUCLOSEALLTABS:
+	case ID_TAB_CLOSEALL:
 		type = CLOSE_ALL;
 		break;
-	case ID_MENUCLOSEEXCEPTSELECTED:
+	case ID_TAB_CLOSEEXCEPTSELECTED:
 		type = CLOSE_ALLEXCEPTSELECTED;
 		break;
-	case ID_MENUCLOSESELECTED:
+	case ID_TAB_CLOSESELECTED:
 		type = CLOSE_SELECTED;
 		break;
 	}

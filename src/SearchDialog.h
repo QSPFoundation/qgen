@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -25,6 +25,17 @@
 	#include <wx/wx.h>
 	#include "Controls.h"
 	#include "SearchDataStore.h"
+
+	enum
+	{
+		ID_FIND_NEXT,
+		ID_FIND_REPL,
+		ID_FIND_REPLALL,
+		ID_FIND_ANEW,
+		ID_FIND_SKIPLOC,
+		ID_TEXT_FIND,
+		ID_TEXT_REPL
+	};
 
 	class SearchDialog : public wxDialog
 	{

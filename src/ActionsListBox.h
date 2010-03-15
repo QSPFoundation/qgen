@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -25,7 +25,6 @@
 	#include <wx/wx.h>
 	#include <wx/fontmap.h>
 	#include <wx/htmllbox.h>
-	#include "Idents.h"
 	#include "DataContainer.h"
 	#include "ActionCode.h"
 
@@ -33,7 +32,6 @@
 	{
 		DECLARE_CLASS(ActionsListBox)
 		DECLARE_EVENT_TABLE()
-
 	private:
 		ILocationPage	  *_locPage;
 		IControls		  *_controls;
@@ -67,11 +65,11 @@
 		void CreateHTMLParser() const;
 		virtual wxString OnGetItem(size_t n) const;
 	public:
-		ActionsListBox(wxWindow *owner, wxWindowID id, ILocationPage *locPage, ActionCode *actCode, IControls *controls,
-					   long style = 0);
+		ActionsListBox(wxWindow *owner, wxWindowID id, ILocationPage *locPage, 
+			ActionCode *actCode, IControls *controls, long style = 0);
 		~ActionsListBox();
 
-		void SetStandardFonts(int size = -1,
+		void SetStandardFonts(int size = -1, 
 			const wxString& normal_face = wxEmptyString,
 			const wxString& fixed_face = wxEmptyString);
 		void Update(bool isFromObservable = false);

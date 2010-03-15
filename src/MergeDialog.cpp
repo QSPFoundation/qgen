@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -29,8 +29,9 @@ BEGIN_EVENT_TABLE(MergeDialog, wxDialog)
 	EVT_BUTTON(ID_CANCEL_BUTTON, MergeDialog::OnButton)
 END_EVENT_TABLE()
 
-MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString &message, int style /* = 0 */) :
-			wxDialog( parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style|wxDEFAULT_DIALOG_STYLE|wxICON_INFORMATION )
+MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString &message, int style) :
+	wxDialog( parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, 
+		style|wxDEFAULT_DIALOG_STYLE|wxICON_INFORMATION )
 {
 	wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *msgSizer = new wxBoxSizer(wxHORIZONTAL);

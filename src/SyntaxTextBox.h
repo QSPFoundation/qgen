@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -24,7 +24,6 @@
 
 	#include <wx/wx.h>
 	#include <wx/stc/stc.h>
-	#include "Idents.h"
 	#include "IControls.h"
 
 	enum

@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -26,7 +26,6 @@
 	#include <wx/clipbrd.h>
 	#include <wx/filename.h>
 
-	#include "Idents.h"
 	#include "DataContainer.h"
 	#include "LocationsListBox.h"
 	#include "LocationsNotebook.h"
@@ -54,18 +53,34 @@
 		SEARCH_ACTCODE
 	};
 
+	enum MessageType
+	{
+		QGEN_MSG_EXISTS = 100,
+		QGEN_MSG_EXISTS_HKEY,
+		QGEN_MSG_EXISTS_S_HKEY,
+		QGEN_MSG_EMPTYDATA,
+		QGEN_MSG_WRONGPASSWORD,
+		QGEN_MSG_CANTSAVEGAME,
+		QGEN_MSG_CANTLOADGAME,
+		QGEN_MSG_NOTFOUND,
+		QGEN_MSG_SEARCHENDED,
+		QGEN_MSG_WRONGFORMAT,
+		QGEN_MSG_MAXACTIONSCOUNTREACHED,
+		QGEN_MSG_TOOLONGFOLDERNAME,
+		QGEN_MSG_TOOLONGLOCATIONNAME,
+		QGEN_MSG_TOOLONGACTIONNAME
+	};
+
 	struct DataSearch
 	{
-		int idxLoc;
-		int idxAct;
-		long startPos;
-		long stringLen;
-		int countChecking;
-
+		int			idxLoc;
+		int			idxAct;
+		long		startPos;
+		long		stringLen;
+		int			countChecking;
 		SearchPlace foundAt;
 		SearchPlace findAt;
-
-		bool isFoundAny;
+		bool		isFoundAny;
 	};
 
 	class Controls : public IControls
@@ -87,7 +102,6 @@
 		static wxString ConvertSearchString(const wxString& s, bool isMatchCase);
 		static int FindSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind = 0);
 		static wxWindow *GetParent();
-
 	public:
 		Controls(const wxString &path);
 		~Controls();

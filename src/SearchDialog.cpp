@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -24,18 +24,18 @@
 IMPLEMENT_CLASS(SearchDialog, wxDialog)
 
 BEGIN_EVENT_TABLE(SearchDialog, wxDialog)
-	EVT_BUTTON(FIND_NEXT, SearchDialog::OnFindNext)
-	EVT_BUTTON(FIND_ANEW, SearchDialog::OnFindAgain)
-	EVT_BUTTON(FIND_REPL, SearchDialog::OnFindRepl)
-	EVT_BUTTON(FIND_REPLALL, SearchDialog::OnFindReplAll)
-	EVT_BUTTON(FIND_SKIPLOC, SearchDialog::OnSkipLoc)
-	EVT_TEXT(FIND_TEXT, SearchDialog::OnUpdFindText)
-	EVT_TEXT_ENTER(FIND_TEXT, SearchDialog::OnFindNext)
-	EVT_TEXT_ENTER(REPL_TEXT, SearchDialog::OnFindRepl)
+	EVT_BUTTON(ID_FIND_NEXT, SearchDialog::OnFindNext)
+	EVT_BUTTON(ID_FIND_ANEW, SearchDialog::OnFindAgain)
+	EVT_BUTTON(ID_FIND_REPL, SearchDialog::OnFindRepl)
+	EVT_BUTTON(ID_FIND_REPLALL, SearchDialog::OnFindReplAll)
+	EVT_BUTTON(ID_FIND_SKIPLOC, SearchDialog::OnSkipLoc)
+	EVT_TEXT(ID_TEXT_FIND, SearchDialog::OnUpdFindText)
+	EVT_TEXT_ENTER(ID_TEXT_FIND, SearchDialog::OnFindNext)
+	EVT_TEXT_ENTER(ID_TEXT_REPL, SearchDialog::OnFindRepl)
 END_EVENT_TABLE()
 
 SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *controls, int style) :
-	wxDialog( parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | style )
+	wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | style)
 {
 	_controls = controls;
 	_parent = parent;
@@ -46,8 +46,10 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 	wxSizer *rightSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *topSizer = new wxBoxSizer(wxHORIZONTAL);
 
-	_textFind = new wxComboBox(this, FIND_TEXT, wxEmptyString, wxDefaultPosition, wxDefaultSize, _searchDataStore->GetSearchStrings());
-	_textRepl = new wxComboBox(this, REPL_TEXT, wxEmptyString, wxDefaultPosition, wxDefaultSize, _searchDataStore->GetReplaceStrings());
+	_textFind = new wxComboBox(this, ID_TEXT_FIND, wxEmptyString, wxDefaultPosition, 
+						wxDefaultSize, _searchDataStore->GetSearchStrings());
+	_textRepl = new wxComboBox(this, ID_TEXT_REPL, wxEmptyString, wxDefaultPosition, 
+						wxDefaultSize, _searchDataStore->GetReplaceStrings());
 	if (_textFind->GetCount()) _textFind->Select(0);
 	if (_textRepl->GetCount()) _textRepl->Select(0);
 	_chkMatchCase = new wxCheckBox(this, wxID_ANY, wxT("Точное совпадение"));
@@ -58,11 +60,11 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 	leftSizer->Add(_chkMatchCase, 1, wxUP|wxGROW, 6);
 	leftSizer->Add(_chkWholeWord, 1, wxUP|wxGROW, 6);
 
-	_btnSearchAgain = new wxButton(this, FIND_ANEW, wxT("Начать заново"));
-	_btnNextSearch = new wxButton(this, FIND_NEXT, wxT("Продолжить поиск"));
-	_btnSkipLoc = new wxButton(this, FIND_SKIPLOC, wxT("Пропустить локацию"));
-	_btnReplace = new wxButton(this, FIND_REPL, wxT("Заменить"));
-	_btnReplaceAll = new wxButton(this, FIND_REPLALL, wxT("Заменить все"));
+	_btnSearchAgain = new wxButton(this, ID_FIND_ANEW, wxT("Начать заново"));
+	_btnNextSearch = new wxButton(this, ID_FIND_NEXT, wxT("Продолжить поиск"));
+	_btnSkipLoc = new wxButton(this, ID_FIND_SKIPLOC, wxT("Пропустить локацию"));
+	_btnReplace = new wxButton(this, ID_FIND_REPL, wxT("Заменить"));
+	_btnReplaceAll = new wxButton(this, ID_FIND_REPLALL, wxT("Заменить все"));
 	_btnClose = new wxButton(this, wxID_CANCEL, wxT("Закрыть"));
 
 	rightSizer->Add(_btnNextSearch, 1, wxALL|wxGROW, 1);
@@ -90,7 +92,9 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 void SearchDialog::OnFindNext( wxCommandEvent &event )
 {
 	wxString str = _textFind->GetValue();
-	_controls->SearchString( str, false, _chkMatchCase->GetValue(), _chkWholeWord->GetValue() );
+	_controls->SearchString(str, false, 
+		_chkMatchCase->GetValue(), 
+		_chkWholeWord->GetValue());
 	AddSearchText(str);
 	_textFind->SetFocus();
 	_btnNextSearch->SetDefault();
@@ -99,7 +103,9 @@ void SearchDialog::OnFindNext( wxCommandEvent &event )
 void SearchDialog::OnFindAgain( wxCommandEvent &event )
 {
 	wxString str = _textFind->GetValue();
-	_controls->SearchString( str, true, _chkMatchCase->GetValue(), _chkWholeWord->GetValue() );
+	_controls->SearchString(str, true, 
+		_chkMatchCase->GetValue(), 
+		_chkWholeWord->GetValue());
 	AddSearchText(str);
 	_textFind->SetFocus();
 	_btnNextSearch->SetDefault();
@@ -120,13 +126,17 @@ void SearchDialog::OnFindReplAll( wxCommandEvent &event )
 	wxString str = _textRepl->GetValue();
 	_controls->ReplaceSearchString(str);
 	wxString str1 = _textFind->GetValue();
-	bool flag = _controls->SearchString( str1, true, _chkMatchCase->GetValue(), _chkWholeWord->GetValue() );
+	bool flag = _controls->SearchString(str1, true, 
+		_chkMatchCase->GetValue(),
+		_chkWholeWord->GetValue());
 	AddSearchText(str1);
 	AddReplaceText(str);
 	while (flag)
 	{
 		_controls->ReplaceSearchString(str);
-		flag = _controls->SearchString( str1, false, _chkMatchCase->GetValue(), _chkWholeWord->GetValue() );
+		flag = _controls->SearchString(str1, false, 
+				_chkMatchCase->GetValue(), 
+				_chkWholeWord->GetValue());
 	}
 	_textRepl->SetFocus();
 	_btnNextSearch->SetDefault();
@@ -146,7 +156,9 @@ void SearchDialog::OnSkipLoc( wxCommandEvent &event )
 {
 	wxString str = _textFind->GetValue();
 	if (_controls->SearchNextLoc())
-		_controls->SearchString( str, false, _chkMatchCase->GetValue(), _chkWholeWord->GetValue() );
+		_controls->SearchString(str, false, 
+			_chkMatchCase->GetValue(), 
+			_chkWholeWord->GetValue());
 	AddSearchText(str);
 	_textFind->SetFocus();
 	_btnNextSearch->SetDefault();
