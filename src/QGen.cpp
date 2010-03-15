@@ -35,14 +35,13 @@ BEGIN_EVENT_TABLE(QGenMainFrame, wxFrame)
 	EVT_MENU(ID_TAB_CLOSEEXCEPTSELECTED, QGenMainFrame::OnTabMenu)
 	EVT_MENU(ID_TAB_CLOSESELECTED, QGenMainFrame::OnTabMenu)
 	EVT_MENU(ID_TAB_FIX, QGenMainFrame::OnFixPage)
-	EVT_MENU(ID_LOC_DESCVISIBLE, QGenMainFrame::OnLocDescVisible)
-	EVT_MENU(ID_LOC_ACTVISIBLE, QGenMainFrame::OnLocActsVisible)
-	EVT_MENU(ID_ABOUT, QGenMainFrame::OnAbout)
 	EVT_MENU(ID_HELP, QGenMainFrame::OnChmHelp)
 	EVT_MENU(ID_HELP_SEARCH, QGenMainFrame::OnSearchHelp)
 	EVT_MENU(ID_FOLDER_CREAT, QGenMainFrame::OnCreateFolder)
 	EVT_MENU(ID_FOLDER_RENAME, QGenMainFrame::OnRenameFolder)
 	EVT_MENU(ID_FOLDER_DEL, QGenMainFrame::OnDeleteFolder)
+	EVT_MENU(ID_LOC_DESCVISIBLE, QGenMainFrame::OnLocDescVisible)
+	EVT_MENU(ID_LOC_ACTVISIBLE, QGenMainFrame::OnLocActsVisible)
 	EVT_MENU(ID_LOC_CREATE, QGenMainFrame::OnCreateLocation)
 	EVT_MENU(ID_LOC_DEL, QGenMainFrame::OnDeleteLocation)
 	EVT_MENU(ID_LOC_RENAME, QGenMainFrame::OnRenameLocation)
@@ -76,13 +75,11 @@ BEGIN_EVENT_TABLE(QGenMainFrame, wxFrame)
 	EVT_MENU(ID_TEXT_CUT, QGenMainFrame::OnCutText)
 	EVT_MENU(ID_TEXT_DEL, QGenMainFrame::OnDeleteText)
 	EVT_MENU(ID_TEXT_SELALL, QGenMainFrame::OnSelectAllText)
-
 	EVT_MENU(ID_QUEST_EXPORTTXT, QGenMainFrame::OnExportTxtFile)
 	EVT_MENU(ID_QUEST_EXPORTTXT2GAM, QGenMainFrame::OnExportTxt2Gam)
 	EVT_MENU(ID_QUEST_IMPORT, QGenMainFrame::OnImportTxt2Gam)
-
+	EVT_MENU(ID_ABOUT, QGenMainFrame::OnAbout)
 	EVT_MENU_OPEN(QGenMainFrame::OnUpdMenuItems)
-
 	EVT_TIMER(ID_TIMER_AUTO_SAVE, QGenMainFrame::OnTimerAutoSave)
 	EVT_TIMER(ID_TIMER_UPD_TOOLBAR, QGenMainFrame::OnTimerUpdToolBar)
 	EVT_KEY_DOWN(QGenMainFrame::OnKeyDown)
@@ -93,6 +90,7 @@ bool QGenApp::OnInit()
 	InitEvent initEvent;
 	wxInitAllImageHandlers();
 	wxFileName appPath(argv[0]);
+	wxRegisterId(20000);
 	appPath.MakeAbsolute();
 	_controls = new Controls(appPath.GetPath());
 	QGenMainFrame *mainFrame = new QGenMainFrame(_controls);
@@ -466,7 +464,8 @@ void QGenMainFrame::CreateNotebook()
 void QGenMainFrame::LoadLayout()
 {
 	Settings *settings = _controls->GetSettings();
-	SetSize(settings->GetLeftFramePos(), settings->GetTopFramePos(), settings->GetFrameWidth(), settings->GetFrameHeight());
+	SetSize(settings->GetLeftFramePos(), settings->GetTopFramePos(), 
+		settings->GetFrameWidth(), settings->GetFrameHeight());
 	Maximize(settings->GetMaximizeFrame());
 	wxStatusBar *statusBar = GetStatusBar();
 	if (settings->GetShowStatusBar())

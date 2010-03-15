@@ -768,7 +768,7 @@ bool Controls::SaveGame(const wxString &filename, const wxString &password)
 
 bool Controls::LoadGame(const wxString &filename)
 {
-/*	_locNotebook->DeleteAllPages(CLOSE_ALL, wxNOT_FOUND);
+	_locNotebook->DeleteAllPages(CLOSE_ALL, wxNOT_FOUND);
 	if (qspOpenQuest(filename.wx_str(), GetParent(), this, _currentGamePass, false))
 	{
 		wxFileName file(filename);
@@ -779,7 +779,7 @@ bool Controls::LoadGame(const wxString &filename)
 		_container->Save();
 		_lastSaveTime = wxGetLocalTimeMillis();
 		return true;
-	}*/
+	}
 	return false;
 }
 
