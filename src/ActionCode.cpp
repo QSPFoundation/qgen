@@ -20,7 +20,6 @@
 */
 
 #include "ActionCode.h"
-#include "QGen.h"
 
 IMPLEMENT_CLASS( ActionCode, wxPanel )
 

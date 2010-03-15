@@ -25,6 +25,11 @@
 	#include "SyntaxTextBox.h"
 	#include "ImagePathTextBox.h"
 
+	enum
+	{
+		ID_PICT_OPEN
+	};
+
 	class ActionCode : public wxPanel, public IObserver
 	{
 		DECLARE_CLASS(ActionCode)

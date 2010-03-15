@@ -20,7 +20,7 @@
 */
 
 #include "LocationsListBox.h"
-#include "Qgen.h"
+#include "QGen.h"
 
 IMPLEMENT_CLASS(LocationsListBox, wxTreeCtrl)
 
