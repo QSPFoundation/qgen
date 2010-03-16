@@ -81,17 +81,6 @@
 			return wxBitmap(wxImage(is, wxBITMAP_TYPE_ANY, -1), -1);
 		}
 
-	class QGenApp : public wxApp
-	{
-	private:
-		Controls *_controls;
-	public:
-		virtual bool OnInit();
-		virtual int OnExit();
-	};
-
-	DECLARE_APP(QGenApp)
-
 	enum
 	{
 		ID_LOCSLIST = 10000,
@@ -151,8 +140,19 @@
 		ID_TAB_CLOSEALL,
 		ID_TAB_CLOSEEXCEPTSELECTED,
 		ID_TAB_CLOSESELECTED,
-		ID_TAB_FIX,
+		ID_TAB_FIX
 	};
+
+	class QGenApp : public wxApp
+	{
+	private:
+		Controls *_controls;
+	public:
+		virtual bool OnInit();
+		virtual int OnExit();
+	};
+
+	DECLARE_APP(QGenApp)
 
 	class QGenMainFrame : public wxFrame
 	{
@@ -167,7 +167,6 @@
 		LocationsNotebook	*_locNotebook;
 		Controls			*_controls;
 		SearchDialog		*_findDlg;
-
 
 		void OnInit(InitEvent &event);
 		void OnExit(wxCommandEvent &event);

@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QGEN_CHECK_SYSTEM_HOTKEYS_H_
-	#define _QGEN_CHECK_SYSTEM_HOTKEYS_H_
+#ifndef _QGEN_CHECK_SYSTEM_HOTKEY_H_
+	#define _QGEN_CHECK_SYSTEM_HOTKEY_H_
 
 	#include <wx/wx.h>
 

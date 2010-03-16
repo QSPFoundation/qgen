@@ -26,7 +26,7 @@
 	#include <wx/fontdlg.h>
 	#include <wx/filename.h>
 	#include <wx/fileconf.h>
-	#include <list>
+	#include <wx/list.h>
 	#include "IObserver.h"
 	#include "HotKeysStore.h"
 	#include "SearchDataStore.h"
@@ -44,6 +44,8 @@
 		SYNTAX_BASE,
 		SYNTAX_DUMMY
 	};
+
+	WX_DECLARE_LIST(IObserver, ObserverList);
 
 	class Settings
 	{
@@ -87,8 +89,7 @@
 		wxString		_panelsPos;
 		HotkeysStore	_hotkeysStore;
 		SearchDataStore _searchDataStore;
-
-		std::list<IObserver *> observers;
+		ObserverList	_observers;
 	public:
 		Settings(const wxString &path);
 

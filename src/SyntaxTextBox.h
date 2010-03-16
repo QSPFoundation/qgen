@@ -24,6 +24,7 @@
 
 	#include <wx/wx.h>
 	#include <wx/stc/stc.h>
+	#include <list>
 	#include "IControls.h"
 
 	enum

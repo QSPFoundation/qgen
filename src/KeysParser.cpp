@@ -65,6 +65,12 @@ void KeysParser::InitKeysTable()
 	_keysTable["F12"] = VK_F12;
 }
 
+
+KeysParser::~KeysParser()
+{
+	_keysTable.clear();
+}
+
 void KeysParser::ReleaseAlt()
 {
 	INPUT input;

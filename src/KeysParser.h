@@ -24,7 +24,7 @@
 
 	#include <wx/wx.h>
 	#include <wx/dynarray.h>
-	#include <map>
+	#include <wx/hashmap.h>
 
 	#ifdef __WXMSW__
 		#include <Windows.h>
@@ -33,11 +33,12 @@
 	#include "HotKeysStore.h"
 
 	WX_DECLARE_OBJARRAY(INPUT, KeysArray);
+	WX_DECLARE_STRING_HASH_MAP(int, KeyTable);
 
 	class KeysParser
 	{
 	private:
-		std::map<wxString, int> _keysTable;
+		KeyTable				_keysTable;
 		HotkeysStore			*_hotKeysStore;
 
 		void OnKeyPress(int keyCode);
@@ -47,6 +48,7 @@
 		void InitKeysTable();
 	public:
 		KeysParser(HotkeysStore *hotKeysStore);
+		~KeysParser();
 		bool ExecuteHotkeyAction(int keyCode, int modifiers);
 		void ParseText(const wxString &text);
 	};
