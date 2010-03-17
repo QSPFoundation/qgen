@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -21,26 +21,25 @@
 
 #include "ChkSysHotKey.h"
 
-bool ChkSysHotKey::CheckSystemHotKeys(wxMenuBar *m, int keyCode, int flags)
+bool ChkSysHotKey::CheckSystemHotKeys(wxMenuBar *menuBar, int keyCode, int flags)
 {
 	_isInMenu = false;
 	_keyCode = keyCode;
 	_flags = flags;
 
-	WalkMenuBar(m);
-
+	WalkMenuBar(menuBar);
 	return _isInMenu;
 }
 
-void ChkSysHotKey::WalkMenuBar(wxMenuBar *m)
+void ChkSysHotKey::WalkMenuBar(wxMenuBar *menuBar)
 {
-	for (size_t i = 0; i < m->GetMenuCount(); ++i)
-		WalkMenu(m->GetMenu(i));
+	for (size_t i = 0; i < menuBar->GetMenuCount(); ++i)
+		WalkMenu(menuBar->GetMenu(i));
 }
 
-void ChkSysHotKey::WalkMenu(wxMenu *m)
+void ChkSysHotKey::WalkMenu(wxMenu *menu)
 {
-	wxMenuItemList &list = m->GetMenuItems();
+	wxMenuItemList &list = menu->GetMenuItems();
 	for (int i = 0; i < list.GetCount(); ++i)
 	{
 		wxMenuItem *menuItem = list.Item(i)->GetData();
@@ -49,14 +48,14 @@ void ChkSysHotKey::WalkMenu(wxMenu *m)
 	}
 }
 
-void ChkSysHotKey::WalkMenuItem(wxMenuItem *m)
+void ChkSysHotKey::WalkMenuItem(wxMenuItem *menuItem)
 {
-	if (m->GetSubMenu())
+	if (menuItem->GetSubMenu())
 	{
-		WalkMenu(m->GetSubMenu());
+		WalkMenu(menuItem->GetSubMenu());
 		return;
 	}
-	wxAcceleratorEntry *a = m->GetAccel();
-	if (a && _keyCode == a->GetKeyCode() && _flags == a->GetFlags())
+	wxAcceleratorEntry *accel = menuItem->GetAccel();
+	if (accel && _keyCode == accel->GetKeyCode() && _flags == accel->GetFlags())
 		_isInMenu = true;
 }

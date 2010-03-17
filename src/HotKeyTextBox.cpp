@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,23 +19,23 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#include "HotKeyTextCtrl.h"
+#include "HotKeyTextBox.h"
 
-IMPLEMENT_CLASS(HotKeyTextCtrl, wxTextCtrl)
+IMPLEMENT_CLASS(HotKeyTextBox, wxTextCtrl)
 
-BEGIN_EVENT_TABLE(HotKeyTextCtrl, wxTextCtrl)
-	EVT_KEY_DOWN(HotKeyTextCtrl::OnKeyDown)
-	EVT_KEY_UP(HotKeyTextCtrl::OnKeyUp)
+BEGIN_EVENT_TABLE(HotKeyTextBox, wxTextCtrl)
+	EVT_KEY_DOWN(HotKeyTextBox::OnKeyDown)
+	EVT_KEY_UP(HotKeyTextBox::OnKeyUp)
 END_EVENT_TABLE()
 
-HotKeyTextCtrl::HotKeyTextCtrl( wxWindow *parent, wxWindowID id, const wxString &value ) :
+HotKeyTextBox::HotKeyTextBox( wxWindow *parent, wxWindowID id, const wxString &value ) :
 	wxTextCtrl( parent, id, value, wxDefaultPosition, wxSize(150, -1), wxTE_READONLY)
 {
 	_hotKeyCode = 0;
 	_flags = 0;
 }
 
-void HotKeyTextCtrl::AppendAccel(wxString &data, const wxString &key) const
+void HotKeyTextBox::AppendAccel(wxString &data, const wxString &key) const
 {
 	if (data.IsEmpty())
 		data.Append(key);
@@ -43,7 +43,7 @@ void HotKeyTextCtrl::AppendAccel(wxString &data, const wxString &key) const
 		data.Append(wxString::Format(wxT("+%s"), key.wx_str()));
 }
 
-void HotKeyTextCtrl::OnKeyDown( wxKeyEvent& event )
+void HotKeyTextBox::OnKeyDown( wxKeyEvent& event )
 {
 	int keyCode = event.GetKeyCode();
 	if (_hotKeyCode)
@@ -80,7 +80,7 @@ void HotKeyTextCtrl::OnKeyDown( wxKeyEvent& event )
 	}
 }
 
-void HotKeyTextCtrl::OnKeyUp( wxKeyEvent& event )
+void HotKeyTextBox::OnKeyUp( wxKeyEvent& event )
 {
 	if (!_hotKeyCode)
 	{

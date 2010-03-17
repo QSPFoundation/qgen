@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -21,8 +21,8 @@
 
 class LocationPage;
 
-#ifndef _QUEST_GENERATOR_CONCRETE_COMMAND_
-	#define _QUEST_GENERATOR_CONCRETE_COMMAND_
+#ifndef _QGEN_ICONTROLS_H_
+	#define _QGEN_ICONTROLS_H_
 
 	#include "Settings.h"
 	#include "DataContainer.h"

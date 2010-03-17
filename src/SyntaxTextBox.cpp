@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -20,6 +20,7 @@
 */
 
 #include "SyntaxTextBox.h"
+#include "QGen.h"
 
 IMPLEMENT_CLASS(SyntaxTextBox, wxStyledTextCtrl)
 
@@ -274,19 +275,19 @@ void SyntaxTextBox::OnRightClick(wxMouseEvent& event)
 	else
 	{
 		wxMenu menu;
-		menu.Append(UNDO_TEXT, wxT("Отменить"));
-		menu.Append(REDO_TEXT, wxT("Повторить"));
+		menu.Append(ID_TEXT_UNDO, wxT("Отменить"));
+		menu.Append(ID_TEXT_REDO, wxT("Повторить"));
 		menu.AppendSeparator();
-		menu.Append(CUT_TEXT, wxT("Вырезать"));
-		menu.Append(COPY_TEXT, wxT("Копировать"));
-		menu.Append(PASTE_TEXT, wxT("Вставить"));
-		menu.Append(DEL_TEXT, wxT("Удалить"));
+		menu.Append(ID_TEXT_CUT, wxT("Вырезать"));
+		menu.Append(ID_TEXT_COPY, wxT("Копировать"));
+		menu.Append(ID_TEXT_PASTE, wxT("Вставить"));
+		menu.Append(ID_TEXT_DEL, wxT("Удалить"));
 		menu.AppendSeparator();
-		menu.Append(SELALL_TEXT, wxT("Выделить всё"));
+		menu.Append(ID_TEXT_SELALL, wxT("Выделить всё"));
 		if (_style & SYNTAX_STYLE_COLORED)
 		{
 			menu.AppendSeparator();
-			menu.Append(LOC_JUMP_LOC, wxT("Перейти на выбранную локацию"));
+			menu.Append(ID_LOC_JUMPLOC, wxT("Перейти на выбранную локацию"));
 		}
 		_controls->UpdateMenuItems(&menu);
 		PopupMenu(&menu);
@@ -663,7 +664,7 @@ void SyntaxTextBox::LoadTips()
 
 void SyntaxTextBox::OnKeyUp(wxKeyEvent& event)
 {
-	if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
+	if (!(_style & SYNTAX_STYLE_NOHELPTIPS)) 
 		Tip(GetCurrentPos());
 	event.Skip();
 }

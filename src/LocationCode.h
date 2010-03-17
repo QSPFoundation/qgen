@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _EXECUTION_BY_VISIT_H
-	#define _EXECUTION_BY_VISIT_H
+#ifndef _QGEN_LOCATION_CODE_H_
+	#define _QGEN_LOCATION_CODE_H_
 
 	#include <wx/wx.h>
 	#include <wx/aui/aui.h>
@@ -37,13 +37,13 @@
 		SyntaxTextBox		*_text;
 		IControls			*_controls;
 	public:
-		LocationCode( wxWindow *owner, ILocationPage *locPage, IControls *controls );
+		LocationCode(wxWindow *owner, ILocationPage *locPage, IControls *controls);
 
 		void SaveCode();
 		void LoadCode();
 		void Clear();
-		void SelectString( long startPos, long lastPos );
-		void ReplaceString( long start, long end, const wxString & str );
+		void SelectString(long startPos, long lastPos);
+		void ReplaceString(long start, long end, const wxString &str);
 		void ExpandCollapseAll(bool isExpanded);
 	};
 

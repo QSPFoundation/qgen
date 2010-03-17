@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,12 +19,23 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef	_QGEN_SEARCH_REPLACE_DIALOG_
-	#define _QGEN_SEARCH_REPLACE_DIALOG_
+#ifndef	_QGEN_SEARCH_REPLACE_DIALOG_H_
+	#define _QGEN_SEARCH_REPLACE_DIALOG_H_
 
 	#include <wx/wx.h>
 	#include "Controls.h"
 	#include "SearchDataStore.h"
+
+	enum
+	{
+		ID_FIND_NEXT = 10400,
+		ID_FIND_REPL,
+		ID_FIND_REPLALL,
+		ID_FIND_ANEW,
+		ID_FIND_SKIPLOC,
+		ID_TEXT_FIND,
+		ID_TEXT_REPL
+	};
 
 	class SearchDialog : public wxDialog
 	{

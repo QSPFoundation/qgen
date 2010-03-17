@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,25 +19,25 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef	_QGEN_MERGE_DIALOG_
-	#define _QGEN_MERGE_DIALOG_
+#ifndef	_QGEN_MERGE_DIALOG_H_
+	#define _QGEN_MERGE_DIALOG_H_
 
 	#include <wx/wx.h>
 	#include <wx/artprov.h>
 
 	enum
 	{
-		ID_REPLACE_BUTTON,
-		ID_SKIP_BUTTON,
-		ID_CANCEL_BUTTON
+		ID_MERGE_REPLACE = 10600,
+		ID_MERGE_SKIP,
+		ID_MERGE_CANCEL
 	};
 
 	enum
 	{
-		MergeAll = 1 << 0,
-		MergeReplace = 1 << 1,
-		MergeSkip = 1 << 2,
-		MergeCancel = 1 << 30
+		MERGE_ALL = 1 << 0,
+		MERGE_REPLACE = 1 << 1,
+		MERGE_SKIP = 1 << 2,
+		MERGE_CANCEL = 1 << 30
 	};
 
 	class MergeDialog : public wxDialog

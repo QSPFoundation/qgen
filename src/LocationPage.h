@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,14 +19,13 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef  _QUEST_GENERATOR_PAGE_LOCATION_H
-	#define _QUEST_GENERATOR_PAGE_LOCATION_H
+#ifndef  _QGEN_LOCATION_PAGE_H_
+	#define _QGEN_LOCATION_PAGE_H_
 
 	#include <wx/wx.h>
 	#include <wx/aui/aui.h>
 	#include <wx/splitter.h>
 	#include <wx/panel.h>
-
 	#include "LocationActions.h"
 	#include "LocationCode.h"
 	#include "LocationDesc.h"
@@ -36,18 +35,17 @@
 	{
 		DECLARE_CLASS(LocationPage)
 	private:
-		IControls		*_controls;
-		LocationCode	*_locCode;
-		LocationDesc	*_locDesc;
-		LocationActions *_locActs;
-		size_t			_locIndex;
+		IControls			*_controls;
+		LocationCode		*_locCode;
+		LocationDesc		*_locDesc;
+		LocationActions		*_locActs;
+		size_t				_locIndex;
 		wxSplitterWindow	*_splitterh;
 		wxSplitterWindow	*_splitterv_up;
-		Settings		*_settings;
-		int				_descWidth;
-		int				_actsHeight;
-		bool			_isFixed;
-
+		Settings			*_settings;
+		int					_descWidth;
+		int					_actsHeight;
+		bool				_isFixed;
 	public:
 		LocationPage( wxAuiNotebook *owner, IControls *controls );
 		~LocationPage();

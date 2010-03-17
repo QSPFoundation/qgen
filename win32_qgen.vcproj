@@ -365,7 +365,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\HotKeyTextCtrl.cpp"
+				RelativePath=".\src\HotKeyTextBox.cpp"
 				>
 			</File>
 			<File
@@ -487,15 +487,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\HotKeyTextCtrl.h"
+				RelativePath=".\src\HotKeyTextBox.h"
 				>
 			</File>
 			<File
 				RelativePath=".\src\IControls.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Idents.h"
 				>
 			</File>
 			<File

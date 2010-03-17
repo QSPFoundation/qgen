@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -20,6 +20,7 @@
 */
 
 #include "LocationsListBox.h"
+#include "QGen.h"
 
 IMPLEMENT_CLASS(LocationsListBox, wxTreeCtrl)
 
@@ -41,7 +42,6 @@ LocationsListBox::LocationsListBox(wxTopLevelWindow *parent, wxWindowID id, ICon
 	_controls = controls;
 	_mainFrame = parent;
 	_needForUpdate = false;
-	_tip = NULL;
 
 	_statesImageList.Create(16, 16);
 	_statesImageList.Add(wxIcon(locslist_folder_closed_xpm));
@@ -62,6 +62,7 @@ LocationsListBox::~LocationsListBox()
 		_showTimer.Stop();
 	Clear();
 	_controls->GetSettings()->RemoveObserver(this);
+	delete _tip;
 }
 
 void LocationsListBox::Update(bool isFromObservable)
@@ -97,25 +98,25 @@ void LocationsListBox::OnRightClick( wxMouseEvent &event )
 		SetFocus();
 		SelectItem(id);
 	}
-	menu.Append(LOC_CREAT, wxT("Создать..."));
-	menu.Append(LOC_RENAME, wxT("Переименовать..."));
-	menu.Append(LOC_DEL, wxT("Удалить"));
+	menu.Append(ID_LOC_CREATE, wxT("Создать..."));
+	menu.Append(ID_LOC_RENAME, wxT("Переименовать..."));
+	menu.Append(ID_LOC_DEL, wxT("Удалить"));
 	menu.AppendSeparator();
-	menu.Append(FOLDER_CREAT, wxT("Создать папку..."));
-	menu.Append(FOLDER_RENAME, wxT("Переименовать папку..."));
-	menu.Append(FOLDER_DEL, wxT("Удалить папку"));
+	menu.Append(ID_FOLDER_CREAT, wxT("Создать папку..."));
+	menu.Append(ID_FOLDER_RENAME, wxT("Переименовать папку..."));
+	menu.Append(ID_FOLDER_DEL, wxT("Удалить папку"));
 	menu.AppendSeparator();
-	menu.Append(LOC_COPY, wxT("Копировать"));
-	menu.Append(LOC_PASTE, wxT("Вставить"));
-	menu.Append(LOC_REPLACE, wxT("Заменить"));
-	menu.Append(LOC_PASTE_NEW, wxT("Вставить в..."));
-	menu.Append(LOC_CLEAR, wxT("Очистить"));
+	menu.Append(ID_LOC_COPY, wxT("Копировать"));
+	menu.Append(ID_LOC_PASTE, wxT("Вставить"));
+	menu.Append(ID_LOC_REPLACE, wxT("Заменить"));
+	menu.Append(ID_LOC_PASTENEW, wxT("Вставить в..."));
+	menu.Append(ID_LOC_CLEAR, wxT("Очистить"));
 	menu.AppendSeparator();
-	menu.Append(LOC_SORT_ASC, wxT("Сортировать по алфавиту"));
-	menu.Append(LOC_SORT_DESC, wxT("Сортировать в обратном порядке"));
+	menu.Append(ID_LOC_SORTASC, wxT("Сортировать по алфавиту"));
+	menu.Append(ID_LOC_SORTDESC, wxT("Сортировать в обратном порядке"));
 	menu.AppendSeparator();
-	menu.Append(LOC_EXPAND, wxT("Развернуть все"));
-	menu.Append(LOC_COLLAPSE, wxT("Свернуть все"));
+	menu.Append(ID_LOC_EXPAND, wxT("Развернуть все"));
+	menu.Append(ID_LOC_COLLAPSE, wxT("Свернуть все"));
 	_controls->UpdateMenuItems(&menu);
 	PopupMenu(&menu);
 }
@@ -151,7 +152,7 @@ void LocationsListBox::Insert(const wxString &name, const wxString &pos, const w
 	else
 		parent = GetRootItem();
 	if (_controls->GetSettings()->GetShowLocsIcons())
-		image = ICON_NOTACTIVELOCATION;
+		image = ICON_NOTACTIVELOC;
 	if (pos.Length() > 0)
 		InsertItem(parent, GetLocByName(GetRootItem(), pos), name, image);
 	else
@@ -419,7 +420,7 @@ void LocationsListBox::OnEndDrag( wxTreeEvent &event )
 void LocationsListBox::SetLocStatus( const wxString &name, bool isOpened )
 {
 	if (_controls->GetSettings()->GetShowLocsIcons())
-		SetItemImage(GetLocByName(GetRootItem(), name), isOpened ? ICON_ACTIVELOCATION : ICON_NOTACTIVELOCATION);
+		SetItemImage(GetLocByName(GetRootItem(), name), isOpened ? ICON_ACTIVELOC : ICON_NOTACTIVELOC);
 }
 
 void LocationsListBox::ApplyStatesImageList()
@@ -435,7 +436,7 @@ void LocationsListBox::AddFolder( const wxString &name )
 	if (_controls->GetSettings()->GetShowLocsIcons())
 	{
 		wxTreeItemId id = AppendItem(GetRootItem(), name, ICON_FOLDER, -1, new FolderItem());
-		SetItemImage(id, ICON_FOLDER_OPENED, wxTreeItemIcon_Expanded);
+		SetItemImage(id, ICON_FOLDEROPENED, wxTreeItemIcon_Expanded);
 	}
 	else
 		AppendItem(GetRootItem(), name, -1, -1, new FolderItem());
@@ -473,7 +474,7 @@ void LocationsListBox::UpdateFolderLocations( const wxString &name )
 		{
 			text = container->GetLocationName(i);
 			if (_controls->GetSettings()->GetShowLocsIcons())
-				AppendItem(parent, text, ICON_NOTACTIVELOCATION);
+				AppendItem(parent, text, ICON_NOTACTIVELOC);
 			else
 				AppendItem(parent, text);
 			UpdateLocationActions(text);

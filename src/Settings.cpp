@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -20,6 +20,9 @@
 */
 
 #include "Settings.h"
+#include <wx/listimpl.cpp>
+
+WX_DEFINE_LIST(ObserverList);
 
 Settings::Settings(const wxString &path)
 {
@@ -217,21 +220,21 @@ void Settings::SaveSettings()
 
 void Settings::AddObserver( IObserver *obj )
 {
-	observers.push_back(obj);
+	_observers.push_back(obj);
 }
 
 void Settings::RemoveObserver( IObserver *obj )
 {
-	observers.remove(obj);
+	_observers.remove(obj);
 }
 
 void Settings::RemoveAllObservers()
 {
-	observers.clear();
+	_observers.clear();
 }
 
 void Settings::NotifyAll()
 {
-	for (std::list<IObserver *>::const_iterator i = observers.begin(); i != observers.end(); ++i)
+	for (ObserverList::const_iterator i = _observers.begin(); i != _observers.end(); ++i)
 		(*i)->Update(true);
 }

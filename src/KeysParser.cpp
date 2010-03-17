@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -63,6 +63,12 @@ void KeysParser::InitKeysTable()
 	_keysTable["F10"] = VK_F10;
 	_keysTable["F11"] = VK_F11;
 	_keysTable["F12"] = VK_F12;
+}
+
+
+KeysParser::~KeysParser()
+{
+	_keysTable.clear();
 }
 
 void KeysParser::ReleaseAlt()

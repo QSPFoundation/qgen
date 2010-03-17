@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,13 +19,13 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_OPTIONS_HOT_KEYS_DIALOG_H
-	#define _QUEST_GENERATOR_OPTIONS_HOT_KEYS_DIALOG_H
+#ifndef _QGEN_OPTIONS_HOTKEYS_DIALOG_H_
+	#define _QGEN_OPTIONS_HOTKEYS_DIALOG_H_
 
 	#include <wx/wx.h>
 	#include <wx/help.h> 
 	#include "Settings.h"
-	#include "HotKeyTextCtrl.h"
+	#include "HotKeyTextBox.h"
 	#include "SyntaxTextBox.h"
 	#include "Controls.h"
 	#ifdef __WXMSW__
@@ -34,8 +34,8 @@
 
 	enum
 	{
-		ID_INPUT_TEXT,
-		ID_HELP_BUTTON
+		ID_HOTKEY_TEXT = 10800,
+		ID_HOTKEY_HELP
 	};
 
 	class OptionsHotkeysDialog : public wxDialog
@@ -43,7 +43,7 @@
 		DECLARE_CLASS(OptionsHotkeysDialog)
 		DECLARE_EVENT_TABLE()
 	private:
-		HotKeyTextCtrl	*_txtInputHotkey;
+		HotKeyTextBox	*_txtInputHotkey;
 		SyntaxTextBox	*_txtInputText;
 		wxButton		*_btnOK;
 		wxButton		*_btnCancel;

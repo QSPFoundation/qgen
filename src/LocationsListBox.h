@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,12 +19,11 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_LOCATION_LIST_H
-	#define _QUEST_GENERATOR_LOCATION_LIST_H
+#ifndef _QGEN_LOCATIONS_LIST_BOX_H_
+	#define _QGEN_LOCATIONS_LIST_BOX_H_
 
 	#include <wx/wx.h>
 	#include <wx/treectrl.h>
-	#include "Idents.h"
 	#include "IControls.h"
 	#include "LocationPage.h"
 	#include "LocationTip.h"
@@ -35,25 +34,25 @@
 	#include "bitmaps/locslist_location_ball_opened.xpm"
 	#include "bitmaps/locslist_action_ball.xpm"
 
-	enum
+	enum 
 	{
 		ICON_FOLDER,
-		ICON_FOLDER_OPENED,
-		ICON_NOTACTIVELOCATION,
-		ICON_ACTIVELOCATION,
+		ICON_FOLDEROPENED,
+		ICON_NOTACTIVELOC,
+		ICON_ACTIVELOC,
 		ICON_ACTION
-	};
-
-	enum
-	{
-		ID_SHOW_TIMER = 10000
 	};
 
 	enum
 	{
 		DRAG_ACTION,
 		DRAG_LOCATION,
-		DRAG_FOLDER
+		DRAG_FOLDER,
+	};
+
+	enum
+	{
+		ID_SHOW_TIMER = 10200
 	};
 
 	class FolderItem : public wxTreeItemData
@@ -65,15 +64,15 @@
 		DECLARE_CLASS(LocationsListBox)
 		DECLARE_EVENT_TABLE()
 	private:
-		IControls *_controls;
-		wxImageList _statesImageList;
-		wxTreeItemId _draggedId;
-		LocationTip *_tip;
-		long _draggedType;
-		bool _needForUpdate;
-		wxTopLevelWindow *_mainFrame;
-		wxPoint _prevMousePos;
-		wxTimer _showTimer;
+		IControls			*_controls;
+		wxImageList			_statesImageList;
+		wxTreeItemId		_draggedId;
+		LocationTip			*_tip;
+		long				_draggedType;
+		bool				_needForUpdate;
+		wxTopLevelWindow	*_mainFrame;
+		wxPoint				_prevMousePos;
+		wxTimer				_showTimer;
 
 		void OnRightClick(wxMouseEvent &event);
 		void OnKeyDown(wxKeyEvent &event);

@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,12 +19,12 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _SYNTAX_TEXTBOX_H
-	#define _SYNTAX_TEXTBOX_H
+#ifndef _QGEN_SYNTAX_TEXT_BOX_H_
+	#define _QGEN_SYNTAX_TEXT_BOX_H_
 
 	#include <wx/wx.h>
 	#include <wx/stc/stc.h>
-	#include "Idents.h"
+	#include <list>
 	#include "IControls.h"
 
 	enum

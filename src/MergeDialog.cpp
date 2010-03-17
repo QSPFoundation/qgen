@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -24,13 +24,14 @@
 IMPLEMENT_CLASS(MergeDialog, wxDialog)
 
 BEGIN_EVENT_TABLE(MergeDialog, wxDialog)
-	EVT_BUTTON(ID_REPLACE_BUTTON, MergeDialog::OnButton)
-	EVT_BUTTON(ID_SKIP_BUTTON, MergeDialog::OnButton)
-	EVT_BUTTON(ID_CANCEL_BUTTON, MergeDialog::OnButton)
+	EVT_BUTTON(ID_MERGE_REPLACE, MergeDialog::OnButton)
+	EVT_BUTTON(ID_MERGE_SKIP, MergeDialog::OnButton)
+	EVT_BUTTON(ID_MERGE_CANCEL, MergeDialog::OnButton)
 END_EVENT_TABLE()
 
-MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString &message, int style /* = 0 */) :
-			wxDialog( parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style|wxDEFAULT_DIALOG_STYLE|wxICON_INFORMATION )
+MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString &message, int style) :
+	wxDialog( parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, 
+		style|wxDEFAULT_DIALOG_STYLE|wxICON_INFORMATION )
 {
 	wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *msgSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -41,9 +42,9 @@ MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString
 
 	wxStaticText *msgText = new wxStaticText(this, wxID_ANY, message);
 
-	_replace = new wxButton(this, ID_REPLACE_BUTTON, wxT("Заменить"));
-	_skip = new wxButton(this, ID_SKIP_BUTTON, wxT("Пропустить"));
-	_cancel = new wxButton(this, ID_CANCEL_BUTTON, wxT("Отмена"));
+	_replace = new wxButton(this, ID_MERGE_REPLACE, wxT("Заменить"));
+	_skip = new wxButton(this, ID_MERGE_SKIP, wxT("Пропустить"));
+	_cancel = new wxButton(this, ID_MERGE_CANCEL, wxT("Отмена"));
 
 	_chkToAll= new wxCheckBox(this, wxID_ANY, wxT("для всех"));
 
@@ -67,16 +68,16 @@ void MergeDialog::OnButton(wxCommandEvent &event)
 	int ret;
 	switch (event.GetId())
 	{
-	case ID_REPLACE_BUTTON:
-		ret = MergeReplace;
+	case ID_MERGE_REPLACE:
+		ret = MERGE_REPLACE;
 		break;
-	case ID_SKIP_BUTTON:
-		ret = MergeSkip;
+	case ID_MERGE_SKIP:
+		ret = MERGE_SKIP;
 		break;
-	case ID_CANCEL_BUTTON:
-		ret = MergeCancel;
+	case ID_MERGE_CANCEL:
+		ret = MERGE_CANCEL;
 		break;
 	}
-	if (_chkToAll->IsChecked()) ret |= MergeAll;
+	if (_chkToAll->IsChecked()) ret |= MERGE_ALL;
 	EndModal(ret);
 }

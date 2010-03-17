@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -20,6 +20,7 @@
 */
 
 #include "Controls.h"
+#include "QGen.h"
 
 Controls::Controls(const wxString &path)
 {
@@ -450,7 +451,7 @@ bool Controls::DeserializeLocData(size_t locIndex, const wxString &buffer)
 	str = DecodeString(buffer.Mid(first, last - first));
 	str.ToLong(&actsCount);
 
-	for (size_t i = 0; i < actsCount; ++i)
+	for (long i = 0; i < actsCount; ++i)
 	{
 		//Изображение
 		first = last + 2;
@@ -566,7 +567,7 @@ wxString Controls::EncodeString(const wxString &str)
 {
 	wxString result;
 	wxChar ch;
-	for (long i = 0; i < str.Length(); i++)
+	for (size_t i = 0; i < str.Length(); i++)
 	{
 		ch = str[i];
 		if (ch == QGEN_CODREMOV)
@@ -582,7 +583,7 @@ wxString Controls::DecodeString(const wxString &str)
 {
 	wxString result;
 	wxChar ch;
-	for (long i = 0; i < str.Length(); i++)
+	for (size_t i = 0; i < str.Length(); i++)
 	{
 		ch = str[i];
 		if (ch == (wxChar)-QGEN_CODREMOV)
@@ -1177,7 +1178,7 @@ void Controls::NewGame()
 
 bool Controls::IsGameSaved()
 {
-	SyncWithLocationsList();
+//	SyncWithLocationsList();
 	_locNotebook->SaveOpenedPages();
 	return _container->IsSaved();
 }
@@ -1216,116 +1217,116 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 {
 	if (!menu) return;
 
-	bool saveFound = menu->FindItem(SAVE_QUEST) != NULL;
-	bool saveAsFound = menu->FindItem(SAVE_QUESTAS) != NULL;
-	bool playQuestFound = menu->FindItem(PLAY_QUEST) != NULL;
-	bool exportTxtFound = menu->FindItem(EXPORT_QUEST_TXT) != NULL;
-	bool exportTxt2GamFound = menu->FindItem(EXPORT_QUEST_TXT2GAM) != NULL;
-	bool folderDelFound = menu->FindItem(FOLDER_DEL) != NULL;
-	bool folderRenameFound = menu->FindItem(FOLDER_RENAME) != NULL;
-	bool locDelFound = menu->FindItem(LOC_DEL) != NULL;
-	bool locRenameFound = menu->FindItem(LOC_RENAME) != NULL;
-	bool locClearFound = menu->FindItem(LOC_CLEAR) != NULL;
-	bool locCopyFound = menu->FindItem(LOC_COPY) != NULL;
-	bool locReplaceFound = menu->FindItem(LOC_REPLACE) != NULL;
-	bool locPasteFound = menu->FindItem(LOC_PASTE) != NULL;
-	bool locPasteNewFound = menu->FindItem(LOC_PASTE_NEW) != NULL;
-	bool locSortAscFound = menu->FindItem(LOC_SORT_ASC) != NULL;
-	bool locSortDescFound = menu->FindItem(LOC_SORT_DESC) != NULL;
-	bool locJumpLocFound = menu->FindItem(LOC_JUMP_LOC) != NULL;
-	bool locExpandFound = menu->FindItem(LOC_EXPAND) != NULL;
-	bool locCollapseFound = menu->FindItem(LOC_COLLAPSE) != NULL;
-	bool createActFound = menu->FindItem(CREATE_ACTION) != NULL;
-	bool delActFound = menu->FindItem(DEL_ACTION) != NULL;
-	bool delAllActFound = menu->FindItem(DEL_ALL_ACTIONS) != NULL;
-	bool renameActFound = menu->FindItem(RENAME_ACTION) != NULL;
-	bool undoTextFound = menu->FindItem(UNDO_TEXT) != NULL;
-	bool redoTextFound = menu->FindItem(REDO_TEXT) != NULL;
-	bool copyTextFound = menu->FindItem(COPY_TEXT) != NULL;
-	bool pasteTextFound = menu->FindItem(PASTE_TEXT) != NULL;
-	bool cutTextFound = menu->FindItem(CUT_TEXT) != NULL;
-	bool delTextFound = menu->FindItem(DEL_TEXT) != NULL;
-	bool selAllTextFound = menu->FindItem(SELALL_TEXT) != NULL;
-	bool closeAllTabsFound = menu->FindItem(ID_MENUCLOSEALLTABS) != NULL;
-	bool closeExecptSelFound = menu->FindItem(ID_MENUCLOSEEXCEPTSELECTED) != NULL;
-	bool closeSelFound = menu->FindItem(ID_MENUCLOSESELECTED) != NULL;
-	bool fixTabFound = menu->FindItem(ID_MENUFIXTAB) != NULL;
-	bool showHideLocDesc = menu->FindItem(ID_LOCDESCVISIBLE) != NULL;
-	bool showHideLocActs = menu->FindItem(ID_LOCACTVISIBLE) != NULL;
+	bool saveFound = menu->FindItem(ID_QUEST_SAVE) != NULL;
+	bool saveAsFound = menu->FindItem(ID_QUEST_SAVEAS) != NULL;
+	bool playQuestFound = menu->FindItem(ID_QUEST_PLAY) != NULL;
+	bool exportTxtFound = menu->FindItem(ID_QUEST_EXPORTTXT) != NULL;
+	bool exportTxt2GamFound = menu->FindItem(ID_QUEST_EXPORTTXT2GAM) != NULL;
+	bool folderDelFound = menu->FindItem(ID_FOLDER_DEL) != NULL;
+	bool folderRenameFound = menu->FindItem(ID_FOLDER_RENAME) != NULL;
+	bool locDelFound = menu->FindItem(ID_LOC_DEL) != NULL;
+	bool locRenameFound = menu->FindItem(ID_LOC_RENAME) != NULL;
+	bool locClearFound = menu->FindItem(ID_LOC_CLEAR) != NULL;
+	bool locCopyFound = menu->FindItem(ID_LOC_COPY) != NULL;
+	bool locReplaceFound = menu->FindItem(ID_LOC_REPLACE) != NULL;
+	bool locPasteFound = menu->FindItem(ID_LOC_PASTE) != NULL;
+	bool locPasteNewFound = menu->FindItem(ID_LOC_PASTENEW) != NULL;
+	bool locSortAscFound = menu->FindItem(ID_LOC_SORTASC) != NULL;
+	bool locSortDescFound = menu->FindItem(ID_LOC_SORTDESC) != NULL;
+	bool locJumpLocFound = menu->FindItem(ID_LOC_JUMPLOC) != NULL;
+	bool locExpandFound = menu->FindItem(ID_LOC_EXPAND) != NULL;
+	bool locCollapseFound = menu->FindItem(ID_LOC_COLLAPSE) != NULL;
+	bool createActFound = menu->FindItem(ID_ACTION_ADD) != NULL;
+	bool delActFound = menu->FindItem(ID_ACTION_DEL) != NULL;
+	bool delAllActFound = menu->FindItem(ID_ACTION_DELALL) != NULL;
+	bool renameActFound = menu->FindItem(ID_ACTION_REN) != NULL;
+	bool undoTextFound = menu->FindItem(ID_TEXT_UNDO) != NULL;
+	bool redoTextFound = menu->FindItem(ID_TEXT_REDO) != NULL;
+	bool copyTextFound = menu->FindItem(ID_TEXT_COPY) != NULL;
+	bool pasteTextFound = menu->FindItem(ID_TEXT_PASTE) != NULL;
+	bool cutTextFound = menu->FindItem(ID_TEXT_CUT) != NULL;
+	bool delTextFound = menu->FindItem(ID_TEXT_DEL) != NULL;
+	bool selAllTextFound = menu->FindItem(ID_TEXT_SELALL) != NULL;
+	bool closeAllTabsFound = menu->FindItem(ID_TAB_CLOSEALL) != NULL;
+	bool closeExecptSelFound = menu->FindItem(ID_TAB_CLOSEEXCEPTSELECTED) != NULL;
+	bool closeSelFound = menu->FindItem(ID_TAB_CLOSESELECTED) != NULL;
+	bool fixTabFound = menu->FindItem(ID_TAB_FIX) != NULL;
+	bool showHideLocDesc = menu->FindItem(ID_LOC_DESCVISIBLE) != NULL;
+	bool showHideLocActs = menu->FindItem(ID_LOC_ACTVISIBLE) != NULL;
 	bool res = false;
 
 	if (saveFound || saveAsFound || playQuestFound || exportTxtFound || exportTxt2GamFound ||
 		locExpandFound || locCollapseFound)
 		res = !_container->IsEmpty();
-	if (saveFound) menu->Enable(SAVE_QUEST, res);
-	if (saveAsFound) menu->Enable(SAVE_QUESTAS, res);
-	if (playQuestFound) menu->Enable(PLAY_QUEST, res);
-	if (exportTxtFound) menu->Enable(EXPORT_QUEST_TXT, res);
-	if (exportTxt2GamFound) menu->Enable(EXPORT_QUEST_TXT2GAM, res);
-	if (locExpandFound) menu->Enable(LOC_EXPAND, res);
-	if (locCollapseFound) menu->Enable(LOC_COLLAPSE, res);
+	if (saveFound) menu->Enable(ID_QUEST_SAVE, res);
+	if (saveAsFound) menu->Enable(ID_QUEST_SAVEAS, res);
+	if (playQuestFound) menu->Enable(ID_QUEST_PLAY, res);
+	if (exportTxtFound) menu->Enable(ID_QUEST_EXPORTTXT, res);
+	if (exportTxt2GamFound) menu->Enable(ID_QUEST_EXPORTTXT2GAM, res);
+	if (locExpandFound) menu->Enable(ID_LOC_EXPAND, res);
+	if (locCollapseFound) menu->Enable(ID_LOC_COLLAPSE, res);
 	res = false;
 
 	if (locDelFound || locRenameFound)
 		res = GetSelectedLocationIndex() >= 0;
-	if (locDelFound) menu->Enable(LOC_DEL, res);
-	if (locRenameFound) menu->Enable(LOC_RENAME, res);
+	if (locDelFound) menu->Enable(ID_LOC_DEL, res);
+	if (locRenameFound) menu->Enable(ID_LOC_RENAME, res);
 	res = false;
 
 	if (folderDelFound || folderRenameFound)
 		res = GetSelectedFolderIndex() >= 0;
-	if (folderDelFound) menu->Enable(FOLDER_DEL, res);
-	if (folderRenameFound) menu->Enable(FOLDER_RENAME, res);
+	if (folderDelFound) menu->Enable(ID_FOLDER_DEL, res);
+	if (folderRenameFound) menu->Enable(ID_FOLDER_RENAME, res);
 	res = false;
 
 	if (delActFound || delAllActFound || renameActFound)
 		res = !IsActionsOnSelectedLocEmpty();
-	if (delActFound) menu->Enable(DEL_ACTION, res);
-	if (delAllActFound) menu->Enable(DEL_ALL_ACTIONS, res);
-	if (renameActFound) menu->Enable(RENAME_ACTION, res);
+	if (delActFound) menu->Enable(ID_ACTION_DEL, res);
+	if (delAllActFound) menu->Enable(ID_ACTION_DELALL, res);
+	if (renameActFound) menu->Enable(ID_ACTION_REN, res);
 	res = false;
 
 	if (locClearFound || locCopyFound)
 		res = !IsSelectedLocationEmpty();
-	if (locClearFound) menu->Enable(LOC_CLEAR, res);
-	if (locCopyFound) menu->Enable(LOC_COPY, res);
+	if (locClearFound) menu->Enable(ID_LOC_CLEAR, res);
+	if (locCopyFound) menu->Enable(ID_LOC_COPY, res);
 	res = false;
 
 	if (locReplaceFound || locPasteFound || locPasteNewFound)
 		res = !IsClipboardEmpty();
-	if (locReplaceFound) menu->Enable(LOC_REPLACE, res && GetSelectedLocationIndex() >= 0);
-	if (locPasteFound) menu->Enable(LOC_PASTE, res);
-	if (locPasteNewFound) menu->Enable(LOC_PASTE_NEW, res);
+	if (locReplaceFound) menu->Enable(ID_LOC_REPLACE, res && GetSelectedLocationIndex() >= 0);
+	if (locPasteFound) menu->Enable(ID_LOC_PASTE, res);
+	if (locPasteNewFound) menu->Enable(ID_LOC_PASTENEW, res);
 	res = false;
 
 	if (locSortAscFound || locSortDescFound)
 		res = _locListBox->GetCount() > 1;
-	if (locSortAscFound) menu->Enable(LOC_SORT_ASC, res);
-	if (locSortDescFound) menu->Enable(LOC_SORT_DESC, res);
+	if (locSortAscFound) menu->Enable(ID_LOC_SORTASC, res);
+	if (locSortDescFound) menu->Enable(ID_LOC_SORTDESC, res);
 	res = false;
 
-	if (locJumpLocFound) menu->Enable(LOC_JUMP_LOC, GetCurrentTextBox() != NULL);
-	if (createActFound)	menu->Enable(CREATE_ACTION, !IsAllLocsClosed());
-	if (undoTextFound) menu->Enable(UNDO_TEXT, CanUndoText());
-	if (redoTextFound) menu->Enable(REDO_TEXT, CanRedoText());
-	if (pasteTextFound) menu->Enable(PASTE_TEXT, CanPasteText());
-	if (selAllTextFound) menu->Enable(SELALL_TEXT, CanSelectText());
+	if (locJumpLocFound) menu->Enable(ID_LOC_JUMPLOC, GetCurrentTextBox() != NULL);
+	if (createActFound)	menu->Enable(ID_ACTION_ADD, !IsAllLocsClosed());
+	if (undoTextFound) menu->Enable(ID_TEXT_UNDO, CanUndoText());
+	if (redoTextFound) menu->Enable(ID_TEXT_REDO, CanRedoText());
+	if (pasteTextFound) menu->Enable(ID_TEXT_PASTE, CanPasteText());
+	if (selAllTextFound) menu->Enable(ID_TEXT_SELALL, CanSelectText());
 
 	if (copyTextFound || cutTextFound || delTextFound)
 		res = CanCopyText();
-	if (copyTextFound) menu->Enable(COPY_TEXT, res);
-	if (cutTextFound) menu->Enable(CUT_TEXT, res);
-	if (delTextFound) menu->Enable(DEL_TEXT, res);
+	if (copyTextFound) menu->Enable(ID_TEXT_COPY, res);
+	if (cutTextFound) menu->Enable(ID_TEXT_CUT, res);
+	if (delTextFound) menu->Enable(ID_TEXT_DEL, res);
 	res = false;
 
 	if (closeAllTabsFound || closeExecptSelFound || closeSelFound || showHideLocDesc || showHideLocActs)
 		res = !IsAllLocsClosed();
-	if (closeAllTabsFound) menu->Enable(ID_MENUCLOSEALLTABS, res);
-	if (closeExecptSelFound) menu->Enable(ID_MENUCLOSEEXCEPTSELECTED, res);
-	if (closeSelFound) menu->Enable(ID_MENUCLOSESELECTED, res);
-	if (fixTabFound) menu->Enable(ID_MENUFIXTAB, res);
-	if (showHideLocDesc) menu->Enable(ID_LOCDESCVISIBLE, res);
-	if (showHideLocActs) menu->Enable(ID_LOCACTVISIBLE, res);
+	if (closeAllTabsFound) menu->Enable(ID_TAB_CLOSEALL, res);
+	if (closeExecptSelFound) menu->Enable(ID_TAB_CLOSEEXCEPTSELECTED, res);
+	if (closeSelFound) menu->Enable(ID_TAB_CLOSESELECTED, res);
+	if (fixTabFound) menu->Enable(ID_TAB_FIX, res);
+	if (showHideLocDesc) menu->Enable(ID_LOC_DESCVISIBLE, res);
+	if (showHideLocActs) menu->Enable(ID_LOC_ACTVISIBLE, res);
 }
 
 bool Controls::RenameFolder( size_t folderIndex, const wxString &name )

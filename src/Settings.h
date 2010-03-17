@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,14 +19,14 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_SETTINGS_H
-	#define _QUEST_GENERATOR_SETTINGS_H
+#ifndef _QGEN_SETTINGS_H_
+	#define _QGEN_SETTINGS_H_
 
 	#include <wx/colordlg.h>
 	#include <wx/fontdlg.h>
 	#include <wx/filename.h>
 	#include <wx/fileconf.h>
-	#include <list>
+	#include <wx/list.h>
 	#include "IObserver.h"
 	#include "HotKeysStore.h"
 	#include "SearchDataStore.h"
@@ -45,52 +45,51 @@
 		SYNTAX_DUMMY
 	};
 
+	WX_DECLARE_LIST(IObserver, ObserverList);
+
 	class Settings
 	{
 	private:
-		int	_leftFramePos,
-			_topFramePos,
-			_frameWidth,
-			_frameHeight,
-			_optionsDialogWidth,
-			_optionsDialogHeight;
-		bool _isFrameMaximized;
-		bool _isShowStatusBar;
-		wxString _panelsPos;
-
-		bool		_isAutoSave;
-		bool		_isShowShortLocsDescs;
-		bool		_isLocDescVisible;
-		bool		_isLocActsVisible;
-		bool		_isWrapLines;
-		bool		_isOpenNewLoc;
-		bool		_isOpenNewAct;
-		bool		_isOpenLastGame;
-		bool		_isShowLinesNums;
-		bool		_isCreateFirstLoc;
-		bool		_isShowLocsIcons;
-		bool		_isCollapseCode;
-		wxString	_firstLocName;
-		wxString	_lastGamePath;
-		int			_autoSaveInterval;
-		int			_tabSize;
-		double		_heightsCoeff;
-		double		_widthsCoeff1;
-		double		_widthsCoeff2;
-		wxFont		_font[SYNTAX_DUMMY];
-		wxColour	_colour[SYNTAX_DUMMY];
-		wxColour	_textBackColour;
-		wxColour	_baseBackColour;
-		wxString	_path;
-		wxString	_currentConfigPath;
-		wxString	_currentPlayerPath;
-		wxString	_currentHelpPath;
-		wxString	_currentTxt2GamPath;
-		HotkeysStore _hotkeysStore;
+		int				_leftFramePos;
+		int				_topFramePos;
+		int				_frameWidth;
+		int				_frameHeight;
+		int				_optionsDialogWidth;
+		int				_optionsDialogHeight;
+		int				_autoSaveInterval;
+		int				_tabSize;
+		bool			_isFrameMaximized;
+		bool			_isShowStatusBar;
+		bool			_isAutoSave;
+		bool			_isShowShortLocsDescs;
+		bool			_isLocDescVisible;
+		bool			_isLocActsVisible;
+		bool			_isWrapLines;
+		bool			_isOpenNewLoc;
+		bool			_isOpenNewAct;
+		bool			_isOpenLastGame;
+		bool			_isShowLinesNums;
+		bool			_isCreateFirstLoc;
+		bool			_isShowLocsIcons;
+		bool			_isCollapseCode;
+		double			_heightsCoeff;
+		double			_widthsCoeff1;
+		double			_widthsCoeff2;
+		wxFont			_font[SYNTAX_DUMMY];
+		wxColour		_colour[SYNTAX_DUMMY];
+		wxColour		_textBackColour;
+		wxColour		_baseBackColour;
+		wxString		_path;
+		wxString		_currentConfigPath;
+		wxString		_currentPlayerPath;
+		wxString		_currentHelpPath;
+		wxString		_currentTxt2GamPath;
+		wxString		_firstLocName;
+		wxString		_lastGamePath;
+		wxString		_panelsPos;
+		HotkeysStore	_hotkeysStore;
 		SearchDataStore _searchDataStore;
-
-		std::list<IObserver *> observers;
-
+		ObserverList	_observers;
 	public:
 		Settings(const wxString &path);
 

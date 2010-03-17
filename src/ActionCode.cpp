@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -24,7 +24,7 @@
 IMPLEMENT_CLASS( ActionCode, wxPanel )
 
 BEGIN_EVENT_TABLE(ActionCode, wxPanel)
-	EVT_BUTTON(OPEN_PICT, ActionCode::OnOpenPicture)
+	EVT_BUTTON(ID_PICT_OPEN, ActionCode::OnOpenPicture)
 END_EVENT_TABLE()
 
 ActionCode::ActionCode( wxWindow *owner, ILocationPage *locPage, IControls *controls ) : wxPanel( owner )
@@ -35,7 +35,7 @@ ActionCode::ActionCode( wxWindow *owner, ILocationPage *locPage, IControls *cont
 	wxBoxSizer *topSizer = new wxBoxSizer( wxVERTICAL );
 	wxBoxSizer *sizerPathPict = new wxBoxSizer( wxHORIZONTAL );
 
-	_button = new wxButton( this, OPEN_PICT, wxT("Изображение..."), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT );
+	_button = new wxButton( this, ID_PICT_OPEN, wxT("Изображение..."), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT );
 	_pathPicTxtCtrl = new ImagePathTextBox( this, wxID_ANY, locPage, _controls );
 
 	sizerPathPict->Add( _pathPicTxtCtrl, 1, wxALL|wxGROW, 1 );

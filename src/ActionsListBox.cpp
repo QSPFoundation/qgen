@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -20,6 +20,7 @@
 */
 
 #include "ActionsListBox.h"
+#include "QGen.h"
 
 IMPLEMENT_CLASS(ActionsListBox, wxHtmlListBox)
 
@@ -139,11 +140,11 @@ void ActionsListBox::OnRightClick(wxMouseEvent & event)
 		SetFocus();
 		Select(ind);
 	}
-	menu.Append(CREATE_ACTION, wxT("Создать..."));
-	menu.Append(RENAME_ACTION, wxT("Переименовать..."));
-	menu.Append(DEL_ACTION, wxT("Удалить"));
+	menu.Append(ID_ACTION_ADD, wxT("Создать..."));
+	menu.Append(ID_ACTION_REN, wxT("Переименовать..."));
+	menu.Append(ID_ACTION_DEL, wxT("Удалить"));
 	menu.AppendSeparator();
-	menu.Append(DEL_ALL_ACTIONS, wxT("Удалить все"));
+	menu.Append(ID_ACTION_DELALL, wxT("Удалить все"));
 	_controls->UpdateMenuItems(&menu);
 	PopupMenu(&menu);
 }

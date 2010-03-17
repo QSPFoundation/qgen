@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,11 +19,10 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_NOTEBOOK_H
-	#define _QUEST_GENERATOR_NOTEBOOK_H
+#ifndef _QGEN_LOCATIONS_NOTEBOOK_H_
+	#define _QGEN_LOCATIONS_NOTEBOOK_H_
 
 	#include <wx/aui/aui.h>
-	#include "Idents.h"
 	#include "LocationPage.h"
 
 	#include "bitmaps/locstabs_page_fixed.xpm"
@@ -42,13 +41,11 @@
 	private:
 		IControls		*_controls;
 		DataContainer	*_container;
-		int selectedPage;
+		int				selectedPage;
 
 		void OnClosePage(wxAuiNotebookEvent &event);
 		void OnPageChanged(wxAuiNotebookEvent &event);
 		void OnRightUpClick(wxAuiNotebookEvent &event);
-		void OnTabMenu(wxCommandEvent &event);
-		void OnFixPage(wxCommandEvent &event);
 		void OnNavigationKeyNotebook(wxNavigationKeyEvent &event);
 
 		void NotifyClosePage(int index);

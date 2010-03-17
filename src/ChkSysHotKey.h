@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,23 +19,23 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_CHECK_SYSTEM_HOTKEYS_H
-	#define _QUEST_GENERATOR_CHECK_SYSTEM_HOTKEYS_H
+#ifndef _QGEN_CHECK_SYSTEM_HOTKEY_H_
+	#define _QGEN_CHECK_SYSTEM_HOTKEY_H_
 
 	#include <wx/wx.h>
 
 	class ChkSysHotKey
 	{
 	private:
-		bool _isInMenu;
-		int _keyCode;
-		int _flags;
-		void WalkMenuBar(wxMenuBar *m);
-		void WalkMenu(wxMenu *m);
-		void WalkMenuItem(wxMenuItem *m);
+		bool	_isInMenu;
+		int		_keyCode;
+		int		_flags;
 
+		void WalkMenuBar(wxMenuBar *menuBar);
+		void WalkMenu(wxMenu *menu);
+		void WalkMenuItem(wxMenuItem *menuItem);
 	public:
-		bool CheckSystemHotKeys(wxMenuBar *m, int keyCode, int flags);
+		bool CheckSystemHotKeys(wxMenuBar *menuBar, int keyCode, int flags);
 	};
 
 #endif

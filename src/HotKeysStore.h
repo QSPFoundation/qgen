@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,8 +19,8 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_HOT_KEYS_STORE_H
-	#define _QUEST_GENERATOR_HOT_KEYS_STORE_H
+#ifndef _QGEN_HOTKEYS_STORE_H_
+	#define _QGEN_HOTKEYS_STORE_H_
 
 	#include <wx/wx.h>
 	#include <wx/fileconf.h>
@@ -28,9 +28,9 @@
 
 	struct HotkeyData
 	{
-		wxString CommandText;
-		int HotKeyCode;
-		int Flags;
+		wxString	CommandText;
+		int			HotKeyCode;
+		int			Flags;
 
 		HotkeyData()
 		{

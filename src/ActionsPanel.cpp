@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -20,13 +20,14 @@
 */
 
 #include "ActionsPanel.h"
+#include "QGen.h"
 
 IMPLEMENT_CLASS(ActionsPanel, wxPanel)
 
 BEGIN_EVENT_TABLE(ActionsPanel, wxPanel)
-	EVT_BUTTON(ID_ADD_ACTION, ActionsPanel::OnAddAction)
-	EVT_BUTTON(ID_REN_ACTION, ActionsPanel::OnRenAction)
-	EVT_BUTTON(ID_DEL_ACTION, ActionsPanel::OnDelAction)
+	EVT_BUTTON(ID_ACTION_ADD, ActionsPanel::OnAddAction)
+	EVT_BUTTON(ID_ACTION_REN, ActionsPanel::OnRenAction)
+	EVT_BUTTON(ID_ACTION_DEL, ActionsPanel::OnDelAction)
 END_EVENT_TABLE()
 
 ActionsPanel::ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode *actCode, IControls *controls ) : wxPanel( owner )
@@ -36,9 +37,9 @@ ActionsPanel::ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode 
 	_actList = new ActionsListBox( this, wxID_ANY, locPage, actCode, controls );
 	wxSizer *sizer2 = new wxBoxSizer ( wxHORIZONTAL );
 
-	_addActButton = new wxBitmapButton( this, ID_ADD_ACTION, wxBitmap(toolbar_action_new_xpm), wxDefaultPosition, wxSize(32,26) );
-	_renActButton = new wxBitmapButton( this, ID_REN_ACTION, wxBitmap(toolbar_action_rename_xpm), wxDefaultPosition, wxSize(32,26) );
-	_delActButton = new wxBitmapButton( this, ID_DEL_ACTION, wxBitmap(toolbar_action_delete_xpm), wxDefaultPosition, wxSize(32,26) );
+	_addActButton = new wxBitmapButton( this, ID_ACTION_ADD, wxBitmap(toolbar_action_new_xpm), wxDefaultPosition, wxSize(32,26) );
+	_renActButton = new wxBitmapButton( this, ID_ACTION_REN, wxBitmap(toolbar_action_rename_xpm), wxDefaultPosition, wxSize(32,26) );
+	_delActButton = new wxBitmapButton( this, ID_ACTION_DEL, wxBitmap(toolbar_action_delete_xpm), wxDefaultPosition, wxSize(32,26) );
 
 	sizer2->Add( _addActButton, 0, wxALL, 1 );
 	sizer2->Add( _renActButton, 0, wxALL, 1 );

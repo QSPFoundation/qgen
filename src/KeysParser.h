@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,12 +19,12 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QUEST_GENERATOR_KEYS_PARSER_H
-	#define _QUEST_GENERATOR_KEYS_PARSER_H
+#ifndef _QGEN_KEYS_PARSER_H_
+	#define _QGEN_KEYS_PARSER_H_
 
 	#include <wx/wx.h>
 	#include <wx/dynarray.h>
-	#include <map>
+	#include <wx/hashmap.h>
 
 	#ifdef __WXMSW__
 		#include <Windows.h>
@@ -33,20 +33,22 @@
 	#include "HotKeysStore.h"
 
 	WX_DECLARE_OBJARRAY(INPUT, KeysArray);
+	WX_DECLARE_STRING_HASH_MAP(int, KeyTable);
 
 	class KeysParser
 	{
 	private:
-		std::map<wxString, int> _keysTable;
-		HotkeysStore *_hotKeysStore;
+		KeyTable				_keysTable;
+		HotkeysStore			*_hotKeysStore;
 
-		void InitKeysTable();
 		void OnKeyPress(int keyCode);
 		void OnKeysPress(const wxString &text);
 
 		void ReleaseAlt();
+		void InitKeysTable();
 	public:
 		KeysParser(HotkeysStore *hotKeysStore);
+		~KeysParser();
 		bool ExecuteHotkeyAction(int keyCode, int modifiers);
 		void ParseText(const wxString &text);
 	};

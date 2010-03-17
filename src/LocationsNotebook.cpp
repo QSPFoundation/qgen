@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -20,6 +20,7 @@
 */
 
 #include "LocationsNoteBook.h"
+#include "QGen.h"
 
 IMPLEMENT_CLASS(LocationsNotebook, wxAuiNotebook)
 
@@ -27,10 +28,6 @@ BEGIN_EVENT_TABLE(LocationsNotebook, wxAuiNotebook)
 	EVT_AUINOTEBOOK_PAGE_CLOSE(wxID_ANY, LocationsNotebook::OnClosePage)
 	EVT_AUINOTEBOOK_PAGE_CHANGED(wxID_ANY, LocationsNotebook::OnPageChanged)
 	EVT_AUINOTEBOOK_TAB_RIGHT_UP(wxID_ANY, LocationsNotebook::OnRightUpClick)
-	EVT_MENU(ID_MENUCLOSEALLTABS, LocationsNotebook::OnTabMenu)
-	EVT_MENU(ID_MENUCLOSEEXCEPTSELECTED, LocationsNotebook::OnTabMenu)
-	EVT_MENU(ID_MENUCLOSESELECTED, LocationsNotebook::OnTabMenu)
-	EVT_MENU(ID_MENUFIXTAB, LocationsNotebook::OnFixPage)
 	EVT_NAVIGATION_KEY(LocationsNotebook::OnNavigationKeyNotebook)
 END_EVENT_TABLE()
 
@@ -144,38 +141,15 @@ void LocationsNotebook::OnRightUpClick( wxAuiNotebookEvent &event )
 	selectedPage = event.GetSelection();
 	if (selectedPage < 0) return;
 	wxMenu menu;
-	menu.Append(ID_MENUCLOSESELECTED, wxT("Закрыть выбранную"));
-	menu.Append(ID_MENUCLOSEEXCEPTSELECTED, wxT("Закрыть все кроме выбранной"));
-	menu.Append(ID_MENUCLOSEALLTABS, wxT("Закрыть все"));
+	menu.Append(ID_TAB_CLOSESELECTED, wxT("Закрыть выбранную"));
+	menu.Append(ID_TAB_CLOSEEXCEPTSELECTED, wxT("Закрыть все кроме выбранной"));
+	menu.Append(ID_TAB_CLOSEALL, wxT("Закрыть все"));
 	menu.AppendSeparator();
 	if (((LocationPage *)GetPage(selectedPage))->IsFixed())
-		menu.Append(ID_MENUFIXTAB, wxT("Открепить"));
+		menu.Append(ID_TAB_FIX, wxT("Открепить"));
 	else
-		menu.Append(ID_MENUFIXTAB, wxT("Закрепить вкладку"));
+		menu.Append(ID_TAB_FIX, wxT("Закрепить вкладку"));
 	PopupMenu(&menu);
-}
-
-void LocationsNotebook::OnTabMenu( wxCommandEvent &event )
-{
-	CloseTypePage type;
-	switch (event.GetId())
-	{
-	case ID_MENUCLOSEALLTABS:
-		type = CLOSE_ALL;
-		break;
-	case ID_MENUCLOSEEXCEPTSELECTED:
-		type = CLOSE_ALLEXCEPTSELECTED;
-		break;
-	case ID_MENUCLOSESELECTED:
-		type = CLOSE_SELECTED;
-		break;
-	}
-	DeleteAllPages(type, selectedPage);
-}
-
-void LocationsNotebook::OnFixPage( wxCommandEvent &event )
-{
-	SwitchPageFixed(selectedPage);
 }
 
 void LocationsNotebook::OnNavigationKeyNotebook( wxNavigationKeyEvent &event )

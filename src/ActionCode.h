@@ -1,5 +1,5 @@
 // Copyright (C) 2005-2009
-// BaxZzZz (bauer_v AT mail DOT ru)
+// Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
 // Valeriy Argunov (nporep AT mail DOT ru)
@@ -19,12 +19,16 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _ACTION_CODE_H
-	#define _ACTION_CODE_H
+#ifndef _QGEN_ACTION_CODE_H_
+	#define _QGEN_ACTION_CODE_H_
 
 	#include "SyntaxTextBox.h"
 	#include "ImagePathTextBox.h"
-	#include "Idents.h"
+
+	enum
+	{
+		ID_PICT_OPEN = 11000
+	};
 
 	class ActionCode : public wxPanel, public IObserver
 	{
@@ -38,17 +42,15 @@
 		ILocationPage		*_locPage;
 
 		void OnOpenPicture(wxCommandEvent &event);
-
 		bool Enable(bool status = true);
 	public:
-		ActionCode(wxWindow *owner, ILocationPage *locPage, IControls *controls );
+		ActionCode(wxWindow *owner, ILocationPage *locPage, IControls *controls);
 		~ActionCode();
 
 		void Update(bool isFromObservable = false);
-		void LoadAction( size_t actIndex );
-		void SaveAction( size_t actIndex );
+		void LoadAction(size_t actIndex);
+		void SaveAction(size_t actIndex);
 		void ClearAction();
-
 		void SelectPicturePathString(long startPos, long lastPos);
 		void SelectCodeString(long startPos, long lastPos );
 		void ReplacePicturePathString(long start, long end, const wxString & str);
