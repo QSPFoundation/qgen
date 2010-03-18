@@ -432,9 +432,8 @@ void QGenMainFrame::OnSaveQuestAs(wxCommandEvent &event)
 	if (dialog.ShowModal() == wxID_OK)
 	{
 		wxString password;
-		wxTextEntryDialog dlgEntry(this, wxT("Введите пароль:"),
-			wxT("Ввод пароля"), wxEmptyString, wxOK|wxCANCEL|wxTE_PASSWORD );
-		dlgEntry.CenterOnParent();
+		wxPasswordEntryDialog dlgEntry(this, wxT("Введите пароль:"),
+			wxT("Ввод пароля"), wxEmptyString);
 		if (dlgEntry.ShowModal() != wxID_CANCEL) password = dlgEntry.GetValue();
 		if (password.IsEmpty()) password = QGEN_PASSWD;
 		if (_controls->SaveGame(dialog.GetPath(), password))
@@ -737,7 +736,6 @@ void QGenMainFrame::OnExportTxtFile( wxCommandEvent &event )
 	wxFileDialog dialog(this, wxT("Сохранить файл"), wxEmptyString, wxEmptyString,
 		_("Текстовые файлы (*.txt)|*.txt"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
 	dialog.CenterOnParent();
-
 	if (dialog.ShowModal() == wxID_OK)
 	{
 		if (!_controls->ExportTxt(dialog.GetPath()))
@@ -750,7 +748,6 @@ void QGenMainFrame::OnExportTxt2Gam( wxCommandEvent &event )
 	wxFileDialog dialog(this, wxT("Сохранить файл"), wxEmptyString, wxEmptyString,
 		_("Текстовые файлы (*.txt)|*.txt"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
 	dialog.CenterOnParent();
-
 	if (dialog.ShowModal() == wxID_OK)
 	{
 		if (!_controls->ExportTxt2Gam(dialog.GetPath()))
@@ -762,11 +759,11 @@ void QGenMainFrame::OnImportTxt2Gam( wxCommandEvent &event )
 {
 	if (!_controls->GetContainer()->IsEmpty())
 	{
-		wxMessageDialog dlgMsg(this, wxT("Импортируемый файл заменит текущий файл игры. Продолжить?"), wxT("Импорт"),
-			wxYES_NO|wxICON_QUESTION, wxDefaultPosition);
-		dlgMsg.CenterOnParent();
-		if (dlgMsg.ShowModal() == wxID_NO)
-			return;
+		wxMessageDialog dlgMsg(this, 
+			wxT("Импортируемый файл заменит текущий файл игры. Продолжить?"), 
+			wxT("Импорт"),
+			wxYES_NO|wxCENTRE|wxICON_QUESTION);
+		if (dlgMsg.ShowModal() == wxID_NO) return;
 	}
 	wxFileDialog dialog(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString,
 		wxT("Текстовые файлы (*.txt)|*.txt"), wxFD_OPEN);
@@ -788,8 +785,8 @@ void QGenMainFrame::OnImportTxt2Gam( wxCommandEvent &event )
 
 void QGenMainFrame::OnInformationQuest( wxCommandEvent &event )
 {
-	wxMessageDialog dialog(this, _controls->GetGameInfo(), wxT("Информация об игре"), wxOK|wxICON_INFORMATION);
-	dialog.CenterOnParent();
+	wxMessageDialog dialog(this, _controls->GetGameInfo(), 
+		wxT("Информация об игре"), wxOK|wxCENTRE|wxICON_INFORMATION);
 	dialog.ShowModal();
 }
 
@@ -841,9 +838,10 @@ bool QGenMainFrame::QuestChange()
 {
 	if (!_controls->IsGameSaved())
 	{
-		wxMessageDialog dlgMsg(this, wxT("Желаете сохранить файл?"), wxT("Файл был изменён"),
-			wxYES_NO|wxCANCEL|wxICON_QUESTION, wxDefaultPosition);
-		dlgMsg.CenterOnParent();
+		wxMessageDialog dlgMsg(this, 
+			wxT("Желаете сохранить файл?"), 
+			wxT("Файл был изменён"),
+			wxYES_NO|wxCANCEL|wxCENTRE|wxICON_QUESTION);
 		switch (dlgMsg.ShowModal())
 		{
 		case wxID_YES:

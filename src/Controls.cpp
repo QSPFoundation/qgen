@@ -87,9 +87,9 @@ int Controls::AddLocation(const wxString &name)
 	wxString locName(name);
 	while (1)
 	{
-		wxTextEntryDialog dlgEntry(GetParent(), wxT("Введите название новой локации:"),
-			wxT("Добавить новую локацию"), locName, wxOK | wxCANCEL);
-		dlgEntry.CenterOnParent();
+		wxTextEntryDialog dlgEntry(GetParent(), 
+			wxT("Введите название новой локации:"),
+			wxT("Добавить новую локацию"), locName);
 		if (dlgEntry.ShowModal() == wxID_OK)
 		{
 			locName = dlgEntry.GetValue().Trim().Trim(false);
@@ -116,9 +116,9 @@ bool Controls::RenameSelectedLocation()
 	wxString name(_container->GetLocationName(locIndex));
 	while (1)
 	{
-		wxTextEntryDialog dlgEntry(GetParent(), wxT("Введите новое название локации:"),
-			wxT("Переименовать локацию"), name, wxOK | wxCANCEL);
-		dlgEntry.CenterOnParent();
+		wxTextEntryDialog dlgEntry(GetParent(), 
+			wxT("Введите новое название локации:"),
+			wxT("Переименовать локацию"), name);
 		if (dlgEntry.ShowModal() == wxID_OK)
 		{
 			name = dlgEntry.GetValue().Trim().Trim(false);
@@ -144,8 +144,7 @@ bool Controls::DeleteSelectedLocation()
 	wxString locName(_container->GetLocationName(locIndex));
 	wxMessageDialog dlgMsg(GetParent(),
 		wxString::Format(wxT("Желаете удалить локацию %s?"), locName),
-		wxT("Удалить локацию"), wxYES_NO|wxICON_QUESTION);
-	dlgMsg.CenterOnParent();
+		wxT("Удалить локацию"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
 	if (dlgMsg.ShowModal() == wxID_YES)
 	{
 		int index = _locNotebook->FindPageIndex(locName);
@@ -175,8 +174,8 @@ bool Controls::AddActionOnSelectedLoc()
 	while (1)
 	{
 		wxTextEntryDialog dlgEntry(GetParent(), wxT("Введите название действия:"),
-			wxT("Создать действие"), name, wxOK | wxCANCEL);
-		dlgEntry.CenterOnParent();
+			wxT("Создать действие"), name);
+
 		if (dlgEntry.ShowModal() == wxID_OK)
 		{
 			name = dlgEntry.GetValue();
@@ -232,8 +231,7 @@ bool Controls::DeleteAllActions()
 
 	wxMessageDialog dlgMsg(GetParent(),
 		wxString::Format(wxT("Желаете удалить все действия на локации %s?"), locName),
-		wxT("Удалить все действия"), wxYES_NO|wxICON_QUESTION);
-	dlgMsg.CenterOnParent();
+		wxT("Удалить все действия"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
 	if (dlgMsg.ShowModal() == wxID_YES)
 	{
 		_container->DeleteAllActions(locIndex);
@@ -257,9 +255,9 @@ bool Controls::RenameSelectedAction()
 	wxString name(_container->GetActionName(locIndex, actIndex));
 	while (1)
 	{
-		wxTextEntryDialog dlgEntry(GetParent(), wxT("Введите новое название действия:"),
-			wxT("Переименовать действие"), name, wxOK | wxCANCEL);
-		dlgEntry.CenterOnParent();
+		wxTextEntryDialog dlgEntry(GetParent(),
+			wxT("Введите новое название действия:"),
+			wxT("Переименовать действие"), name);
 		if (dlgEntry.ShowModal() == wxID_OK)
 		{
 			name = dlgEntry.GetValue();
@@ -279,8 +277,8 @@ bool Controls::RenameSelectedAction()
 
 void Controls::ShowMessage( long errorNum )
 {
-	wxMessageDialog dlgMsg(GetParent(), GetMessageDesc(errorNum), wxT("Инфо"), wxOK | wxICON_INFORMATION);
-	dlgMsg.CenterOnParent();
+	wxMessageDialog dlgMsg(GetParent(), GetMessageDesc(errorNum), 
+		wxT("Инфо"), wxOK|wxICON_INFORMATION|wxCENTRE);
 	dlgMsg.ShowModal();
 }
 
@@ -520,9 +518,9 @@ void Controls::PasteLocFromClipboard( PasteType type )
 			_locNotebook->SaveOpenedPages();
 			if (!_container->IsEmptyLoc(locIndex))
 			{
-				wxMessageDialog dlgMsg(GetParent(), wxString::Format(wxT("Желаете заменить локацию %s?"), locName),
-					wxT("Заменить локацию"), wxYES_NO|wxICON_QUESTION);
-				dlgMsg.CenterOnParent();
+				wxMessageDialog dlgMsg(GetParent(), 
+					wxString::Format(wxT("Желаете заменить локацию %s?"), locName),
+					wxT("Заменить локацию"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
 				if (dlgMsg.ShowModal() == wxID_YES)
 					InitSearchData();
 				else
@@ -605,8 +603,7 @@ void Controls::ClearSelectedLocation()
 	wxString locName(_container->GetLocationName(locIndex));
 	wxMessageDialog dlgMsg(GetParent(),
 		wxString::Format(wxT("Желаете очистить локацию %s?"), locName),
-		wxT("Очистить локацию"), wxYES_NO|wxICON_QUESTION);
-	dlgMsg.CenterOnParent();
+		wxT("Очистить локацию"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
 	if (dlgMsg.ShowModal() == wxID_YES)
 	{
 		_container->ClearLocation(locIndex);
@@ -1496,9 +1493,9 @@ bool Controls::AddFolder()
 	wxString name;
 	while (1)
 	{
-		wxTextEntryDialog dlgEntry(GetParent(), wxT("Введите название новой папки:"),
-			wxT("Добавить новую папку"), name, wxOK | wxCANCEL);
-		dlgEntry.CenterOnParent();
+		wxTextEntryDialog dlgEntry(GetParent(), 
+			wxT("Введите название новой папки:"),
+			wxT("Добавить новую папку"), name);
 		if (dlgEntry.ShowModal() == wxID_OK)
 		{
 			name = dlgEntry.GetValue().Trim().Trim(false);
@@ -1531,8 +1528,7 @@ bool Controls::DeleteSelectedFolder()
 	wxString folderName(_container->GetFolderName(folder));
 	wxMessageDialog dlgMsg(GetParent(),
 		wxString::Format(wxT("Желаете удалить папку %s?"), folderName),
-		wxT("Удалить папку"), wxYES_NO|wxICON_QUESTION);
-	dlgMsg.CenterOnParent();
+		wxT("Удалить папку"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
 	if (dlgMsg.ShowModal() == wxID_YES)
 	{
 		SyncWithLocationsList();
@@ -1551,9 +1547,9 @@ bool Controls::RenameSelectedFolder()
 	wxString name(_container->GetFolderName(folder));
 	while (1)
 	{
-		wxTextEntryDialog dlgEntry(GetParent(), wxT("Введите новое название папки:"),
-			wxT("Переименовать папку"), name, wxOK | wxCANCEL);
-		dlgEntry.CenterOnParent();
+		wxTextEntryDialog dlgEntry(GetParent(),
+			wxT("Введите новое название папки:"),
+			wxT("Переименовать папку"), name);
 		if (dlgEntry.ShowModal() == wxID_OK)
 		{
 			name = dlgEntry.GetValue().Trim().Trim(false);
@@ -1585,7 +1581,8 @@ bool Controls::SearchHelpFile()
 {
 	if (!wxFile::Exists(_settings->GetCurrentHelpPath()))
 	{
-		wxFileDialog dialog(GetParent(), wxT("Выберите файл справки"), wxEmptyString, wxEmptyString,
+		wxFileDialog dialog(GetParent(), 
+			wxT("Выберите файл справки"), wxEmptyString, wxEmptyString,
 			wxT("Файл справки (*.chm)|*.chm|Все файлы (*.*)|*.*"), wxFD_OPEN);
 		dialog.CenterOnParent();
 		if (dialog.ShowModal() == wxID_CANCEL) return false;

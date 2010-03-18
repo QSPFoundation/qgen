@@ -345,15 +345,14 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
 	if (QGEN_STRCMP(data, QGEN_PASSWD))
 	{
 		wxPasswordEntryDialog dlgEntry(parent, wxT("¬ведите пароль:"),
-			wxT("¬вод парол€"), wxEmptyString, wxOK | wxCANCEL);
-		dlgEntry.CenterOnParent();
-		if ( dlgEntry.ShowModal() == wxID_OK )
+			wxT("¬вод парол€"), wxEmptyString);
+		if (dlgEntry.ShowModal() == wxID_OK)
 		{
 			if (dlgEntry.GetValue() != data)
 			{
 				free(data);
 				qspFreeStrs(strs, count, false);
-				controls->ShowMessage( QGEN_MSG_WRONGPASSWORD );
+				controls->ShowMessage(QGEN_MSG_WRONGPASSWORD);
 				return false;
 			}
 		}
