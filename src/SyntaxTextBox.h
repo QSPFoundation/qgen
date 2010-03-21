@@ -52,17 +52,12 @@
 		KeywordsStore				*_keywordsStore;
 		int							_style;
 
-	//	static void FillKeywords(const wxString &str);
 		static wxString GetArrayAsString(const wxArrayString &arr);
-		//static void LoadTips();
-
-		
 		int GetCharPosition(int startPos, int chars);
 		int GetCharIndexFromPosition(int fromPos, int pos);
 		bool StartAutoComplete();
 		void Expand(int &line, bool doExpand, bool force = false, int visLevels = 0, int level = -1);
 		wxString GetWordFromPos(int pos);
-
 		void Tip(int pos);
 
 		void OnKeyDown(wxKeyEvent& event);
