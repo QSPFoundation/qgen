@@ -22,7 +22,7 @@
 #ifndef _QGEN_ACTIONS_PANEL_H_
 	#define _QGEN_ACTIONS_PANEL_H_
 
-	#include "wx/wx.h"
+	#include <wx/wx.h>
 	#include "IControls.h"
 	#include "ActionCode.h"
 	#include "ActionsListBox.h"

@@ -24,7 +24,6 @@
 
 	#include <wx/wx.h>
 	#include <wx/stc/stc.h>
-	#include <list>
 	#include "IControls.h"
 
 	enum
@@ -44,31 +43,20 @@
 		 SYNTAX_STYLE_NOHELPTIPS =		1 << 5
 	};
 
-	struct HelpTip
-	{
-		wxString word;
-		wxString tip;
-
-		HelpTip(const wxString &w, const wxString &t) : word(w), tip(t)
-		{
-		}
-	};
-
 	class SyntaxTextBox : public wxStyledTextCtrl, public IObserver
 	{
 		DECLARE_CLASS(SyntaxTextBox)
 		DECLARE_EVENT_TABLE()
 	private:
-		static wxArrayString _keywords;
-		static std::list<HelpTip> _tooltips;
+		IControls					*_controls;
+		KeywordsStore				*_keywordsStore;
+		int							_style;
 
-		static void FillKeywords(const wxString &str);
+	//	static void FillKeywords(const wxString &str);
 		static wxString GetArrayAsString(const wxArrayString &arr);
-		static void LoadTips();
+		//static void LoadTips();
 
-		IControls *_controls;
-		int _style;
-
+		
 		int GetCharPosition(int startPos, int chars);
 		int GetCharIndexFromPosition(int fromPos, int pos);
 		bool StartAutoComplete();

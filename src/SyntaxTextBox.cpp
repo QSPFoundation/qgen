@@ -22,6 +22,7 @@
 #include "SyntaxTextBox.h"
 #include "QGen.h"
 
+
 IMPLEMENT_CLASS(SyntaxTextBox, wxStyledTextCtrl)
 
 BEGIN_EVENT_TABLE(SyntaxTextBox, wxStyledTextCtrl)
@@ -33,13 +34,11 @@ BEGIN_EVENT_TABLE(SyntaxTextBox, wxStyledTextCtrl)
 	EVT_MOTION(SyntaxTextBox::OnMouseMove)
 END_EVENT_TABLE()
 
-wxArrayString SyntaxTextBox::_keywords;
-std::list<HelpTip> SyntaxTextBox::_tooltips;
-
 SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 	wxStyledTextCtrl(owner, wxID_ANY, wxDefaultPosition, wxSize(1, 1))
 {
 	_controls = controls;
+	_keywordsStore = controls->GetKeywordsStore();
 	_style = style;
 	SetEOLMode(wxSTC_EOL_LF);
 	SetWrapMode(wxSTC_WRAP_WORD);
@@ -59,24 +58,9 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 		SetScrollWidthTracking(true);
 
 		SetLexer(wxSTC_LEX_VB);
-
-		SetKeyWords(0, wxT("clear clr nl p pl msg wait act delact del cla cmdclear cmdclr cls set ") \
-					   wxT("let killvar dynamic copyarr add obj addobj delobj killobj unselect unsel ") \
-					   wxT("killall menu opengame openqst addqst killqst savegame refint settimer showacts ") \
-					   wxT("showinput showobjs showstat if else end exit jump gosub gs goto gt xgoto xgt play ") \
-					   wxT("close all view exec"));
-
-		SetKeyWords(1, wxT("and or no mod desc iif input $desc $iif $input isplay max min $max $min rand rgb ") \
-					   wxT("getobj $getobj dyneval $dyneval func $func arrpos arrsize instr isnum trim $trim ") \
-					   wxT("ucase lcase $ucase $lcase len mid str $mid $str val arrcomp strcomp strfind $strfind ") \
-					   wxT("strpos replace $replace user_text $user_text usrtxt $usrtxt maintxt $maintxt ") \
-					   wxT("stattxt $stattxt countobj msecscount rnd curloc $curloc qspver $qspver selobj $selobj ") \
-					   wxT("selact $selact curacts $curacts"));
-
-		SetKeyWords(2, wxT("nosave disablescroll disablesubex debug $counter $ongload $ongsave ") \
-					   wxT("$onnewloc $onactsel $onobjsel $onobjadd $onobjdel $usercom usehtml bcolor ") \
-					   wxT("fcolor lcolor fsize $fname $backimage args $args result $result"));
-
+		SetKeyWords(0, _keywordsStore->GetWords(STATEMENT));
+		SetKeyWords(1, _keywordsStore->GetWords(EXPRESSION));
+		SetKeyWords(2, _keywordsStore->GetWords(VARIABLE));
 		//	SetViewEOL(true);
 		//	SetViewWhiteSpace(true);
 		SetIndentationGuides(true);
@@ -108,24 +92,8 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 		AutoCompSetChooseSingle(true);
 		AutoCompSetIgnoreCase(true);
 		AutoCompSetDropRestOfWord(true);
-
-		FillKeywords(wxT("CLEAR CLR NL P PL MSG WAIT ACT DELACT DEL CLA CMDCLEAR CMDCLR CLS SET LET ") \
-					 wxT("KILLVAR DYNAMIC COPYARR ADD OBJ ADDOBJ DELOBJ KILLOBJ UNSELECT UNSEL KILLALL ") \
-					 wxT("MENU OPENGAME OPENQST ADDQST KILLQST SAVEGAME REFINT SETTIMER SHOWACTS SHOWINPUT ") \
-					 wxT("SHOWOBJS SHOWSTAT IF ELSE END EXIT JUMP GOSUB GS GOTO GT XGOTO XGT PLAY EXEC ") \
-					 wxT("CLOSE ALL VIEW AND OR NO MOD DESC IIF INPUT $DESC $IIF $INPUT ISPLAY MAX MIN ") \
-					 wxT("$MAX $MIN RAND RGB GETOBJ $GETOBJ DYNEVAL $DYNEVAL FUNC $FUNC ARRPOS ARRSIZE ") \
-					 wxT("INSTR ISNUM TRIM $TRIM UCASE LCASE $UCASE $LCASE LEN MID STR REPLACE $REPLACE ") \
-					 wxT("$MID $STR VAL ARRCOMP STRCOMP STRFIND $STRFIND STRPOS COUNTOBJ NOSAVE DISABLESCROLL ") \
-					 wxT("DISABLESUBEX MSECSCOUNT RND DEBUG CURLOC $CURLOC QSPVER $QSPVER SELOBJ $SELOBJ ") \
-					 wxT("SELACT $SELACT USER_TEXT $USER_TEXT USRTXT $USRTXT MAINTXT $MAINTXT ") \
-					 wxT("STATTXT $STATTXT $COUNTER $ONGLOAD $ONGSAVE $ONNEWLOC $ONACTSEL $ONOBJSEL ") \
-					 wxT("$ONOBJADD $ONOBJDEL $USERCOM USEHTML BCOLOR FCOLOR LCOLOR FSIZE $FNAME ") \
-					 wxT("$BACKIMAGE ARGS $ARGS RESULT $RESULT CURACTS $CURACTS"));
 	}
 	Update();
-	if (!(_style & SYNTAX_STYLE_NOHELPTIPS)) LoadTips();
-
 	_controls->GetSettings()->AddObserver(this);
 }
 
@@ -204,8 +172,13 @@ bool SyntaxTextBox::StartAutoComplete()
 	if (!root.IsEmpty())
 	{
 		wxArrayString words;
-		for (size_t i = 0; i < _keywords.GetCount(); ++i)
-			if (_keywords[i].StartsWith(root)) words.Add(_keywords[i]);
+		wxString str;
+		size_t count = _keywordsStore->GetCount();
+		for (size_t i = 0; i < count; ++i)
+		{
+			str = _keywordsStore->GetWord(i).Upper();
+			if (str.StartsWith(root)) words.Add(str);
+		}
 		if (words.GetCount() > 0)
 		{
 			AutoCompShow(root.Length(), GetArrayAsString(words));
@@ -299,21 +272,6 @@ void SyntaxTextBox::SetValue( const wxString &str )
 	SetText(str);
 	SetModified(false);
 	EmptyUndoBuffer();
-}
-
-void SyntaxTextBox::FillKeywords( const wxString &str )
-{
-	if (_keywords.empty())
-	{
-		int cur, beg = 0;
-		while ((cur = str.find(wxT(' '), beg)) >= 0)
-		{
-			_keywords.Add(str.substr(beg, cur - beg));
-			beg = cur + 1;
-		}
-		if (beg > 0) _keywords.Add(str.substr(beg, str.length() - beg));
-		_keywords.Sort();
-	}
 }
 
 wxString SyntaxTextBox::GetArrayAsString( const wxArrayString &arr )
@@ -496,170 +454,7 @@ void SyntaxTextBox::Tip(int pos)
 	bool tipFound = false;
 	wxString str = GetWordFromPos(pos).Lower();
 	if (!str.IsEmpty())
-	{
-		for (std::list<HelpTip>::const_iterator i = _tooltips.begin(); i != _tooltips.end(); ++i)
-		{
-			if (str == i->word)
-			{
-				_controls->SetStatusText(i->tip);
-				tipFound = true;
-				break;
-			}
-		}
-	}
-	if (!tipFound)
-		_controls->SetStatusText(wxEmptyString);
-}
-
-void SyntaxTextBox::LoadTips()
-{
-	if (_tooltips.empty())
-	{
-		// Statements
-		_tooltips.push_back(HelpTip(wxT("pl"), wxT("PL [выражение] / *PL [выражение] - вывод текста в дополнительное / основное окно описания, затем переход на новую строку")));
-		_tooltips.push_back(HelpTip(wxT("clear"), wxT("CLEAR / *CLEAR - очистка дополнительного / основного окна описания")));
-		_tooltips.push_back(HelpTip(wxT("clr"), wxT("CLR / *CLR - очистка дополнительного / основного окна описания")));
-		_tooltips.push_back(HelpTip(wxT("p"), wxT("P [выражение] / *P [выражение] - вывод текста в дополнительное / основное окно описания")));
-		_tooltips.push_back(HelpTip(wxT("nl"), wxT("NL [выражение] / *NL [выражение] - переход на новую строку, затем вывод текста в дополнительное / основное окно описания")));
-		_tooltips.push_back(HelpTip(wxT("msg"), wxT("MSG [выражение] - вывод сообщения в информационном окне")));
-		_tooltips.push_back(HelpTip(wxT("wait"), wxT("WAIT [#выражение] - остановка выполнения программы на заданное количество миллисекунд")));
-		_tooltips.push_back(HelpTip(wxT("act"), wxT("ACT [$название],[$путь к изображению]:[оператор] & [оператор] & ... - добавление действия")));
-		_tooltips.push_back(HelpTip(wxT("delact"), wxT("DELACT [$название] / DEL ACT [$название] - удаление действия")));
-		_tooltips.push_back(HelpTip(wxT("cla"), wxT("CLA - очистка списка действий")));
-		_tooltips.push_back(HelpTip(wxT("cmdclear"), wxT("CMDCLEAR - очистка строки ввода")));
-		_tooltips.push_back(HelpTip(wxT("cmdclr"), wxT("CMDCLR - очистка строки ввода")));
-		_tooltips.push_back(HelpTip(wxT("cls"), wxT("CLS - очищает экран, оставляя только список предметов")));
-		_tooltips.push_back(HelpTip(wxT("menu"), wxT("MENU [$выражение] - показ меню с заданным названием")));
-		_tooltips.push_back(HelpTip(wxT("settimer"), wxT("SETTIMER [#выражение] - задает интервал таймера для локации-счетчика")));
-		_tooltips.push_back(HelpTip(wxT("dynamic"), wxT("DYNAMIC [$строка кода],[параметр 1],[параметр 2], ... - динамическое выполнение кода")));
-		_tooltips.push_back(HelpTip(wxT("set"), wxT("SET [название переменной]=[выражение] - установка значения переменной")));
-		_tooltips.push_back(HelpTip(wxT("let"), wxT("LET [название переменной]=[выражение] - установка значения переменной")));
-		_tooltips.push_back(HelpTip(wxT("killvar"), wxT("KILLVAR [$название],[#индекс] - удаление всех переменных / указанной переменной")));
-		_tooltips.push_back(HelpTip(wxT("copyarr"), wxT("COPYARR [$массив-приемник],[$массив-источник] - копирование содержимого массива в другой массив")));
-		_tooltips.push_back(HelpTip(wxT("addobj"), wxT("ADDOBJ [$название],[$путь к изображению],[#позиция] / ADD OBJ [$название],[$путь к изображению],[#позиция] - добавление предмета")));
-		_tooltips.push_back(HelpTip(wxT("delobj"), wxT("DELOBJ [$название] / DEL OBJ [$название] - удаление предмета")));
-		_tooltips.push_back(HelpTip(wxT("killobj"), wxT("KILLOBJ [#позиция] - удаление всех предметов / предмета в заданной позиции")));
-		_tooltips.push_back(HelpTip(wxT("unselect"), wxT("UNSELECT - отмена выбора предмета")));
-		_tooltips.push_back(HelpTip(wxT("unsel"), wxT("UNSEL - отмена выбора предмета")));
-		_tooltips.push_back(HelpTip(wxT("killall"), wxT("KILLALL - удаление всех переменных и предметов")));
-		_tooltips.push_back(HelpTip(wxT("opengame"), wxT("OPENGAME [$выражение] - загрузка состояния игры")));
-		_tooltips.push_back(HelpTip(wxT("openqst"), wxT("OPENQST [$выражение] - открытие и запуск файла игры")));
-		_tooltips.push_back(HelpTip(wxT("addqst"), wxT("ADDQST [$выражение] - добавление локаций из указанного файла")));
-		_tooltips.push_back(HelpTip(wxT("killqst"), wxT("KILLQST - удаление всех добавленных через ADDQST локаций")));
-		_tooltips.push_back(HelpTip(wxT("savegame"), wxT("SAVEGAME [$выражение] - сохранение состояния игры")));
-		_tooltips.push_back(HelpTip(wxT("refint"), wxT("REFINT - обновление интерфейса")));
-		_tooltips.push_back(HelpTip(wxT("showacts"), wxT("SHOWACTS [#выражение] - показ / скрытие списка действий")));
-		_tooltips.push_back(HelpTip(wxT("showinput"), wxT("SHOWINPUT [#выражение] - показ / скрытие строки ввода")));
-		_tooltips.push_back(HelpTip(wxT("showobjs"), wxT("SHOWOBJS [#выражение] - показ / скрытие списка предметов")));
-		_tooltips.push_back(HelpTip(wxT("showstat"), wxT("SHOWSTAT [#выражение] - показ / скрытие дополнительного окна описания")));
-		_tooltips.push_back(HelpTip(wxT("if"), wxT("IF [#выражение]:[оператор1] & [оператор2] & ... ELSE [оператор3] & [оператор4] & ... - условие")));
-		_tooltips.push_back(HelpTip(wxT("else"), wxT("IF [#выражение]:[оператор1] & [оператор2] & ... ELSE [оператор3] & [оператор4] & ... - условие")));
-		_tooltips.push_back(HelpTip(wxT("exit"), wxT("EXIT - завершение выполнения текущего кода")));
-		_tooltips.push_back(HelpTip(wxT("end"), wxT("END - завершение многострочной формы IF / ACT")));
-		_tooltips.push_back(HelpTip(wxT("jump"), wxT("JUMP [$выражение] - переход на указанную метку")));
-		_tooltips.push_back(HelpTip(wxT("gosub"), wxT("GOSUB [$выражение],[параметр 1],[параметр 2], ... - обработка указанной локации")));
-		_tooltips.push_back(HelpTip(wxT("gs"), wxT("GS [$выражение],[параметр 1],[параметр 2], ... - обработка указанной локации")));
-		_tooltips.push_back(HelpTip(wxT("goto"), wxT("GOTO [$выражение],[параметр 1],[параметр 2], ... - переход на указанную локацию")));
-		_tooltips.push_back(HelpTip(wxT("gt"), wxT("GT [$выражение],[параметр 1],[параметр 2], ... - переход на указанную локацию")));
-		_tooltips.push_back(HelpTip(wxT("xgoto"), wxT("XGOTO [$выражение],[параметр 1],[параметр 2], ... - переход на указанную локацию без очистки основного окна описания")));
-		_tooltips.push_back(HelpTip(wxT("xgt"), wxT("XGT [$выражение],[параметр 1],[параметр 2], ... - переход на указанную локацию без очистки основного окна описания")));
-		_tooltips.push_back(HelpTip(wxT("play"), wxT("PLAY [$путь к звуковому файлу],[#громкость] - воспроизведение звукового файла с заданной громкостью")));
-		_tooltips.push_back(HelpTip(wxT("close"), wxT("CLOSE [$путь к звуковому файлу] / CLOSE ALL - остановка проигрывания звукового файла / всех звуковых файлов")));
-		_tooltips.push_back(HelpTip(wxT("view"), wxT("VIEW [$путь к графическому файлу] - просмотр изображения")));
-		// Functions
-		_tooltips.push_back(HelpTip(wxT("and"), wxT("[#выражение 1] AND [#выражение 2] - логическое \"и\"")));
-		_tooltips.push_back(HelpTip(wxT("or"), wxT("[#выражение 1] OR [#выражение 2] - логическое \"или\"")));
-		_tooltips.push_back(HelpTip(wxT("no"), wxT("NO [#выражение] - отрицание")));
-		_tooltips.push_back(HelpTip(wxT("mod"), wxT("[#выражение 1] MOD [#выражение 2] - вычисление остатка от деления")));
-		_tooltips.push_back(HelpTip(wxT("desc"), wxT("DESC([$выражение]) - возвращает текст базового описания локации")));
-		_tooltips.push_back(HelpTip(wxT("$desc"), wxT("$DESC([$выражение]) - возвращает текст базового описания локации")));
-		_tooltips.push_back(HelpTip(wxT("iif"), wxT("IIF([#выражение],[выражение_да],[выражение_нет]) - возвращает одно из выражений по условию")));
-		_tooltips.push_back(HelpTip(wxT("$iif"), wxT("$IIF([#выражение],[выражение_да],[выражение_нет]) - возвращает одно из выражений по условию")));
-		_tooltips.push_back(HelpTip(wxT("input"), wxT("INPUT([выражение]) - показывает окно ввода текста и возвращает введенное значение")));
-		_tooltips.push_back(HelpTip(wxT("$input"), wxT("$INPUT([выражение]) - показывает окно ввода текста и возвращает введенное значение")));
-		_tooltips.push_back(HelpTip(wxT("isplay"), wxT("ISPLAY([$выражение]) - проверяет, проигрывается ли в текущий момент указанный файл")));
-		_tooltips.push_back(HelpTip(wxT("max"), wxT("MAX([выражение 1],[выражение 2], ...) - возвращает максимальное из значений аргументов")));
-		_tooltips.push_back(HelpTip(wxT("$max"), wxT("$MAX([выражение 1],[выражение 2], ...) - возвращает максимальное из значений аргументов")));
-		_tooltips.push_back(HelpTip(wxT("min"), wxT("MIN([выражение 1],[выражение 2], ...) - возвращает минимальное из значений аргументов")));
-		_tooltips.push_back(HelpTip(wxT("$min"), wxT("$MIN([выражение 1],[выражение 2], ...) - возвращает минимальное из значений аргументов")));
-		_tooltips.push_back(HelpTip(wxT("rand"), wxT("RAND([#выражение 1],[#выражение 2]) - возвращает случайное число между заданными")));
-		_tooltips.push_back(HelpTip(wxT("rgb"), wxT("RGB([#красный],[#зеленый],[#синий]) - возвращает код цвета на основе 3-х составляющих")));
-		_tooltips.push_back(HelpTip(wxT("getobj"), wxT("GETOBJ([#позиция]) - возвращает название предмета, расположенного в заданной позиции")));
-		_tooltips.push_back(HelpTip(wxT("$getobj"), wxT("$GETOBJ([#позиция]) - возвращает название предмета, расположенного в заданной позиции")));
-		_tooltips.push_back(HelpTip(wxT("dyneval"), wxT("DYNEVAL([$выражение],[параметр 1],[параметр 2], ...) - возвращает значение динамически вычисленного выражения")));
-		_tooltips.push_back(HelpTip(wxT("$dyneval"), wxT("$DYNEVAL([$выражение],[параметр 1],[параметр 2], ...) - возвращает значение динамически вычисленного выражения")));
-		_tooltips.push_back(HelpTip(wxT("func"), wxT("FUNC([$выражение],[параметр 1],[параметр 2], ...) - обработка указанной локации как функции")));
-		_tooltips.push_back(HelpTip(wxT("$func"), wxT("$FUNC([$выражение],[параметр 1],[параметр 2], ...) - обработка указанной локации как функции")));
-		_tooltips.push_back(HelpTip(wxT("arrsize"), wxT("ARRSIZE([$выражение]) - возвращает число элементов в указанном массиве")));
-		_tooltips.push_back(HelpTip(wxT("arrpos"), wxT("ARRPOS([#начальный индекс],[$имя массива],[значение]) - поиск в массиве элемента с заданным значением")));
-		_tooltips.push_back(HelpTip(wxT("instr"), wxT("INSTR([#начальная позиция],[$текст],[$искомый текст]) - поиск вхождения текста")));
-		_tooltips.push_back(HelpTip(wxT("isnum"), wxT("ISNUM([$выражение]) - проверяет, является ли указанная строка числом")));
-		_tooltips.push_back(HelpTip(wxT("trim"), wxT("TRIM([$выражение]) - удаляет из текста прилегающие пробелы и символы табуляции")));
-		_tooltips.push_back(HelpTip(wxT("$trim"), wxT("$TRIM([$выражение]) - удаляет из текста прилегающие пробелы и символы табуляции")));
-		_tooltips.push_back(HelpTip(wxT("ucase"), wxT("UCASE([$выражение]) - преобразует маленькие буквы текста в большие")));
-		_tooltips.push_back(HelpTip(wxT("$ucase"), wxT("$UCASE([$выражение]) - преобразует маленькие буквы текста в большие")));
-		_tooltips.push_back(HelpTip(wxT("lcase"), wxT("LCASE([$выражение]) - преобразует большие буквы текста в маленькие")));
-		_tooltips.push_back(HelpTip(wxT("$lcase"), wxT("$LCASE([$выражение]) - преобразует большие буквы текста в маленькие")));
-		_tooltips.push_back(HelpTip(wxT("len"), wxT("LEN([$выражение]) - возвращает длину указанной строки")));
-		_tooltips.push_back(HelpTip(wxT("mid"), wxT("MID([$текст],[#начало],[#длина]) - вырезает из текста строку указанной длины начиная с заданной позиции")));
-		_tooltips.push_back(HelpTip(wxT("$mid"), wxT("$MID([$текст],[#начало],[#длина]) - вырезает из текста строку указанной длины начиная с заданной позиции")));
-		_tooltips.push_back(HelpTip(wxT("replace"), wxT("REPLACE([$текст],[$искомый текст],[$текст для замены]) - заменяет в тексте заданную строку")));
-		_tooltips.push_back(HelpTip(wxT("$replace"), wxT("$REPLACE([$текст],[$искомый текст],[$текст для замены]) - заменяет в тексте заданную строку")));
-		_tooltips.push_back(HelpTip(wxT("str"), wxT("STR([#выражение]) - переводит число в строку")));
-		_tooltips.push_back(HelpTip(wxT("$str"), wxT("$STR([#выражение]) - переводит число в строку")));
-		_tooltips.push_back(HelpTip(wxT("val"), wxT("VAL([$выражение]) - переводит строку в число")));
-		_tooltips.push_back(HelpTip(wxT("arrcomp"), wxT("ARRCOMP([#начальный индекс],[$имя массива],[$шаблон]) - поиск в массиве элемента, соответствующего регулярному выражению")));
-		_tooltips.push_back(HelpTip(wxT("strcomp"), wxT("STRCOMP([$выражение],[$шаблон]) - проверяет заданный текст на соответствие регулярному выражению")));
-		_tooltips.push_back(HelpTip(wxT("strfind"), wxT("STRFIND([$выражение],[$шаблон],[#номер]) - возвращает подстроку, соответствующую группе с номером [#номер] регулярного выражения")));
-		_tooltips.push_back(HelpTip(wxT("$strfind"), wxT("$STRFIND([$выражение],[$шаблон],[#номер]) - возвращает подстроку, соответствующую группе с номером [#номер] регулярного выражения")));
-		_tooltips.push_back(HelpTip(wxT("strpos"), wxT("STRPOS([$выражение],[$шаблон],[#номер]) - возвращает позицию подстроки, соответствующей группе с номером [#номер] регулярного выражения")));
-		_tooltips.push_back(HelpTip(wxT("countobj"), wxT("COUNTOBJ - возвращает текущее число предметов")));
-		_tooltips.push_back(HelpTip(wxT("msecscount"), wxT("MSECSCOUNT - возвращает количество миллисекунд, прошедших с момента начала игры")));
-		_tooltips.push_back(HelpTip(wxT("rnd"), wxT("RND - возвращает случайное значение от 1 до 1000")));
-		_tooltips.push_back(HelpTip(wxT("curloc"), wxT("CURLOC - возвращает название текущей локации")));
-		_tooltips.push_back(HelpTip(wxT("$curloc"), wxT("$CURLOC - возвращает название текущей локации")));
-		_tooltips.push_back(HelpTip(wxT("qspver"), wxT("QSPVER - возвращает версию интерпретатора")));
-		_tooltips.push_back(HelpTip(wxT("$qspver"), wxT("$QSPVER - возвращает версию интерпретатора")));
-		_tooltips.push_back(HelpTip(wxT("selobj"), wxT("SELOBJ - возвращает название выделенного предмета")));
-		_tooltips.push_back(HelpTip(wxT("$selobj"), wxT("$SELOBJ - возвращает название выделенного предмета")));
-		_tooltips.push_back(HelpTip(wxT("selact"), wxT("SELACT - возвращает название выделенного действия")));
-		_tooltips.push_back(HelpTip(wxT("$selact"), wxT("$SELACT - возвращает название выделенного действия")));
-		_tooltips.push_back(HelpTip(wxT("curacts"), wxT("CURACTS - возвращает в виде кода все текущие действия")));
-		_tooltips.push_back(HelpTip(wxT("$curacts"), wxT("$CURACTS - возвращает в виде кода все текущие действия")));
-		_tooltips.push_back(HelpTip(wxT("user_text"), wxT("USER_TEXT - возвращает текст в строке ввода")));
-		_tooltips.push_back(HelpTip(wxT("$user_text"), wxT("$USER_TEXT - возвращает текст в строке ввода")));
-		_tooltips.push_back(HelpTip(wxT("usrtxt"), wxT("USRTXT - возвращает текст в строке ввода")));
-		_tooltips.push_back(HelpTip(wxT("$usrtxt"), wxT("$USRTXT - возвращает текст в строке ввода")));
-		_tooltips.push_back(HelpTip(wxT("maintxt"), wxT("MAINTXT - возвращает текст в основном окне описания")));
-		_tooltips.push_back(HelpTip(wxT("$maintxt"), wxT("$MAINTXT - возвращает текст в основном окне описания")));
-		_tooltips.push_back(HelpTip(wxT("stattxt"), wxT("STATTXT - возвращает текст в дополнительном окне описания")));
-		_tooltips.push_back(HelpTip(wxT("$stattxt"), wxT("$STATTXT - возвращает текст в дополнительном окне описания")));
-		// Variables
-		_tooltips.push_back(HelpTip(wxT("args"), wxT("ARGS - массив с параметрами процедуры / функции")));
-		_tooltips.push_back(HelpTip(wxT("$args"), wxT("$ARGS - массив с параметрами процедуры / функции")));
-		_tooltips.push_back(HelpTip(wxT("result"), wxT("RESULT - переменная содержит результат, возвращаемый текущей функцией")));
-		_tooltips.push_back(HelpTip(wxT("$result"), wxT("$RESULT - переменная содержит результат, возвращаемый текущей функцией")));
-		_tooltips.push_back(HelpTip(wxT("disablescroll"), wxT("DISABLESCROLL - если переменная не равна 0, то запрещает автопрокрутку текста при выводе")));
-		_tooltips.push_back(HelpTip(wxT("disablesubex"), wxT("DISABLESUBEX - если переменная не равна 0, то запрещает использование \"подвыражений\" в тексте")));
-		_tooltips.push_back(HelpTip(wxT("nosave"), wxT("NOSAVE - если переменная не равна 0, то сохранение состояния игры пользователем невозможно")));
-		_tooltips.push_back(HelpTip(wxT("debug"), wxT("DEBUG - если переменная не равна 0, то отключается проверка идентификатора игры при загрузке состояния")));
-		_tooltips.push_back(HelpTip(wxT("$counter"), wxT("$COUNTER - переменная содержит название локации-счётчика")));
-		_tooltips.push_back(HelpTip(wxT("$ongload"), wxT("$ONGLOAD - переменная содержит название локации-обработчика загрузки состояния")));
-		_tooltips.push_back(HelpTip(wxT("$ongsave"), wxT("$ONGSAVE - переменная содержит название локации-обработчика сохранения состояния")));
-		_tooltips.push_back(HelpTip(wxT("$onnewloc"), wxT("$ONNEWLOC - переменная содержит название локации-обработчика перехода на новую локацию")));
-		_tooltips.push_back(HelpTip(wxT("$onactsel"), wxT("$ONACTSEL - переменная содержит название локации-обработчика выбора действия")));
-		_tooltips.push_back(HelpTip(wxT("$onobjsel"), wxT("$ONOBJSEL - переменная содержит название локации-обработчика выбора предмета")));
-		_tooltips.push_back(HelpTip(wxT("$onobjadd"), wxT("$ONOBJADD - переменная содержит название локации-обработчика добавления предмета")));
-		_tooltips.push_back(HelpTip(wxT("$onobjdel"), wxT("$ONOBJDEL - переменная содержит название локации-обработчика удаления предмета")));
-		_tooltips.push_back(HelpTip(wxT("$usercom"), wxT("$USERCOM - переменная содержит название локации-обработчика строки ввода")));
-		_tooltips.push_back(HelpTip(wxT("usehtml"), wxT("USEHTML - если переменная не равна 0, то включает возможность использования HTML")));
-		_tooltips.push_back(HelpTip(wxT("bcolor"), wxT("BCOLOR - переменная содержит цвет фона")));
-		_tooltips.push_back(HelpTip(wxT("fcolor"), wxT("FCOLOR - переменная содержит основной цвет шрифта")));
-		_tooltips.push_back(HelpTip(wxT("lcolor"), wxT("LCOLOR - переменная содержит основной цвет ссылок")));
-		_tooltips.push_back(HelpTip(wxT("fsize"), wxT("FSIZE - переменная содержит основной размер шрифта")));
-		_tooltips.push_back(HelpTip(wxT("$fname"), wxT("$FNAME - переменная содержит название основного шрифта")));
-		_tooltips.push_back(HelpTip(wxT("$backimage"), wxT("$BACKIMAGE - переменная содержит путь к фоновому изображению")));
-	}
+		_controls->SetStatusText(_keywordsStore->FindTip(str));
 }
 
 void SyntaxTextBox::OnKeyUp(wxKeyEvent& event)

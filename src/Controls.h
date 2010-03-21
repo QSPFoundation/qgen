@@ -91,6 +91,7 @@
 		DataContainer		*_container;
 		Settings			*_settings;
 		KeysParser			*_keysParser;
+		KeywordsStore		*_keywordsStore;
 		DataSearch			_dataSearch;
 		wxString			_currentPath;
 		wxString			_currentGamePath;
@@ -107,10 +108,11 @@
 
 		Settings *GetSettings() const { return _settings; }
 		DataContainer *GetContainer() const { return _container; }
+		KeywordsStore *GetKeywordsStore() const { return _keywordsStore; }
 
-		void SetMainFrame(wxFrame *mainFrame);
-		void SetLocListBox(LocationsListBox *locListBox);
-		void SetNotebook(LocationsNotebook *locNotebook);
+		void SetMainFrame(wxFrame *mainFrame) { _mainFrame = mainFrame; }
+		void SetLocListBox(LocationsListBox *locListBox) { _locListBox = locListBox; }
+		void SetNotebook(LocationsNotebook *locNotebook) { _locNotebook = locNotebook; }
 
 		wxString GetGamePath() const { return _currentGamePath; }
 		wxString GetGamePass() const { return _currentGamePass; }
@@ -211,7 +213,7 @@
 		bool DeleteSelectedFolder();
 		bool RenameSelectedFolder();
 
-		bool SearchHelpFile();
+		bool SearchHelpFile();		
 	};
 
 #endif

@@ -40,7 +40,7 @@ void ChkSysHotKey::WalkMenuBar(wxMenuBar *menuBar)
 void ChkSysHotKey::WalkMenu(wxMenu *menu)
 {
 	wxMenuItemList &list = menu->GetMenuItems();
-	for (int i = 0; i < list.GetCount(); ++i)
+	for (size_t i = 0; i < list.GetCount(); ++i)
 	{
 		wxMenuItem *menuItem = list.Item(i)->GetData();
 		if (menuItem->GetKind() != wxITEM_SEPARATOR)

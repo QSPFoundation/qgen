@@ -26,12 +26,14 @@ class LocationPage;
 
 	#include "Settings.h"
 	#include "DataContainer.h"
+	#include "KeywordsStore.h"
 
 	class IControls
 	{
 	public:
 		virtual Settings *GetSettings() const = 0;
 		virtual DataContainer *GetContainer() const = 0;
+		virtual KeywordsStore *GetKeywordsStore() const = 0;
 		virtual wxString GetGamePath() const = 0;
 
 		virtual bool RenameFolder(size_t folderIndex, const wxString &name) = 0;

@@ -20,7 +20,7 @@
 */
 
 #include "DataContainer.h"
-#include "wx/arrimpl.cpp"
+#include <wx/arrimpl.cpp>
 
 WX_DEFINE_OBJARRAY(ActionDataArray);
 WX_DEFINE_OBJARRAY(LocationDataArray);

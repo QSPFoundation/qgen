@@ -33,6 +33,9 @@ Controls::Controls(const wxString &path)
 	_settings = new Settings(_currentPath);
 	_container = new DataContainer();
 	_keysParser = new KeysParser(_settings->GetHotKeys());
+	_keywordsStore = new KeywordsStore();
+	 wxString filename = wxFileName(_currentPath, wxT("qgen_keywords.xml")).GetFullPath();
+	_keywordsStore->Load(filename);
 }
 
 Controls::~Controls()
@@ -40,21 +43,7 @@ Controls::~Controls()
 	delete _settings;
 	delete _container;
 	delete _keysParser;
-}
-
-void Controls::SetMainFrame(wxFrame *mainFrame)
-{
-	_mainFrame = mainFrame;
-}
-
-void Controls::SetLocListBox(LocationsListBox *locListBox)
-{
-	_locListBox = locListBox;
-}
-
-void Controls::SetNotebook(LocationsNotebook *locNotebook)
-{
-	_locNotebook = locNotebook;
+	delete _keywordsStore;
 }
 
 int Controls::GetSelectedLocationIndex()

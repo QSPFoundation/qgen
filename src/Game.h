@@ -24,6 +24,7 @@
 
 	#include <wx/wx.h>
 	#include <wx/xml/xml.h>
+	#include <wx/mstream.h>
 	#include "DataContainer.h"
 
 	#ifdef _UNICODE
@@ -107,6 +108,14 @@
 	#define QGEN_MAXLOCATIONNAMELEN 100
 	#define QGEN_MAXACTIONNAMELEN 500
 	#define QGEN_DELIMS QGEN_FMT("():=+-*/<>!&,[] '\"\t{}%@#^;.?~\\|\r\n")
+
+	#define wxGetBitmapFromMemory(name) _wxGetBitmapFromMemory(name ## _png, sizeof(name ## _png))
+		inline wxBitmap _wxGetBitmapFromMemory(const unsigned char *data, int length)
+		{
+			wxMemoryInputStream is(data, length);
+			return wxBitmap(wxImage(is, wxBITMAP_TYPE_ANY, -1), -1);
+		}
+
 
 	class Controls;
 

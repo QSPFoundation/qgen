@@ -381,6 +381,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\KeywordsStore.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\LocationActions.cpp"
 				>
 			</File>
@@ -515,6 +519,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\KeywordsStore.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\LocationActions.h"
 				>
 			</File>
@@ -581,6 +589,10 @@
 		</Filter>
 		<File
 			RelativePath=".\changelog.txt"
+			>
+		</File>
+		<File
+			RelativePath=".\qgen_keywords.xml"
 			>
 		</File>
 		<File

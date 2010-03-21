@@ -30,7 +30,6 @@
 	#include <wx/fdrepdlg.h>
 	#include <wx/aboutdlg.h>
 	#include <wx/help.h>
-	#include <wx/mstream.h>
 	#include "Controls.h"
 	#include "SearchDialog.h"
 	#include "OptionsDialog.h"
@@ -73,13 +72,6 @@
 	#include "bitmaps/menu_exit.xpm"
 
 	#define QGEN_TITLE wxT("Quests Generator")
-
-	#define wxGetBitmapFromMemory(name) _wxGetBitmapFromMemory(name ## _png, sizeof(name ## _png))
-		inline wxBitmap _wxGetBitmapFromMemory(const unsigned char *data, int length)
-		{
-			wxMemoryInputStream is(data, length);
-			return wxBitmap(wxImage(is, wxBITMAP_TYPE_ANY, -1), -1);
-		}
 
 	enum
 	{
@@ -146,7 +138,7 @@
 	class QGenApp : public wxApp
 	{
 	private:
-		Controls *_controls;
+		Controls		*_controls;
 	public:
 		virtual bool OnInit();
 		virtual int OnExit();
