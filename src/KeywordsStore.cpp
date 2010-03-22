@@ -85,9 +85,14 @@ wxString KeywordsStore::GetWords( KeywordType type ) const
 	for (size_t idx = 0; idx < count; ++idx)
 	{
 		if (_keywords[idx].type == type)
-			result += _keywords[idx].word + wxT(' ');
+		{
+			if (result.Length() == 0)
+				result = _keywords[idx].word;
+			else
+				result += wxT(' ') + _keywords[idx].word;
+		}
 	}
-	return result.Trim();
+	return result;
 }
 
 size_t KeywordsStore::GetCount()
@@ -97,7 +102,7 @@ size_t KeywordsStore::GetCount()
 
 wxString KeywordsStore::GetWord( size_t index ) const
 {
-	if (_keywords.GetCount() == 0) return wxEmptyString;
+	if (index >= _keywords.GetCount()) return wxEmptyString;
 	return _keywords[index].word;
 }
 
@@ -114,9 +119,9 @@ wxString KeywordsStore::FindTip( const wxString &word ) const
 	{
 		idx = first + (last - first) / 2;
 		str = _keywords[idx].word;
-		if(w.CmpNoCase(str) > 0)
+		if(w.Cmp(str) > 0)
 			first = idx + 1;
-		else if(w.CmpNoCase(str) < 0)
+		else if(w.Cmp(str) < 0)
 			last = idx - 1;
 		else
 		{
