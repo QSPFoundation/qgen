@@ -1,5 +1,5 @@
 /* XPM */
-static char *toolbar_redo_xpm[] = {
+static const char *toolbar_redo_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "24 24 79 1",
 "S c #69D545",

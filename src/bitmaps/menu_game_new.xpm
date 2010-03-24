@@ -1,5 +1,5 @@
 /* XPM */
-static char *menu_game_new_xpm[] = {
+static const char *menu_game_new_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 45 1",
 "o c #A8A368",

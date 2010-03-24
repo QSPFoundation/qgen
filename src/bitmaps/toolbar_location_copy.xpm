@@ -1,5 +1,5 @@
 /* XPM */ 
-static char * toolbar_location_copy_xpm[] = {
+static const char * toolbar_location_copy_xpm[] = {
 "24 24 25 1",
 " 	c None",
 "!	c #5E5E5E",

@@ -1,5 +1,5 @@
 /* XPM */ 
-static char * about_logo_xpm[] = {
+static const char * about_logo_xpm[] = {
 "48 48 32 1",
 " 	c None",
 "!	c black",

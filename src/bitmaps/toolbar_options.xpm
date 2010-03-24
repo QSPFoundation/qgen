@@ -1,5 +1,5 @@
 /* XPM */ 
-static char * toolbar_options_xpm[] = {
+static const char * toolbar_options_xpm[] = {
 "24 24 71 1",
 " 	c None",
 "!	c black",

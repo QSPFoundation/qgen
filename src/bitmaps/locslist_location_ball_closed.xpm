@@ -1,5 +1,5 @@
 /* XPM */ 
-static char * locslist_location_ball_closed_xpm[] = {
+static const char * locslist_location_ball_closed_xpm[] = {
 "15 15 13 1",
 " 	c None",
 "!	c black",

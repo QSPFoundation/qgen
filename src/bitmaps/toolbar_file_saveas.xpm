@@ -1,5 +1,5 @@
 /* XPM */
-static char *toolbar_file_saveas_xpm[] = {
+static const char *toolbar_file_saveas_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "24 24 95 2",
 "n  c #CACACA",

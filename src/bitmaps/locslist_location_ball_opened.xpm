@@ -1,5 +1,5 @@
 /* XPM */
-static char *locslist_location_ball_opened_xpm[] = {
+static const char *locslist_location_ball_opened_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "15 15 12 1",
 "@ c #395FFF",

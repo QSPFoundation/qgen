@@ -1,5 +1,5 @@
 /* XPM */ 
-static char * toolbar_location_paste_xpm[] = {
+static const char * toolbar_location_paste_xpm[] = {
 "24 24 44 1",
 " 	c None",
 "!	c black",

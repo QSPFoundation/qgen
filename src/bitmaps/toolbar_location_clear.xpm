@@ -1,5 +1,5 @@
 /* XPM */
-static char *toolbar_location_clear_xpm[] = {
+static const char *toolbar_location_clear_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "24 24 139 2",
 "e. c #BFA829",

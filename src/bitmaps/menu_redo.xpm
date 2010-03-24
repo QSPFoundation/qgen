@@ -1,5 +1,5 @@
 /* XPM */
-static char *menu_redo_xpm[] = {
+static const char *menu_redo_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 63 1",
 "+ c #AAC7F5",

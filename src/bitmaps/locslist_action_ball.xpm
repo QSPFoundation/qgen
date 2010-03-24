@@ -1,5 +1,5 @@
 /* XPM */
-static char *locslist_action_ball_xpm[] = {
+static const char *locslist_action_ball_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "15 15 16 1",
 "% c #F5DB00",

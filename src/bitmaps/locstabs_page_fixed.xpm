@@ -1,5 +1,5 @@
 /* XPM */
-static char *locstabs_page_fixed_xpm[] = {
+static const char *locstabs_page_fixed_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "14 14 75 1",
 "; c #2D2D2D",

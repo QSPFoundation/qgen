@@ -1,5 +1,5 @@
 /* XPM */ 
-static char * toolbar_game_info_xpm[] = {
+static const char * toolbar_game_info_xpm[] = {
 "24 24 75 1",
 " 	c None",
 "!	c black",

@@ -24,6 +24,7 @@
 
 	#include <wx/wx.h>
 	#include <wx/treectrl.h>
+	#include <wx/imaglist.h>
 	#include "IControls.h"
 	#include "LocationPage.h"
 	#include "LocationTip.h"

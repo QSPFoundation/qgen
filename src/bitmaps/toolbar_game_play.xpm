@@ -1,5 +1,5 @@
 /* XPM */
-static char *toolbar_game_play_xpm[] = {
+static const char *toolbar_game_play_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "24 24 68 1",
 "- c #2E79EE",

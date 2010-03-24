@@ -1,5 +1,5 @@
 /* XPM */ 
-static char * qgen_xpm[] = {
+static const char * qgen_xpm[] = {
 "16 16 29 1",
 " 	c None",
 "!	c black",

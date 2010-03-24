@@ -1,5 +1,5 @@
 /* XPM */ 
-static char * menu_game_play_xpm[] = {
+static const char * menu_game_play_xpm[] = {
 "16 16 19 1",
 " 	c None",
 "!	c black",

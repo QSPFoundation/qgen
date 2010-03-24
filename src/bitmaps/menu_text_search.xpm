@@ -1,5 +1,5 @@
 /* XPM */
-static char *menu_text_search_xpm[] = {
+static const char *menu_text_search_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 76 1",
 "w c #A6D6FE",

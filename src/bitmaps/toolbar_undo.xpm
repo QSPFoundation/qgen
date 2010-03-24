@@ -1,5 +1,5 @@
 /* XPM */
-static char *toolbar_undo_xpm[] = {
+static const char *toolbar_undo_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "24 24 79 1",
 "p c #6DB0F0",

@@ -1,5 +1,5 @@
 /* XPM */
-static char *locslist_folder_closed_xpm[] = {
+static const char *locslist_folder_closed_xpm[] = {
 /* columns rows colors chars-per-pixel */
 "16 16 21 1",
 "< c #FFDB75",
