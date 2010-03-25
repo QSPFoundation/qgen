@@ -176,3 +176,4 @@ bool KeysParser::ExecuteHotkeyAction( int keyCode, int modifiers )
 	}
 	return false;
 }
+

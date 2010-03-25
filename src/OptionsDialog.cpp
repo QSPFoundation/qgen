@@ -55,7 +55,7 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
 	EVT_BUTTON(ID_DELETE_HKEY, OptionsDialog::OnDeleteHotKey)
 	EVT_TEXT(wxID_ANY, OptionsDialog::OnStateChanged)
 	EVT_CHECKBOX(wxID_ANY, OptionsDialog::OnStateChanged)
-	EVT_SPINCTRL(wxID_ANY, OptionsDialog::OnStateChanged)
+	EVT_SPINCTRL(wxID_ANY, OptionsDialog::OnStateChangedSpinCtrl)
 	EVT_LIST_ITEM_ACTIVATED(ID_LIST_HKEYS, OptionsDialog::OnDblClickHotKeysList)
 	EVT_CLOSE(OptionsDialog::OnCloseDialog)
 END_EVENT_TABLE()
@@ -70,6 +70,17 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *notebookSizer = new wxBoxSizer(wxHORIZONTAL);
 	wxSizer *btnSizer = new wxBoxSizer(wxHORIZONTAL);
+
+	_btnOK = new wxButton(this, ID_OK_SETTINGS, wxT("OK"));
+	wxButton *btnCancel = new wxButton(this, wxID_CANCEL, wxT("Отмена"));
+	_btnApply = new wxButton(this, ID_APPLY_SETTINGS, wxT("Применить"));
+	_btnReset = new wxButton(this, ID_RESET_SETTINGS, wxT("Сброс"));
+
+	btnSizer->Add(_btnReset, 0, wxLEFT|wxBOTTOM, 5);
+	btnSizer->AddStretchSpacer(1);
+	btnSizer->Add(_btnOK, 0, wxRIGHT|wxBOTTOM, 5);
+	btnSizer->Add(btnCancel, 0, wxRIGHT|wxBOTTOM, 5);
+	btnSizer->Add(_btnApply, 0, wxRIGHT|wxBOTTOM, 5);
 
 	_notebook = new wxNotebook(this, wxID_ANY);
 
@@ -346,51 +357,42 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	_paths->SetSizerAndFit(topSizerPaths);
 	_paths->SetAutoLayout(true);
 
-	_hotkeys = new wxPanel(_notebook);
-	_notebook->AddPage(_hotkeys, wxT("Комбинации клавиш"));
+	#ifdef __WXMSW__
+		_hotkeys = new wxPanel(_notebook);
+		_notebook->AddPage(_hotkeys, wxT("Комбинации клавиш"));
 
-	wxBoxSizer *topSizerHotKeys = new wxBoxSizer(wxVERTICAL);
+		wxBoxSizer *topSizerHotKeys = new wxBoxSizer(wxVERTICAL);
 
-	wxStaticText *stText0001 = new wxStaticText(_hotkeys, wxID_ANY, wxT("Список команд:"));
-	_lstHotKeys = new wxListCtrl(_hotkeys, ID_LIST_HKEYS, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
-	_lstHotKeys->InsertColumn(0, wxT("Комбинация клавиш"), wxLIST_FORMAT_LEFT, 150);
-	_lstHotKeys->InsertColumn(1, wxT("Исполняемая команда"), wxLIST_FORMAT_LEFT, 300);
+		wxStaticText *stText0001 = new wxStaticText(_hotkeys, wxID_ANY, wxT("Список команд:"));
+		_lstHotKeys = new wxListCtrl(_hotkeys, ID_LIST_HKEYS, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
+		_lstHotKeys->InsertColumn(0, wxT("Комбинация клавиш"), wxLIST_FORMAT_LEFT, 150);
+		_lstHotKeys->InsertColumn(1, wxT("Исполняемая команда"), wxLIST_FORMAT_LEFT, 300);
 
-	wxBoxSizer *btnHotkKeysSizer = new wxBoxSizer(wxHORIZONTAL);
-	_btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEWHKEY, wxT("Добавить..."));
-	_btnEditHotKey = new wxButton(_hotkeys, ID_EDIT_HKEY, wxT("Редактировать..."));
-	_btnDelHotKey = new wxButton(_hotkeys, ID_DELETE_HKEY, wxT("Удалить"));
+		wxBoxSizer *btnHotkKeysSizer = new wxBoxSizer(wxHORIZONTAL);
+		_btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEWHKEY, wxT("Добавить..."));
+		_btnEditHotKey = new wxButton(_hotkeys, ID_EDIT_HKEY, wxT("Редактировать..."));
+		_btnDelHotKey = new wxButton(_hotkeys, ID_DELETE_HKEY, wxT("Удалить"));
 
-	btnHotkKeysSizer->Add(_btnAddNewHotKey, wxALL, 5);
-	btnHotkKeysSizer->Add(_btnEditHotKey, wxALL, 5);
-	btnHotkKeysSizer->Add(_btnDelHotKey, wxALL, 5);
+		btnHotkKeysSizer->Add(_btnAddNewHotKey, wxALL, 5);
+		btnHotkKeysSizer->Add(_btnEditHotKey, wxALL, 5);
+		btnHotkKeysSizer->Add(_btnDelHotKey, wxALL, 5);
 
-	topSizerHotKeys->Add(stText0001, 0, wxTOP|wxLEFT, 5);
-	topSizerHotKeys->Add(_lstHotKeys, 1, wxALL|wxGROW, 5);
-	topSizerHotKeys->Add(btnHotkKeysSizer, 0, wxGROW);
+		topSizerHotKeys->Add(stText0001, 0, wxTOP|wxLEFT, 5);
+		topSizerHotKeys->Add(_lstHotKeys, 1, wxALL|wxGROW, 5);
+		topSizerHotKeys->Add(btnHotkKeysSizer, 0, wxGROW);
 
-	_hotkeys->SetSizerAndFit(topSizerHotKeys);
-	_hotkeys->SetAutoLayout(true);
+		_hotkeys->SetSizerAndFit(topSizerHotKeys);
+		_hotkeys->SetAutoLayout(true);
+	#endif
 
 	notebookSizer->Add(_notebook, 1, wxALL|wxGROW, 3);
-
-	_btnOK = new wxButton(this, ID_OK_SETTINGS, wxT("OK"));
-	wxButton *btnCancel = new wxButton(this, wxID_CANCEL, wxT("Отмена"));
-	_btnApply = new wxButton(this, ID_APPLY_SETTINGS, wxT("Применить"));
-	_btnReset = new wxButton(this, ID_RESET_SETTINGS, wxT("Сброс"));
-
-	btnSizer->Add(_btnReset, 0, wxLEFT|wxBOTTOM, 5);
-	btnSizer->AddStretchSpacer(1);
-	btnSizer->Add(_btnOK, 0, wxRIGHT|wxBOTTOM, 5);
-	btnSizer->Add(btnCancel, 0, wxRIGHT|wxBOTTOM, 5);
-	btnSizer->Add(_btnApply, 0, wxRIGHT|wxBOTTOM, 5);
 
 	topSizer->Add(notebookSizer, 1, wxGROW);
 	topSizer->Add(btnSizer, 0, wxGROW);
 
 	SetSizerAndFit(topSizer);
 	SetAutoLayout(true);
-	SetMinClientSize(wxSize(500, 380));
+	SetMinClientSize(wxSize(500, 400));
 	InitOptionsDialog();
 
 	_btnOK->SetDefault();
@@ -661,27 +663,27 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
 	switch (event.GetId())
 	{
 	case ID_PATH_PLAYER:
-		dialog.Create(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString, 
+		dialog.Create(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString,
 			wxT("Файл плеера (*.exe)|*.exe|Все файлы (*.*)|*.*"), wxFD_OPEN);
-		if (dialog.ShowModal() == wxID_OK) 
+		if (dialog.ShowModal() == wxID_OK)
 		{
 			_txtPathPlayer->SetValue(dialog.GetPath());
 			_btnApply->Enable();
 		}
 		break;
 	case ID_PATH_HELP:
-		dialog.Create(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString, 
+		dialog.Create(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString,
 			wxT("Файл справки (*.chm)|*.chm|Все файлы (*.*)|*.*"), wxFD_OPEN);
-		if (dialog.ShowModal() == wxID_OK) 
+		if (dialog.ShowModal() == wxID_OK)
 		{
 			_txtPathHelp->SetValue(dialog.GetPath());
 			_btnApply->Enable();
 		}
 		break;
 	case ID_PATH_TXT2GAM:
-		dialog.Create(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString, 
+		dialog.Create(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString,
 			wxT("Файл конвертора (*.exe)|*.exe|Все файлы (*.*)|*.*"), wxFD_OPEN);
-		if (dialog.ShowModal() == wxID_OK) 
+		if (dialog.ShowModal() == wxID_OK)
 		{
 			_txtPathTxt2Gam->SetValue(dialog.GetPath());
 			_btnApply->Enable();
@@ -722,7 +724,7 @@ void OptionsDialog::OnStateChanged(wxCommandEvent &event)
 	_btnApply->Enable(true);
 }
 
-void OptionsDialog::OnStateChanged(wxSpinEvent &event)
+void OptionsDialog::OnStateChangedSpinCtrl(wxSpinEvent &event)
 {
 	_btnApply->Enable(true);
 }
@@ -800,13 +802,16 @@ void OptionsDialog::ApplySettings()
 	_settings->SetFont(SYNTAX_COMMENTS, _txtFontComments->GetFont());
 	_settings->SetFont(SYNTAX_BASE, _txtFontBase->GetFont());
 
-	HotkeyData hotKeyData;
-	size_t count = _lstHotKeys->GetItemCount();
-	HotkeysStore *hotKeysStore = _settings->GetHotKeys();
-	hotKeysStore->ClearHotkeysData();
-	for (size_t i = 0; i < count; ++i)
-		hotKeysStore->AddHotkeyData(_hotkeysData[i]);
-	_settings->NotifyAll();
+	#ifdef __WXMSW__
+		HotkeyData hotKeyData;
+		size_t count = _lstHotKeys->GetItemCount();
+		HotkeysStore *hotKeysStore = _settings->GetHotKeys();
+		hotKeysStore->ClearHotkeysData();
+		for (size_t i = 0; i < count; ++i)
+			hotKeysStore->AddHotkeyData(_hotkeysData[i]);
+		_settings->NotifyAll();
+	#endif
+
 	_btnApply->Enable(false);
 }
 
@@ -898,17 +903,20 @@ void OptionsDialog::InitOptionsDialog()
 	_txtNameFirsLoc->Enable(_settings->GetCreateFirstLoc());
 	_spnAutoSaveMin->Enable(_settings->GetAutoSave());
 
-	HotkeysStore *hotKeysStore = _settings->GetHotKeys();
-	size_t count = hotKeysStore->GetHotkeysCount();
-	_lstHotKeys->DeleteAllItems();
-	_hotkeysData.Clear();
-	for (size_t i = 0; i < count; ++i)
-	{
-		const HotkeyData &hotKeyData = hotKeysStore->GetHotkeyData(i);
-		_lstHotKeys->InsertItem(i, hotKeyData.GetKeysAsString());
-		_lstHotKeys->SetItem(i, 1, hotKeyData.CommandText);
-		_hotkeysData.Add(hotKeyData);
-	}
+	#ifdef __WXMSW__
+		HotkeysStore *hotKeysStore = _settings->GetHotKeys();
+		size_t count = hotKeysStore->GetHotkeysCount();
+		_lstHotKeys->DeleteAllItems();
+		_hotkeysData.Clear();
+		for (size_t i = 0; i < count; ++i)
+		{
+			const HotkeyData &hotKeyData = hotKeysStore->GetHotkeyData(i);
+			_lstHotKeys->InsertItem(i, hotKeyData.GetKeysAsString());
+			_lstHotKeys->SetItem(i, 1, hotKeyData.CommandText);
+			_hotkeysData.Add(hotKeyData);
+		}
+	#endif
+
 	SetSize(_settings->GetOptionsDialogWidth(), _settings->GetOptionsDialogHeight());
 	_btnApply->Enable(false);
 	Refresh();

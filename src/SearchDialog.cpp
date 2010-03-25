@@ -39,6 +39,7 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 {
 	_controls = controls;
 	_parent = parent;
+	wxCommandEvent dummy;
 	Settings *settings = _controls->GetSettings();
 	_searchDataStore = settings->GetSearchDataStore();
 
@@ -46,9 +47,9 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 	wxSizer *rightSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *topSizer = new wxBoxSizer(wxHORIZONTAL);
 
-	_textFind = new wxComboBox(this, ID_TEXT_FIND, wxEmptyString, wxDefaultPosition, 
+	_textFind = new wxComboBox(this, ID_TEXT_FIND, wxEmptyString, wxDefaultPosition,
 						wxDefaultSize, _searchDataStore->GetSearchStrings());
-	_textRepl = new wxComboBox(this, ID_TEXT_REPL, wxEmptyString, wxDefaultPosition, 
+	_textRepl = new wxComboBox(this, ID_TEXT_REPL, wxEmptyString, wxDefaultPosition,
 						wxDefaultSize, _searchDataStore->GetReplaceStrings());
 	if (_textFind->GetCount()) _textFind->Select(0);
 	if (_textRepl->GetCount()) _textRepl->Select(0);
@@ -85,15 +86,15 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 	SetMaxClientSize(wxSize(2048, maxHeight));
 	SetClientSize(350, maxHeight);
 
-	OnUpdFindText(wxCommandEvent());
+	OnUpdFindText(dummy);
 	_btnNextSearch->SetDefault();
 }
 
 void SearchDialog::OnFindNext( wxCommandEvent &event )
 {
 	wxString str = _textFind->GetValue();
-	_controls->SearchString(str, false, 
-		_chkMatchCase->GetValue(), 
+	_controls->SearchString(str, false,
+		_chkMatchCase->GetValue(),
 		_chkWholeWord->GetValue());
 	AddSearchText(str);
 	_textFind->SetFocus();
@@ -103,8 +104,8 @@ void SearchDialog::OnFindNext( wxCommandEvent &event )
 void SearchDialog::OnFindAgain( wxCommandEvent &event )
 {
 	wxString str = _textFind->GetValue();
-	_controls->SearchString(str, true, 
-		_chkMatchCase->GetValue(), 
+	_controls->SearchString(str, true,
+		_chkMatchCase->GetValue(),
 		_chkWholeWord->GetValue());
 	AddSearchText(str);
 	_textFind->SetFocus();
@@ -113,9 +114,10 @@ void SearchDialog::OnFindAgain( wxCommandEvent &event )
 
 void SearchDialog::OnFindRepl( wxCommandEvent &event )
 {
+	wxCommandEvent dummy;
 	wxString str = _textRepl->GetValue();
 	_controls->ReplaceSearchString(str);
-	OnFindNext(wxCommandEvent());
+	OnFindNext(dummy);
 	AddReplaceText(str);
 	_textRepl->SetFocus();
 	_btnNextSearch->SetDefault();
@@ -126,7 +128,7 @@ void SearchDialog::OnFindReplAll( wxCommandEvent &event )
 	wxString str = _textRepl->GetValue();
 	_controls->ReplaceSearchString(str);
 	wxString str1 = _textFind->GetValue();
-	bool flag = _controls->SearchString(str1, true, 
+	bool flag = _controls->SearchString(str1, true,
 		_chkMatchCase->GetValue(),
 		_chkWholeWord->GetValue());
 	AddSearchText(str1);
@@ -134,8 +136,8 @@ void SearchDialog::OnFindReplAll( wxCommandEvent &event )
 	while (flag)
 	{
 		_controls->ReplaceSearchString(str);
-		flag = _controls->SearchString(str1, false, 
-				_chkMatchCase->GetValue(), 
+		flag = _controls->SearchString(str1, false,
+				_chkMatchCase->GetValue(),
 				_chkWholeWord->GetValue());
 	}
 	_textRepl->SetFocus();
@@ -156,8 +158,8 @@ void SearchDialog::OnSkipLoc( wxCommandEvent &event )
 {
 	wxString str = _textFind->GetValue();
 	if (_controls->SearchNextLoc())
-		_controls->SearchString(str, false, 
-			_chkMatchCase->GetValue(), 
+		_controls->SearchString(str, false,
+			_chkMatchCase->GetValue(),
 			_chkWholeWord->GetValue());
 	AddSearchText(str);
 	_textFind->SetFocus();

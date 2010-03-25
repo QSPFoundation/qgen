@@ -90,7 +90,7 @@ void OptionsHotkeysDialog::OnHelpHotKeys( wxCommandEvent &event )
 		DesktopWindow desktop;
 		wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
 	#else
-		wxCHMHelpController *chmHelp = new wxCHMHelpController();
+		wxExtHelpController *chmHelp = new wxExtHelpController();
 	#endif
 	if (_controls->SearchHelpFile())
 	{

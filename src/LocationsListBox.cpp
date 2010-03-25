@@ -82,10 +82,10 @@ void LocationsListBox::Update(bool isFromObservable)
 bool LocationsListBox::IsItemOk( wxTreeItemId id, int flags )
 {
 	return id.IsOk() &&
-		(flags == wxTREE_HITTEST_ONITEMINDENT ||
-		 flags == wxTREE_HITTEST_ONITEMICON ||
-		 flags == wxTREE_HITTEST_ONITEMLABEL ||
-		 flags == wxTREE_HITTEST_ONITEMRIGHT);
+		((flags & wxTREE_HITTEST_ONITEMINDENT) |
+		 (flags & wxTREE_HITTEST_ONITEMICON) |
+		 (flags & wxTREE_HITTEST_ONITEMLABEL) |
+		 (flags & wxTREE_HITTEST_ONITEMRIGHT));
 }
 
 void LocationsListBox::OnRightClick( wxMouseEvent &event )
@@ -214,10 +214,13 @@ wxString LocationsListBox::GetStringSelection()
 		else
 		{
 			wxTreeItemId parent(GetItemParent(id));
-			if (IsFolderItem(parent))
-				return GetItemText(id);
-			else
-				return GetItemText(parent);
+			if (parent.IsOk())
+			{
+				if (IsFolderItem(parent))
+					return GetItemText(id);
+				else
+					return GetItemText(parent);
+			}
 		}
 	}
 	return wxEmptyString;
@@ -236,10 +239,13 @@ wxString LocationsListBox::GetSelectedFolder()
 		else
 		{
 			wxTreeItemId parent(GetItemParent(id));
-			if (IsFolderItem(parent))
-				return GetItemText(parent);
-			else
-				return GetItemText(GetItemParent(parent));
+			if (parent.IsOk())
+			{
+				if (IsFolderItem(parent))
+					return GetItemText(parent);
+				else
+					return GetItemText(GetItemParent(parent));
+			}
 		}
 	}
 	return wxEmptyString;

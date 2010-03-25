@@ -32,7 +32,9 @@
 	#include "IControls.h"
 	#include "MergeDialog.h"
 	#include "Game.h"
-	#include "KeysParser.h"
+	#ifdef __WXMSW__
+		#include "KeysParser.h"
+	#endif
 
 	enum PasteType
 	{
@@ -90,7 +92,11 @@
 		LocationsNotebook	*_locNotebook;
 		DataContainer		*_container;
 		Settings			*_settings;
-		KeysParser			*_keysParser;
+
+		#ifdef __WXMSW__
+			KeysParser		*_keysParser;
+		#endif
+
 		KeywordsStore		*_keywordsStore;
 		DataSearch			_dataSearch;
 		wxString			_currentPath;
@@ -213,7 +219,7 @@
 		bool DeleteSelectedFolder();
 		bool RenameSelectedFolder();
 
-		bool SearchHelpFile();		
+		bool SearchHelpFile();
 	};
 
 #endif

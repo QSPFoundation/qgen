@@ -32,7 +32,11 @@ Controls::Controls(const wxString &path)
 
 	_settings = new Settings(_currentPath);
 	_container = new DataContainer();
-	_keysParser = new KeysParser(_settings->GetHotKeys());
+
+	#ifdef __WXMSW__
+		_keysParser = new KeysParser(_settings->GetHotKeys());
+	#endif
+
 	_keywordsStore = new KeywordsStore();
 	 wxString filename = wxFileName(_currentPath, wxT("qgen_keywords.xml")).GetFullPath();
 	_keywordsStore->Load(filename);
@@ -42,7 +46,11 @@ Controls::~Controls()
 {
 	delete _settings;
 	delete _container;
-	delete _keysParser;
+
+	#ifdef __WXMSW__
+		delete _keysParser;
+	#endif
+
 	delete _keywordsStore;
 }
 
@@ -76,7 +84,7 @@ int Controls::AddLocation(const wxString &name)
 	wxString locName(name);
 	while (1)
 	{
-		wxTextEntryDialog dlgEntry(GetParent(), 
+		wxTextEntryDialog dlgEntry(GetParent(),
 			wxT("Введите название новой локации:"),
 			wxT("Добавить новую локацию"), locName);
 		if (dlgEntry.ShowModal() == wxID_OK)
@@ -105,7 +113,7 @@ bool Controls::RenameSelectedLocation()
 	wxString name(_container->GetLocationName(locIndex));
 	while (1)
 	{
-		wxTextEntryDialog dlgEntry(GetParent(), 
+		wxTextEntryDialog dlgEntry(GetParent(),
 			wxT("Введите новое название локации:"),
 			wxT("Переименовать локацию"), name);
 		if (dlgEntry.ShowModal() == wxID_OK)
@@ -266,7 +274,7 @@ bool Controls::RenameSelectedAction()
 
 void Controls::ShowMessage( long errorNum )
 {
-	wxMessageDialog dlgMsg(GetParent(), GetMessageDesc(errorNum), 
+	wxMessageDialog dlgMsg(GetParent(), GetMessageDesc(errorNum),
 		wxT("Инфо"), wxOK|wxICON_INFORMATION|wxCENTRE);
 	dlgMsg.ShowModal();
 }
@@ -507,7 +515,7 @@ void Controls::PasteLocFromClipboard( PasteType type )
 			_locNotebook->SaveOpenedPages();
 			if (!_container->IsEmptyLoc(locIndex))
 			{
-				wxMessageDialog dlgMsg(GetParent(), 
+				wxMessageDialog dlgMsg(GetParent(),
 					wxString::Format(wxT("Желаете заменить локацию %s?"), locName),
 					wxT("Заменить локацию"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
 				if (dlgMsg.ShowModal() == wxID_YES)
@@ -771,7 +779,8 @@ bool Controls::LoadGame(const wxString &filename)
 
 bool Controls::JoinGame( const wxString &filename )
 {
-	if (qspOpenQuest(filename.wx_str(), GetParent(), this, wxString(), true))
+	wxString dummy;
+	if (qspOpenQuest(filename.wx_str(), GetParent(), this, dummy, true))
 	{
 		InitSearchData();
 		UpdateLocationsList();
@@ -1459,10 +1468,12 @@ void Controls::SwitchLocActs()
 
 bool Controls::ExecuteHotkey( int keyCode, int modifiers )
 {
-	bool res;
+	bool res = false;
+	#ifdef __WXMSW__
 	++_execHotkeyEnters;
 	res = _keysParser->ExecuteHotkeyAction(keyCode, modifiers);
 	--_execHotkeyEnters;
+	#endif
 	return res;
 }
 
@@ -1482,7 +1493,7 @@ bool Controls::AddFolder()
 	wxString name;
 	while (1)
 	{
-		wxTextEntryDialog dlgEntry(GetParent(), 
+		wxTextEntryDialog dlgEntry(GetParent(),
 			wxT("Введите название новой папки:"),
 			wxT("Добавить новую папку"), name);
 		if (dlgEntry.ShowModal() == wxID_OK)
@@ -1570,7 +1581,7 @@ bool Controls::SearchHelpFile()
 {
 	if (!wxFile::Exists(_settings->GetCurrentHelpPath()))
 	{
-		wxFileDialog dialog(GetParent(), 
+		wxFileDialog dialog(GetParent(),
 			wxT("Выберите файл справки"), wxEmptyString, wxEmptyString,
 			wxT("Файл справки (*.chm)|*.chm|Все файлы (*.*)|*.*"), wxFD_OPEN);
 		dialog.CenterOnParent();

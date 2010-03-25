@@ -35,7 +35,7 @@
 	#include "bitmaps/locslist_location_ball_opened.xpm"
 	#include "bitmaps/locslist_action_ball.xpm"
 
-	enum 
+	enum
 	{
 		ICON_FOLDER,
 		ICON_FOLDEROPENED,

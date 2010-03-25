@@ -127,12 +127,13 @@ int QGenApp::OnExit()
 	return wxApp::OnExit();
 }
 
-QGenMainFrame::QGenMainFrame(Controls *controls) : 
-	_timerAutoSave(this, ID_TIMER_AUTO_SAVE), 
+QGenMainFrame::QGenMainFrame(Controls *controls) :
+	_timerAutoSave(this, ID_TIMER_AUTO_SAVE),
 	_timerUpdToolBar(this, ID_TIMER_UPD_TOOLBAR)
 {
 	_controls = controls;
-	if (Create(wxSize(640, 480), wxDEFAULT_FRAME_STYLE)) OnNewQuest(wxCommandEvent());
+	wxCommandEvent dummy;
+	if (Create(wxSize(640, 480), wxDEFAULT_FRAME_STYLE)) OnNewQuest(dummy);
 	_timerAutoSave.Start(1000);
 	_timerUpdToolBar.Start(500);
 	_findDlg = NULL;
@@ -148,8 +149,10 @@ bool QGenMainFrame::Create(const wxSize& size, long style)
 	bool res = wxFrame::Create(NULL, wxID_ANY, wxEmptyString, wxDefaultPosition, size, style);
 	if (res)
 	{
-		SetIcon(wxICON(wxwin16x16));
-		SetMinSize(wxSize(400, 300));
+		#ifdef __WXMSW__
+			SetIcon(wxICON(wxwin16x16));
+		#endif
+		SetMinSize(wxSize(550, 300));
 		CreateControls();
 	}
 	return res;
@@ -445,7 +448,8 @@ void QGenMainFrame::OnSaveQuestAs(wxCommandEvent &event)
 
 void QGenMainFrame::OnSaveQuest( wxCommandEvent &event )
 {
-	if (!_controls->SaveGameWithCheck()) OnSaveQuestAs(wxCommandEvent());
+	wxCommandEvent dummy;
+	if (!_controls->SaveGameWithCheck()) OnSaveQuestAs(dummy);
 }
 
 void QGenMainFrame::CreateLocListBox()
@@ -463,7 +467,7 @@ void QGenMainFrame::CreateNotebook()
 void QGenMainFrame::LoadLayout()
 {
 	Settings *settings = _controls->GetSettings();
-	SetSize(settings->GetLeftFramePos(), settings->GetTopFramePos(), 
+	SetSize(settings->GetLeftFramePos(), settings->GetTopFramePos(),
 		settings->GetFrameWidth(), settings->GetFrameHeight());
 	Maximize(settings->GetMaximizeFrame());
 	wxStatusBar *statusBar = GetStatusBar();
@@ -685,6 +689,7 @@ void QGenMainFrame::OnJoinQuest( wxCommandEvent &event )
 
 void QGenMainFrame::OnPlayQuest( wxCommandEvent &event )
 {
+	wxCommandEvent dummy;
 	Settings *settings = _controls->GetSettings();
 	if (!wxFile::Exists(settings->GetCurrentPlayerPath()))
 	{
@@ -694,7 +699,7 @@ void QGenMainFrame::OnPlayQuest( wxCommandEvent &event )
 		if (dialog.ShowModal() == wxID_CANCEL) return;
 		settings->SetCurrentPlayerPath(dialog.GetPath());
 	}
-	OnSaveQuest(wxCommandEvent());
+	OnSaveQuest(dummy);
 	if (_controls->IsGameSaved())
 		wxExecute(wxString::Format("\"%s\" \"%s\"", settings->GetCurrentPlayerPath(), _controls->GetGamePath()));
 }
@@ -705,7 +710,7 @@ void QGenMainFrame::OnChmHelp( wxCommandEvent &event )
 		DesktopWindow desktop;
 		wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
 	#else
-		wxCHMHelpController *chmHelp = new wxCHMHelpController();
+		wxExtHelpController *chmHelp = new wxExtHelpController();
 	#endif
 	if (_controls->SearchHelpFile())
 	{
@@ -721,7 +726,7 @@ void QGenMainFrame::OnSearchHelp( wxCommandEvent &event )
 		DesktopWindow desktop;
 		wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
 	#else
-		wxCHMHelpController *chmHelp = new wxCHMHelpController();
+		wxExtHelpController *chmHelp = new wxExtHelpController();
 	#endif
 	if (_controls->SearchHelpFile())
 	{
@@ -759,8 +764,8 @@ void QGenMainFrame::OnImportTxt2Gam( wxCommandEvent &event )
 {
 	if (!_controls->GetContainer()->IsEmpty())
 	{
-		wxMessageDialog dlgMsg(this, 
-			wxT("Импортируемый файл заменит текущий файл игры. Продолжить?"), 
+		wxMessageDialog dlgMsg(this,
+			wxT("Импортируемый файл заменит текущий файл игры. Продолжить?"),
 			wxT("Импорт"),
 			wxYES_NO|wxCENTRE|wxICON_QUESTION);
 		if (dlgMsg.ShowModal() == wxID_NO) return;
@@ -785,7 +790,7 @@ void QGenMainFrame::OnImportTxt2Gam( wxCommandEvent &event )
 
 void QGenMainFrame::OnInformationQuest( wxCommandEvent &event )
 {
-	wxMessageDialog dialog(this, _controls->GetGameInfo(), 
+	wxMessageDialog dialog(this, _controls->GetGameInfo(),
 		wxT("Информация об игре"), wxOK|wxCENTRE|wxICON_INFORMATION);
 	dialog.ShowModal();
 }
@@ -836,16 +841,17 @@ void QGenMainFrame::OnTimerUpdToolBar(wxTimerEvent &event)
 
 bool QGenMainFrame::QuestChange()
 {
+	wxCommandEvent dummy;
 	if (!_controls->IsGameSaved())
 	{
-		wxMessageDialog dlgMsg(this, 
-			wxT("Желаете сохранить файл?"), 
+		wxMessageDialog dlgMsg(this,
+			wxT("Желаете сохранить файл?"),
 			wxT("Файл был изменён"),
 			wxYES_NO|wxCANCEL|wxCENTRE|wxICON_QUESTION);
 		switch (dlgMsg.ShowModal())
 		{
 		case wxID_YES:
-			OnSaveQuest(wxCommandEvent());
+			OnSaveQuest(dummy);
 			return true;
 		case wxID_NO:
 			return true;

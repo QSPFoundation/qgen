@@ -29,7 +29,7 @@
 	#include <wx/fontdlg.h>
 	#include <wx/notebook.h>
 	#include <wx/sizer.h>
-	#include <wx/listctrl.h> 
+	#include <wx/listctrl.h>
 	#include "Settings.h"
 	#include "Controls.h"
 	#include "OptionsHotKeysDialog.h"
@@ -180,7 +180,7 @@
 		void OnOkSettings(wxCommandEvent &event);
 		void OnResetSettings(wxCommandEvent &event);
 		void OnStateChanged(wxCommandEvent &event);
-		void OnStateChanged(wxSpinEvent &event);
+		void OnStateChangedSpinCtrl(wxSpinEvent &event);
 		void OnAddHotKey(wxCommandEvent &event);
 		void OnEditHotKey(wxCommandEvent &event);
 		void OnDeleteHotKey(wxCommandEvent &event);

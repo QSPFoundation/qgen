@@ -106,14 +106,18 @@ void SyntaxTextBox::Update(bool isFromObservable)
 {
 	Settings *settings = _controls->GetSettings();
 	wxColour backColour = settings->GetTextBackColour();
+	wxFont font;
+	int tabSize;
 
 	SetCaretForeground((backColour.Blue() << 16 | backColour.Green() << 8 | backColour.Red()) ^ 0xFFFFFF);
 	SetSelBackground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT));
 	SetSelForeground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHTTEXT));
 	StyleSetForeground(wxSTC_STYLE_DEFAULT, settings->GetColour(SYNTAX_BASE));
 	StyleSetBackground(wxSTC_STYLE_DEFAULT, backColour);
-	StyleSetFont(wxSTC_STYLE_DEFAULT, settings->GetFont(SYNTAX_BASE));
-	SetTabWidth(settings->GetTabSize());
+	font = settings->GetFont(SYNTAX_BASE);
+	StyleSetFont(wxSTC_STYLE_DEFAULT, font);
+	tabSize = settings->GetTabSize();
+	SetTabWidth(tabSize);
 	StyleClearAll();
 
 	if (_style & SYNTAX_STYLE_COLORED)
@@ -126,32 +130,40 @@ void SyntaxTextBox::Update(bool isFromObservable)
 			SetMarginWidth(SYNTAX_NUM_MARGIN, settings->GetShowLinesNums() ? 40 : 0);
 		}
 		// Ключевые слова
-		StyleSetFont(wxSTC_B_KEYWORD, settings->GetFont(SYNTAX_STATEMENTS));
+		font = settings->GetFont(SYNTAX_STATEMENTS);
+		StyleSetFont(wxSTC_B_KEYWORD, font);
 		StyleSetForeground(wxSTC_B_KEYWORD, settings->GetColour(SYNTAX_STATEMENTS));
-		StyleSetFont(wxSTC_B_KEYWORD2, settings->GetFont(SYNTAX_FUNCTIONS));
+		font = settings->GetFont(SYNTAX_FUNCTIONS);
+		StyleSetFont(wxSTC_B_KEYWORD2, font);
 		StyleSetForeground(wxSTC_B_KEYWORD2, settings->GetColour(SYNTAX_FUNCTIONS));
-		StyleSetFont(wxSTC_B_KEYWORD3, settings->GetFont(SYNTAX_SYS_VARIABLES));
+		font = settings->GetFont(SYNTAX_SYS_VARIABLES);
+		StyleSetFont(wxSTC_B_KEYWORD3, font);
 		StyleSetForeground(wxSTC_B_KEYWORD3, settings->GetColour(SYNTAX_SYS_VARIABLES));
 		// Строки
-		StyleSetFont(wxSTC_B_STRING, settings->GetFont(SYNTAX_STRINGS));
+		font = settings->GetFont(SYNTAX_STRINGS);
+		StyleSetFont(wxSTC_B_STRING, font);
 		StyleSetForeground(wxSTC_B_STRING, settings->GetColour(SYNTAX_STRINGS));
-		StyleSetFont(wxSTC_B_STRINGEOL, settings->GetFont(SYNTAX_STRINGS));
+		StyleSetFont(wxSTC_B_STRINGEOL, font);
 		StyleSetForeground(wxSTC_B_STRINGEOL, settings->GetColour(SYNTAX_STRINGS));
 		// Числа
-		StyleSetFont(wxSTC_B_NUMBER, settings->GetFont(SYNTAX_NUMBERS));
+		font = settings->GetFont(SYNTAX_NUMBERS);
+		StyleSetFont(wxSTC_B_NUMBER, font);
 		StyleSetForeground(wxSTC_B_NUMBER, settings->GetColour(SYNTAX_NUMBERS));
 		// Операции
-		StyleSetFont(wxSTC_B_OPERATOR, settings->GetFont(SYNTAX_OPERATIONS));
+		font = settings->GetFont(SYNTAX_OPERATIONS);
+		StyleSetFont(wxSTC_B_OPERATOR, font);
 		StyleSetForeground(wxSTC_B_OPERATOR, settings->GetColour(SYNTAX_OPERATIONS));
 		// Метки
-		StyleSetFont(wxSTC_B_LABEL, settings->GetFont(SYNTAX_LABELS));
+		font = settings->GetFont(SYNTAX_LABELS);
+		StyleSetFont(wxSTC_B_LABEL, font);
 		StyleSetForeground(wxSTC_B_LABEL, settings->GetColour(SYNTAX_LABELS));
 		// Комментарии
-		StyleSetFont(wxSTC_B_COMMENT, settings->GetFont(SYNTAX_COMMENTS));
+		font = settings->GetFont(SYNTAX_COMMENTS);
+		StyleSetFont(wxSTC_B_COMMENT, font);
 		StyleSetForeground(wxSTC_B_COMMENT, settings->GetColour(SYNTAX_COMMENTS));
-		StyleSetFont(wxSTC_B_PREPROCESSOR, settings->GetFont(SYNTAX_COMMENTS));
+		StyleSetFont(wxSTC_B_PREPROCESSOR, font);
 		StyleSetForeground(wxSTC_B_PREPROCESSOR, settings->GetColour(SYNTAX_COMMENTS));
-		StyleSetFont(wxSTC_B_DATE, settings->GetFont(SYNTAX_COMMENTS));
+		StyleSetFont(wxSTC_B_DATE, font);
 		StyleSetForeground(wxSTC_B_DATE, settings->GetColour(SYNTAX_COMMENTS));
 	}
 }
@@ -459,7 +471,7 @@ void SyntaxTextBox::Tip(int pos)
 
 void SyntaxTextBox::OnKeyUp(wxKeyEvent& event)
 {
-	if (!(_style & SYNTAX_STYLE_NOHELPTIPS)) 
+	if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
 		Tip(GetCurrentPos());
 	event.Skip();
 }

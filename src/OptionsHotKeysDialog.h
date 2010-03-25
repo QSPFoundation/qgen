@@ -23,7 +23,8 @@
 	#define _QGEN_OPTIONS_HOTKEYS_DIALOG_H_
 
 	#include <wx/wx.h>
-	#include <wx/help.h> 
+	#include <wx/help.h>
+	#include <wx/generic/helpext.h>
 	#include "Settings.h"
 	#include "HotKeyTextBox.h"
 	#include "SyntaxTextBox.h"
