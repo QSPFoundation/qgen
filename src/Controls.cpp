@@ -38,7 +38,7 @@ Controls::Controls(const wxString &path)
 	#endif
 
 	_keywordsStore = new KeywordsStore();
-	 wxString filename = wxFileName(_currentPath, wxT("qgen_keywords.xml")).GetFullPath();
+	 wxString filename = wxFileName(_currentPath, wxT("keywords.xml")).GetFullPath();
 	_keywordsStore->Load(filename);
 }
 
