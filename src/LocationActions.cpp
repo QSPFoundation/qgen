@@ -36,8 +36,9 @@ LocationActions::LocationActions(wxWindow *owner, ILocationPage *locPage, IContr
 	_splitterv_down->SetMinimumPaneSize(1);
 	_splitterv_down->SplitVertically( _actPanel, _actCode );
 
-	sizerDown->Add( new wxStaticText( this, wxID_ANY, wxT("Базовые действия:"),
-					wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE ), 0, wxALL|wxGROW );
+	_stTextBaseActions = new wxStaticText( this, wxID_ANY, wxEmptyString, 
+		wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
+	sizerDown->Add( _stTextBaseActions, 0, wxALL|wxGROW );
 	sizerDown->Add( _splitterv_down, 1, wxALL|wxGROW );
 
 	SetSizerAndFit( sizerDown );
@@ -56,6 +57,8 @@ void LocationActions::Update(bool isFromObservable)
 {
 	Settings *settings = _controls->GetSettings();
 	_splitterv_down->SetSashGravity(settings->GetWidthsCoeff2());
+	_stTextBaseActions->SetLabel(_("Base actions:"));
+	GetSizer()->Layout();
 }
 
 void LocationActions::SaveAction()

@@ -28,27 +28,27 @@ BEGIN_EVENT_TABLE(OptionsHotkeysDialog, wxDialog)
 	EVT_BUTTON(ID_HOTKEY_HELP, OptionsHotkeysDialog::OnHelpHotKeys)
 END_EVENT_TABLE()
 
-OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& title, Controls *controls, int style) :
+OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& title, IControls *controls, int style) :
 	wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
 {
 	_controls = controls;
 	wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 	wxSizer *hotKeySizer = new wxBoxSizer(wxHORIZONTAL);
 
-	wxStaticText *stText01 = new wxStaticText(this, wxID_ANY, wxT("Комбинация клавиш:"));
+	wxStaticText *stText01 = new wxStaticText(this, wxID_ANY, _("Hotkeys:"));
 	_txtInputHotkey = new HotKeyTextBox(this, wxID_ANY);
 
 	hotKeySizer->Add(stText01, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
 	hotKeySizer->Add(_txtInputHotkey, 0, wxALL, 5);
 
-	wxStaticText *stText02 = new wxStaticText(this, wxID_ANY, wxT("Текст:"));
+	wxStaticText *stText02 = new wxStaticText(this, wxID_ANY, _("Text:"));
 	_txtInputText = new SyntaxTextBox(this, controls, SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS |
 													  SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOHELPTIPS);
 
 	wxSizer *btnSizer = new wxBoxSizer(wxHORIZONTAL);
-	_btnHelp = new wxButton(this, ID_HOTKEY_HELP, wxT("Справка"));
-	_btnOK = new wxButton(this, wxID_OK, wxT("OK"));
-	_btnCancel = new wxButton(this, wxID_CANCEL, wxT("Отмена"));
+	_btnHelp = new wxButton(this, ID_HOTKEY_HELP, _("Help"));
+	_btnOK = new wxButton(this, wxID_OK, _("OK"));
+	_btnCancel = new wxButton(this, wxID_CANCEL, _("Cancel"));
 
 	btnSizer->Add(_btnHelp, 0, wxLEFT|wxBOTTOM, 5);
 	btnSizer->AddStretchSpacer(1);

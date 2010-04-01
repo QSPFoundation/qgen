@@ -28,6 +28,42 @@ class LocationPage;
 	#include "DataContainer.h"
 	#include "KeywordsStore.h"
 
+	enum PasteType
+	{
+		PASTE_REPLACE,
+		PASTE_NEW,
+		PASTE_NEW_AUTO
+	};
+
+	enum SearchPlace
+	{
+		SEARCH_NONE,
+		SEARCH_LOCNAME,
+		SEARCH_LOCDESC,
+		SEARCH_LOCCODE,
+		SEARCH_ACTNAME,
+		SEARCH_PATHPICT,
+		SEARCH_ACTCODE
+	};
+
+	enum MessageType
+	{
+		QGEN_MSG_EXISTS,
+		QGEN_MSG_EXISTS_HKEY,
+		QGEN_MSG_EXISTS_S_HKEY,
+		QGEN_MSG_EMPTYDATA,
+		QGEN_MSG_WRONGPASSWORD,
+		QGEN_MSG_CANTSAVEGAME,
+		QGEN_MSG_CANTLOADGAME,
+		QGEN_MSG_NOTFOUND,
+		QGEN_MSG_SEARCHENDED,
+		QGEN_MSG_WRONGFORMAT,
+		QGEN_MSG_MAXACTIONSCOUNTREACHED,
+		QGEN_MSG_TOOLONGFOLDERNAME,
+		QGEN_MSG_TOOLONGLOCATIONNAME,
+		QGEN_MSG_TOOLONGACTIONNAME
+	};
+
 	class IControls
 	{
 	public:
@@ -59,6 +95,51 @@ class LocationPage;
 		virtual bool ExecuteHotkey(int keyCode, int modifiers) = 0;
 		virtual bool IsInHotkeyExecution() const = 0;
 		virtual void SetStatusText(const wxString &text) = 0;
+		virtual bool LoadGame(const wxString &filename) = 0;
+		virtual void NewGame() = 0;
+		virtual bool SaveGame(const wxString &path, const wxString &password) = 0;
+		virtual bool SaveGameWithCheck() = 0;
+		virtual bool SearchString(const wxString &str, bool findAgain, bool isMatchCase = false, bool isWholeString = false) = 0;
+		virtual void ReplaceSearchString(const wxString & replaceString) = 0;
+		virtual bool SearchNextLoc() = 0;
+		virtual void InitSearchData() = 0;
+		virtual int AddLocation(const wxString &name = wxEmptyString) = 0;
+		virtual bool DeleteSelectedLocation() = 0;
+		virtual bool RenameSelectedLocation() = 0;
+		virtual void ClearSelectedLocation() = 0;
+		virtual void CopySelectedLocToClipboard() = 0;
+		virtual void PasteLocFromClipboard(PasteType type) = 0;
+		virtual void SortLocations(bool isAscending) = 0;
+		virtual bool DeleteAllActions() = 0;
+		virtual void UndoText() = 0;
+		virtual void RedoText() = 0;
+		virtual void CopySelectedTextToClipboard() = 0;
+		virtual void CutSelectedTextToClipboard() = 0;
+		virtual void PasteTextFromClipboard() = 0;
+		virtual void DeleteSelectedText() = 0;
+		virtual void SelectAllText() = 0;
+		virtual bool JoinGame(const wxString &filename) = 0;
+		virtual bool IsGameSaved() = 0;
+		virtual bool SearchHelpFile() = 0;
+		virtual wxString GetSelectedWord() const = 0;
+		virtual bool ExportTxt(const wxString &filename) = 0;
+		virtual bool ExportTxt2Gam(const wxString &filename) = 0;
+		virtual bool ImportTxt2Gam(const wxString &filename) = 0;
+		virtual wxString GetGameInfo() const = 0;
+		virtual wxLongLong GetLastSaveTime() const = 0;
+		virtual void UpdateLocale(int lang) = 0;
+		virtual bool CanUndoText() const = 0;
+		virtual bool CanRedoText() const = 0;
+		virtual int GetSelectedLocationIndex() const = 0;
+		virtual bool IsSelectedLocationEmpty() const = 0;
+		virtual bool IsActionsOnSelectedLocEmpty() const = 0;
+		virtual bool IsAllLocsClosed() const = 0;
+		virtual void SwitchLocDesc() = 0;
+		virtual void SwitchLocActs() = 0;
+		virtual void JumpToSelectedLoc() = 0;
+		virtual bool AddFolder() = 0;
+		virtual bool DeleteSelectedFolder() = 0;
+		virtual bool RenameSelectedFolder() = 0;
 	};
 
 #endif

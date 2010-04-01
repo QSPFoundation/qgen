@@ -20,7 +20,8 @@
 */
 
 #include "SyntaxTextBox.h"
-#include "QGen.h"
+#include "MainFrame.h"
+#include "Game.h"
 
 
 IMPLEMENT_CLASS(SyntaxTextBox, wxStyledTextCtrl)
@@ -260,19 +261,19 @@ void SyntaxTextBox::OnRightClick(wxMouseEvent& event)
 	else
 	{
 		wxMenu menu;
-		menu.Append(ID_TEXT_UNDO, wxT("Отменить"));
-		menu.Append(ID_TEXT_REDO, wxT("Повторить"));
+		menu.Append(ID_TEXT_UNDO, _("Undo"));
+		menu.Append(ID_TEXT_REDO, _("Redo"));
 		menu.AppendSeparator();
-		menu.Append(ID_TEXT_CUT, wxT("Вырезать"));
-		menu.Append(ID_TEXT_COPY, wxT("Копировать"));
-		menu.Append(ID_TEXT_PASTE, wxT("Вставить"));
-		menu.Append(ID_TEXT_DEL, wxT("Удалить"));
+		menu.Append(ID_TEXT_CUT, _("Cut"));
+		menu.Append(ID_TEXT_COPY, _("Copy"));
+		menu.Append(ID_TEXT_PASTE, _("Paste"));
+		menu.Append(ID_TEXT_DEL, _("Delete"));
 		menu.AppendSeparator();
-		menu.Append(ID_TEXT_SELALL, wxT("Выделить всё"));
+		menu.Append(ID_TEXT_SELALL, _("Select all"));
 		if (_style & SYNTAX_STYLE_COLORED)
 		{
 			menu.AppendSeparator();
-			menu.Append(ID_LOC_JUMPLOC, wxT("Перейти на выбранную локацию"));
+			menu.Append(ID_LOC_JUMPLOC, _("Go to selected location"));
 		}
 		_controls->UpdateMenuItems(&menu);
 		PopupMenu(&menu);

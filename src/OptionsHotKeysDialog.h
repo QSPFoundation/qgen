@@ -28,7 +28,7 @@
 	#include "Settings.h"
 	#include "HotKeyTextBox.h"
 	#include "SyntaxTextBox.h"
-	#include "Controls.h"
+	#include "IControls.h"
 	#ifdef __WXMSW__
 		#include "DesktopWindow.h"
 	#endif
@@ -50,12 +50,12 @@
 		wxButton		*_btnCancel;
 		wxButton		*_btnHelp;
 		HotkeyData		_hotkeyData;
-		Controls		*_controls;
+		IControls		*_controls;
 
 		void OnOkSettings(wxCommandEvent &event);
 		void OnHelpHotKeys(wxCommandEvent &event);
 	public:
-		OptionsHotkeysDialog(wxWindow *parent, const wxString& title, Controls *controls,
+		OptionsHotkeysDialog(wxWindow *parent, const wxString& title, IControls *controls,
 							 int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
 
 		void SetHotkeyData(const HotkeyData &hotkeyData);

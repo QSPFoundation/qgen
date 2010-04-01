@@ -1,0 +1,869 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: English 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-30 19:35+1100\n"
+"PO-Revision-Date: 2010-04-01 19:34+1000\n"
+"Last-Translator: BaxZzZz <baxzzzz@gmail.com>\n"
+"Language-Team: English <baxzzzz@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "\tAction's image: %s"
+msgstr "\tAction's image: %s"
+
+msgid "&About..."
+msgstr "&About..."
+
+msgid "&Actions"
+msgstr "&Actions"
+
+msgid "&Close all tabs\tCtrl+Alt+F4"
+msgstr "&Close all tabs\tCtrl+Alt+F4"
+
+msgid "&Copy\tCtrl+Shift+C"
+msgstr "&Copy\tCtrl+Shift+C"
+
+msgid "&Create...\tAlt+F7"
+msgstr "&Create...\tAlt+F7"
+
+msgid "&Create...\tF7"
+msgstr "&Create...\tF7"
+
+msgid "&Cut\tCtrl+X"
+msgstr "&Cut\tCtrl+X"
+
+msgid "&Delete\tAlt+F8"
+msgstr "&Delete\tAlt+F8"
+
+msgid "&Delete\tCtrl+D"
+msgstr "&Delete\tCtrl+D"
+
+msgid "&Delete\tF8"
+msgstr "&Delete\tF8"
+
+msgid "&Exit\tAlt+X"
+msgstr "&Exit\tAlt+X"
+
+msgid "&Export"
+msgstr "&Export"
+
+msgid "&Find / Replace\tCtrl+F"
+msgstr "&Find / Replace\tCtrl+F"
+
+msgid "&Game"
+msgstr "&Game"
+
+msgid "&Game info\tCtrl+I"
+msgstr "&Game info\tCtrl+I"
+
+msgid "&Help"
+msgstr "&Help"
+
+msgid "&Help\tF1"
+msgstr "&Help\tF1"
+
+msgid "&Import"
+msgstr "&Import"
+
+msgid "&Locations"
+msgstr "&Locations"
+
+msgid "&Locations list"
+msgstr "&Locations list"
+
+msgid "&Merge game...\tCtrl+M"
+msgstr "&Merge game...\tCtrl+M"
+
+msgid "&New\tCtrl+N"
+msgstr "&New\tCtrl+N"
+
+msgid "&Open...\tCtrl+O"
+msgstr "&Open...\tCtrl+O"
+
+msgid "&Paste\tCtrl+Shift+V"
+msgstr "&Paste\tCtrl+Shift+V"
+
+msgid "&Paste\tCtrl+V"
+msgstr "&Paste\tCtrl+V"
+
+msgid "&Redo\tCtrl+Y"
+msgstr "&Redo\tCtrl+Y"
+
+msgid "&Rename...\tAlt+F6"
+msgstr "&Rename...\tAlt+F6"
+
+msgid "&Rename...\tF6"
+msgstr "&Rename...\tF6"
+
+msgid "&Replace\tCtrl+Shift+R"
+msgstr "&Replace\tCtrl+Shift+R"
+
+msgid "&Save\tCtrl+S"
+msgstr "&Save\tCtrl+S"
+
+msgid "&Settings...\tCtrl+P"
+msgstr "&Settings...\tCtrl+P"
+
+msgid "&Statusbar"
+msgstr "&Statusbar"
+
+msgid "&Text"
+msgstr "&Text"
+
+msgid "&Toolbar"
+msgstr "&Toolbar"
+
+msgid "&Undo\tCtrl+Z"
+msgstr "&Undo\tCtrl+Z"
+
+msgid "&Utilities"
+msgstr "&Utilities"
+
+msgid "&View"
+msgstr "&View"
+
+msgid "&Windows list"
+msgstr "&Windows list"
+
+msgid "(empty)"
+msgstr "(empty)"
+
+msgid "------------ End of location: \"%s\" ------------\n"
+msgstr "------------ End of location: \"%s\" ------------\n"
+
+msgid "Action's code:"
+msgstr "Action's code:"
+
+msgid "Action's name can't contain more than %i characters!"
+msgstr "Action's name can't contain more than %i characters!"
+
+msgid "Actions without code: %i\n"
+msgstr "Actions without code: %i\n"
+
+msgid "Add action"
+msgstr "Add action"
+
+msgid "Add folder"
+msgstr "Add folder"
+
+msgid "Add location"
+msgstr "Add location"
+
+msgid "Add locations from another game"
+msgstr "Add locations from another game"
+
+msgid "Add macro"
+msgstr "Add macro"
+
+msgid "Add..."
+msgstr "Add..."
+
+msgid "An empty field, input the value!"
+msgstr "An empty field, input the value!"
+
+msgid "Apply"
+msgstr "Apply"
+
+msgid "Auto create first location:"
+msgstr "Auto create first location:"
+
+msgid "Auto save every"
+msgstr "Auto save every"
+
+msgid "Average count of actions per location: %i\n"
+msgstr "Average count of actions per location: %i\n"
+
+msgid "Average location size: %i characters\n"
+msgstr "Average location size: %i characters\n"
+
+msgid "Base actions:"
+msgstr "Base actions:"
+
+msgid "Base font's color:"
+msgstr "Base font's color:"
+
+msgid "C&lear\tCtrl+Shift+D"
+msgstr "C&lear\tCtrl+Shift+D"
+
+msgid "C&opy\tCtrl+C"
+msgstr "C&opy\tCtrl+C"
+
+msgid "Can't add more than %i actions."
+msgstr "Can't add more than %i actions."
+
+msgid "Can't load game. Locations with the same name are found!"
+msgstr "Can't load game. Locations with the same name are found!"
+
+msgid "Can't write file!"
+msgstr "Can't write file!"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Clean \"%s\" location?"
+msgstr "Clean \"%s\" location?"
+
+msgid "Clean location"
+msgstr "Clean location"
+
+msgid "Clear"
+msgstr "Clear"
+
+msgid "Clear location"
+msgstr "Clear location"
+
+msgid "Clear selected location (Ctrl+Shift+D)"
+msgstr "Clear selected location (Ctrl+Shift+D)"
+
+msgid "Close all"
+msgstr "Close all"
+
+msgid "Close all except selected"
+msgstr "Close all except selected"
+
+msgid "Close all tabs &except current"
+msgstr "Close all tabs &except current"
+
+msgid "Close c&urrent tab\tCtrl+F4"
+msgstr "Close c&urrent tab\tCtrl+F4"
+
+msgid "Close program"
+msgstr "Close program"
+
+msgid "Close selected tab"
+msgstr "Close selected tab"
+
+msgid "Code editor"
+msgstr "Code editor"
+
+msgid "Collapse all"
+msgstr "Collapse all"
+
+msgid "Collapse blocks of code when location is opened"
+msgstr "Collapse blocks of code when location is opened"
+
+msgid "Colors"
+msgstr "Colors"
+
+msgid "Comments color:"
+msgstr "Comments color:"
+
+msgid "Comments font:"
+msgstr "Comments font:"
+
+msgid "Continue search"
+msgstr "Continue search"
+
+msgid "Converter's file (*.exe)|*.exe|All files (*.*)|*.*"
+msgstr "Converter's file (*.exe)|*.exe|All files (*.*)|*.*"
+
+msgid "Copy"
+msgstr "Copy"
+
+msgid "Copy selected location (Ctrl+Shift+C)"
+msgstr "Copy selected location (Ctrl+Shift+C)"
+
+msgid "Copy selected location to clipboard"
+msgstr "Copy selected location to clipboard"
+
+msgid "Create action on selected location"
+msgstr "Create action on selected location"
+
+msgid "Create folder for locations"
+msgstr "Create folder for locations"
+
+msgid "Create folder..."
+msgstr "Create folder..."
+
+msgid "Create location"
+msgstr "Create location"
+
+msgid "Create location... (F7)"
+msgstr "Create location... (F7)"
+
+msgid "Create new game"
+msgstr "Create new game"
+
+msgid "Create..."
+msgstr "Create..."
+
+msgid "Cut"
+msgstr "Cut"
+
+msgid "D&elete all\tAlt+F10"
+msgstr "D&elete all\tAlt+F10"
+
+msgid "Default"
+msgstr "Default"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Delete all"
+msgstr "Delete all"
+
+msgid "Delete folder"
+msgstr "Delete folder"
+
+msgid "Delete folder, but keep locations"
+msgstr "Delete folder, but keep locations"
+
+msgid "Delete location"
+msgstr "Delete location"
+
+msgid "Delete selected action"
+msgstr "Delete selected action"
+
+msgid "Delete selected location (F8)"
+msgstr "Delete selected location (F8)"
+
+msgid "Description:"
+msgstr "Description:"
+
+msgid "Edit macro"
+msgstr "Edit macro"
+
+msgid "Edit..."
+msgstr "Edit..."
+
+msgid "Executables (*.exe)|*.exe|All files (*.*)|*.*"
+msgstr "Executables (*.exe)|*.exe|All files (*.*)|*.*"
+
+msgid "Execute"
+msgstr "Execute"
+
+msgid "Execute on visit:"
+msgstr "Execute on visit:"
+
+msgid "Expand all"
+msgstr "Expand all"
+
+msgid "File was changed"
+msgstr "File was changed"
+
+msgid "Find / Replace"
+msgstr "Find / Replace"
+
+msgid "Find / Replace... (Ctrl+F)"
+msgstr "Find / Replace... (Ctrl+F)"
+
+msgid "Find / replace some text"
+msgstr "Find / replace some text"
+
+msgid "Folder"
+msgstr "Folder"
+
+msgid "Folder's name can't contain more than %i characters!"
+msgstr "Folder's name can't contain more than %i characters!"
+
+msgid "Fonts"
+msgstr "Fonts"
+
+msgid "Functions color:"
+msgstr "Functions color:"
+
+msgid "Functions font:"
+msgstr "Functions font:"
+
+msgid "G&o to selected location\tCtrl+G"
+msgstr "G&o to selected location\tCtrl+G"
+
+msgid "Game password"
+msgstr "Game password"
+
+msgid "Game statistics"
+msgstr "Game statistics"
+
+msgid "General"
+msgstr "General"
+
+msgid "Go to selected location"
+msgstr "Go to selected location"
+
+msgid "Help"
+msgstr "Help"
+
+msgid "Help by &keyword\tCtrl+F1"
+msgstr "Help by &keyword\tCtrl+F1"
+
+msgid "Help file (*.chm)|*.chm|All files (*.*)|*.*"
+msgstr "Help file (*.chm)|*.chm|All files (*.*)|*.*"
+
+msgid "Hotkey"
+msgstr "Hotkey"
+
+msgid "Hotkeys"
+msgstr "Hotkeys"
+
+msgid "Hotkeys list:"
+msgstr "Hotkeys list:"
+
+msgid "Hotkeys:"
+msgstr "Hotkeys:"
+
+msgid "Image..."
+msgstr "Image..."
+
+msgid "Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*.*"
+msgstr "Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*.*"
+
+msgid "Import"
+msgstr "Import"
+
+msgid "Incorrect format!"
+msgstr "Incorrect format!"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Input name for a new action"
+msgstr "Input name for a new action"
+
+msgid "Input name for a new folder:"
+msgstr "Input name for a new folder:"
+
+msgid "Input name for a new location:"
+msgstr "Input name for a new location:"
+
+msgid "Input new action's name:"
+msgstr "Input new action's name:"
+
+msgid "Input new folder's name:"
+msgstr "Input new folder's name:"
+
+msgid "Input new location's name:"
+msgstr "Input new location's name:"
+
+msgid "Input password:"
+msgstr "Input password:"
+
+msgid "Labels color:"
+msgstr "Labels color:"
+
+msgid "Labels font:"
+msgstr "Labels font:"
+
+msgid "Language:"
+msgstr "Language:"
+
+msgid ""
+"Location with the same name already exists!\n"
+"Location: \"%s\"\n"
+"Replace existing location?"
+msgstr ""
+"Location with the same name already exists!\n"
+"Location: \"%s\"\n"
+"Replace existing location?"
+
+msgid "Location's actions:\n"
+msgstr "Location's actions:\n"
+
+msgid "Location's code:"
+msgstr "Location's code:"
+
+msgid "Location's description:\n"
+msgstr "Location's description:\n"
+
+msgid "Location's name can't contain more than %i characters!"
+msgstr "Location's name can't contain more than %i characters!"
+
+msgid "Location: \"%s\""
+msgstr "Location: \"%s\""
+
+msgid "Locations"
+msgstr "Locations"
+
+msgid "Locations without \"on visit\" code: %i\n"
+msgstr "Locations without \"on visit\" code: %i\n"
+
+msgid "Locations without base description: %i\n"
+msgstr "Locations without base description: %i\n"
+
+msgid "Main background color:"
+msgstr "Main background color:"
+
+msgid "Main font:"
+msgstr "Main font:"
+
+msgid "Match case"
+msgstr "Match case"
+
+msgid "Max location size: %i characters\n"
+msgstr "Max location size: %i characters\n"
+
+msgid "New search"
+msgstr "New search"
+
+msgid "Numbers color:"
+msgstr "Numbers color:"
+
+msgid "Numbers font:"
+msgstr "Numbers font:"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Open File"
+msgstr "Open File"
+
+msgid "Open action after creation"
+msgstr "Open action after creation"
+
+msgid "Open game file"
+msgstr "Open game file"
+
+msgid "Open game... (Ctrl+O)"
+msgstr "Open game... (Ctrl+O)"
+
+msgid "Open location after creation"
+msgstr "Open location after creation"
+
+msgid "Open text file"
+msgstr "Open text file"
+
+msgid "Operations color:"
+msgstr "Operations color:"
+
+msgid "Operations font:"
+msgstr "Operations font:"
+
+msgid "P&aste in...\tCtrl+Shift+N"
+msgstr "P&aste in...\tCtrl+Shift+N"
+
+msgid "Paste"
+msgstr "Paste"
+
+msgid "Paste clipboard data to the new location"
+msgstr "Paste clipboard data to the new location"
+
+msgid "Paste in..."
+msgstr "Paste in..."
+
+msgid "Paste location (Ctrl+Shift+V)"
+msgstr "Paste location (Ctrl+Shift+V)"
+
+msgid "Paste location from clipboard"
+msgstr "Paste location from clipboard"
+
+msgid "Path to TXT2GAM:"
+msgstr "Path to TXT2GAM:"
+
+msgid "Path to help:"
+msgstr "Path to help:"
+
+msgid "Path to player:"
+msgstr "Path to player:"
+
+msgid "Paths"
+msgstr "Paths"
+
+msgid "Pin tab"
+msgstr "Pin tab"
+
+msgid "Pin/Unpin &tab"
+msgstr "Pin/Unpin &tab"
+
+msgid "Player's file (*.exe)|*.exe|All files (*.*)|*.*"
+msgstr "Player's file (*.exe)|*.exe|All files (*.*)|*.*"
+
+msgid "QSP games (*.qsp)|*.qsp"
+msgstr "QSP games (*.qsp)|*.qsp"
+
+msgid "QSP games (*.qsp;*.gam)|*.qsp;*.gam"
+msgstr "QSP games (*.qsp;*.gam)|*.qsp;*.gam"
+
+msgid "Redo"
+msgstr "Redo"
+
+msgid "Redo (Ctrl+Y)"
+msgstr "Redo (Ctrl+Y)"
+
+msgid ""
+"Relative height of description and location's\n"
+"code fields to the tab's height (%):"
+msgstr ""
+"Relative height of description and location's\n"
+"code fields to the tab's height (%):"
+
+msgid "Relative width of actions list to the tab's width (%):"
+msgstr "Relative width of actions list to the tab's width (%):"
+
+msgid ""
+"Relative width of location's description field\n"
+"to the tab's height (%):"
+msgstr ""
+"Relative width of location's description field\n"
+"to the tab's height (%):"
+
+msgid "Remember game file on exit"
+msgstr "Remember game file on exit"
+
+msgid "Remove \"%s\" folder?"
+msgstr "Remove \"%s\" folder?"
+
+msgid "Remove \"%s\" location?"
+msgstr "Remove \"%s\" location?"
+
+msgid "Remove all actions"
+msgstr "Remove all actions"
+
+msgid "Remove all actions on \"%s\" location?"
+msgstr "Remove all actions on \"%s\" location?"
+
+msgid "Remove folder"
+msgstr "Remove folder"
+
+msgid "Remove location"
+msgstr "Remove location"
+
+msgid "Rename action"
+msgstr "Rename action"
+
+msgid "Rename folder"
+msgstr "Rename folder"
+
+msgid "Rename folder..."
+msgstr "Rename folder..."
+
+msgid "Rename location"
+msgstr "Rename location"
+
+msgid "Rename selected action"
+msgstr "Rename selected action"
+
+msgid "Rename selected folder"
+msgstr "Rename selected folder"
+
+msgid "Rename selected location... (F6)"
+msgstr "Rename selected location... (F6)"
+
+msgid "Rename..."
+msgstr "Rename..."
+
+msgid "Replace"
+msgstr "Replace"
+
+msgid "Replace \"%s\" location?"
+msgstr "Replace \"%s\" location?"
+
+msgid "Replace all"
+msgstr "Replace all"
+
+msgid "Replace location"
+msgstr "Replace location"
+
+msgid "Replace selected location with clipboard data"
+msgstr "Replace selected location with clipboard data"
+
+msgid "Reset"
+msgstr "Reset"
+
+msgid "Run current game"
+msgstr "Run current game"
+
+msgid "&Run game\tF5"
+msgstr "&Run game\tF5"
+
+msgid "Run game (F5)"
+msgstr "Run game (F5)"
+
+msgid "S&elect all\tCtrl+A"
+msgstr "S&elect all\tCtrl+A"
+
+msgid "Save &as...\tCtrl+W"
+msgstr "Save &as...\tCtrl+W"
+
+msgid "Save game"
+msgstr "Save game"
+
+msgid "Save game (Ctrl+S)"
+msgstr "Save game (Ctrl+S)"
+
+msgid "Save game file"
+msgstr "Save game file"
+
+msgid "Save game file?"
+msgstr "Save game file?"
+
+msgid "Save game in another file"
+msgstr "Save game in another file"
+
+msgid "Save game in another file (Ctrl+W)"
+msgstr "Save game in another file (Ctrl+W)"
+
+msgid "Save text file"
+msgstr "Save text file"
+
+msgid "Search only word"
+msgstr "Search only word"
+
+msgid "Select all"
+msgstr "Select all"
+
+msgid "Select color..."
+msgstr "Select color..."
+
+msgid "Select converter's file"
+msgstr "Select converter's file"
+
+msgid "Select font..."
+msgstr "Select font..."
+
+msgid "Select help file"
+msgstr "Select help file"
+
+msgid "Select image file"
+msgstr "Select image file"
+
+msgid "Select path..."
+msgstr "Select path..."
+
+msgid "Select player's file"
+msgstr "Select player's file"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Settings... (Ctrl+P)"
+msgstr "Settings... (Ctrl+P)"
+
+msgid "Show base actions on location's tab"
+msgstr "Show base actions on location's tab"
+
+msgid "Show base description on location's tab"
+msgstr "Show base description on location's tab"
+
+msgid "Show game statistics (Ctrl+I)"
+msgstr "Show game statistics (Ctrl+I)"
+
+msgid "Show lines numbers"
+msgstr "Show lines numbers"
+
+msgid "Show locations icons"
+msgstr "Show locations icons"
+
+msgid "Show short locations descriptions"
+msgstr "Show short locations descriptions"
+
+msgid "Show short statistics"
+msgstr "Show short statistics"
+
+msgid "Show/Hide location's &actions\tCtrl+Alt+A"
+msgstr "Show/Hide location's &actions\tCtrl+Alt+A"
+
+msgid "Show/Hide location's &description\tCtrl+Alt+D"
+msgstr "Show/Hide location's &description\tCtrl+Alt+D"
+
+msgid "Size of TAB:"
+msgstr "Size of TAB:"
+
+msgid "Sizes"
+msgstr "Sizes"
+
+msgid "Skip"
+msgstr "Skip"
+
+msgid "Skip location"
+msgstr "Skip location"
+
+msgid "So&rt ascending\tCtrl+Shift+O"
+msgstr "So&rt ascending\tCtrl+Shift+O"
+
+msgid "Sor&t descending\tCtrl+Shift+P"
+msgstr "Sor&t descending\tCtrl+Shift+P"
+
+msgid "Sort ascending"
+msgstr "Sort ascending"
+
+msgid "Sort descending"
+msgstr "Sort descending"
+
+msgid "Start"
+msgstr "Start"
+
+msgid "Statements color:"
+msgstr "Statements color:"
+
+msgid "Statements font:"
+msgstr "Statements font:"
+
+msgid "Strings color:"
+msgstr "Strings color:"
+
+msgid "Strings font:"
+msgstr "Strings font:"
+
+msgid "Such name already exists! Input another name."
+msgstr "Such name already exists! Input another name."
+
+msgid "System variables color:"
+msgstr "System variables color:"
+
+msgid "System variables font:"
+msgstr "System variables font:"
+
+msgid "Tabs background color:"
+msgstr "Tabs background color:"
+
+msgid "Text file in TXT2GAM format..."
+msgstr "Text file in TXT2GAM format..."
+
+msgid "Text file..."
+msgstr "Text file..."
+
+msgid "Text files (*.txt)|*.txt"
+msgstr "Text files (*.txt)|*.txt"
+
+msgid "Text:"
+msgstr "Text:"
+
+msgid "The new file will replace current game file. Continue?"
+msgstr "The new file will replace current game file. Continue?"
+
+msgid "The specified text was not found"
+msgstr "The specified text was not found"
+
+msgid "The specified text was not found anymore."
+msgstr "The specified text was not found anymore."
+
+msgid "This game contains %i location(s)\n"
+msgstr "This game contains %i location(s)\n"
+
+msgid "This keys combination is used already by the system! Select another combination."
+msgstr "This keys combination is used already by the system! Select another combination."
+
+msgid "This keys combination is used already! Select another combination."
+msgstr "This keys combination is used already! Select another combination."
+
+msgid "Total game size: %i characters"
+msgstr "Total game size: %i characters"
+
+msgid "Undo"
+msgstr "Undo"
+
+msgid "Undo (Ctrl+Z)"
+msgstr "Undo (Ctrl+Z)"
+
+msgid "Unknown error!"
+msgstr "Unknown error!"
+
+msgid "Unpin"
+msgstr "Unpin"
+
+msgid "Wrap lines by words"
+msgstr "Wrap lines by words"
+
+msgid "Wrong password!"
+msgstr "Wrong password!"
+
+msgid "for all"
+msgstr "for all"
+
+msgid "minutes"
+msgstr "minutes"
+

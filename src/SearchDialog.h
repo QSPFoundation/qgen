@@ -23,7 +23,7 @@
 	#define _QGEN_SEARCH_REPLACE_DIALOG_H_
 
 	#include <wx/wx.h>
-	#include "Controls.h"
+	#include "IControls.h"
 	#include "SearchDataStore.h"
 
 	enum
@@ -53,7 +53,7 @@
 					*_btnReplaceAll,
 					*_btnSkipLoc;
 		wxWindow	*_parent;
-		Controls	*_controls;
+		IControls	*_controls;
 		SearchDataStore *_searchDataStore;
 
 		void OnFindNext(wxCommandEvent &event);
@@ -66,7 +66,7 @@
 		void AddSearchText(const wxString &text);
 		void AddReplaceText(const wxString &text);
 	public:
-		SearchDialog(wxWindow *parent, const wxString& title, Controls *controls, int style = 0);
+		SearchDialog(wxWindow *parent, const wxString& title, IControls *controls, int style = 0);
 
 		bool Show(bool show = true);
 	};

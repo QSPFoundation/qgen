@@ -34,7 +34,7 @@ BEGIN_EVENT_TABLE(SearchDialog, wxDialog)
 	EVT_TEXT_ENTER(ID_TEXT_REPL, SearchDialog::OnFindRepl)
 END_EVENT_TABLE()
 
-SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *controls, int style) :
+SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, IControls *controls, int style) :
 	wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | style)
 {
 	_controls = controls;
@@ -53,20 +53,20 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, Controls *co
 						wxDefaultSize, _searchDataStore->GetReplaceStrings());
 	if (_textFind->GetCount()) _textFind->Select(0);
 	if (_textRepl->GetCount()) _textRepl->Select(0);
-	_chkMatchCase = new wxCheckBox(this, wxID_ANY, wxT("Точное совпадение"));
-	_chkWholeWord = new wxCheckBox(this, wxID_ANY, wxT("Только слово целиком"));
+	_chkMatchCase = new wxCheckBox(this, wxID_ANY, _("Match case"));
+	_chkWholeWord = new wxCheckBox(this, wxID_ANY, _("Search only word"));
 
 	leftSizer->Add(_textFind, 1, wxGROW);
 	leftSizer->Add(_textRepl, 1, wxUP|wxGROW, 4);
 	leftSizer->Add(_chkMatchCase, 1, wxUP|wxGROW, 6);
 	leftSizer->Add(_chkWholeWord, 1, wxUP|wxGROW, 6);
 
-	_btnSearchAgain = new wxButton(this, ID_FIND_ANEW, wxT("Начать заново"));
-	_btnNextSearch = new wxButton(this, ID_FIND_NEXT, wxT("Продолжить поиск"));
-	_btnSkipLoc = new wxButton(this, ID_FIND_SKIPLOC, wxT("Пропустить локацию"));
-	_btnReplace = new wxButton(this, ID_FIND_REPL, wxT("Заменить"));
-	_btnReplaceAll = new wxButton(this, ID_FIND_REPLALL, wxT("Заменить все"));
-	_btnClose = new wxButton(this, wxID_CANCEL, wxT("Закрыть"));
+	_btnSearchAgain = new wxButton(this, ID_FIND_ANEW, _("New search"));
+	_btnNextSearch = new wxButton(this, ID_FIND_NEXT, _("Continue search"));
+	_btnSkipLoc = new wxButton(this, ID_FIND_SKIPLOC, _("Skip location"));
+	_btnReplace = new wxButton(this, ID_FIND_REPL, _("Replace"));
+	_btnReplaceAll = new wxButton(this, ID_FIND_REPLALL, _("Replace all"));
+	_btnClose = new wxButton(this, wxID_CANCEL, _("Cancel"));
 
 	rightSizer->Add(_btnNextSearch, 1, wxALL|wxGROW, 1);
 	rightSizer->Add(_btnSearchAgain, 1, wxALL|wxGROW, 1);

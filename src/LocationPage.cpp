@@ -74,11 +74,12 @@ void LocationPage::Update(bool isFromObservable)
 
 void LocationPage::LocDescVisible(bool isVisible)
 {
+	int pageWidth  = _splitterv_up->GetSize().GetWidth();
 	if (isVisible)
 	{
 		_splitterv_up->SetSashGravity(_settings->GetWidthsCoeff1());
-		if (_descWidth < 0)
-			_descWidth = _splitterv_up->GetSize().GetWidth() * _settings->GetWidthsCoeff1();
+		if (_descWidth < 0 || _descWidth > pageWidth)
+			_descWidth = pageWidth * _settings->GetWidthsCoeff1();
 		Freeze();
 		_splitterv_up->SplitVertically(_locDesc, _locCode);
 		_splitterv_up->SetSashPosition(_descWidth);
@@ -93,11 +94,12 @@ void LocationPage::LocDescVisible(bool isVisible)
 
 void LocationPage::LocActsVisible(bool isVisible)
 {
+	int pageHeight = _splitterh->GetSize().GetHeight();
 	if (isVisible)
 	{
 		_splitterh->SetSashGravity(_settings->GetHeightsCoeff());
-		if (_actsHeight < 0)
-			_actsHeight = _splitterh->GetSize().GetHeight() * _settings->GetHeightsCoeff();
+		if (_actsHeight < 0 || _actsHeight > pageHeight)
+			_actsHeight = pageHeight * _settings->GetHeightsCoeff();
 		Freeze();
 		_splitterh->SplitHorizontally(_splitterv_up, _locActs);
 		_splitterh->SetSashPosition(_actsHeight);

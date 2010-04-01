@@ -344,8 +344,9 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
 	data = qspGameToQSPString(isOldFormat ? strs[1] : strs[2], isUCS2, true);
 	if (QGEN_STRCMP(data, QGEN_PASSWD))
 	{
-		wxPasswordEntryDialog dlgEntry(parent, wxT("Введите пароль:"),
-			wxT("Ввод пароля"), wxEmptyString);
+		wxPasswordEntryDialog dlgEntry(parent, 
+			_("Input password:"),
+			_("Game password"), wxEmptyString);
 		if (dlgEntry.ShowModal() == wxID_OK)
 		{
 			if (dlgEntry.GetValue() != data)
@@ -389,7 +390,8 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
 			{
 				if (!(mergeType & MERGE_ALL))
 				{
-					MergeDialog dialog(parent, wxT("Подтвердить замену"), wxString::Format(wxT("Локация с таким именем уже существует!\nНазвание локации: %s\nЗаменить существующую локацию?"), data));
+					MergeDialog dialog(parent, _("Replace location"), 
+						wxString::Format(_("Location with the same name already exists!\nLocation: \"%s\"\nReplace existing location?"), data));
 					mergeType = dialog.ShowModal();
 					if (mergeType & MERGE_CANCEL)
 					{
@@ -623,7 +625,7 @@ bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
 
 	for (size_t idxLoc = 0; idxLoc < container->GetLocationsCount(); ++idxLoc)
 	{
-		str = wxString::Format(wxT("Название локации: %s"), container->GetLocationName(idxLoc).wx_str());
+		str = wxString::Format(_("Location: \"%s\""), container->GetLocationName(idxLoc).wx_str());
 		len = qspGameCodeWriteVal(&buf, len, str, true, false);
 		str = wxString(wxT("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
 		len = qspGameCodeWriteVal(&buf, len, str, true, false);
@@ -631,7 +633,7 @@ bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
 		if (str.Length())
 		{
 			masStrings = wxSplit(str, '\n');
-			str = wxString(wxT("Описание локации:\n"));
+			str = wxString(_("Location's description:\n"));
 			len = qspGameCodeWriteVal(&buf, len, str, true, false);
 			for (size_t i = 0; i < masStrings.GetCount(); ++i)
 			{
@@ -643,7 +645,7 @@ bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
 		}
 		if (container->GetActionsCount(idxLoc))
 		{
-			str = wxString(wxT("Действия на локации:\n"));
+			str = wxString(_("Location's actions:\n"));
 			len = qspGameCodeWriteVal(&buf, len, str, true, false);
 			for (size_t idxAct = 0; idxAct < container->GetActionsCount(idxLoc); ++idxAct)
 			{
@@ -652,7 +654,7 @@ bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
 				actPictPath = container->GetActionPicturePath(idxLoc, idxAct);
 				if (actPictPath.Length())
 				{
-					str = wxString::Format(wxT("\tФайл иконки: %s"), actPictPath);
+					str = wxString::Format(_("\tAction's image: %s"), actPictPath);
 					len = qspGameCodeWriteVal(&buf, len, str, true, false);
 				}
 				masStrings = wxSplit(container->GetActionCode(idxLoc, idxAct), '\n');
@@ -669,7 +671,7 @@ bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
 		if (str.Length())
 		{
 			masStrings = wxSplit(str, '\n');
-			str = wxString(wxT("Описание локации:\n"));
+			str = wxString(_("Location's description:\n"));
 			len = qspGameCodeWriteVal(&buf, len, str, true, false);
 			for (size_t i = 0; i < masStrings.GetCount(); ++i)
 			{
@@ -679,11 +681,11 @@ bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
 			str = wxEmptyString;
 			len = qspGameCodeWriteVal(&buf, len, str, true, false);
 		}
-		str = wxString::Format(wxT("------------ Конец локации: %s ------------\n"), 
+		str = wxString::Format(_("------------ End of location: \"%s\" ------------\n"), 
 				container->GetLocationName(idxLoc).wx_str());
 		len = qspGameCodeWriteVal(&buf, len, str, true, false);
 	}
-	fwrite("\xFF\xFE", 1, 2, f);
+	fwrite(QGEN_BOM, 1, 2, f);
 	fwrite(buf, 2, len, f);
 	free(buf);
 	fclose(f);
@@ -768,7 +770,7 @@ bool qspExportTxt2Game(const QGEN_CHAR *fileName, Controls *controls)
 				container->GetLocationName(idxLoc).wx_str());
 		len = qspGameCodeWriteVal(&buf, len, str, true, false);
 	}
-	fwrite("\xFF\xFE", 1, 2, f);
+	fwrite(QGEN_BOM, 1, 2, f);
 	fwrite(buf, 2, len, f);
 	free(buf);
 	fclose(f);

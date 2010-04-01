@@ -20,7 +20,7 @@
 */
 
 #include "ActionsListBox.h"
-#include "QGen.h"
+#include "MainFrame.h"
 
 IMPLEMENT_CLASS(ActionsListBox, wxHtmlListBox)
 
@@ -140,11 +140,11 @@ void ActionsListBox::OnRightClick(wxMouseEvent & event)
 		SetFocus();
 		Select(ind);
 	}
-	menu.Append(ID_ACTION_ADD, wxT("Создать..."));
-	menu.Append(ID_ACTION_REN, wxT("Переименовать..."));
-	menu.Append(ID_ACTION_DEL, wxT("Удалить"));
+	menu.Append(ID_ACTION_ADD, _("Create..."));
+	menu.Append(ID_ACTION_REN, _("Rename..."));
+	menu.Append(ID_ACTION_DEL, _("Delete"));
 	menu.AppendSeparator();
-	menu.Append(ID_ACTION_DELALL, wxT("Удалить все"));
+	menu.Append(ID_ACTION_DELALL, _("Delete all"));
 	_controls->UpdateMenuItems(&menu);
 	PopupMenu(&menu);
 }

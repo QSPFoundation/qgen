@@ -31,12 +31,19 @@ LocationDesc::LocationDesc( wxWindow *owner, ILocationPage *locPage, IControls *
 
 	_text = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_SIMPLE | SYNTAX_STYLE_NOHELPTIPS);
 	wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-	sizer->Add(new wxStaticText(this, wxID_ANY, wxT("Описание:"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE), 0, wxALL|wxGROW, 1);
+	_stTextDesc = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
+	sizer->Add( _stTextDesc, 0, wxALL|wxGROW, 1);
 	sizer->Add(_text, 1, wxALL|wxGROW, 1);
 	SetSizerAndFit(sizer);
 	SetAutoLayout(true);
+	Update();
+	_controls->GetSettings()->AddObserver(this);
 }
 
+LocationDesc::~LocationDesc()
+{
+	_controls->GetSettings()->RemoveObserver(this);
+}
 void LocationDesc::SaveDesc()
 {
 	if (_text->IsModified())
@@ -64,4 +71,10 @@ void LocationDesc::SelectString(long startPos, long lastPos)
 void LocationDesc::ReplaceString( long start, long end, const wxString & str )
 {
 	_text->Replace(start, end, str);
+}
+
+void LocationDesc::Update( bool isFromObservable /*= false*/ )
+{
+	_stTextDesc->SetLabel(_("Description:"));
+	GetSizer()->Layout();
 }

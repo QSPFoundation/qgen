@@ -31,10 +31,18 @@ LocationCode::LocationCode( wxWindow *owner, ILocationPage *locPage, IControls *
 
 	_text = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_COLORED);
 	wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-	sizer->Add(new wxStaticText(this, wxID_ANY, wxT("Выполнить при посещении:"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE), 0, wxALL|wxGROW, 1);
+	_stTextExec = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
+	sizer->Add(_stTextExec, 0, wxALL|wxGROW, 1);
 	sizer->Add(_text, 1, wxALL|wxGROW, 1);
 	SetSizerAndFit(sizer);
 	SetAutoLayout(true);
+	Update();
+	_controls->GetSettings()->AddObserver(this);
+}
+
+LocationCode::~LocationCode()
+{
+	_controls->GetSettings()->RemoveObserver(this);
 }
 
 void LocationCode::SaveCode()
@@ -69,4 +77,10 @@ void LocationCode::ReplaceString( long start, long end, const wxString & str )
 void LocationCode::ExpandCollapseAll( bool isExpanded )
 {
 	_text->ExpandCollapseAll(isExpanded);
+}
+
+void LocationCode::Update( bool isFromObservable /*= false*/ )
+{
+	_stTextExec->SetLabel(_("Execute on visit:"));
+	GetSizer()->Layout();
 }

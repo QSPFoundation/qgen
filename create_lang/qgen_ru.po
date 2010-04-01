@@ -1,0 +1,869 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Russian 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-30 19:35+1100\n"
+"PO-Revision-Date: 2010-04-01 19:33+1000\n"
+"Last-Translator: BaxZzZz <baxzzzz@gmail.com>\n"
+"Language-Team: Russian <baxzzzz@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "\tAction's image: %s"
+msgstr "\tФайл иконки: %s"
+
+msgid "&About..."
+msgstr "&О программе..."
+
+msgid "&Actions"
+msgstr "&Действия"
+
+msgid "&Close all tabs\tCtrl+Alt+F4"
+msgstr "&Закрыть все вкладки\tCtrl+Alt+F4"
+
+msgid "&Copy\tCtrl+Shift+C"
+msgstr "&Копировать\tCtrl+Shift+C"
+
+msgid "&Create...\tAlt+F7"
+msgstr "&Создать...\tAlt+F7"
+
+msgid "&Create...\tF7"
+msgstr "&Создать...\tF7"
+
+msgid "&Cut\tCtrl+X"
+msgstr "&Вырезать\tCtrl+X"
+
+msgid "&Delete\tAlt+F8"
+msgstr "&Удалить\tAlt+F8"
+
+msgid "&Delete\tCtrl+D"
+msgstr "&Удалить\tCtrl+D"
+
+msgid "&Delete\tF8"
+msgstr "&Удалить\tF8"
+
+msgid "&Exit\tAlt+X"
+msgstr "&Выход\tAlt+X"
+
+msgid "&Export"
+msgstr "&Экспорт"
+
+msgid "&Find / Replace\tCtrl+F"
+msgstr "&Поиск / замена\tCtrl+F"
+
+msgid "&Game"
+msgstr "&Игра"
+
+msgid "&Game info\tCtrl+I"
+msgstr "&Информация об игре\tCtrl+I"
+
+msgid "&Help"
+msgstr "&Помощь"
+
+msgid "&Help\tF1"
+msgstr "&Помощь\tF1"
+
+msgid "&Import"
+msgstr "&Импорт"
+
+msgid "&Locations"
+msgstr "&Локации"
+
+msgid "&Locations list"
+msgstr "&Окно списка локаций"
+
+msgid "&Merge game...\tCtrl+M"
+msgstr "&Присоединить игру...\tCtrl+M"
+
+msgid "&New\tCtrl+N"
+msgstr "&Новая\tCtrl+N"
+
+msgid "&Open...\tCtrl+O"
+msgstr "&Открыть...\tCtrl+O"
+
+msgid "&Paste\tCtrl+Shift+V"
+msgstr "&Вставить\tCtrl+Shift+V"
+
+msgid "&Paste\tCtrl+V"
+msgstr "В&ставить\tCtrl+V"
+
+msgid "&Redo\tCtrl+Y"
+msgstr "&Повторить\tCtrl+Y"
+
+msgid "&Rename...\tAlt+F6"
+msgstr "&Переименовать...\tAlt+F6"
+
+msgid "&Rename...\tF6"
+msgstr "&Переименовать...\tF6"
+
+msgid "&Replace\tCtrl+Shift+R"
+msgstr "&Заменить\tCtrl+Shift+R"
+
+msgid "&Save\tCtrl+S"
+msgstr "&Сохранить\tCtrl+S"
+
+msgid "&Settings...\tCtrl+P"
+msgstr "&Настройки...\tCtrl+P"
+
+msgid "&Statusbar"
+msgstr "&Строка состояния"
+
+msgid "&Text"
+msgstr "&Текст"
+
+msgid "&Toolbar"
+msgstr "&Панель инструментов"
+
+msgid "&Undo\tCtrl+Z"
+msgstr "&Отменить\tCtrl+Z"
+
+msgid "&Utilities"
+msgstr "&Утилиты"
+
+msgid "&View"
+msgstr "&Вид"
+
+msgid "&Windows list"
+msgstr "&Список окон"
+
+msgid "(empty)"
+msgstr "(пусто)"
+
+msgid "------------ End of location: \"%s\" ------------\n"
+msgstr "------------ Конец локации: %s ------------\n"
+
+msgid "Action's code:"
+msgstr "Код действия:"
+
+msgid "Action's name can't contain more than %i characters!"
+msgstr "Название действия не может содержать более %i символов."
+
+msgid "Actions without code: %i\n"
+msgstr "Базовых действий не имеющих кода обработки события \"Выбор\": %i\n"
+
+msgid "Add action"
+msgstr "Создать действие"
+
+msgid "Add folder"
+msgstr "Добавить новую папку"
+
+msgid "Add location"
+msgstr "Добавить новую локацию"
+
+msgid "Add locations from another game"
+msgstr "Добавить локации другой игры"
+
+msgid "Add macro"
+msgstr "Добавление команды"
+
+msgid "Add..."
+msgstr "Добавить..."
+
+msgid "An empty field, input the value!"
+msgstr "Пустое поле, введите значение!"
+
+msgid "Apply"
+msgstr "Применить"
+
+msgid "Auto create first location:"
+msgstr "Название начальной локации:"
+
+msgid "Auto save every"
+msgstr "Автосохранение каждые"
+
+msgid "Average count of actions per location: %i\n"
+msgstr "Среднее число базовых действий на 1 локацию: %i\n"
+
+msgid "Average location size: %i characters\n"
+msgstr "Средний размер локации: %i символ(а/ов)\n"
+
+msgid "Base actions:"
+msgstr "Базовые действия:"
+
+msgid "Base font's color:"
+msgstr "Цвет основного шрифта:"
+
+msgid "C&lear\tCtrl+Shift+D"
+msgstr "&Очистить\tCtrl+Shift+D"
+
+msgid "C&opy\tCtrl+C"
+msgstr "&Копировать\tCtrl+C"
+
+msgid "Can't add more than %i actions."
+msgstr "Вы не можете добавить на локацию более чем %i действий."
+
+msgid "Can't load game. Locations with the same name are found!"
+msgstr "Нельзя загрузить игру! Найдены 2 локации с одинаковым именем!"
+
+msgid "Can't write file!"
+msgstr "Ошибка записи файла!"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Clean \"%s\" location?"
+msgstr "Желаете очистить локацию %s?"
+
+msgid "Clean location"
+msgstr "Очистить локацию"
+
+msgid "Clear"
+msgstr "Очистить"
+
+msgid "Clear location"
+msgstr "Очистить локацию"
+
+msgid "Clear selected location (Ctrl+Shift+D)"
+msgstr "Очистить выделенную локацию (Ctrl+Shift+D)"
+
+msgid "Close all"
+msgstr "Закрыть все"
+
+msgid "Close all except selected"
+msgstr "Закрыть все кроме выбранной"
+
+msgid "Close all tabs &except current"
+msgstr "Закрыть все &кроме текущей"
+
+msgid "Close c&urrent tab\tCtrl+F4"
+msgstr "Закрыть &текущую\tCtrl+F4"
+
+msgid "Close program"
+msgstr "Выйти из программы"
+
+msgid "Close selected tab"
+msgstr "Закрыть выбранную"
+
+msgid "Code editor"
+msgstr "Редактор кода"
+
+msgid "Collapse all"
+msgstr "Свернуть все"
+
+msgid "Collapse blocks of code when location is opened"
+msgstr "Сворачивать блоки кода при открытии"
+
+msgid "Colors"
+msgstr "Цвета"
+
+msgid "Comments color:"
+msgstr "Цвет комментариев:"
+
+msgid "Comments font:"
+msgstr "Шрифт комментариев:"
+
+msgid "Continue search"
+msgstr "Продолжить поиск"
+
+msgid "Converter's file (*.exe)|*.exe|All files (*.*)|*.*"
+msgstr "Файл конвертора (*.exe)|*.exe|Все файлы (*.*)|*.*"
+
+msgid "Copy"
+msgstr "Копировать"
+
+msgid "Copy selected location (Ctrl+Shift+C)"
+msgstr "Копировать выделенную локацию (Ctrl+Shift+C)"
+
+msgid "Copy selected location to clipboard"
+msgstr "Копировать локацию в буфер"
+
+msgid "Create action on selected location"
+msgstr "Создать действие на локации"
+
+msgid "Create folder for locations"
+msgstr "Создать папку для локаций"
+
+msgid "Create folder..."
+msgstr "Создать папку..."
+
+msgid "Create location"
+msgstr "Создать локацию"
+
+msgid "Create location... (F7)"
+msgstr "Создать локацию... (F7)"
+
+msgid "Create new game"
+msgstr "Создать новую игру"
+
+msgid "Create..."
+msgstr "Создать..."
+
+msgid "Cut"
+msgstr "Вырезать"
+
+msgid "D&elete all\tAlt+F10"
+msgstr "У&далить все\tAlt+F10"
+
+msgid "Default"
+msgstr "По умолчанию"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Delete all"
+msgstr "Удалить всё"
+
+msgid "Delete folder"
+msgstr "Удалить папку"
+
+msgid "Delete folder, but keep locations"
+msgstr "Удалить папку, но сохранить локации"
+
+msgid "Delete location"
+msgstr "Удалить локацию"
+
+msgid "Delete selected action"
+msgstr "Удалить действие"
+
+msgid "Delete selected location (F8)"
+msgstr "Удалить выделенную локацию (F8)"
+
+msgid "Description:"
+msgstr "Описание:"
+
+msgid "Edit macro"
+msgstr "Редактирование команды"
+
+msgid "Edit..."
+msgstr "Редактировать..."
+
+msgid "Executables (*.exe)|*.exe|All files (*.*)|*.*"
+msgstr "Файл конвертора (*.exe)|*.exe|Все файлы (*.*)|*.*"
+
+msgid "Execute"
+msgstr "Исполняемая команда"
+
+msgid "Execute on visit:"
+msgstr "Выполнить при посещении:"
+
+msgid "Expand all"
+msgstr "Развернуть все"
+
+msgid "File was changed"
+msgstr "Файл был изменён"
+
+msgid "Find / Replace"
+msgstr "Поиск / замена"
+
+msgid "Find / Replace... (Ctrl+F)"
+msgstr "Поиск / замена... (Ctrl+F)"
+
+msgid "Find / replace some text"
+msgstr "Поиск и замена текста"
+
+msgid "Folder"
+msgstr "Папка"
+
+msgid "Folder's name can't contain more than %i characters!"
+msgstr "Название папки не может содержать более %i символов."
+
+msgid "Fonts"
+msgstr "Шрифты"
+
+msgid "Functions color:"
+msgstr "Цвет функций:"
+
+msgid "Functions font:"
+msgstr "Шрифт функций:"
+
+msgid "G&o to selected location\tCtrl+G"
+msgstr "П&ерейти на выбранную локацию\tCtrl+G"
+
+msgid "Game password"
+msgstr "Ввод пароля"
+
+msgid "Game statistics"
+msgstr "Информация об игре"
+
+msgid "General"
+msgstr "Основные"
+
+msgid "Go to selected location"
+msgstr "Перейти на выбранную локацию"
+
+msgid "Help"
+msgstr "Помощь"
+
+msgid "Help by &keyword\tCtrl+F1"
+msgstr "Помощь по ключевому &слову\tCtrl+F1"
+
+msgid "Help file (*.chm)|*.chm|All files (*.*)|*.*"
+msgstr "Файл справки (*.chm)|*.chm|Все файлы (*.*)|*.*"
+
+msgid "Hotkey"
+msgstr "Комбинация клавиш"
+
+msgid "Hotkeys"
+msgstr "Комбинации клавиш"
+
+msgid "Hotkeys list:"
+msgstr "Список команд:"
+
+msgid "Hotkeys:"
+msgstr "Комбинация клавиш:"
+
+msgid "Image..."
+msgstr "Изображение..."
+
+msgid "Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*.*"
+msgstr "Файлы изображений (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|Все файлы (*.*)|*.*"
+
+msgid "Import"
+msgstr "Импорт"
+
+msgid "Incorrect format!"
+msgstr "Неверный формат!"
+
+msgid "Info"
+msgstr "Инфо"
+
+msgid "Input name for a new action"
+msgstr "Введите название действия:"
+
+msgid "Input name for a new folder:"
+msgstr "Введите название новой папки:"
+
+msgid "Input name for a new location:"
+msgstr "Введите название новой локации:"
+
+msgid "Input new action's name:"
+msgstr "Введите новое название действия:"
+
+msgid "Input new folder's name:"
+msgstr "Введите новое название папки:"
+
+msgid "Input new location's name:"
+msgstr "Введите новое название локации:"
+
+msgid "Input password:"
+msgstr "Введите пароль:"
+
+msgid "Labels color:"
+msgstr "Цвет меток:"
+
+msgid "Labels font:"
+msgstr "Шрифт меток:"
+
+msgid "Language:"
+msgstr "Язык:"
+
+msgid ""
+"Location with the same name already exists!\n"
+"Location: \"%s\"\n"
+"Replace existing location?"
+msgstr ""
+"Локация с таким именем уже существует!\n"
+"Название локации: %s\n"
+"Заменить существующую локацию?"
+
+msgid "Location's actions:\n"
+msgstr "Действия на локации:\n"
+
+msgid "Location's code:"
+msgstr "Код локации:"
+
+msgid "Location's description:\n"
+msgstr "Описание локации:\n"
+
+msgid "Location's name can't contain more than %i characters!"
+msgstr "Название локации не может содержать более %i символов."
+
+msgid "Location: \"%s\""
+msgstr "Название локации: %s"
+
+msgid "Locations"
+msgstr "Локации"
+
+msgid "Locations without \"on visit\" code: %i\n"
+msgstr "Локаций, не имеющих кода обработки события \"Посещение\": %i\n"
+
+msgid "Locations without base description: %i\n"
+msgstr "Из них локаций, не содержащих текст описания: %i\n"
+
+msgid "Main background color:"
+msgstr "Цвет основного фона:"
+
+msgid "Main font:"
+msgstr "Основной шрифт:"
+
+msgid "Match case"
+msgstr "Точное совпадение"
+
+msgid "Max location size: %i characters\n"
+msgstr "Максимальный размер локации: %i символ(а/ов)\n"
+
+msgid "New search"
+msgstr "Начать заново"
+
+msgid "Numbers color:"
+msgstr "Цвет чисел:"
+
+msgid "Numbers font:"
+msgstr "Шрифт чисел:"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Open File"
+msgstr "Открыть файл"
+
+msgid "Open action after creation"
+msgstr "Открытие действия при создании"
+
+msgid "Open game file"
+msgstr "Открыть файл"
+
+msgid "Open game... (Ctrl+O)"
+msgstr "Открыть игру... (Ctrl+O)"
+
+msgid "Open location after creation"
+msgstr "Открытие локации при создании"
+
+msgid "Open text file"
+msgstr "Открыть файл"
+
+msgid "Operations color:"
+msgstr "Цвет операций:"
+
+msgid "Operations font:"
+msgstr "Шрифт операций:"
+
+msgid "P&aste in...\tCtrl+Shift+N"
+msgstr "Вс&тавить в...\tCtrl+Shift+N"
+
+msgid "Paste"
+msgstr "Вставить"
+
+msgid "Paste clipboard data to the new location"
+msgstr "Вставить локацию из буфера в новую локацию"
+
+msgid "Paste in..."
+msgstr "Вставить в..."
+
+msgid "Paste location (Ctrl+Shift+V)"
+msgstr "Вставить локацию (Ctrl+Shift+V)"
+
+msgid "Paste location from clipboard"
+msgstr "Вставить локацию из буфера"
+
+msgid "Path to TXT2GAM:"
+msgstr "Путь к TXT2GAM:"
+
+msgid "Path to help:"
+msgstr "Путь к справке:"
+
+msgid "Path to player:"
+msgstr "Путь к плееру:"
+
+msgid "Paths"
+msgstr "Пути"
+
+msgid "Pin tab"
+msgstr "Открепить"
+
+msgid "Pin/Unpin &tab"
+msgstr "Закрепить/открепить &вкладку"
+
+msgid "Player's file (*.exe)|*.exe|All files (*.*)|*.*"
+msgstr "Файл плеера (*.exe)|*.exe|Все файлы (*.*)|*.*"
+
+msgid "QSP games (*.qsp)|*.qsp"
+msgstr "Файлы игр QSP (*.qsp)|*.qsp"
+
+msgid "QSP games (*.qsp;*.gam)|*.qsp;*.gam"
+msgstr "Файлы игр QSP (*.qsp;*.gam)|*.qsp;*.gam"
+
+msgid "Redo"
+msgstr "Повторить"
+
+msgid "Redo (Ctrl+Y)"
+msgstr "Повторить (Ctrl+Y)"
+
+msgid ""
+"Relative height of description and location's\n"
+"code fields to the tab's height (%):"
+msgstr ""
+"Относительная высота полей описания и кода\n"
+"локации к высоте вкладки (%):"
+
+msgid "Relative width of actions list to the tab's width (%):"
+msgstr "Относительная ширина списка действий к ширине вкладки (%):"
+
+msgid ""
+"Relative width of location's description field\n"
+"to the tab's height (%):"
+msgstr ""
+"Относительная ширина поля описания локации к ширине\n"
+"вкладки (%):"
+
+msgid "Remember game file on exit"
+msgstr "Запоминать игру при выходе"
+
+msgid "Remove \"%s\" folder?"
+msgstr "Желаете удалить папку %s?"
+
+msgid "Remove \"%s\" location?"
+msgstr "Желаете удалить локацию %s?"
+
+msgid "Remove all actions"
+msgstr "Удалить все действия"
+
+msgid "Remove all actions on \"%s\" location?"
+msgstr "Желаете удалить все действия на локации %s?"
+
+msgid "Remove folder"
+msgstr "Удалить папку"
+
+msgid "Remove location"
+msgstr "Удалить локацию"
+
+msgid "Rename action"
+msgstr "Переименовать действие"
+
+msgid "Rename folder"
+msgstr "Переименовать папку"
+
+msgid "Rename folder..."
+msgstr "Переименовать папку..."
+
+msgid "Rename location"
+msgstr "Переименовать локацию"
+
+msgid "Rename selected action"
+msgstr "Переименовать действие"
+
+msgid "Rename selected folder"
+msgstr "Переименовать выбранную папку"
+
+msgid "Rename selected location... (F6)"
+msgstr "Переименовать выделенную локацию... (F6)"
+
+msgid "Rename..."
+msgstr "Переименовать..."
+
+msgid "Replace"
+msgstr "Заменить"
+
+msgid "Replace \"%s\" location?"
+msgstr "Желаете заменить локацию %s?"
+
+msgid "Replace all"
+msgstr "Заменить все"
+
+msgid "Replace location"
+msgstr "Заменить локацию"
+
+msgid "Replace selected location with clipboard data"
+msgstr "Заменить выбранную локацию локацией из буфера"
+
+msgid "Reset"
+msgstr "Сброс"
+
+msgid "Run current game"
+msgstr "Запустить текущую игру"
+
+msgid "&Run game\tF5"
+msgstr "&Запуск игры\tF5"
+
+msgid "Run game (F5)"
+msgstr "Запуск игры (F5)"
+
+msgid "S&elect all\tCtrl+A"
+msgstr "В&ыделить всё\tCtrl+A"
+
+msgid "Save &as...\tCtrl+W"
+msgstr "Сохранить &как...\tCtrl+W"
+
+msgid "Save game"
+msgstr "Сохранить игру"
+
+msgid "Save game (Ctrl+S)"
+msgstr "Сохранить игру (Ctrl+S)"
+
+msgid "Save game file"
+msgstr "Сохранить игру"
+
+msgid "Save game file?"
+msgstr "Сохранить игру?"
+
+msgid "Save game in another file"
+msgstr "Сохранить игру под другим именем"
+
+msgid "Save game in another file (Ctrl+W)"
+msgstr "Сохранить игру под другим именем (Ctrl+W)"
+
+msgid "Save text file"
+msgstr "Сохранить файл"
+
+msgid "Search only word"
+msgstr "Только слово целиком"
+
+msgid "Select all"
+msgstr "Выделить всё"
+
+msgid "Select color..."
+msgstr "Выбрать цвет..."
+
+msgid "Select converter's file"
+msgstr "Выберите файл"
+
+msgid "Select font..."
+msgstr "Выбрать шрифт..."
+
+msgid "Select help file"
+msgstr "Выберите файл справки"
+
+msgid "Select image file"
+msgstr "Выберите изображение"
+
+msgid "Select path..."
+msgstr "Выбрать путь..."
+
+msgid "Select player's file"
+msgstr "Выберите файл плеера"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Settings... (Ctrl+P)"
+msgstr "Настройки... (Ctrl+P)"
+
+msgid "Show base actions on location's tab"
+msgstr "Показывать базовые действия локаций"
+
+msgid "Show base description on location's tab"
+msgstr "Показывать базовые описания локаций"
+
+msgid "Show game statistics (Ctrl+I)"
+msgstr "Краткая информация об игре (Ctrl+I)"
+
+msgid "Show lines numbers"
+msgstr "Показывать номера строк"
+
+msgid "Show locations icons"
+msgstr "Отображать иконки в списке локаций"
+
+msgid "Show short locations descriptions"
+msgstr "Показывать краткие описания локаций"
+
+msgid "Show short statistics"
+msgstr "Показать краткую статистику"
+
+msgid "Show/Hide location's &actions\tCtrl+Alt+A"
+msgstr "Показать/скрыть &действия локации\tCtrl+Alt+A"
+
+msgid "Show/Hide location's &description\tCtrl+Alt+D"
+msgstr "Показать/скрыть &описание локации\tCtrl+Alt+D"
+
+msgid "Size of TAB:"
+msgstr "Размер TAB:"
+
+msgid "Sizes"
+msgstr "Размеры"
+
+msgid "Skip"
+msgstr "Пропустить"
+
+msgid "Skip location"
+msgstr "Пропустить локацию"
+
+msgid "So&rt ascending\tCtrl+Shift+O"
+msgstr "Со&ртировать по алфавиту\tCtrl+Shift+O"
+
+msgid "Sor&t descending\tCtrl+Shift+P"
+msgstr "Сор&тировать в обратном порядке\tCtrl+Shift+P"
+
+msgid "Sort ascending"
+msgstr "Сортировать по алфавиту"
+
+msgid "Sort descending"
+msgstr "Сортировать в обратном порядке"
+
+msgid "Start"
+msgstr "Начало"
+
+msgid "Statements color:"
+msgstr "Цвет операторов:"
+
+msgid "Statements font:"
+msgstr "Шрифт операторов:"
+
+msgid "Strings color:"
+msgstr "Цвет строк:"
+
+msgid "Strings font:"
+msgstr "Шрифт строк:"
+
+msgid "Such name already exists! Input another name."
+msgstr "Такое название уже существует, введите другое название!"
+
+msgid "System variables color:"
+msgstr "Цвет системных переменных:"
+
+msgid "System variables font:"
+msgstr "Шрифт системных переменных:"
+
+msgid "Tabs background color:"
+msgstr "Цвет фона вкладок локаций:"
+
+msgid "Text file in TXT2GAM format..."
+msgstr "Текстовый файл формата TXT2GAM..."
+
+msgid "Text file..."
+msgstr "Текстовый файл..."
+
+msgid "Text files (*.txt)|*.txt"
+msgstr "Текстовые файлы (*.txt)|*.txt"
+
+msgid "Text:"
+msgstr "Текст:"
+
+msgid "The new file will replace current game file. Continue?"
+msgstr "The Импортируемый файл заменит текущий файл игры. Продолжить?"
+
+msgid "The specified text was not found"
+msgstr "Ничего не найдено!"
+
+msgid "The specified text was not found anymore."
+msgstr "Указанный текст больше не найден."
+
+msgid "This game contains %i location(s)\n"
+msgstr "This game contains %i location(s)\n"
+
+msgid "This keys combination is used already by the system! Select another combination."
+msgstr "Такая комбинация клавиш уже используется системой, введите другую комбинацию!"
+
+msgid "This keys combination is used already! Select another combination."
+msgstr "Такая комбинация клавиш уже используется, введите другую комбинацию!"
+
+msgid "Total game size: %i characters"
+msgstr "Всего локации игры содержат: %i символ(а/ов)"
+
+msgid "Undo"
+msgstr "Отменить"
+
+msgid "Undo (Ctrl+Z)"
+msgstr "Отменить (Ctrl+Z)"
+
+msgid "Unknown error!"
+msgstr "Неизвестная ошибка!"
+
+msgid "Unpin"
+msgstr "Закрепить вкладку"
+
+msgid "Wrap lines by words"
+msgstr "Перенос строк по словам в коде локаций и действий"
+
+msgid "Wrong password!"
+msgstr "Неверный пароль!"
+
+msgid "for all"
+msgstr "для всех"
+
+msgid "minutes"
+msgstr "минут"
+

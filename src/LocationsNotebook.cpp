@@ -20,7 +20,7 @@
 */
 
 #include "LocationsNotebook.h"
-#include "QGen.h"
+#include "MainFrame.h"
 
 IMPLEMENT_CLASS(LocationsNotebook, wxAuiNotebook)
 
@@ -141,14 +141,14 @@ void LocationsNotebook::OnRightUpClick( wxAuiNotebookEvent &event )
 	selectedPage = event.GetSelection();
 	if (selectedPage < 0) return;
 	wxMenu menu;
-	menu.Append(ID_TAB_CLOSESELECTED, wxT("Закрыть выбранную"));
-	menu.Append(ID_TAB_CLOSEEXCEPTSELECTED, wxT("Закрыть все кроме выбранной"));
-	menu.Append(ID_TAB_CLOSEALL, wxT("Закрыть все"));
+	menu.Append(ID_TAB_CLOSESELECTED, _("Close selected tab"));
+	menu.Append(ID_TAB_CLOSEEXCEPTSELECTED, _("Close all except selected"));
+	menu.Append(ID_TAB_CLOSEALL, _("Close all"));
 	menu.AppendSeparator();
 	if (((LocationPage *)GetPage(selectedPage))->IsFixed())
-		menu.Append(ID_TAB_FIX, wxT("Открепить"));
+		menu.Append(ID_TAB_FIX, _("Unpin"));
 	else
-		menu.Append(ID_TAB_FIX, wxT("Закрепить вкладку"));
+		menu.Append(ID_TAB_FIX, _("Pin tab"));
 	PopupMenu(&menu);
 }
 

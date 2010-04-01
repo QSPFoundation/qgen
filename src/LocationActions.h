@@ -38,6 +38,7 @@
 		ActionsPanel		*_actPanel;
 		ActionCode			*_actCode;
 		wxSplitterWindow	*_splitterv_down;
+		wxStaticText		*_stTextBaseActions;
 
 		void ShowActions();
 	public:

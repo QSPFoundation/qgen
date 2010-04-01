@@ -38,7 +38,7 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
 	_title->SetFont(_title->GetFont().MakeBold().MakeLarger());
 	_title->SetForegroundColour(textColor);
 
-	_desc = new wxStaticText(this, wxID_ANY, wxT("Описание:"));
+	_desc = new wxStaticText(this, wxID_ANY, _("Description:"));
 	_desc->SetFont(_desc->GetFont().MakeBold());
 	_desc->SetForegroundColour(textColor);
 	_locDesc = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_SIMPLE |
@@ -51,7 +51,7 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
 												  SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU |
 												  SYNTAX_STYLE_NOMARGINS | SYNTAX_STYLE_NOHELPTIPS);
 
-	_emptyLabel = new wxButton(this, wxID_ANY, wxT("(пусто)"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+	_emptyLabel = new wxButton(this, wxID_ANY, _("(empty)"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
 	_emptyLabel->SetFont(_emptyLabel->GetFont().MakeLarger().MakeLarger());
 	_emptyLabel->SetBackgroundColour(backColor);
 	_emptyLabel->SetForegroundColour(textColor);
@@ -108,7 +108,7 @@ void LocationTip::LoadTip()
 		_sizer->Show(_desc, hasDesc);
 		_sizer->Show(_locDesc, hasDesc);
 		_locDesc->SetValue(descText);
-		_code->SetLabel(wxT("Код локации:"));
+		_code->SetLabel(_("Location's code:"));
 		wxString codeText(container->GetLocationCode(locIndex));
 		hasCode = !codeText.IsEmpty();
 		_sizer->Show(_code, hasCode);
@@ -126,7 +126,7 @@ void LocationTip::LoadTip()
 		_sizer->Hide(_locDesc);
 		_sizer->Show(_code, hasCode);
 		_sizer->Show(_locCode, hasCode);
-		_code->SetLabel(wxT("Код действия:"));
+		_code->SetLabel(_("Action's code:"));
 		_locCode->SetValue(actCode);
 		if (!hasCode) showEmpty = true;
 	}

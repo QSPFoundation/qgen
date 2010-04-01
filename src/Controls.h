@@ -25,6 +25,7 @@
 	#include <wx/wx.h>
 	#include <wx/clipbrd.h>
 	#include <wx/filename.h>
+	#include "MainFrame.h"
 	#include "DataContainer.h"
 	#include "LocationsListBox.h"
 	#include "LocationsNotebook.h"
@@ -35,42 +36,6 @@
 	#ifdef __WXMSW__
 		#include "KeysParser.h"
 	#endif
-
-	enum PasteType
-	{
-		PASTE_REPLACE,
-		PASTE_NEW,
-		PASTE_NEW_AUTO
-	};
-
-	enum SearchPlace
-	{
-		SEARCH_NONE,
-		SEARCH_LOCNAME,
-		SEARCH_LOCDESC,
-		SEARCH_LOCCODE,
-		SEARCH_ACTNAME,
-		SEARCH_PATHPICT,
-		SEARCH_ACTCODE
-	};
-
-	enum MessageType
-	{
-		QGEN_MSG_EXISTS,
-		QGEN_MSG_EXISTS_HKEY,
-		QGEN_MSG_EXISTS_S_HKEY,
-		QGEN_MSG_EMPTYDATA,
-		QGEN_MSG_WRONGPASSWORD,
-		QGEN_MSG_CANTSAVEGAME,
-		QGEN_MSG_CANTLOADGAME,
-		QGEN_MSG_NOTFOUND,
-		QGEN_MSG_SEARCHENDED,
-		QGEN_MSG_WRONGFORMAT,
-		QGEN_MSG_MAXACTIONSCOUNTREACHED,
-		QGEN_MSG_TOOLONGFOLDERNAME,
-		QGEN_MSG_TOOLONGLOCATIONNAME,
-		QGEN_MSG_TOOLONGACTIONNAME
-	};
 
 	struct DataSearch
 	{
@@ -87,7 +52,7 @@
 	class Controls : public IControls
 	{
 	private:
-		wxFrame				*_mainFrame;
+		MainFrame			*_mainFrame;
 		LocationsListBox	*_locListBox;
 		LocationsNotebook	*_locNotebook;
 		DataContainer		*_container;
@@ -104,6 +69,7 @@
 		wxString			_currentGamePass;
 		wxLongLong			_lastSaveTime;
 		long				_execHotkeyEnters;
+		wxLocale			*_locale;
 
 		static wxString ConvertSearchString(const wxString& s, bool isMatchCase);
 		static int FindSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind = 0);
@@ -116,15 +82,15 @@
 		DataContainer *GetContainer() const { return _container; }
 		KeywordsStore *GetKeywordsStore() const { return _keywordsStore; }
 
-		void SetMainFrame(wxFrame *mainFrame) { _mainFrame = mainFrame; }
+		void SetMainFrame(MainFrame *mainFrame) { _mainFrame = mainFrame; }
 		void SetLocListBox(LocationsListBox *locListBox) { _locListBox = locListBox; }
 		void SetNotebook(LocationsNotebook *locNotebook) { _locNotebook = locNotebook; }
 
 		wxString GetGamePath() const { return _currentGamePath; }
 		wxString GetGamePass() const { return _currentGamePass; }
 
-		int GetSelectedLocationIndex();
-		int GetSelectedFolderIndex();
+		int GetSelectedLocationIndex() const;
+		int GetSelectedFolderIndex() const;
 		void SelectLocation(size_t locIndex);
 		bool RenameFolder(size_t folderIndex, const wxString &name);
 		bool RenameLocation(size_t locIndex, const wxString &name);
@@ -153,20 +119,23 @@
 		static wxString GetMessageDesc(long errorNum);
 
 		bool GetBufferedLocName(const wxString &buffer, wxString &locName);
-		bool IsClipboardEmpty();
 		void CopySelectedLocToClipboard();
 		void PasteLocFromClipboard(PasteType type);
 
 		wxString EncodeString(const wxString &str);
 		wxString DecodeString(const wxString &str);
 
-		bool IsSelectedLocationEmpty();
-		bool IsAllLocsClosed();
-		bool IsActionsOnSelectedLocEmpty();
+		bool IsSelectedLocationEmpty() const;
+		bool IsAllLocsClosed() const;
+		bool IsActionsOnSelectedLocEmpty() const;
+		bool IsClipboardEmpty();
+		bool IsGameSaved();
+		bool IsCorrectDataFormat(const wxString &str);
+		bool IsInHotkeyExecution() const { return _execHotkeyEnters != 0; }
 
 		static wxTextEntryBase *GetCurrentTextBox();
-		bool CanUndoText();
-		bool CanRedoText();
+		bool CanUndoText() const;
+		bool CanRedoText() const;
 		bool CanCopyText();
 		bool CanPasteText();
 		bool CanCutText();
@@ -174,8 +143,8 @@
 		void UndoText();
 		void RedoText();
 		void CopySelectedTextToClipboard();
-		void PasteTextFromClipboard();
 		void CutSelectedTextToClipboard();
+		void PasteTextFromClipboard();
 		void DeleteSelectedText();
 		void SelectAllText();
 
@@ -193,15 +162,13 @@
 		bool ExportTxt2Gam(const wxString &filename);
 		bool ImportTxt2Gam(const wxString &filename);
 
-		wxString GetSelectedWord();
+		wxString GetSelectedWord() const;
 		void JumpToSelectedLoc();
 		bool SearchString(const wxString &str, bool findAgain, bool isMatchCase = false, bool isWholeString = false);
 		void ReplaceSearchString(const wxString & replaceString);
 		bool SearchNextLoc();
 		void InitSearchData();
-		bool IsGameSaved();
-		bool IsCorrectDataFormat(const wxString &str);
-		wxString GetGameInfo();
+		wxString GetGameInfo() const;
 
 		void SwitchLocDesc();
 		void SwitchLocActs();
@@ -212,7 +179,6 @@
 		void SetLastSaveTime(wxLongLong lastSaveTime) { _lastSaveTime = lastSaveTime; }
 		wxLongLong GetLastSaveTime() const { return _lastSaveTime; }
 		bool ExecuteHotkey(int keyCode, int modifiers);
-		bool IsInHotkeyExecution() const { return _execHotkeyEnters != 0; }
 		void SetStatusText(const wxString &text);
 
 		bool AddFolder();
@@ -220,6 +186,7 @@
 		bool RenameSelectedFolder();
 
 		bool SearchHelpFile();
+		void UpdateLocale(int lang);
 	};
 
 #endif

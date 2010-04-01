@@ -20,13 +20,13 @@
 */
 
 #include "Controls.h"
-#include "QGen.h"
 
 Controls::Controls(const wxString &path)
 {
 	_mainFrame = NULL;
 	_locListBox = NULL;
 	_locNotebook = NULL;
+	_locale = NULL;
 	_execHotkeyEnters = 0;
 	_currentPath = path;
 
@@ -52,9 +52,10 @@ Controls::~Controls()
 	#endif
 
 	delete _keywordsStore;
+	if (_locale) delete _locale;
 }
 
-int Controls::GetSelectedLocationIndex()
+int Controls::GetSelectedLocationIndex() const
 {
 	LocationPage *page = _locNotebook->GetSelectedPage();
 	if (page && !_locListBox->HasFocus()) return page->GetLocationIndex();
@@ -85,8 +86,8 @@ int Controls::AddLocation(const wxString &name)
 	while (1)
 	{
 		wxTextEntryDialog dlgEntry(GetParent(),
-			wxT("Введите название новой локации:"),
-			wxT("Добавить новую локацию"), locName);
+			_("Input name for a new location:"),
+			_("Add location"), locName);
 		if (dlgEntry.ShowModal() == wxID_OK)
 		{
 			locName = dlgEntry.GetValue().Trim().Trim(false);
@@ -114,8 +115,8 @@ bool Controls::RenameSelectedLocation()
 	while (1)
 	{
 		wxTextEntryDialog dlgEntry(GetParent(),
-			wxT("Введите новое название локации:"),
-			wxT("Переименовать локацию"), name);
+			_("Input new location's name:"),
+			_("Rename location"), name);
 		if (dlgEntry.ShowModal() == wxID_OK)
 		{
 			name = dlgEntry.GetValue().Trim().Trim(false);
@@ -140,8 +141,8 @@ bool Controls::DeleteSelectedLocation()
 
 	wxString locName(_container->GetLocationName(locIndex));
 	wxMessageDialog dlgMsg(GetParent(),
-		wxString::Format(wxT("Желаете удалить локацию %s?"), locName),
-		wxT("Удалить локацию"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
+		wxString::Format(_("Remove \"%s\" location?"), locName),
+		_("Remove location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
 	if (dlgMsg.ShowModal() == wxID_YES)
 	{
 		int index = _locNotebook->FindPageIndex(locName);
@@ -170,8 +171,9 @@ bool Controls::AddActionOnSelectedLoc()
 
 	while (1)
 	{
-		wxTextEntryDialog dlgEntry(GetParent(), wxT("Введите название действия:"),
-			wxT("Создать действие"), name);
+		wxTextEntryDialog dlgEntry(GetParent(), 
+			_("Input name for a new action"),
+			_("Add action"), name);
 
 		if (dlgEntry.ShowModal() == wxID_OK)
 		{
@@ -227,8 +229,8 @@ bool Controls::DeleteAllActions()
 	wxString locName(_container->GetLocationName(locIndex));
 
 	wxMessageDialog dlgMsg(GetParent(),
-		wxString::Format(wxT("Желаете удалить все действия на локации %s?"), locName),
-		wxT("Удалить все действия"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
+		wxString::Format(_("Remove all actions on \"%s\" location?"), locName),
+		_("Remove all actions"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
 	if (dlgMsg.ShowModal() == wxID_YES)
 	{
 		_container->DeleteAllActions(locIndex);
@@ -253,8 +255,8 @@ bool Controls::RenameSelectedAction()
 	while (1)
 	{
 		wxTextEntryDialog dlgEntry(GetParent(),
-			wxT("Введите новое название действия:"),
-			wxT("Переименовать действие"), name);
+			_("Input new action's name:"),
+			_("Rename action"), name);
 		if (dlgEntry.ShowModal() == wxID_OK)
 		{
 			name = dlgEntry.GetValue();
@@ -275,7 +277,7 @@ bool Controls::RenameSelectedAction()
 void Controls::ShowMessage( long errorNum )
 {
 	wxMessageDialog dlgMsg(GetParent(), GetMessageDesc(errorNum),
-		wxT("Инфо"), wxOK|wxICON_INFORMATION|wxCENTRE);
+		_("Info"), wxOK|wxICON_INFORMATION|wxCENTRE);
 	dlgMsg.ShowModal();
 }
 
@@ -284,21 +286,21 @@ wxString Controls::GetMessageDesc( long errorNum )
 	wxString str;
 	switch (errorNum)
 	{
-		case QGEN_MSG_EXISTS: str = wxT("Такое название уже существует, введите другое название!"); break;
-		case QGEN_MSG_EXISTS_HKEY: str = wxT("Такая комбинация клавиш уже используется, введите другую комбинацию!"); break;
-		case QGEN_MSG_EXISTS_S_HKEY: str = wxT("Такая комбинация клавиш уже используется системой, введите другую комбинацию!"); break;
-		case QGEN_MSG_EMPTYDATA: str = wxT("Пустое поле, введите значение!"); break;
-		case QGEN_MSG_WRONGPASSWORD: str = wxT("Неверный пароль!"); break;
-		case QGEN_MSG_CANTSAVEGAME: str = wxT("Ошибка записи файла!"); break;
-		case QGEN_MSG_CANTLOADGAME: str = wxT("Нельзя загрузить игру! Найдены 2 локации с одинаковым именем!"); break;
-		case QGEN_MSG_NOTFOUND: str = wxT("Ничего не найдено!"); break;
-		case QGEN_MSG_SEARCHENDED: str = wxT("Указанный текст больше не найден."); break;
-		case QGEN_MSG_WRONGFORMAT: str = wxT("Неверный формат!"); break;
-		case QGEN_MSG_MAXACTIONSCOUNTREACHED: str = wxString::Format(wxT("Вы не можете добавить на локацию более чем %i действий."), QGEN_MAXACTIONS); break;
-		case QGEN_MSG_TOOLONGLOCATIONNAME: str = wxString::Format(wxT("Название локации не может содержать более %i символов."), QGEN_MAXLOCATIONNAMELEN); break;
-		case QGEN_MSG_TOOLONGACTIONNAME: str = wxString::Format(wxT("Название действия не может содержать более %i символов."), QGEN_MAXACTIONNAMELEN); break;
-		case QGEN_MSG_TOOLONGFOLDERNAME: str = wxString::Format(wxT("Название папки не может содержать более %i символов."), QGEN_MAXFOLDERNAMELEN); break;
-		default: str = wxT("Неизвестная ошибка!"); break;
+		case QGEN_MSG_EXISTS: str = _("Such name already exists! Input another name."); break;
+		case QGEN_MSG_EXISTS_HKEY: str = _("This keys combination is used already! Select another combination."); break;
+		case QGEN_MSG_EXISTS_S_HKEY: str = _("This keys combination is used already by the system! Select another combination."); break;
+		case QGEN_MSG_EMPTYDATA: str = _("An empty field, input the value!"); break;
+		case QGEN_MSG_WRONGPASSWORD: str = _("Wrong password!"); break;
+		case QGEN_MSG_CANTSAVEGAME: str = _("Can't write file!"); break;
+		case QGEN_MSG_CANTLOADGAME: str = _("Can't load game. Locations with the same name are found!"); break;
+		case QGEN_MSG_NOTFOUND: str = _("The specified text was not found"); break;
+		case QGEN_MSG_SEARCHENDED: str = _("The specified text was not found anymore."); break;
+		case QGEN_MSG_WRONGFORMAT: str = _("Incorrect format!"); break;
+		case QGEN_MSG_MAXACTIONSCOUNTREACHED: str = wxString::Format(_("Can't add more than %i actions."), QGEN_MAXACTIONS); break;
+		case QGEN_MSG_TOOLONGLOCATIONNAME: str = wxString::Format(_("Location's name can't contain more than %i characters!"), QGEN_MAXLOCATIONNAMELEN); break;
+		case QGEN_MSG_TOOLONGACTIONNAME: str = wxString::Format(_("Action's name can't contain more than %i characters!"), QGEN_MAXACTIONNAMELEN); break;
+		case QGEN_MSG_TOOLONGFOLDERNAME: str = wxString::Format(_("Folder's name can't contain more than %i characters!"), QGEN_MAXFOLDERNAMELEN); break;
+		default: str = _("Unknown error!"); break;
 	}
 	return str;
 }
@@ -333,7 +335,7 @@ void Controls::SortLocations(bool isAscending)
 	}
 }
 
-bool Controls::IsSelectedLocationEmpty()
+bool Controls::IsSelectedLocationEmpty() const
 {
 	int locIndex = GetSelectedLocationIndex();
 	if (locIndex < 0) return true;
@@ -516,8 +518,8 @@ void Controls::PasteLocFromClipboard( PasteType type )
 			if (!_container->IsEmptyLoc(locIndex))
 			{
 				wxMessageDialog dlgMsg(GetParent(),
-					wxString::Format(wxT("Желаете заменить локацию %s?"), locName),
-					wxT("Заменить локацию"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
+					wxString::Format(_("Replace \"%s\" location?"), locName),
+					_("Replace location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
 				if (dlgMsg.ShowModal() == wxID_YES)
 					InitSearchData();
 				else
@@ -599,8 +601,8 @@ void Controls::ClearSelectedLocation()
 
 	wxString locName(_container->GetLocationName(locIndex));
 	wxMessageDialog dlgMsg(GetParent(),
-		wxString::Format(wxT("Желаете очистить локацию %s?"), locName),
-		wxT("Очистить локацию"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
+		wxString::Format(_("Clean \"%s\" location?"), locName),
+		_("Clean location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
 	if (dlgMsg.ShowModal() == wxID_YES)
 	{
 		_container->ClearLocation(locIndex);
@@ -618,14 +620,14 @@ wxTextEntryBase *Controls::GetCurrentTextBox()
 	return wxDynamicCast(win, wxTextCtrl);
 }
 
-bool Controls::CanUndoText()
+bool Controls::CanUndoText() const
 {
 	wxTextEntryBase *txt = GetCurrentTextBox();
 	if (txt) return txt->CanUndo();
 	return false;
 }
 
-bool Controls::CanRedoText()
+bool Controls::CanRedoText() const
 {
 	wxTextEntryBase *txt = GetCurrentTextBox();
 	if (txt) return txt->CanRedo();
@@ -711,8 +713,8 @@ void Controls::SelectAllText()
 
 wxString Controls::SelectPicturePath()
 {
-	wxFileDialog filedlg( GetParent(), wxT( "Выберите изображение" ),
-		wxEmptyString, wxEmptyString, wxT( "Файлы изображений (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|Все файлы (*.*)|*.*" ), wxFD_OPEN );
+	wxFileDialog filedlg( GetParent(), _( "Select image file" ),
+		wxEmptyString, wxEmptyString, _( "Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*.*" ), wxFD_OPEN );
 	filedlg.CentreOnParent();
 	if ( filedlg.ShowModal() == wxID_OK )
 	{
@@ -833,13 +835,13 @@ void Controls::UpdateLocationsList()
 	_locListBox->Thaw();
 }
 
-bool Controls::IsActionsOnSelectedLocEmpty()
+bool Controls::IsActionsOnSelectedLocEmpty() const
 {
 	LocationPage *page = _locNotebook->GetSelectedPage();
 	return (!page || page->IsActionsEmpty());
 }
 
-bool Controls::IsAllLocsClosed()
+bool Controls::IsAllLocsClosed() const
 {
 	return (_locNotebook->GetPageCount() == 0);
 }
@@ -901,7 +903,7 @@ void Controls::JumpToSelectedLoc()
 	}
 }
 
-wxString Controls::GetSelectedWord()
+wxString Controls::GetSelectedWord() const
 {
 	wxString str, data;
 	long beginPos, lastPos, curPos;
@@ -1212,11 +1214,11 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 {
 	if (!menu) return;
 
-	bool saveFound = menu->FindItem(ID_QUEST_SAVE) != NULL;
-	bool saveAsFound = menu->FindItem(ID_QUEST_SAVEAS) != NULL;
-	bool playQuestFound = menu->FindItem(ID_QUEST_PLAY) != NULL;
-	bool exportTxtFound = menu->FindItem(ID_QUEST_EXPORTTXT) != NULL;
-	bool exportTxt2GamFound = menu->FindItem(ID_QUEST_EXPORTTXT2GAM) != NULL;
+	bool saveFound = menu->FindItem(ID_GAME_SAVE) != NULL;
+	bool saveAsFound = menu->FindItem(ID_GAME_SAVEAS) != NULL;
+	bool playQuestFound = menu->FindItem(ID_GAME_PLAY) != NULL;
+	bool exportTxtFound = menu->FindItem(ID_GAME_EXPORTTXT) != NULL;
+	bool exportTxt2GamFound = menu->FindItem(ID_GAME_EXPORTTXT2GAM) != NULL;
 	bool folderDelFound = menu->FindItem(ID_FOLDER_DEL) != NULL;
 	bool folderRenameFound = menu->FindItem(ID_FOLDER_RENAME) != NULL;
 	bool locDelFound = menu->FindItem(ID_LOC_DEL) != NULL;
@@ -1253,11 +1255,11 @@ void Controls::UpdateMenuItems(wxMenu *menu)
 	if (saveFound || saveAsFound || playQuestFound || exportTxtFound || exportTxt2GamFound ||
 		locExpandFound || locCollapseFound)
 		res = !_container->IsEmpty();
-	if (saveFound) menu->Enable(ID_QUEST_SAVE, res);
-	if (saveAsFound) menu->Enable(ID_QUEST_SAVEAS, res);
-	if (playQuestFound) menu->Enable(ID_QUEST_PLAY, res);
-	if (exportTxtFound) menu->Enable(ID_QUEST_EXPORTTXT, res);
-	if (exportTxt2GamFound) menu->Enable(ID_QUEST_EXPORTTXT2GAM, res);
+	if (saveFound) menu->Enable(ID_GAME_SAVE, res);
+	if (saveAsFound) menu->Enable(ID_GAME_SAVEAS, res);
+	if (playQuestFound) menu->Enable(ID_GAME_PLAY, res);
+	if (exportTxtFound) menu->Enable(ID_GAME_EXPORTTXT, res);
+	if (exportTxt2GamFound) menu->Enable(ID_GAME_EXPORTTXT2GAM, res);
 	if (locExpandFound) menu->Enable(ID_LOC_EXPAND, res);
 	if (locCollapseFound) menu->Enable(ID_LOC_COLLAPSE, res);
 	res = false;
@@ -1376,7 +1378,7 @@ void Controls::MoveActionTo( size_t locIndex, size_t actIndex, size_t moveTo )
 	InitSearchData();
 }
 
-wxString Controls::GetGameInfo()
+wxString Controls::GetGameInfo() const
 {
 	int totalLocsCount,
 		totalEmptyDesc = 0,
@@ -1424,14 +1426,14 @@ wxString Controls::GetGameInfo()
 		avgActions = (int)((float)totalActs / totalLocsCount + 0.5);
 		avgSize = (int)((float)totalLocsSize / totalLocsCount + 0.5);
 	}
-	wxString message = wxString::Format(wxT("Игра содержит %i локаци(ю/й/и)\n"), totalLocsCount);
-	message += wxString::Format(wxT("Из них локаций, не содержащих текст описания: %i\n"), totalEmptyDesc);
-	message += wxString::Format(wxT("Локаций, не имеющих кода обработки события \"Посещение\": %i\n"), totalEmptyCode);
-	message += wxString::Format(wxT("Среднее число базовых действий на 1 локацию: %i\n"), avgActions);
-	message += wxString::Format(wxT("Базовых действий не имеющих кода обработки события \"Выбор\": %i\n"), totalEmptyActsCode);
-	message += wxString::Format(wxT("Максимальный размер локации: %i символ(а/ов)\n"), maxLocSize);
-	message += wxString::Format(wxT("Средний размер локации: %i символ(а/ов)\n"), avgSize);
-	message += wxString::Format(wxT("Всего локации игры содержат: %i символ(а/ов)"), totalLocsSize);
+	wxString message = wxString::Format(_("This game contains %i location(s)\n"), totalLocsCount);
+	message += wxString::Format(_("Locations without base description: %i\n"), totalEmptyDesc);
+	message += wxString::Format(_("Locations without \"on visit\" code: %i\n"), totalEmptyCode);
+	message += wxString::Format(_("Average count of actions per location: %i\n"), avgActions);
+	message += wxString::Format(_("Actions without code: %i\n"), totalEmptyActsCode);
+	message += wxString::Format(_("Max location size: %i characters\n"), maxLocSize);
+	message += wxString::Format(_("Average location size: %i characters\n"), avgSize);
+	message += wxString::Format(_("Total game size: %i characters"), totalLocsSize);
 	return message;
 }
 
@@ -1494,8 +1496,8 @@ bool Controls::AddFolder()
 	while (1)
 	{
 		wxTextEntryDialog dlgEntry(GetParent(),
-			wxT("Введите название новой папки:"),
-			wxT("Добавить новую папку"), name);
+			_("Input name for a new folder:"),
+			_("Add folder"), name);
 		if (dlgEntry.ShowModal() == wxID_OK)
 		{
 			name = dlgEntry.GetValue().Trim().Trim(false);
@@ -1527,8 +1529,8 @@ bool Controls::DeleteSelectedFolder()
 
 	wxString folderName(_container->GetFolderName(folder));
 	wxMessageDialog dlgMsg(GetParent(),
-		wxString::Format(wxT("Желаете удалить папку %s?"), folderName),
-		wxT("Удалить папку"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
+		wxString::Format(_("Remove \"%s\" folder?"), folderName),
+		_("Remove folder"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
 	if (dlgMsg.ShowModal() == wxID_YES)
 	{
 		SyncWithLocationsList();
@@ -1548,8 +1550,8 @@ bool Controls::RenameSelectedFolder()
 	while (1)
 	{
 		wxTextEntryDialog dlgEntry(GetParent(),
-			wxT("Введите новое название папки:"),
-			wxT("Переименовать папку"), name);
+			_("Input new folder's name:"),
+			_("Rename folder"), name);
 		if (dlgEntry.ShowModal() == wxID_OK)
 		{
 			name = dlgEntry.GetValue().Trim().Trim(false);
@@ -1568,7 +1570,7 @@ bool Controls::RenameSelectedFolder()
 	return true;
 }
 
-int Controls::GetSelectedFolderIndex()
+int Controls::GetSelectedFolderIndex() const
 {
 	int locIndex = GetSelectedLocationIndex();
 	if (locIndex >= 0)
@@ -1582,8 +1584,8 @@ bool Controls::SearchHelpFile()
 	if (!wxFile::Exists(_settings->GetCurrentHelpPath()))
 	{
 		wxFileDialog dialog(GetParent(),
-			wxT("Выберите файл справки"), wxEmptyString, wxEmptyString,
-			wxT("Файл справки (*.chm)|*.chm|Все файлы (*.*)|*.*"), wxFD_OPEN);
+			_("Select help file"), wxEmptyString, wxEmptyString,
+			_("Help file (*.chm)|*.chm|All files (*.*)|*.*"), wxFD_OPEN);
 		dialog.CenterOnParent();
 		if (dialog.ShowModal() == wxID_CANCEL) return false;
 		_settings->SetCurrentHelpPath(dialog.GetPath());
@@ -1595,3 +1597,15 @@ wxWindow *Controls::GetParent()
 {
 	return wxGetTopLevelParent(wxGetActiveWindow());
 }
+
+void Controls::UpdateLocale(int lang)
+{
+	if (_locale) delete _locale;
+	_locale = new wxLocale;
+	_locale->Init(lang);
+	_locale->AddCatalogLookupPathPrefix(_currentPath + wxT("langs"));
+	
+	if (!_locale->AddCatalog(QGEN_APPNAME))
+		_locale->AddCatalog(wxString(QGEN_APPNAME + _locale->GetName().Left(2)));
+}
+

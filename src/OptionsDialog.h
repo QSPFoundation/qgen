@@ -30,8 +30,9 @@
 	#include <wx/notebook.h>
 	#include <wx/sizer.h>
 	#include <wx/listctrl.h>
+	#include <wx/dir.h>
 	#include "Settings.h"
-	#include "Controls.h"
+	#include "IControls.h"
 	#include "OptionsHotKeysDialog.h"
 	#include "ChkSysHotKey.h"
 
@@ -68,8 +69,11 @@
 		ID_ADD_NEWHKEY,
 		ID_EDIT_HKEY,
 		ID_DELETE_HKEY,
-		ID_LIST_HKEYS
+		ID_LIST_HKEYS,
+		ID_COMB_LANG
 	};
+
+	WX_DECLARE_STRING_HASH_MAP(int, LangTable);
 
 	class OptionsDialog : public wxDialog
 	{
@@ -78,7 +82,7 @@
 	private:
 		wxNotebook	*_notebook;
 		Settings	*_settings;
-		Controls	*_controls;
+		IControls	*_controls;
 		wxFrame		*_parent;
 
 		wxNotebookPage *_general;
@@ -170,8 +174,47 @@
 		wxButton	*_btnOK;
 		wxButton	*_btnApply;
 		wxButton	*_btnReset;
+		wxButton	*_btnCancel;
+
+		wxStaticText *_stTextHeights;
+		wxStaticText *_stTextWidth1;
+		wxStaticText *_stTextWidth2;
+		wxStaticText *_stTextTabSize;
+		wxStaticText *_stTextCmbLang;
+		wxStaticText *_autoSaveUnits;
+
+		wxStaticText *_stText1;
+		wxStaticText *_stText2;
+		wxStaticText *_stText3;
+		wxStaticText *_stText4;
+		wxStaticText *_stText5;
+		wxStaticText *_stText6;
+		wxStaticText *_stText7;
+		wxStaticText *_stText8;
+		wxStaticText *_stText9;
+		wxStaticText *_stText10;
+		wxStaticText *_stText11;
+
+		wxStaticText *_stText01;
+		wxStaticText *_stText02;
+		wxStaticText *_stText03;
+		wxStaticText *_stText04;
+		wxStaticText *_stText05;
+		wxStaticText *_stText06;
+		wxStaticText *_stText07;
+		wxStaticText *_stText08;
+		wxStaticText *_stText09;
+
+		wxStaticText *_stText001;
+		wxStaticText *_stText002;
+		wxStaticText *_stText003;
+
+		wxStaticText *_stText0001;
 
 		HotkeyDataArray _hotkeysData;
+
+		wxComboBox	*_cmbLang;
+		LangTable	_langTable;
 
 		void OnColorSelect(wxCommandEvent &event);
 		void OnFontSelect(wxCommandEvent &event);
@@ -194,8 +237,11 @@
 		void EditHotKey();
 		void AddHotKey();
 		void DeleteHotKey();
+		void UpdateLanguagesList();
+		void ReCreateGUI();
 	public:
-		OptionsDialog(wxFrame *parent, const wxString& title, Controls *controls, int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
+		OptionsDialog(wxFrame *parent, const wxString& title, IControls *controls, int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
+		~OptionsDialog();
 	};
 
 #endif

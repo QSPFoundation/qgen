@@ -60,7 +60,7 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
 	EVT_CLOSE(OptionsDialog::OnCloseDialog)
 END_EVENT_TABLE()
 
-OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *controls, int style) :
+OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *controls, int style) :
 	wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, style)
 {
 	_settings = controls->GetSettings();
@@ -71,43 +71,47 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	wxSizer *notebookSizer = new wxBoxSizer(wxHORIZONTAL);
 	wxSizer *btnSizer = new wxBoxSizer(wxHORIZONTAL);
 
-	_btnOK = new wxButton(this, ID_OK_SETTINGS, wxT("OK"));
-	wxButton *btnCancel = new wxButton(this, wxID_CANCEL, wxT("Отмена"));
-	_btnApply = new wxButton(this, ID_APPLY_SETTINGS, wxT("Применить"));
-	_btnReset = new wxButton(this, ID_RESET_SETTINGS, wxT("Сброс"));
+	_btnOK = new wxButton(this, ID_OK_SETTINGS, wxEmptyString);
+	_btnCancel = new wxButton(this, wxID_CANCEL, wxEmptyString);
+	_btnApply = new wxButton(this, ID_APPLY_SETTINGS, wxEmptyString);
+	_btnReset = new wxButton(this, ID_RESET_SETTINGS, wxEmptyString);
 
 	btnSizer->Add(_btnReset, 0, wxLEFT|wxBOTTOM, 5);
 	btnSizer->AddStretchSpacer(1);
 	btnSizer->Add(_btnOK, 0, wxRIGHT|wxBOTTOM, 5);
-	btnSizer->Add(btnCancel, 0, wxRIGHT|wxBOTTOM, 5);
+	btnSizer->Add(_btnCancel, 0, wxRIGHT|wxBOTTOM, 5);
 	btnSizer->Add(_btnApply, 0, wxRIGHT|wxBOTTOM, 5);
 
 	_notebook = new wxNotebook(this, wxID_ANY);
 
 	_general = new wxPanel(_notebook);
-	_notebook->AddPage(_general, wxT("Основные"));
+	_notebook->AddPage(_general, wxEmptyString);
 
 	wxFlexGridSizer *topSizerGeneral = new wxFlexGridSizer(2);
 	wxSizer *sizerAutoSave = new wxBoxSizer(wxHORIZONTAL);
 
-	_chkAutoSave = new wxCheckBox(_general, ID_AUTO_SAVE, wxT("Автосохранение каждые"));
-	_chkFirstLoc = new wxCheckBox(_general, ID_FIRST_LOC, wxT("Название начальной локации:"));
-	_chkDescOfLoc = new wxCheckBox(_general, wxID_ANY, wxT("Показывать краткие описания локаций"));
-	_chkOpeningLoc = new wxCheckBox(_general, wxID_ANY, wxT("Открытие локации при создании"));
-	_chkOpeningAct = new wxCheckBox(_general, wxID_ANY, wxT("Открытие действия при создании"));
-	_chkOnLocActIcons = new wxCheckBox(_general, wxID_ANY, wxT("Отображать иконки в списке локаций"));
-	_chkLocDescVisible = new wxCheckBox(_general, wxID_ANY, wxT("Показывать базовые описания локаций"));
-	_chkLocActsVisible = new wxCheckBox(_general, wxID_ANY, wxT("Показывать базовые действия локаций"));
-	_chkOpenLastGame = new wxCheckBox(_general, wxID_ANY, wxT("Запоминать игру при выходе"));
+	_chkAutoSave = new wxCheckBox(_general, ID_AUTO_SAVE, wxEmptyString);
+	_chkFirstLoc = new wxCheckBox(_general, ID_FIRST_LOC, wxEmptyString);
+	_chkDescOfLoc = new wxCheckBox(_general, wxID_ANY, wxEmptyString);
+	_chkOpeningLoc = new wxCheckBox(_general, wxID_ANY, wxEmptyString);
+	_chkOpeningAct = new wxCheckBox(_general, wxID_ANY, wxEmptyString);
+	_chkOnLocActIcons = new wxCheckBox(_general, wxID_ANY, wxEmptyString);
+	_chkLocDescVisible = new wxCheckBox(_general, wxID_ANY, wxEmptyString);
+	_chkLocActsVisible = new wxCheckBox(_general, wxID_ANY, wxEmptyString);
+	_chkOpenLastGame = new wxCheckBox(_general, wxID_ANY, wxEmptyString);
+
+	_stTextCmbLang = new wxStaticText(_general, wxID_ANY, wxEmptyString);
+	
+	_cmbLang = new wxComboBox(_general, ID_COMB_LANG, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, 0, wxCB_READONLY);
 
 	_spnAutoSaveMin = new wxSpinCtrl(_general, wxID_ANY, wxT("5"), wxDefaultPosition, wxSize(45, wxDefaultCoord),
 										wxSP_ARROW_KEYS, 1, 60, 5);
-	_txtNameFirsLoc = new wxTextCtrl(_general, wxID_ANY, wxT("Начало"));
+	_txtNameFirsLoc = new wxTextCtrl(_general, wxID_ANY, wxEmptyString);
 
-	wxStaticText *autoSaveUnits  = new wxStaticText(_general, wxID_ANY, wxT("минут"));
+	_autoSaveUnits  = new wxStaticText(_general, wxID_ANY, wxEmptyString);
 
 	sizerAutoSave->Add(_spnAutoSaveMin);
-	sizerAutoSave->Add(autoSaveUnits, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 2);
+	sizerAutoSave->Add(_autoSaveUnits, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 2);
 
 	topSizerGeneral->Add(_chkAutoSave, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerGeneral->Add(sizerAutoSave, 0, wxALL, 2);
@@ -127,19 +131,21 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	topSizerGeneral->Add(NULL, 0);
 	topSizerGeneral->Add(_chkOpenLastGame, 0, wxALL, 5);
 	topSizerGeneral->Add(NULL, 0);
+	topSizerGeneral->Add(_stTextCmbLang, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerGeneral->Add(_cmbLang, 0, wxALL, 5);
 	topSizerGeneral->AddGrowableCol(1, 0);
 
 	_general->SetSizerAndFit(topSizerGeneral);
 	_general->SetAutoLayout(true);
 
 	_editor = new wxPanel(_notebook);
-	_notebook->AddPage(_editor, wxT("Редактор кода"));
+	_notebook->AddPage(_editor, wxEmptyString);
 
 	wxFlexGridSizer *topSizerEditor = new wxFlexGridSizer(2);
 
-	_chkWrapLines = new wxCheckBox(_editor, wxID_ANY, wxT("Перенос строк по словам в коде локаций и действий"));
-	_chkShowLinesNums = new wxCheckBox(_editor, wxID_ANY, wxT("Показывать номера строк"));
-	_chkCollapseCode = new wxCheckBox(_editor, wxID_ANY, wxT("Сворачивать блоки кода при открытии"));
+	_chkWrapLines = new wxCheckBox(_editor, wxID_ANY, wxEmptyString);
+	_chkShowLinesNums = new wxCheckBox(_editor, wxID_ANY, wxEmptyString);
+	_chkCollapseCode = new wxCheckBox(_editor, wxID_ANY, wxEmptyString);
 
 	topSizerEditor->Add(_chkWrapLines, 0, wxALL, 5);
 	topSizerEditor->Add(NULL, 0);
@@ -153,26 +159,27 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	_editor->SetAutoLayout(true);
 
 	_sizes = new wxPanel(_notebook);
-	_notebook->AddPage(_sizes, wxT("Размеры"));
+	_notebook->AddPage(_sizes, wxEmptyString);
 
 	wxFlexGridSizer *topSizerSizes = new wxFlexGridSizer(2);
 
-	wxStaticText *stTextHeights = new wxStaticText(_sizes, wxID_ANY, wxT("Относительная высота полей описания и кода\nлокации к высоте вкладки (%):"));
-	wxStaticText *stTextWidth1 = new wxStaticText(_sizes, wxID_ANY, wxT("Относительная ширина поля описания локации к ширине\nвкладки (%):"));
-	wxStaticText *stTextWidth2 = new wxStaticText(_sizes, wxID_ANY, wxT("Относительная ширина списка действий к ширине вкладки (%):"));
-	wxStaticText *stTextTabSize = new wxStaticText(_sizes, wxID_ANY, wxT("Размер TAB:"));
+	_stTextHeights = new wxStaticText(_sizes, wxID_ANY, wxEmptyString);
+	_stTextWidth1 = new wxStaticText(_sizes, wxID_ANY, wxEmptyString);
+	_stTextWidth2 = new wxStaticText(_sizes, wxID_ANY, wxEmptyString);
+	_stTextTabSize = new wxStaticText(_sizes, wxID_ANY, wxEmptyString);
+
 	_spnHeights = new wxSpinCtrl(_sizes, wxID_ANY, wxT("100"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 1, 100, 100);
 	_spnWidth1 = new wxSpinCtrl(_sizes, wxID_ANY, wxT("100"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 1, 100, 100);
 	_spnWidth2 = new wxSpinCtrl(_sizes, wxID_ANY, wxT("100"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 1, 100, 100);
 	_spnTabSize = new wxSpinCtrl(_sizes, wxID_ANY, wxT("8"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 2, 8, 8);
 
-	topSizerSizes->Add(stTextHeights, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerSizes->Add(_stTextHeights, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerSizes->Add(_spnHeights, 0, wxALL, 5);
-	topSizerSizes->Add(stTextWidth1, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerSizes->Add(_stTextWidth1, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerSizes->Add(_spnWidth1, 0, wxALL, 5);
-	topSizerSizes->Add(stTextWidth2, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerSizes->Add(_stTextWidth2, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerSizes->Add(_spnWidth2, 0, wxALL, 5);
-	topSizerSizes->Add(stTextTabSize, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerSizes->Add(_stTextTabSize, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerSizes->Add(_spnTabSize, 0, wxALL, 5);
 
 	topSizerSizes->AddGrowableCol(0, 1);
@@ -181,21 +188,21 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	_sizes->SetAutoLayout(true);
 
 	_colors = new wxPanel(_notebook);
-	_notebook->AddPage(_colors, wxT("Цвета"));
+	_notebook->AddPage(_colors, wxEmptyString);
 
 	wxFlexGridSizer *topSizerColors = new wxFlexGridSizer(3);
 
-	wxStaticText *stText1 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет операторов:"));
-	wxStaticText *stText2 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет функций:"));
-	wxStaticText *stText3 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет системных переменных:"));
-	wxStaticText *stText4 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет строк:"));
-	wxStaticText *stText5 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет чисел:"));
-	wxStaticText *stText6 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет операций:"));
-	wxStaticText *stText7 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет меток:"));
-	wxStaticText *stText8 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет комментариев:"));
-	wxStaticText *stText9 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет основного шрифта:"));
-	wxStaticText *stText10 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет фона вкладок локаций:"));
-	wxStaticText *stText11 = new wxStaticText(_colors, wxID_ANY, wxT("Цвет основного фона:"));
+	_stText1 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
+	_stText2 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
+	_stText3 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
+	_stText4 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
+	_stText5 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
+	_stText6 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
+	_stText7 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
+	_stText8 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
+	_stText9 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
+	_stText10 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
+	_stText11 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
 
 	_colorStatements = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
 	_colorFunctions = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
@@ -209,49 +216,49 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	_colorTextBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
 	_colorBaseBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
 
-	_btnClrsStatements = new wxButton(_colors, ID_COLORS_STATEMENTS, wxT("Выбрать цвет..."));
-	_btnClrsFunctions = new wxButton(_colors, ID_COLORS_FUNCTIONS, wxT("Выбрать цвет..."));
-	_btnClrsSysVariables = new wxButton(_colors, ID_COLORS_SYSVARIABLES, wxT("Выбрать цвет..."));
-	_btnClrsStrings = new wxButton(_colors, ID_COLORS_STRINGS, wxT("Выбрать цвет..."));
-	_btnClrsNumbers = new wxButton(_colors, ID_COLORS_NUMBERS, wxT("Выбрать цвет..."));
-	_btnClrsOptsBrts = new wxButton(_colors, ID_COLORS_OPERATIONSBRACKETS, wxT("Выбрать цвет..."));
-	_btnClrsMarks = new wxButton(_colors, ID_COLORS_MARKS, wxT("Выбрать цвет..."));
-	_btnClrsComments = new wxButton(_colors, ID_COLORS_COMMENTS, wxT("Выбрать цвет..."));
-	_btnClrsBaseFont = new wxButton(_colors, ID_COLORS_BASEFONT, wxT("Выбрать цвет..."));
-	_btnClrsTextBack = new wxButton(_colors, ID_COLORS_TEXTBACK, wxT("Выбрать цвет..."));
-	_btnClrsBaseBack = new wxButton(_colors, ID_COLORS_BASEBACK, wxT("Выбрать цвет..."));
+	_btnClrsStatements = new wxButton(_colors, ID_COLORS_STATEMENTS, wxEmptyString);
+	_btnClrsFunctions = new wxButton(_colors, ID_COLORS_FUNCTIONS, wxEmptyString);
+	_btnClrsSysVariables = new wxButton(_colors, ID_COLORS_SYSVARIABLES, wxEmptyString);
+	_btnClrsStrings = new wxButton(_colors, ID_COLORS_STRINGS, wxEmptyString);
+	_btnClrsNumbers = new wxButton(_colors, ID_COLORS_NUMBERS, wxEmptyString);
+	_btnClrsOptsBrts = new wxButton(_colors, ID_COLORS_OPERATIONSBRACKETS, wxEmptyString);
+	_btnClrsMarks = new wxButton(_colors, ID_COLORS_MARKS, wxEmptyString);
+	_btnClrsComments = new wxButton(_colors, ID_COLORS_COMMENTS, wxEmptyString);
+	_btnClrsBaseFont = new wxButton(_colors, ID_COLORS_BASEFONT, wxEmptyString);
+	_btnClrsTextBack = new wxButton(_colors, ID_COLORS_TEXTBACK, wxEmptyString);
+	_btnClrsBaseBack = new wxButton(_colors, ID_COLORS_BASEBACK, wxEmptyString);
 
-	topSizerColors->Add(stText11, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerColors->Add(_stText11, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorBaseBack, 0, wxALL|wxALIGN_RIGHT, 2);
 	topSizerColors->Add(_btnClrsBaseBack, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerColors->Add(stText10, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerColors->Add(_stText10, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorTextBack, 0, wxALL|wxALIGN_RIGHT, 2);
 	topSizerColors->Add(_btnClrsTextBack, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerColors->Add(stText9, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerColors->Add(_stText9, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorBaseFont, 0, wxALL|wxALIGN_RIGHT, 2);
 	topSizerColors->Add(_btnClrsBaseFont, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerColors->Add(stText1, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerColors->Add(_stText1, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorStatements, 0, wxALL|wxALIGN_RIGHT, 2);
 	topSizerColors->Add(_btnClrsStatements, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerColors->Add(stText2, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerColors->Add(_stText2, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorFunctions, 0, wxALL|wxALIGN_RIGHT, 2);
 	topSizerColors->Add(_btnClrsFunctions, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerColors->Add(stText3, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerColors->Add(_stText3, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorSysVariables, 0, wxALL|wxALIGN_RIGHT, 2);
 	topSizerColors->Add(_btnClrsSysVariables, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerColors->Add(stText4, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerColors->Add(_stText4, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorStrings, 0, wxALL|wxALIGN_RIGHT, 2);
 	topSizerColors->Add(_btnClrsStrings, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerColors->Add(stText5, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerColors->Add(_stText5, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorNumbers, 0, wxALL|wxALIGN_RIGHT, 2);
 	topSizerColors->Add(_btnClrsNumbers, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerColors->Add(stText6, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerColors->Add(_stText6, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorOptsBrts, 0, wxALL|wxALIGN_RIGHT, 2);
 	topSizerColors->Add(_btnClrsOptsBrts, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerColors->Add(stText7, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerColors->Add(_stText7, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorMarks, 0, wxALL|wxALIGN_RIGHT, 2);
 	topSizerColors->Add(_btnClrsMarks, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerColors->Add(stText8, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerColors->Add(_stText8, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerColors->Add(_colorComments, 0, wxALL|wxALIGN_RIGHT, 2);
 	topSizerColors->Add(_btnClrsComments, 0, wxALIGN_CENTER_VERTICAL);
 	topSizerColors->AddGrowableCol(0, 1);
@@ -260,19 +267,19 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	_colors->SetAutoLayout(true);
 
 	_fonts = new wxPanel(_notebook);
-	_notebook->AddPage(_fonts, wxT("Шрифты"));
+	_notebook->AddPage(_fonts, wxEmptyString);
 
 	wxFlexGridSizer *topSizerFonts = new wxFlexGridSizer(3);
 
-	wxStaticText *stText01 = new wxStaticText(_fonts, wxID_ANY, wxT("Шрифт операторов:"));
-	wxStaticText *stText02 = new wxStaticText(_fonts, wxID_ANY, wxT("Шрифт функций:"));
-	wxStaticText *stText03 = new wxStaticText(_fonts, wxID_ANY, wxT("Шрифт системных переменных:"));
-	wxStaticText *stText04 = new wxStaticText(_fonts, wxID_ANY, wxT("Шрифт строк:"));
-	wxStaticText *stText05 = new wxStaticText(_fonts, wxID_ANY, wxT("Шрифт чисел:"));
-	wxStaticText *stText06 = new wxStaticText(_fonts, wxID_ANY, wxT("Шрифт операций:"));
-	wxStaticText *stText07 = new wxStaticText(_fonts, wxID_ANY, wxT("Шрифт меток:"));
-	wxStaticText *stText08 = new wxStaticText(_fonts, wxID_ANY, wxT("Шрифт комментариев:"));
-	wxStaticText *stText09 = new wxStaticText(_fonts, wxID_ANY, wxT("Основной шрифт:"));
+	_stText01 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
+	_stText02 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
+	_stText03 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
+	_stText04 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
+	_stText05 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
+	_stText06 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
+	_stText07 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
+	_stText08 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
+	_stText09 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
 
 	_txtFontStatements = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
 	_txtFontFunctions = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
@@ -284,41 +291,41 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	_txtFontComments = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
 	_txtFontBase = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
 
-	_btnFontsStatements = new wxButton(_fonts, ID_FONTS_STATEMENTS, wxT("Выбрать шрифт..."));
-	_btnFontsFunctions = new wxButton(_fonts, ID_FONTS_FUNCTIONS, wxT("Выбрать шрифт..."));
-	_btnFontsSysVariables = new wxButton(_fonts, ID_FONTS_SYSVARIABLES, wxT("Выбрать шрифт..."));
-	_btnFontsStrings = new wxButton(_fonts, ID_FONTS_STRINGS, wxT("Выбрать шрифт..."));
-	_btnFontsNumbers = new wxButton(_fonts, ID_FONTS_NUMBERS, wxT("Выбрать шрифт..."));
-	_btnFontsOptsBrts = new wxButton(_fonts, ID_FONTS_OPERATIONSBRACKETS, wxT("Выбрать шрифт..."));
-	_btnFontsMarks = new wxButton(_fonts, ID_FONTS_MARKS, wxT("Выбрать шрифт..."));
-	_btnFontsComments = new wxButton(_fonts, ID_FONTS_COMMENTS, wxT("Выбрать шрифт..."));
-	_btnFontsBase = new wxButton(_fonts, ID_FONTS_BASE, wxT("Выбрать шрифт..."));
+	_btnFontsStatements = new wxButton(_fonts, ID_FONTS_STATEMENTS, wxEmptyString);
+	_btnFontsFunctions = new wxButton(_fonts, ID_FONTS_FUNCTIONS, wxEmptyString);
+	_btnFontsSysVariables = new wxButton(_fonts, ID_FONTS_SYSVARIABLES, wxEmptyString);
+	_btnFontsStrings = new wxButton(_fonts, ID_FONTS_STRINGS, wxEmptyString);
+	_btnFontsNumbers = new wxButton(_fonts, ID_FONTS_NUMBERS, wxEmptyString);
+	_btnFontsOptsBrts = new wxButton(_fonts, ID_FONTS_OPERATIONSBRACKETS, wxEmptyString);
+	_btnFontsMarks = new wxButton(_fonts, ID_FONTS_MARKS, wxEmptyString);
+	_btnFontsComments = new wxButton(_fonts, ID_FONTS_COMMENTS, wxEmptyString);
+	_btnFontsBase = new wxButton(_fonts, ID_FONTS_BASE, wxEmptyString);
 
-	topSizerFonts->Add(stText09, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerFonts->Add(_stText09, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerFonts->Add(_txtFontBase, 0, wxGROW|wxALL, 2);
 	topSizerFonts->Add(_btnFontsBase, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerFonts->Add(stText01, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerFonts->Add(_stText01, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerFonts->Add(_txtFontStatements, 0, wxGROW|wxALL, 2);
 	topSizerFonts->Add(_btnFontsStatements, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerFonts->Add(stText02, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerFonts->Add(_stText02, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerFonts->Add(_txtFontFunctions, 0, wxGROW|wxALL, 2);
 	topSizerFonts->Add(_btnFontsFunctions, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerFonts->Add(stText03, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerFonts->Add(_stText03, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerFonts->Add(_txtFontSysVariables, 0, wxGROW|wxALL, 2);
 	topSizerFonts->Add(_btnFontsSysVariables, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerFonts->Add(stText04, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerFonts->Add(_stText04, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerFonts->Add(_txtFontStrings, 0, wxGROW|wxALL, 2);
 	topSizerFonts->Add(_btnFontsStrings, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerFonts->Add(stText05, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerFonts->Add(_stText05, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerFonts->Add(_txtFontNumbers, 0, wxGROW|wxALL, 2);
 	topSizerFonts->Add(_btnFontsNumbers, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerFonts->Add(stText06, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerFonts->Add(_stText06, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerFonts->Add(_txtFontOptsBrts, 0, wxGROW|wxALL, 2);
 	topSizerFonts->Add(_btnFontsOptsBrts, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerFonts->Add(stText07, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerFonts->Add(_stText07, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerFonts->Add(_txtFontMarks, 0, wxGROW|wxALL, 2);
 	topSizerFonts->Add(_btnFontsMarks, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerFonts->Add(stText08, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerFonts->Add(_stText08, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerFonts->Add(_txtFontComments, 0, wxGROW|wxALL, 2);
 	topSizerFonts->Add(_btnFontsComments, 0, wxALIGN_CENTER_VERTICAL);
 	topSizerFonts->AddGrowableCol(1, 0);
@@ -327,29 +334,29 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	_fonts->SetAutoLayout(true);
 
 	_paths = new wxPanel(_notebook);
-	_notebook->AddPage(_paths, wxT("Пути"));
+	_notebook->AddPage(_paths, wxEmptyString);
 
 	wxFlexGridSizer *topSizerPaths = new wxFlexGridSizer(3);
 
-	wxStaticText *stText001 = new wxStaticText(_paths, wxID_ANY, wxT("Путь к плееру:"));
-	wxStaticText *stText002 = new wxStaticText(_paths, wxID_ANY, wxT("Путь к справке:"));
-	wxStaticText *stText003 = new wxStaticText(_paths, wxID_ANY, wxT("Путь к TXT2GAM:"));
+	_stText001 = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
+	_stText002 = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
+	_stText003 = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
 
 	_txtPathPlayer = new wxTextCtrl(_paths, wxID_ANY);
 	_txtPathHelp = new wxTextCtrl(_paths, wxID_ANY);
 	_txtPathTxt2Gam = new wxTextCtrl(_paths, wxID_ANY);
 
-	_btnPathPlayer = new wxButton(_paths, ID_PATH_PLAYER, wxT("Выбрать путь..."));
-	_btnPathHelp = new wxButton(_paths, ID_PATH_HELP, wxT("Выбрать путь..."));
-	_btnPathTxt2Gam = new wxButton(_paths, ID_PATH_TXT2GAM, wxT("Выбрать путь..."));
+	_btnPathPlayer = new wxButton(_paths, ID_PATH_PLAYER, wxEmptyString);
+	_btnPathHelp = new wxButton(_paths, ID_PATH_HELP, wxEmptyString);
+	_btnPathTxt2Gam = new wxButton(_paths, ID_PATH_TXT2GAM, wxEmptyString);
 
-	topSizerPaths->Add(stText001, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerPaths->Add(_stText001, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerPaths->Add(_txtPathPlayer, 0, wxALL|wxGROW, 2);
 	topSizerPaths->Add(_btnPathPlayer, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerPaths->Add(stText002, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerPaths->Add(_stText002, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerPaths->Add(_txtPathHelp, 0, wxALL|wxGROW, 2);
 	topSizerPaths->Add(_btnPathHelp, 0, wxALIGN_CENTER_VERTICAL);
-	topSizerPaths->Add(stText003, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+	topSizerPaths->Add(_stText003, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 	topSizerPaths->Add(_txtPathTxt2Gam, 0, wxALL|wxGROW, 2);
 	topSizerPaths->Add(_btnPathTxt2Gam, 0, wxALIGN_CENTER_VERTICAL);
 	topSizerPaths->AddGrowableCol(1, 0);
@@ -359,25 +366,25 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 
 	#ifdef __WXMSW__
 		_hotkeys = new wxPanel(_notebook);
-		_notebook->AddPage(_hotkeys, wxT("Комбинации клавиш"));
+		_notebook->AddPage(_hotkeys, wxEmptyString);
 
 		wxBoxSizer *topSizerHotKeys = new wxBoxSizer(wxVERTICAL);
 
-		wxStaticText *stText0001 = new wxStaticText(_hotkeys, wxID_ANY, wxT("Список команд:"));
+		_stText0001 = new wxStaticText(_hotkeys, wxID_ANY, wxEmptyString);
 		_lstHotKeys = new wxListCtrl(_hotkeys, ID_LIST_HKEYS, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
-		_lstHotKeys->InsertColumn(0, wxT("Комбинация клавиш"), wxLIST_FORMAT_LEFT, 150);
-		_lstHotKeys->InsertColumn(1, wxT("Исполняемая команда"), wxLIST_FORMAT_LEFT, 300);
+		_lstHotKeys->InsertColumn(0, wxEmptyString, wxLIST_FORMAT_LEFT, 150);
+		_lstHotKeys->InsertColumn(1, wxEmptyString, wxLIST_FORMAT_LEFT, 300);
 
 		wxBoxSizer *btnHotkKeysSizer = new wxBoxSizer(wxHORIZONTAL);
-		_btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEWHKEY, wxT("Добавить..."));
-		_btnEditHotKey = new wxButton(_hotkeys, ID_EDIT_HKEY, wxT("Редактировать..."));
-		_btnDelHotKey = new wxButton(_hotkeys, ID_DELETE_HKEY, wxT("Удалить"));
+		_btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEWHKEY, wxEmptyString);
+		_btnEditHotKey = new wxButton(_hotkeys, ID_EDIT_HKEY, wxEmptyString);
+		_btnDelHotKey = new wxButton(_hotkeys, ID_DELETE_HKEY, wxEmptyString);
 
 		btnHotkKeysSizer->Add(_btnAddNewHotKey, wxALL, 5);
 		btnHotkKeysSizer->Add(_btnEditHotKey, wxALL, 5);
 		btnHotkKeysSizer->Add(_btnDelHotKey, wxALL, 5);
 
-		topSizerHotKeys->Add(stText0001, 0, wxTOP|wxLEFT, 5);
+		topSizerHotKeys->Add(_stText0001, 0, wxTOP|wxLEFT, 5);
 		topSizerHotKeys->Add(_lstHotKeys, 1, wxALL|wxGROW, 5);
 		topSizerHotKeys->Add(btnHotkKeysSizer, 0, wxGROW);
 
@@ -394,8 +401,115 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, Controls *c
 	SetAutoLayout(true);
 	SetMinClientSize(wxSize(500, 400));
 	InitOptionsDialog();
-
 	_btnOK->SetDefault();
+	ReCreateGUI();
+}
+
+OptionsDialog::~OptionsDialog()
+{
+	_langTable.clear();
+}
+
+void OptionsDialog::ReCreateGUI()
+{
+	//Main button
+	_btnOK->SetLabel(_("OK"));
+	_btnCancel->SetLabel(_("Cancel"));
+	_btnApply->SetLabel(_("Apply"));
+	_btnReset->SetLabel(_("Reset"));
+	//Page General
+	_notebook->SetPageText(0, _("General"));
+	_chkAutoSave->SetLabel(_("Auto save every"));
+	_chkFirstLoc->SetLabel(_("Auto create first location:"));
+	_chkDescOfLoc->SetLabel(_("Show short locations descriptions"));
+	_chkOpeningLoc->SetLabel(_("Open location after creation"));
+	_chkOpeningAct->SetLabel(_("Open action after creation"));
+	_chkOnLocActIcons->SetLabel(_("Show locations icons"));
+	_chkLocDescVisible->SetLabel(_("Show base description on location's tab"));
+	_chkLocActsVisible->SetLabel(_("Show base actions on location's tab"));
+	_chkOpenLastGame->SetLabel(_("Remember game file on exit"));
+	_stTextCmbLang->SetLabel(_("Language:"));
+	_txtNameFirsLoc->SetLabel(_("Start"));
+	_autoSaveUnits->SetLabel(_("minutes"));
+	//Page Editor
+	_notebook->SetPageText(1, _("Code editor"));
+	_chkWrapLines->SetLabel(_("Wrap lines by words"));
+	_chkShowLinesNums->SetLabel(_("Show lines numbers"));
+	_chkCollapseCode->SetLabel(_("Collapse blocks of code when location is opened"));
+	//Page Sizes
+	_notebook->SetPageText(2, _("Sizes"));
+	_stTextHeights->SetLabel(_("Relative height of description and location's\ncode fields to the tab's height (%):"));
+	_stTextWidth1->SetLabel(_("Relative width of location's description field\nto the tab's height (%):"));
+	_stTextWidth2->SetLabel(_("Relative width of actions list to the tab's width (%):"));
+	_stTextTabSize->SetLabel(_("Size of TAB:"));
+	//Page Colors
+	_notebook->SetPageText(3, _("Colors"));
+	_stText1->SetLabel(_("Statements color:"));
+	_stText2->SetLabel(_("Functions color:"));
+	_stText3->SetLabel(_("System variables color:"));
+	_stText4->SetLabel(_("Strings color:"));
+	_stText5->SetLabel(_("Numbers color:"));
+	_stText6->SetLabel(_("Operations color:"));
+	_stText7->SetLabel(_("Labels color:"));
+	_stText8->SetLabel(_("Comments color:"));
+	_stText9->SetLabel(_("Base font's color:"));
+	_stText10->SetLabel(_("Tabs background color:"));
+	_stText11->SetLabel(_("Main background color:"));
+	_btnClrsStatements->SetLabel(_("Select color..."));
+	_btnClrsFunctions->SetLabel(_("Select color..."));
+	_btnClrsSysVariables->SetLabel(_("Select color..."));
+	_btnClrsStrings->SetLabel(_("Select color..."));
+	_btnClrsNumbers->SetLabel(_("Select color..."));
+	_btnClrsOptsBrts->SetLabel(_("Select color..."));
+	_btnClrsMarks->SetLabel(_("Select color..."));
+	_btnClrsComments->SetLabel(_("Select color..."));
+	_btnClrsBaseFont->SetLabel(_("Select color..."));
+	_btnClrsTextBack->SetLabel(_("Select color..."));
+	_btnClrsBaseBack->SetLabel(_("Select color..."));
+	//Page Fonts
+	_notebook->SetPageText(4, _("Fonts"));
+	_stText01->SetLabel(_("Statements font:"));
+	_stText02->SetLabel(_("Functions font:"));
+	_stText03->SetLabel(_("System variables font:"));
+	_stText04->SetLabel(_("Strings font:"));
+	_stText05->SetLabel(_("Numbers font:"));
+	_stText06->SetLabel(_("Operations font:"));
+	_stText07->SetLabel(_("Labels font:"));
+	_stText08->SetLabel(_("Comments font:"));
+	_stText09->SetLabel(_("Main font:"));
+	_btnFontsStatements->SetLabel(_("Select font..."));
+	_btnFontsFunctions->SetLabel(_("Select font..."));
+	_btnFontsSysVariables->SetLabel(_("Select font..."));
+	_btnFontsStrings->SetLabel(_("Select font..."));
+	_btnFontsNumbers->SetLabel(_("Select font..."));
+	_btnFontsOptsBrts->SetLabel(_("Select font..."));
+	_btnFontsMarks->SetLabel(_("Select font..."));
+	_btnFontsComments->SetLabel(_("Select font..."));
+	_btnFontsBase->SetLabel(_("Select font..."));
+	//Page Paths
+	_notebook->SetPageText(5, _("Paths"));
+	_stText001->SetLabel(_("Path to player:"));
+	_stText002->SetLabel(_("Path to help:"));
+	_stText003->SetLabel(_("Path to TXT2GAM:"));
+	_btnPathPlayer->SetLabel(_("Select path..."));
+	_btnPathHelp->SetLabel(_("Select path..."));
+	_btnPathTxt2Gam->SetLabel(_("Select path..."));
+	#ifdef __WXMSW__
+		//Page HotKeys
+		_notebook->SetPageText(6,  _("Hotkeys"));
+		_stText0001->SetLabel(_("Hotkeys list:"));
+		wxListItem header; 
+		_lstHotKeys->GetColumn(0, header);
+		header.SetText(_("Hotkey"));
+		_lstHotKeys->SetColumn(0, header);
+		_lstHotKeys->GetColumn(1, header);
+		header.SetText(_("Execute"));
+		_lstHotKeys->SetColumn(1, header);
+		_btnAddNewHotKey->SetLabel(_("Add..."));
+		_btnEditHotKey->SetLabel(_("Edit..."));
+		_btnDelHotKey->SetLabel(_("Delete"));
+	#endif
+	GetSizer()->SetSizeHints(this);
 }
 
 void OptionsDialog::InitColoursDialog(wxColourDialog &dialog, const wxColour &col)
@@ -663,8 +777,8 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
 	switch (event.GetId())
 	{
 	case ID_PATH_PLAYER:
-		dialog.Create(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString,
-			wxT("Файл плеера (*.exe)|*.exe|Все файлы (*.*)|*.*"), wxFD_OPEN);
+		dialog.Create(this, _("Open File"), wxEmptyString, wxEmptyString,
+			_("Player's file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
 		if (dialog.ShowModal() == wxID_OK)
 		{
 			_txtPathPlayer->SetValue(dialog.GetPath());
@@ -672,8 +786,8 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
 		}
 		break;
 	case ID_PATH_HELP:
-		dialog.Create(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString,
-			wxT("Файл справки (*.chm)|*.chm|Все файлы (*.*)|*.*"), wxFD_OPEN);
+		dialog.Create(this, _("Open File"), wxEmptyString, wxEmptyString,
+			_("Help file (*.chm)|*.chm|All files (*.*)|*.*"), wxFD_OPEN);
 		if (dialog.ShowModal() == wxID_OK)
 		{
 			_txtPathHelp->SetValue(dialog.GetPath());
@@ -681,8 +795,8 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
 		}
 		break;
 	case ID_PATH_TXT2GAM:
-		dialog.Create(this, wxT("Открыть файл"), wxEmptyString, wxEmptyString,
-			wxT("Файл конвертора (*.exe)|*.exe|Все файлы (*.*)|*.*"), wxFD_OPEN);
+		dialog.Create(this, _("Open file"), wxEmptyString, wxEmptyString,
+			_("Converter's file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
 		if (dialog.ShowModal() == wxID_OK)
 		{
 			_txtPathTxt2Gam->SetValue(dialog.GetPath());
@@ -701,13 +815,16 @@ void OptionsDialog::OnOkSettings(wxCommandEvent &event)
 void OptionsDialog::OnApplySettings(wxCommandEvent &event)
 {
 	ApplySettings();
+	ReCreateGUI();
 }
 
 void OptionsDialog::OnResetSettings(wxCommandEvent &event)
 {
 	_settings->InitSettings();
 	InitOptionsDialog();
+	_controls->UpdateLocale(_settings->GetLangId());
 	_settings->NotifyAll();
+	ReCreateGUI();
 }
 
 void OptionsDialog::OnStateChanged(wxCommandEvent &event)
@@ -809,9 +926,11 @@ void OptionsDialog::ApplySettings()
 		hotKeysStore->ClearHotkeysData();
 		for (size_t i = 0; i < count; ++i)
 			hotKeysStore->AddHotkeyData(_hotkeysData[i]);
-		_settings->NotifyAll();
 	#endif
-
+	int lang = _langTable[_cmbLang->GetStringSelection()];
+ 	_controls->UpdateLocale(lang);
+	_settings->SetIdLang(lang);
+	_settings->NotifyAll();
 	_btnApply->Enable(false);
 }
 
@@ -916,7 +1035,7 @@ void OptionsDialog::InitOptionsDialog()
 			_hotkeysData.Add(hotKeyData);
 		}
 	#endif
-
+	UpdateLanguagesList();
 	SetSize(_settings->GetOptionsDialogWidth(), _settings->GetOptionsDialogHeight());
 	_btnApply->Enable(false);
 	Refresh();
@@ -929,7 +1048,7 @@ void OptionsDialog::EditHotKey()
 	long index = _lstHotKeys->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	if (index != wxNOT_FOUND)
 	{
-		OptionsHotkeysDialog dialog(this, wxT("Редактирование команды"), _controls);
+		OptionsHotkeysDialog dialog(this, _("Edit macro"), _controls);
 		dialog.SetHotkeyData(_hotkeysData[index]);
 		dialog.CenterOnParent();
 		do
@@ -972,7 +1091,7 @@ void OptionsDialog::AddHotKey()
 	HotkeyData hotKeyData;
 	long index;
 	bool isError = true;
-	OptionsHotkeysDialog dialog(this, wxT("Добавление команды"), _controls);
+	OptionsHotkeysDialog dialog(this, _("Add macro"), _controls);
 	dialog.CenterOnParent();
 	do
 	{
@@ -1023,4 +1142,31 @@ void OptionsDialog::DeleteHotKey()
 		}
 		_btnApply->Enable(true);
 	}
+}
+
+void OptionsDialog::UpdateLanguagesList()
+{
+	wxString filename;
+	const wxLanguageInfo *langinfo;
+	wxString name(wxLocale::GetLanguageName(wxLANGUAGE_DEFAULT));
+	_cmbLang->Clear();
+	if (!name.IsEmpty())
+	{
+		_langTable[_("Default")] = wxLANGUAGE_DEFAULT;
+		_cmbLang->Append(_("Default"));
+	}
+	wxDir dir(_settings->GetPath() + wxT("langs"));
+	if (dir.IsOpened())
+	{
+		for (bool cont = dir.GetFirst(&filename, wxT("*"), wxDIR_DEFAULT); cont; cont = dir.GetNext(&filename))
+		{
+			if (langinfo = wxLocale::FindLanguageInfo(filename))
+			{
+				_langTable[langinfo->Description] = langinfo->Language;
+				_cmbLang->Append(langinfo->Description);
+			}
+		}
+	}
+	name = wxLocale::GetLanguageName(_settings->GetLangId());
+	_cmbLang->SetStringSelection(name);
 }

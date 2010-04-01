@@ -54,7 +54,7 @@ void Settings::InitSettings()
 	_panelsPos = wxT("layout2|")\
 		wxT("name=LocationsNotebook;state=768;dir=5;layer=0;row=0;pos=0;prop=100000|")\
 		wxT("name=Toolbar;state=2106096;dir=1;layer=10;row=0;pos=0;prop=100000;bestw=540;besth=34|")\
-		wxT("name=LocationsList;caption=Локации;state=31459324;dir=4;layer=1;row=0;pos=0;prop=100000;bestw=166|")\
+		wxT("name=LocationsList;state=31459324;dir=4;layer=1;row=0;pos=0;prop=100000;bestw=166|")\
 		wxT("dock_size(5,0,0)=186|dock_size(4,1,0)=168|dock_size(1,10,0)=28|");
 
 	_isAutoSave = false;
@@ -65,16 +65,17 @@ void Settings::InitSettings()
 	_isWrapLines = false;
 	_isOpenNewLoc = true;
 	_isOpenNewAct = true;
-	_isOpenLastGame = true;
+	_isOpenLastGame = false;
 	_isShowLinesNums = true;
 	_isCreateFirstLoc = false;
-	_firstLocName = wxT("Начало");
+	_firstLocName = _("Start");
 	_isShowLocsIcons = true;
 	_isCollapseCode = false;
 	_heightsCoeff = 0.6;
 	_widthsCoeff1 = 0.3;
 	_widthsCoeff2 = 0.25;
 	_tabSize = 4;
+	_idLang = wxLANGUAGE_DEFAULT;
 
 	_font[SYNTAX_BASE] = wxFont(10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Courier New"));
 	_font[SYNTAX_STATEMENTS] = wxFont(10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
@@ -101,6 +102,7 @@ void Settings::InitSettings()
 
 void Settings::LoadSettings()
 {
+	int coeff;
 	if (!wxFileExists(_currentConfigPath)) return;
 
 	wxFileConfig cfg(wxEmptyString, wxEmptyString, _currentConfigPath);
@@ -114,9 +116,12 @@ void Settings::LoadSettings()
 	cfg.Read(wxT("Pos/Height"), &_frameHeight);
 	cfg.Read(wxT("Pos/Maximize"), &_isFrameMaximized);
 	cfg.Read(wxT("Pos/ShowStatusBar"), &_isShowStatusBar);
-	cfg.Read(wxT("Pos/HeightsCoef"), &_heightsCoeff);
-	cfg.Read(wxT("Pos/WidthsCoef1"), &_widthsCoeff1);
-	cfg.Read(wxT("Pos/WidthsCoef2"), &_widthsCoeff2);
+	cfg.Read(wxT("Pos/HeightsCoef"), &coeff);
+	_heightsCoeff = (double) coeff / 100;
+	cfg.Read(wxT("Pos/WidthsCoef1"), &coeff);
+	_widthsCoeff1 = (double) coeff / 100;
+	cfg.Read(wxT("Pos/WidthsCoef2"), &coeff);
+	_widthsCoeff2 = (double) coeff / 100;
 	cfg.Read(wxT("Pos/Panels"), &_panelsPos);
 	cfg.Read(wxT("OptionsDialog/Width"), &_optionsDialogWidth);
 	cfg.Read(wxT("OptionsDialog/Height"), &_optionsDialogHeight);
@@ -132,6 +137,7 @@ void Settings::LoadSettings()
 	cfg.Read(wxT("General/FirstLocName"), &_firstLocName);
 	cfg.Read(wxT("General/ShowLocsIcons"), &_isShowLocsIcons);
 	cfg.Read(wxT("General/TabSize"), &_tabSize);
+	cfg.Read(wxT("General/Language"), &_idLang, wxLANGUAGE_DEFAULT);
 	cfg.Read(wxT("Editor/WrapLines"), &_isWrapLines);
 	cfg.Read(wxT("Editor/ShowLinesNums"), &_isShowLinesNums);
 	cfg.Read(wxT("Editor/CollapseCode"), &_isCollapseCode);
@@ -161,6 +167,7 @@ void Settings::LoadSettings()
 
 void Settings::SaveSettings()
 {
+	int coeff;
 	wxFileConfig cfg(wxEmptyString, wxEmptyString, _currentConfigPath);
 
 	cfg.Write(wxT("Paths/Player"), _currentPlayerPath);
@@ -173,9 +180,12 @@ void Settings::SaveSettings()
 	cfg.Write(wxT("Pos/Height"), _frameHeight);
 	cfg.Write(wxT("Pos/Maximize"), _isFrameMaximized);
 	cfg.Write(wxT("Pos/ShowStatusBar"), _isShowStatusBar);
-	cfg.Write(wxT("Pos/HeightsCoef"), _heightsCoeff);
-	cfg.Write(wxT("Pos/WidthsCoef1"), _widthsCoeff1);
-	cfg.Write(wxT("Pos/WidthsCoef2"), _widthsCoeff2);
+	coeff = (int) (_heightsCoeff * 100);
+	cfg.Write(wxT("Pos/HeightsCoef"), coeff);
+	coeff = (int) (_widthsCoeff1 * 100);
+	cfg.Write(wxT("Pos/WidthsCoef1"), coeff);
+	coeff = (int) (_widthsCoeff2 * 100);
+	cfg.Write(wxT("Pos/WidthsCoef2"), coeff);
 	cfg.Write(wxT("Pos/Panels"), _panelsPos);
 	cfg.Write(wxT("OptionsDialog/Width"), _optionsDialogWidth);
 	cfg.Write(wxT("OptionsDialog/Height"), _optionsDialogHeight);
@@ -191,6 +201,7 @@ void Settings::SaveSettings()
 	cfg.Write(wxT("General/FirstLocName"), _firstLocName);
 	cfg.Write(wxT("General/ShowLocsIcons"), _isShowLocsIcons);
 	cfg.Write(wxT("General/TabSize"), _tabSize);
+	cfg.Write(wxT("General/Language"), _idLang);
 	cfg.Write(wxT("Editor/WrapLines"), _isWrapLines);
 	cfg.Write(wxT("Editor/ShowLinesNums"),_isShowLinesNums);
 	cfg.Write(wxT("Editor/CollapseCode"), _isCollapseCode);

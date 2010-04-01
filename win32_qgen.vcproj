@@ -345,6 +345,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\Application.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\ChkSysHotKey.cpp"
 				>
 			</File>
@@ -413,6 +417,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\MainFrame.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\MergeDialog.cpp"
 				>
 			</File>
@@ -422,10 +430,6 @@
 			</File>
 			<File
 				RelativePath=".\src\OptionsHotKeysDialog.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\QGen.cpp"
 				>
 			</File>
 			<File
@@ -464,6 +468,10 @@
 			</File>
 			<File
 				RelativePath=".\src\ActionsPanel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\Application.h"
 				>
 			</File>
 			<File
@@ -551,6 +559,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\MainFrame.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\MergeDialog.h"
 				>
 			</File>
@@ -560,10 +572,6 @@
 			</File>
 			<File
 				RelativePath=".\src\OptionsHotKeysDialog.h"
-				>
-			</File>
-			<File
-				RelativePath=".\src\QGen.h"
 				>
 			</File>
 			<File

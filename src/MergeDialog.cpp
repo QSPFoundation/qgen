@@ -42,11 +42,11 @@ MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString
 
 	wxStaticText *msgText = new wxStaticText(this, wxID_ANY, message);
 
-	_replace = new wxButton(this, ID_MERGE_REPLACE, wxT("Заменить"));
-	_skip = new wxButton(this, ID_MERGE_SKIP, wxT("Пропустить"));
-	_cancel = new wxButton(this, ID_MERGE_CANCEL, wxT("Отмена"));
+	_replace = new wxButton(this, ID_MERGE_REPLACE, _("Replace"));
+	_skip = new wxButton(this, ID_MERGE_SKIP, _("Skip"));
+	_cancel = new wxButton(this, ID_MERGE_CANCEL, _("Cancel"));
 
-	_chkToAll= new wxCheckBox(this, wxID_ANY, wxT("для всех"));
+	_chkToAll= new wxCheckBox(this, wxID_ANY, _("for all"));
 
 	msgSizer->Add(info_icon, 0, wxALIGN_LEFT);
 	msgSizer->AddSpacer(8);

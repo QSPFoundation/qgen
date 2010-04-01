@@ -35,7 +35,7 @@ ActionCode::ActionCode( wxWindow *owner, ILocationPage *locPage, IControls *cont
 	wxBoxSizer *topSizer = new wxBoxSizer( wxVERTICAL );
 	wxBoxSizer *sizerPathPict = new wxBoxSizer( wxHORIZONTAL );
 
-	_button = new wxButton( this, ID_PICT_OPEN, wxT("Изображение..."), wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT );
+	_button = new wxButton( this, ID_PICT_OPEN, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT );
 	_pathPicTxtCtrl = new ImagePathTextBox( this, wxID_ANY, locPage, _controls );
 
 	sizerPathPict->Add( _pathPicTxtCtrl, 1, wxALL|wxGROW, 1 );
@@ -48,7 +48,7 @@ ActionCode::ActionCode( wxWindow *owner, ILocationPage *locPage, IControls *cont
 
 	SetSizerAndFit( topSizer );
 	SetAutoLayout( true );
-
+	Update();
 	_controls->GetSettings()->AddObserver(this);
 }
 
@@ -59,6 +59,7 @@ ActionCode::~ActionCode()
 
 void ActionCode::Update(bool isFromObservable)
 {
+	_button->SetLabel(_("Image..."));
 	GetSizer()->Layout();
 }
 

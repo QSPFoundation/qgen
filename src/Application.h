@@ -19,26 +19,24 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef _QGEN_TOOLBAR_H_
-	#define _QGEN_TOOLBAR_H_
+#ifndef QGEN_APPLICATION_H_
+	#define QGEN_APPLICATION_H_
+	
+	#include <wx/filename.h>
+	#include <wx/cmdline.h>
+	#include <wx/fileconf.h>
+	#include <wx/stdpaths.h>
+	#include "Controls.h"
+	#include "InitEvent.h"
+	#include "MainFrame.h"
 
-	#include <wx/wx.h>
-	#include <wx/aui/auibar.h>
-	#include "IControls.h"
-
-	class ToolBar : public wxAuiToolBar, public IObserver
+	class Application : public wxApp
 	{
-		DECLARE_CLASS(ToolBar)
-		DECLARE_EVENT_TABLE()
-	public:
-		ToolBar(wxWindow *parent, wxWindowID id, IControls *controls);
-		~ToolBar();
 	private:
-		IControls *_controls;
-
-		void OnMotion(wxMouseEvent &evt);
-		void OnLeaveWindow(wxMouseEvent &evt);
-		void Update(bool isFromObservable = false);
+		Controls		*_controls;
+	public:
+		virtual bool OnInit();
+		virtual int OnExit();
 	};
 
 #endif

@@ -89,6 +89,7 @@
 		wxString		_panelsPos;
 		HotkeysStore	_hotkeysStore;
 		SearchDataStore _searchDataStore;
+		int				_idLang;
 		ObserverList	_observers;
 	public:
 		Settings(const wxString &path);
@@ -174,6 +175,9 @@
 
 		HotkeysStore *GetHotKeys() { return &_hotkeysStore; }
 		SearchDataStore *GetSearchDataStore() { return &_searchDataStore; }
+		void SetIdLang(int id) { _idLang = id; }
+		int GetLangId() { return _idLang; }
+		wxString GetPath() const { return _path; }
 	};
 
 #endif

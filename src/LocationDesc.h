@@ -29,16 +29,19 @@
 	#include "DataContainer.h"
 	#include "SyntaxTextBox.h"
 
-	class LocationDesc : public wxPanel
+	class LocationDesc : public wxPanel, public IObserver
 	{
 		DECLARE_CLASS(LocationDesc)
 	private:
 		ILocationPage		*_locPage;
 		SyntaxTextBox		*_text;
 		IControls			*_controls;
+		wxStaticText		*_stTextDesc;
 	public:
 		LocationDesc(wxWindow *owner, ILocationPage *locPage, IControls *controls);
+		~LocationDesc();
 
+		void Update(bool isFromObservable = false);
 		void SaveDesc();
 		void LoadDesc();
 		void Clear();

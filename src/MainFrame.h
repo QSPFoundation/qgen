@@ -24,16 +24,16 @@
 
 	#include <wx/filedlg.h>
 	#include <wx/wfstream.h>
-	#include <wx/filename.h>
-	#include <wx/cmdline.h>
-	#include <wx/fileconf.h>
 	#include <wx/fdrepdlg.h>
 	#include <wx/aboutdlg.h>
 	#include <wx/help.h>
-	#include "Controls.h"
+	#include <wx/aui/aui.h>
+	#include "InitEvent.h"
+	#include "IControls.h"
+	#include "LocationsListBox.h"
+	#include "LocationsNotebook.h"
 	#include "SearchDialog.h"
 	#include "OptionsDialog.h"
-	#include "InitEvent.h"
 	#include "ToolBar.h"
 	#ifdef __WXMSW__
 		#include "DesktopWindow.h"
@@ -72,6 +72,7 @@
 	#include "bitmaps/menu_exit.xpm"
 
 	#define QGEN_TITLE wxT("Quests Generator")
+	#define QGEN_APPNAME wxT("qgen")
 
 	enum
 	{
@@ -79,18 +80,21 @@
 		ID_TOOLBAR,
 		ID_TIMER_AUTO_SAVE,
 		ID_TIMER_UPD_TOOLBAR,
+		ID_TOGGLE,
 		ID_TOGGLE_TOOLBAR,
 		ID_TOGGLE_STATUSBAR,
 		ID_TOGGLE_LISTBOX,
-		ID_QUEST_NEW,
-		ID_QUEST_OPEN,
-		ID_QUEST_JOIN,
-		ID_QUEST_SAVE,
-		ID_QUEST_SAVEAS,
-		ID_QUEST_EXPORTTXT,
-		ID_QUEST_EXPORTTXT2GAM,
-		ID_QUEST_IMPORT,
-		ID_QUEST_PLAY,
+		ID_GAME_NEW,
+		ID_GAME_OPEN,
+		ID_GAME_JOIN,
+		ID_GAME_SAVE,
+		ID_GAME_SAVEAS,
+		ID_GAME_EXPORT,
+		ID_GAME_EXPORTTXT,
+		ID_GAME_EXPORTTXT2GAM,
+		ID_GAME_IMPORT,
+		ID_GAME_IMPORTTXT2GAM,
+		ID_GAME_PLAY,
 		ID_QGEN_EXIT,
 		ID_UTIL_FIND,
 		ID_UTIL_INF,
@@ -135,31 +139,20 @@
 		ID_TAB_FIX
 	};
 
-	class QGenApp : public wxApp
-	{
-	private:
-		Controls		*_controls;
-	public:
-		virtual bool OnInit();
-		virtual int OnExit();
-	};
-
-	DECLARE_APP(QGenApp)
-
-	class QGenMainFrame : public wxFrame
+	class MainFrame : public wxFrame, public IObserver
 	{
 		DECLARE_EVENT_TABLE()
 	private:
 		wxAuiManager		_manager;
 		wxTimer				_timerAutoSave;
 		wxTimer				_timerUpdToolBar;
-		QGenToolBar			*_toolBar;
+		ToolBar				*_toolBar;
 		wxMenuBar			*_menu_bar;
 		LocationsListBox	*_locListBox;
 		LocationsNotebook	*_locNotebook;
-		Controls			*_controls;
+		IControls			*_controls;
 		SearchDialog		*_findDlg;
-
+		
 		void OnInit(InitEvent &event);
 		void OnExit(wxCommandEvent &event);
 		void OnQuit(wxCloseEvent &event);
@@ -169,7 +162,7 @@
 		void OnLoadFile(wxCommandEvent &event);
 		void OnSaveQuestAs(wxCommandEvent &event);
 		void OnSaveQuest(wxCommandEvent &event);
-		void OnNewQuest(wxCommandEvent &event);
+		void OnNewGame(wxCommandEvent &event);
 		void OnJoinQuest(wxCommandEvent &event);
 		void OnPlayQuest(wxCommandEvent &event);
 		void OnExportTxtFile(wxCommandEvent &event);
@@ -228,12 +221,15 @@
 		void UpdateTitle();
 		bool QuestChange();
 		void TogglePaneVisibility(wxString pane_name);
-
 	public:
-		QGenMainFrame( Controls *controls );
-		~QGenMainFrame();
+		MainFrame(IControls *controls);
+		~MainFrame();
 
 		bool Create(const wxSize& size = wxDefaultSize, long style = wxDEFAULT_FRAME_STYLE);
+		void Update(bool isFromObservable = false);
+		LocationsListBox *GetLocListBox() const { return _locListBox; }
+		LocationsNotebook *GetNotebook() const { return _locNotebook; }
+		void CreateNewGame();
 	};
 
 #endif

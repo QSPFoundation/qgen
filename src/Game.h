@@ -108,6 +108,7 @@
 	#define QGEN_MAXLOCATIONNAMELEN 100
 	#define QGEN_MAXACTIONNAMELEN 500
 	#define QGEN_DELIMS QGEN_FMT("():=+-*/<>!&,[] '\"\t{}%@#^;.?~\\|\r\n")
+	#define QGEN_BOM "\xFF\xFE"
 
 	#define wxGetBitmapFromMemory(name) _wxGetBitmapFromMemory(name ## _png, sizeof(name ## _png))
 		inline wxBitmap _wxGetBitmapFromMemory(const unsigned char *data, int length)

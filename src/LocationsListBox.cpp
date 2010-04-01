@@ -20,7 +20,7 @@
 */
 
 #include "LocationsListBox.h"
-#include "QGen.h"
+#include "MainFrame.h"
 
 IMPLEMENT_CLASS(LocationsListBox, wxTreeCtrl)
 
@@ -98,25 +98,25 @@ void LocationsListBox::OnRightClick( wxMouseEvent &event )
 		SetFocus();
 		SelectItem(id);
 	}
-	menu.Append(ID_LOC_CREATE, wxT("Создать..."));
-	menu.Append(ID_LOC_RENAME, wxT("Переименовать..."));
-	menu.Append(ID_LOC_DEL, wxT("Удалить"));
+	menu.Append(ID_LOC_CREATE, _("Create..."));
+	menu.Append(ID_LOC_RENAME, _("Rename..."));
+	menu.Append(ID_LOC_DEL, _("Delete"));
 	menu.AppendSeparator();
-	menu.Append(ID_FOLDER_CREAT, wxT("Создать папку..."));
-	menu.Append(ID_FOLDER_RENAME, wxT("Переименовать папку..."));
-	menu.Append(ID_FOLDER_DEL, wxT("Удалить папку"));
+	menu.Append(ID_FOLDER_CREAT, _("Create folder..."));
+	menu.Append(ID_FOLDER_RENAME, _("Rename folder..."));
+	menu.Append(ID_FOLDER_DEL, _("Delete folder"));
 	menu.AppendSeparator();
-	menu.Append(ID_LOC_COPY, wxT("Копировать"));
-	menu.Append(ID_LOC_PASTE, wxT("Вставить"));
-	menu.Append(ID_LOC_REPLACE, wxT("Заменить"));
-	menu.Append(ID_LOC_PASTENEW, wxT("Вставить в..."));
-	menu.Append(ID_LOC_CLEAR, wxT("Очистить"));
+	menu.Append(ID_LOC_COPY, _("Copy"));
+	menu.Append(ID_LOC_PASTE, _("Paste"));
+	menu.Append(ID_LOC_REPLACE, _("Replace"));
+	menu.Append(ID_LOC_PASTENEW, _("Paste in..."));
+	menu.Append(ID_LOC_CLEAR, _("Clear"));
 	menu.AppendSeparator();
-	menu.Append(ID_LOC_SORTASC, wxT("Сортировать по алфавиту"));
-	menu.Append(ID_LOC_SORTDESC, wxT("Сортировать в обратном порядке"));
+	menu.Append(ID_LOC_SORTASC, _("Sort ascending"));
+	menu.Append(ID_LOC_SORTDESC, _("Sort descending"));
 	menu.AppendSeparator();
-	menu.Append(ID_LOC_EXPAND, wxT("Развернуть все"));
-	menu.Append(ID_LOC_COLLAPSE, wxT("Свернуть все"));
+	menu.Append(ID_LOC_EXPAND, _("Expand all"));
+	menu.Append(ID_LOC_COLLAPSE, _("Collapse all"));
 	_controls->UpdateMenuItems(&menu);
 	PopupMenu(&menu);
 }

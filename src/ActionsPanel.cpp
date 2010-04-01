@@ -20,7 +20,7 @@
 */
 
 #include "ActionsPanel.h"
-#include "QGen.h"
+#include "MainFrame.h"
 
 IMPLEMENT_CLASS(ActionsPanel, wxPanel)
 
