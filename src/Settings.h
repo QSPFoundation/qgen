@@ -45,7 +45,7 @@
 		SYNTAX_DUMMY
 	};
 
-	WX_DECLARE_LIST(IObserver, ObserverList);
+	WX_DECLARE_LIST(IObserver, ObserversList);
 
 	class Settings
 	{
@@ -90,7 +90,7 @@
 		HotkeysStore	_hotkeysStore;
 		SearchDataStore _searchDataStore;
 		int				_idLang;
-		ObserverList	_observers;
+		ObserversList	_observers;
 	public:
 		Settings(const wxString &path);
 

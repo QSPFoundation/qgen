@@ -324,7 +324,7 @@ void MainFrame::Update( bool isFromObservable /*= false*/ )
 	menuBar->SetLabel(ID_GAME_SAVE, _("&Save\tCtrl+S"));
 	menuBar->SetHelpString(ID_GAME_SAVE, _("Save game"));
 	menuBar->SetLabel(ID_GAME_SAVEAS, _("Save &as...\tCtrl+W"));
-	menuBar->SetHelpString(ID_GAME_SAVEAS, _("Save game in another file"));
+	menuBar->SetHelpString(ID_GAME_SAVEAS, _("Save game into another file..."));
 	//Sub menu Export
 	menuBar->SetLabel(ID_GAME_EXPORT, _("&Export"));
 	menuBar->SetLabel(ID_GAME_EXPORTTXT, _("Text file..."));
@@ -547,7 +547,7 @@ void MainFrame::SaveLayout()
 	settings->SetFrameHeight(r.GetHeight());
 }
 
-void MainFrame::TogglePaneVisibility(wxString pane_name)
+void MainFrame::TogglePaneVisibility(const wxString &pane_name)
 {
 	wxAuiPaneInfoArray& all_panes = _manager.GetAllPanes();
 	size_t i, count;
@@ -717,7 +717,7 @@ void MainFrame::OnDeleteText( wxCommandEvent &event )
 void MainFrame::OnJoinQuest( wxCommandEvent &event )
 {
 	wxFileDialog dialog(this, 
-		_("Open game file"), wxEmptyString, wxEmptyString,
+		_("Join game file"), wxEmptyString, wxEmptyString,
 		_("QSP games (*.qsp;*.gam)|*.qsp;*.gam"), wxFD_OPEN);
 	dialog.CenterOnParent();
 	if (dialog.ShowModal() == wxID_OK)

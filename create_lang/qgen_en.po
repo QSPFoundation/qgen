@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: English 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-30 19:35+1100\n"
-"PO-Revision-Date: 2010-04-01 19:34+1000\n"
+"PO-Revision-Date: 2010-04-09 05:26+1000\n"
 "Last-Translator: BaxZzZz <baxzzzz@gmail.com>\n"
 "Language-Team: English <baxzzzz@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -442,14 +442,14 @@ msgstr "Input new location's name:"
 msgid "Input password:"
 msgstr "Input password:"
 
+msgid "Join game file"
+msgstr "Join game file"
+
 msgid "Labels color:"
 msgstr "Labels color:"
 
 msgid "Labels font:"
 msgstr "Labels font:"
-
-msgid "Language:"
-msgstr "Language:"
 
 msgid ""
 "Location with the same name already exists!\n"
@@ -507,9 +507,6 @@ msgstr "Numbers font:"
 
 msgid "OK"
 msgstr "OK"
-
-msgid "Open File"
-msgstr "Open File"
 
 msgid "Open action after creation"
 msgstr "Open action after creation"
@@ -690,11 +687,11 @@ msgstr "Save game file"
 msgid "Save game file?"
 msgstr "Save game file?"
 
-msgid "Save game in another file"
-msgstr "Save game in another file"
+msgid "Save game into another file..."
+msgstr "Save game into another file..."
 
-msgid "Save game in another file (Ctrl+W)"
-msgstr "Save game in another file (Ctrl+W)"
+msgid "Save game into another file... (Ctrl+W)"
+msgstr "Save game into another file... (Ctrl+W)"
 
 msgid "Save text file"
 msgstr "Save text file"
@@ -842,6 +839,9 @@ msgstr "This keys combination is used already! Select another combination."
 
 msgid "Total game size: %i characters"
 msgstr "Total game size: %i characters"
+
+msgid "UI language"
+msgstr "UI language"
 
 msgid "Undo"
 msgstr "Undo"

@@ -69,7 +69,7 @@ void ToolBar::Update( bool isFromObservable /*= false*/ )
 	SetToolShortHelp(ID_LOC_DEL, _("Delete selected location (F8)"));
 	SetToolShortHelp(ID_GAME_OPEN, _("Open game... (Ctrl+O)"));
 	SetToolShortHelp(ID_GAME_SAVE, _("Save game (Ctrl+S)"));
-	SetToolShortHelp(ID_GAME_SAVEAS, _("Save game in another file (Ctrl+W)"));
+	SetToolShortHelp(ID_GAME_SAVEAS, _("Save game into another file... (Ctrl+W)"));
 	SetToolShortHelp(ID_GAME_PLAY, _("Run game (F5)"));
 	SetToolShortHelp(ID_UTIL_INF, _("Show game statistics (Ctrl+I)"));
 	SetToolShortHelp(ID_TEXT_UNDO, _("Undo (Ctrl+Z)"));

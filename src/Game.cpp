@@ -685,7 +685,7 @@ bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
 				container->GetLocationName(idxLoc).wx_str());
 		len = qspGameCodeWriteVal(&buf, len, str, true, false);
 	}
-	fwrite(QGEN_BOM, 1, 2, f);
+	fwrite(QGEN_BOM, 1, sizeof(QGEN_BOM) - 1, f);
 	fwrite(buf, 2, len, f);
 	free(buf);
 	fclose(f);
@@ -770,7 +770,7 @@ bool qspExportTxt2Game(const QGEN_CHAR *fileName, Controls *controls)
 				container->GetLocationName(idxLoc).wx_str());
 		len = qspGameCodeWriteVal(&buf, len, str, true, false);
 	}
-	fwrite(QGEN_BOM, 1, 2, f);
+	fwrite(QGEN_BOM, 1, sizeof(QGEN_BOM) - 1, f);
 	fwrite(buf, 2, len, f);
 	free(buf);
 	fclose(f);

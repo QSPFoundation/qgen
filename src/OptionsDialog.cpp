@@ -428,7 +428,7 @@ void OptionsDialog::ReCreateGUI()
 	_chkLocDescVisible->SetLabel(_("Show base description on location's tab"));
 	_chkLocActsVisible->SetLabel(_("Show base actions on location's tab"));
 	_chkOpenLastGame->SetLabel(_("Remember game file on exit"));
-	_stTextCmbLang->SetLabel(_("Language:"));
+	_stTextCmbLang->SetLabel(_("UI language"));
 	_txtNameFirsLoc->SetLabel(_("Start"));
 	_autoSaveUnits->SetLabel(_("minutes"));
 	//Page Editor
@@ -777,7 +777,7 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
 	switch (event.GetId())
 	{
 	case ID_PATH_PLAYER:
-		dialog.Create(this, _("Open File"), wxEmptyString, wxEmptyString,
+		dialog.Create(this, _("Select player's file"), wxEmptyString, wxEmptyString,
 			_("Player's file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
 		if (dialog.ShowModal() == wxID_OK)
 		{
@@ -786,7 +786,7 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
 		}
 		break;
 	case ID_PATH_HELP:
-		dialog.Create(this, _("Open File"), wxEmptyString, wxEmptyString,
+		dialog.Create(this, _("Select help file"), wxEmptyString, wxEmptyString,
 			_("Help file (*.chm)|*.chm|All files (*.*)|*.*"), wxFD_OPEN);
 		if (dialog.ShowModal() == wxID_OK)
 		{
@@ -795,7 +795,7 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
 		}
 		break;
 	case ID_PATH_TXT2GAM:
-		dialog.Create(this, _("Open file"), wxEmptyString, wxEmptyString,
+		dialog.Create(this, _("Select converter's file"), wxEmptyString, wxEmptyString,
 			_("Converter's file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
 		if (dialog.ShowModal() == wxID_OK)
 		{

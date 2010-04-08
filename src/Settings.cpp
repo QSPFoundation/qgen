@@ -22,7 +22,7 @@
 #include "Settings.h"
 #include <wx/listimpl.cpp>
 
-WX_DEFINE_LIST(ObserverList);
+WX_DEFINE_LIST(ObserversList);
 
 Settings::Settings(const wxString &path)
 {
@@ -246,6 +246,6 @@ void Settings::RemoveAllObservers()
 
 void Settings::NotifyAll()
 {
-	for (ObserverList::const_iterator i = _observers.begin(); i != _observers.end(); ++i)
+	for (ObserversList::const_iterator i = _observers.begin(); i != _observers.end(); ++i)
 		(*i)->Update(true);
 }

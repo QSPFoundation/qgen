@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Russian 1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-30 19:35+1100\n"
-"PO-Revision-Date: 2010-04-01 19:33+1000\n"
+"PO-Revision-Date: 2010-04-09 05:27+1000\n"
 "Last-Translator: BaxZzZz <baxzzzz@gmail.com>\n"
 "Language-Team: Russian <baxzzzz@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -442,14 +442,14 @@ msgstr "Введите новое название локации:"
 msgid "Input password:"
 msgstr "Введите пароль:"
 
+msgid "Join game file"
+msgstr "Присоединить файл игры"
+
 msgid "Labels color:"
 msgstr "Цвет меток:"
 
 msgid "Labels font:"
 msgstr "Шрифт меток:"
-
-msgid "Language:"
-msgstr "Язык:"
 
 msgid ""
 "Location with the same name already exists!\n"
@@ -507,9 +507,6 @@ msgstr "Шрифт чисел:"
 
 msgid "OK"
 msgstr "OK"
-
-msgid "Open File"
-msgstr "Открыть файл"
 
 msgid "Open action after creation"
 msgstr "Открытие действия при создании"
@@ -690,11 +687,11 @@ msgstr "Сохранить игру"
 msgid "Save game file?"
 msgstr "Сохранить игру?"
 
-msgid "Save game in another file"
-msgstr "Сохранить игру под другим именем"
+msgid "Save game into another file..."
+msgstr "Сохранить игру под другим именем..."
 
-msgid "Save game in another file (Ctrl+W)"
-msgstr "Сохранить игру под другим именем (Ctrl+W)"
+msgid "Save game into another file... (Ctrl+W)"
+msgstr "Сохранить игру под другим именем... (Ctrl+W)"
 
 msgid "Save text file"
 msgstr "Сохранить файл"
@@ -709,7 +706,7 @@ msgid "Select color..."
 msgstr "Выбрать цвет..."
 
 msgid "Select converter's file"
-msgstr "Выберите файл"
+msgstr "Выберите файл конвертера"
 
 msgid "Select font..."
 msgstr "Выбрать шрифт..."
@@ -842,6 +839,9 @@ msgstr "Такая комбинация клавиш уже использует
 
 msgid "Total game size: %i characters"
 msgstr "Всего локации игры содержат: %i символ(а/ов)"
+
+msgid "UI language"
+msgstr "Язык интерфейса"
 
 msgid "Undo"
 msgstr "Отменить"

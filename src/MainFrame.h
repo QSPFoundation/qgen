@@ -220,7 +220,7 @@
 		void SaveLayout();
 		void UpdateTitle();
 		bool QuestChange();
-		void TogglePaneVisibility(wxString pane_name);
+		void TogglePaneVisibility(const wxString &pane_name);
 	public:
 		MainFrame(IControls *controls);
 		~MainFrame();
