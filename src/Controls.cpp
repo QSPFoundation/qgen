@@ -398,12 +398,13 @@ bool Controls::GetBufferedLocName(const wxString &buffer, wxString &locName)
 		ShowMessage(QGEN_MSG_WRONGFORMAT);
 		return false;
 	}
+	size_t lenDelim = QGEN_LEN(QGEN_STRSDELIM);
 	//ID формата файла
 	last = buffer.find(QGEN_STRSDELIM);
 	//Данные о версии редактора
-	last = buffer.find(QGEN_STRSDELIM, last + 2);
+	last = buffer.find(QGEN_STRSDELIM, last + lenDelim);
 	//Имя локации
-	first = last + 2;
+	first = last + lenDelim;
 	last = buffer.find(QGEN_STRSDELIM, first);
 	locName = buffer.Mid(first, last - first);
 	return true;
@@ -422,28 +423,28 @@ bool Controls::DeserializeLocData(size_t locIndex, const wxString &buffer)
 		return false;
 	}
 	_container->ClearLocation(locIndex);
-
+	size_t lenDelim = QGEN_LEN(QGEN_STRSDELIM);
 	//ID формата файла
 	last = buffer.find(QGEN_STRSDELIM);
 	//Данные о версии редактора
-	last = buffer.find(QGEN_STRSDELIM, last + 2);
+	last = buffer.find(QGEN_STRSDELIM, last + lenDelim);
 	//Имя локации
-	last = buffer.find(QGEN_STRSDELIM, last + 2);
+	last = buffer.find(QGEN_STRSDELIM, last + lenDelim);
 
 	//Описание локации
-	first = last + 2;
+	first = last + lenDelim;
 	last = buffer.find(QGEN_STRSDELIM, first);
 	str = buffer.Mid(first, last - first);
 	_container->SetLocationDesc(locIndex, DecodeString(str));
 
 	//Код локации
-	first = last + 2;
+	first = last + lenDelim;
 	last = buffer.find(QGEN_STRSDELIM, first);
 	str = buffer.Mid(first, last - first);
 	_container->SetLocationCode(locIndex, DecodeString(str));
 
 	//Количество действий
-	first = last + 2;
+	first = last + lenDelim;
 	last = buffer.find(QGEN_STRSDELIM, first);
 	str = DecodeString(buffer.Mid(first, last - first));
 	str.ToLong(&actsCount);
@@ -451,20 +452,20 @@ bool Controls::DeserializeLocData(size_t locIndex, const wxString &buffer)
 	for (long i = 0; i < actsCount; ++i)
 	{
 		//Изображение
-		first = last + 2;
+		first = last + lenDelim;
 		last = buffer.find(QGEN_STRSDELIM, first);
 		str = buffer.Mid(first, last - first);
 		actImage = DecodeString(str);
 
 		//Название
-		first = last + 2;
+		first = last + lenDelim;
 		last = buffer.find(QGEN_STRSDELIM, first);
 		str = buffer.Mid(first, last - first);
 		_container->AddAction(locIndex, DecodeString(str));
 		_container->SetActionPicturePath(locIndex, i, actImage);
 
 		//Код
-		first = last + 2;
+		first = last + lenDelim;
 		last = buffer.find(QGEN_STRSDELIM, first);
 		str = buffer.Mid(first, last - first);
 		_container->SetActionCode(locIndex, i, DecodeString(str));
@@ -848,8 +849,30 @@ bool Controls::IsAllLocsClosed() const
 
 bool Controls::IsCorrectDataFormat(const wxString &str)
 {
-	return (str.Mid(0, 7) == QGEN_GAMEID);
-}
+	size_t count = 0;
+	wxArrayString strArray;
+	int last, first = 0;
+
+	last = str.find(QGEN_STRSDELIM);
+	if (last == wxNOT_FOUND) return false;	
+	do
+	{
+		++count;
+		strArray.Add(str.Mid(first, last - first));
+		first = last + QGEN_LEN(QGEN_STRSDELIM);
+		last = str.find(QGEN_STRSDELIM, first);
+	} while(last != wxNOT_FOUND);
+
+	if (count <= 5) return false;
+	//ID формата файла
+	if (!strArray[0].IsSameAs(QGEN_GAMEID)) return false;
+	//Количество действий
+	int actsCount = wxAtoi(strArray[5]);
+	//Общее кличество строк
+	if (count < 5 + actsCount * 3) return false;
+	return true;
+} 
+
 
 wxString Controls::ConvertSearchString(const wxString& s, bool isMatchCase)
 {
