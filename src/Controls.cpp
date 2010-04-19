@@ -398,13 +398,12 @@ bool Controls::GetBufferedLocName(const wxString &buffer, wxString &locName)
 		ShowMessage(QGEN_MSG_WRONGFORMAT);
 		return false;
 	}
-	size_t lenDelim = QGEN_LEN(QGEN_STRSDELIM);
 	//ID формата файла
 	last = buffer.find(QGEN_STRSDELIM);
 	//Данные о версии редактора
-	last = buffer.find(QGEN_STRSDELIM, last + lenDelim);
+	last = buffer.find(QGEN_STRSDELIM, last + QGEN_LEN(QGEN_STRSDELIM));
 	//Имя локации
-	first = last + lenDelim;
+	first = last + QGEN_LEN(QGEN_STRSDELIM);
 	last = buffer.find(QGEN_STRSDELIM, first);
 	locName = buffer.Mid(first, last - first);
 	return true;
@@ -423,28 +422,27 @@ bool Controls::DeserializeLocData(size_t locIndex, const wxString &buffer)
 		return false;
 	}
 	_container->ClearLocation(locIndex);
-	size_t lenDelim = QGEN_LEN(QGEN_STRSDELIM);
 	//ID формата файла
 	last = buffer.find(QGEN_STRSDELIM);
 	//Данные о версии редактора
-	last = buffer.find(QGEN_STRSDELIM, last + lenDelim);
+	last = buffer.find(QGEN_STRSDELIM, last + QGEN_LEN(QGEN_STRSDELIM));
 	//Имя локации
-	last = buffer.find(QGEN_STRSDELIM, last + lenDelim);
+	last = buffer.find(QGEN_STRSDELIM, last + QGEN_LEN(QGEN_STRSDELIM));
 
 	//Описание локации
-	first = last + lenDelim;
+	first = last + QGEN_LEN(QGEN_STRSDELIM);
 	last = buffer.find(QGEN_STRSDELIM, first);
 	str = buffer.Mid(first, last - first);
 	_container->SetLocationDesc(locIndex, DecodeString(str));
 
 	//Код локации
-	first = last + lenDelim;
+	first = last + QGEN_LEN(QGEN_STRSDELIM);
 	last = buffer.find(QGEN_STRSDELIM, first);
 	str = buffer.Mid(first, last - first);
 	_container->SetLocationCode(locIndex, DecodeString(str));
 
 	//Количество действий
-	first = last + lenDelim;
+	first = last + QGEN_LEN(QGEN_STRSDELIM);
 	last = buffer.find(QGEN_STRSDELIM, first);
 	str = DecodeString(buffer.Mid(first, last - first));
 	str.ToLong(&actsCount);
@@ -452,20 +450,20 @@ bool Controls::DeserializeLocData(size_t locIndex, const wxString &buffer)
 	for (long i = 0; i < actsCount; ++i)
 	{
 		//Изображение
-		first = last + lenDelim;
+		first = last + QGEN_LEN(QGEN_STRSDELIM);
 		last = buffer.find(QGEN_STRSDELIM, first);
 		str = buffer.Mid(first, last - first);
 		actImage = DecodeString(str);
 
 		//Название
-		first = last + lenDelim;
+		first = last + QGEN_LEN(QGEN_STRSDELIM);
 		last = buffer.find(QGEN_STRSDELIM, first);
 		str = buffer.Mid(first, last - first);
 		_container->AddAction(locIndex, DecodeString(str));
 		_container->SetActionPicturePath(locIndex, i, actImage);
 
 		//Код
-		first = last + lenDelim;
+		first = last + QGEN_LEN(QGEN_STRSDELIM);
 		last = buffer.find(QGEN_STRSDELIM, first);
 		str = buffer.Mid(first, last - first);
 		_container->SetActionCode(locIndex, i, DecodeString(str));
