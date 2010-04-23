@@ -39,6 +39,7 @@
     <Keyword name="showstat" desc="SHOWSTAT [#выражение] - показ / скрытие дополнительного окна описания"/>
     <Keyword name="if" desc="IF [#выражение]:[оператор1] &amp; [оператор2] &amp; ... ELSE [оператор3] &amp; [оператор4] &amp; ... - условие"/>
     <Keyword name="else" desc="IF [#выражение]:[оператор1] &amp; [оператор2] &amp; ... ELSE [оператор3] &amp; [оператор4] &amp; ... - условие"/>
+    <Keyword name="elseif" desc="ELSEIF [#выражение]:[оператор1] &amp; [оператор2] &amp; ... - альтернативное условие"/>
     <Keyword name="exit" desc="EXIT - завершение выполнения текущего кода"/>
     <Keyword name="end" desc="END - завершение многострочной формы IF / ACT"/>
     <Keyword name="jump" desc="JUMP [$выражение] - переход на указанную метку"/>
