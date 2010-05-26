@@ -221,7 +221,6 @@ bool DataContainer::IsEmpty() const
 
 bool DataContainer::GetLocActions( size_t indexLoc, wxArrayString & actions ) const
 {
-	if (indexLoc < 0) return false;
 	actions.Clear();
 	for (size_t i = 0; i < locationArray[indexLoc].actionArray.Count(); ++i)
 		actions.Add(locationArray[indexLoc].actionArray[i].description);

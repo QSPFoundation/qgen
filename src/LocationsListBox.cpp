@@ -629,15 +629,9 @@ void LocationsListBox::OnLeaveWindow(wxMouseEvent &event)
 		event.Skip();
 		return;
 	}
-	wxPoint mousePos = event.GetPosition();
-	if (_prevMousePos != mousePos)
-	{
-		_prevMousePos = mousePos;
-		if (_showTimer.IsRunning())
-			_showTimer.Stop();
-		_tip->HideTip();
-	}
-
+	if (_showTimer.IsRunning())
+		_showTimer.Stop();
+	_tip->HideTip();
 	event.Skip();
 }
 
