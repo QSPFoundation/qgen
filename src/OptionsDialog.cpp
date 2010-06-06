@@ -821,8 +821,8 @@ void OptionsDialog::OnApplySettings(wxCommandEvent &event)
 void OptionsDialog::OnResetSettings(wxCommandEvent &event)
 {
 	_settings->InitSettings();
-	InitOptionsDialog();
 	_controls->UpdateLocale(_settings->GetLangId());
+	InitOptionsDialog();
 	_settings->NotifyAll();
 	ReCreateGUI();
 }
@@ -1148,13 +1148,10 @@ void OptionsDialog::UpdateLanguagesList()
 {
 	wxString filename;
 	const wxLanguageInfo *langinfo;
-	wxString name(wxLocale::GetLanguageName(wxLANGUAGE_DEFAULT));
 	_cmbLang->Clear();
-	if (!name.IsEmpty())
-	{
-		_langTable[_("Default")] = wxLANGUAGE_DEFAULT;
-		_cmbLang->Append(_("Default"));
-	}
+	_langTable.clear();
+	_langTable[_("Default")] = wxLANGUAGE_DEFAULT;
+	_cmbLang->Append(_("Default"));
 	wxDir dir(_settings->GetPath() + wxT("langs"));
 	if (dir.IsOpened())
 	{
@@ -1167,6 +1164,8 @@ void OptionsDialog::UpdateLanguagesList()
 			}
 		}
 	}
-	name = wxLocale::GetLanguageName(_settings->GetLangId());
+	wxString name(wxLocale::GetLanguageName(_settings->GetLangId()));
+	if (name.IsEmpty())
+		name = _("Default");
 	_cmbLang->SetStringSelection(name);
 }

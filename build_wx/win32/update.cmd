@@ -1,6 +1,6 @@
 SET WX_PATH=d:\wx\wxWidgets
 SET WX_QSP_PATH=d:\wx\wx_qsp
-SET MSYS=c:\msys
+SET MSYS=c:\msys\1.0
 SET VC=c:\Program Files\Microsoft Visual Studio 9.0
 
 SET QSP_PATH=%~dp0\..\..
