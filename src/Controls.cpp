@@ -1629,6 +1629,5 @@ void Controls::UpdateLocale(int lang)
 	_locale->AddCatalogLookupPathPrefix(_currentPath + wxT("langs"));
 	
 	if (!_locale->AddCatalog(QGEN_APPNAME))
-		_locale->AddCatalog(wxString(QGEN_APPNAME + _locale->GetName().Left(2)));
+		_locale->AddCatalog(wxString(QGEN_APPNAME + wxT('_') + _locale->GetCanonicalName().BeforeFirst(wxT('_'))));
 }
-
