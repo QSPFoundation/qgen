@@ -180,7 +180,7 @@ void Settings::LoadSettings()
 void Settings::SaveSettings()
 {
 	int coeff;
-	wxString langName = wxLocale::GetLanguageName(_idLang);
+	wxString langName = wxLocale::GetLanguageCanonicalName(_idLang);
 
 	wxFileConfig cfg(wxEmptyString, wxEmptyString, _currentConfigPath);
 
