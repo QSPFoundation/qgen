@@ -866,8 +866,10 @@ bool Controls::IsCorrectDataFormat(const wxString &str)
 	if (!strArray[0].IsSameAs(QGEN_GAMEID)) return false;
 	//Количество действий
 	int actsCount = wxAtoi(strArray[5]);
+	if (actsCount < 0)
+		actsCount = -actsCount;
 	//Общее кличество строк
-	if (count < 5 + actsCount * 3) return false;
+	if (count < 5 + (size_t)actsCount * 3) return false;
 	return true;
 } 
 

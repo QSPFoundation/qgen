@@ -288,7 +288,7 @@ void DataContainer::DeleteFolder( size_t folderIndex )
 	count = _folders.GetCount();
 	for (long i = count - 1; i >= 0; --i)
 	{
-		if (i > folderIndex)
+		if ((size_t) i > folderIndex)
 			_folders[i].pos--;
 	}
 	_folders.RemoveAt(folderIndex);

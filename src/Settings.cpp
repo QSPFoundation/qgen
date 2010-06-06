@@ -102,6 +102,7 @@ void Settings::InitSettings()
 
 void Settings::LoadSettings()
 {
+	wxString langName;
 	int coeff;
 	if (!wxFileExists(_currentConfigPath)) return;
 
@@ -137,7 +138,7 @@ void Settings::LoadSettings()
 	cfg.Read(wxT("General/FirstLocName"), &_firstLocName);
 	cfg.Read(wxT("General/ShowLocsIcons"), &_isShowLocsIcons);
 	cfg.Read(wxT("General/TabSize"), &_tabSize);
-	cfg.Read(wxT("General/Language"), &_idLang, wxLANGUAGE_DEFAULT);
+	cfg.Read(wxT("General/Language"), &langName);
 	cfg.Read(wxT("Editor/WrapLines"), &_isWrapLines);
 	cfg.Read(wxT("Editor/ShowLinesNums"), &_isShowLinesNums);
 	cfg.Read(wxT("Editor/CollapseCode"), &_isCollapseCode);
@@ -163,11 +164,24 @@ void Settings::LoadSettings()
 	cfg.Read(wxT("Colours/BaseBackground"), &_baseBackColour);
 	_hotkeysStore.LoadHotkeysData(cfg);
 	_searchDataStore.LoadSearchData(cfg);
+
+	if (langName.IsEmpty())
+		_idLang = wxLANGUAGE_DEFAULT;
+	else
+	{
+		const wxLanguageInfo *langInfo = wxLocale::FindLanguageInfo(langName);
+		if (langInfo)
+			_idLang = langInfo->Language;
+		else
+			_idLang = wxLANGUAGE_DEFAULT;
+	}
 }
 
 void Settings::SaveSettings()
 {
 	int coeff;
+	wxString langName = wxLocale::GetLanguageName(_idLang);
+
 	wxFileConfig cfg(wxEmptyString, wxEmptyString, _currentConfigPath);
 
 	cfg.Write(wxT("Paths/Player"), _currentPlayerPath);
@@ -201,7 +215,7 @@ void Settings::SaveSettings()
 	cfg.Write(wxT("General/FirstLocName"), _firstLocName);
 	cfg.Write(wxT("General/ShowLocsIcons"), _isShowLocsIcons);
 	cfg.Write(wxT("General/TabSize"), _tabSize);
-	cfg.Write(wxT("General/Language"), _idLang);
+	cfg.Write(wxT("General/Language"), langName);
 	cfg.Write(wxT("Editor/WrapLines"), _isWrapLines);
 	cfg.Write(wxT("Editor/ShowLinesNums"),_isShowLinesNums);
 	cfg.Write(wxT("Editor/CollapseCode"), _isCollapseCode);
