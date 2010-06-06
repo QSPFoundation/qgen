@@ -335,7 +335,7 @@ void MainFrame::Update( bool isFromObservable /*= false*/ )
 	menuBar->SetLabel(ID_QGEN_EXIT, _("&Exit\tAlt+X"));
 	menuBar->SetHelpString(ID_QGEN_EXIT, _("Close program"));
 	//Utilities
-	menuBar->SetLabel(ID_GAME_PLAY, _("Run game\tF5"));
+	menuBar->SetLabel(ID_GAME_PLAY, _("&Run game\tF5"));
 	menuBar->SetHelpString(ID_GAME_PLAY, _("Run current game"));
 	menuBar->SetLabel(ID_UTIL_FIND, _("&Find / Replace\tCtrl+F"));
 	menuBar->SetHelpString(ID_UTIL_FIND, _("Find / replace some text"));
