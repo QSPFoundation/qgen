@@ -56,6 +56,7 @@
   <Expressions>
     <Keyword name="and" desc="[#выражение 1] AND [#выражение 2] - логическое &quot;и=&quot;"/>
     <Keyword name="or" desc="[#выражение 1] OR [#выражение 2] - логическое &quot;или&quot;"/>
+    <Keyword name="obj" desc="OBJ [$предмет] - проверка наличия предмета в рюкзаке"/>
     <Keyword name="loc" desc="LOC [$локация] - проверка существования локации"/>
     <Keyword name="no" desc="NO [#выражение] - отрицание"/>
     <Keyword name="mod" desc="[#выражение 1] MOD [#выражение 2] - вычисление остатка от деления"/>
