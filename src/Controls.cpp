@@ -854,27 +854,25 @@ bool Controls::IsCorrectDataFormat(const wxString &str)
 	int last, first = 0;
 
 	last = str.find(QGEN_STRSDELIM);
-	if (last == wxNOT_FOUND) return false;	
+	if (last == wxNOT_FOUND) return false;
 	do
 	{
 		++count;
 		strArray.Add(str.Mid(first, last - first));
 		first = last + QGEN_LEN(QGEN_STRSDELIM);
 		last = str.find(QGEN_STRSDELIM, first);
-	} while(last != wxNOT_FOUND);
+	} while (last != wxNOT_FOUND);
 
 	if (count <= 5) return false;
 	//ID формата файла
 	if (!strArray[0].IsSameAs(QGEN_GAMEID)) return false;
 	//Количество действий
 	int actsCount = wxAtoi(strArray[5]);
-	if (actsCount < 0)
-		actsCount = -actsCount;
+	if (actsCount < 0) return false;
 	//Общее кличество строк
 	if (count < 5 + (size_t)actsCount * 3) return false;
 	return true;
-} 
-
+}
 
 wxString Controls::ConvertSearchString(const wxString& s, bool isMatchCase)
 {
