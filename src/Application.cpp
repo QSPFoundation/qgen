@@ -35,6 +35,8 @@ bool Application::OnInit()
 	_controls->SetMainFrame(mainFrame);
 	_controls->SetLocListBox(mainFrame->GetLocListBox());
 	_controls->SetNotebook(mainFrame->GetNotebook());
+	_controls->NewGame();
+	mainFrame->UpdateTitle();
 	mainFrame->Show();
 	wxCmdLineParser cmdParser(argc, argv);
 	if (argc > 1)
@@ -54,8 +56,6 @@ bool Application::OnInit()
 			initEvent.SetInitString(settings->GetLastGamePath());
 			wxPostEvent(mainFrame, initEvent);
 		}
-		else
-			mainFrame->CreateNewGame();
 	}
 	return true;
 }

@@ -40,6 +40,8 @@ Controls::Controls(const wxString &path)
 	_keywordsStore = new KeywordsStore();
 	 wxString filename = wxFileName(_currentPath, wxT("keywords.xml")).GetFullPath();
 	_keywordsStore->Load(filename);
+
+	InitData();
 }
 
 Controls::~Controls()
@@ -1174,6 +1176,14 @@ void Controls::InitSearchData()
 	_dataSearch.isFoundAny = false;
 }
 
+void Controls::InitData()
+{
+	_currentGamePath = wxFileName(_currentPath, wxT("NoName.qsp")).GetFullPath();
+	_currentGamePass = QGEN_PASSWD;
+	InitSearchData();
+	_lastSaveTime = 0;
+}
+
 void Controls::NewGame()
 {
 	if ( !_container->IsEmpty() )
@@ -1183,9 +1193,7 @@ void Controls::NewGame()
 		_container->Clear();
 		_container->Save();
 	}
-	_currentGamePath = wxFileName(_currentPath, wxT("NoName.qsp")).GetFullPath();
-	_currentGamePass = QGEN_PASSWD;
-	InitSearchData();
+	InitData();
 	wxString locName = _settings->GetFirstLocName().Trim().Trim(false);
 	if (_settings->GetCreateFirstLoc() && !locName.IsEmpty())
 	{
@@ -1193,7 +1201,6 @@ void Controls::NewGame()
 		_locListBox->Insert(locName, wxEmptyString, wxEmptyString);
 		_container->Save();
 	}
-	_lastSaveTime = 0;
 }
 
 bool Controls::IsGameSaved()

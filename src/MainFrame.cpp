@@ -416,7 +416,11 @@ void MainFrame::OnExit( wxCommandEvent &event )
 
 void MainFrame::OnNewGame( wxCommandEvent &event )
 {
-	if (QuestChange()) CreateNewGame();
+	if (QuestChange())
+	{
+		_controls->NewGame();
+		UpdateTitle();
+	}
 }
 
 void MainFrame::OnQuit( wxCloseEvent &event )
@@ -981,10 +985,4 @@ void MainFrame::OnRenameFolder( wxCommandEvent &event )
 void MainFrame::OnDeleteFolder( wxCommandEvent &event )
 {
 	_controls->DeleteSelectedFolder();
-}
-
-void MainFrame::CreateNewGame()
-{
-	_controls->NewGame();
-	UpdateTitle();
 }

@@ -218,7 +218,6 @@
 		void CreateNotebook();
 		void LoadLayout();
 		void SaveLayout();
-		void UpdateTitle();
 		bool QuestChange();
 		void TogglePaneVisibility(const wxString &pane_name);
 	public:
@@ -229,7 +228,7 @@
 		void Update(bool isFromObservable = false);
 		LocationsListBox *GetLocListBox() const { return _locListBox; }
 		LocationsNotebook *GetNotebook() const { return _locNotebook; }
-		void CreateNewGame();
+		void UpdateTitle();
 	};
 
 #endif

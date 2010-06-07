@@ -74,6 +74,8 @@
 		static wxString ConvertSearchString(const wxString& s, bool isMatchCase);
 		static int FindSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind = 0);
 		static wxWindow *GetParent();
+
+		void InitData();
 	public:
 		Controls(const wxString &path);
 		~Controls();
