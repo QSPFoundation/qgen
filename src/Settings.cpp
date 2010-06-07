@@ -68,6 +68,7 @@ void Settings::InitSettings()
 	_isOpenLastGame = true;
 	_isShowLinesNums = true;
 	_isCreateFirstLoc = false;
+	_firstLocName = wxEmptyString;
 	_isShowLocsIcons = true;
 	_isCollapseCode = false;
 	_heightsCoeff = 0.6;

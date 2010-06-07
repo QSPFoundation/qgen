@@ -821,6 +821,7 @@ void OptionsDialog::OnResetSettings(wxCommandEvent &event)
 {
 	_settings->InitSettings();
 	_controls->UpdateLocale(_settings->GetLangId());
+	_settings->PostInitLocaleSettings();
 	InitOptionsDialog();
 	_settings->NotifyAll();
 	ReCreateGUI();
