@@ -429,7 +429,6 @@ void OptionsDialog::ReCreateGUI()
 	_chkLocActsVisible->SetLabel(_("Show base actions on location's tab"));
 	_chkOpenLastGame->SetLabel(_("Remember game file on exit"));
 	_stTextCmbLang->SetLabel(_("UI language"));
-	_txtNameFirsLoc->SetLabel(_("Start"));
 	_autoSaveUnits->SetLabel(_("minutes"));
 	//Page Editor
 	_notebook->SetPageText(1, _("Code editor"));
@@ -886,7 +885,6 @@ void OptionsDialog::ApplySettings()
 	_settings->SetOpenLastGame(_chkOpenLastGame->GetValue());
 	_settings->SetShowLinesNums(_chkShowLinesNums->GetValue());
 	_settings->SetCreateFirstLoc(_chkFirstLoc->GetValue());
-	_settings->SetFirstLocName(_txtNameFirsLoc->GetValue());
 	_settings->SetShowLocsIcons(_chkOnLocActIcons->GetValue());
 	_settings->SetCollapseCode(_chkCollapseCode->GetValue());
 	_settings->SetHeightsCoeff((double)_spnHeights->GetValue()/100);
@@ -930,6 +928,14 @@ void OptionsDialog::ApplySettings()
 	int lang = _langTable[_cmbLang->GetStringSelection()];
  	_controls->UpdateLocale(lang);
 	_settings->SetIdLang(lang);
+	if (_chkFirstLoc->GetValue())
+		_settings->SetFirstLocName(_txtNameFirsLoc->GetValue());
+	else
+	{
+		_settings->SetFirstLocName(wxEmptyString);
+		_settings->PostInitLocaleSettings();
+		_txtNameFirsLoc->SetValue(_settings->GetFirstLocName());
+	}
 	_settings->NotifyAll();
 	_btnApply->Enable(false);
 }

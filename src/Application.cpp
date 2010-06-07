@@ -31,6 +31,7 @@ bool Application::OnInit()
 	wxRegisterId(20000);
 	_controls = new Controls(appPath.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR));
 	_controls->UpdateLocale(_controls->GetSettings()->GetLangId());
+	_controls->GetSettings()->PostInitLocaleSettings();
 	MainFrame *mainFrame = new MainFrame(_controls);
 	_controls->SetMainFrame(mainFrame);
 	_controls->SetLocListBox(mainFrame->GetLocListBox());

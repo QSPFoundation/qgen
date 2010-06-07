@@ -68,7 +68,6 @@ void Settings::InitSettings()
 	_isOpenLastGame = true;
 	_isShowLinesNums = true;
 	_isCreateFirstLoc = false;
-	_firstLocName = _("Start");
 	_isShowLocsIcons = true;
 	_isCollapseCode = false;
 	_heightsCoeff = 0.6;
@@ -262,4 +261,10 @@ void Settings::NotifyAll()
 {
 	for (ObserversList::const_iterator i = _observers.begin(); i != _observers.end(); ++i)
 		(*i)->Update(true);
+}
+
+void Settings::PostInitLocaleSettings()
+{
+	if (_firstLocName.IsEmpty())
+		_firstLocName = _("Start");
 }
