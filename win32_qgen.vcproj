@@ -600,10 +600,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\qgen_keywords.xml"
-			>
-		</File>
-		<File
 			RelativePath=".\src\winresource.rc"
 			>
 		</File>

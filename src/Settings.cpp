@@ -65,7 +65,7 @@ void Settings::InitSettings()
 	_isWrapLines = false;
 	_isOpenNewLoc = true;
 	_isOpenNewAct = true;
-	_isOpenLastGame = false;
+	_isOpenLastGame = true;
 	_isShowLinesNums = true;
 	_isCreateFirstLoc = false;
 	_firstLocName = _("Start");
