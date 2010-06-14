@@ -1203,7 +1203,9 @@ void Controls::NewGame()
 
 bool Controls::IsGameSaved()
 {
-//	SyncWithLocationsList();
+	// It's need to call SyncWithLocationsList because some locations
+	// can be moved in the locs list
+	SyncWithLocationsList();
 	_locNotebook->SaveOpenedPages();
 	return _container->IsSaved();
 }
@@ -1467,12 +1469,14 @@ wxString Controls::GetGameInfo() const
 
 bool Controls::ExportTxt(const wxString &filename)
 {
+	SyncWithLocationsList();
 	_locNotebook->SaveOpenedPages();
 	return qspExportTxt(filename.wx_str(), this);
 }
 
 bool Controls::ExportTxt2Gam(const wxString &filename)
 {
+	SyncWithLocationsList();
 	_locNotebook->SaveOpenedPages();
 	return qspExportTxt2Game(filename.wx_str(), this);
 }
