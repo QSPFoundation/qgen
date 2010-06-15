@@ -62,7 +62,6 @@ LocationsListBox::~LocationsListBox()
 		_showTimer.Stop();
 	Clear();
 	_controls->GetSettings()->RemoveObserver(this);
-	delete _tip;
 }
 
 void LocationsListBox::Update(bool isFromObservable)

@@ -24,7 +24,8 @@
 IMPLEMENT_CLASS(LocationTip, wxFrame);
 
 LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
-	wxFrame(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(TIP_SIZE_X, TIP_SIZE_Y), wxFRAME_TOOL_WINDOW)
+	wxFrame(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, 
+		wxSize(TIP_SIZE_X, TIP_SIZE_Y), wxFRAME_TOOL_WINDOW)
 {
 	_mainFrame = parent;
 	_controls = controls;
@@ -42,7 +43,8 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
 	_desc->SetFont(_desc->GetFont().MakeBold());
 	_desc->SetForegroundColour(textColor);
 	_locDesc = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_SIMPLE |
-												  SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOHELPTIPS);
+												  SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU | 
+												  SYNTAX_STYLE_NOHELPTIPS);
 
 	_code = new wxStaticText(this, wxID_ANY, wxEmptyString);
 	_code->SetFont(_code->GetFont().MakeBold());
