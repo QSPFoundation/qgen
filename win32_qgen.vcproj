@@ -333,123 +333,123 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\ActionCode.cpp"
+				RelativePath=".\src\actioncode.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ActionsListBox.cpp"
+				RelativePath=".\src\actionslistbox.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ActionsPanel.cpp"
+				RelativePath=".\src\actionspanel.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Application.cpp"
+				RelativePath=".\src\application.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ChkSysHotKey.cpp"
+				RelativePath=".\src\chksyshotkey.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Controls.cpp"
+				RelativePath=".\src\controls.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\DataContainer.cpp"
+				RelativePath=".\src\datacontainer.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Game.cpp"
+				RelativePath=".\src\game.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\HotKeysStore.cpp"
+				RelativePath=".\src\hotkeysstore.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\HotKeyTextBox.cpp"
+				RelativePath=".\src\hotkeytextbox.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ImagePathTextBox.cpp"
+				RelativePath=".\src\imagepathtextbox.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\InitEvent.cpp"
+				RelativePath=".\src\initevent.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\KeysParser.cpp"
+				RelativePath=".\src\keysparser.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\KeywordsStore.cpp"
+				RelativePath=".\src\keywordsstore.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationActions.cpp"
+				RelativePath=".\src\locationactions.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationCode.cpp"
+				RelativePath=".\src\locationcode.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationDesc.cpp"
+				RelativePath=".\src\locationdesc.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationPage.cpp"
+				RelativePath=".\src\locationpage.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationsListBox.cpp"
+				RelativePath=".\src\locationslistbox.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationsNotebook.cpp"
+				RelativePath=".\src\locationsnotebook.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationTip.cpp"
+				RelativePath=".\src\locationtip.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\MainFrame.cpp"
+				RelativePath=".\src\mainframe.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\MergeDialog.cpp"
+				RelativePath=".\src\mergedialog.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\OptionsDialog.cpp"
+				RelativePath=".\src\optionsdialog.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\OptionsHotKeysDialog.cpp"
+				RelativePath=".\src\optionshotkeysdialog.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\SearchDataStore.cpp"
+				RelativePath=".\src\searchdatastore.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\SearchDialog.cpp"
+				RelativePath=".\src\searchdialog.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Settings.cpp"
+				RelativePath=".\src\settings.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\SyntaxTextBox.cpp"
+				RelativePath=".\src\syntaxtextbox.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ToolBar.cpp"
+				RelativePath=".\src\toolbar.cpp"
 				>
 			</File>
 		</Filter>
@@ -459,139 +459,143 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\src\ActionCode.h"
+				RelativePath=".\src\actioncode.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ActionsListBox.h"
+				RelativePath=".\src\actionslistbox.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ActionsPanel.h"
+				RelativePath=".\src\actionspanel.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Application.h"
+				RelativePath=".\src\application.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ChkSysHotKey.h"
+				RelativePath=".\src\chksyshotkey.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Controls.h"
+				RelativePath=".\src\controls.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\DataContainer.h"
+				RelativePath=".\src\datacontainer.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\DesktopWindow.h"
+				RelativePath=".\src\desktopwindow.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Game.h"
+				RelativePath=".\src\game.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\HotKeysStore.h"
+				RelativePath=".\src\hotkeysstore.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\HotKeyTextBox.h"
+				RelativePath=".\src\hotkeytextbox.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\IControls.h"
+				RelativePath=".\src\icontrols.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ILocationPage.h"
+				RelativePath=".\src\ilocationpage.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ImagePathTextBox.h"
+				RelativePath=".\src\imagepathtextbox.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\InitEvent.h"
+				RelativePath=".\src\initevent.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\IObserver.h"
+				RelativePath=".\src\iobserver.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\KeysParser.h"
+				RelativePath=".\src\keysparser.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\KeywordsStore.h"
+				RelativePath=".\src\keywordsstore.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationActions.h"
+				RelativePath=".\src\locationactions.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationCode.h"
+				RelativePath=".\src\locationcode.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationDesc.h"
+				RelativePath=".\src\locationdesc.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationPage.h"
+				RelativePath=".\src\locationpage.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationsListBox.h"
+				RelativePath=".\src\locationslistbox.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationsNotebook.h"
+				RelativePath=".\src\locationsnotebook.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\LocationTip.h"
+				RelativePath=".\src\locationtip.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\MainFrame.h"
+				RelativePath=".\src\mainframe.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\MergeDialog.h"
+				RelativePath=".\src\mergedialog.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\OptionsDialog.h"
+				RelativePath=".\src\optionsdialog.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\OptionsHotKeysDialog.h"
+				RelativePath=".\src\optionshotkeysdialog.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\SearchDataStore.h"
+				RelativePath=".\src\searchdatastore.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\SearchDialog.h"
+				RelativePath=".\src\searchdialog.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\Settings.h"
+				RelativePath=".\src\settings.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\SyntaxTextBox.h"
+				RelativePath=".\src\syntaxtextbox.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\ToolBar.h"
+				RelativePath=".\src\toolbar.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\winresource.h"
 				>
 			</File>
 		</Filter>
