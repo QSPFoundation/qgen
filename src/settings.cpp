@@ -100,6 +100,12 @@ void Settings::InitSettings()
 	_colour[SYNTAX_COMMENTS] = wxColour(130, 130, 130);
 }
 
+void Settings::PostInitLocaleSettings()
+{
+	if (_firstLocName.IsEmpty())
+		_firstLocName = _("Start");
+}
+
 void Settings::LoadSettings()
 {
 	wxString langName;
@@ -262,10 +268,4 @@ void Settings::NotifyAll()
 {
 	for (ObserversList::const_iterator i = _observers.begin(); i != _observers.end(); ++i)
 		(*i)->Update(true);
-}
-
-void Settings::PostInitLocaleSettings()
-{
-	if (_firstLocName.IsEmpty())
-		_firstLocName = _("Start");
 }

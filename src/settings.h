@@ -97,6 +97,7 @@
 		void LoadSettings();
 		void SaveSettings();
 		void InitSettings();
+		void PostInitLocaleSettings();
 		void AddObserver(IObserver *obj);
 		void RemoveObserver(IObserver *obj);
 		void RemoveAllObservers();
@@ -178,7 +179,6 @@
 		void SetIdLang(int id) { _idLang = id; }
 		int GetLangId() { return _idLang; }
 		wxString GetPath() const { return _path; }
-		void PostInitLocaleSettings();
 	};
 
 #endif

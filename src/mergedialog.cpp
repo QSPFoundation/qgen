@@ -56,8 +56,8 @@ MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString
 	buttonSizer->Add(_cancel, 1, wxALL|wxGROW, 5);
 	buttonSizer->Add(_chkToAll, 1, wxALL|wxGROW, 5);
 
-	topSizer->Add(msgSizer,1, wxGROW|wxALL, 26);
-	topSizer->Add(buttonSizer,1, wxGROW);
+	topSizer->Add(msgSizer, 1, wxGROW|wxALL, 26);
+	topSizer->Add(buttonSizer, 0, wxGROW);
 
 	SetSizerAndFit(topSizer);
 	SetAutoLayout(true);
