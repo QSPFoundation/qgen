@@ -56,8 +56,8 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, IControls *c
 	_chkMatchCase = new wxCheckBox(this, wxID_ANY, _("Match case"));
 	_chkWholeWord = new wxCheckBox(this, wxID_ANY, _("Search only word"));
 
-	leftSizer->Add(_textFind, 1, wxGROW);
-	leftSizer->Add(_textRepl, 1, wxUP|wxGROW, 4);
+	leftSizer->Add(_textFind, 1, wxDOWN|wxGROW, 2);
+	leftSizer->Add(_textRepl, 1, wxUP|wxGROW, 2);
 	leftSizer->Add(_chkMatchCase, 1, wxUP|wxGROW, 6);
 	leftSizer->Add(_chkWholeWord, 1, wxUP|wxGROW, 6);
 
