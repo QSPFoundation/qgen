@@ -883,6 +883,7 @@ void MainFrame::OnTimerUpdToolBar(wxTimerEvent &event)
 	_toolBar->EnableTool(ID_TEXT_UNDO, isCanUndoText);
 	_toolBar->EnableTool(ID_TEXT_REDO, isCanRedoText);
 	_toolBar->Realize();
+	UpdateTitle();
 }
 
 bool MainFrame::QuestChange()
@@ -910,7 +911,10 @@ bool MainFrame::QuestChange()
 void MainFrame::UpdateTitle()
 {
 	wxString title;
-	title.Printf(wxT("%s - %s %s"), _controls->GetGamePath(), QGEN_TITLE, QGEN_VER);
+	if (_controls->IsGameSaved())
+		title.Printf(wxT("%s - %s %s"), _controls->GetGamePath(), QGEN_TITLE, QGEN_VER);
+	else
+		title.Printf(wxT("* %s - %s %s"), _controls->GetGamePath(), QGEN_TITLE, QGEN_VER);
 	SetTitle(title);
 }
 
