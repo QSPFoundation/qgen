@@ -1148,3 +1148,72 @@ diff -u -r d:/wx/wxWidgets/src/stc/scintilla/src/LexVB.cxx d:/wx/wx_qsp/src/stc/
 -LexerModule lmVBScript(SCLEX_VBSCRIPT, ColouriseVBScriptDoc, "vbscript", FoldVBDoc, vbWordListDesc);
 -
 +LexerModule lmVBScript(SCLEX_VBSCRIPT, ColouriseVBNetDoc, "vbscript", FoldVBDoc, vbWordListDesc);
+diff -u -r d:/Programming/wx_svn/src/stc/stc.cpp d:/Programming/wx_qsp/src/stc/stc.cpp
+--- d:/Programming/wx_svn/src/stc/stc.cpp	2012-04-21 17:05:20 +0400
++++ d:/Programming/wx_qsp/src/stc/stc.cpp	2012-04-23 16:36:55 +0400
+@@ -259,7 +259,12 @@
+ // Add text to the document at current position.
+ void wxStyledTextCtrl::AddText(const wxString& text) {
+                     wxWX2MBbuf buf = (wxWX2MBbuf)wx2stc(text);
++					// rrock.ru's hack
++#if wxUSE_UNICODE
+                     SendMsg(2001, buf.length()-1, (sptr_t)(const char*)buf);
++#else
++					SendMsg(2001, strlen(buf), (sptr_t)(const char*)buf);
++#endif
+ }
+ 
+ // Add array of cells to document.
+@@ -1709,7 +1714,12 @@
+ 
+      int wxStyledTextCtrl::ReplaceTarget(const wxString& text) {
+          wxWX2MBbuf buf = (wxWX2MBbuf)wx2stc(text);
++		  // rrock.ru's hack
++#if wxUSE_UNICODE
+          return SendMsg(2194, buf.length()-1, (sptr_t)(const char*)buf);
++#else
++		return SendMsg(2194, strlen(buf), (sptr_t)(const char*)buf);
++#endif
+ }
+ 
+ // Replace the target text with the argument text after \d processing.
+@@ -1721,7 +1730,12 @@
+ 
+      int wxStyledTextCtrl::ReplaceTargetRE(const wxString& text) {
+          wxWX2MBbuf buf = (wxWX2MBbuf)wx2stc(text);
++		  // rrock.ru's hack
++#if wxUSE_UNICODE
+          return SendMsg(2195, buf.length()-1, (sptr_t)(const char*)buf);
++#else
++		return SendMsg(2195, strlen(buf), (sptr_t)(const char*)buf);
++#endif
+ }
+ 
+ // Search for a counted string in the target and set the target to the found
+@@ -1730,7 +1743,12 @@
+ 
+      int wxStyledTextCtrl::SearchInTarget(const wxString& text) {
+          wxWX2MBbuf buf = (wxWX2MBbuf)wx2stc(text);
++		  // rrock.ru's hack
++#if wxUSE_UNICODE
+          return SendMsg(2197, buf.length()-1, (sptr_t)(const char*)buf);
++#else
++		return SendMsg(2197, strlen(buf), (sptr_t)(const char*)buf);
++#endif
+ }
+ 
+ // Set the search flags used by SearchInTarget.
+@@ -2086,7 +2103,12 @@
+ // Append a string to the end of the document without changing the selection.
+ void wxStyledTextCtrl::AppendText(const wxString& text) {
+                     wxWX2MBbuf buf = (wxWX2MBbuf)wx2stc(text);
+-                    SendMsg(2282, buf.length()-1, (sptr_t)(const char*)buf);
++					// rrock.ru's hack
++#if wxUSE_UNICODE
++					SendMsg(2282, buf.length()-1, (sptr_t)(const char*)buf);
++#else
++					SendMsg(2282, strlen(buf), (sptr_t)(const char*)buf);
++#endif
+ }
+ 
+ // Is drawing done in two phases with backgrounds drawn before foregrounds?
