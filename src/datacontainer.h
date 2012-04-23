@@ -1,4 +1,4 @@
-// Copyright (C) 2005-2010
+// Copyright (C) 2005-2012
 // Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)

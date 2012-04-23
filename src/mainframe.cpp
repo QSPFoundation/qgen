@@ -1,4 +1,4 @@
-// Copyright (C) 2005-2010
+// Copyright (C) 2005-2012
 // Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
@@ -437,7 +437,7 @@ void MainFrame::OnAbout( wxCommandEvent &event )
 	wxAboutDialogInfo info;
 	info.SetIcon(wxIcon(about_logo_xpm));
 	info.SetName(QGEN_TITLE);
-	info.SetCopyright(wxT("Quest Soft, 2001-2010"));
+	info.SetCopyright(wxT("Quest Soft, 2001-2012"));
 	info.SetDescription(wxString::Format( _("Version: %s\nCompiled: %s"),
 		QGEN_VER, wxT(__DATE__) wxT(", ") wxT(__TIME__)));
 	info.SetWebSite(wxT("http://qsp.su"));
