@@ -181,14 +181,15 @@ diff -u -r d:/wx/wxWidgets/include/wx/htmllbox.h d:/wx/wx_qsp/include/wx/htmllbo
 +private:
  
      // it calls our GetSelectedTextColour() and GetSelectedTextBgColour()
-     friend class wxHtmlListBoxStyle;
+     friend class wxHtmlListBoxStyle;	 
 diff -u -r d:/wx/wxWidgets/src/aui/floatpane.cpp d:/wx/wx_qsp/src/aui/floatpane.cpp
---- d:/wx/wxWidgets/src/aui/floatpane.cpp	2010-06-06 21:21:25 +0700
-+++ d:/wx/wx_qsp/src/aui/floatpane.cpp	2010-07-17 12:47:57 +0700
-@@ -145,10 +145,13 @@
-         SetClientSize(size);
-     }
- 
+--- d:/wx/wxWidgets/src/aui/floatpane.cpp	2012-04-24 15:54:50.068433500 +0400
++++ d:/wx/wx_qsp/src/aui/floatpane.cpp	2012-04-24 15:56:39.986720500 +0400
+@@ -133,10 +133,14 @@
+     // pane.floating_size from inside it so we must also record its original
+     // value before doing it.
+     const bool hasFloatingSize = pane.floating_size != wxDefaultSize;
++    
 +    // HzD_Byte's hack
 +    /*
      if (pane.IsFixed())
@@ -196,9 +197,10 @@ diff -u -r d:/wx/wxWidgets/src/aui/floatpane.cpp d:/wx/wx_qsp/src/aui/floatpane.
          SetWindowStyleFlag(GetWindowStyleFlag() & ~wxRESIZE_BORDER);
      }
 +    */
- }
  
- wxAuiManager* wxAuiFloatingFrame::GetOwnerManager() const
+     if ( hasFloatingSize )
+     {
+
 diff -u -r d:/wx/wxWidgets/src/aui/framemanager.cpp d:/wx/wx_qsp/src/aui/framemanager.cpp
 --- d:/wx/wxWidgets/src/aui/framemanager.cpp	2010-06-06 21:21:25 +0700
 +++ d:/wx/wx_qsp/src/aui/framemanager.cpp	2010-07-17 12:47:57 +0700
@@ -1217,3 +1219,16 @@ diff -u -r d:/Programming/wx_svn/src/stc/stc.cpp d:/Programming/wx_qsp/src/stc/s
  }
  
  // Is drawing done in two phases with backgrounds drawn before foregrounds?
+diff -u -r /cygdrive/d/Programming/wx_svn//src/common/wincmn.cpp /cygdrive/d/Programming/wx_qsp//src/common/wincmn.cpp
+--- d:/Programming/wx_svn/src/common/wincmn.cpp	2012-04-21 17:05:51.925452800 +0400
++++ d:/Programming/wx_qsp/src/common/wincmn.cpp	2012-04-24 14:47:07.675077900 +0400
+@@ -1247,6 +1247,9 @@
+ 
+ bool wxWindowBase::IsDescendant(wxWindowBase* win) const
+ {
++	// rrock.ru's hack
++	if (win == this)
++		return true;
+     // Iterate until we find this window in the parent chain or exhaust it.
+     while ( win )
+     {
