@@ -438,8 +438,8 @@ void MainFrame::OnAbout( wxCommandEvent &event )
 	info.SetIcon(wxIcon(about_logo_xpm));
 	info.SetName(QGEN_TITLE);
 	info.SetCopyright(wxT("Quest Soft, 2001-2012"));
-	info.SetDescription(wxString::Format( _("Version: %s\nCompiled: %s"),
-		QGEN_VER, wxT(__DATE__) wxT(", ") wxT(__TIME__)));
+	info.SetDescription(wxString::Format( _("Version: %s\nCompiled: %s\n\nUsed: %s"),
+		QGEN_VER, wxT(__DATE__) wxT(", ") wxT(__TIME__), wxGetLibraryVersionInfo().ToString()));
 	info.SetWebSite(wxT("http://qsp.su"));
 	info.AddDeveloper(wxT("BaxZzZz [baxzzzz@gmail.com]"));
 	info.AddDeveloper(wxT("Byte [nporep@mail.ru]"));
@@ -882,7 +882,7 @@ void MainFrame::OnTimerUpdToolBar(wxTimerEvent &event)
 	_toolBar->EnableTool(ID_GAME_SAVEAS, isCanPlay);
 	_toolBar->EnableTool(ID_TEXT_UNDO, isCanUndoText);
 	_toolBar->EnableTool(ID_TEXT_REDO, isCanRedoText);
-	_toolBar->Realize();
+	_toolBar->Refresh();
 	UpdateTitle();
 }
 
