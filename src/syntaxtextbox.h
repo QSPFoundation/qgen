@@ -20,34 +20,34 @@
 */
 
 #ifndef _QGEN_SYNTAX_TEXT_BOX_H_
-	#define _QGEN_SYNTAX_TEXT_BOX_H_
+    #define _QGEN_SYNTAX_TEXT_BOX_H_
 
-	#include <wx/wx.h>
-	#include <wx/stc/stc.h>
-	#include "icontrols.h"
+    #include <wx/wx.h>
+    #include <wx/stc/stc.h>
+    #include "icontrols.h"
 
-	enum
-	{
+    enum
+    {
 		SYNTAX_FOLD_MARGIN = 1,
 		SYNTAX_NUM_MARGIN
-	};
+    };
 
-	enum
-	{
+    enum
+    {
 		 SYNTAX_STYLE_SIMPLE =			0,
 		 SYNTAX_STYLE_COLORED =			1 << 0,
 		 SYNTAX_STYLE_NOHOTKEYS =		1 << 1,
 		 SYNTAX_STYLE_SIMPLEMENU =		1 << 2,
-		 SYNTAX_STYLE_NOSCROLLBARS =	1 << 3,
+		 SYNTAX_STYLE_NOSCROLLBARS =    1 << 3,
 		 SYNTAX_STYLE_NOMARGINS =		1 << 4,
 		 SYNTAX_STYLE_NOHELPTIPS =		1 << 5
-	};
+    };
 
-	class SyntaxTextBox : public wxStyledTextCtrl, public IObserver
-	{
+    class SyntaxTextBox : public wxStyledTextCtrl, public IObserver
+    {
 		DECLARE_CLASS(SyntaxTextBox)
 		DECLARE_EVENT_TABLE()
-	private:
+    private:
 		IControls					*_controls;
 		KeywordsStore				*_keywordsStore;
 		int							_style;
@@ -66,7 +66,7 @@
 		void OnMarginClicked(wxStyledTextEvent &event);
 		void OnCharAdded(wxStyledTextEvent &event);
 		void OnMouseMove(wxMouseEvent& event);
-	public:
+    public:
 		SyntaxTextBox(wxWindow *owner, IControls *controls, int style);
 		~SyntaxTextBox();
 
@@ -79,6 +79,6 @@
 		void RemoveSelection();
 		void Clear();
 		void ExpandCollapseAll(bool isExpanded);
-	};
+    };
 
 #endif

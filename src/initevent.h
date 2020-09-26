@@ -20,13 +20,13 @@
 */
 
 #ifndef _QGEN_INITEVENT_H_
-	#define _QGEN_INITEVENT_H_
+    #define _QGEN_INITEVENT_H_
 
-	#include <wx/wx.h>
+    #include <wx/wx.h>
 
-	class InitEvent : public wxEvent
-	{
-	public:
+    class InitEvent : public wxEvent
+    {
+    public:
 		// C-tors / D-tor
 		InitEvent();
 		InitEvent(const InitEvent& event);
@@ -40,21 +40,21 @@
 		{
 			return new InitEvent(*this);
 		}
-	protected:
+    protected:
 		// Fields
 		wxString _initString;
-	private:
+    private:
 		DECLARE_DYNAMIC_CLASS(InitEvent)
-	};
+    };
 
-	DECLARE_EVENT_TYPE(EVT_INIT, 0)
+    DECLARE_EVENT_TYPE(EVT_INIT, 0)
 
-	typedef void (wxEvtHandler::*InitEventFunction)(InitEvent&);
+    typedef void (wxEvtHandler::*InitEventFunction)(InitEvent&);
 
-	#define InitEventHandler(func) \
+    #define InitEventHandler(func) \
 		(wxObjectEventFunction)(wxEventFunction)wxStaticCastEvent(InitEventFunction, &func)
 
-	#define EVT_INIT(func) \
+    #define EVT_INIT(func) \
 		wx__DECLARE_EVT0(EVT_INIT, InitEventHandler(func))
 
 #endif

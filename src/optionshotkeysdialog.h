@@ -20,32 +20,32 @@
 */
 
 #ifndef _QGEN_OPTIONS_HOTKEYS_DIALOG_H_
-	#define _QGEN_OPTIONS_HOTKEYS_DIALOG_H_
+    #define _QGEN_OPTIONS_HOTKEYS_DIALOG_H_
 
-	#include <wx/wx.h>
-	#include <wx/help.h>
-	#include <wx/generic/helpext.h>
-	#include "settings.h"
-	#include "hotkeytextbox.h"
-	#include "syntaxtextbox.h"
-	#include "icontrols.h"
-	#ifdef __WXMSW__
+    #include <wx/wx.h>
+    #include <wx/help.h>
+    #include <wx/generic/helpext.h>
+    #include "settings.h"
+    #include "hotkeytextbox.h"
+    #include "syntaxtextbox.h"
+    #include "icontrols.h"
+    #ifdef __WXMSW__
 		#include "DesktopWindow.h"
-	#endif
+    #endif
 
-	enum
-	{
+    enum
+    {
 		ID_HOTKEY_TEXT = 10800,
 		ID_HOTKEY_HELP
-	};
+    };
 
-	class OptionsHotkeysDialog : public wxDialog
-	{
+    class OptionsHotkeysDialog : public wxDialog
+    {
 		DECLARE_CLASS(OptionsHotkeysDialog)
 		DECLARE_EVENT_TABLE()
-	private:
-		HotKeyTextBox	*_txtInputHotkey;
-		SyntaxTextBox	*_txtInputText;
+    private:
+		HotKeyTextBox    *_txtInputHotkey;
+		SyntaxTextBox    *_txtInputText;
 		wxButton		*_btnOK;
 		wxButton		*_btnCancel;
 		wxButton		*_btnHelp;
@@ -54,12 +54,12 @@
 
 		void OnOkSettings(wxCommandEvent &event);
 		void OnHelpHotKeys(wxCommandEvent &event);
-	public:
+    public:
 		OptionsHotkeysDialog(wxWindow *parent, const wxString& title, IControls *controls,
 							 int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
 
 		void SetHotkeyData(const HotkeyData &hotkeyData);
 		HotkeyData GetHotkeyData() const { return _hotkeyData; }
-	};
+    };
 
 #endif

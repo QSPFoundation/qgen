@@ -20,58 +20,58 @@
 */
 
 #ifndef _QGEN_LOCATIONS_LIST_BOX_H_
-	#define _QGEN_LOCATIONS_LIST_BOX_H_
+    #define _QGEN_LOCATIONS_LIST_BOX_H_
 
-	#include <wx/wx.h>
-	#include <wx/treectrl.h>
-	#include <wx/imaglist.h>
-	#include "icontrols.h"
-	#include "locationpage.h"
-	#include "locationtip.h"
+    #include <wx/wx.h>
+    #include <wx/treectrl.h>
+    #include <wx/imaglist.h>
+    #include "icontrols.h"
+    #include "locationpage.h"
+    #include "locationtip.h"
 
-	#include "bitmaps/locslist_folder_closed.xpm"
-	#include "bitmaps/locslist_folder_opened.xpm"
-	#include "bitmaps/locslist_location_ball_closed.xpm"
-	#include "bitmaps/locslist_location_ball_opened.xpm"
-	#include "bitmaps/locslist_action_ball.xpm"
+    #include "bitmaps/locslist_folder_closed.xpm"
+    #include "bitmaps/locslist_folder_opened.xpm"
+    #include "bitmaps/locslist_location_ball_closed.xpm"
+    #include "bitmaps/locslist_location_ball_opened.xpm"
+    #include "bitmaps/locslist_action_ball.xpm"
 
-	enum
-	{
+    enum
+    {
 		ICON_FOLDER,
 		ICON_FOLDEROPENED,
 		ICON_NOTACTIVELOC,
 		ICON_ACTIVELOC,
 		ICON_ACTION
-	};
+    };
 
-	enum
-	{
+    enum
+    {
 		DRAG_ACTION,
 		DRAG_LOCATION,
 		DRAG_FOLDER,
-	};
+    };
 
-	enum
-	{
+    enum
+    {
 		ID_SHOW_TIMER = 10200
-	};
+    };
 
-	class FolderItem : public wxTreeItemData
-	{
-	};
+    class FolderItem : public wxTreeItemData
+    {
+    };
 
-	class LocationsListBox : public wxTreeCtrl, public IObserver
-	{
+    class LocationsListBox : public wxTreeCtrl, public IObserver
+    {
 		DECLARE_CLASS(LocationsListBox)
 		DECLARE_EVENT_TABLE()
-	private:
+    private:
 		IControls			*_controls;
 		wxImageList			_statesImageList;
 		wxTreeItemId		_draggedId;
 		LocationTip			*_tip;
 		long				_draggedType;
 		bool				_needForUpdate;
-		wxTopLevelWindow	*_mainFrame;
+		wxTopLevelWindow    *_mainFrame;
 		wxPoint				_prevMousePos;
 		wxTimer				_showTimer;
 
@@ -91,7 +91,7 @@
 		long GetItemPos(const wxTreeItemId &parent, const wxTreeItemId &id);
 		void UpdateDataContainer(const wxTreeItemId &parent, long folder, long *locPos, long *folderPos, long *pos);
 		bool IsFolderItem(const wxTreeItemId &id);
-	public:
+    public:
 		LocationsListBox(wxTopLevelWindow *parent, wxWindowID id, IControls *controls,
 						 long style = wxTR_HAS_BUTTONS|wxTR_LINES_AT_ROOT|
 									  wxTR_HIDE_ROOT|wxTR_NO_LINES|
@@ -120,6 +120,6 @@
 		void DeleteFolder(const wxString &name);
 
 		void UpdateDataContainer();
-	};
+    };
 
 #endif

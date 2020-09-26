@@ -20,24 +20,24 @@
 */
 
 #ifndef _QGEN_LOCATION_CODE_H_
-	#define _QGEN_LOCATION_CODE_H_
+    #define _QGEN_LOCATION_CODE_H_
 
-	#include <wx/wx.h>
-	#include <wx/aui/aui.h>
-	#include "ilocationpage.h"
-	#include "icontrols.h"
-	#include "datacontainer.h"
-	#include "syntaxtextbox.h"
+    #include <wx/wx.h>
+    #include <wx/aui/aui.h>
+    #include "ilocationpage.h"
+    #include "icontrols.h"
+    #include "datacontainer.h"
+    #include "syntaxtextbox.h"
 
-	class LocationCode : public wxPanel, public IObserver
-	{
+    class LocationCode : public wxPanel, public IObserver
+    {
 		DECLARE_CLASS(LocationCode)
-	private:
+    private:
 		ILocationPage		*_locPage;
 		SyntaxTextBox		*_text;
 		IControls			*_controls;
 		wxStaticText		*_stTextExec;
-	public:
+    public:
 		LocationCode(wxWindow *owner, ILocationPage *locPage, IControls *controls);
 		~LocationCode();
 
@@ -48,6 +48,6 @@
 		void SelectString(long startPos, long lastPos);
 		void ReplaceString(long start, long end, const wxString &str);
 		void ExpandCollapseAll(bool isExpanded);
-	};
+    };
 
 #endif

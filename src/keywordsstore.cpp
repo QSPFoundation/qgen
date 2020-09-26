@@ -26,20 +26,20 @@ WX_DEFINE_OBJARRAY(KeywordsArray);
 
 int CmpWordsAsc( Keyword **first, Keyword **second )
 {
-	return (*first)->word.CmpNoCase((*second)->word);
+    return (*first)->word.CmpNoCase((*second)->word);
 }
 
 bool KeywordsStore::Load( const wxString &filename )
 {
-	wxXmlDocument doc;
-	wxXmlNode *node;
-	if (!(wxFileExists(filename) && doc.Load(filename))) return false;
-	node = doc.GetRoot();
-	if (node == NULL || node->GetName() != wxT("QGen-keywords")) return false;
-	node = node->GetChildren();
-	if (node == NULL) return false;
-	while (node)
-	{
+    wxXmlDocument doc;
+    wxXmlNode *node;
+    if (!(wxFileExists(filename) && doc.Load(filename))) return false;
+    node = doc.GetRoot();
+    if (node == NULL || node->GetName() != wxT("QGen-keywords")) return false;
+    node = node->GetChildren();
+    if (node == NULL) return false;
+    while (node)
+    {
 		if (node->GetName() == wxT("Statements"))
 		{
 			ParseKeywords(node, STATEMENT);
@@ -53,18 +53,18 @@ bool KeywordsStore::Load( const wxString &filename )
 			ParseKeywords(node, VARIABLE);
 		}
 		node = node->GetNext();
-	}
-	_keywords.Sort(CmpWordsAsc);
-	return true;
+    }
+    _keywords.Sort(CmpWordsAsc);
+    return true;
 }
 
 void KeywordsStore::ParseKeywords( wxXmlNode *node, KeywordType type )
 {
-	Keyword *keyword;
+    Keyword *keyword;
 
-	node = node->GetChildren();
-	while (node)
-	{
+    node = node->GetChildren();
+    while (node)
+    {
 		if (node->GetName() == wxT("Keyword"))
 		{
 			keyword = new Keyword();
@@ -74,16 +74,16 @@ void KeywordsStore::ParseKeywords( wxXmlNode *node, KeywordType type )
 			_keywords.Add(keyword);
 		}
 		node = node->GetNext();
-	}
+    }
 }
 
 wxString KeywordsStore::GetWords( KeywordType type ) const
 {
-	wxString result;
+    wxString result;
 
-	size_t count = _keywords.GetCount(); 
-	for (size_t idx = 0; idx < count; ++idx)
-	{
+    size_t count = _keywords.GetCount();
+    for (size_t idx = 0; idx < count; ++idx)
+    {
 		if (_keywords[idx].type == type)
 		{
 			if (result.Length() == 0)
@@ -91,32 +91,32 @@ wxString KeywordsStore::GetWords( KeywordType type ) const
 			else
 				result += wxT(' ') + _keywords[idx].word;
 		}
-	}
-	return result;
+    }
+    return result;
 }
 
 size_t KeywordsStore::GetCount()
 {
-	return _keywords.GetCount();
+    return _keywords.GetCount();
 }
 
 wxString KeywordsStore::GetWord( size_t index ) const
 {
-	if (index >= _keywords.GetCount()) return wxEmptyString;
-	return _keywords[index].word;
+    if (index >= _keywords.GetCount()) return wxEmptyString;
+    return _keywords[index].word;
 }
 
 wxString KeywordsStore::FindTip( const wxString &word ) const
 {
-	wxString result;
-	int idx, first = 0;
-	size_t count = _keywords.GetCount();
-	if (count == 0) return result;
-	int last = count - 1;
-	wxString w = word.Lower();
-	wxString str;
-	do 
-	{
+    wxString result;
+    int idx, first = 0;
+    size_t count = _keywords.GetCount();
+    if (count == 0) return result;
+    int last = count - 1;
+    wxString w = word.Lower();
+    wxString str;
+    do
+    {
 		idx = first + (last - first) / 2;
 		str = _keywords[idx].word;
 		if(w.Cmp(str) > 0)
@@ -128,6 +128,6 @@ wxString KeywordsStore::FindTip( const wxString &word ) const
 			result = _keywords[idx].desc;
 			break;
 		}
-	} while (first <= last);
-	return result;
+    } while (first <= last);
+    return result;
 }

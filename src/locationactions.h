@@ -20,28 +20,28 @@
 */
 
 #ifndef _QGEN_LOCATION_ACTIONS_H_
-	#define _QGEN_LOCATION_ACTIONS_H_
+    #define _QGEN_LOCATION_ACTIONS_H_
 
-	#include <wx/wx.h>
-	#include <wx/splitter.h>
-	#include "ilocationpage.h"
-	#include "icontrols.h"
-	#include "actionspanel.h"
-	#include "actioncode.h"
+    #include <wx/wx.h>
+    #include <wx/splitter.h>
+    #include "ilocationpage.h"
+    #include "icontrols.h"
+    #include "actionspanel.h"
+    #include "actioncode.h"
 
-	class LocationActions : public wxPanel, public IObserver
-	{
+    class LocationActions : public wxPanel, public IObserver
+    {
 		DECLARE_CLASS(LocationActions)
-	private:
+    private:
 		ILocationPage		*_locPage;
 		IControls			*_controls;
 		ActionsPanel		*_actPanel;
 		ActionCode			*_actCode;
-		wxSplitterWindow	*_splitterv_down;
+		wxSplitterWindow    *_splitterv_down;
 		wxStaticText		*_stTextBaseActions;
 
 		void ShowActions();
-	public:
+    public:
 		LocationActions(wxWindow *owner, ILocationPage *locPage, IControls *controls);
 		~LocationActions();
 
@@ -62,6 +62,6 @@
 		void ReplacePicturePathString(long start, long end, const wxString & str);
 		void ReplaceActionCodeString(long start, long end, const wxString & str);
 		void SetFocusOnActionCode();
-	};
+    };
 
 #endif

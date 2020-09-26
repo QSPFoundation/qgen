@@ -20,27 +20,27 @@
 */
 
 #ifndef _QGEN_LOCATIONS_NOTEBOOK_H_
-	#define _QGEN_LOCATIONS_NOTEBOOK_H_
+    #define _QGEN_LOCATIONS_NOTEBOOK_H_
 
-	#include <wx/aui/aui.h>
-	#include "locationpage.h"
+    #include <wx/aui/aui.h>
+    #include "locationpage.h"
 
-	#include "bitmaps/locstabs_page_fixed.xpm"
+    #include "bitmaps/locstabs_page_fixed.xpm"
 
-	enum CloseTypePage
-	{
+    enum CloseTypePage
+    {
 		CLOSE_ALL,
 		CLOSE_ALLEXCEPTSELECTED,
 		CLOSE_SELECTED
-	};
+    };
 
-	class LocationsNotebook : public wxAuiNotebook, public IObserver
-	{
+    class LocationsNotebook : public wxAuiNotebook, public IObserver
+    {
 		DECLARE_CLASS(LocationsNotebook)
 		DECLARE_EVENT_TABLE()
-	private:
+    private:
 		IControls		*_controls;
-		DataContainer	*_container;
+		DataContainer    *_container;
 		int				selectedPage;
 
 		void OnClosePage(wxAuiNotebookEvent &event);
@@ -49,7 +49,7 @@
 		void OnNavigationKeyNotebook(wxNavigationKeyEvent &event);
 
 		void NotifyClosePage(int index);
-	public:
+    public:
 		LocationsNotebook(wxWindow *parent, wxWindowID id, IControls *controls,
 						  long style = wxAUI_NB_DEFAULT_STYLE|wxAUI_NB_WINDOWLIST_BUTTON);
 
@@ -66,6 +66,6 @@
 		void Update(bool isFromObservable = false);
 		void AdvanceSelection(bool forward = true);
 		void SwitchPageFixed(size_t selPage);
-	};
+    };
 
 #endif

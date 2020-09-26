@@ -20,24 +20,24 @@
 */
 
 #ifndef _QGEN_KEYS_PARSER_H_
-	#define _QGEN_KEYS_PARSER_H_
+    #define _QGEN_KEYS_PARSER_H_
 
-	#include <wx/wx.h>
-	#include <wx/dynarray.h>
-	#include <wx/hashmap.h>
+    #include <wx/wx.h>
+    #include <wx/dynarray.h>
+    #include <wx/hashmap.h>
 
-	#ifdef __WXMSW__
+    #ifdef __WXMSW__
 		#include <Windows.h>
-	#endif
+    #endif
 
-	#include "hotkeysstore.h"
+    #include "hotkeysstore.h"
 
-	WX_DECLARE_OBJARRAY(INPUT, KeysArray);
-	WX_DECLARE_STRING_HASH_MAP(int, KeyTable);
+    WX_DECLARE_OBJARRAY(INPUT, KeysArray);
+    WX_DECLARE_STRING_HASH_MAP(int, KeyTable);
 
-	class KeysParser
-	{
-	private:
+    class KeysParser
+    {
+    private:
 		KeyTable				_keysTable;
 		HotkeysStore			*_hotKeysStore;
 
@@ -46,11 +46,11 @@
 
 		void ReleaseAlt();
 		void InitKeysTable();
-	public:
+    public:
 		KeysParser(HotkeysStore *hotKeysStore);
 		~KeysParser();
 		bool ExecuteHotkeyAction(int keyCode, int modifiers);
 		void ParseText(const wxString &text);
-	};
+    };
 
 #endif

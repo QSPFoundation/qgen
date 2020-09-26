@@ -22,21 +22,21 @@
 class LocationPage;
 
 #ifndef _QGEN_ICONTROLS_H_
-	#define _QGEN_ICONTROLS_H_
+    #define _QGEN_ICONTROLS_H_
 
-	#include "settings.h"
-	#include "datacontainer.h"
-	#include "keywordsstore.h"
+    #include "settings.h"
+    #include "datacontainer.h"
+    #include "keywordsstore.h"
 
-	enum PasteType
-	{
+    enum PasteType
+    {
 		PASTE_REPLACE,
 		PASTE_NEW,
 		PASTE_NEW_AUTO
-	};
+    };
 
-	enum SearchPlace
-	{
+    enum SearchPlace
+    {
 		SEARCH_NONE,
 		SEARCH_LOCNAME,
 		SEARCH_LOCDESC,
@@ -44,10 +44,10 @@ class LocationPage;
 		SEARCH_ACTNAME,
 		SEARCH_PATHPICT,
 		SEARCH_ACTCODE
-	};
+    };
 
-	enum MessageType
-	{
+    enum MessageType
+    {
 		QGEN_MSG_EXISTS,
 		QGEN_MSG_EXISTS_HKEY,
 		QGEN_MSG_EXISTS_S_HKEY,
@@ -62,11 +62,11 @@ class LocationPage;
 		QGEN_MSG_TOOLONGFOLDERNAME,
 		QGEN_MSG_TOOLONGLOCATIONNAME,
 		QGEN_MSG_TOOLONGACTIONNAME
-	};
+    };
 
-	class IControls
-	{
-	public:
+    class IControls
+    {
+    public:
 		virtual Settings *GetSettings() const = 0;
 		virtual DataContainer *GetContainer() const = 0;
 		virtual KeywordsStore *GetKeywordsStore() const = 0;
@@ -140,6 +140,6 @@ class LocationPage;
 		virtual bool AddFolder() = 0;
 		virtual bool DeleteSelectedFolder() = 0;
 		virtual bool RenameSelectedFolder() = 0;
-	};
+    };
 
 #endif

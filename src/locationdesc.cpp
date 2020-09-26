@@ -24,57 +24,57 @@
 IMPLEMENT_CLASS( LocationDesc, wxPanel )
 
 LocationDesc::LocationDesc( wxWindow *owner, ILocationPage *locPage, IControls *controls ) :
-	wxPanel(owner, wxID_ANY)
+    wxPanel(owner, wxID_ANY)
 {
-	_locPage  = locPage;
-	_controls = controls;
+    _locPage  = locPage;
+    _controls = controls;
 
-	_text = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_SIMPLE | SYNTAX_STYLE_NOHELPTIPS);
-	wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-	_stTextDesc = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
-	sizer->Add( _stTextDesc, 0, wxALL|wxGROW, 1);
-	sizer->Add(_text, 1, wxALL|wxGROW, 1);
-	SetSizerAndFit(sizer);
-	SetAutoLayout(true);
-	Update();
-	_controls->GetSettings()->AddObserver(this);
+    _text = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_SIMPLE | SYNTAX_STYLE_NOHELPTIPS);
+    wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+    _stTextDesc = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
+    sizer->Add( _stTextDesc, 0, wxALL|wxGROW, 1);
+    sizer->Add(_text, 1, wxALL|wxGROW, 1);
+    SetSizerAndFit(sizer);
+    SetAutoLayout(true);
+    Update();
+    _controls->GetSettings()->AddObserver(this);
 }
 
 LocationDesc::~LocationDesc()
 {
-	_controls->GetSettings()->RemoveObserver(this);
+    _controls->GetSettings()->RemoveObserver(this);
 }
 void LocationDesc::SaveDesc()
 {
-	if (_text->IsModified())
-	{
+    if (_text->IsModified())
+    {
 		_controls->GetContainer()->SetLocationDesc( _locPage->GetLocationIndex(), _text->GetValue() );
 		_text->SetModified(false);
-	}
+    }
 }
 
 void LocationDesc::LoadDesc()
 {
-	_text->SetValue(_controls->GetContainer()->GetLocationDesc(_locPage->GetLocationIndex()));
+    _text->SetValue(_controls->GetContainer()->GetLocationDesc(_locPage->GetLocationIndex()));
 }
 
 void LocationDesc::Clear()
 {
-	_text->Clear();
+    _text->Clear();
 }
 
 void LocationDesc::SelectString(long startPos, long lastPos)
 {
-	_text->SetSelection( startPos, lastPos );
+    _text->SetSelection( startPos, lastPos );
 }
 
 void LocationDesc::ReplaceString( long start, long end, const wxString & str )
 {
-	_text->Replace(start, end, str);
+    _text->Replace(start, end, str);
 }
 
 void LocationDesc::Update( bool isFromObservable /*= false*/ )
 {
-	_stTextDesc->SetLabel(_("Description:"));
-	GetSizer()->Layout();
+    _stTextDesc->SetLabel(_("Description:"));
+    GetSizer()->Layout();
 }

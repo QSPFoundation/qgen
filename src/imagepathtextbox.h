@@ -20,27 +20,27 @@
 */
 
 #ifndef _QGEN_IMAGE_PATH_TEXT_BOX_H_
-	#define _QGEN_IMAGE_PATH_TEXT_BOX_H_
+    #define _QGEN_IMAGE_PATH_TEXT_BOX_H_
 
-	#include <wx/wx.h>
-	#include "ilocationpage.h"
-	#include "icontrols.h"
+    #include <wx/wx.h>
+    #include "ilocationpage.h"
+    #include "icontrols.h"
 
-	class ImagePathTextBox : public wxTextCtrl, public IObserver
-	{
+    class ImagePathTextBox : public wxTextCtrl, public IObserver
+    {
 		DECLARE_CLASS(ImagePathTextBox)
 		DECLARE_EVENT_TABLE()
-	private:
-		ILocationPage	*_locPage;
+    private:
+		ILocationPage    *_locPage;
 		IControls		*_controls;
 
 		void OnLostFocus(wxFocusEvent &event);
 		void OnKeyDown(wxKeyEvent& event);
-	public:
+    public:
 		ImagePathTextBox(wxWindow *owner, wxWindowID id, ILocationPage *locPage, IControls *controls);
 		~ImagePathTextBox();
 
 		void Update(bool isFromObservable = false);
-	};
+    };
 
 #endif

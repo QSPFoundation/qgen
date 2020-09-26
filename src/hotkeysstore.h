@@ -20,15 +20,15 @@
 */
 
 #ifndef _QGEN_HOTKEYS_STORE_H_
-	#define _QGEN_HOTKEYS_STORE_H_
+    #define _QGEN_HOTKEYS_STORE_H_
 
-	#include <wx/wx.h>
-	#include <wx/fileconf.h>
-	#include <wx/dynarray.h>
+    #include <wx/wx.h>
+    #include <wx/fileconf.h>
+    #include <wx/dynarray.h>
 
-	struct HotkeyData
-	{
-		wxString	CommandText;
+    struct HotkeyData
+    {
+		wxString    CommandText;
 		int			HotKeyCode;
 		int			Flags;
 
@@ -57,7 +57,7 @@
 			return wxString::Format(wxT("%s+%c"), tmp.wx_str(), HotKeyCode);
 		}
 
-	private:
+    private:
 		void AppendAccel(wxString &data, const wxString &key) const
 		{
 			if (data.IsEmpty())
@@ -65,15 +65,15 @@
 			else
 				data.Append(wxString::Format(wxT("+%s"), key.wx_str()));
 		}
-	};
+    };
 
-	WX_DECLARE_OBJARRAY(HotkeyData, HotkeyDataArray);
+    WX_DECLARE_OBJARRAY(HotkeyData, HotkeyDataArray);
 
-	class HotkeysStore
-	{
-	private:
+    class HotkeysStore
+    {
+    private:
 		HotkeyDataArray _hotkeysData;
-	public:
+    public:
 		HotkeysStore();
 		size_t AddHotkeyData(const HotkeyData &hotkeyData);
 		bool DeleteHotkeyData(const HotkeyData &hotkey);
@@ -83,6 +83,6 @@
 		int FindHotkeyDataIndex(const HotkeyData &hotkey) const;
 		void SaveHotkeysData(wxConfigBase &fileConfig);
 		void LoadHotkeysData(wxConfigBase &fileConfig);
-	};
+    };
 
 #endif

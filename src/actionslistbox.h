@@ -20,23 +20,23 @@
 */
 
 #ifndef _QGEN_ACTIONS_LIST_BOX_H_
-	#define _QGEN_ACTIONS_LIST_BOX_H_
+    #define _QGEN_ACTIONS_LIST_BOX_H_
 
-	#include <wx/wx.h>
-	#include <wx/fontmap.h>
-	#include <wx/htmllbox.h>
-	#include "datacontainer.h"
-	#include "actioncode.h"
+    #include <wx/wx.h>
+    #include <wx/fontmap.h>
+    #include <wx/htmllbox.h>
+    #include "datacontainer.h"
+    #include "actioncode.h"
 
-	class ActionsListBox : public wxHtmlListBox, public IObserver
-	{
+    class ActionsListBox : public wxHtmlListBox, public IObserver
+    {
 		DECLARE_CLASS(ActionsListBox)
 		DECLARE_EVENT_TABLE()
-	private:
-		ILocationPage	  *_locPage;
+    private:
+		ILocationPage      *_locPage;
 		IControls		  *_controls;
 		ActionCode		  *_actCode;
-		DataContainer	  *_container;
+		DataContainer      *_container;
 		wxString		  _outFormat;
 		wxString		  _outFormatImage;
 		wxString		  _outFormatBold;
@@ -45,7 +45,7 @@
 		wxString		  _outFormatItalicImage;
 		wxString		  _outFormatBoldItalic;
 		wxString		  _outFormatBoldItalicImage;
-		wxArrayString	  _items;
+		wxArrayString      _items;
 		bool			  _isDragging;
 		int				  _draggedAction;
 		int				  _prevActionIndex;
@@ -64,7 +64,7 @@
 
 		void CreateHTMLParser() const;
 		virtual wxString OnGetItem(size_t n) const;
-	public:
+    public:
 		ActionsListBox(wxWindow *owner, wxWindowID id, ILocationPage *locPage, 
 			ActionCode *actCode, IControls *controls, long style = 0);
 		~ActionsListBox();
@@ -92,6 +92,6 @@
 		void SetString(size_t index, const wxString & name);
 		void Insert(const wxString & name, size_t index);
 		void Clear();
-	};
+    };
 
 #endif

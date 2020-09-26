@@ -20,23 +20,23 @@
 */
 
 #ifndef _QGEN_GAME_H_
-	#define _QGEN_GAME_H_
+    #define _QGEN_GAME_H_
 
-	#include <wx/wx.h>
-	#include <wx/xml/xml.h>
-	#include <wx/mstream.h>
-	#include "datacontainer.h"
+    #include <wx/wx.h>
+    #include <wx/xml/xml.h>
+    #include <wx/mstream.h>
+    #include "datacontainer.h"
 
-	#ifdef _UNICODE
+    #ifdef _UNICODE
 		typedef wchar_t QGEN_CHAR;
 		#define QGEN_FMT2(x) L##x
 		#define QGEN_FMT(x) QGEN_FMT2(x)
-	#else
+    #else
 		typedef char QGEN_CHAR;
 		#define QGEN_FMT(x) x
-	#endif
+    #endif
 
-	#ifdef _UNICODE
+    #ifdef _UNICODE
 		#define QGEN_STRCPY wcscpy
 		#define QGEN_STRNCPY wcsncpy
 		#define QGEN_STRLEN wcslen
@@ -56,7 +56,7 @@
 		#define QGEN_TO_OS_CHAR(a) qspDirectConvertUC(a, qspCP1251ToUnicodeTable)
 		#define QGEN_WCTOB
 		#define QGEN_BTOWC
-	#else
+    #else
 		#define QGEN_STRCPY strcpy
 		#define QGEN_STRNCPY strncpy
 		#define QGEN_STRLEN strlen
@@ -86,31 +86,31 @@
 			#define QGEN_CHRUPR(a) qspKOI8RToUpperTable[(unsigned char)(a)]
 			#define QGEN_STRCOLL(a, b) qspStrCmpSB(a, b, qspKOI8ROrderTable)
 		#endif
-	#endif
+    #endif
 
-	#ifdef _WINDOWS
+    #ifdef _WINDOWS
 		#define QGEN_PATHDELIM QGEN_FMT("\\")
-	#else
+    #else
 		#define QGEN_PATHDELIM QGEN_FMT("/")
-	#endif
+    #endif
 
-	#define QGEN_LEN(x) (sizeof(x) / sizeof(QGEN_CHAR) - 1)
+    #define QGEN_LEN(x) (sizeof(x) / sizeof(QGEN_CHAR) - 1)
 
-	#define QGEN_CODREMOV 5
-	#define QGEN_SPACES QGEN_FMT(" \t")
-	#define QGEN_STRSDELIM QGEN_FMT("\r\n")
-	#define QGEN_GAMEID QGEN_FMT("QSPGAME")
-	#define QGEN_VER QGEN_FMT("4.0.0 beta 1")
-	#define QGEN_NAME QGEN_FMT("QGEN")
-	#define QGEN_PASSWD QGEN_FMT("No")
-	#define QGEN_MAXACTIONS 50
-	#define QGEN_MAXFOLDERNAMELEN 100
-	#define QGEN_MAXLOCATIONNAMELEN 100
-	#define QGEN_MAXACTIONNAMELEN 500
-	#define QGEN_DELIMS QGEN_FMT("():=+-*/<>!&,[] '\"\t{}%@#^;.?~\\|\r\n")
-	#define QGEN_BOM "\xFF\xFE"
+    #define QGEN_CODREMOV 5
+    #define QGEN_SPACES QGEN_FMT(" \t")
+    #define QGEN_STRSDELIM QGEN_FMT("\r\n")
+    #define QGEN_GAMEID QGEN_FMT("QSPGAME")
+    #define QGEN_VER QGEN_FMT("4.0.0 beta 1")
+    #define QGEN_NAME QGEN_FMT("QGEN")
+    #define QGEN_PASSWD QGEN_FMT("No")
+    #define QGEN_MAXACTIONS 50
+    #define QGEN_MAXFOLDERNAMELEN 100
+    #define QGEN_MAXLOCATIONNAMELEN 100
+    #define QGEN_MAXACTIONNAMELEN 500
+    #define QGEN_DELIMS QGEN_FMT("():=+-*/<>!&,[] '\"\t{}%@#^;.?~\\|\r\n")
+    #define QGEN_BOM "\xFF\xFE"
 
-	#define wxGetBitmapFromMemory(name) _wxGetBitmapFromMemory(name ## _png, sizeof(name ## _png))
+    #define wxGetBitmapFromMemory(name) _wxGetBitmapFromMemory(name ## _png, sizeof(name ## _png))
 		inline wxBitmap _wxGetBitmapFromMemory(const unsigned char *data, int length)
 		{
 			wxMemoryInputStream is(data, length);
@@ -118,15 +118,15 @@
 		}
 
 
-	class Controls;
+    class Controls;
 
-	bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *controls, wxString &password, bool merge);
-	bool qspSaveQuest(const QGEN_CHAR *fileName, const wxString &passwd, Controls *controls);
-	bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls);
-	bool qspExportTxt2Game(const QGEN_CHAR *fileName, Controls *controls);
-	bool qspImportTxt2Game(const QGEN_CHAR *fileName, Controls *controls);
+    bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *controls, wxString &password, bool merge);
+    bool qspSaveQuest(const QGEN_CHAR *fileName, const wxString &passwd, Controls *controls);
+    bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls);
+    bool qspExportTxt2Game(const QGEN_CHAR *fileName, Controls *controls);
+    bool qspImportTxt2Game(const QGEN_CHAR *fileName, Controls *controls);
 
-	bool OpenConfigFile(DataContainer *container, const wxString &file);
-	bool SaveConfigFile(DataContainer *container, const wxString &file);
+    bool OpenConfigFile(DataContainer *container, const wxString &file);
+    bool SaveConfigFile(DataContainer *container, const wxString &file);
 
 #endif

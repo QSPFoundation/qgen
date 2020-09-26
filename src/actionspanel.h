@@ -20,23 +20,23 @@
 */
 
 #ifndef _QGEN_ACTIONS_PANEL_H_
-	#define _QGEN_ACTIONS_PANEL_H_
+    #define _QGEN_ACTIONS_PANEL_H_
 
-	#include <wx/wx.h>
-	#include "icontrols.h"
-	#include "actioncode.h"
-	#include "actionslistbox.h"
+    #include <wx/wx.h>
+    #include "icontrols.h"
+    #include "actioncode.h"
+    #include "actionslistbox.h"
 
-	#include "bitmaps/toolbar_action_new.xpm"
-	#include "bitmaps/toolbar_action_rename.xpm"
-	#include "bitmaps/toolbar_action_delete.xpm"
+    #include "bitmaps/toolbar_action_new.xpm"
+    #include "bitmaps/toolbar_action_rename.xpm"
+    #include "bitmaps/toolbar_action_delete.xpm"
 
-	class ActionsPanel : public wxPanel
-	{
+    class ActionsPanel : public wxPanel
+    {
 		DECLARE_CLASS(ActionsPanel)
 		DECLARE_EVENT_TABLE()
-	private:
-		ActionsListBox	*_actList;
+    private:
+		ActionsListBox    *_actList;
 		wxButton		*_addActButton;
 		wxButton		*_renActButton;
 		wxButton		*_delActButton;
@@ -45,11 +45,11 @@
 		void OnAddAction( wxCommandEvent &event );
 		void OnRenAction( wxCommandEvent &event );
 		void OnDelAction( wxCommandEvent &event );
-	public:
+    public:
 		ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode *_actCode, IControls *controls );
 
 		void EnableButtons();
 		ActionsListBox *GetActionsListBox() { return _actList; };
-	};
+    };
 
 #endif

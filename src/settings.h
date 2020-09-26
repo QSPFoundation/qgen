@@ -20,19 +20,19 @@
 */
 
 #ifndef _QGEN_SETTINGS_H_
-	#define _QGEN_SETTINGS_H_
+    #define _QGEN_SETTINGS_H_
 
-	#include <wx/colordlg.h>
-	#include <wx/fontdlg.h>
-	#include <wx/filename.h>
-	#include <wx/fileconf.h>
-	#include <wx/list.h>
-	#include "iobserver.h"
-	#include "hotkeysstore.h"
-	#include "searchdatastore.h"
+    #include <wx/colordlg.h>
+    #include <wx/fontdlg.h>
+    #include <wx/filename.h>
+    #include <wx/fileconf.h>
+    #include <wx/list.h>
+    #include "iobserver.h"
+    #include "hotkeysstore.h"
+    #include "searchdatastore.h"
 
-	enum SyntaxType
-	{
+    enum SyntaxType
+    {
 		SYNTAX_STATEMENTS,
 		SYNTAX_FUNCTIONS,
 		SYNTAX_SYS_VARIABLES,
@@ -43,13 +43,13 @@
 		SYNTAX_COMMENTS,
 		SYNTAX_BASE,
 		SYNTAX_DUMMY
-	};
+    };
 
-	WX_DECLARE_LIST(IObserver, ObserversList);
+    WX_DECLARE_LIST(IObserver, ObserversList);
 
-	class Settings
-	{
-	private:
+    class Settings
+    {
+    private:
 		int				_leftFramePos;
 		int				_topFramePos;
 		int				_frameWidth;
@@ -87,11 +87,11 @@
 		wxString		_firstLocName;
 		wxString		_lastGamePath;
 		wxString		_panelsPos;
-		HotkeysStore	_hotkeysStore;
+		HotkeysStore    _hotkeysStore;
 		SearchDataStore _searchDataStore;
 		int				_idLang;
-		ObserversList	_observers;
-	public:
+		ObserversList    _observers;
+    public:
 		Settings(const wxString &path);
 
 		void LoadSettings();
@@ -179,6 +179,6 @@
 		void SetIdLang(int id) { _idLang = id; }
 		int GetLangId() { return _idLang; }
 		wxString GetPath() const { return _path; }
-	};
+    };
 
 #endif

@@ -24,53 +24,53 @@
 IMPLEMENT_CLASS( ImagePathTextBox, wxTextCtrl )
 
 BEGIN_EVENT_TABLE(ImagePathTextBox, wxTextCtrl)
-	EVT_KILL_FOCUS(ImagePathTextBox::OnLostFocus)
-	EVT_KEY_DOWN(ImagePathTextBox::OnKeyDown)
+    EVT_KILL_FOCUS(ImagePathTextBox::OnLostFocus)
+    EVT_KEY_DOWN(ImagePathTextBox::OnKeyDown)
 END_EVENT_TABLE()
 
 ImagePathTextBox::ImagePathTextBox( wxWindow *owner, wxWindowID id, ILocationPage *locPage, IControls *controls ) :
-	wxTextCtrl(owner, id, wxEmptyString, wxDefaultPosition, wxSize(1, 1), wxTE_MULTILINE)
+    wxTextCtrl(owner, id, wxEmptyString, wxDefaultPosition, wxSize(1, 1), wxTE_MULTILINE)
 {
-	_locPage = locPage;
-	_controls = controls;
+    _locPage = locPage;
+    _controls = controls;
 
-	Update();
-	_controls->GetSettings()->AddObserver(this);
+    Update();
+    _controls->GetSettings()->AddObserver(this);
 }
 
 ImagePathTextBox::~ImagePathTextBox()
 {
-	_controls->GetSettings()->RemoveObserver(this);
+    _controls->GetSettings()->RemoveObserver(this);
 }
 
 void ImagePathTextBox::Update(bool isFromObservable)
 {
-	Settings *settings = _controls->GetSettings();
-	SetFont(settings->GetFont(SYNTAX_BASE));
-	SetForegroundColour(settings->GetColour(SYNTAX_BASE));
-	SetBackgroundColour(settings->GetTextBackColour());
-	#ifdef __WXMSW__
+    Settings *settings = _controls->GetSettings();
+    SetFont(settings->GetFont(SYNTAX_BASE));
+    SetForegroundColour(settings->GetColour(SYNTAX_BASE));
+    SetBackgroundColour(settings->GetTextBackColour());
+    #ifdef __WXMSW__
 		ToggleWindowStyle(wxTE_MULTILINE);
 		SetInitialSize(wxSize(1, GetBestSize().GetHeight()));
 		ToggleWindowStyle(wxTE_MULTILINE);
-	#else
+    #else
 		wxTextCtrl *temp = new wxTextCtrl(GetParent(), wxID_ANY);
 		int size = temp->GetSize().GetHeight() - temp->GetCharHeight();
 		SetInitialSize(wxSize(1, GetCharHeight() + size));
 		delete temp;
-	#endif
-	Refresh();
+    #endif
+    Refresh();
 }
 
 void ImagePathTextBox::OnLostFocus( wxFocusEvent &event )
 {
-	_locPage->RefreshActions();
-	event.Skip();
+    _locPage->RefreshActions();
+    event.Skip();
 }
 
 void ImagePathTextBox::OnKeyDown( wxKeyEvent& event )
 {
-	if (!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
+    if (!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
 		event.Skip();
-	if (event.GetKeyCode() == WXK_RETURN) event.Skip(false);
+    if (event.GetKeyCode() == WXK_RETURN) event.Skip(false);
 }

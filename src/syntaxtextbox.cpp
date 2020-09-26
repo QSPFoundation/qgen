@@ -27,34 +27,34 @@
 IMPLEMENT_CLASS(SyntaxTextBox, wxStyledTextCtrl)
 
 BEGIN_EVENT_TABLE(SyntaxTextBox, wxStyledTextCtrl)
-	EVT_KEY_DOWN(SyntaxTextBox::OnKeyDown)
-	EVT_KEY_UP(SyntaxTextBox::OnKeyUp)
-	EVT_RIGHT_DOWN(SyntaxTextBox::OnRightClick)
-	EVT_STC_MARGINCLICK(wxID_ANY, SyntaxTextBox::OnMarginClicked)
-	EVT_STC_CHARADDED(wxID_ANY, SyntaxTextBox::OnCharAdded)
-	EVT_MOTION(SyntaxTextBox::OnMouseMove)
+    EVT_KEY_DOWN(SyntaxTextBox::OnKeyDown)
+    EVT_KEY_UP(SyntaxTextBox::OnKeyUp)
+    EVT_RIGHT_DOWN(SyntaxTextBox::OnRightClick)
+    EVT_STC_MARGINCLICK(wxID_ANY, SyntaxTextBox::OnMarginClicked)
+    EVT_STC_CHARADDED(wxID_ANY, SyntaxTextBox::OnCharAdded)
+    EVT_MOTION(SyntaxTextBox::OnMouseMove)
 END_EVENT_TABLE()
 
 SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
-	wxStyledTextCtrl(owner, wxID_ANY, wxDefaultPosition, wxSize(1, 1))
+    wxStyledTextCtrl(owner, wxID_ANY, wxDefaultPosition, wxSize(1, 1))
 {
-	_controls = controls;
-	_keywordsStore = controls->GetKeywordsStore();
-	_style = style;
-	SetEOLMode(wxSTC_EOL_LF);
-	SetWrapMode(wxSTC_WRAP_WORD);
-	SetMarginWidth(1, 0);
-	if (_style & SYNTAX_STYLE_NOSCROLLBARS)
-	{
+    _controls = controls;
+    _keywordsStore = controls->GetKeywordsStore();
+    _style = style;
+    SetEOLMode(wxSTC_EOL_LF);
+    SetWrapMode(wxSTC_WRAP_WORD);
+    SetMarginWidth(1, 0);
+    if (_style & SYNTAX_STYLE_NOSCROLLBARS)
+    {
 		SetUseHorizontalScrollBar(false);
 		SetUseVerticalScrollBar(false);
-	}
-	if (!(_style & SYNTAX_STYLE_SIMPLEMENU))
-	{
+    }
+    if (!(_style & SYNTAX_STYLE_SIMPLEMENU))
+    {
 		UsePopUp(false);
-	}
-	if (_style & SYNTAX_STYLE_COLORED)
-	{
+    }
+    if (_style & SYNTAX_STYLE_COLORED)
+    {
 		SetScrollWidth(-1);
 		SetScrollWidthTracking(true);
 
@@ -62,14 +62,14 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 		SetKeyWords(0, _keywordsStore->GetWords(STATEMENT));
 		SetKeyWords(1, _keywordsStore->GetWords(EXPRESSION));
 		SetKeyWords(2, _keywordsStore->GetWords(VARIABLE));
-		//	SetViewEOL(true);
-		//	SetViewWhiteSpace(true);
+		//    SetViewEOL(true);
+		//    SetViewWhiteSpace(true);
 		SetIndentationGuides(true);
 		if (!(_style & SYNTAX_STYLE_NOMARGINS))
 		{
 			SetProperty(wxT("fold"), wxT("1"));
-			//	SetProperty(wxT("fold.compact"), wxT("0"));
-			//	SetProperty(wxT("fold.comment"), wxT("1"));
+			//    SetProperty(wxT("fold.compact"), wxT("0"));
+			//    SetProperty(wxT("fold.comment"), wxT("1"));
 			SetFoldFlags(wxSTC_FOLDLEVELBASE);
 
 			SetMarginType(SYNTAX_FOLD_MARGIN, wxSTC_MARGIN_SYMBOL);
@@ -93,44 +93,44 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 		AutoCompSetChooseSingle(true);
 		AutoCompSetIgnoreCase(true);
 		AutoCompSetDropRestOfWord(true);
-	}
-	Update();
-	_controls->GetSettings()->AddObserver(this);
+    }
+    Update();
+    _controls->GetSettings()->AddObserver(this);
 }
 
 SyntaxTextBox::~SyntaxTextBox()
 {
-	_controls->GetSettings()->RemoveObserver(this);
+    _controls->GetSettings()->RemoveObserver(this);
 }
 
 void SyntaxTextBox::Update(bool isFromObservable)
 {
-	Settings *settings = _controls->GetSettings();
-	wxColour backColour = settings->GetTextBackColour();
-	wxFont font;
-	int tabSize;
+    Settings *settings = _controls->GetSettings();
+    wxColour backColour = settings->GetTextBackColour();
+    wxFont font;
+    int tabSize;
 
-	SetCaretForeground((backColour.Blue() << 16 | backColour.Green() << 8 | backColour.Red()) ^ 0xFFFFFF);
-	SetSelBackground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT));
-	SetSelForeground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHTTEXT));
-	StyleSetForeground(wxSTC_STYLE_DEFAULT, settings->GetColour(SYNTAX_BASE));
-	StyleSetBackground(wxSTC_STYLE_DEFAULT, backColour);
-	font = settings->GetFont(SYNTAX_BASE);
-	StyleSetFont(wxSTC_STYLE_DEFAULT, font);
-	tabSize = settings->GetTabSize();
-	SetTabWidth(tabSize);
-	StyleClearAll();
+    SetCaretForeground((backColour.Blue() << 16 | backColour.Green() << 8 | backColour.Red()) ^ 0xFFFFFF);
+    SetSelBackground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT));
+    SetSelForeground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHTTEXT));
+    StyleSetForeground(wxSTC_STYLE_DEFAULT, settings->GetColour(SYNTAX_BASE));
+    StyleSetBackground(wxSTC_STYLE_DEFAULT, backColour);
+    font = settings->GetFont(SYNTAX_BASE);
+    StyleSetFont(wxSTC_STYLE_DEFAULT, font);
+    tabSize = settings->GetTabSize();
+    SetTabWidth(tabSize);
+    StyleClearAll();
 
-	if (_style & SYNTAX_STYLE_COLORED)
-	{
+    if (_style & SYNTAX_STYLE_COLORED)
+    {
 		SetWrapMode(settings->GetWrapLines() ? wxSTC_WRAP_WORD : wxSTC_WRAP_NONE);
 		if (!(_style & SYNTAX_STYLE_NOMARGINS))
 		{
 			SetFoldMarginColour(true, backColour);
-			// Нумерация строк
+			// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 			SetMarginWidth(SYNTAX_NUM_MARGIN, settings->GetShowLinesNums() ? 40 : 0);
 		}
-		// Ключевые слова
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 		font = settings->GetFont(SYNTAX_STATEMENTS);
 		StyleSetFont(wxSTC_B_KEYWORD, font);
 		StyleSetForeground(wxSTC_B_KEYWORD, settings->GetColour(SYNTAX_STATEMENTS));
@@ -140,25 +140,25 @@ void SyntaxTextBox::Update(bool isFromObservable)
 		font = settings->GetFont(SYNTAX_SYS_VARIABLES);
 		StyleSetFont(wxSTC_B_KEYWORD3, font);
 		StyleSetForeground(wxSTC_B_KEYWORD3, settings->GetColour(SYNTAX_SYS_VARIABLES));
-		// Строки
+		// пїЅпїЅпїЅпїЅпїЅпїЅ
 		font = settings->GetFont(SYNTAX_STRINGS);
 		StyleSetFont(wxSTC_B_STRING, font);
 		StyleSetForeground(wxSTC_B_STRING, settings->GetColour(SYNTAX_STRINGS));
 		StyleSetFont(wxSTC_B_STRINGEOL, font);
 		StyleSetForeground(wxSTC_B_STRINGEOL, settings->GetColour(SYNTAX_STRINGS));
-		// Числа
+		// пїЅпїЅпїЅпїЅпїЅ
 		font = settings->GetFont(SYNTAX_NUMBERS);
 		StyleSetFont(wxSTC_B_NUMBER, font);
 		StyleSetForeground(wxSTC_B_NUMBER, settings->GetColour(SYNTAX_NUMBERS));
-		// Операции
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		font = settings->GetFont(SYNTAX_OPERATIONS);
 		StyleSetFont(wxSTC_B_OPERATOR, font);
 		StyleSetForeground(wxSTC_B_OPERATOR, settings->GetColour(SYNTAX_OPERATIONS));
-		// Метки
+		// пїЅпїЅпїЅпїЅпїЅ
 		font = settings->GetFont(SYNTAX_LABELS);
 		StyleSetFont(wxSTC_B_LABEL, font);
 		StyleSetForeground(wxSTC_B_LABEL, settings->GetColour(SYNTAX_LABELS));
-		// Комментарии
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		font = settings->GetFont(SYNTAX_COMMENTS);
 		StyleSetFont(wxSTC_B_COMMENT, font);
 		StyleSetForeground(wxSTC_B_COMMENT, settings->GetColour(SYNTAX_COMMENTS));
@@ -166,24 +166,24 @@ void SyntaxTextBox::Update(bool isFromObservable)
 		StyleSetForeground(wxSTC_B_PREPROCESSOR, settings->GetColour(SYNTAX_COMMENTS));
 		StyleSetFont(wxSTC_B_DATE, font);
 		StyleSetForeground(wxSTC_B_DATE, settings->GetColour(SYNTAX_COMMENTS));
-	}
+    }
 }
 
 bool SyntaxTextBox::StartAutoComplete()
 {
-	int curLineIndex = GetCurrentLine();
-	wxString line = GetLine(curLineIndex);
-	int caretChar = GetCharIndexFromPosition(PositionFromLine(curLineIndex), GetCurrentPos());
-	int startword = caretChar - 1;
-	while (startword >= 0)
+    int curLineIndex = GetCurrentLine();
+    wxString line = GetLine(curLineIndex);
+    int caretChar = GetCharIndexFromPosition(PositionFromLine(curLineIndex), GetCurrentPos());
+    int startword = caretChar - 1;
+    while (startword >= 0)
 		if (QGEN_STRCHR(QGEN_DELIMS, line[startword]))
 			break;
 		else
 			--startword;
-	++startword;
-	wxString root = line.Mid(startword, caretChar - startword).Upper();
-	if (!root.IsEmpty())
-	{
+    ++startword;
+    wxString root = line.Mid(startword, caretChar - startword).Upper();
+    if (!root.IsEmpty())
+    {
 		wxArrayString words;
 		wxString str;
 		size_t count = _keywordsStore->GetCount();
@@ -197,24 +197,24 @@ bool SyntaxTextBox::StartAutoComplete()
 			AutoCompShow(root.Length(), GetArrayAsString(words));
 			return true;
 		}
-	}
-	return false;
+    }
+    return false;
 }
 
 void SyntaxTextBox::OnMarginClicked( wxStyledTextEvent &event )
 {
-	switch (event.GetMargin())
-	{
-	case SYNTAX_FOLD_MARGIN:
+    switch (event.GetMargin())
+    {
+    case SYNTAX_FOLD_MARGIN:
 		ToggleFold(LineFromPosition(event.GetPosition()));
 		break;
-	}
+    }
 }
 
 void SyntaxTextBox::OnCharAdded( wxStyledTextEvent &event )
 {
-	if ((_style & SYNTAX_STYLE_COLORED) && event.GetKey() == '\n' && !_controls->IsInHotkeyExecution())
-	{
+    if ((_style & SYNTAX_STYLE_COLORED) && event.GetKey() == '\n' && !_controls->IsInHotkeyExecution())
+    {
 		int curLine = GetCurrentLine();
 		if (curLine > 0 && GetLineLength(curLine) <= 2)
 		{
@@ -227,13 +227,13 @@ void SyntaxTextBox::OnCharAdded( wxStyledTextEvent &event )
 				}
 			ReplaceSelection(line);
 		}
-	}
+    }
 }
 
 void SyntaxTextBox::OnKeyDown( wxKeyEvent& event )
 {
-	if (_style & SYNTAX_STYLE_COLORED)
-	{
+    if (_style & SYNTAX_STYLE_COLORED)
+    {
 		switch (event.GetKeyCode())
 		{
 		case WXK_SPACE:
@@ -244,22 +244,22 @@ void SyntaxTextBox::OnKeyDown( wxKeyEvent& event )
 			}
 			break;
 		}
-	}
-	if (_style & SYNTAX_STYLE_NOHOTKEYS)
+    }
+    if (_style & SYNTAX_STYLE_NOHOTKEYS)
 		event.Skip();
-	else
-	{
+    else
+    {
 		if (!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
 			event.Skip();
-	}
+    }
 }
 
 void SyntaxTextBox::OnRightClick(wxMouseEvent& event)
 {
-	if (_style & SYNTAX_STYLE_SIMPLEMENU)
+    if (_style & SYNTAX_STYLE_SIMPLEMENU)
 		event.Skip();
-	else
-	{
+    else
+    {
 		wxMenu menu;
 		menu.Append(ID_TEXT_UNDO, _("Undo"));
 		menu.Append(ID_TEXT_REDO, _("Redo"));
@@ -277,93 +277,93 @@ void SyntaxTextBox::OnRightClick(wxMouseEvent& event)
 		}
 		_controls->UpdateMenuItems(&menu);
 		PopupMenu(&menu);
-	}
+    }
 }
 
 void SyntaxTextBox::SetValue( const wxString &str )
 {
-	SetText(str);
-	SetModified(false);
-	EmptyUndoBuffer();
+    SetText(str);
+    SetModified(false);
+    EmptyUndoBuffer();
 }
 
 wxString SyntaxTextBox::GetArrayAsString( const wxArrayString &arr )
 {
-	wxString res;
-	if (arr.GetCount() > 0)
-	{
+    wxString res;
+    if (arr.GetCount() > 0)
+    {
 		res += arr[0];
 		for (size_t i = 1; i < arr.GetCount(); ++i)
 			res += wxT(" ") + arr[i];
-	}
-	return res;
+    }
+    return res;
 }
 
 int SyntaxTextBox::GetCharPosition( int startPos, int chars )
 {
-	while (chars--)
+    while (chars--)
 		startPos = PositionAfter(startPos);
-	return startPos;
+    return startPos;
 }
 
 int SyntaxTextBox::GetCharIndexFromPosition( int fromPos, int pos )
 {
-	int index = 0;
-	while (pos != fromPos)
-	{
+    int index = 0;
+    while (pos != fromPos)
+    {
 		pos = PositionBefore(pos);
 		++index;
-	}
-	return index;
+    }
+    return index;
 }
 
 void SyntaxTextBox::SetSelection( long from, long to )
 {
-	int start = GetCharPosition(0, from);
-	int end = GetCharPosition(start, to - from);
-	EnsureVisibleEnforcePolicy(LineFromPosition(start));
-	GotoPos(end);
-	GotoPos(start);
-	wxStyledTextCtrl::SetSelection(start, end);
+    int start = GetCharPosition(0, from);
+    int end = GetCharPosition(start, to - from);
+    EnsureVisibleEnforcePolicy(LineFromPosition(start));
+    GotoPos(end);
+    GotoPos(start);
+    wxStyledTextCtrl::SetSelection(start, end);
 }
 
 void SyntaxTextBox::Replace( long from, long to, const wxString &str )
 {
-	int start = GetCharPosition(0, from);
-	int end = GetCharPosition(start, to - from);
-	EnsureVisibleEnforcePolicy(LineFromPosition(start));
-	GotoPos(end);
-	GotoPos(start);
-	wxStyledTextCtrl::Replace(start, end, str);
+    int start = GetCharPosition(0, from);
+    int end = GetCharPosition(start, to - from);
+    EnsureVisibleEnforcePolicy(LineFromPosition(start));
+    GotoPos(end);
+    GotoPos(start);
+    wxStyledTextCtrl::Replace(start, end, str);
 }
 
 long SyntaxTextBox::GetInsertionPoint() const
 {
-	return const_cast<SyntaxTextBox *>(this)->GetCharIndexFromPosition(0, GetCurrentPos());
+    return const_cast<SyntaxTextBox *>(this)->GetCharIndexFromPosition(0, GetCurrentPos());
 }
 
 wxString SyntaxTextBox::GetStringSelection() const
 {
-	return const_cast<SyntaxTextBox *>(this)->GetSelectedText();
+    return const_cast<SyntaxTextBox *>(this)->GetSelectedText();
 }
 
 void SyntaxTextBox::RemoveSelection()
 {
-	wxStyledTextCtrl::Clear();
+    wxStyledTextCtrl::Clear();
 }
 
 void SyntaxTextBox::Clear()
 {
-	ClearAll();
-	SetModified(false);
+    ClearAll();
+    SetModified(false);
 }
 
 void SyntaxTextBox::Expand(int &line, bool doExpand, bool force, int visLevels, int level)
 {
-	int lineMaxSubord = GetLastChild(line, level & wxSTC_FOLDLEVELNUMBERMASK);
-	++line;
-	while (line <= lineMaxSubord)
-	{
+    int lineMaxSubord = GetLastChild(line, level & wxSTC_FOLDLEVELNUMBERMASK);
+    ++line;
+    while (line <= lineMaxSubord)
+    {
 		if (force)
 		{
 			if (visLevels > 0)
@@ -392,18 +392,18 @@ void SyntaxTextBox::Expand(int &line, bool doExpand, bool force, int visLevels, 
 		}
 		else
 			line++;
-	}
+    }
 }
 
 void SyntaxTextBox::ExpandCollapseAll( bool isExpanded )
 {
-	int linesCount = GetLineCount();
-	SetProperty(wxT("fold.all"), wxT("1"));
-	wxStyledTextCtrl::Update();
-	SetProperty(wxT("fold.all"), wxT("0"));
-	Freeze();
-	for (int line = 0; line < linesCount; line++)
-	{
+    int linesCount = GetLineCount();
+    SetProperty(wxT("fold.all"), wxT("1"));
+    wxStyledTextCtrl::Update();
+    SetProperty(wxT("fold.all"), wxT("0"));
+    Freeze();
+    for (int line = 0; line < linesCount; line++)
+    {
 		int level = GetFoldLevel(line);
 		if ((level & wxSTC_FOLDLEVELHEADERFLAG) &&
 			(wxSTC_FOLDLEVELBASE == (level & wxSTC_FOLDLEVELNUMBERMASK)))
@@ -422,26 +422,26 @@ void SyntaxTextBox::ExpandCollapseAll( bool isExpanded )
 					HideLines(line + 1, lineMaxSubord);
 			}
 		}
-	}
-	Thaw();
+    }
+    Thaw();
 }
 
 void SyntaxTextBox::OnMouseMove(wxMouseEvent& event)
 {
-	wxStyledTextCtrl::OnMouseMove(event);
-	if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
+    wxStyledTextCtrl::OnMouseMove(event);
+    if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
 		Tip(PositionFromPoint(event.GetPosition()));
 }
 
 wxString SyntaxTextBox::GetWordFromPos(int pos)
 {
-	wxString str;
-	int beginPos, lastPos;
-	int lineInd = LineFromPosition(pos);
-	int realPos = GetCharIndexFromPosition(PositionFromLine(lineInd), pos);
-	wxString lineStr = GetLine(lineInd).Trim();
-	if (!lineStr.IsEmpty())
-	{
+    wxString str;
+    int beginPos, lastPos;
+    int lineInd = LineFromPosition(pos);
+    int realPos = GetCharIndexFromPosition(PositionFromLine(lineInd), pos);
+    wxString lineStr = GetLine(lineInd).Trim();
+    if (!lineStr.IsEmpty())
+    {
 		if (realPos >= lineStr.Length())
 			realPos = lineStr.Length() - 1;
 		beginPos = realPos;
@@ -457,22 +457,22 @@ wxString SyntaxTextBox::GetWordFromPos(int pos)
 			else
 				++lastPos;
 		if (lastPos > beginPos) str = lineStr.Mid(beginPos + 1, lastPos - beginPos - 1);
-	}
+    }
 
-	return str;
+    return str;
 }
 
 void SyntaxTextBox::Tip(int pos)
 {
-	bool tipFound = false;
-	wxString str = GetWordFromPos(pos).Lower();
-	if (!str.IsEmpty())
+    bool tipFound = false;
+    wxString str = GetWordFromPos(pos).Lower();
+    if (!str.IsEmpty())
 		_controls->SetStatusText(_keywordsStore->FindTip(str));
 }
 
 void SyntaxTextBox::OnKeyUp(wxKeyEvent& event)
 {
-	if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
+    if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
 		Tip(GetCurrentPos());
-	event.Skip();
+    event.Skip();
 }

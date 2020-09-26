@@ -19,41 +19,41 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef	_QGEN_MERGE_DIALOG_H_
-	#define _QGEN_MERGE_DIALOG_H_
+#ifndef    _QGEN_MERGE_DIALOG_H_
+    #define _QGEN_MERGE_DIALOG_H_
 
-	#include <wx/wx.h>
-	#include <wx/artprov.h>
+    #include <wx/wx.h>
+    #include <wx/artprov.h>
 
-	enum
-	{
+    enum
+    {
 		ID_MERGE_REPLACE = 10600,
 		ID_MERGE_SKIP,
 		ID_MERGE_CANCEL
-	};
+    };
 
-	enum
-	{
+    enum
+    {
 		MERGE_ALL = 1 << 0,
 		MERGE_REPLACE = 1 << 1,
 		MERGE_SKIP = 1 << 2,
 		MERGE_CANCEL = 1 << 30
-	};
+    };
 
-	class MergeDialog : public wxDialog
-	{
+    class MergeDialog : public wxDialog
+    {
 		DECLARE_CLASS(MergeDialog)
 		DECLARE_EVENT_TABLE()
 
-		wxButton	*_replace;
-		wxButton	*_skip;
-		wxButton	*_cancel;
-		wxCheckBox	*_chkToAll;
+		wxButton    *_replace;
+		wxButton    *_skip;
+		wxButton    *_cancel;
+		wxCheckBox    *_chkToAll;
 
 		void OnButton(wxCommandEvent &event);
 
-	public:
+    public:
 		MergeDialog(wxWindow *parent, const wxString& title, const wxString &message, int style = 0);
-	};
+    };
 
 #endif

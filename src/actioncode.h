@@ -20,22 +20,22 @@
 */
 
 #ifndef _QGEN_ACTION_CODE_H_
-	#define _QGEN_ACTION_CODE_H_
+    #define _QGEN_ACTION_CODE_H_
 
-	#include "syntaxtextbox.h"
-	#include "imagepathtextbox.h"
+    #include "syntaxtextbox.h"
+    #include "imagepathtextbox.h"
 
-	enum
-	{
+    enum
+    {
 		ID_PICT_OPEN = 11000
-	};
+    };
 
-	class ActionCode : public wxPanel, public IObserver
-	{
+    class ActionCode : public wxPanel, public IObserver
+    {
 		DECLARE_CLASS(ActionCode)
 		DECLARE_EVENT_TABLE()
-	private:
-		ImagePathTextBox	*_pathPicTxtCtrl;
+    private:
+		ImagePathTextBox    *_pathPicTxtCtrl;
 		SyntaxTextBox		*_actCodeTxt;
 		wxButton			*_button;
 		IControls			*_controls;
@@ -43,7 +43,7 @@
 
 		void OnOpenPicture(wxCommandEvent &event);
 		bool Enable(bool status = true);
-	public:
+    public:
 		ActionCode(wxWindow *owner, ILocationPage *locPage, IControls *controls);
 		~ActionCode();
 
@@ -57,6 +57,6 @@
 		void ReplaceCodeString(long start, long end, const wxString & str);
 		void SetFocusOnActionCode();
 		void ExpandCollapseAll(bool isExpanded);
-	};
+    };
 
 #endif

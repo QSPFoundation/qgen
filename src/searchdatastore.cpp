@@ -27,62 +27,62 @@ SearchDataStore::SearchDataStore()
 
 void SearchDataStore::SaveSearchData( wxConfigBase &fileConfig )
 {
-	size_t count = _searchStrings.GetCount();
-	fileConfig.DeleteGroup(wxT("SearchData"));
-	for (size_t i = 0; i < count; i++)
+    size_t count = _searchStrings.GetCount();
+    fileConfig.DeleteGroup(wxT("SearchData"));
+    for (size_t i = 0; i < count; i++)
 		fileConfig.Write(wxString::Format(wxT("SearchData/Search%d_Text"), i), _searchStrings[i]);
-	count = _replaceStrings.GetCount();
-	for (size_t i = 0; i < count; i++)
+    count = _replaceStrings.GetCount();
+    for (size_t i = 0; i < count; i++)
 		fileConfig.Write(wxString::Format(wxT("SearchData/Replace%d_Text"), i), _replaceStrings[i]);
 }
 
 void SearchDataStore::LoadSearchData( wxConfigBase &fileConfig )
 {
-	wxString str;
-	size_t i = 0;
-	_searchStrings.Clear();
-	_replaceStrings.Clear();
-	while (1)
-	{
+    wxString str;
+    size_t i = 0;
+    _searchStrings.Clear();
+    _replaceStrings.Clear();
+    while (1)
+    {
 		if (!fileConfig.Read(wxString::Format(wxT("SearchData/Search%d_Text"), i), &str)) break;
 		_searchStrings.Add(str);
 		++i;
-	}
-	i = 0;
-	while (1)
-	{
+    }
+    i = 0;
+    while (1)
+    {
 		if (!fileConfig.Read(wxString::Format(wxT("SearchData/Replace%d_Text"), i), &str)) break;
 		_replaceStrings.Add(str);
 		++i;
-	}
+    }
 }
 
 void SearchDataStore::ClearStore()
 {
-	_searchStrings.Clear();
-	_replaceStrings.Clear();
+    _searchStrings.Clear();
+    _replaceStrings.Clear();
 }
 
 void SearchDataStore::AddSearchString( const wxString &text )
 {
-	if (_searchStrings.Index(text) == wxNOT_FOUND)
-	{
+    if (_searchStrings.Index(text) == wxNOT_FOUND)
+    {
 		size_t count = _searchStrings.GetCount();
 		if (count >= 10) _searchStrings.RemoveAt(count - 1);
-	}
-	else
+    }
+    else
 		_searchStrings.Remove(text);
-	_searchStrings.Insert(text, 0);
+    _searchStrings.Insert(text, 0);
 }
 
 void SearchDataStore::AddReplaceString( const wxString &text )
 {
-	if (_replaceStrings.Index(text) == wxNOT_FOUND)
-	{
+    if (_replaceStrings.Index(text) == wxNOT_FOUND)
+    {
 		size_t count = _replaceStrings.GetCount();
 		if (count >= 10) _replaceStrings.RemoveAt(count - 1);
-	}
-	else
+    }
+    else
 		_replaceStrings.Remove(text);
-	_replaceStrings.Insert(text, 0);
+    _replaceStrings.Insert(text, 0);
 }

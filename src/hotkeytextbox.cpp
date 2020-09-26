@@ -24,36 +24,36 @@
 IMPLEMENT_CLASS(HotKeyTextBox, wxTextCtrl)
 
 BEGIN_EVENT_TABLE(HotKeyTextBox, wxTextCtrl)
-	EVT_KEY_DOWN(HotKeyTextBox::OnKeyDown)
-	EVT_KEY_UP(HotKeyTextBox::OnKeyUp)
+    EVT_KEY_DOWN(HotKeyTextBox::OnKeyDown)
+    EVT_KEY_UP(HotKeyTextBox::OnKeyUp)
 END_EVENT_TABLE()
 
 HotKeyTextBox::HotKeyTextBox( wxWindow *parent, wxWindowID id, const wxString &value ) :
-	wxTextCtrl( parent, id, value, wxDefaultPosition, wxSize(150, -1), wxTE_READONLY)
+    wxTextCtrl( parent, id, value, wxDefaultPosition, wxSize(150, -1), wxTE_READONLY)
 {
-	_hotKeyCode = 0;
-	_flags = 0;
+    _hotKeyCode = 0;
+    _flags = 0;
 }
 
 void HotKeyTextBox::AppendAccel(wxString &data, const wxString &key) const
 {
-	if (data.IsEmpty())
+    if (data.IsEmpty())
 		data.Append(key);
-	else
+    else
 		data.Append(wxString::Format(wxT("+%s"), key.wx_str()));
 }
 
 void HotKeyTextBox::OnKeyDown( wxKeyEvent& event )
 {
-	int keyCode = event.GetKeyCode();
-	if (_hotKeyCode)
-	{
+    int keyCode = event.GetKeyCode();
+    if (_hotKeyCode)
+    {
 		_hotKey.Clear();
 		_flags = 0;
 		_hotKeyCode = 0;
-	}
-	if (event.GetModifiers() != wxMOD_NONE)
-	{
+    }
+    if (event.GetModifiers() != wxMOD_NONE)
+    {
 		if (event.AltDown() && !(_flags & wxACCEL_ALT))
 		{
 			AppendAccel(_hotKey, wxT("Alt"));
@@ -77,15 +77,15 @@ void HotKeyTextBox::OnKeyDown( wxKeyEvent& event )
 			_hotKeyCode = keyCode;
 		}
 		SetValue(_hotKey);
-	}
+    }
 }
 
 void HotKeyTextBox::OnKeyUp( wxKeyEvent& event )
 {
-	if (!_hotKeyCode)
-	{
+    if (!_hotKeyCode)
+    {
 		Clear();
 		_hotKey.Clear();
 		_flags = 0;
-	}
+    }
 }

@@ -20,62 +20,62 @@
 */
 
 #ifndef _QGEN_MAIN_FRAME_H_
-	#define _QGEN_MAIN_FRAME_H_
+    #define _QGEN_MAIN_FRAME_H_
 
-	#include <wx/filedlg.h>
-	#include <wx/wfstream.h>
-	#include <wx/fdrepdlg.h>
-	#include <wx/aboutdlg.h>
-	#include <wx/help.h>
-	#include <wx/aui/aui.h>
-	#include "initevent.h"
-	#include "icontrols.h"
-	#include "locationslistbox.h"
-	#include "locationsnotebook.h"
-	#include "searchdialog.h"
-	#include "optionsdialog.h"
-	#include "toolbar.h"
-	#ifdef __WXMSW__
+    #include <wx/filedlg.h>
+    #include <wx/wfstream.h>
+    #include <wx/fdrepdlg.h>
+    #include <wx/aboutdlg.h>
+    #include <wx/help.h>
+    #include <wx/aui/aui.h>
+    #include "initevent.h"
+    #include "icontrols.h"
+    #include "locationslistbox.h"
+    #include "locationsnotebook.h"
+    #include "searchdialog.h"
+    #include "optionsdialog.h"
+    #include "toolbar.h"
+    #ifdef __WXMSW__
 		#include "DesktopWindow.h"
-	#endif
-	#include "bitmaps/toolbar_game_play.xpm"
-	#include "bitmaps/toolbar_game_info.xpm"
-	#include "bitmaps/toolbar_file_saveas.xpm"
-	#include "bitmaps/toolbar_file_save.xpm"
-	#include "bitmaps/toolbar_location_copy.xpm"
-	#include "bitmaps/toolbar_file_open.xpm"
-	#include "bitmaps/toolbar_location_new.xpm"
-	#include "bitmaps/toolbar_location_rename.xpm"
-	#include "bitmaps/toolbar_location_delete.xpm"
-	#include "bitmaps/toolbar_location_clear.xpm"
-	#include "bitmaps/toolbar_location_paste.xpm"
-	#include "bitmaps/toolbar_text_search.xpm"
-	#include "bitmaps/toolbar_options.xpm"
-	#include "bitmaps/qgen.xpm"
-	#include "bitmaps/about_logo.xpm"
-	#include "bitmaps/toolbar_redo.xpm"
-	#include "bitmaps/toolbar_undo.xpm"
-	#include "bitmaps/menu_file_open.xpm"
-	#include "bitmaps/menu_file_save.xpm"
-	#include "bitmaps/menu_game_play.xpm"
-	#include "bitmaps/menu_game_new.xpm"
-	#include "bitmaps/menu_text_cut.xpm"
-	#include "bitmaps/menu_text_copy.xpm"
-	#include "bitmaps/menu_text_paste.xpm"
-	#include "bitmaps/menu_text_delete.xpm"
-	#include "bitmaps/menu_text_search.xpm"
-	#include "bitmaps/menu_help.xpm"
-	#include "bitmaps/menu_help_search.xpm"
-	#include "bitmaps/menu_game_info.xpm"
-	#include "bitmaps/menu_undo.xpm"
-	#include "bitmaps/menu_redo.xpm"
-	#include "bitmaps/menu_exit.xpm"
+    #endif
+    #include "bitmaps/toolbar_game_play.xpm"
+    #include "bitmaps/toolbar_game_info.xpm"
+    #include "bitmaps/toolbar_file_saveas.xpm"
+    #include "bitmaps/toolbar_file_save.xpm"
+    #include "bitmaps/toolbar_location_copy.xpm"
+    #include "bitmaps/toolbar_file_open.xpm"
+    #include "bitmaps/toolbar_location_new.xpm"
+    #include "bitmaps/toolbar_location_rename.xpm"
+    #include "bitmaps/toolbar_location_delete.xpm"
+    #include "bitmaps/toolbar_location_clear.xpm"
+    #include "bitmaps/toolbar_location_paste.xpm"
+    #include "bitmaps/toolbar_text_search.xpm"
+    #include "bitmaps/toolbar_options.xpm"
+    #include "bitmaps/qgen.xpm"
+    #include "bitmaps/about_logo.xpm"
+    #include "bitmaps/toolbar_redo.xpm"
+    #include "bitmaps/toolbar_undo.xpm"
+    #include "bitmaps/menu_file_open.xpm"
+    #include "bitmaps/menu_file_save.xpm"
+    #include "bitmaps/menu_game_play.xpm"
+    #include "bitmaps/menu_game_new.xpm"
+    #include "bitmaps/menu_text_cut.xpm"
+    #include "bitmaps/menu_text_copy.xpm"
+    #include "bitmaps/menu_text_paste.xpm"
+    #include "bitmaps/menu_text_delete.xpm"
+    #include "bitmaps/menu_text_search.xpm"
+    #include "bitmaps/menu_help.xpm"
+    #include "bitmaps/menu_help_search.xpm"
+    #include "bitmaps/menu_game_info.xpm"
+    #include "bitmaps/menu_undo.xpm"
+    #include "bitmaps/menu_redo.xpm"
+    #include "bitmaps/menu_exit.xpm"
 
-	#define QGEN_TITLE wxT("Quests Generator")
-	#define QGEN_APPNAME wxT("qgen")
+    #define QGEN_TITLE wxT("Quests Generator")
+    #define QGEN_APPNAME wxT("qgen")
 
-	enum
-	{
+    enum
+    {
 		ID_LOCSLIST = 10000,
 		ID_TOOLBAR,
 		ID_TIMER_AUTO_SAVE,
@@ -137,19 +137,19 @@
 		ID_TAB_CLOSEEXCEPTSELECTED,
 		ID_TAB_CLOSESELECTED,
 		ID_TAB_FIX
-	};
+    };
 
-	class MainFrame : public wxFrame, public IObserver
-	{
+    class MainFrame : public wxFrame, public IObserver
+    {
 		DECLARE_EVENT_TABLE()
-	private:
+    private:
 		wxAuiManager		_manager;
 		wxTimer				_timerAutoSave;
 		wxTimer				_timerUpdToolBar;
 		ToolBar				*_toolBar;
 		wxMenuBar			*_menu_bar;
-		LocationsListBox	*_locListBox;
-		LocationsNotebook	*_locNotebook;
+		LocationsListBox    *_locListBox;
+		LocationsNotebook    *_locNotebook;
 		IControls			*_controls;
 		SearchDialog		*_findDlg;
 		
@@ -220,7 +220,7 @@
 		void SaveLayout();
 		bool QuestChange();
 		void TogglePaneVisibility(const wxString &pane_name);
-	public:
+    public:
 		MainFrame(IControls *controls);
 		~MainFrame();
 
@@ -229,6 +229,6 @@
 		LocationsListBox *GetLocListBox() const { return _locListBox; }
 		LocationsNotebook *GetNotebook() const { return _locNotebook; }
 		void UpdateTitle();
-	};
+    };
 
 #endif

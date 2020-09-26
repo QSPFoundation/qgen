@@ -20,22 +20,22 @@
 */
 
 #ifndef _QGEN_CHECK_SYSTEM_HOTKEY_H_
-	#define _QGEN_CHECK_SYSTEM_HOTKEY_H_
+    #define _QGEN_CHECK_SYSTEM_HOTKEY_H_
 
-	#include <wx/wx.h>
+    #include <wx/wx.h>
 
-	class ChkSysHotKey
-	{
-	private:
-		bool	_isInMenu;
+    class ChkSysHotKey
+    {
+    private:
+		bool    _isInMenu;
 		int		_keyCode;
 		int		_flags;
 
 		void WalkMenuBar(wxMenuBar *menuBar);
 		void WalkMenu(wxMenu *menu);
 		void WalkMenuItem(wxMenuItem *menuItem);
-	public:
+    public:
 		bool CheckSystemHotKeys(wxMenuBar *menuBar, int keyCode, int flags);
-	};
+    };
 
 #endif

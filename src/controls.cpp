@@ -23,70 +23,70 @@
 
 Controls::Controls(const wxString &path)
 {
-	_mainFrame = NULL;
-	_locListBox = NULL;
-	_locNotebook = NULL;
-	_locale = NULL;
-	_execHotkeyEnters = 0;
-	_currentPath = path;
+    _mainFrame = NULL;
+    _locListBox = NULL;
+    _locNotebook = NULL;
+    _locale = NULL;
+    _execHotkeyEnters = 0;
+    _currentPath = path;
 
-	_settings = new Settings(_currentPath);
-	_container = new DataContainer();
+    _settings = new Settings(_currentPath);
+    _container = new DataContainer();
 
-	#ifdef __WXMSW__
+    #ifdef __WXMSW__
 		_keysParser = new KeysParser(_settings->GetHotKeys());
-	#endif
+    #endif
 
-	_keywordsStore = new KeywordsStore();
-	 wxString filename = wxFileName(_currentPath, wxT("keywords.xml")).GetFullPath();
-	_keywordsStore->Load(filename);
+    _keywordsStore = new KeywordsStore();
+     wxString filename = wxFileName(_currentPath, wxT("keywords.xml")).GetFullPath();
+    _keywordsStore->Load(filename);
 
-	InitData();
+    InitData();
 }
 
 Controls::~Controls()
 {
-	delete _settings;
-	delete _container;
+    delete _settings;
+    delete _container;
 
-	#ifdef __WXMSW__
+    #ifdef __WXMSW__
 		delete _keysParser;
-	#endif
+    #endif
 
-	delete _keywordsStore;
-	if (_locale) delete _locale;
+    delete _keywordsStore;
+    if (_locale) delete _locale;
 }
 
 int Controls::GetSelectedLocationIndex() const
 {
-	LocationPage *page = _locNotebook->GetSelectedPage();
-	if (page && !_locListBox->HasFocus()) return page->GetLocationIndex();
-	wxString locName(_locListBox->GetStringSelection());
-	if (!locName.IsEmpty()) return _container->FindLocationIndex(locName);
-	return wxNOT_FOUND;
+    LocationPage *page = _locNotebook->GetSelectedPage();
+    if (page && !_locListBox->HasFocus()) return page->GetLocationIndex();
+    wxString locName(_locListBox->GetStringSelection());
+    if (!locName.IsEmpty()) return _container->FindLocationIndex(locName);
+    return wxNOT_FOUND;
 }
 
 int Controls::AddLocationByName(const wxString &name)
 {
-	wxString locName(_locListBox->GetStringSelection());
-	wxString folder(_locListBox->GetSelectedFolder());
-	int locInd = _container->AddLocation(name);
-	if (locInd >= 0)
-	{
+    wxString locName(_locListBox->GetStringSelection());
+    wxString folder(_locListBox->GetSelectedFolder());
+    int locInd = _container->AddLocation(name);
+    if (locInd >= 0)
+    {
 		_locListBox->Insert(name, locName, folder);
 		if (_settings->GetOpenNewLoc()) ShowLocation(name);
 		return locInd;
-	}
-	else
+    }
+    else
 		ShowMessage(QGEN_MSG_EXISTS);
-	return wxNOT_FOUND;
+    return wxNOT_FOUND;
 }
 
 int Controls::AddLocation(const wxString &name)
 {
-	wxString locName(name);
-	while (1)
-	{
+    wxString locName(name);
+    while (1)
+    {
 		wxTextEntryDialog dlgEntry(GetParent(),
 			_("Input name for a new location:"),
 			_("Add location"), locName);
@@ -105,17 +105,17 @@ int Controls::AddLocation(const wxString &name)
 		}
 		else
 			return wxNOT_FOUND;
-	}
+    }
 }
 
 bool Controls::RenameSelectedLocation()
 {
-	int locIndex = GetSelectedLocationIndex();
-	if (locIndex < 0) return false;
+    int locIndex = GetSelectedLocationIndex();
+    if (locIndex < 0) return false;
 
-	wxString name(_container->GetLocationName(locIndex));
-	while (1)
-	{
+    wxString name(_container->GetLocationName(locIndex));
+    while (1)
+    {
 		wxTextEntryDialog dlgEntry(GetParent(),
 			_("Input new location's name:"),
 			_("Rename location"), name);
@@ -133,20 +133,20 @@ bool Controls::RenameSelectedLocation()
 		}
 		else
 			return false;
-	}
+    }
 }
 
 bool Controls::DeleteSelectedLocation()
 {
-	int locIndex = GetSelectedLocationIndex();
-	if (locIndex < 0) return false;
+    int locIndex = GetSelectedLocationIndex();
+    if (locIndex < 0) return false;
 
-	wxString locName(_container->GetLocationName(locIndex));
-	wxMessageDialog dlgMsg(GetParent(),
+    wxString locName(_container->GetLocationName(locIndex));
+    wxMessageDialog dlgMsg(GetParent(),
 		wxString::Format(_("Remove \"%s\" location?"), locName),
 		_("Remove location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
-	if (dlgMsg.ShowModal() == wxID_YES)
-	{
+    if (dlgMsg.ShowModal() == wxID_YES)
+    {
 		int index = _locNotebook->FindPageIndex(locName);
 		if ( index >= 0 ) _locNotebook->DeletePage(index);
 		_locListBox->Delete(locName);
@@ -154,25 +154,25 @@ bool Controls::DeleteSelectedLocation()
 		UpdateOpenedLocationsIndexes();
 		InitSearchData();
 		return true;
-	}
-	return false;
+    }
+    return false;
 }
 
 bool Controls::AddActionOnSelectedLoc()
 {
-	LocationPage *page = _locNotebook->GetSelectedPage();
-	if (!page) return false;
+    LocationPage *page = _locNotebook->GetSelectedPage();
+    if (!page) return false;
 
-	wxString name;
-	size_t locIndex = page->GetLocationIndex();
-	if (_container->GetActionsCount(locIndex) >= QGEN_MAXACTIONS)
-	{
+    wxString name;
+    size_t locIndex = page->GetLocationIndex();
+    if (_container->GetActionsCount(locIndex) >= QGEN_MAXACTIONS)
+    {
 		ShowMessage( QGEN_MSG_MAXACTIONSCOUNTREACHED );
 		return false;
-	}
+    }
 
-	while (1)
-	{
+    while (1)
+    {
 		wxTextEntryDialog dlgEntry(GetParent(), 
 			_("Input name for a new action"),
 			_("Add action"), name);
@@ -203,59 +203,59 @@ bool Controls::AddActionOnSelectedLoc()
 		}
 		else
 			return false;
-	}
+    }
 }
 
 bool Controls::DeleteSelectedAction()
 {
-	LocationPage *page = _locNotebook->GetSelectedPage();
-	if (!page) return false;
+    LocationPage *page = _locNotebook->GetSelectedPage();
+    if (!page) return false;
 
-	size_t locIndex = page->GetLocationIndex();
-	long actIndex = page->GetSelectedAction();
-	if (actIndex < 0) return false;
+    size_t locIndex = page->GetLocationIndex();
+    long actIndex = page->GetSelectedAction();
+    if (actIndex < 0) return false;
 
-	_container->DeleteAction(locIndex, actIndex);
-	page->DeleteAction(actIndex);
-	_locListBox->UpdateLocationActions(_container->GetLocationName(locIndex));
-	InitSearchData();
-	return true;
+    _container->DeleteAction(locIndex, actIndex);
+    page->DeleteAction(actIndex);
+    _locListBox->UpdateLocationActions(_container->GetLocationName(locIndex));
+    InitSearchData();
+    return true;
 }
 
 bool Controls::DeleteAllActions()
 {
-	LocationPage *page = _locNotebook->GetSelectedPage();
-	if (!page) return false;
+    LocationPage *page = _locNotebook->GetSelectedPage();
+    if (!page) return false;
 
-	size_t locIndex = page->GetLocationIndex();
-	wxString locName(_container->GetLocationName(locIndex));
+    size_t locIndex = page->GetLocationIndex();
+    wxString locName(_container->GetLocationName(locIndex));
 
-	wxMessageDialog dlgMsg(GetParent(),
+    wxMessageDialog dlgMsg(GetParent(),
 		wxString::Format(_("Remove all actions on \"%s\" location?"), locName),
 		_("Remove all actions"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
-	if (dlgMsg.ShowModal() == wxID_YES)
-	{
+    if (dlgMsg.ShowModal() == wxID_YES)
+    {
 		_container->DeleteAllActions(locIndex);
 		page->DeleteAllActions();
 		_locListBox->UpdateLocationActions(locName);
 		InitSearchData();
 		return true;
-	}
-	return false;
+    }
+    return false;
 }
 
 bool Controls::RenameSelectedAction()
 {
-	LocationPage *page = _locNotebook->GetSelectedPage();
-	if (!page) return false;
+    LocationPage *page = _locNotebook->GetSelectedPage();
+    if (!page) return false;
 
-	size_t locIndex = page->GetLocationIndex();
-	long actIndex = page->GetSelectedAction();
-	if (actIndex < 0) return false;
+    size_t locIndex = page->GetLocationIndex();
+    long actIndex = page->GetSelectedAction();
+    if (actIndex < 0) return false;
 
-	wxString name(_container->GetActionName(locIndex, actIndex));
-	while (1)
-	{
+    wxString name(_container->GetActionName(locIndex, actIndex));
+    while (1)
+    {
 		wxTextEntryDialog dlgEntry(GetParent(),
 			_("Input new action's name:"),
 			_("Rename action"), name);
@@ -273,21 +273,21 @@ bool Controls::RenameSelectedAction()
 		}
 		else
 			return false;
-	}
+    }
 }
 
 void Controls::ShowMessage( long errorNum )
 {
-	wxMessageDialog dlgMsg(GetParent(), GetMessageDesc(errorNum),
+    wxMessageDialog dlgMsg(GetParent(), GetMessageDesc(errorNum),
 		_("Info"), wxOK|wxICON_INFORMATION|wxCENTRE);
-	dlgMsg.ShowModal();
+    dlgMsg.ShowModal();
 }
 
 wxString Controls::GetMessageDesc( long errorNum )
 {
-	wxString str;
-	switch (errorNum)
-	{
+    wxString str;
+    switch (errorNum)
+    {
 		case QGEN_MSG_EXISTS: str = _("Such name already exists! Input another name."); break;
 		case QGEN_MSG_EXISTS_HKEY: str = _("This keys combination is used already! Select another combination."); break;
 		case QGEN_MSG_EXISTS_S_HKEY: str = _("This keys combination is used already by the system! Select another combination."); break;
@@ -303,28 +303,28 @@ wxString Controls::GetMessageDesc( long errorNum )
 		case QGEN_MSG_TOOLONGACTIONNAME: str = wxString::Format(_("Action's name can't contain more than %i characters!"), QGEN_MAXACTIONNAMELEN); break;
 		case QGEN_MSG_TOOLONGFOLDERNAME: str = wxString::Format(_("Folder's name can't contain more than %i characters!"), QGEN_MAXFOLDERNAMELEN); break;
 		default: str = _("Unknown error!"); break;
-	}
-	return str;
+    }
+    return str;
 }
 
 LocationPage *Controls::ShowLocation(const wxString & locName)
 {
-	int indexPage = _locNotebook->FindPageIndex(locName);
-	if (indexPage >= 0)
-	{
+    int indexPage = _locNotebook->FindPageIndex(locName);
+    if (indexPage >= 0)
+    {
 		_locNotebook->SetSelection(indexPage);
 		return (LocationPage *)_locNotebook->GetPage(indexPage);
-	}
-	LocationPage *page = _locNotebook->OpenLocationPage(locName, true);
-	if (_settings->GetCollapseCode())
+    }
+    LocationPage *page = _locNotebook->OpenLocationPage(locName, true);
+    if (_settings->GetCollapseCode())
 		page->ExpandCollapseAll(false);
-	return page;
+    return page;
 }
 
 void Controls::SortLocations(bool isAscending)
 {
-	if (_container->GetLocationsCount() > 1)
-	{
+    if (_container->GetLocationsCount() > 1)
+    {
 		SyncWithLocationsList();
 		int selFolder = GetSelectedFolderIndex();
 		_container->SortLocsInFolder(selFolder, isAscending);
@@ -334,23 +334,23 @@ void Controls::SortLocations(bool isAscending)
 		else
 			UpdateLocationsList();
 		InitSearchData();
-	}
+    }
 }
 
 bool Controls::IsSelectedLocationEmpty() const
 {
-	int locIndex = GetSelectedLocationIndex();
-	if (locIndex < 0) return true;
-	_locNotebook->SaveOpenedPages();
-	return _container->IsEmptyLoc(locIndex);
+    int locIndex = GetSelectedLocationIndex();
+    if (locIndex < 0) return true;
+    _locNotebook->SaveOpenedPages();
+    return _container->IsEmptyLoc(locIndex);
 }
 
 bool Controls::IsClipboardEmpty()
 {
-	wxTextDataObject data;
-	bool canGetData = false, res = true;
-	if ( !wxTheClipboard->IsOpened() && wxTheClipboard->Open() )
-	{
+    wxTextDataObject data;
+    bool canGetData = false, res = true;
+    if ( !wxTheClipboard->IsOpened() && wxTheClipboard->Open() )
+    {
 		if (wxTheClipboard->IsSupported(wxDF_TEXT))
 		{
 			wxTheClipboard->GetData(data);
@@ -358,159 +358,159 @@ bool Controls::IsClipboardEmpty()
 		}
 		wxTheClipboard->Close();
 		if (canGetData) res = !IsCorrectDataFormat(data.GetText());
-	}
-	return res;
+    }
+    return res;
 }
 
 bool Controls::SerializeLocData( size_t locIndex, wxString &buffer )
 {
-	size_t actsCount;
-	buffer.Append(QGEN_GAMEID);
-	buffer.Append(QGEN_STRSDELIM);
-	buffer.Append(QGEN_NAME);
-	buffer.Append(wxT(" "));
-	buffer.Append(QGEN_VER);
-	buffer.Append(QGEN_STRSDELIM);
-	buffer.Append(_container->GetLocationName(locIndex));
-	buffer.Append(QGEN_STRSDELIM);
-	buffer.Append(EncodeString(_container->GetLocationDesc(locIndex)));
-	buffer.Append(QGEN_STRSDELIM);
-	buffer.Append(EncodeString(_container->GetLocationCode(locIndex)));
-	buffer.Append(QGEN_STRSDELIM);
-	actsCount = _container->GetActionsCount(locIndex);
-	buffer.Append(EncodeString(wxString::Format(wxT("%ld"), actsCount)));
-	buffer.Append(QGEN_STRSDELIM);
-	for (size_t i = 0; i < actsCount; ++i)
-	{
+    size_t actsCount;
+    buffer.Append(QGEN_GAMEID);
+    buffer.Append(QGEN_STRSDELIM);
+    buffer.Append(QGEN_NAME);
+    buffer.Append(wxT(" "));
+    buffer.Append(QGEN_VER);
+    buffer.Append(QGEN_STRSDELIM);
+    buffer.Append(_container->GetLocationName(locIndex));
+    buffer.Append(QGEN_STRSDELIM);
+    buffer.Append(EncodeString(_container->GetLocationDesc(locIndex)));
+    buffer.Append(QGEN_STRSDELIM);
+    buffer.Append(EncodeString(_container->GetLocationCode(locIndex)));
+    buffer.Append(QGEN_STRSDELIM);
+    actsCount = _container->GetActionsCount(locIndex);
+    buffer.Append(EncodeString(wxString::Format(wxT("%ld"), actsCount)));
+    buffer.Append(QGEN_STRSDELIM);
+    for (size_t i = 0; i < actsCount; ++i)
+    {
 		buffer.Append(EncodeString(_container->GetActionPicturePath(locIndex, i)));
 		buffer.Append(QGEN_STRSDELIM);
 		buffer.Append(EncodeString(_container->GetActionName(locIndex, i)));
 		buffer.Append(QGEN_STRSDELIM);
 		buffer.Append(EncodeString(_container->GetActionCode(locIndex, i)));
 		buffer.Append(QGEN_STRSDELIM);
-	}
-	return true;
+    }
+    return true;
 }
 
 bool Controls::GetBufferedLocName(const wxString &buffer, wxString &locName)
 {
-	size_t first = 0, last = 0;
-	if (!IsCorrectDataFormat(buffer))
-	{
+    size_t first = 0, last = 0;
+    if (!IsCorrectDataFormat(buffer))
+    {
 		ShowMessage(QGEN_MSG_WRONGFORMAT);
 		return false;
-	}
-	//ID формата файла
-	last = buffer.find(QGEN_STRSDELIM);
-	//Данные о версии редактора
-	last = buffer.find(QGEN_STRSDELIM, last + QGEN_LEN(QGEN_STRSDELIM));
-	//Имя локации
-	first = last + QGEN_LEN(QGEN_STRSDELIM);
-	last = buffer.find(QGEN_STRSDELIM, first);
-	locName = buffer.Mid(first, last - first);
-	return true;
+    }
+    //ID пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    last = buffer.find(QGEN_STRSDELIM);
+    //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    last = buffer.find(QGEN_STRSDELIM, last + QGEN_LEN(QGEN_STRSDELIM));
+    //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    first = last + QGEN_LEN(QGEN_STRSDELIM);
+    last = buffer.find(QGEN_STRSDELIM, first);
+    locName = buffer.Mid(first, last - first);
+    return true;
 }
 
 bool Controls::DeserializeLocData(size_t locIndex, const wxString &buffer)
 {
-	size_t first = 0, last = 0;
-	wxString str;
-	wxString actImage;
-	long actsCount;
+    size_t first = 0, last = 0;
+    wxString str;
+    wxString actImage;
+    long actsCount;
 
-	if (!IsCorrectDataFormat(buffer))
-	{
+    if (!IsCorrectDataFormat(buffer))
+    {
 		ShowMessage(QGEN_MSG_WRONGFORMAT);
 		return false;
-	}
-	_container->ClearLocation(locIndex);
-	//ID формата файла
-	last = buffer.find(QGEN_STRSDELIM);
-	//Данные о версии редактора
-	last = buffer.find(QGEN_STRSDELIM, last + QGEN_LEN(QGEN_STRSDELIM));
-	//Имя локации
-	last = buffer.find(QGEN_STRSDELIM, last + QGEN_LEN(QGEN_STRSDELIM));
+    }
+    _container->ClearLocation(locIndex);
+    //ID пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    last = buffer.find(QGEN_STRSDELIM);
+    //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    last = buffer.find(QGEN_STRSDELIM, last + QGEN_LEN(QGEN_STRSDELIM));
+    //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    last = buffer.find(QGEN_STRSDELIM, last + QGEN_LEN(QGEN_STRSDELIM));
 
-	//Описание локации
-	first = last + QGEN_LEN(QGEN_STRSDELIM);
-	last = buffer.find(QGEN_STRSDELIM, first);
-	str = buffer.Mid(first, last - first);
-	_container->SetLocationDesc(locIndex, DecodeString(str));
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    first = last + QGEN_LEN(QGEN_STRSDELIM);
+    last = buffer.find(QGEN_STRSDELIM, first);
+    str = buffer.Mid(first, last - first);
+    _container->SetLocationDesc(locIndex, DecodeString(str));
 
-	//Код локации
-	first = last + QGEN_LEN(QGEN_STRSDELIM);
-	last = buffer.find(QGEN_STRSDELIM, first);
-	str = buffer.Mid(first, last - first);
-	_container->SetLocationCode(locIndex, DecodeString(str));
+    //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    first = last + QGEN_LEN(QGEN_STRSDELIM);
+    last = buffer.find(QGEN_STRSDELIM, first);
+    str = buffer.Mid(first, last - first);
+    _container->SetLocationCode(locIndex, DecodeString(str));
 
-	//Количество действий
-	first = last + QGEN_LEN(QGEN_STRSDELIM);
-	last = buffer.find(QGEN_STRSDELIM, first);
-	str = DecodeString(buffer.Mid(first, last - first));
-	str.ToLong(&actsCount);
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    first = last + QGEN_LEN(QGEN_STRSDELIM);
+    last = buffer.find(QGEN_STRSDELIM, first);
+    str = DecodeString(buffer.Mid(first, last - first));
+    str.ToLong(&actsCount);
 
-	for (long i = 0; i < actsCount; ++i)
-	{
-		//Изображение
+    for (long i = 0; i < actsCount; ++i)
+    {
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		first = last + QGEN_LEN(QGEN_STRSDELIM);
 		last = buffer.find(QGEN_STRSDELIM, first);
 		str = buffer.Mid(first, last - first);
 		actImage = DecodeString(str);
 
-		//Название
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		first = last + QGEN_LEN(QGEN_STRSDELIM);
 		last = buffer.find(QGEN_STRSDELIM, first);
 		str = buffer.Mid(first, last - first);
 		_container->AddAction(locIndex, DecodeString(str));
 		_container->SetActionPicturePath(locIndex, i, actImage);
 
-		//Код
+		//пїЅпїЅпїЅ
 		first = last + QGEN_LEN(QGEN_STRSDELIM);
 		last = buffer.find(QGEN_STRSDELIM, first);
 		str = buffer.Mid(first, last - first);
 		_container->SetActionCode(locIndex, i, DecodeString(str));
-	}
-	return true;
+    }
+    return true;
 }
 
 void Controls::CopySelectedLocToClipboard()
 {
-	int locIndex = GetSelectedLocationIndex();
-	if (locIndex < 0) return;
-	_locNotebook->SaveOpenedPages();
-	if (_container->IsEmptyLoc(locIndex)) return;
+    int locIndex = GetSelectedLocationIndex();
+    if (locIndex < 0) return;
+    _locNotebook->SaveOpenedPages();
+    if (_container->IsEmptyLoc(locIndex)) return;
 
-	wxString buffer;
-	SerializeLocData(locIndex, buffer);
-	if ( !wxTheClipboard->IsOpened() && wxTheClipboard->Open() )
-	{
+    wxString buffer;
+    SerializeLocData(locIndex, buffer);
+    if ( !wxTheClipboard->IsOpened() && wxTheClipboard->Open() )
+    {
 		wxTheClipboard->SetData( new wxTextDataObject( buffer ) );
 		wxTheClipboard->Close();
-	}
+    }
 }
 
 void Controls::PasteLocFromClipboard( PasteType type )
 {
-	int locIndex;
-	bool canGetData = false;
-	wxTextDataObject data;
-	wxString locName, baseLocName, buffer;
-	if ( IsClipboardEmpty() ) return;
+    int locIndex;
+    bool canGetData = false;
+    wxTextDataObject data;
+    wxString locName, baseLocName, buffer;
+    if ( IsClipboardEmpty() ) return;
 
-	if ( !wxTheClipboard->IsOpened() && wxTheClipboard->Open() )
-	{
+    if ( !wxTheClipboard->IsOpened() && wxTheClipboard->Open() )
+    {
 		if (wxTheClipboard->IsSupported(wxDF_TEXT))
 		{
 			wxTheClipboard->GetData( data );
 			canGetData = true;
 		}
 		wxTheClipboard->Close();
-	}
-	if (!canGetData) return;
-	buffer = data.GetText();
-	switch (type)
-	{
-	case PASTE_REPLACE:
+    }
+    if (!canGetData) return;
+    buffer = data.GetText();
+    switch (type)
+    {
+    case PASTE_REPLACE:
 		locIndex = GetSelectedLocationIndex();
 		if (locIndex >= 0)
 		{
@@ -528,11 +528,11 @@ void Controls::PasteLocFromClipboard( PasteType type )
 			}
 		}
 		break;
-	case PASTE_NEW:
+    case PASTE_NEW:
 		locIndex = AddLocation();
 		if (locIndex >= 0) locName = _container->GetLocationName(locIndex);
 		break;
-	case PASTE_NEW_AUTO:
+    case PASTE_NEW_AUTO:
 		if (GetBufferedLocName(buffer, baseLocName))
 		{
 			unsigned long ind = 1;
@@ -547,9 +547,9 @@ void Controls::PasteLocFromClipboard( PasteType type )
 		else
 			locIndex = wxNOT_FOUND;
 		break;
-	}
-	if ( locIndex >= 0 && DeserializeLocData(locIndex, buffer) )
-	{
+    }
+    if ( locIndex >= 0 && DeserializeLocData(locIndex, buffer) )
+    {
 		_locListBox->UpdateLocationActions(locName);
 		LocationPage *page = _locNotebook->GetPageByLocName(locName);
 		if (page)
@@ -558,200 +558,200 @@ void Controls::PasteLocFromClipboard( PasteType type )
 			if (_settings->GetCollapseCode())
 				page->ExpandCollapseAll(false);
 		}
-	}
+    }
 }
 
 wxString Controls::EncodeString(const wxString &str)
 {
-	wxString result;
-	wxChar ch;
-	for (size_t i = 0; i < str.Length(); i++)
-	{
+    wxString result;
+    wxChar ch;
+    for (size_t i = 0; i < str.Length(); i++)
+    {
 		ch = str[i];
 		if (ch == QGEN_CODREMOV)
 			ch = -QGEN_CODREMOV;
 		else
 			ch -= QGEN_CODREMOV;
 		result.Append(ch);
-	}
-	return result;
+    }
+    return result;
 }
 
 wxString Controls::DecodeString(const wxString &str)
 {
-	wxString result;
-	wxChar ch;
-	for (size_t i = 0; i < str.Length(); i++)
-	{
+    wxString result;
+    wxChar ch;
+    for (size_t i = 0; i < str.Length(); i++)
+    {
 		ch = str[i];
 		if (ch == (wxChar)-QGEN_CODREMOV)
 			ch = QGEN_CODREMOV;
 		else
 			ch += QGEN_CODREMOV;
 		result.Append(ch);
-	}
-	return result;
+    }
+    return result;
 }
 
 void Controls::ClearSelectedLocation()
 {
-	int locIndex = GetSelectedLocationIndex();
-	if (locIndex < 0) return;
-	_locNotebook->SaveOpenedPages();
-	if (_container->IsEmptyLoc(locIndex)) return;
+    int locIndex = GetSelectedLocationIndex();
+    if (locIndex < 0) return;
+    _locNotebook->SaveOpenedPages();
+    if (_container->IsEmptyLoc(locIndex)) return;
 
-	wxString locName(_container->GetLocationName(locIndex));
-	wxMessageDialog dlgMsg(GetParent(),
+    wxString locName(_container->GetLocationName(locIndex));
+    wxMessageDialog dlgMsg(GetParent(),
 		wxString::Format(_("Clean \"%s\" location?"), locName),
 		_("Clean location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
-	if (dlgMsg.ShowModal() == wxID_YES)
-	{
+    if (dlgMsg.ShowModal() == wxID_YES)
+    {
 		_container->ClearLocation(locIndex);
 		LocationPage *page = _locNotebook->GetPageByLocName(locName);
 		if (page) page->Clear();
 		_locListBox->UpdateLocationActions(locName);
-	}
+    }
 }
 
 wxTextEntryBase *Controls::GetCurrentTextBox()
 {
-	wxWindow *win = wxWindow::FindFocus();
-	wxTextEntryBase *ret = wxDynamicCast(win, SyntaxTextBox);
-	if (ret) return ret;
-	return wxDynamicCast(win, wxTextCtrl);
+    wxWindow *win = wxWindow::FindFocus();
+    wxTextEntryBase *ret = wxDynamicCast(win, SyntaxTextBox);
+    if (ret) return ret;
+    return wxDynamicCast(win, wxTextCtrl);
 }
 
 bool Controls::CanUndoText() const
 {
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt) return txt->CanUndo();
-	return false;
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt) return txt->CanUndo();
+    return false;
 }
 
 bool Controls::CanRedoText() const
 {
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt) return txt->CanRedo();
-	return false;
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt) return txt->CanRedo();
+    return false;
 }
 
 bool Controls::CanCopyText()
 {
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt) return txt->CanCopy();
-	return false;
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt) return txt->CanCopy();
+    return false;
 }
 
 bool Controls::CanPasteText()
 {
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt) return txt->CanPaste();
-	return false;
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt) return txt->CanPaste();
+    return false;
 }
 
 bool Controls::CanCutText()
 {
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt) return txt->CanCut();
-	return false;
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt) return txt->CanCut();
+    return false;
 }
 
 bool Controls::CanSelectText()
 {
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt) return !txt->IsEmpty();
-	return false;
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt) return !txt->IsEmpty();
+    return false;
 }
 
 void Controls::UndoText()
 {
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt) txt->Undo();
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt) txt->Undo();
 }
 
 void Controls::RedoText()
 {
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt) txt->Redo();
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt) txt->Redo();
 }
 
 void Controls::CopySelectedTextToClipboard()
 {
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt) txt->Copy();
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt) txt->Copy();
 }
 
 void Controls::PasteTextFromClipboard()
 {
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt) txt->Paste();
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt) txt->Paste();
 }
 
 void Controls::CutSelectedTextToClipboard()
 {
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt) txt->Cut();
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt) txt->Cut();
 }
 
 void Controls::DeleteSelectedText()
 {
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt)
-	{
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt)
+    {
 		SyntaxTextBox *syntaxBox = dynamic_cast<SyntaxTextBox *>(txt);
 		if (syntaxBox)
 			syntaxBox->RemoveSelection();
 		else
 			txt->RemoveSelection();
-	}
+    }
 }
 
 void Controls::SelectAllText()
 {
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt) txt->SelectAll();
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt) txt->SelectAll();
 }
 
 wxString Controls::SelectPicturePath()
 {
-	wxFileDialog filedlg( GetParent(), _( "Select image file" ),
+    wxFileDialog filedlg( GetParent(), _( "Select image file" ),
 		wxEmptyString, wxEmptyString, _( "Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*.*" ), wxFD_OPEN );
-	filedlg.CentreOnParent();
-	if ( filedlg.ShowModal() == wxID_OK )
-	{
+    filedlg.CentreOnParent();
+    if ( filedlg.ShowModal() == wxID_OK )
+    {
 		wxFileName path(filedlg.GetPath());
 		path.MakeRelativeTo(wxFileName(_currentGamePath).GetPath());
 		return path.GetFullPath();
-	}
-	return wxEmptyString;
+    }
+    return wxEmptyString;
 }
 
 bool Controls::SaveGameWithCheck()
 {
-	if (_lastSaveTime == 0) return false;
-	if (!IsGameSaved())
+    if (_lastSaveTime == 0) return false;
+    if (!IsGameSaved())
 		return SaveGame(_currentGamePath, _currentGamePass);
-	else
+    else
 		_lastSaveTime = wxGetLocalTimeMillis();
-	return true;
+    return true;
 }
 
 void Controls::SyncWithLocationsList()
 {
-	if (_locListBox->IsNeedForUpdate())
-	{
+    if (_locListBox->IsNeedForUpdate())
+    {
 		_locListBox->UpdateDataContainer();
 		UpdateOpenedLocationsIndexes();
 		InitSearchData();
-	}
+    }
 }
 
 bool Controls::SaveGame(const wxString &filename, const wxString &password)
 {
-	SyncWithLocationsList();
-	_locNotebook->SaveOpenedPages();
-	if (qspSaveQuest(filename.wx_str(), password, this))
-	{
+    SyncWithLocationsList();
+    _locNotebook->SaveOpenedPages();
+    if (qspSaveQuest(filename.wx_str(), password, this))
+    {
 		wxFileName file(filename);
 		SaveConfigFile(_container, file.GetPathWithSep() + file.GetName() + wxT(".qproj"));
 		_container->Save();
@@ -759,15 +759,15 @@ bool Controls::SaveGame(const wxString &filename, const wxString &password)
 		_currentGamePath = filename;
 		_currentGamePass = password;
 		return true;
-	}
-	return false;
+    }
+    return false;
 }
 
 bool Controls::LoadGame(const wxString &filename)
 {
-	_locNotebook->DeleteAllPages(CLOSE_ALL, wxNOT_FOUND);
-	if (qspOpenQuest(filename.wx_str(), GetParent(), this, _currentGamePass, false))
-	{
+    _locNotebook->DeleteAllPages(CLOSE_ALL, wxNOT_FOUND);
+    if (qspOpenQuest(filename.wx_str(), GetParent(), this, _currentGamePass, false))
+    {
 		wxFileName file(filename);
 		OpenConfigFile(_container, file.GetPathWithSep() + file.GetName() + wxT(".qproj"));
 		InitSearchData();
@@ -776,33 +776,33 @@ bool Controls::LoadGame(const wxString &filename)
 		_container->Save();
 		_lastSaveTime = wxGetLocalTimeMillis();
 		return true;
-	}
-	return false;
+    }
+    return false;
 }
 
 bool Controls::JoinGame( const wxString &filename )
 {
-	wxString dummy;
-	if (qspOpenQuest(filename.wx_str(), GetParent(), this, dummy, true))
-	{
+    wxString dummy;
+    if (qspOpenQuest(filename.wx_str(), GetParent(), this, dummy, true))
+    {
 		InitSearchData();
 		UpdateLocationsList();
 		_locNotebook->LoadOpenedPages();
 		return true;
-	}
-	return false;
+    }
+    return false;
 }
 
 void Controls::UpdateLocationsList()
 {
-	size_t locsCount = _container->GetLocationsCount();
-	_locListBox->Freeze();
-	_locListBox->Clear();
-	wxString folderName;
-	wxArrayInt locs;
-	long oldPos = -1, pos = 0, folderIndex;
-	while (pos != oldPos)
-	{
+    size_t locsCount = _container->GetLocationsCount();
+    _locListBox->Freeze();
+    _locListBox->Clear();
+    wxString folderName;
+    wxArrayInt locs;
+    long oldPos = -1, pos = 0, folderIndex;
+    while (pos != oldPos)
+    {
 		oldPos = pos;
 		folderIndex = _container->FindFolderForPos(pos);
 		if (folderIndex >= 0)
@@ -830,59 +830,59 @@ void Controls::UpdateLocationsList()
 				}
 			}
 		}
-	}
-	UpdateActionsOnAllLocs();
-	ShowOpenedLocationsIcons();
-	_locListBox->Thaw();
+    }
+    UpdateActionsOnAllLocs();
+    ShowOpenedLocationsIcons();
+    _locListBox->Thaw();
 }
 
 bool Controls::IsActionsOnSelectedLocEmpty() const
 {
-	LocationPage *page = _locNotebook->GetSelectedPage();
-	return (!page || page->IsActionsEmpty());
+    LocationPage *page = _locNotebook->GetSelectedPage();
+    return (!page || page->IsActionsEmpty());
 }
 
 bool Controls::IsAllLocsClosed() const
 {
-	return (_locNotebook->GetPageCount() == 0);
+    return (_locNotebook->GetPageCount() == 0);
 }
 
 bool Controls::IsCorrectDataFormat(const wxString &str)
 {
-	size_t count = 0;
-	wxArrayString strArray;
-	int last, first = 0;
+    size_t count = 0;
+    wxArrayString strArray;
+    int last, first = 0;
 
-	last = str.find(QGEN_STRSDELIM);
-	if (last == wxNOT_FOUND) return false;
-	do
-	{
+    last = str.find(QGEN_STRSDELIM);
+    if (last == wxNOT_FOUND) return false;
+    do
+    {
 		++count;
 		strArray.Add(str.Mid(first, last - first));
 		first = last + QGEN_LEN(QGEN_STRSDELIM);
 		last = str.find(QGEN_STRSDELIM, first);
-	} while (last != wxNOT_FOUND);
+    } while (last != wxNOT_FOUND);
 
-	if (count <= 5) return false;
-	//ID формата файла
-	if (!strArray[0].IsSameAs(QGEN_GAMEID)) return false;
-	//Количество действий
-	int actsCount = wxAtoi(strArray[5]);
-	if (actsCount < 0) return false;
-	//Общее кличество строк
-	if (count < 5 + (size_t)actsCount * 3) return false;
-	return true;
+    if (count <= 5) return false;
+    //ID пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    if (!strArray[0].IsSameAs(QGEN_GAMEID)) return false;
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    int actsCount = wxAtoi(strArray[5]);
+    if (actsCount < 0) return false;
+    //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    if (count < 5 + (size_t)actsCount * 3) return false;
+    return true;
 }
 
 wxString Controls::ConvertSearchString(const wxString& s, bool isMatchCase)
 {
-	return (isMatchCase ? s : s.Lower());
+    return (isMatchCase ? s : s.Lower());
 }
 
 int Controls::FindSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind)
 {
-	if (isWholeString)
-	{
+    if (isWholeString)
+    {
 		int length = s.length(), subLen = sub.length(), ind2;
 		--ind;
 		do
@@ -895,44 +895,44 @@ int Controls::FindSubString(const wxString& s, const wxString& sub, bool isWhole
 			(ind2 >= length || QGEN_STRCHR(QGEN_DELIMS, s[ind2]))
 			));
 		return ind;
-	}
-	else
+    }
+    else
 		return s.find(sub, ind);
 }
 
 bool Controls::SearchNextLoc()
 {
-	int countLocs = _container->GetLocationsCount();
-	_dataSearch.findAt = SEARCH_LOCNAME;
-	_dataSearch.startPos = wxNOT_FOUND;
-	if (++_dataSearch.idxLoc >= countLocs) _dataSearch.idxLoc = 0;
-	if (++_dataSearch.countChecking >= countLocs)
-	{
+    int countLocs = _container->GetLocationsCount();
+    _dataSearch.findAt = SEARCH_LOCNAME;
+    _dataSearch.startPos = wxNOT_FOUND;
+    if (++_dataSearch.idxLoc >= countLocs) _dataSearch.idxLoc = 0;
+    if (++_dataSearch.countChecking >= countLocs)
+    {
 		ShowMessage(_dataSearch.isFoundAny ? QGEN_MSG_SEARCHENDED : QGEN_MSG_NOTFOUND);
 		return false;
-	}
-	return true;
+    }
+    return true;
 }
 
 void Controls::JumpToSelectedLoc()
 {
-	wxString word = GetSelectedWord();
-	if (!word.IsEmpty())
-	{
+    wxString word = GetSelectedWord();
+    if (!word.IsEmpty())
+    {
 		if (_container->FindLocationIndex(word) >= 0)
 			ShowLocation(word);
 		else
 			AddLocation(word);
-	}
+    }
 }
 
 wxString Controls::GetSelectedWord() const
 {
-	wxString str, data;
-	long beginPos, lastPos, curPos;
-	wxTextEntryBase *txt = GetCurrentTextBox();
-	if (txt)
-	{
+    wxString str, data;
+    long beginPos, lastPos, curPos;
+    wxTextEntryBase *txt = GetCurrentTextBox();
+    if (txt)
+    {
 		str = txt->GetStringSelection();
 		data = txt->GetValue();
 		curPos = txt->GetInsertionPoint();
@@ -953,39 +953,39 @@ wxString Controls::GetSelectedWord() const
 					++lastPos;
 			if (lastPos > beginPos) str = data.Mid(beginPos + 1, lastPos - beginPos - 1);
 		}
-	}
-	return str;
+    }
+    return str;
 }
 
 bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCase, bool isWholeString )
 {
-	wxString data;
-	wxString locName;
-	wxString actName;
-	LocationPage *page = NULL;
-	int startPos = wxNOT_FOUND;
-	int lastPos;
-	int locIndex, countLocs = _container->GetLocationsCount();
-	if (!countLocs) return false;
-	SyncWithLocationsList();
+    wxString data;
+    wxString locName;
+    wxString actName;
+    LocationPage *page = NULL;
+    int startPos = wxNOT_FOUND;
+    int lastPos;
+    int locIndex, countLocs = _container->GetLocationsCount();
+    if (!countLocs) return false;
+    SyncWithLocationsList();
 
-	wxString lwrStr = ConvertSearchString(str, isMatchCase);
+    wxString lwrStr = ConvertSearchString(str, isMatchCase);
 
-	_locNotebook->SaveOpenedPages();
+    _locNotebook->SaveOpenedPages();
 
-	if (findAgain || _dataSearch.idxLoc >= countLocs || _dataSearch.countChecking >= countLocs)
-	{
+    if (findAgain || _dataSearch.idxLoc >= countLocs || _dataSearch.countChecking >= countLocs)
+    {
 		InitSearchData();
 		locIndex = GetSelectedLocationIndex();
 		if (locIndex < 0) locIndex = 0;
 		_dataSearch.idxLoc = locIndex;
-	}
+    }
 
-	_dataSearch.foundAt = SEARCH_NONE;
-	_dataSearch.stringLen = str.Length();
+    _dataSearch.foundAt = SEARCH_NONE;
+    _dataSearch.stringLen = str.Length();
 
-	while (_dataSearch.idxLoc < countLocs)
-	{
+    while (_dataSearch.idxLoc < countLocs)
+    {
 		locName = _container->GetLocationName(_dataSearch.idxLoc);
 		if (_dataSearch.findAt == SEARCH_LOCNAME)
 		{
@@ -1115,302 +1115,302 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
 			}
 		}
 		if (!SearchNextLoc()) return false;
-	}
-	ShowMessage(QGEN_MSG_NOTFOUND);
-	return false;
+    }
+    ShowMessage(QGEN_MSG_NOTFOUND);
+    return false;
 }
 
 void Controls::ReplaceSearchString(const wxString & replaceString)
 {
-	wxString temp;
-	if (_dataSearch.foundAt == SEARCH_NONE) return;
-	LocationPage *page = _locNotebook->GetPageByLocName(_container->GetLocationName(_dataSearch.idxLoc));
-	switch (_dataSearch.foundAt)
-	{
-	case SEARCH_LOCDESC:
+    wxString temp;
+    if (_dataSearch.foundAt == SEARCH_NONE) return;
+    LocationPage *page = _locNotebook->GetPageByLocName(_container->GetLocationName(_dataSearch.idxLoc));
+    switch (_dataSearch.foundAt)
+    {
+    case SEARCH_LOCDESC:
 		temp = _container->GetLocationDesc(_dataSearch.idxLoc);
 		temp.replace(_dataSearch.startPos, _dataSearch.stringLen, replaceString);
 		_container->SetLocationDesc(_dataSearch.idxLoc, temp);
 		if (page)
 			page->ReplaceLocDescString(_dataSearch.startPos, _dataSearch.startPos + _dataSearch.stringLen, replaceString);
 		break;
-	case SEARCH_LOCCODE:
+    case SEARCH_LOCCODE:
 		temp = _container->GetLocationCode(_dataSearch.idxLoc);
 		temp.replace(_dataSearch.startPos, _dataSearch.stringLen, replaceString);
 		_container->SetLocationCode(_dataSearch.idxLoc, temp);
 		if (page)
 			page->ReplaceLocCodeString(_dataSearch.startPos, _dataSearch.startPos + _dataSearch.stringLen, replaceString);
 		break;
-	case SEARCH_PATHPICT:
+    case SEARCH_PATHPICT:
 		temp = _container->GetActionPicturePath(_dataSearch.idxLoc, _dataSearch.idxAct);
 		temp.replace(_dataSearch.startPos, _dataSearch.stringLen, replaceString);
 		_container->SetActionPicturePath(_dataSearch.idxLoc, _dataSearch.idxAct, temp);
 		if (page)
 			page->ReplacePicturePathString(_dataSearch.startPos, _dataSearch.startPos + _dataSearch.stringLen, replaceString);
 		break;
-	case SEARCH_ACTCODE:
+    case SEARCH_ACTCODE:
 		temp = _container->GetActionCode(_dataSearch.idxLoc, _dataSearch.idxAct);
 		temp.replace(_dataSearch.startPos, _dataSearch.stringLen, replaceString);
 		_container->SetActionCode(_dataSearch.idxLoc, _dataSearch.idxAct, temp);
 		if (page)
 			page->ReplaceActionCodeString(_dataSearch.startPos, _dataSearch.startPos + _dataSearch.stringLen, replaceString);
 		break;
-	}
-	_dataSearch.startPos += replaceString.Length() - 1;
-	_dataSearch.foundAt = SEARCH_NONE;
+    }
+    _dataSearch.startPos += replaceString.Length() - 1;
+    _dataSearch.foundAt = SEARCH_NONE;
 }
 
 void Controls::InitSearchData()
 {
-	_dataSearch.foundAt = SEARCH_NONE;
-	_dataSearch.findAt = SEARCH_LOCNAME;
+    _dataSearch.foundAt = SEARCH_NONE;
+    _dataSearch.findAt = SEARCH_LOCNAME;
 
-	_dataSearch.idxLoc = 0;
-	_dataSearch.idxAct = 0;
-	_dataSearch.startPos = wxNOT_FOUND;
-	_dataSearch.stringLen = 0;
+    _dataSearch.idxLoc = 0;
+    _dataSearch.idxAct = 0;
+    _dataSearch.startPos = wxNOT_FOUND;
+    _dataSearch.stringLen = 0;
 
-	_dataSearch.countChecking = 0;
-	_dataSearch.isFoundAny = false;
+    _dataSearch.countChecking = 0;
+    _dataSearch.isFoundAny = false;
 }
 
 void Controls::InitData()
 {
-	_currentGamePath = wxFileName(_currentPath, wxT("NoName.qsp")).GetFullPath();
-	_currentGamePass = QGEN_PASSWD;
-	InitSearchData();
-	_lastSaveTime = 0;
+    _currentGamePath = wxFileName(_currentPath, wxT("NoName.qsp")).GetFullPath();
+    _currentGamePass = QGEN_PASSWD;
+    InitSearchData();
+    _lastSaveTime = 0;
 }
 
 void Controls::NewGame()
 {
-	if ( !_container->IsEmpty() )
-	{
+    if ( !_container->IsEmpty() )
+    {
 		_locNotebook->DeleteAllPages(CLOSE_ALL, wxNOT_FOUND);
 		_locListBox->Clear();
 		_container->Clear();
 		_container->Save();
-	}
-	InitData();
-	wxString locName = _settings->GetFirstLocName().Trim().Trim(false);
-	if (_settings->GetCreateFirstLoc() && !locName.IsEmpty())
-	{
+    }
+    InitData();
+    wxString locName = _settings->GetFirstLocName().Trim().Trim(false);
+    if (_settings->GetCreateFirstLoc() && !locName.IsEmpty())
+    {
 		_container->AddLocation(locName);
 		_locListBox->Insert(locName, wxEmptyString, wxEmptyString);
 		_container->Save();
-	}
+    }
 }
 
 bool Controls::IsGameSaved()
 {
-	// It's need to call SyncWithLocationsList because some locations
-	// can be moved in the locs list
-	SyncWithLocationsList();
-	_locNotebook->SaveOpenedPages();
-	return _container->IsSaved();
+    // It's need to call SyncWithLocationsList because some locations
+    // can be moved in the locs list
+    SyncWithLocationsList();
+    _locNotebook->SaveOpenedPages();
+    return _container->IsSaved();
 }
 
 void Controls::UpdateActionsOnAllLocs()
 {
-	size_t count = _container->GetLocationsCount();
-	for (size_t i = 0; i < count; ++i)
+    size_t count = _container->GetLocationsCount();
+    for (size_t i = 0; i < count; ++i)
 		_locListBox->UpdateLocationActions(_container->GetLocationName(i));
 }
 
 void Controls::UpdateOpenedLocationsIndexes()
 {
-	LocationPage *page;
-	size_t count = _locNotebook->GetPageCount();
-	for (size_t index = 0; index < count; ++index)
-	{
+    LocationPage *page;
+    size_t count = _locNotebook->GetPageCount();
+    for (size_t index = 0; index < count; ++index)
+    {
 		page = ( LocationPage * )_locNotebook->GetPage(index);
 		page->SetLocationIndex(_container->FindLocationIndex(_locNotebook->GetPageText(index)));
-	}
+    }
 }
 
 void Controls::UpdateLocationIcon( size_t locIndex, bool isOpened )
 {
-	_locListBox->SetLocStatus(_container->GetLocationName(locIndex), isOpened);
+    _locListBox->SetLocStatus(_container->GetLocationName(locIndex), isOpened);
 }
 
 void Controls::ShowOpenedLocationsIcons()
 {
-	size_t index, count = _locNotebook->GetPageCount();
-	for (index = 0; index < count; ++index)
+    size_t index, count = _locNotebook->GetPageCount();
+    for (index = 0; index < count; ++index)
 		_locListBox->SetLocStatus(_locNotebook->GetPageText(index), true);
 }
 
 void Controls::UpdateMenuItems(wxMenu *menu)
 {
-	if (!menu) return;
+    if (!menu) return;
 
-	bool saveFound = menu->FindItem(ID_GAME_SAVE) != NULL;
-	bool saveAsFound = menu->FindItem(ID_GAME_SAVEAS) != NULL;
-	bool playQuestFound = menu->FindItem(ID_GAME_PLAY) != NULL;
-	bool exportTxtFound = menu->FindItem(ID_GAME_EXPORTTXT) != NULL;
-	bool exportTxt2GamFound = menu->FindItem(ID_GAME_EXPORTTXT2GAM) != NULL;
-	bool folderDelFound = menu->FindItem(ID_FOLDER_DEL) != NULL;
-	bool folderRenameFound = menu->FindItem(ID_FOLDER_RENAME) != NULL;
-	bool locDelFound = menu->FindItem(ID_LOC_DEL) != NULL;
-	bool locRenameFound = menu->FindItem(ID_LOC_RENAME) != NULL;
-	bool locClearFound = menu->FindItem(ID_LOC_CLEAR) != NULL;
-	bool locCopyFound = menu->FindItem(ID_LOC_COPY) != NULL;
-	bool locReplaceFound = menu->FindItem(ID_LOC_REPLACE) != NULL;
-	bool locPasteFound = menu->FindItem(ID_LOC_PASTE) != NULL;
-	bool locPasteNewFound = menu->FindItem(ID_LOC_PASTENEW) != NULL;
-	bool locSortAscFound = menu->FindItem(ID_LOC_SORTASC) != NULL;
-	bool locSortDescFound = menu->FindItem(ID_LOC_SORTDESC) != NULL;
-	bool locJumpLocFound = menu->FindItem(ID_LOC_JUMPLOC) != NULL;
-	bool locExpandFound = menu->FindItem(ID_LOC_EXPAND) != NULL;
-	bool locCollapseFound = menu->FindItem(ID_LOC_COLLAPSE) != NULL;
-	bool createActFound = menu->FindItem(ID_ACTION_ADD) != NULL;
-	bool delActFound = menu->FindItem(ID_ACTION_DEL) != NULL;
-	bool delAllActFound = menu->FindItem(ID_ACTION_DELALL) != NULL;
-	bool renameActFound = menu->FindItem(ID_ACTION_REN) != NULL;
-	bool undoTextFound = menu->FindItem(ID_TEXT_UNDO) != NULL;
-	bool redoTextFound = menu->FindItem(ID_TEXT_REDO) != NULL;
-	bool copyTextFound = menu->FindItem(ID_TEXT_COPY) != NULL;
-	bool pasteTextFound = menu->FindItem(ID_TEXT_PASTE) != NULL;
-	bool cutTextFound = menu->FindItem(ID_TEXT_CUT) != NULL;
-	bool delTextFound = menu->FindItem(ID_TEXT_DEL) != NULL;
-	bool selAllTextFound = menu->FindItem(ID_TEXT_SELALL) != NULL;
-	bool closeAllTabsFound = menu->FindItem(ID_TAB_CLOSEALL) != NULL;
-	bool closeExecptSelFound = menu->FindItem(ID_TAB_CLOSEEXCEPTSELECTED) != NULL;
-	bool closeSelFound = menu->FindItem(ID_TAB_CLOSESELECTED) != NULL;
-	bool fixTabFound = menu->FindItem(ID_TAB_FIX) != NULL;
-	bool showHideLocDesc = menu->FindItem(ID_LOC_DESCVISIBLE) != NULL;
-	bool showHideLocActs = menu->FindItem(ID_LOC_ACTVISIBLE) != NULL;
-	bool res = false;
+    bool saveFound = menu->FindItem(ID_GAME_SAVE) != NULL;
+    bool saveAsFound = menu->FindItem(ID_GAME_SAVEAS) != NULL;
+    bool playQuestFound = menu->FindItem(ID_GAME_PLAY) != NULL;
+    bool exportTxtFound = menu->FindItem(ID_GAME_EXPORTTXT) != NULL;
+    bool exportTxt2GamFound = menu->FindItem(ID_GAME_EXPORTTXT2GAM) != NULL;
+    bool folderDelFound = menu->FindItem(ID_FOLDER_DEL) != NULL;
+    bool folderRenameFound = menu->FindItem(ID_FOLDER_RENAME) != NULL;
+    bool locDelFound = menu->FindItem(ID_LOC_DEL) != NULL;
+    bool locRenameFound = menu->FindItem(ID_LOC_RENAME) != NULL;
+    bool locClearFound = menu->FindItem(ID_LOC_CLEAR) != NULL;
+    bool locCopyFound = menu->FindItem(ID_LOC_COPY) != NULL;
+    bool locReplaceFound = menu->FindItem(ID_LOC_REPLACE) != NULL;
+    bool locPasteFound = menu->FindItem(ID_LOC_PASTE) != NULL;
+    bool locPasteNewFound = menu->FindItem(ID_LOC_PASTENEW) != NULL;
+    bool locSortAscFound = menu->FindItem(ID_LOC_SORTASC) != NULL;
+    bool locSortDescFound = menu->FindItem(ID_LOC_SORTDESC) != NULL;
+    bool locJumpLocFound = menu->FindItem(ID_LOC_JUMPLOC) != NULL;
+    bool locExpandFound = menu->FindItem(ID_LOC_EXPAND) != NULL;
+    bool locCollapseFound = menu->FindItem(ID_LOC_COLLAPSE) != NULL;
+    bool createActFound = menu->FindItem(ID_ACTION_ADD) != NULL;
+    bool delActFound = menu->FindItem(ID_ACTION_DEL) != NULL;
+    bool delAllActFound = menu->FindItem(ID_ACTION_DELALL) != NULL;
+    bool renameActFound = menu->FindItem(ID_ACTION_REN) != NULL;
+    bool undoTextFound = menu->FindItem(ID_TEXT_UNDO) != NULL;
+    bool redoTextFound = menu->FindItem(ID_TEXT_REDO) != NULL;
+    bool copyTextFound = menu->FindItem(ID_TEXT_COPY) != NULL;
+    bool pasteTextFound = menu->FindItem(ID_TEXT_PASTE) != NULL;
+    bool cutTextFound = menu->FindItem(ID_TEXT_CUT) != NULL;
+    bool delTextFound = menu->FindItem(ID_TEXT_DEL) != NULL;
+    bool selAllTextFound = menu->FindItem(ID_TEXT_SELALL) != NULL;
+    bool closeAllTabsFound = menu->FindItem(ID_TAB_CLOSEALL) != NULL;
+    bool closeExecptSelFound = menu->FindItem(ID_TAB_CLOSEEXCEPTSELECTED) != NULL;
+    bool closeSelFound = menu->FindItem(ID_TAB_CLOSESELECTED) != NULL;
+    bool fixTabFound = menu->FindItem(ID_TAB_FIX) != NULL;
+    bool showHideLocDesc = menu->FindItem(ID_LOC_DESCVISIBLE) != NULL;
+    bool showHideLocActs = menu->FindItem(ID_LOC_ACTVISIBLE) != NULL;
+    bool res = false;
 
-	if (saveFound || saveAsFound || playQuestFound || exportTxtFound || exportTxt2GamFound ||
+    if (saveFound || saveAsFound || playQuestFound || exportTxtFound || exportTxt2GamFound ||
 		locExpandFound || locCollapseFound)
 		res = !_container->IsEmpty();
-	if (saveFound) menu->Enable(ID_GAME_SAVE, res);
-	if (saveAsFound) menu->Enable(ID_GAME_SAVEAS, res);
-	if (playQuestFound) menu->Enable(ID_GAME_PLAY, res);
-	if (exportTxtFound) menu->Enable(ID_GAME_EXPORTTXT, res);
-	if (exportTxt2GamFound) menu->Enable(ID_GAME_EXPORTTXT2GAM, res);
-	if (locExpandFound) menu->Enable(ID_LOC_EXPAND, res);
-	if (locCollapseFound) menu->Enable(ID_LOC_COLLAPSE, res);
-	res = false;
+    if (saveFound) menu->Enable(ID_GAME_SAVE, res);
+    if (saveAsFound) menu->Enable(ID_GAME_SAVEAS, res);
+    if (playQuestFound) menu->Enable(ID_GAME_PLAY, res);
+    if (exportTxtFound) menu->Enable(ID_GAME_EXPORTTXT, res);
+    if (exportTxt2GamFound) menu->Enable(ID_GAME_EXPORTTXT2GAM, res);
+    if (locExpandFound) menu->Enable(ID_LOC_EXPAND, res);
+    if (locCollapseFound) menu->Enable(ID_LOC_COLLAPSE, res);
+    res = false;
 
-	if (locDelFound || locRenameFound)
+    if (locDelFound || locRenameFound)
 		res = GetSelectedLocationIndex() >= 0;
-	if (locDelFound) menu->Enable(ID_LOC_DEL, res);
-	if (locRenameFound) menu->Enable(ID_LOC_RENAME, res);
-	res = false;
+    if (locDelFound) menu->Enable(ID_LOC_DEL, res);
+    if (locRenameFound) menu->Enable(ID_LOC_RENAME, res);
+    res = false;
 
-	if (folderDelFound || folderRenameFound)
+    if (folderDelFound || folderRenameFound)
 		res = GetSelectedFolderIndex() >= 0;
-	if (folderDelFound) menu->Enable(ID_FOLDER_DEL, res);
-	if (folderRenameFound) menu->Enable(ID_FOLDER_RENAME, res);
-	res = false;
+    if (folderDelFound) menu->Enable(ID_FOLDER_DEL, res);
+    if (folderRenameFound) menu->Enable(ID_FOLDER_RENAME, res);
+    res = false;
 
-	if (delActFound || delAllActFound || renameActFound)
+    if (delActFound || delAllActFound || renameActFound)
 		res = !IsActionsOnSelectedLocEmpty();
-	if (delActFound) menu->Enable(ID_ACTION_DEL, res);
-	if (delAllActFound) menu->Enable(ID_ACTION_DELALL, res);
-	if (renameActFound) menu->Enable(ID_ACTION_REN, res);
-	res = false;
+    if (delActFound) menu->Enable(ID_ACTION_DEL, res);
+    if (delAllActFound) menu->Enable(ID_ACTION_DELALL, res);
+    if (renameActFound) menu->Enable(ID_ACTION_REN, res);
+    res = false;
 
-	if (locClearFound || locCopyFound)
+    if (locClearFound || locCopyFound)
 		res = !IsSelectedLocationEmpty();
-	if (locClearFound) menu->Enable(ID_LOC_CLEAR, res);
-	if (locCopyFound) menu->Enable(ID_LOC_COPY, res);
-	res = false;
+    if (locClearFound) menu->Enable(ID_LOC_CLEAR, res);
+    if (locCopyFound) menu->Enable(ID_LOC_COPY, res);
+    res = false;
 
-	if (locReplaceFound || locPasteFound || locPasteNewFound)
+    if (locReplaceFound || locPasteFound || locPasteNewFound)
 		res = !IsClipboardEmpty();
-	if (locReplaceFound) menu->Enable(ID_LOC_REPLACE, res && GetSelectedLocationIndex() >= 0);
-	if (locPasteFound) menu->Enable(ID_LOC_PASTE, res);
-	if (locPasteNewFound) menu->Enable(ID_LOC_PASTENEW, res);
-	res = false;
+    if (locReplaceFound) menu->Enable(ID_LOC_REPLACE, res && GetSelectedLocationIndex() >= 0);
+    if (locPasteFound) menu->Enable(ID_LOC_PASTE, res);
+    if (locPasteNewFound) menu->Enable(ID_LOC_PASTENEW, res);
+    res = false;
 
-	if (locSortAscFound || locSortDescFound)
+    if (locSortAscFound || locSortDescFound)
 		res = _locListBox->GetCount() > 1;
-	if (locSortAscFound) menu->Enable(ID_LOC_SORTASC, res);
-	if (locSortDescFound) menu->Enable(ID_LOC_SORTDESC, res);
-	res = false;
+    if (locSortAscFound) menu->Enable(ID_LOC_SORTASC, res);
+    if (locSortDescFound) menu->Enable(ID_LOC_SORTDESC, res);
+    res = false;
 
-	if (locJumpLocFound) menu->Enable(ID_LOC_JUMPLOC, GetCurrentTextBox() != NULL);
-	if (createActFound)	menu->Enable(ID_ACTION_ADD, !IsAllLocsClosed());
-	if (undoTextFound) menu->Enable(ID_TEXT_UNDO, CanUndoText());
-	if (redoTextFound) menu->Enable(ID_TEXT_REDO, CanRedoText());
-	if (pasteTextFound) menu->Enable(ID_TEXT_PASTE, CanPasteText());
-	if (selAllTextFound) menu->Enable(ID_TEXT_SELALL, CanSelectText());
+    if (locJumpLocFound) menu->Enable(ID_LOC_JUMPLOC, GetCurrentTextBox() != NULL);
+    if (createActFound)    menu->Enable(ID_ACTION_ADD, !IsAllLocsClosed());
+    if (undoTextFound) menu->Enable(ID_TEXT_UNDO, CanUndoText());
+    if (redoTextFound) menu->Enable(ID_TEXT_REDO, CanRedoText());
+    if (pasteTextFound) menu->Enable(ID_TEXT_PASTE, CanPasteText());
+    if (selAllTextFound) menu->Enable(ID_TEXT_SELALL, CanSelectText());
 
-	if (copyTextFound || cutTextFound || delTextFound)
+    if (copyTextFound || cutTextFound || delTextFound)
 		res = CanCopyText();
-	if (copyTextFound) menu->Enable(ID_TEXT_COPY, res);
-	if (cutTextFound) menu->Enable(ID_TEXT_CUT, res);
-	if (delTextFound) menu->Enable(ID_TEXT_DEL, res);
-	res = false;
+    if (copyTextFound) menu->Enable(ID_TEXT_COPY, res);
+    if (cutTextFound) menu->Enable(ID_TEXT_CUT, res);
+    if (delTextFound) menu->Enable(ID_TEXT_DEL, res);
+    res = false;
 
-	if (closeAllTabsFound || closeExecptSelFound || closeSelFound || showHideLocDesc || showHideLocActs)
+    if (closeAllTabsFound || closeExecptSelFound || closeSelFound || showHideLocDesc || showHideLocActs)
 		res = !IsAllLocsClosed();
-	if (closeAllTabsFound) menu->Enable(ID_TAB_CLOSEALL, res);
-	if (closeExecptSelFound) menu->Enable(ID_TAB_CLOSEEXCEPTSELECTED, res);
-	if (closeSelFound) menu->Enable(ID_TAB_CLOSESELECTED, res);
-	if (fixTabFound) menu->Enable(ID_TAB_FIX, res);
-	if (showHideLocDesc) menu->Enable(ID_LOC_DESCVISIBLE, res);
-	if (showHideLocActs) menu->Enable(ID_LOC_ACTVISIBLE, res);
+    if (closeAllTabsFound) menu->Enable(ID_TAB_CLOSEALL, res);
+    if (closeExecptSelFound) menu->Enable(ID_TAB_CLOSEEXCEPTSELECTED, res);
+    if (closeSelFound) menu->Enable(ID_TAB_CLOSESELECTED, res);
+    if (fixTabFound) menu->Enable(ID_TAB_FIX, res);
+    if (showHideLocDesc) menu->Enable(ID_LOC_DESCVISIBLE, res);
+    if (showHideLocActs) menu->Enable(ID_LOC_ACTVISIBLE, res);
 }
 
 bool Controls::RenameFolder( size_t folderIndex, const wxString &name )
 {
-	wxString oldName(_container->GetFolderName(folderIndex));
-	if (_container->RenameFolder(folderIndex, name))
-	{
+    wxString oldName(_container->GetFolderName(folderIndex));
+    if (_container->RenameFolder(folderIndex, name))
+    {
 		_locListBox->SetFolderName(oldName, name);
 		return true;
-	}
-	else
+    }
+    else
 		ShowMessage( QGEN_MSG_EXISTS );
-	return false;
+    return false;
 }
 
 bool Controls::RenameLocation( size_t locIndex, const wxString &name )
 {
-	wxString oldName(_container->GetLocationName(locIndex));
-	if (_container->RenameLocation(locIndex, name))
-	{
+    wxString oldName(_container->GetLocationName(locIndex));
+    if (_container->RenameLocation(locIndex, name))
+    {
 		_locListBox->SetLocName(oldName, name);
 		int pageIndex = _locNotebook->FindPageIndex(oldName);
 		if (pageIndex >= 0) _locNotebook->SetPageText(pageIndex, name);
 		return true;
-	}
-	else
+    }
+    else
 		ShowMessage( QGEN_MSG_EXISTS );
-	return false;
+    return false;
 }
 
 bool Controls::RenameAction( size_t locIndex, size_t actIndex, const wxString &name )
 {
-	if (_container->RenameAction(locIndex, actIndex, name))
-	{
+    if (_container->RenameAction(locIndex, actIndex, name))
+    {
 		LocationPage *page = _locNotebook->GetPageByLocName(_container->GetLocationName(locIndex));
 		if (page) page->RenameAction(actIndex, name);
 		_locListBox->UpdateLocationActions(_container->GetLocationName(locIndex));
 		return true;
-	}
-	else
+    }
+    else
 		ShowMessage( QGEN_MSG_EXISTS );
-	return false;
+    return false;
 }
 
 void Controls::MoveActionTo( size_t locIndex, size_t actIndex, size_t moveTo )
 {
-	_container->MoveActionTo(locIndex, actIndex, moveTo);
-	wxString locName(_container->GetLocationName(locIndex));
-	LocationPage *page = _locNotebook->GetPageByLocName(locName);
-	if (page) page->MoveActionTo(actIndex, moveTo);
-	_locListBox->UpdateLocationActions(locName);
-	InitSearchData();
+    _container->MoveActionTo(locIndex, actIndex, moveTo);
+    wxString locName(_container->GetLocationName(locIndex));
+    LocationPage *page = _locNotebook->GetPageByLocName(locName);
+    if (page) page->MoveActionTo(actIndex, moveTo);
+    _locListBox->UpdateLocationActions(locName);
+    InitSearchData();
 }
 
 wxString Controls::GetGameInfo() const
 {
-	int totalLocsCount,
+    int totalLocsCount,
 		totalEmptyDesc = 0,
 		totalEmptyCode = 0,
 		totalEmptyActsCode = 0,
@@ -1421,11 +1421,11 @@ wxString Controls::GetGameInfo() const
 		avgSize = 0,
 		locSize,
 		actsCount;
-	wxString locName, actName, data;
+    wxString locName, actName, data;
 
-	totalLocsCount = _container->GetLocationsCount();
-	if (totalLocsCount > 0)
-	{
+    totalLocsCount = _container->GetLocationsCount();
+    if (totalLocsCount > 0)
+    {
 		for (int i = 0; i < totalLocsCount; ++i)
 		{
 			locName = _container->GetLocationName(i);
@@ -1455,78 +1455,78 @@ wxString Controls::GetGameInfo() const
 		}
 		avgActions = (int)((float)totalActs / totalLocsCount + 0.5);
 		avgSize = (int)((float)totalLocsSize / totalLocsCount + 0.5);
-	}
-	wxString message = wxString::Format(_("This game contains %i location(s)\n"), totalLocsCount);
-	message += wxString::Format(_("Locations without base description: %i\n"), totalEmptyDesc);
-	message += wxString::Format(_("Locations without \"on visit\" code: %i\n"), totalEmptyCode);
-	message += wxString::Format(_("Average count of actions per location: %i\n"), avgActions);
-	message += wxString::Format(_("Actions without code: %i\n"), totalEmptyActsCode);
-	message += wxString::Format(_("Max location size: %i characters\n"), maxLocSize);
-	message += wxString::Format(_("Average location size: %i characters\n"), avgSize);
-	message += wxString::Format(_("Total game size: %i characters"), totalLocsSize);
-	return message;
+    }
+    wxString message = wxString::Format(_("This game contains %i location(s)\n"), totalLocsCount);
+    message += wxString::Format(_("Locations without base description: %i\n"), totalEmptyDesc);
+    message += wxString::Format(_("Locations without \"on visit\" code: %i\n"), totalEmptyCode);
+    message += wxString::Format(_("Average count of actions per location: %i\n"), avgActions);
+    message += wxString::Format(_("Actions without code: %i\n"), totalEmptyActsCode);
+    message += wxString::Format(_("Max location size: %i characters\n"), maxLocSize);
+    message += wxString::Format(_("Average location size: %i characters\n"), avgSize);
+    message += wxString::Format(_("Total game size: %i characters"), totalLocsSize);
+    return message;
 }
 
 bool Controls::ExportTxt(const wxString &filename)
 {
-	SyncWithLocationsList();
-	_locNotebook->SaveOpenedPages();
-	return qspExportTxt(filename.wx_str(), this);
+    SyncWithLocationsList();
+    _locNotebook->SaveOpenedPages();
+    return qspExportTxt(filename.wx_str(), this);
 }
 
 bool Controls::ExportTxt2Gam(const wxString &filename)
 {
-	SyncWithLocationsList();
-	_locNotebook->SaveOpenedPages();
-	return qspExportTxt2Game(filename.wx_str(), this);
+    SyncWithLocationsList();
+    _locNotebook->SaveOpenedPages();
+    return qspExportTxt2Game(filename.wx_str(), this);
 }
 
 bool Controls::ImportTxt2Gam(const wxString &filename)
 {
-	if (qspImportTxt2Game(filename.wx_str(), this))
+    if (qspImportTxt2Game(filename.wx_str(), this))
 		return LoadGame(_currentGamePath);
-	return false;
+    return false;
 }
 
 void Controls::SwitchLocDesc()
 {
-	LocationPage *page = _locNotebook->GetSelectedPage();
-	if (page) page->LocDescVisible(!page->IsDescShown());
+    LocationPage *page = _locNotebook->GetSelectedPage();
+    if (page) page->LocDescVisible(!page->IsDescShown());
 }
 
 void Controls::SwitchLocActs()
 {
-	LocationPage *page = _locNotebook->GetSelectedPage();
-	if (page) page->LocActsVisible(!page->IsActsShown());
+    LocationPage *page = _locNotebook->GetSelectedPage();
+    if (page) page->LocActsVisible(!page->IsActsShown());
 }
 
 bool Controls::ExecuteHotkey( int keyCode, int modifiers )
 {
-	bool res = false;
-	#ifdef __WXMSW__
-	++_execHotkeyEnters;
-	res = _keysParser->ExecuteHotkeyAction(keyCode, modifiers);
-	--_execHotkeyEnters;
-	#endif
-	return res;
+    bool res = false;
+    #ifdef __WXMSW__
+    ++_execHotkeyEnters;
+    res = _keysParser->ExecuteHotkeyAction(keyCode, modifiers);
+    --_execHotkeyEnters;
+    #endif
+    return res;
 }
 
 void Controls::SetStatusText( const wxString &text )
 {
-	wxStatusBar *statusBar = _mainFrame->GetStatusBar();
-	if (statusBar) statusBar->SetStatusText(text);
+    wxStatusBar *statusBar = _mainFrame->GetStatusBar();
+    if (statusBar) statusBar->SetStatusText(text);
 }
 
 void Controls::SelectLocation( size_t locIndex )
 {
-	_locListBox->Select(_container->GetLocationName(locIndex));
+    _locListBox->Select(_container->GetLocationName(locIndex));
 }
 
 bool Controls::AddFolder()
 {
-	wxString name;
-	while (1)
-	{
+    wxString name;
+    while (1)
+    {
 		wxTextEntryDialog dlgEntry(GetParent(),
 			_("Input name for a new folder:"),
 			_("Add folder"), name);
@@ -1550,37 +1550,37 @@ bool Controls::AddFolder()
 		}
 		else
 			return false;
-	}
-	return true;
+    }
+    return true;
 }
 
 bool Controls::DeleteSelectedFolder()
 {
-	int folder = GetSelectedFolderIndex();
-	if (folder < 0) return false;
+    int folder = GetSelectedFolderIndex();
+    if (folder < 0) return false;
 
-	wxString folderName(_container->GetFolderName(folder));
-	wxMessageDialog dlgMsg(GetParent(),
+    wxString folderName(_container->GetFolderName(folder));
+    wxMessageDialog dlgMsg(GetParent(),
 		wxString::Format(_("Remove \"%s\" folder?"), folderName),
 		_("Remove folder"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
-	if (dlgMsg.ShowModal() == wxID_YES)
-	{
+    if (dlgMsg.ShowModal() == wxID_YES)
+    {
 		SyncWithLocationsList();
 		_container->DeleteFolder(_container->FindFolderIndex(folderName));
 		UpdateLocationsList();
 		return true;
-	}
-	return false;
+    }
+    return false;
 }
 
 bool Controls::RenameSelectedFolder()
 {
-	int folder = GetSelectedFolderIndex();
-	if (folder < 0) return false;
+    int folder = GetSelectedFolderIndex();
+    if (folder < 0) return false;
 
-	wxString name(_container->GetFolderName(folder));
-	while (1)
-	{
+    wxString name(_container->GetFolderName(folder));
+    while (1)
+    {
 		wxTextEntryDialog dlgEntry(GetParent(),
 			_("Input new folder's name:"),
 			_("Rename folder"), name);
@@ -1598,45 +1598,45 @@ bool Controls::RenameSelectedFolder()
 		}
 		else
 			return false;
-	}
-	return true;
+    }
+    return true;
 }
 
 int Controls::GetSelectedFolderIndex() const
 {
-	int locIndex = GetSelectedLocationIndex();
-	if (locIndex >= 0)
+    int locIndex = GetSelectedLocationIndex();
+    if (locIndex >= 0)
 		return _container->GetLocFolder(locIndex);
-	else
+    else
 		return _container->FindFolderIndex(_locListBox->GetSelectedFolder());
 }
 
 bool Controls::SearchHelpFile()
 {
-	if (!wxFile::Exists(_settings->GetCurrentHelpPath()))
-	{
+    if (!wxFile::Exists(_settings->GetCurrentHelpPath()))
+    {
 		wxFileDialog dialog(GetParent(),
 			_("Select help file"), wxEmptyString, wxEmptyString,
 			_("Help file (*.chm)|*.chm|All files (*.*)|*.*"), wxFD_OPEN);
 		dialog.CenterOnParent();
 		if (dialog.ShowModal() == wxID_CANCEL) return false;
 		_settings->SetCurrentHelpPath(dialog.GetPath());
-	}
-	return true;
+    }
+    return true;
 }
 
 wxWindow *Controls::GetParent()
 {
-	return wxGetTopLevelParent(wxGetActiveWindow());
+    return wxGetTopLevelParent(wxGetActiveWindow());
 }
 
 void Controls::UpdateLocale(int lang)
 {
-	if (_locale) delete _locale;
-	_locale = new wxLocale;
-	_locale->Init(lang);
-	_locale->AddCatalogLookupPathPrefix(_currentPath + wxT("langs"));
-	
-	if (!_locale->AddCatalog(QGEN_APPNAME))
+    if (_locale) delete _locale;
+    _locale = new wxLocale;
+    _locale->Init(lang);
+    _locale->AddCatalogLookupPathPrefix(_currentPath + wxT("langs"));
+
+    if (!_locale->AddCatalog(QGEN_APPNAME))
 		_locale->AddCatalog(wxString(QGEN_APPNAME) + wxT('_') + _locale->GetCanonicalName().BeforeFirst(wxT('_')));
 }

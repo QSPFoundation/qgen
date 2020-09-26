@@ -1,286 +1,130 @@
-diff -u -r d:/wx/wxWidgets/Makefile.in d:/wx/wx_qsp/Makefile.in
---- d:/wx/wxWidgets/Makefile.in	2010-07-15 00:09:56 +0700
-+++ d:/wx/wx_qsp/Makefile.in	2010-07-17 12:47:57 +0700
-@@ -16706,8 +16706,8 @@
- monodll_gtk_aboutdlg.o: $(srcdir)/src/gtk/aboutdlg.cpp $(MONODLL_ODEP)
- 	$(CXXC) -c -o $@ $(MONODLL_CXXFLAGS) $(srcdir)/src/gtk/aboutdlg.cpp
- 
--monodll_animate.o: $(srcdir)/src/gtk/animate.cpp $(MONODLL_ODEP)
--	$(CXXC) -c -o $@ $(MONODLL_CXXFLAGS) $(srcdir)/src/gtk/animate.cpp
-+monodll_animate.o: $(srcdir)/src/generic/animateg.cpp $(MONODLL_ODEP)
-+	$(CXXC) -c -o $@ $(MONODLL_CXXFLAGS) $(srcdir)/src/generic/animateg.cpp
- 
- monodll_gtk_bmpcbox.o: $(srcdir)/src/gtk/bmpcbox.cpp $(MONODLL_ODEP)
- 	$(CXXC) -c -o $@ $(MONODLL_CXXFLAGS) $(srcdir)/src/gtk/bmpcbox.cpp
-@@ -21908,8 +21908,8 @@
- monolib_gtk_aboutdlg.o: $(srcdir)/src/gtk/aboutdlg.cpp $(MONOLIB_ODEP)
- 	$(CXXC) -c -o $@ $(MONOLIB_CXXFLAGS) $(srcdir)/src/gtk/aboutdlg.cpp
- 
--monolib_animate.o: $(srcdir)/src/gtk/animate.cpp $(MONOLIB_ODEP)
--	$(CXXC) -c -o $@ $(MONOLIB_CXXFLAGS) $(srcdir)/src/gtk/animate.cpp
-+monolib_animate.o: $(srcdir)/src/generic/animateg.cpp $(MONOLIB_ODEP)
-+	$(CXXC) -c -o $@ $(MONOLIB_CXXFLAGS) $(srcdir)/src/generic/animateg.cpp
- 
- monolib_gtk_bmpcbox.o: $(srcdir)/src/gtk/bmpcbox.cpp $(MONOLIB_ODEP)
- 	$(CXXC) -c -o $@ $(MONOLIB_CXXFLAGS) $(srcdir)/src/gtk/bmpcbox.cpp
-@@ -34406,8 +34406,8 @@
- advdll_gtk_aboutdlg.o: $(srcdir)/src/gtk/aboutdlg.cpp $(ADVDLL_ODEP)
- 	$(CXXC) -c -o $@ $(ADVDLL_CXXFLAGS) $(srcdir)/src/gtk/aboutdlg.cpp
- 
--advdll_animate.o: $(srcdir)/src/gtk/animate.cpp $(ADVDLL_ODEP)
--	$(CXXC) -c -o $@ $(ADVDLL_CXXFLAGS) $(srcdir)/src/gtk/animate.cpp
-+advdll_animate.o: $(srcdir)/src/generic/animateg.cpp $(ADVDLL_ODEP)
-+	$(CXXC) -c -o $@ $(ADVDLL_CXXFLAGS) $(srcdir)/src/generic/animateg.cpp
- 
- advdll_gtk_bmpcbox.o: $(srcdir)/src/gtk/bmpcbox.cpp $(ADVDLL_ODEP)
- 	$(CXXC) -c -o $@ $(ADVDLL_CXXFLAGS) $(srcdir)/src/gtk/bmpcbox.cpp
-@@ -34739,8 +34739,8 @@
- advlib_gtk_aboutdlg.o: $(srcdir)/src/gtk/aboutdlg.cpp $(ADVLIB_ODEP)
- 	$(CXXC) -c -o $@ $(ADVLIB_CXXFLAGS) $(srcdir)/src/gtk/aboutdlg.cpp
- 
--advlib_animate.o: $(srcdir)/src/gtk/animate.cpp $(ADVLIB_ODEP)
--	$(CXXC) -c -o $@ $(ADVLIB_CXXFLAGS) $(srcdir)/src/gtk/animate.cpp
-+advlib_animate.o: $(srcdir)/src/generic/animateg.cpp $(ADVLIB_ODEP)
-+	$(CXXC) -c -o $@ $(ADVLIB_CXXFLAGS) $(srcdir)/src/generic/animateg.cpp
- 
- advlib_gtk_bmpcbox.o: $(srcdir)/src/gtk/bmpcbox.cpp $(ADVLIB_ODEP)
- 	$(CXXC) -c -o $@ $(ADVLIB_CXXFLAGS) $(srcdir)/src/gtk/bmpcbox.cpp
-diff -u -r d:/wx/wxWidgets/include/wx/animate.h d:/wx/wx_qsp/include/wx/animate.h
---- d:/wx/wxWidgets/include/wx/animate.h	2009-05-09 19:27:30 +0700
-+++ d:/wx/wx_qsp/include/wx/animate.h	2010-07-17 12:47:57 +0700
-@@ -115,11 +115,15 @@
- // include the platform-specific version of the wxAnimationCtrl class
- // ----------------------------------------------------------------------------
- 
-+// HzD_Byte's hack
-+/*
- #if defined(__WXGTK20__) && !defined(__WXUNIVERSAL__)
-     #include "wx/gtk/animate.h"
- #else
-     #include "wx/generic/animate.h"
- #endif
-+*/
-+#include "wx/generic/animate.h"
- 
- #endif // wxUSE_ANIMATIONCTRL
- 
-diff -u -r d:/wx/wxWidgets/include/wx/animdecod.h d:/wx/wx_qsp/include/wx/animdecod.h
---- d:/wx/wxWidgets/include/wx/animdecod.h	2010-01-07 01:06:59 +0600
-+++ d:/wx/wx_qsp/include/wx/animdecod.h	2010-07-17 12:47:57 +0700
-@@ -145,6 +145,9 @@
-     // the transparent colour for this frame if any or wxNullColour.
-     virtual wxColour GetTransparentColour(unsigned int frame) const = 0;
- 
-+    // HzD_Byte's hack
-+    bool IsAnimation() const { return m_nFrames > 1; }
-+
-     // get global data
-     wxSize GetAnimationSize() const { return m_szAnimation; }
-     wxColour GetBackgroundColour() const { return m_background; }
-diff -u -r d:/wx/wxWidgets/include/wx/aui/floatpane.h d:/wx/wx_qsp/include/wx/aui/floatpane.h
---- d:/wx/wxWidgets/include/wx/aui/floatpane.h	2009-08-21 17:59:07 +0700
-+++ d:/wx/wx_qsp/include/wx/aui/floatpane.h	2010-07-17 12:47:57 +0700
-@@ -32,6 +32,8 @@
- class WXDLLIMPEXP_AUI wxAuiFloatingFrame : public wxAuiFloatingFrameBaseClass
- {
- public:
-+    // HzD_Byte's hack
-+    /*
-     wxAuiFloatingFrame(wxWindow* parent,
-                    wxAuiManager* owner_mgr,
-                    const wxAuiPaneInfo& pane,
-@@ -40,6 +42,15 @@
-                                 wxFRAME_NO_TASKBAR | wxFRAME_FLOAT_ON_PARENT |
-                                 wxCLIP_CHILDREN
-                    );
-+    */
-+    wxAuiFloatingFrame(wxWindow* parent,
-+                   wxAuiManager* owner_mgr,
-+                   const wxAuiPaneInfo& pane,
-+                   wxWindowID id = wxID_ANY,
-+                   long style = wxSYSTEM_MENU | wxCAPTION |
-+                                wxFRAME_NO_TASKBAR | wxFRAME_FLOAT_ON_PARENT | 
-+                                wxCLIP_CHILDREN
-+                   );
-     virtual ~wxAuiFloatingFrame();
-     void SetPaneWindow(const wxAuiPaneInfo& pane);
-     wxAuiManager* GetOwnerManager() const;
-diff -u -r d:/wx/wxWidgets/include/wx/generic/animate.h d:/wx/wx_qsp/include/wx/generic/animate.h
---- d:/wx/wxWidgets/include/wx/generic/animate.h	2009-05-09 19:27:24 +0700
-+++ d:/wx/wx_qsp/include/wx/generic/animate.h	2010-07-17 12:47:57 +0700
-@@ -27,8 +27,13 @@
-     wxAnimation(const wxString &name, wxAnimationType type = wxANIMATION_TYPE_ANY)
-         { LoadFile(name, type); }
- 
-+    // HzD_Byte's hack
-+    /*
-     virtual bool IsOk() const
-         { return m_refData != NULL; }
-+    */
-+    virtual bool IsOk() const
-+        { return m_refData != NULL && wx_static_cast(wxAnimationDecoder *, m_refData)->IsAnimation(); }
- 
-     virtual unsigned int GetFrameCount() const;
-     virtual int GetDelay(unsigned int i) const;
-@@ -168,7 +173,11 @@
- 
+diff --git a/include/wx/generic/animate.h b/include/wx/generic/animate.h
+index 46413e01dd..cc607a1bc0 100644
+--- a/include/wx/generic/animate.h
++++ b/include/wx/generic/animate.h
+@@ -130,6 +130,10 @@ protected:
      wxBitmap      m_backingStore;     // The frames are drawn here and then blitted
                                        // on the screen
--
-+    // HzD_Byte's hack
+ 
 +    int m_scalePosX;
 +    int m_scalePosY;
 +    int m_scaleWidth;
 +    int m_scaleHeight;
  private:
      typedef wxAnimationCtrlBase base_type;
-     DECLARE_DYNAMIC_CLASS(wxAnimationCtrl)
-diff -u -r d:/wx/wxWidgets/include/wx/gifdecod.h d:/wx/wx_qsp/include/wx/gifdecod.h
---- d:/wx/wxWidgets/include/wx/gifdecod.h	2009-08-21 17:59:18 +0700
-+++ d:/wx/wx_qsp/include/wx/gifdecod.h	2010-07-17 12:47:57 +0700
-@@ -66,8 +66,11 @@
-     virtual long GetDelay(unsigned int frame) const;
- 
-     // GIFs can contain both static images and animations
-+    // HzD_Byte's hack
-+    /*
-     bool IsAnimation() const
-         { return m_nFrames > 1; }
-+    */
- 
-     // load function which returns more info than just Load():
-     wxGIFErrorCode LoadGIF( wxInputStream& stream );
-diff -u -r d:/wx/wxWidgets/include/wx/htmllbox.h d:/wx/wx_qsp/include/wx/htmllbox.h
---- d:/wx/wxWidgets/include/wx/htmllbox.h	2009-05-09 19:27:30 +0700
-+++ d:/wx/wx_qsp/include/wx/htmllbox.h	2010-07-17 12:47:57 +0700
-@@ -130,7 +130,8 @@
+     wxDECLARE_DYNAMIC_CLASS(wxGenericAnimationCtrl);
+diff --git a/include/wx/htmllbox.h b/include/wx/htmllbox.h
+index a65fa566e5..06f827c899 100644
+--- a/include/wx/htmllbox.h
++++ b/include/wx/htmllbox.h
+@@ -133,6 +133,15 @@ protected:
      // ensure that the given item is cached
      void CacheItem(size_t n) const;
  
--private:
-+    // HzD_Byte's hack
-+// private:
++protected:
++    // HTML parser we use
++    wxHtmlWinParser *m_htmlParser;
++
++#if wxUSE_FILESYSTEM
++    // file system used by m_htmlParser
++    wxFileSystem m_filesystem;
++#endif // wxUSE_FILESYSTEM
++
+ private:
      // wxHtmlWindowInterface methods:
-     virtual void SetHTMLWindowTitle(const wxString& title);
-     virtual void OnHTMLLinkClicked(const wxHtmlLinkInfo& link);
-@@ -163,7 +164,8 @@
-     // given cell to physical coordinates in the window
-     wxPoint CellCoordsToPhysical(const wxPoint& pos, wxHtmlCell *cell) const;
- 
--private:
-+    // HzD_Byte's hack
-+// private:
+     virtual void SetHTMLWindowTitle(const wxString& title) wxOVERRIDE;
+@@ -173,14 +182,6 @@ private:
      // this class caches the pre-parsed HTML to speed up display
      wxHtmlListBoxCache *m_cache;
  
-@@ -178,6 +180,8 @@
+-    // HTML parser we use
+-    wxHtmlWinParser *m_htmlParser;
+-
+-#if wxUSE_FILESYSTEM
+-    // file system used by m_htmlParser
+-    wxFileSystem m_filesystem;
+-#endif // wxUSE_FILESYSTEM
+-
      // rendering style for the parser which allows us to customize our colours
      wxHtmlListBoxStyle *m_htmlRendStyle;
  
-+    // HzD_Byte's hack
-+private:
- 
-     // it calls our GetSelectedTextColour() and GetSelectedTextBgColour()
-     friend class wxHtmlListBoxStyle;	 
-diff -u -r d:/wx/wxWidgets/src/aui/floatpane.cpp d:/wx/wx_qsp/src/aui/floatpane.cpp
---- d:/wx/wxWidgets/src/aui/floatpane.cpp	2012-04-24 15:54:50.068433500 +0400
-+++ d:/wx/wx_qsp/src/aui/floatpane.cpp	2012-04-24 15:56:39.986720500 +0400
-@@ -133,10 +133,14 @@
+diff --git a/src/aui/floatpane.cpp b/src/aui/floatpane.cpp
+index 80dee278c7..9a142d2c66 100644
+--- a/src/aui/floatpane.cpp
++++ b/src/aui/floatpane.cpp
+@@ -132,10 +132,6 @@ void wxAuiFloatingFrame::SetPaneWindow(const wxAuiPaneInfo& pane)
      // pane.floating_size from inside it so we must also record its original
      // value before doing it.
      const bool hasFloatingSize = pane.floating_size != wxDefaultSize;
-+    
-+    // HzD_Byte's hack
-+    /*
-     if (pane.IsFixed())
-     {
-         SetWindowStyleFlag(GetWindowStyleFlag() & ~wxRESIZE_BORDER);
-     }
-+    */
+-    if (pane.IsFixed())
+-    {
+-        SetWindowStyleFlag(GetWindowStyleFlag() & ~wxRESIZE_BORDER);
+-    }
  
      if ( hasFloatingSize )
      {
-
-diff -u -r d:/wx/wxWidgets/src/aui/framemanager.cpp d:/wx/wx_qsp/src/aui/framemanager.cpp
---- d:/wx/wxWidgets/src/aui/framemanager.cpp	2010-06-06 21:21:25 +0700
-+++ d:/wx/wx_qsp/src/aui/framemanager.cpp	2010-07-17 12:47:57 +0700
-@@ -2603,6 +2603,8 @@
+diff --git a/src/aui/framemanager.cpp b/src/aui/framemanager.cpp
+index e9aed4e5f0..b4a8421e4c 100644
+--- a/src/aui/framemanager.cpp
++++ b/src/aui/framemanager.cpp
+@@ -2685,6 +2685,7 @@ void wxAuiManager::Update()
                  p.window->Refresh();
                  p.window->Update();
              }
-+            // HzD_Byte's hack
 +            p.BestSize(p.rect.GetSize());
          }
      }
  
-diff -u -r d:/wx/wxWidgets/src/common/filesys.cpp d:/wx/wx_qsp/src/common/filesys.cpp
---- d:/wx/wxWidgets/src/common/filesys.cpp	2010-04-12 15:26:29 +0700
-+++ d:/wx/wx_qsp/src/common/filesys.cpp	2010-07-17 12:47:57 +0700
-@@ -633,7 +633,8 @@
-         path = path.Mid(2);
- #endif
- 
--    path = wxURI::Unescape(path);
-+    // HzD_Byte's hack
-+    // path = wxURI::Unescape(path);
- 
- #ifdef __WXMSW__
-     // file urls either start with a forward slash (local harddisk),
-diff -u -r d:/wx/wxWidgets/src/generic/animateg.cpp d:/wx/wx_qsp/src/generic/animateg.cpp
---- d:/wx/wxWidgets/src/generic/animateg.cpp	2009-08-21 17:59:06 +0700
-+++ d:/wx/wx_qsp/src/generic/animateg.cpp	2010-07-17 12:47:57 +0700
-@@ -277,6 +277,8 @@
+diff --git a/src/generic/animateg.cpp b/src/generic/animateg.cpp
+index 578827b52b..82712ac939 100644
+--- a/src/generic/animateg.cpp
++++ b/src/generic/animateg.cpp
+@@ -178,6 +178,7 @@ void wxGenericAnimationCtrl::Init()
      m_currentFrame = 0;
      m_looped = false;
      m_isPlaying = false;
-+    // HzD_Byte's hack
 +    m_scalePosX = m_scalePosY = m_scaleWidth = m_scaleHeight = 0;
  
      // use the window background colour by default to be consistent
      // with the GTK+ native version
-@@ -338,6 +340,10 @@
+@@ -250,6 +251,9 @@ void wxGenericAnimationCtrl::SetAnimation(const wxAnimation& animation)
  
      // set new animation even if it's wxNullAnimation
      m_animation = animation;
-+    // HzD_Byte's hack
 +    wxSizeEvent e;
 +    OnSize(e);
 +
      if (!m_animation.IsOk())
      {
          DisplayStaticImage();
-@@ -439,6 +445,8 @@
+@@ -354,18 +358,14 @@ bool wxGenericAnimationCtrl::RebuildBackingStoreUpToFrame(unsigned int frame)
  {
      // if we've not created the backing store yet or it's too
      // small, then recreate it
-+    // HzD_Byte's hack
-+    /*
-     wxSize sz = m_animation.GetSize(),
-            winsz = GetClientSize();
-     int w = wxMin(sz.GetWidth(), winsz.GetWidth());
-@@ -450,6 +458,15 @@
-         if (!m_backingStore.Create(w, h))
-             return false;
-     }
-+    */
+-    wxSize sz = m_animation.GetSize(),
+-           winsz = GetClientSize();
+-    int w = wxMin(sz.GetWidth(), winsz.GetWidth());
+-    int h = wxMin(sz.GetHeight(), winsz.GetHeight());
+-
+-    if ( !m_backingStore.IsOk() ||
+-            m_backingStore.GetWidth() < w || m_backingStore.GetHeight() < h )
 +    wxSize sz = m_animation.GetSize();
 +    int w = sz.GetWidth(), h = sz.GetHeight();
 +    if (!m_backingStore.IsOk() ||
 +        m_backingStore.GetWidth() != w || m_backingStore.GetHeight() != h)
-+    {
-+        if (!m_backingStore.Create(w, h))
-+            return false;
-+    }
- 
+     {
+         if (!m_backingStore.Create(w, h))
+             return false;
+     }
+-
      wxMemoryDC dc;
      dc.SelectObject(m_backingStore);
-@@ -582,7 +599,13 @@
+ 
+@@ -498,7 +498,11 @@ void wxGenericAnimationCtrl::DrawCurrentFrame(wxDC& dc)
      wxASSERT( m_backingStore.IsOk() );
  
      // m_backingStore always contains the current frame
 -    dc.DrawBitmap(m_backingStore, 0, 0, true /* use mask in case it's present */);
-+    // HzD_Byte's hack
-+    // dc.DrawBitmap(m_backingStore, 0, 0, true /* use mask in case it's present */);
 +    if (m_scaleWidth > 0 && m_scaleHeight > 0)
 +    {
 +        wxBitmap bitmap(m_backingStore.ConvertToImage().Scale(m_scaleWidth, m_scaleHeight));
@@ -288,14 +132,12 @@ diff -u -r d:/wx/wxWidgets/src/generic/animateg.cpp d:/wx/wx_qsp/src/generic/ani
 +    }
  }
  
- void wxAnimationCtrl::DisposeToBackground()
-@@ -630,7 +653,13 @@
-         // NOTE: we draw the bitmap explicitely ignoring the mask (if any);
+ void wxGenericAnimationCtrl::DisposeToBackground()
+@@ -546,7 +550,11 @@ void wxGenericAnimationCtrl::OnPaint(wxPaintEvent& WXUNUSED(event))
+         // NOTE: we draw the bitmap explicitly ignoring the mask (if any);
          //       i.e. we don't want to combine the backing store with the
          //       possibly wrong preexisting contents of the window!
 -        dc.DrawBitmap(m_backingStore, 0, 0, false /* no mask */);
-+        // HzD_Byte's hack
-+        // dc.DrawBitmap(m_backingStore, 0, 0, false /* no mask */);
 +        if (m_scaleWidth > 0 && m_scaleHeight > 0)
 +        {
 +            wxBitmap bitmap(m_backingStore.ConvertToImage().Scale(m_scaleWidth, m_scaleHeight));
@@ -304,11 +146,10 @@ diff -u -r d:/wx/wxWidgets/src/generic/animateg.cpp d:/wx/wx_qsp/src/generic/ani
      }
      else
      {
-@@ -690,6 +719,20 @@
+@@ -606,6 +614,19 @@ void wxGenericAnimationCtrl::OnSize(wxSizeEvent &WXUNUSED(event))
              if (!RebuildBackingStoreUpToFrame(m_currentFrame))
                  Stop();     // in case we are playing
          }
-+        // HzD_Byte's hack
 +        int w, h, srcW, srcH;
 +        wxSize srcSize = m_animation.GetSize();
 +        GetClientSize(&w, &h);
@@ -325,130 +166,120 @@ diff -u -r d:/wx/wxWidgets/src/generic/animateg.cpp d:/wx/wx_qsp/src/generic/ani
      }
  }
  
-diff -u -r d:/wx/wxWidgets/src/generic/scrlwing.cpp d:/wx/wx_qsp/src/generic/scrlwing.cpp
---- d:/wx/wxWidgets/src/generic/scrlwing.cpp	2010-07-15 00:09:42 +0700
-+++ d:/wx/wx_qsp/src/generic/scrlwing.cpp	2010-07-17 12:47:57 +0700
-@@ -567,6 +567,8 @@
+diff --git a/src/generic/scrlwing.cpp b/src/generic/scrlwing.cpp
+index 53a556af22..35e69d346a 100644
+--- a/src/generic/scrlwing.cpp
++++ b/src/generic/scrlwing.cpp
+@@ -556,14 +556,9 @@ void wxScrollHelperBase::HandleOnScroll(wxScrollWinEvent& event)
          m_win->SetScrollPos(wxVERTICAL, m_yScrollPosition);
      }
  
-+    // HzD_Byte's hack
-+    /*
-     if ( needsRefresh )
-     {
-         m_targetWindow->Refresh(true, GetScrollRect());
-@@ -575,6 +577,10 @@
-     {
-         m_targetWindow->ScrollWindow(dx, dy, GetScrollRect());
-     }
-+    */
+-    if ( needsRefresh )
+-    {
+-        m_targetWindow->Refresh(true, GetScrollRect());
+-    }
+-    else
+-    {
 +    m_targetWindow->Refresh(true, GetScrollRect());
 +    if (!needsRefresh)
-+        m_targetWindow->ScrollWindow(dx, dy, GetScrollRect());
+         m_targetWindow->ScrollWindow(dx, dy, GetScrollRect());
+-    }
  }
  
  int wxScrollHelperBase::CalcScrollInc(wxScrollWinEvent& event)
-diff -u -r d:/wx/wxWidgets/src/html/htmlwin.cpp d:/wx/wx_qsp/src/html/htmlwin.cpp
---- d:/wx/wxWidgets/src/html/htmlwin.cpp	2010-07-01 20:56:43 +0700
-+++ d:/wx/wx_qsp/src/html/htmlwin.cpp	2010-07-17 12:47:57 +0700
-@@ -465,7 +465,8 @@
+diff --git a/src/html/htmlwin.cpp b/src/html/htmlwin.cpp
+index 6662d1cd77..8ba82eee39 100644
+--- a/src/html/htmlwin.cpp
++++ b/src/html/htmlwin.cpp
+@@ -488,7 +488,6 @@ bool wxHtmlWindow::DoSetPage(const wxString& source)
      // ...and run the parser on it:
-     wxClientDC *dc = new wxClientDC(this);
-     dc->SetMapMode(wxMM_TEXT);
+     wxClientDC dc(this);
+     dc.SetMapMode(wxMM_TEXT);
 -    SetBackgroundColour(wxColour(0xFF, 0xFF, 0xFF));
-+    // HzD_Byte's hack
-+    // SetBackgroundColour(wxColour(0xFF, 0xFF, 0xFF));
      SetBackgroundImage(wxNullBitmap);
  
-     m_Parser->SetDC(dc);
-diff -u -r d:/wx/wxWidgets/src/html/m_image.cpp d:/wx/wx_qsp/src/html/m_image.cpp
---- d:/wx/wxWidgets/src/html/m_image.cpp	2010-07-15 00:09:32 +0700
-+++ d:/wx/wx_qsp/src/html/m_image.cpp	2010-07-17 12:47:57 +0700
-@@ -307,6 +307,9 @@
+     double pixelScale = 1.0;
+diff --git a/src/html/m_image.cpp b/src/html/m_image.cpp
+index edef506fd1..1d557d8383 100644
+--- a/src/html/m_image.cpp
++++ b/src/html/m_image.cpp
+@@ -320,6 +320,8 @@ private:
      wxBitmap           *m_bitmap;
      int                 m_align;
      int                 m_bmpW, m_bmpH;
-+    // HzD_Byte's hack
 +    wxBitmap            m_cachedBmp;
 +    int                 m_bmpMaxW, m_bmpMaxH;
      bool                m_bmpWpercent:1;
      bool                m_bmpHpresent:1;
      bool                m_showFrame:1;
-@@ -358,6 +361,8 @@
+@@ -373,6 +375,7 @@ wxHtmlImageCell::wxHtmlImageCell(wxHtmlWindowInterface *windowIface,
      m_bitmap = NULL;
      m_bmpW   = w;
      m_bmpH   = h;
-+    // HzD_Byte's hack
 +    m_bmpMaxW = m_bmpMaxH = wxDefaultCoord;
      m_align  = align;
      m_bmpWpercent = wpercent;
      m_bmpHpresent = hpresent;
-@@ -389,20 +394,30 @@
+@@ -403,20 +406,21 @@ wxHtmlImageCell::wxHtmlImageCell(wxHtmlWindowInterface *windowIface,
                      if ( m_gifDecoder->LoadGIF(*s) == wxGIF_OK )
                      {
                          wxImage img;
-+                        // HzD_Byte's hack
-+                        /*
-                         if ( m_gifDecoder->ConvertToImage(0, &img) )
-                             SetImage(img);
-+                        */
- 
+-                        if ( m_gifDecoder->ConvertToImage(0, &img) )
+-                            SetImage(img);
+-
                          readImg = false;
  
                          if ( m_gifDecoder->IsAnimation() )
                          {
                              m_gifTimer = new wxGIFTimer(this);
-+                            // HzD_Byte's hack
 +                            wxSize sz(m_gifDecoder->GetAnimationSize());
-+                            m_bmpMaxW = sz.GetWidth();
-+                            m_bmpMaxH = sz.GetHeight();
++                            m_bmpMaxW = sz.GetWidth() / scaleHDPI;
++                            m_bmpMaxH = sz.GetHeight() / scaleHDPI;
                              long delay = m_gifDecoder->GetDelay(0);
                              if ( delay == 0 )
                                  delay = 1;
                              m_gifTimer->Start(delay, true);
                          }
 -                        else
-+                        // HzD_Byte's hack
-+                        // else
-+                        if (m_gifDecoder->ConvertToImage(0, &img)) SetImage(img);
++                        if (m_gifDecoder->ConvertToImage(0, &img)) SetImage(img, scaleHDPI);
 +                        if (!m_gifDecoder->IsAnimation())
                          {
                              wxDELETE(m_gifDecoder);
                          }
-@@ -424,6 +439,8 @@
+@@ -438,19 +442,8 @@ wxHtmlImageCell::wxHtmlImageCell(wxHtmlWindowInterface *windowIface,
          }
          else // input==NULL, use "broken image" bitmap
          {
-+            // HzD_Byte's hack
-+            /*
-             if ( m_bmpW == wxDefaultCoord && m_bmpH == wxDefaultCoord )
-             {
-                 m_bmpW = 29;
-@@ -437,6 +454,9 @@
-             }
-             m_bitmap =
-                 new wxBitmap(wxArtProvider::GetBitmap(wxART_MISSING_IMAGE));
-+            */
+-            if ( m_bmpW == wxDefaultCoord && m_bmpH == wxDefaultCoord )
+-            {
+-                m_bmpW = 29;
+-                m_bmpH = 31;
+-            }
+-            else
+-            {
+-                m_showFrame = true;
+-                if ( m_bmpW == wxDefaultCoord ) m_bmpW = 31;
+-                if ( m_bmpH == wxDefaultCoord ) m_bmpH = 33;
+-            }
+-            m_bitmap =
+-                new wxBitmap(wxArtProvider::GetBitmap(wxART_MISSING_IMAGE));
 +            wxBitmap missBmp(wxArtProvider::GetBitmap(wxART_MISSING_IMAGE));
 +            SetImage(missBmp.ConvertToImage());
          }
      }
      //else: ignore the 0-sized images used sometimes on the Web pages
-@@ -454,10 +474,30 @@
+@@ -468,14 +461,26 @@ void wxHtmlImageCell::SetImage(const wxImage& img, double scaleHDPI)
          ww = img.GetWidth();
          hh = img.GetHeight();
  
-+        // HzD_Byte's hack
-+        /*
-         if ( m_bmpW == wxDefaultCoord)
-             m_bmpW = ww;
-         if ( m_bmpH == wxDefaultCoord)
-             m_bmpH = hh;
-+        */
+-        if ( m_bmpW == wxDefaultCoord)
+-            m_bmpW = ww / scaleHDPI;
+-        if ( m_bmpH == wxDefaultCoord)
+-            m_bmpH = hh / scaleHDPI;
 +        if (m_bmpMaxW == wxDefaultCoord)
-+            m_bmpMaxW = ww;
++            m_bmpMaxW = ww / scaleHDPI;
 +        if (m_bmpMaxH == wxDefaultCoord)
-+            m_bmpMaxH = hh;
++            m_bmpMaxH = hh / scaleHDPI;
 +        if (m_bmpW == wxDefaultCoord && m_bmpH == wxDefaultCoord)
 +        {
 +            m_bmpW = m_bmpMaxW;
@@ -458,51 +289,34 @@ diff -u -r d:/wx/wxWidgets/src/html/m_image.cpp d:/wx/wx_qsp/src/html/m_image.cp
 +            m_bmpW = m_bmpMaxW * m_bmpH / m_bmpMaxH;
 +        else if (m_bmpH == wxDefaultCoord)
 +            m_bmpH = m_bmpMaxH * m_bmpW / m_bmpMaxW;
-+        if (ww == m_bmpMaxW && hh == m_bmpMaxH)
-+            m_bitmap = new wxBitmap(img);
-+        else
-+            m_bitmap = new wxBitmap(img.Size(wxSize(m_bmpMaxW, m_bmpMaxH), wxPoint(0, 0)));
  
-         // Only scale the bitmap at the rendering stage,
-         // so we don't lose quality twice
-@@ -469,7 +509,8 @@
-         }
-         else
- */
--            m_bitmap = new wxBitmap(img);
-+        // HzD_Byte's hack
-+        //     m_bitmap = new wxBitmap(img);
+         // On a Mac retina screen, we might have found a @2x version of the image,
+         // so specify this scale factor.
+-        m_bitmap = new wxBitmap(img, -1, scaleHDPI);
++        if (ww == m_bmpMaxW && hh == m_bmpMaxH)
++            m_bitmap = new wxBitmap(img, -1, scaleHDPI);
++        else
++            m_bitmap = new wxBitmap(img.Size(wxSize(m_bmpMaxW, m_bmpMaxH), wxPoint(0, 0)), -1, scaleHDPI);
      }
  #endif
  }
-@@ -484,7 +525,8 @@
+@@ -500,7 +505,6 @@ void wxHtmlImageCell::AdvanceAnimation(wxTimer *timer)
      if (m_nCurrFrame == m_gifDecoder->GetFrameCount())
          m_nCurrFrame = 0;
  
 -    if ( m_physX == wxDefaultCoord )
-+    // HzD_Byte's hack
-+    // if ( m_physX == wxDefaultCoord )
      {
          m_physX = m_physY = 0;
          for (wxHtmlCell *cell = this; cell; cell = cell->GetParent())
-@@ -503,18 +545,35 @@
+@@ -519,18 +523,24 @@ void wxHtmlImageCell::AdvanceAnimation(wxTimer *timer)
           m_gifDecoder->ConvertToImage(m_nCurrFrame, &img) )
      {
  #if !defined(__WXMSW__) || wxUSE_WXDIB
-+        // HzD_Byte's hack
-+        /*
-         if ( m_gifDecoder->GetFrameSize(m_nCurrFrame) != wxSize(m_Width, m_Height) ||
-              m_gifDecoder->GetFramePosition(m_nCurrFrame) != wxPoint(0, 0) )
-+        */
+-        if ( m_gifDecoder->GetFrameSize(m_nCurrFrame) != wxSize(m_Width, m_Height) ||
+-             m_gifDecoder->GetFramePosition(m_nCurrFrame) != wxPoint(0, 0) )
 +        if (m_gifDecoder->GetFramePosition(m_nCurrFrame) != wxPoint(0, 0))
          {
 -            wxBitmap bmp(img);
-+            // HzD_Byte's hack
-+            // wxBitmap bmp(img);
-+            // wxMemoryDC dc;
-+            // dc.SelectObject(*m_bitmap);
-+            // dc.DrawBitmap(bmp, m_gifDecoder->GetFramePosition(m_nCurrFrame),
-+            //               true /* use mask */);
 +            wxBitmap bmp(img.Size(wxSize(m_bmpMaxW, m_bmpMaxH), m_gifDecoder->GetFramePosition(m_nCurrFrame)));
              wxMemoryDC dc;
              dc.SelectObject(*m_bitmap);
@@ -513,7 +327,7 @@ diff -u -r d:/wx/wxWidgets/src/html/m_image.cpp d:/wx/wx_qsp/src/html/m_image.cp
          else
  #endif
              SetImage(img);
-+        // HzD_Byte's hack
++
 +        if (m_Width > 0 && m_Height > 0)
 +        {
 +            if (m_bitmap->GetWidth() == m_Width && m_bitmap->GetHeight() == m_Height)
@@ -524,11 +338,10 @@ diff -u -r d:/wx/wxWidgets/src/html/m_image.cpp d:/wx/wx_qsp/src/html/m_image.cp
          win->Refresh(img.HasMask(), &rect);
      }
  
-@@ -540,6 +599,16 @@
+@@ -557,6 +567,15 @@ void wxHtmlImageCell::Layout(int w)
          m_Width  = static_cast<int>(m_scale*m_bmpW);
          m_Height = static_cast<int>(m_scale*m_bmpH);
      }
-+    // HzD_Byte's hack
 +    if (m_Width < 0) m_Width = 0;
 +    if (m_Height < 0) m_Height = 0;
 +    if (m_bitmap && m_Width > 0 && m_Height > 0)
@@ -541,694 +354,125 @@ diff -u -r d:/wx/wxWidgets/src/html/m_image.cpp d:/wx/wx_qsp/src/html/m_image.cp
  
      switch (m_align)
      {
-@@ -580,8 +649,11 @@
+@@ -597,48 +616,9 @@ void wxHtmlImageCell::Draw(wxDC& dc, int x, int y,
          dc.SetBrush(*wxTRANSPARENT_BRUSH);
          dc.SetPen(*wxBLACK_PEN);
          dc.DrawRectangle(x + m_PosX, y + m_PosY, m_Width, m_Height);
 -        x++, y++;
-+        // HzD_Byte's hack
-+        // x++, y++;
+-    }
+-    if ( m_bitmap )
+-    {
+-        // We add in the scaling from the desired bitmap width
+-        // and height, so we only do the scaling once.
+-        double imageScaleX = 1.0;
+-        double imageScaleY = 1.0;
+-
+-        // Optimisation for Windows: WIN32 scaling for window DCs is very poor,
+-        // so unless we're using a printer DC, do the scaling ourselves.
+-#if defined(__WXMSW__) && wxUSE_IMAGE
+-        if (m_Width >= 0 && m_Width != m_bitmap->GetWidth()
+-    #if wxUSE_PRINTING_ARCHITECTURE
+-            && !dc.IsKindOf(CLASSINFO(wxPrinterDC))
+-    #endif
+-           )
+-        {
+-            wxImage image(m_bitmap->ConvertToImage());
+-            if (image.HasMask())
+-            {
+-                // Convert the mask to an alpha channel or scaling won't work correctly
+-                image.InitAlpha();
+-            }
+-            image.Rescale(m_Width, m_Height, wxIMAGE_QUALITY_HIGH);
+-            (*m_bitmap) = wxBitmap(image);
+-        }
+-#endif 
+-
+-        if (m_Width != m_bitmap->GetScaledWidth())
+-            imageScaleX = (double) m_Width / (double) m_bitmap->GetScaledWidth();
+-        if (m_Height != m_bitmap->GetScaledHeight())
+-            imageScaleY = (double) m_Height / (double) m_bitmap->GetScaledHeight();
+-
+-        double us_x, us_y;
+-        dc.GetUserScale(&us_x, &us_y);
+-        dc.SetUserScale(us_x * imageScaleX, us_y * imageScaleY);
+-
+-        dc.DrawBitmap(*m_bitmap, (int) ((x + m_PosX) / (imageScaleX)),
+-                                 (int) ((y + m_PosY) / (imageScaleY)), true);
+-        dc.SetUserScale(us_x, us_y);
      }
-+    // HzD_Byte's hack
-+    /*
-     if ( m_bitmap )
-     {
-         // We add in the scaling from the desired bitmap width
-@@ -601,6 +673,9 @@
-                                  (int) ((y + m_PosY) / (imageScaleY)), true);
-         dc.SetUserScale(us_x, us_y);
-     }
-+    */
 +    if (m_cachedBmp.IsOk())
 +        dc.DrawBitmap(m_cachedBmp, x + m_PosX, y + m_PosY, true);
  }
  
  wxHtmlLinkInfo *wxHtmlImageCell::GetLink( int x, int y ) const
-diff -u -r d:/wx/wxWidgets/src/html/m_links.cpp d:/wx/wx_qsp/src/html/m_links.cpp
---- d:/wx/wxWidgets/src/html/m_links.cpp	2009-05-09 19:22:47 +0700
-+++ d:/wx/wx_qsp/src/html/m_links.cpp	2010-07-17 12:47:57 +0700
-@@ -76,7 +76,10 @@
-             if (tag.HasParam( wxT("TARGET") )) target = tag.GetParam( wxT("TARGET") );
+diff --git a/src/html/m_links.cpp b/src/html/m_links.cpp
+index 5acfea0973..fc1a07363d 100644
+--- a/src/html/m_links.cpp
++++ b/src/html/m_links.cpp
+@@ -84,7 +84,8 @@ TAG_HANDLER_BEGIN(A, "A")
+             // set default styles, might get overridden by ApplyStyle
              m_WParser->SetActualColor(m_WParser->GetLinkColor());
              m_WParser->GetContainer()->InsertCell(new wxHtmlColourCell(m_WParser->GetLinkColor()));
 -            m_WParser->SetFontUnderlined(true);
-+            // HzD_Byte's hack
-+            // m_WParser->SetFontUnderlined(true);
 +            if (!(tag.HasParam(wxT("CLASS")) && tag.GetParam(wxT("CLASS")).IsSameAs(wxT("PLAIN"), false)))
 +                m_WParser->SetFontUnderlined(true);
              m_WParser->GetContainer()->InsertCell(new wxHtmlFontCell(m_WParser->CreateCurrentFont()));
-             m_WParser->SetLink(wxHtmlLinkInfo(name, target));
+             m_WParser->SetLink(wxHtmlLinkInfo(href, target));
  
-diff -u -r d:/wx/wxWidgets/src/html/winpars.cpp d:/wx/wx_qsp/src/html/winpars.cpp
---- d:/wx/wxWidgets/src/html/winpars.cpp	2010-07-01 20:56:43 +0700
-+++ d:/wx/wx_qsp/src/html/winpars.cpp	2010-07-17 12:47:57 +0700
-@@ -55,6 +55,8 @@
+diff --git a/src/html/winpars.cpp b/src/html/winpars.cpp
+index 96650b2b37..c1b577f2e8 100644
+--- a/src/html/winpars.cpp
++++ b/src/html/winpars.cpp
+@@ -55,6 +55,7 @@ wxHtmlWinParser::wxHtmlWinParser(wxHtmlWindowInterface *wndIface)
      m_whitespaceMode = Whitespace_Normal;
      m_lastWordCell = NULL;
      m_posColumn = 0;
-+    // HzD_Byte's hack
 +    m_LinkColor.Set(0, 0, 0xFF);
  
      {
          int i, j, k, l, m;
-@@ -212,7 +214,8 @@
+@@ -211,7 +212,6 @@ void wxHtmlWinParser::InitParser(const wxString& source)
  
      m_UseLink = false;
      m_Link = wxHtmlLinkInfo( wxEmptyString );
 -    m_LinkColor.Set(0, 0, 0xFF);
-+    // HzD_Byte's hack
-+    // m_LinkColor.Set(0, 0, 0xFF);
      m_ActualColor.Set(0, 0, 0);
-     m_Align = wxHTML_ALIGN_LEFT;
-     m_ScriptMode = wxHTML_SCRIPT_NORMAL;
-@@ -298,6 +301,8 @@
+     const wxColour windowColour = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW) ;
+     m_ActualBackgroundColor = m_windowInterface
+@@ -289,36 +289,6 @@ wxFSFile *wxHtmlWinParser::OpenURL(wxHtmlURLType type,
+     for (;;)
      {
          wxString myfullurl(myurl);
- 
-+        // HzD_Byte's hack
-+        /*
-         // consider url as absolute path first
-         wxURI current(myurl);
-         myfullurl = current.BuildUnescapedURI();
-@@ -326,6 +331,7 @@
-                 }
-             }
-         }
-+        */
- 
+-
+-        // consider url as absolute path first
+-        wxURI current(myurl);
+-        myfullurl = current.BuildUnescapedURI();
+-
+-        // if not absolute then ...
+-        if( current.IsRelative() )
+-        {
+-            wxString basepath = GetFS()->GetPath();
+-            wxURI base(basepath);
+-
+-            // ... try to apply base path if valid ...
+-            if( !base.IsReference() )
+-            {
+-                wxURI path(myfullurl);
+-                path.Resolve( base );
+-                myfullurl = path.BuildUnescapedURI();
+-            }
+-            else
+-            {
+-                // ... or force such addition if not included already
+-                if( !current.GetPath().Contains(base.GetPath()) )
+-                {
+-                    basepath += myurl;
+-                    wxURI connected( basepath );
+-                    myfullurl = connected.BuildUnescapedURI();
+-                }
+-            }
+-        }
+-
          wxString redirect;
          status = m_windowInterface->OnHTMLOpeningURL(type, myfullurl, &redirect);
-diff -u -r d:/wx/wxWidgets/src/msw/textctrl.cpp d:/wx/wx_qsp/src/msw/textctrl.cpp
---- d:/wx/wxWidgets/src/msw/textctrl.cpp	2010-06-16 22:03:10 +0700
-+++ d:/wx/wx_qsp/src/msw/textctrl.cpp	2010-07-17 12:47:57 +0700
-@@ -1844,6 +1844,8 @@
-                 // Insert tab since calling the default Windows handler
-                 // doesn't seem to do it
-                 WriteText(wxT("\t"));
-+                // rrock.ru's hack
-+                SetFocus();
-                 return;
-             }
-             break;
-diff -u -r d:/wx/wxWidgets/src/stc/scintilla/src/Editor.cxx d:/wx/wx_qsp/src/stc/scintilla/src/Editor.cxx
---- d:/wx/wxWidgets/src/stc/scintilla/src/Editor.cxx	2010-04-12 15:26:27 +0700
-+++ d:/wx/wx_qsp/src/stc/scintilla/src/Editor.cxx	2010-07-17 12:47:57 +0700
-@@ -23,6 +23,8 @@
- #include "Platform.h"
- 
- #include "Scintilla.h"
-+// HzD_Byte's hack
-+#include "SciLexer.h"
- 
- #include "SplitVector.h"
- #include "Partitioning.h"
-@@ -1651,6 +1653,8 @@
- 			        SC_MARKNUM_FOLDEROPEN);
- 			int folderEnd = SubstituteMarkerIfEmpty(SC_MARKNUM_FOLDEREND,
- 			        SC_MARKNUM_FOLDER);
-+			// HzD_Byte's hack
-+			bool showNum = true;
- 
- 			while ((visibleLine < cs.LinesDisplayed()) && yposScreen < rcMargin.bottom) {
- 
-@@ -1659,6 +1663,15 @@
- 				int lineDoc = cs.DocFromDisplay(visibleLine);
- 				PLATFORM_ASSERT(cs.GetVisible(lineDoc));
- 				bool firstSubLine = visibleLine == cs.DisplayFromDoc(lineDoc);
-+				// HzD_Byte's hack
-+				if (vs.ms[margin].style == SC_MARGIN_NUMBER && lineDoc > 0)
-+				{
-+					char style = pdoc->StyleAt(pdoc->LineEnd(lineDoc - 1));
-+					int lineState = pdoc->GetLineState(lineDoc - 1);
-+					showNum = (style != SCE_B_STRING && style != SCE_B_STRINGEOL &&
-+						style != SCE_B_PREPROCESSOR && style != SCE_B_DATE &&
-+						style != SCE_B_ASM && style != SCE_B_ERROR && !lineState);
-+				}
- 
- 				// Decide which fold indicator should be displayed
- 				level = pdoc->GetLevel(lineDoc);
-@@ -1730,7 +1743,11 @@
- 				if (vs.ms[margin].style == SC_MARGIN_NUMBER) {
- 					char number[100];
- 					number[0] = '\0';
-+					// HzD_Byte's hack
-+					/*
- 					if (firstSubLine)
-+					*/
-+					if (firstSubLine && showNum)
- 						sprintf(number, "%d", lineDoc + 1);
- 					if (foldFlags & SC_FOLDFLAG_LEVELNUMBERS) {
- 						int lev = pdoc->GetLevel(lineDoc);
-@@ -6005,6 +6022,8 @@
- 			NotifyDwelling(ptMouseLast, dwelling);
- 		}
- 	}
-+	// HzD_Byte's hack
-+	Redraw();
- }
- 
- bool Editor::Idle() {
-diff -u -r d:/wx/wxWidgets/src/stc/scintilla/src/LexVB.cxx d:/wx/wx_qsp/src/stc/scintilla/src/LexVB.cxx
---- d:/wx/wxWidgets/src/stc/scintilla/src/LexVB.cxx	2010-03-31 08:58:32 +0700
-+++ d:/wx/wx_qsp/src/stc/scintilla/src/LexVB.cxx	2010-07-17 12:51:27 +0700
-@@ -1,8 +1,8 @@
- // Scintilla source code edit control
- /** @file LexVB.cxx
-- ** Lexer for Visual Basic and VBScript.
-+ ** Lexer for QSP.
-  **/
--// Copyright 1998-2005 by Neil Hodgson <neilh@scintilla.org>
-+// Copyright 2008 by Valeriy Argunov <nporep@mail.ru>
- // The License.txt file describes the conditions under which this software may be distributed.
- 
- #include <stdlib.h>
-@@ -24,283 +24,247 @@
- using namespace Scintilla;
- #endif
- 
--// Internal state, highlighted as number
--#define SCE_B_FILENUMBER SCE_B_DEFAULT+100
--
--
--static bool IsVBComment(Accessor &styler, int pos, int len) {
--	return len > 0 && styler[pos] == '\'';
-+static bool IsComment(Accessor &styler, int pos, int len) {
-+	char style = styler.StyleAt(pos);
-+	return len > 0 && (style == SCE_B_PREPROCESSOR || style == SCE_B_DATE || style == SCE_B_COMMENT);
- }
- 
--static inline bool IsTypeCharacter(int ch) {
--	return ch == '%' || ch == '&' || ch == '@' || ch == '!' || ch == '#' || ch == '$';
--}
--
--// Extended to accept accented characters
- static inline bool IsAWordChar(int ch) {
--	return ch >= 0x80 ||
--	       (isalnum(ch) || ch == '.' || ch == '_');
-+	return (ch >= 0x80 || isalnum(ch) || ch == '_' || ch == '$');
- }
- 
- static inline bool IsAWordStart(int ch) {
--	return ch >= 0x80 ||
--	       (isalpha(ch) || ch == '_');
-+	return (ch >= 0x80 || isalpha(ch) || ch == '_' || ch == '$');
- }
- 
- static inline bool IsANumberChar(int ch) {
--	// Not exactly following number definition (several dots are seen as OK, etc.)
--	// but probably enough in most cases.
--	return (ch < 0x80) &&
--	        (isdigit(ch) || toupper(ch) == 'E' ||
--             ch == '.' || ch == '-' || ch == '+');
-+	return (ch < 0x80 && isdigit(ch));
- }
- 
--static void ColouriseVBDoc(unsigned int startPos, int length, int initStyle,
--                           WordList *keywordlists[], Accessor &styler, bool vbScriptSyntax) {
--
-+static void ColouriseVBDoc(unsigned int startPos, int length, int initStyle, WordList *keywordlists[], Accessor &styler) {
-+	if (styler.GetPropertyInt("fold.all", 0))
-+	{
-+		startPos = 0;
-+		length = styler.Length();
-+		initStyle = 0;
-+	}
-+	char s[100];
- 	WordList &keywords = *keywordlists[0];
- 	WordList &keywords2 = *keywordlists[1];
- 	WordList &keywords3 = *keywordlists[2];
- 	WordList &keywords4 = *keywordlists[3];
-+	int curLine = styler.GetLine(startPos);
-+	int lineState = 0;
-+	if (curLine > 0) lineState = styler.GetLineState(curLine - 1) & 0xFF;
-+	int commentState = 0;
-+	if (curLine > 0) commentState = (styler.GetLineState(curLine - 1) >> 8) & 0xFF;
- 
- 	styler.StartAt(startPos);
--
--	int visibleChars = 0;
--	int fileNbDigits = 0;
--
--	// Do not leak onto next line
--	if (initStyle == SCE_B_STRINGEOL || initStyle == SCE_B_COMMENT || initStyle == SCE_B_PREPROCESSOR) {
--		initStyle = SCE_B_DEFAULT;
--	}
--
- 	StyleContext sc(startPos, length, initStyle, styler);
- 
--	for (; sc.More(); sc.Forward()) {
-+	if (sc.state != SCE_B_STRING && sc.state != SCE_B_STRINGEOL &&
-+		sc.state != SCE_B_PREPROCESSOR && sc.state != SCE_B_DATE &&
-+		sc.state != SCE_B_ASM && sc.state != SCE_B_ERROR &&
-+		!commentState) {
-+		sc.SetState(SCE_B_CONSTANT); // Begin of line
-+	}
- 
-+	while (sc.More()) {
- 		if (sc.state == SCE_B_OPERATOR) {
- 			sc.SetState(SCE_B_DEFAULT);
-+		} else if (sc.state == SCE_B_LABEL) {
-+			if (sc.ch == '&') {
-+				sc.SetState(SCE_B_DEFAULT);
-+			}
- 		} else if (sc.state == SCE_B_IDENTIFIER) {
-+			sc.GetCurrentLowered(s, sizeof(s));
- 			if (!IsAWordChar(sc.ch)) {
--				// In Basic (except VBScript), a variable name or a function name
--				// can end with a special character indicating the type of the value
--				// held or returned.
--				bool skipType = false;
--				if (!vbScriptSyntax && IsTypeCharacter(sc.ch)) {
--					sc.Forward();	// Skip it
--					skipType = true;
--				}
--				if (sc.ch == ']') {
--					sc.Forward();
--				}
--				char s[100];
--				sc.GetCurrentLowered(s, sizeof(s));
--				if (skipType) {
--					s[strlen(s) - 1] = '\0';
--				}
--				if (strcmp(s, "rem") == 0) {
--					sc.ChangeState(SCE_B_COMMENT);
--				} else {
--					if (keywords.InList(s)) {
--						sc.ChangeState(SCE_B_KEYWORD);
--					} else if (keywords2.InList(s)) {
--						sc.ChangeState(SCE_B_KEYWORD2);
--					} else if (keywords3.InList(s)) {
--						sc.ChangeState(SCE_B_KEYWORD3);
--					} else if (keywords4.InList(s)) {
--						sc.ChangeState(SCE_B_KEYWORD4);
--					}	// Else, it is really an identifier...
--					sc.SetState(SCE_B_DEFAULT);
-+				if (keywords.InList(s)) {
-+					sc.ChangeState(SCE_B_KEYWORD);
-+				} else if (keywords2.InList(s)) {
-+					sc.ChangeState(SCE_B_KEYWORD2);
-+				} else if (keywords3.InList(s)) {
-+					sc.ChangeState(SCE_B_KEYWORD3);
-+				} else if (keywords4.InList(s)) {
-+					sc.ChangeState(SCE_B_KEYWORD4);
- 				}
-+				sc.SetState(SCE_B_DEFAULT);
- 			}
- 		} else if (sc.state == SCE_B_NUMBER) {
--			// We stop the number definition on non-numerical non-dot non-eE non-sign char
--			// Also accepts A-F for hex. numbers
--			if (!IsANumberChar(sc.ch) && !(tolower(sc.ch) >= 'a' && tolower(sc.ch) <= 'f')) {
-+			if (!IsANumberChar(sc.ch)) {
- 				sc.SetState(SCE_B_DEFAULT);
- 			}
--		} else if (sc.state == SCE_B_STRING) {
--			// VB doubles quotes to preserve them, so just end this string
--			// state now as a following quote will start again
-+		} else if (sc.state == SCE_B_STRING) { // String 1
-+			if (sc.ch == '\'') {
-+				if (sc.chNext == '\'') {
-+					sc.Forward();
-+				} else {
-+					sc.ForwardSetState(SCE_B_DEFAULT);
-+				}
-+			}
-+		} else if (sc.state == SCE_B_STRINGEOL) { // String 2
- 			if (sc.ch == '\"') {
- 				if (sc.chNext == '\"') {
- 					sc.Forward();
- 				} else {
--					if (tolower(sc.chNext) == 'c') {
--						sc.Forward();
--					}
- 					sc.ForwardSetState(SCE_B_DEFAULT);
- 				}
--			} else if (sc.atLineEnd) {
--				visibleChars = 0;
--				sc.ChangeState(SCE_B_STRINGEOL);
--				sc.ForwardSetState(SCE_B_DEFAULT);
- 			}
--		} else if (sc.state == SCE_B_COMMENT) {
--			if (sc.atLineEnd) {
--				visibleChars = 0;
--				sc.ForwardSetState(SCE_B_DEFAULT);
--			}
--		} else if (sc.state == SCE_B_PREPROCESSOR) {
--			if (sc.atLineEnd) {
--				visibleChars = 0;
--				sc.ForwardSetState(SCE_B_DEFAULT);
--			}
--		} else if (sc.state == SCE_B_FILENUMBER) {
--			if (IsADigit(sc.ch)) {
--				fileNbDigits++;
--				if (fileNbDigits > 3) {
--					sc.ChangeState(SCE_B_DATE);
-+		} else if (sc.state == SCE_B_PREPROCESSOR) { // String 1 in the comment
-+			if (sc.ch == '\'') {
-+				if (sc.chNext == '\'') {
-+					sc.Forward();
-+				} else {
-+					sc.ForwardSetState(SCE_B_COMMENT);
-+				}
-+			}
-+		} else if (sc.state == SCE_B_DATE) { // String 2 in the comment
-+			if (sc.ch == '\"') {
-+				if (sc.chNext == '\"') {
-+					sc.Forward();
-+				} else {
-+					sc.ForwardSetState(SCE_B_COMMENT);
- 				}
--			} else if (sc.ch == '\r' || sc.ch == '\n' || sc.ch == ',') {
--				// Regular uses: Close #1; Put #1, ...; Get #1, ... etc.
--				// Too bad if date is format #27, Oct, 2003# or something like that...
--				// Use regular number state
--				sc.ChangeState(SCE_B_NUMBER);
-+			}
-+		} else if (sc.state == SCE_B_ASM) { // Continue line
-+			if (sc.atLineStart || (sc.ch != ' ' && sc.ch != '\t' && !sc.atLineEnd)) {
- 				sc.SetState(SCE_B_DEFAULT);
--			} else if (sc.ch == '#') {
--				sc.ChangeState(SCE_B_DATE);
--				sc.ForwardSetState(SCE_B_DEFAULT);
--			} else {
--				sc.ChangeState(SCE_B_DATE);
--			}
--			if (sc.state != SCE_B_FILENUMBER) {
--				fileNbDigits = 0;
--			}
--		} else if (sc.state == SCE_B_DATE) {
--			if (sc.atLineEnd) {
--				visibleChars = 0;
--				sc.ChangeState(SCE_B_STRINGEOL);
--				sc.ForwardSetState(SCE_B_DEFAULT);
--			} else if (sc.ch == '#') {
--				sc.ForwardSetState(SCE_B_DEFAULT);
- 			}
--		}
--
--		if (sc.state == SCE_B_DEFAULT) {
--			if (sc.ch == '\'') {
-+		} else if (sc.state == SCE_B_ERROR) { // Continue line in the comment
-+			if (sc.atLineStart || (sc.ch != ' ' && sc.ch != '\t' && !sc.atLineEnd)) {
- 				sc.SetState(SCE_B_COMMENT);
--			} else if (sc.ch == '\"') {
--				sc.SetState(SCE_B_STRING);
--			} else if (sc.ch == '#' && visibleChars == 0) {
--				// Preprocessor commands are alone on their line
--				sc.SetState(SCE_B_PREPROCESSOR);
--			} else if (sc.ch == '#') {
--				// It can be a date literal, ending with #, or a file number, from 1 to 511
--				// The date literal depends on the locale, so anything can go between #'s.
--				// Can be #January 1, 1993# or #1 Jan 93# or #05/11/2003#, etc.
--				// So we set the FILENUMBER state, and switch to DATE if it isn't a file number
--				sc.SetState(SCE_B_FILENUMBER);
--			} else if (sc.ch == '&' && tolower(sc.chNext) == 'h') {
--				// Hexadecimal number
--				sc.SetState(SCE_B_NUMBER);
--				sc.Forward();
--			} else if (sc.ch == '&' && tolower(sc.chNext) == 'o') {
--				// Octal number
--				sc.SetState(SCE_B_NUMBER);
-+			}
-+		}
-+		if (sc.state == SCE_B_DEFAULT || sc.state == SCE_B_CONSTANT) {
-+			if (sc.ch == ' ' && sc.chNext == '_') {
-+				sc.SetState(SCE_B_ASM); // Continue line
- 				sc.Forward();
--			} else if (IsADigit(sc.ch) || (sc.ch == '.' && IsADigit(sc.chNext))) {
-+			} else if (sc.ch == '\'') {
-+				sc.SetState(SCE_B_STRING); // String 1
-+			} else if (sc.ch == '\"') {
-+				sc.SetState(SCE_B_STRINGEOL); // String 2
-+			} else if (sc.state == SCE_B_CONSTANT && sc.ch == '!') {
-+				sc.SetState(SCE_B_COMMENT);
-+			} else if (sc.state == SCE_B_CONSTANT && sc.ch == ':') {
-+				sc.SetState(SCE_B_LABEL);
-+			} else if (IsADigit(sc.ch)) {
- 				sc.SetState(SCE_B_NUMBER);
--			} else if (IsAWordStart(sc.ch) || (sc.ch == '[')) {
-+			} else if (IsAWordStart(sc.ch)) {
- 				sc.SetState(SCE_B_IDENTIFIER);
--			} else if (isoperator(static_cast<char>(sc.ch)) || (sc.ch == '\\')) {	// Integer division
-+			} else if (isoperator(static_cast<char>(sc.ch)) && (sc.state != SCE_B_CONSTANT || (sc.ch != ' ' && sc.ch != '\t'))) {
- 				sc.SetState(SCE_B_OPERATOR);
-+				if (sc.ch == '&')
-+				{
-+					sc.ForwardSetState(SCE_B_CONSTANT); // Begin of line
-+					continue;
-+				}
-+			}
-+		} else if (sc.state == SCE_B_COMMENT) {
-+			if (sc.ch == ' ' && sc.chNext == '_') {
-+				sc.SetState(SCE_B_ERROR); // Continue line in the comment
-+				sc.Forward();
-+			} else if (sc.ch == '\'') {
-+				sc.SetState(SCE_B_PREPROCESSOR); // String 1 in the comment
-+			} else if (sc.ch == '\"') {
-+				sc.SetState(SCE_B_DATE); // String 2 in the comment
- 			}
- 		}
--
--		if (sc.atLineEnd) {
--			visibleChars = 0;
-+		if (sc.state != SCE_B_STRING && sc.state != SCE_B_STRINGEOL &&
-+			sc.state != SCE_B_PREPROCESSOR && sc.state != SCE_B_DATE) {
-+			if (sc.ch == '{') {
-+				++lineState;
-+				if (sc.state == SCE_B_COMMENT)
-+					++commentState;
-+				else {
-+					sc.ForwardSetState(SCE_B_CONSTANT); // Begin of line
-+					continue;
-+				}
-+			} else if (sc.ch == '}' && lineState) {
-+				--lineState;
-+				if (commentState) --commentState;
-+			}
- 		}
--		if (!IsASpace(sc.ch)) {
--			visibleChars++;
-+		if (sc.atLineEnd) {
-+			styler.SetLineState(curLine++, ((commentState & 0xFF) << 8) | (lineState & 0xFF));
-+			if (sc.state != SCE_B_STRING && sc.state != SCE_B_STRINGEOL &&
-+				sc.state != SCE_B_PREPROCESSOR && sc.state != SCE_B_DATE &&
-+				sc.state != SCE_B_ASM && sc.state != SCE_B_ERROR &&
-+				!commentState) {
-+				sc.SetState(SCE_B_CONSTANT); // Begin of line
-+			}
- 		}
-+		sc.Forward();
- 	}
--
--	if (sc.state == SCE_B_IDENTIFIER && !IsAWordChar(sc.ch)) {
--		// In Basic (except VBScript), a variable name or a function name
--		// can end with a special character indicating the type of the value
--		// held or returned.
--		bool skipType = false;
--		if (!vbScriptSyntax && IsTypeCharacter(sc.ch)) {
--			sc.Forward();	// Skip it
--			skipType = true;
--		}
--		if (sc.ch == ']') {
--			sc.Forward();
--		}
--		char s[100];
-+	if (sc.state == SCE_B_IDENTIFIER) {
- 		sc.GetCurrentLowered(s, sizeof(s));
--		if (skipType) {
--			s[strlen(s) - 1] = '\0';
--		}
--		if (strcmp(s, "rem") == 0) {
--			sc.ChangeState(SCE_B_COMMENT);
--		} else {
--			if (keywords.InList(s)) {
--				sc.ChangeState(SCE_B_KEYWORD);
--			} else if (keywords2.InList(s)) {
--				sc.ChangeState(SCE_B_KEYWORD2);
--			} else if (keywords3.InList(s)) {
--				sc.ChangeState(SCE_B_KEYWORD3);
--			} else if (keywords4.InList(s)) {
--				sc.ChangeState(SCE_B_KEYWORD4);
--			}	// Else, it is really an identifier...
--			sc.SetState(SCE_B_DEFAULT);
-+		if (keywords.InList(s)) {
-+			sc.ChangeState(SCE_B_KEYWORD);
-+		} else if (keywords2.InList(s)) {
-+			sc.ChangeState(SCE_B_KEYWORD2);
-+		} else if (keywords3.InList(s)) {
-+			sc.ChangeState(SCE_B_KEYWORD3);
-+		} else if (keywords4.InList(s)) {
-+			sc.ChangeState(SCE_B_KEYWORD4);
- 		}
- 	}
--
- 	sc.Complete();
- }
- 
--static void FoldVBDoc(unsigned int startPos, int length, int,
--						   WordList *[], Accessor &styler) {
-+static void FoldVBDoc(unsigned int startPos, int length, int, WordList *[], Accessor &styler) {
-+	if (styler.GetPropertyInt("fold.all", 0))
-+	{
-+		startPos = 0;
-+		length = styler.Length();
-+	}
- 	int endPos = startPos + length;
--
--	// Backtrack to previous line in case need to fix its fold status
-+	int spaceFlags = 0;
-+	int indentCurrent;
- 	int lineCurrent = styler.GetLine(startPos);
- 	if (startPos > 0) {
- 		if (lineCurrent > 0) {
- 			lineCurrent--;
- 			startPos = styler.LineStart(lineCurrent);
- 		}
-+		indentCurrent = styler.LevelAt(lineCurrent);
- 	}
--	int spaceFlags = 0;
--	int indentCurrent = styler.IndentAmount(lineCurrent, &spaceFlags, IsVBComment);
-+	else
-+		indentCurrent = styler.IndentAmount(lineCurrent, &spaceFlags, IsComment);
- 	char chNext = styler[startPos];
--	for (int i = startPos; i < endPos; i++) {
-+	for (int i = startPos; i < endPos; ++i) {
- 		char ch = chNext;
- 		chNext = styler.SafeGetCharAt(i + 1);
- 
--		if ((ch == '\r' && chNext != '\n') || (ch == '\n') || (i == endPos)) {
-+		if ((ch == '\r' && chNext != '\n') || (ch == '\n') || (i == endPos - 1)) {
- 			int lev = indentCurrent;
--			int indentNext = styler.IndentAmount(lineCurrent + 1, &spaceFlags, IsVBComment);
--			if (!(indentCurrent & SC_FOLDLEVELWHITEFLAG)) {
-+			int indentNext = styler.IndentAmount(lineCurrent + 1, &spaceFlags, IsComment);
-+			char lastStyle = styler.StyleAt(i);
-+			if (!(indentCurrent & SC_FOLDLEVELWHITEFLAG) &&
-+				(lastStyle != SCE_B_STRING && lastStyle != SCE_B_STRINGEOL &&
-+				lastStyle != SCE_B_ASM && lastStyle != SCE_B_ERROR)) {
- 				// Only non whitespace lines can be headers
- 				if ((indentCurrent & SC_FOLDLEVELNUMBERMASK) < (indentNext & SC_FOLDLEVELNUMBERMASK)) {
- 					lev |= SC_FOLDLEVELHEADERFLAG;
- 				} else if (indentNext & SC_FOLDLEVELWHITEFLAG) {
- 					// Line after is blank so check the next - maybe should continue further?
- 					int spaceFlags2 = 0;
--					int indentNext2 = styler.IndentAmount(lineCurrent + 2, &spaceFlags2, IsVBComment);
--					if ((indentCurrent & SC_FOLDLEVELNUMBERMASK) < (indentNext2 & SC_FOLDLEVELNUMBERMASK)) {
-+					int indentNext2 = styler.IndentAmount(lineCurrent + 2, &spaceFlags2, IsComment);
-+					if (!(indentNext2 & SC_FOLDLEVELWHITEFLAG) &&
-+						(indentCurrent & SC_FOLDLEVELNUMBERMASK) < (indentNext2 & SC_FOLDLEVELNUMBERMASK)) {
- 						lev |= SC_FOLDLEVELHEADERFLAG;
- 					}
- 				}
- 			}
--			indentCurrent = indentNext;
-+			if (lastStyle != SCE_B_STRING && lastStyle != SCE_B_STRINGEOL &&
-+				lastStyle != SCE_B_ASM && lastStyle != SCE_B_ERROR)
-+				indentCurrent = indentNext;
- 			styler.SetLevel(lineCurrent, lev);
- 			lineCurrent++;
- 		}
- 	}
- }
- 
--static void ColouriseVBNetDoc(unsigned int startPos, int length, int initStyle,
--                           WordList *keywordlists[], Accessor &styler) {
--	ColouriseVBDoc(startPos, length, initStyle, keywordlists, styler, false);
--}
--
--static void ColouriseVBScriptDoc(unsigned int startPos, int length, int initStyle,
--                           WordList *keywordlists[], Accessor &styler) {
--	ColouriseVBDoc(startPos, length, initStyle, keywordlists, styler, true);
-+static void ColouriseVBNetDoc(unsigned int startPos, int length, int initStyle, WordList *keywordlists[], Accessor &styler) {
-+	ColouriseVBDoc(startPos, length, initStyle, keywordlists, styler);
- }
- 
- static const char * const vbWordListDesc[] = {
-@@ -312,5 +276,4 @@
- };
- 
- LexerModule lmVB(SCLEX_VB, ColouriseVBNetDoc, "vb", FoldVBDoc, vbWordListDesc);
--LexerModule lmVBScript(SCLEX_VBSCRIPT, ColouriseVBScriptDoc, "vbscript", FoldVBDoc, vbWordListDesc);
--
-+LexerModule lmVBScript(SCLEX_VBSCRIPT, ColouriseVBNetDoc, "vbscript", FoldVBDoc, vbWordListDesc);
-diff -u -r d:/Programming/wx_svn/src/stc/stc.cpp d:/Programming/wx_qsp/src/stc/stc.cpp
---- d:/Programming/wx_svn/src/stc/stc.cpp	2012-04-21 17:05:20 +0400
-+++ d:/Programming/wx_qsp/src/stc/stc.cpp	2012-04-23 16:36:55 +0400
-@@ -259,7 +259,12 @@
- // Add text to the document at current position.
- void wxStyledTextCtrl::AddText(const wxString& text) {
-                     wxWX2MBbuf buf = (wxWX2MBbuf)wx2stc(text);
-+					// rrock.ru's hack
-+#if wxUSE_UNICODE
-                     SendMsg(2001, buf.length()-1, (sptr_t)(const char*)buf);
-+#else
-+					SendMsg(2001, strlen(buf), (sptr_t)(const char*)buf);
-+#endif
- }
- 
- // Add array of cells to document.
-@@ -1709,7 +1714,12 @@
- 
-      int wxStyledTextCtrl::ReplaceTarget(const wxString& text) {
-          wxWX2MBbuf buf = (wxWX2MBbuf)wx2stc(text);
-+		  // rrock.ru's hack
-+#if wxUSE_UNICODE
-          return SendMsg(2194, buf.length()-1, (sptr_t)(const char*)buf);
-+#else
-+		return SendMsg(2194, strlen(buf), (sptr_t)(const char*)buf);
-+#endif
- }
- 
- // Replace the target text with the argument text after \d processing.
-@@ -1721,7 +1730,12 @@
- 
-      int wxStyledTextCtrl::ReplaceTargetRE(const wxString& text) {
-          wxWX2MBbuf buf = (wxWX2MBbuf)wx2stc(text);
-+		  // rrock.ru's hack
-+#if wxUSE_UNICODE
-          return SendMsg(2195, buf.length()-1, (sptr_t)(const char*)buf);
-+#else
-+		return SendMsg(2195, strlen(buf), (sptr_t)(const char*)buf);
-+#endif
- }
- 
- // Search for a counted string in the target and set the target to the found
-@@ -1730,7 +1743,12 @@
- 
-      int wxStyledTextCtrl::SearchInTarget(const wxString& text) {
-          wxWX2MBbuf buf = (wxWX2MBbuf)wx2stc(text);
-+		  // rrock.ru's hack
-+#if wxUSE_UNICODE
-          return SendMsg(2197, buf.length()-1, (sptr_t)(const char*)buf);
-+#else
-+		return SendMsg(2197, strlen(buf), (sptr_t)(const char*)buf);
-+#endif
- }
- 
- // Set the search flags used by SearchInTarget.
-@@ -2086,7 +2103,12 @@
- // Append a string to the end of the document without changing the selection.
- void wxStyledTextCtrl::AppendText(const wxString& text) {
-                     wxWX2MBbuf buf = (wxWX2MBbuf)wx2stc(text);
--                    SendMsg(2282, buf.length()-1, (sptr_t)(const char*)buf);
-+					// rrock.ru's hack
-+#if wxUSE_UNICODE
-+					SendMsg(2282, buf.length()-1, (sptr_t)(const char*)buf);
-+#else
-+					SendMsg(2282, strlen(buf), (sptr_t)(const char*)buf);
-+#endif
- }
- 
- // Is drawing done in two phases with backgrounds drawn before foregrounds?
-diff -u -r /cygdrive/d/Programming/wx_svn//src/common/wincmn.cpp /cygdrive/d/Programming/wx_qsp//src/common/wincmn.cpp
---- d:/Programming/wx_svn/src/common/wincmn.cpp	2012-04-21 17:05:51.925452800 +0400
-+++ d:/Programming/wx_qsp/src/common/wincmn.cpp	2012-04-24 14:47:07.675077900 +0400
-@@ -1247,6 +1247,9 @@
- 
- bool wxWindowBase::IsDescendant(wxWindowBase* win) const
- {
-+	// rrock.ru's hack
-+	if (win == this)
-+		return true;
-     // Iterate until we find this window in the parent chain or exhaust it.
-     while ( win )
-     {
+         if ( status != wxHTML_REDIRECT )

@@ -20,14 +20,14 @@
 */
 
 #ifndef _DESKTOP_WINDOW_H_
-	#define _DESKTOP_WINDOW_H_
+    #define _DESKTOP_WINDOW_H_
 
-	#include <wx/wx.h>
+    #include <wx/wx.h>
 
-	class DesktopWindow : public wxWindow
-	{
-	public:
+    class DesktopWindow : public wxWindow
+    {
+    public:
 		HWND GetHWND() const { return ::GetDesktopWindow(); }
-	};
+    };
 
 #endif

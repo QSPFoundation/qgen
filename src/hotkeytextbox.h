@@ -20,15 +20,15 @@
 */
 
 #ifndef _QGEN_HOTKEY_TEXT_BOX_H_
-	#define _QGEN_HOTKEY_TEXT_BOX_H_
+    #define _QGEN_HOTKEY_TEXT_BOX_H_
 
-	#include <wx/wx.h>
+    #include <wx/wx.h>
 
-	class HotKeyTextBox : public wxTextCtrl
-	{
+    class HotKeyTextBox : public wxTextCtrl
+    {
 		DECLARE_CLASS(HotKeyTextBox)
 		DECLARE_EVENT_TABLE()
-	private:
+    private:
 		wxString		_hotKey;
 		int				_hotKeyCode;
 		int				_flags;
@@ -36,13 +36,13 @@
 		void OnKeyDown(wxKeyEvent& event);
 		void OnKeyUp(wxKeyEvent& event);
 		void AppendAccel(wxString &data, const wxString &key) const;
-	public:
+    public:
 		HotKeyTextBox(wxWindow *parent, wxWindowID id, const wxString &value = wxEmptyString);
 
 		void SetFlags(int flags) { _flags = flags; }
 		int GetFlags() const { return _flags; }
 		void SetHotKeyCode(int hotKeyCode) { _hotKeyCode = hotKeyCode; }
 		int GetHotKeyCode() const { return _hotKeyCode; }
-	};
+    };
 
 #endif

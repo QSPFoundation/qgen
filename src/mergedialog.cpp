@@ -24,60 +24,60 @@
 IMPLEMENT_CLASS(MergeDialog, wxDialog)
 
 BEGIN_EVENT_TABLE(MergeDialog, wxDialog)
-	EVT_BUTTON(ID_MERGE_REPLACE, MergeDialog::OnButton)
-	EVT_BUTTON(ID_MERGE_SKIP, MergeDialog::OnButton)
-	EVT_BUTTON(ID_MERGE_CANCEL, MergeDialog::OnButton)
+    EVT_BUTTON(ID_MERGE_REPLACE, MergeDialog::OnButton)
+    EVT_BUTTON(ID_MERGE_SKIP, MergeDialog::OnButton)
+    EVT_BUTTON(ID_MERGE_CANCEL, MergeDialog::OnButton)
 END_EVENT_TABLE()
 
 MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString &message, int style) :
-	wxDialog( parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, 
+    wxDialog( parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize,
 		style|wxDEFAULT_DIALOG_STYLE|wxICON_INFORMATION )
 {
-	wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
-	wxSizer *msgSizer = new wxBoxSizer(wxHORIZONTAL);
-	wxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
+    wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
+    wxSizer *msgSizer = new wxBoxSizer(wxHORIZONTAL);
+    wxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
 
-	wxBitmap bitmap = wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER);
-	wxStaticBitmap *info_icon = new wxStaticBitmap(this, wxID_ANY, bitmap);
+    wxBitmap bitmap = wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER);
+    wxStaticBitmap *info_icon = new wxStaticBitmap(this, wxID_ANY, bitmap);
 
-	wxStaticText *msgText = new wxStaticText(this, wxID_ANY, message);
+    wxStaticText *msgText = new wxStaticText(this, wxID_ANY, message);
 
-	_replace = new wxButton(this, ID_MERGE_REPLACE, _("Replace"));
-	_skip = new wxButton(this, ID_MERGE_SKIP, _("Skip"));
-	_cancel = new wxButton(this, ID_MERGE_CANCEL, _("Cancel"));
+    _replace = new wxButton(this, ID_MERGE_REPLACE, _("Replace"));
+    _skip = new wxButton(this, ID_MERGE_SKIP, _("Skip"));
+    _cancel = new wxButton(this, ID_MERGE_CANCEL, _("Cancel"));
 
-	_chkToAll= new wxCheckBox(this, wxID_ANY, _("for all"));
+    _chkToAll= new wxCheckBox(this, wxID_ANY, _("for all"));
 
-	msgSizer->Add(info_icon, 0, wxALIGN_LEFT);
-	msgSizer->AddSpacer(8);
-	msgSizer->Add(msgText, 0, wxGROW);
-	buttonSizer->Add(_replace, 1, wxALL|wxGROW, 5);
-	buttonSizer->Add(_skip, 1, wxALL|wxGROW, 5);
-	buttonSizer->Add(_cancel, 1, wxALL|wxGROW, 5);
-	buttonSizer->Add(_chkToAll, 1, wxALL|wxGROW, 5);
+    msgSizer->Add(info_icon, 0, wxALIGN_LEFT);
+    msgSizer->AddSpacer(8);
+    msgSizer->Add(msgText, 0, wxGROW);
+    buttonSizer->Add(_replace, 1, wxALL|wxGROW, 5);
+    buttonSizer->Add(_skip, 1, wxALL|wxGROW, 5);
+    buttonSizer->Add(_cancel, 1, wxALL|wxGROW, 5);
+    buttonSizer->Add(_chkToAll, 1, wxALL|wxGROW, 5);
 
-	topSizer->Add(msgSizer, 1, wxGROW|wxALL, 26);
-	topSizer->Add(buttonSizer, 0, wxGROW);
+    topSizer->Add(msgSizer, 1, wxGROW|wxALL, 26);
+    topSizer->Add(buttonSizer, 0, wxGROW);
 
-	SetSizerAndFit(topSizer);
-	SetAutoLayout(true);
+    SetSizerAndFit(topSizer);
+    SetAutoLayout(true);
 }
 
 void MergeDialog::OnButton(wxCommandEvent &event)
 {
-	int ret;
-	switch (event.GetId())
-	{
-	case ID_MERGE_REPLACE:
+    int ret;
+    switch (event.GetId())
+    {
+    case ID_MERGE_REPLACE:
 		ret = MERGE_REPLACE;
 		break;
-	case ID_MERGE_SKIP:
+    case ID_MERGE_SKIP:
 		ret = MERGE_SKIP;
 		break;
-	case ID_MERGE_CANCEL:
+    case ID_MERGE_CANCEL:
 		ret = MERGE_CANCEL;
 		break;
-	}
-	if (_chkToAll->IsChecked()) ret |= MERGE_ALL;
-	EndModal(ret);
+    }
+    if (_chkToAll->IsChecked()) ret |= MERGE_ALL;
+    EndModal(ret);
 }

@@ -24,63 +24,63 @@
 IMPLEMENT_CLASS(LocationCode, wxPanel)
 
 LocationCode::LocationCode( wxWindow *owner, ILocationPage *locPage, IControls *controls ) :
-	wxPanel(owner, wxID_ANY)
+    wxPanel(owner, wxID_ANY)
 {
-	_locPage  = locPage;
-	_controls = controls;
+    _locPage  = locPage;
+    _controls = controls;
 
-	_text = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_COLORED);
-	wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-	_stTextExec = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
-	sizer->Add(_stTextExec, 0, wxALL|wxGROW, 1);
-	sizer->Add(_text, 1, wxALL|wxGROW, 1);
-	SetSizerAndFit(sizer);
-	SetAutoLayout(true);
-	Update();
-	_controls->GetSettings()->AddObserver(this);
+    _text = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_COLORED);
+    wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+    _stTextExec = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
+    sizer->Add(_stTextExec, 0, wxALL|wxGROW, 1);
+    sizer->Add(_text, 1, wxALL|wxGROW, 1);
+    SetSizerAndFit(sizer);
+    SetAutoLayout(true);
+    Update();
+    _controls->GetSettings()->AddObserver(this);
 }
 
 LocationCode::~LocationCode()
 {
-	_controls->GetSettings()->RemoveObserver(this);
+    _controls->GetSettings()->RemoveObserver(this);
 }
 
 void LocationCode::SaveCode()
 {
-	if (_text->IsModified())
-	{
+    if (_text->IsModified())
+    {
 		_controls->GetContainer()->SetLocationCode( _locPage->GetLocationIndex(), _text->GetValue() );
 		_text->SetModified(false);
-	}
+    }
 }
 
 void LocationCode::LoadCode()
 {
-	_text->SetValue(_controls->GetContainer()->GetLocationCode(_locPage->GetLocationIndex()));
+    _text->SetValue(_controls->GetContainer()->GetLocationCode(_locPage->GetLocationIndex()));
 }
 
 void LocationCode::Clear()
 {
-	_text->Clear();
+    _text->Clear();
 }
 
 void LocationCode::SelectString( long startPos, long lastPos )
 {
-	_text->SetSelection( startPos, lastPos );
+    _text->SetSelection( startPos, lastPos );
 }
 
 void LocationCode::ReplaceString( long start, long end, const wxString & str )
 {
-	_text->Replace(start, end, str);
+    _text->Replace(start, end, str);
 }
 
 void LocationCode::ExpandCollapseAll( bool isExpanded )
 {
-	_text->ExpandCollapseAll(isExpanded);
+    _text->ExpandCollapseAll(isExpanded);
 }
 
 void LocationCode::Update( bool isFromObservable /*= false*/ )
 {
-	_stTextExec->SetLabel(_("Execute on visit:"));
-	GetSizer()->Layout();
+    _stTextExec->SetLabel(_("Execute on visit:"));
+    GetSizer()->Layout();
 }

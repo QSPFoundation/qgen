@@ -20,46 +20,46 @@
 */
 
 #ifndef _QGEN_DATA_CONTAINER_H_
-	#define _QGEN_DATA_CONTAINER_H_
+    #define _QGEN_DATA_CONTAINER_H_
 
-	#include <wx/wx.h>
-	#include <wx/dynarray.h>
+    #include <wx/wx.h>
+    #include <wx/dynarray.h>
 
-	struct ActionData
-	{
-		wxString pathPicture;			//Изображение для действия - относительный путь к файлу
-		wxString description;			//Описание действия
-		wxString onPress;				//Код события "выбор действия"
-	};
+    struct ActionData
+    {
+		wxString pathPicture;			//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
+		wxString description;			//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		wxString onPress;				//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
+    };
 
-	WX_DECLARE_OBJARRAY(ActionData, ActionDataArray);
+    WX_DECLARE_OBJARRAY(ActionData, ActionDataArray);
 
-	struct LocationData
-	{
-		wxString		name;			//Название локации
-		wxString		description;	//Описание локации
-		wxString		onVisit;		//Код события "посещение локации"
-		ActionDataArray	actionArray;	//Массив действий
-		int				folderIndex;	//Индекс секции
-	};
+    struct LocationData
+    {
+		wxString		name;			//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		wxString		description;    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		wxString		onVisit;		//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
+		ActionDataArray    actionArray;    //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		int				folderIndex;    //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    };
 
-	WX_DECLARE_OBJARRAY(LocationData, LocationDataArray);
+    WX_DECLARE_OBJARRAY(LocationData, LocationDataArray);
 
-	struct FolderData
-	{
-		wxString	name;				//Имя секции
-		int			pos;				//Позиция секции
-	};
+    struct FolderData
+    {
+		wxString    name;				//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+		int			pos;				//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    };
 
-	WX_DECLARE_OBJARRAY(FolderData, FolderDataArray);
+    WX_DECLARE_OBJARRAY(FolderData, FolderDataArray);
 
-	class DataContainer
-	{
-	private:
-		LocationDataArray	locationArray;
+    class DataContainer
+    {
+    private:
+		LocationDataArray    locationArray;
 		FolderDataArray		_folders;
 		bool				_isSaved;
-	public:
+    public:
 		DataContainer();
 
 		void Save() { _isSaved = true; }
@@ -106,6 +106,6 @@
 		void MoveFolder(size_t folderIndex, size_t moveToSecPos);
 		void SetFolderPos(size_t folderIndex, long pos);
 		int FindFolderForPos(size_t pos) const;
-	};
+    };
 
 #endif

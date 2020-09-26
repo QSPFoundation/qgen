@@ -20,23 +20,23 @@
 */
 
 #ifndef QGEN_APPLICATION_H_
-	#define QGEN_APPLICATION_H_
-	
-	#include <wx/filename.h>
-	#include <wx/cmdline.h>
-	#include <wx/fileconf.h>
-	#include <wx/stdpaths.h>
-	#include "controls.h"
-	#include "initevent.h"
-	#include "mainframe.h"
+    #define QGEN_APPLICATION_H_
 
-	class Application : public wxApp
-	{
-	private:
+    #include <wx/filename.h>
+    #include <wx/cmdline.h>
+    #include <wx/fileconf.h>
+    #include <wx/stdpaths.h>
+    #include "controls.h"
+    #include "initevent.h"
+    #include "mainframe.h"
+
+    class Application : public wxApp
+    {
+    private:
 		Controls		*_controls;
-	public:
+    public:
 		virtual bool OnInit();
 		virtual int OnExit();
-	};
+    };
 
 #endif

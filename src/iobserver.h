@@ -20,12 +20,12 @@
 */
 
 #ifndef _QGEN_IOBSERVER_H_
-	#define _QGEN_IOBSERVER_H_
+    #define _QGEN_IOBSERVER_H_
 
-	class IObserver
-	{
-	public:
+    class IObserver
+    {
+    public:
 		virtual void Update(bool isFromObservable) = 0;
-	};
+    };
 
 #endif

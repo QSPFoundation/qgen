@@ -20,33 +20,33 @@
 */
 
 #ifndef  _QGEN_LOCATION_PAGE_H_
-	#define _QGEN_LOCATION_PAGE_H_
+    #define _QGEN_LOCATION_PAGE_H_
 
-	#include <wx/wx.h>
-	#include <wx/aui/aui.h>
-	#include <wx/splitter.h>
-	#include <wx/panel.h>
-	#include "locationactions.h"
-	#include "locationcode.h"
-	#include "locationdesc.h"
-	#include "ilocationpage.h"
+    #include <wx/wx.h>
+    #include <wx/aui/aui.h>
+    #include <wx/splitter.h>
+    #include <wx/panel.h>
+    #include "locationactions.h"
+    #include "locationcode.h"
+    #include "locationdesc.h"
+    #include "ilocationpage.h"
 
-	class LocationPage : public wxPanel, public ILocationPage, public IObserver
-	{
+    class LocationPage : public wxPanel, public ILocationPage, public IObserver
+    {
 		DECLARE_CLASS(LocationPage)
-	private:
+    private:
 		IControls			*_controls;
 		LocationCode		*_locCode;
 		LocationDesc		*_locDesc;
 		LocationActions		*_locActs;
 		size_t				_locIndex;
-		wxSplitterWindow	*_splitterh;
-		wxSplitterWindow	*_splitterv_up;
+		wxSplitterWindow    *_splitterh;
+		wxSplitterWindow    *_splitterv_up;
 		Settings			*_settings;
 		int					_descWidth;
 		int					_actsHeight;
 		bool				_isFixed;
-	public:
+    public:
 		LocationPage( wxAuiNotebook *owner, IControls *controls );
 		~LocationPage();
 
@@ -82,6 +82,6 @@
 		void ReplaceLocCodeString(long start, long end, const wxString & str);
 		void ReplacePicturePathString(long start, long end, const wxString & str);
 		void ReplaceActionCodeString(long start, long end, const wxString & str);
-	};
+    };
 
 #endif

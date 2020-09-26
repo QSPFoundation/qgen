@@ -20,24 +20,24 @@
 */
 
 #ifndef _QGEN_OPTIONS_DIALOG_H_
-	#define _QGEN_OPTIONS_DIALOG_H_
+    #define _QGEN_OPTIONS_DIALOG_H_
 
-	#include <wx/wx.h>
-	#include <wx/notebook.h>
-	#include <wx/spinctrl.h>
-	#include <wx/colordlg.h>
-	#include <wx/fontdlg.h>
-	#include <wx/notebook.h>
-	#include <wx/sizer.h>
-	#include <wx/listctrl.h>
-	#include <wx/dir.h>
-	#include "settings.h"
-	#include "icontrols.h"
-	#include "optionshotkeysdialog.h"
-	#include "chksyshotkey.h"
+    #include <wx/wx.h>
+    #include <wx/notebook.h>
+    #include <wx/spinctrl.h>
+    #include <wx/colordlg.h>
+    #include <wx/fontdlg.h>
+    #include <wx/notebook.h>
+    #include <wx/sizer.h>
+    #include <wx/listctrl.h>
+    #include <wx/dir.h>
+    #include "settings.h"
+    #include "icontrols.h"
+    #include "optionshotkeysdialog.h"
+    #include "chksyshotkey.h"
 
-	enum
-	{
+    enum
+    {
 		ID_COLORS_STATEMENTS = 11200,
 		ID_COLORS_FUNCTIONS,
 		ID_COLORS_SYSVARIABLES,
@@ -71,18 +71,18 @@
 		ID_DELETE_HKEY,
 		ID_LIST_HKEYS,
 		ID_COMB_LANG
-	};
+    };
 
-	WX_DECLARE_STRING_HASH_MAP(int, LangTable);
+    WX_DECLARE_STRING_HASH_MAP(int, LangTable);
 
-	class OptionsDialog : public wxDialog
-	{
+    class OptionsDialog : public wxDialog
+    {
 		DECLARE_CLASS(OptionsDialog)
 		DECLARE_EVENT_TABLE()
-	private:
-		wxNotebook	*_notebook;
-		Settings	*_settings;
-		IControls	*_controls;
+    private:
+		wxNotebook    *_notebook;
+		Settings    *_settings;
+		IControls    *_controls;
 		wxFrame		*_parent;
 
 		wxNotebookPage *_general;
@@ -93,88 +93,88 @@
 		wxNotebookPage *_paths;
 		wxNotebookPage *_hotkeys;
 
-		wxCheckBox	*_chkAutoSave;
-		wxCheckBox	*_chkDescOfLoc;
-		wxCheckBox	*_chkOpeningLoc;
-		wxCheckBox	*_chkOpeningAct;
-		wxCheckBox	*_chkFirstLoc;
-		wxCheckBox	*_chkOnLocActIcons;
-		wxCheckBox	*_chkLocDescVisible;
-		wxCheckBox	*_chkLocActsVisible;
-		wxCheckBox	*_chkWrapLines;
-		wxCheckBox	*_chkOpenLastGame;
-		wxCheckBox	*_chkShowLinesNums;
-		wxCheckBox	*_chkCollapseCode;
+		wxCheckBox    *_chkAutoSave;
+		wxCheckBox    *_chkDescOfLoc;
+		wxCheckBox    *_chkOpeningLoc;
+		wxCheckBox    *_chkOpeningAct;
+		wxCheckBox    *_chkFirstLoc;
+		wxCheckBox    *_chkOnLocActIcons;
+		wxCheckBox    *_chkLocDescVisible;
+		wxCheckBox    *_chkLocActsVisible;
+		wxCheckBox    *_chkWrapLines;
+		wxCheckBox    *_chkOpenLastGame;
+		wxCheckBox    *_chkShowLinesNums;
+		wxCheckBox    *_chkCollapseCode;
 
-		wxSpinCtrl	*_spnAutoSaveMin;
-		wxSpinCtrl	*_spnHeights;
-		wxSpinCtrl	*_spnWidth1;
-		wxSpinCtrl	*_spnWidth2;
-		wxSpinCtrl	*_spnTabSize;
-		wxTextCtrl	*_txtNameFirsLoc;
+		wxSpinCtrl    *_spnAutoSaveMin;
+		wxSpinCtrl    *_spnHeights;
+		wxSpinCtrl    *_spnWidth1;
+		wxSpinCtrl    *_spnWidth2;
+		wxSpinCtrl    *_spnTabSize;
+		wxTextCtrl    *_txtNameFirsLoc;
 
-		wxWindow	*_colorStatements;
-		wxWindow	*_colorFunctions;
-		wxWindow	*_colorSysVariables;
-		wxWindow	*_colorStrings;
-		wxWindow	*_colorNumbers;
-		wxWindow	*_colorOptsBrts;
-		wxWindow	*_colorMarks;
-		wxWindow	*_colorComments;
-		wxWindow	*_colorBaseFont;
-		wxWindow	*_colorTextBack;
-		wxWindow	*_colorBaseBack;
+		wxWindow    *_colorStatements;
+		wxWindow    *_colorFunctions;
+		wxWindow    *_colorSysVariables;
+		wxWindow    *_colorStrings;
+		wxWindow    *_colorNumbers;
+		wxWindow    *_colorOptsBrts;
+		wxWindow    *_colorMarks;
+		wxWindow    *_colorComments;
+		wxWindow    *_colorBaseFont;
+		wxWindow    *_colorTextBack;
+		wxWindow    *_colorBaseBack;
 
-		wxButton	*_btnClrsStatements;
-		wxButton	*_btnClrsFunctions;
-		wxButton	*_btnClrsSysVariables;
-		wxButton	*_btnClrsStrings;
-		wxButton	*_btnClrsNumbers;
-		wxButton	*_btnClrsOptsBrts;
-		wxButton	*_btnClrsMarks;
-		wxButton	*_btnClrsComments;
-		wxButton	*_btnClrsBaseFont;
-		wxButton	*_btnClrsTextBack;
-		wxButton	*_btnClrsBaseBack;
+		wxButton    *_btnClrsStatements;
+		wxButton    *_btnClrsFunctions;
+		wxButton    *_btnClrsSysVariables;
+		wxButton    *_btnClrsStrings;
+		wxButton    *_btnClrsNumbers;
+		wxButton    *_btnClrsOptsBrts;
+		wxButton    *_btnClrsMarks;
+		wxButton    *_btnClrsComments;
+		wxButton    *_btnClrsBaseFont;
+		wxButton    *_btnClrsTextBack;
+		wxButton    *_btnClrsBaseBack;
 
-		wxButton	*_btnFontsStatements;
-		wxButton	*_btnFontsFunctions;
-		wxButton	*_btnFontsSysVariables;
-		wxButton	*_btnFontsStrings;
-		wxButton	*_btnFontsNumbers;
-		wxButton	*_btnFontsOptsBrts;
-		wxButton	*_btnFontsMarks;
-		wxButton	*_btnFontsComments;
-		wxButton	*_btnFontsBase;
+		wxButton    *_btnFontsStatements;
+		wxButton    *_btnFontsFunctions;
+		wxButton    *_btnFontsSysVariables;
+		wxButton    *_btnFontsStrings;
+		wxButton    *_btnFontsNumbers;
+		wxButton    *_btnFontsOptsBrts;
+		wxButton    *_btnFontsMarks;
+		wxButton    *_btnFontsComments;
+		wxButton    *_btnFontsBase;
 
-		wxTextCtrl	*_txtFontStatements;
-		wxTextCtrl	*_txtFontFunctions;
-		wxTextCtrl	*_txtFontSysVariables;
-		wxTextCtrl	*_txtFontStrings;
-		wxTextCtrl	*_txtFontNumbers;
-		wxTextCtrl	*_txtFontOptsBrts;
-		wxTextCtrl	*_txtFontMarks;
-		wxTextCtrl	*_txtFontComments;
-		wxTextCtrl	*_txtFontBase;
+		wxTextCtrl    *_txtFontStatements;
+		wxTextCtrl    *_txtFontFunctions;
+		wxTextCtrl    *_txtFontSysVariables;
+		wxTextCtrl    *_txtFontStrings;
+		wxTextCtrl    *_txtFontNumbers;
+		wxTextCtrl    *_txtFontOptsBrts;
+		wxTextCtrl    *_txtFontMarks;
+		wxTextCtrl    *_txtFontComments;
+		wxTextCtrl    *_txtFontBase;
 
-		wxTextCtrl	*_txtPathPlayer;
-		wxTextCtrl	*_txtPathHelp;
-		wxTextCtrl	*_txtPathTxt2Gam;
+		wxTextCtrl    *_txtPathPlayer;
+		wxTextCtrl    *_txtPathHelp;
+		wxTextCtrl    *_txtPathTxt2Gam;
 
-		wxButton	*_btnPathPlayer;
-		wxButton	*_btnPathHelp;
-		wxButton	*_btnPathTxt2Gam;
+		wxButton    *_btnPathPlayer;
+		wxButton    *_btnPathHelp;
+		wxButton    *_btnPathTxt2Gam;
 
-		wxListCtrl	*_lstHotKeys;
+		wxListCtrl    *_lstHotKeys;
 
-		wxButton	*_btnAddNewHotKey;
-		wxButton	*_btnEditHotKey;
-		wxButton	*_btnDelHotKey;
+		wxButton    *_btnAddNewHotKey;
+		wxButton    *_btnEditHotKey;
+		wxButton    *_btnDelHotKey;
 
-		wxButton	*_btnOK;
-		wxButton	*_btnApply;
-		wxButton	*_btnReset;
-		wxButton	*_btnCancel;
+		wxButton    *_btnOK;
+		wxButton    *_btnApply;
+		wxButton    *_btnReset;
+		wxButton    *_btnCancel;
 
 		wxStaticText *_stTextHeights;
 		wxStaticText *_stTextWidth1;
@@ -213,8 +213,8 @@
 
 		HotkeyDataArray _hotkeysData;
 
-		wxComboBox	*_cmbLang;
-		LangTable	_langTable;
+		wxComboBox    *_cmbLang;
+		LangTable    _langTable;
 
 		void OnColorSelect(wxCommandEvent &event);
 		void OnFontSelect(wxCommandEvent &event);
@@ -239,9 +239,9 @@
 		void DeleteHotKey();
 		void UpdateLanguagesList();
 		void ReCreateGUI();
-	public:
+    public:
 		OptionsDialog(wxFrame *parent, const wxString& title, IControls *controls, int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
 		~OptionsDialog();
-	};
+    };
 
 #endif

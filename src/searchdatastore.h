@@ -20,18 +20,18 @@
 */
 
 #ifndef _QGEN_SEARCH_DATA_STORE_H_
-	#define _QGEN_SEARCH_DATA_STORE_H_
+    #define _QGEN_SEARCH_DATA_STORE_H_
 
-	#include <wx/wx.h>
-	#include <wx/fileconf.h>
+    #include <wx/wx.h>
+    #include <wx/fileconf.h>
 
-	class SearchDataStore
-	{
-	private:
+    class SearchDataStore
+    {
+    private:
 		wxArrayString _searchStrings;
 		wxArrayString _replaceStrings;
 
-	public:
+    public:
 		SearchDataStore();
 
 		const wxArrayString &GetSearchStrings() const { return _searchStrings; }
@@ -41,6 +41,6 @@
 		void ClearStore();
 		void SaveSearchData(wxConfigBase &fileConfig);
 		void LoadSearchData(wxConfigBase &fileConfig);
-	};
+    };
 
 #endif

@@ -19,15 +19,15 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef	_QGEN_SEARCH_REPLACE_DIALOG_H_
-	#define _QGEN_SEARCH_REPLACE_DIALOG_H_
+#ifndef    _QGEN_SEARCH_REPLACE_DIALOG_H_
+    #define _QGEN_SEARCH_REPLACE_DIALOG_H_
 
-	#include <wx/wx.h>
-	#include "icontrols.h"
-	#include "searchdatastore.h"
+    #include <wx/wx.h>
+    #include "icontrols.h"
+    #include "searchdatastore.h"
 
-	enum
-	{
+    enum
+    {
 		ID_FIND_NEXT = 10400,
 		ID_FIND_REPL,
 		ID_FIND_REPLALL,
@@ -35,25 +35,25 @@
 		ID_FIND_SKIPLOC,
 		ID_TEXT_FIND,
 		ID_TEXT_REPL
-	};
+    };
 
-	class SearchDialog : public wxDialog
-	{
+    class SearchDialog : public wxDialog
+    {
 		DECLARE_CLASS(SearchDialog)
 		DECLARE_EVENT_TABLE()
 
-		wxComboBox	*_textFind,
+		wxComboBox    *_textFind,
 					*_textRepl;
 		wxCheckBox  *_chkMatchCase,
 					*_chkWholeWord;
-		wxButton	*_btnClose,
+		wxButton    *_btnClose,
 					*_btnNextSearch,
 					*_btnSearchAgain,
 					*_btnReplace,
 					*_btnReplaceAll,
 					*_btnSkipLoc;
-		wxWindow	*_parent;
-		IControls	*_controls;
+		wxWindow    *_parent;
+		IControls    *_controls;
 		SearchDataStore *_searchDataStore;
 
 		void OnFindNext(wxCommandEvent &event);
@@ -65,10 +65,10 @@
 
 		void AddSearchText(const wxString &text);
 		void AddReplaceText(const wxString &text);
-	public:
+    public:
 		SearchDialog(wxWindow *parent, const wxString& title, IControls *controls, int style = 0);
 
 		bool Show(bool show = true);
-	};
+    };
 
 #endif

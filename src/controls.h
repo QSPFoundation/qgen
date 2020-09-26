@@ -20,25 +20,25 @@
 */
 
 #ifndef _QGEN_CONTROLS_H_
-	#define _QGEN_CONTROLS_H_
+    #define _QGEN_CONTROLS_H_
 
-	#include <wx/wx.h>
-	#include <wx/clipbrd.h>
-	#include <wx/filename.h>
-	#include "mainframe.h"
-	#include "datacontainer.h"
-	#include "locationslistbox.h"
-	#include "locationsnotebook.h"
-	#include "datacontainer.h"
-	#include "icontrols.h"
-	#include "mergedialog.h"
-	#include "game.h"
-	#ifdef __WXMSW__
+    #include <wx/wx.h>
+    #include <wx/clipbrd.h>
+    #include <wx/filename.h>
+    #include "mainframe.h"
+    #include "datacontainer.h"
+    #include "locationslistbox.h"
+    #include "locationsnotebook.h"
+    #include "datacontainer.h"
+    #include "icontrols.h"
+    #include "mergedialog.h"
+    #include "game.h"
+    #ifdef __WXMSW__
 		#include "keysparser.h"
-	#endif
+    #endif
 
-	struct DataSearch
-	{
+    struct DataSearch
+    {
 		int			idxLoc;
 		int			idxAct;
 		long		startPos;
@@ -47,14 +47,14 @@
 		SearchPlace foundAt;
 		SearchPlace findAt;
 		bool		isFoundAny;
-	};
+    };
 
-	class Controls : public IControls
-	{
-	private:
+    class Controls : public IControls
+    {
+    private:
 		MainFrame			*_mainFrame;
-		LocationsListBox	*_locListBox;
-		LocationsNotebook	*_locNotebook;
+		LocationsListBox    *_locListBox;
+		LocationsNotebook    *_locNotebook;
 		DataContainer		*_container;
 		Settings			*_settings;
 
@@ -76,7 +76,7 @@
 		static wxWindow *GetParent();
 
 		void InitData();
-	public:
+    public:
 		Controls(const wxString &path);
 		~Controls();
 
@@ -189,6 +189,6 @@
 
 		bool SearchHelpFile();
 		void UpdateLocale(int lang);
-	};
+    };
 
 #endif

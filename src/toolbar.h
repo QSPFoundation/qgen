@@ -20,25 +20,25 @@
 */
 
 #ifndef _QGEN_TOOLBAR_H_
-	#define _QGEN_TOOLBAR_H_
+    #define _QGEN_TOOLBAR_H_
 
-	#include <wx/wx.h>
-	#include <wx/aui/auibar.h>
-	#include "icontrols.h"
+    #include <wx/wx.h>
+    #include <wx/aui/auibar.h>
+    #include "icontrols.h"
 
-	class ToolBar : public wxAuiToolBar, public IObserver
-	{
+    class ToolBar : public wxAuiToolBar, public IObserver
+    {
 		DECLARE_CLASS(ToolBar)
 		DECLARE_EVENT_TABLE()
-	public:
+    public:
 		ToolBar(wxWindow *parent, wxWindowID id, IControls *controls);
 		~ToolBar();
-	private:
+    private:
 		IControls *_controls;
 
 		void OnMotion(wxMouseEvent &evt);
 		void OnLeaveWindow(wxMouseEvent &evt);
 		void Update(bool isFromObservable = false);
-	};
+    };
 
 #endif

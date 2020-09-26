@@ -30,74 +30,74 @@ HotkeysStore::HotkeysStore()
 
 size_t HotkeysStore::AddHotkeyData( const HotkeyData &hotKeyData )
 {
-	int index = FindHotkeyDataIndex(hotKeyData);
-	if (index < 0)
-	{
+    int index = FindHotkeyDataIndex(hotKeyData);
+    if (index < 0)
+    {
 		_hotkeysData.Add(hotKeyData);
 		return _hotkeysData.GetCount() - 1;
-	}
-	_hotkeysData[index] = hotKeyData;
-	return (size_t)index;
+    }
+    _hotkeysData[index] = hotKeyData;
+    return (size_t)index;
 }
 
 bool HotkeysStore::DeleteHotkeyData( const HotkeyData &hotKey )
 {
-	int index = FindHotkeyDataIndex(hotKey);
-	if ( index < 0) return false;
-	_hotkeysData.RemoveAt(index);
-	return true;
+    int index = FindHotkeyDataIndex(hotKey);
+    if ( index < 0) return false;
+    _hotkeysData.RemoveAt(index);
+    return true;
 }
 
 void HotkeysStore::ClearHotkeysData()
 {
-	_hotkeysData.Clear();
+    _hotkeysData.Clear();
 }
 
 HotkeyData &HotkeysStore::GetHotkeyData( size_t index ) const
 {
-	return _hotkeysData[index];
+    return _hotkeysData[index];
 }
 
 int HotkeysStore::FindHotkeyDataIndex(const HotkeyData &hotKey) const
 {
-	int count = _hotkeysData.GetCount();
-	for (int i = 0; i < count; i++)
-	{
+    int count = _hotkeysData.GetCount();
+    for (int i = 0; i < count; i++)
+    {
 		if (hotKey.HotKeyCode == _hotkeysData[i].HotKeyCode && hotKey.Flags == _hotkeysData[i].Flags)
 			return i;
-	}
-	return wxNOT_FOUND;
+    }
+    return wxNOT_FOUND;
 }
 
 size_t HotkeysStore::GetHotkeysCount() const
 {
-	return _hotkeysData.GetCount();
+    return _hotkeysData.GetCount();
 }
 
 void HotkeysStore::SaveHotkeysData(wxConfigBase &fileConfig)
 {
-	wxString str;
-	size_t count = _hotkeysData.GetCount();
-	fileConfig.DeleteGroup(wxT("HotKeys"));
-	for (size_t i = 0; i < count; i++)
-	{
+    wxString str;
+    size_t count = _hotkeysData.GetCount();
+    fileConfig.DeleteGroup(wxT("HotKeys"));
+    for (size_t i = 0; i < count; i++)
+    {
 		str = wxString::Format(wxT("HotKeys/Hotkey%d_KeyCode"), i);
 		fileConfig.Write(str, _hotkeysData[i].HotKeyCode);
 		str = wxString::Format(wxT("HotKeys/Hotkey%d_Flags"), i);
 		fileConfig.Write(str, _hotkeysData[i].Flags);
 		str = wxString::Format(wxT("HotKeys/Hotkey%d_Exec"), i);
 		fileConfig.Write(str, _hotkeysData[i].CommandText);
-	}
+    }
 }
 
 void HotkeysStore::LoadHotkeysData(wxConfigBase &fileConfig)
 {
-	wxString str, dataVal;
-	int keyCode, flags;
-	size_t i = 0;
-	_hotkeysData.Clear();
-	while (1)
-	{
+    wxString str, dataVal;
+    int keyCode, flags;
+    size_t i = 0;
+    _hotkeysData.Clear();
+    while (1)
+    {
 		str = wxString::Format(wxT("HotKeys/Hotkey%d_KeyCode"), i);
 		if (!fileConfig.Read(str, &keyCode)) break;
 		str = wxString::Format(wxT("HotKeys/Hotkey%d_Flags"), i);
@@ -106,5 +106,5 @@ void HotkeysStore::LoadHotkeysData(wxConfigBase &fileConfig)
 		if (!fileConfig.Read(str, &dataVal)) break;
 		AddHotkeyData(HotkeyData(keyCode, flags, dataVal));
 		++i;
-	}
+    }
 }

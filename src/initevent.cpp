@@ -27,11 +27,11 @@ IMPLEMENT_DYNAMIC_CLASS(InitEvent, wxEvent)
 
 InitEvent::InitEvent()
 {
-	m_eventType = EVT_INIT;
+    m_eventType = EVT_INIT;
 }
 
 InitEvent::InitEvent(const InitEvent& event)
 {
-	m_eventType = event.m_eventType;
-	_initString = event._initString;
+    m_eventType = event.m_eventType;
+    _initString = event._initString;
 }

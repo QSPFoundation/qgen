@@ -25,47 +25,47 @@ IMPLEMENT_APP(Application)
 
 bool Application::OnInit()
 {
-	InitEvent initEvent;
-	wxInitAllImageHandlers();
-	wxFileName appPath(wxStandardPaths::Get().GetExecutablePath());
-	wxRegisterId(20000);
-	_controls = new Controls(appPath.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR));
-	_controls->UpdateLocale(_controls->GetSettings()->GetLangId());
-	_controls->GetSettings()->PostInitLocaleSettings();
-	MainFrame *mainFrame = new MainFrame(_controls);
-	_controls->SetMainFrame(mainFrame);
-	_controls->SetLocListBox(mainFrame->GetLocListBox());
-	_controls->SetNotebook(mainFrame->GetNotebook());
-	_controls->NewGame();
-	mainFrame->UpdateTitle();
-	mainFrame->Show();
-	wxCmdLineParser cmdParser(argc, argv);
-	if (argc > 1)
-	{
+    InitEvent initEvent;
+    wxInitAllImageHandlers();
+    wxFileName appPath(wxStandardPaths::Get().GetExecutablePath());
+    wxRegisterId(20000);
+    _controls = new Controls(appPath.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR));
+    _controls->UpdateLocale(_controls->GetSettings()->GetLangId());
+    _controls->GetSettings()->PostInitLocaleSettings();
+    MainFrame *mainFrame = new MainFrame(_controls);
+    _controls->SetMainFrame(mainFrame);
+    _controls->SetLocListBox(mainFrame->GetLocListBox());
+    _controls->SetNotebook(mainFrame->GetNotebook());
+    _controls->NewGame();
+    mainFrame->UpdateTitle();
+    mainFrame->Show();
+    wxCmdLineParser cmdParser(argc, argv);
+    if (argc > 1)
+    {
 		cmdParser.AddParam();
 		cmdParser.Parse(false);
 		wxFileName path(cmdParser.GetParam());
 		path.MakeAbsolute();
 		initEvent.SetInitString(path.GetFullPath());
 		wxPostEvent(mainFrame, initEvent);
-	}
-	else
-	{
+    }
+    else
+    {
 		Settings *settings = _controls->GetSettings();
 		if (settings->GetOpenLastGame())
 		{
 			initEvent.SetInitString(settings->GetLastGamePath());
 			wxPostEvent(mainFrame, initEvent);
 		}
-	}
-	return true;
+    }
+    return true;
 }
 
 int Application::OnExit()
 {
-	Settings *settings = _controls->GetSettings();
-	settings->SetLastGamePath(_controls->GetGamePath());
-	settings->SaveSettings();
-	delete _controls;
-	return wxApp::OnExit();
+    Settings *settings = _controls->GetSettings();
+    settings->SetLastGamePath(_controls->GetGamePath());
+    settings->SaveSettings();
+    delete _controls;
+    return wxApp::OnExit();
 }

@@ -24,86 +24,86 @@
 IMPLEMENT_CLASS(LocationTip, wxFrame);
 
 LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
-	wxFrame(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, 
+    wxFrame(parent, wxID_ANY, wxEmptyString, wxDefaultPosition,
 		wxSize(TIP_SIZE_X, TIP_SIZE_Y), wxFRAME_TOOL_WINDOW)
 {
-	_mainFrame = parent;
-	_controls = controls;
-	wxColour textColor(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOTEXT));
-	wxColour backColor(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOBK));
+    _mainFrame = parent;
+    _controls = controls;
+    wxColour textColor(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOTEXT));
+    wxColour backColor(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOBK));
 
-	SetBackgroundColour(backColor);
-	wxBoxSizer *_sizer = new wxBoxSizer(wxVERTICAL);
+    SetBackgroundColour(backColor);
+    wxBoxSizer *_sizer = new wxBoxSizer(wxVERTICAL);
 
-	_title = new wxStaticText(this, wxID_ANY, wxEmptyString);
-	_title->SetFont(_title->GetFont().MakeBold().MakeLarger());
-	_title->SetForegroundColour(textColor);
+    _title = new wxStaticText(this, wxID_ANY, wxEmptyString);
+    _title->SetFont(_title->GetFont().MakeBold().MakeLarger());
+    _title->SetForegroundColour(textColor);
 
-	_desc = new wxStaticText(this, wxID_ANY, _("Description:"));
-	_desc->SetFont(_desc->GetFont().MakeBold());
-	_desc->SetForegroundColour(textColor);
-	_locDesc = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_SIMPLE |
+    _desc = new wxStaticText(this, wxID_ANY, _("Description:"));
+    _desc->SetFont(_desc->GetFont().MakeBold());
+    _desc->SetForegroundColour(textColor);
+    _locDesc = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_SIMPLE |
 												  SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU | 
 												  SYNTAX_STYLE_NOHELPTIPS);
 
-	_code = new wxStaticText(this, wxID_ANY, wxEmptyString);
-	_code->SetFont(_code->GetFont().MakeBold());
-	_code->SetForegroundColour(textColor);
-	_locCode = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_COLORED |
+    _code = new wxStaticText(this, wxID_ANY, wxEmptyString);
+    _code->SetFont(_code->GetFont().MakeBold());
+    _code->SetForegroundColour(textColor);
+    _locCode = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_COLORED |
 												  SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU |
 												  SYNTAX_STYLE_NOMARGINS | SYNTAX_STYLE_NOHELPTIPS);
 
-	_emptyLabel = new wxButton(this, wxID_ANY, _("(empty)"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
-	_emptyLabel->SetFont(_emptyLabel->GetFont().MakeLarger().MakeLarger());
-	_emptyLabel->SetBackgroundColour(backColor);
-	_emptyLabel->SetForegroundColour(textColor);
+    _emptyLabel = new wxButton(this, wxID_ANY, _("(empty)"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+    _emptyLabel->SetFont(_emptyLabel->GetFont().MakeLarger().MakeLarger());
+    _emptyLabel->SetBackgroundColour(backColor);
+    _emptyLabel->SetForegroundColour(textColor);
 
-	_sizer->Add(_title, 0, wxALL|wxALIGN_CENTER, 4);
-	_sizer->Add(_desc, 0, wxLEFT|wxRIGHT|wxGROW, 4);
-	_sizer->Add(_locDesc, 1, wxALL|wxGROW, 4);
-	_sizer->Add(_code, 0, wxLEFT|wxRIGHT|wxGROW, 4);
-	_sizer->Add(_locCode, 1, wxALL|wxGROW, 4);
-	_sizer->Add(_emptyLabel, 1, wxGROW);
+    _sizer->Add(_title, 0, wxALL|wxALIGN_CENTER, 4);
+    _sizer->Add(_desc, 0, wxLEFT|wxRIGHT|wxGROW, 4);
+    _sizer->Add(_locDesc, 1, wxALL|wxGROW, 4);
+    _sizer->Add(_code, 0, wxLEFT|wxRIGHT|wxGROW, 4);
+    _sizer->Add(_locCode, 1, wxALL|wxGROW, 4);
+    _sizer->Add(_emptyLabel, 1, wxGROW);
 
-	SetSizer(_sizer);
-	SetAutoLayout( true );
+    SetSizer(_sizer);
+    SetAutoLayout( true );
 }
 
 void LocationTip::MoveTip(const wxPoint &pos)
 {
-	wxPoint position(pos);
-	LoadTip();
-	wxRect displaySize(wxGetClientDisplayRect());
-	int curWidth, curHeight;
-	GetSize(&curWidth, &curHeight);
-	if (displaySize.GetHeight() < (position.y + curHeight + TIP_Y_OFFSET))
+    wxPoint position(pos);
+    LoadTip();
+    wxRect displaySize(wxGetClientDisplayRect());
+    int curWidth, curHeight;
+    GetSize(&curWidth, &curHeight);
+    if (displaySize.GetHeight() < (position.y + curHeight + TIP_Y_OFFSET))
 		position.y -= curHeight;
-	else
+    else
 		position.y += TIP_Y_OFFSET;
-	if (displaySize.GetWidth() < (position.x + curWidth + TIP_X_OFFSET))
+    if (displaySize.GetWidth() < (position.x + curWidth + TIP_X_OFFSET))
 		position.x -= curWidth;
-	else
+    else
 		position.x += TIP_X_OFFSET;
-	Move(position.x, position.y);
-	if (!IsShown()) Show();
+    Move(position.x, position.y);
+    if (!IsShown()) Show();
 }
 
 void LocationTip::HideTip()
 {
-	if (IsShown()) Hide();
-	_locName.Clear();
-	_actName.Clear();
+    if (IsShown()) Hide();
+    _locName.Clear();
+    _actName.Clear();
 }
 
 void LocationTip::LoadTip()
 {
-	bool hasDesc, hasCode, showEmpty = false;
-	wxSizer *_sizer = GetSizer();
-	DataContainer *container = _controls->GetContainer();
-	size_t locIndex = container->FindLocationIndex(_locName);
-	_sizer->Hide(_emptyLabel);
-	if (_actName.IsEmpty())
-	{
+    bool hasDesc, hasCode, showEmpty = false;
+    wxSizer *_sizer = GetSizer();
+    DataContainer *container = _controls->GetContainer();
+    size_t locIndex = container->FindLocationIndex(_locName);
+    _sizer->Hide(_emptyLabel);
+    if (_actName.IsEmpty())
+    {
 		_title->SetLabel(_locName);
 		wxString descText(container->GetLocationDesc(locIndex));
 		hasDesc = !descText.IsEmpty();
@@ -117,9 +117,9 @@ void LocationTip::LoadTip()
 		_sizer->Show(_locCode, hasCode);
 		_locCode->SetValue(codeText);
 		if (!(hasCode || hasDesc)) showEmpty = true;
-	}
-	else
-	{
+    }
+    else
+    {
 		_title->SetLabel(_actName);
 		size_t actIndex = container->FindActionIndex(locIndex, _actName);
 		wxString actCode(container->GetActionCode(locIndex, actIndex));
@@ -131,24 +131,24 @@ void LocationTip::LoadTip()
 		_code->SetLabel(_("Action's code:"));
 		_locCode->SetValue(actCode);
 		if (!hasCode) showEmpty = true;
-	}
-	if (showEmpty)
-	{
+    }
+    if (showEmpty)
+    {
 		_sizer->Show(_emptyLabel);
 		SetSize(TIP_EMPTY_SIZE_X, TIP_EMPTY_SIZE_Y);
-	}
-	else
+    }
+    else
 		SetSize(TIP_SIZE_X, TIP_SIZE_Y);
 
-	Layout();
+    Layout();
 }
 
 void LocationTip::SetLocName( const wxString &name )
 {
-	_locName = name;
+    _locName = name;
 }
 
 void LocationTip::SetActName( const wxString &name )
 {
-	_actName = name;
+    _actName = name;
 }

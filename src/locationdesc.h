@@ -20,24 +20,24 @@
 */
 
 #ifndef _QGEN_LOCATION_DESCRIPTION_H_
-	#define _QGEN_LOCATION_DESCRIPTION_H_
+    #define _QGEN_LOCATION_DESCRIPTION_H_
 
-	#include <wx/wx.h>
-	#include <wx/aui/aui.h>
-	#include "ilocationpage.h"
-	#include "icontrols.h"
-	#include "datacontainer.h"
-	#include "syntaxtextbox.h"
+    #include <wx/wx.h>
+    #include <wx/aui/aui.h>
+    #include "ilocationpage.h"
+    #include "icontrols.h"
+    #include "datacontainer.h"
+    #include "syntaxtextbox.h"
 
-	class LocationDesc : public wxPanel, public IObserver
-	{
+    class LocationDesc : public wxPanel, public IObserver
+    {
 		DECLARE_CLASS(LocationDesc)
-	private:
+    private:
 		ILocationPage		*_locPage;
 		SyntaxTextBox		*_text;
 		IControls			*_controls;
 		wxStaticText		*_stTextDesc;
-	public:
+    public:
 		LocationDesc(wxWindow *owner, ILocationPage *locPage, IControls *controls);
 		~LocationDesc();
 
@@ -47,6 +47,6 @@
 		void Clear();
 		void SelectString(long startPos, long lastPos);
 		void ReplaceString(long start, long end, const wxString &str);
-	};
+    };
 
 #endif
