@@ -586,34 +586,31 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 		bool hideTip = true;
 		_prevMousePos = mousePos;
 		wxTreeItemId id(HitTest(mousePos, flags));
-		if (id.IsOk())
+		if (IsItemOk(id, flags))
 		{
 			if (GetItemType(id) != DRAG_FOLDER)
 			{
-				if (IsItemOk(id, flags))
-				{
-					switch (GetItemType(id))
-					{
-					case DRAG_ACTION:
-						if (GetItemText(id) != _tip->GetActName())
-						{
-							_tip->HideTip();
-							_tip->SetActName(GetItemText(id));
-							_tip->SetLocName(GetItemText(GetItemParent(id)));
-							_showTimer.Start(500, true);
-						}
-						break;
-					case DRAG_LOCATION:
-						if (GetItemText(id) != _tip->GetLocName() || !_tip->GetActName().IsEmpty())
-						{
-							_tip->HideTip();
-							_tip->SetLocName(GetItemText(id));
-							_showTimer.Start(500, true);
-						}
-						break;
-					}
-					hideTip = false;
-				}
+                switch (GetItemType(id))
+                {
+                case DRAG_ACTION:
+                    if (GetItemText(id) != _tip->GetActName())
+                    {
+                        _tip->HideTip();
+                        _tip->SetActName(GetItemText(id));
+                        _tip->SetLocName(GetItemText(GetItemParent(id)));
+                        _showTimer.Start(500, true);
+                    }
+                    break;
+                case DRAG_LOCATION:
+                    if (GetItemText(id) != _tip->GetLocName() || !_tip->GetActName().IsEmpty())
+                    {
+                        _tip->HideTip();
+                        _tip->SetLocName(GetItemText(id));
+                        _showTimer.Start(500, true);
+                    }
+                    break;
+                }
+                hideTip = false;
 			}
 		}
 		if (hideTip)
