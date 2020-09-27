@@ -27,7 +27,7 @@
     #include <wx/hashmap.h>
 
     #ifdef __WXMSW__
-		#include <Windows.h>
+        #include <Windows.h>
     #endif
 
     #include "hotkeysstore.h"
@@ -38,19 +38,19 @@
     class KeysParser
     {
     private:
-		KeyTable				_keysTable;
-		HotkeysStore			*_hotKeysStore;
+        KeyTable                _keysTable;
+        HotkeysStore            *_hotKeysStore;
 
-		void OnKeyPress(int keyCode);
-		void OnKeysPress(const wxString &text);
+        void OnKeyPress(int keyCode);
+        void OnKeysPress(const wxString &text);
 
-		void ReleaseAlt();
-		void InitKeysTable();
+        void ReleaseAlt();
+        void InitKeysTable();
     public:
-		KeysParser(HotkeysStore *hotKeysStore);
-		~KeysParser();
-		bool ExecuteHotkeyAction(int keyCode, int modifiers);
-		void ParseText(const wxString &text);
+        KeysParser(HotkeysStore *hotKeysStore);
+        ~KeysParser();
+        bool ExecuteHotkeyAction(int keyCode, int modifiers);
+        void ParseText(const wxString &text);
     };
 
 #endif

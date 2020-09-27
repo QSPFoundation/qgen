@@ -37,7 +37,7 @@ LocationActions::LocationActions(wxWindow *owner, ILocationPage *locPage, IContr
     _splitterv_down->SplitVertically( _actPanel, _actCode );
 
     _stTextBaseActions = new wxStaticText( this, wxID_ANY, wxEmptyString,
-		wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
+        wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
     sizerDown->Add( _stTextBaseActions, 0, wxALL|wxGROW );
     sizerDown->Add( _splitterv_down, 1, wxALL|wxGROW );
 

@@ -31,7 +31,7 @@ END_EVENT_TABLE()
 
 MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString &message, int style) :
     wxDialog( parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize,
-		style|wxDEFAULT_DIALOG_STYLE|wxICON_INFORMATION )
+        style|wxDEFAULT_DIALOG_STYLE|wxICON_INFORMATION )
 {
     wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
     wxSizer *msgSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -69,14 +69,14 @@ void MergeDialog::OnButton(wxCommandEvent &event)
     switch (event.GetId())
     {
     case ID_MERGE_REPLACE:
-		ret = MERGE_REPLACE;
-		break;
+        ret = MERGE_REPLACE;
+        break;
     case ID_MERGE_SKIP:
-		ret = MERGE_SKIP;
-		break;
+        ret = MERGE_SKIP;
+        break;
     case ID_MERGE_CANCEL:
-		ret = MERGE_CANCEL;
-		break;
+        ret = MERGE_CANCEL;
+        break;
     }
     if (_chkToAll->IsChecked()) ret |= MERGE_ALL;
     EndModal(ret);

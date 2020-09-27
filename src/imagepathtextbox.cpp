@@ -50,14 +50,14 @@ void ImagePathTextBox::Update(bool isFromObservable)
     SetForegroundColour(settings->GetColour(SYNTAX_BASE));
     SetBackgroundColour(settings->GetTextBackColour());
     #ifdef __WXMSW__
-		ToggleWindowStyle(wxTE_MULTILINE);
-		SetInitialSize(wxSize(1, GetBestSize().GetHeight()));
-		ToggleWindowStyle(wxTE_MULTILINE);
+        ToggleWindowStyle(wxTE_MULTILINE);
+        SetInitialSize(wxSize(1, GetBestSize().GetHeight()));
+        ToggleWindowStyle(wxTE_MULTILINE);
     #else
-		wxTextCtrl *temp = new wxTextCtrl(GetParent(), wxID_ANY);
-		int size = temp->GetSize().GetHeight() - temp->GetCharHeight();
-		SetInitialSize(wxSize(1, GetCharHeight() + size));
-		delete temp;
+        wxTextCtrl *temp = new wxTextCtrl(GetParent(), wxID_ANY);
+        int size = temp->GetSize().GetHeight() - temp->GetCharHeight();
+        SetInitialSize(wxSize(1, GetCharHeight() + size));
+        delete temp;
     #endif
     Refresh();
 }
@@ -71,6 +71,6 @@ void ImagePathTextBox::OnLostFocus( wxFocusEvent &event )
 void ImagePathTextBox::OnKeyDown( wxKeyEvent& event )
 {
     if (!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
-		event.Skip();
+        event.Skip();
     if (event.GetKeyCode() == WXK_RETURN) event.Skip(false);
 }

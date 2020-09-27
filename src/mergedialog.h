@@ -27,33 +27,33 @@
 
     enum
     {
-		ID_MERGE_REPLACE = 10600,
-		ID_MERGE_SKIP,
-		ID_MERGE_CANCEL
+        ID_MERGE_REPLACE = 10600,
+        ID_MERGE_SKIP,
+        ID_MERGE_CANCEL
     };
 
     enum
     {
-		MERGE_ALL = 1 << 0,
-		MERGE_REPLACE = 1 << 1,
-		MERGE_SKIP = 1 << 2,
-		MERGE_CANCEL = 1 << 30
+        MERGE_ALL = 1 << 0,
+        MERGE_REPLACE = 1 << 1,
+        MERGE_SKIP = 1 << 2,
+        MERGE_CANCEL = 1 << 30
     };
 
     class MergeDialog : public wxDialog
     {
-		DECLARE_CLASS(MergeDialog)
-		DECLARE_EVENT_TABLE()
+        DECLARE_CLASS(MergeDialog)
+        DECLARE_EVENT_TABLE()
 
-		wxButton    *_replace;
-		wxButton    *_skip;
-		wxButton    *_cancel;
-		wxCheckBox    *_chkToAll;
+        wxButton    *_replace;
+        wxButton    *_skip;
+        wxButton    *_cancel;
+        wxCheckBox    *_chkToAll;
 
-		void OnButton(wxCommandEvent &event);
+        void OnButton(wxCommandEvent &event);
 
     public:
-		MergeDialog(wxWindow *parent, const wxString& title, const wxString &message, int style = 0);
+        MergeDialog(wxWindow *parent, const wxString& title, const wxString &message, int style = 0);
     };
 
 #endif

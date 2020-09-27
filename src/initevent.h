@@ -27,24 +27,24 @@
     class InitEvent : public wxEvent
     {
     public:
-		// C-tors / D-tor
-		InitEvent();
-		InitEvent(const InitEvent& event);
+        // C-tors / D-tor
+        InitEvent();
+        InitEvent(const InitEvent& event);
 
-		// Accessors
-		wxString GetInitString() const { return _initString; }
-		void SetInitString(const wxString& str) { _initString = str; }
+        // Accessors
+        wxString GetInitString() const { return _initString; }
+        void SetInitString(const wxString& str) { _initString = str; }
 
-		// Overloaded methods
-		virtual wxEvent *Clone() const
-		{
-			return new InitEvent(*this);
-		}
+        // Overloaded methods
+        virtual wxEvent *Clone() const
+        {
+            return new InitEvent(*this);
+        }
     protected:
-		// Fields
-		wxString _initString;
+        // Fields
+        wxString _initString;
     private:
-		DECLARE_DYNAMIC_CLASS(InitEvent)
+        DECLARE_DYNAMIC_CLASS(InitEvent)
     };
 
     DECLARE_EVENT_TYPE(EVT_INIT, 0)
@@ -52,9 +52,9 @@
     typedef void (wxEvtHandler::*InitEventFunction)(InitEvent&);
 
     #define InitEventHandler(func) \
-		(wxObjectEventFunction)(wxEventFunction)wxStaticCastEvent(InitEventFunction, &func)
+        (wxObjectEventFunction)(wxEventFunction)wxStaticCastEvent(InitEventFunction, &func)
 
     #define EVT_INIT(func) \
-		wx__DECLARE_EVT0(EVT_INIT, InitEventHandler(func))
+        wx__DECLARE_EVT0(EVT_INIT, InitEventHandler(func))
 
 #endif

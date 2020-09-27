@@ -27,36 +27,36 @@
 
     enum
     {
-		ID_PICT_OPEN = 11000
+        ID_PICT_OPEN = 11000
     };
 
     class ActionCode : public wxPanel, public IObserver
     {
-		DECLARE_CLASS(ActionCode)
-		DECLARE_EVENT_TABLE()
+        DECLARE_CLASS(ActionCode)
+        DECLARE_EVENT_TABLE()
     private:
-		ImagePathTextBox    *_pathPicTxtCtrl;
-		SyntaxTextBox		*_actCodeTxt;
-		wxButton			*_button;
-		IControls			*_controls;
-		ILocationPage		*_locPage;
+        ImagePathTextBox    *_pathPicTxtCtrl;
+        SyntaxTextBox        *_actCodeTxt;
+        wxButton            *_button;
+        IControls            *_controls;
+        ILocationPage        *_locPage;
 
-		void OnOpenPicture(wxCommandEvent &event);
-		bool Enable(bool status = true);
+        void OnOpenPicture(wxCommandEvent &event);
+        bool Enable(bool status = true);
     public:
-		ActionCode(wxWindow *owner, ILocationPage *locPage, IControls *controls);
-		~ActionCode();
+        ActionCode(wxWindow *owner, ILocationPage *locPage, IControls *controls);
+        ~ActionCode();
 
-		void Update(bool isFromObservable = false);
-		void LoadAction(size_t actIndex);
-		void SaveAction(size_t actIndex);
-		void ClearAction();
-		void SelectPicturePathString(long startPos, long lastPos);
-		void SelectCodeString(long startPos, long lastPos );
-		void ReplacePicturePathString(long start, long end, const wxString & str);
-		void ReplaceCodeString(long start, long end, const wxString & str);
-		void SetFocusOnActionCode();
-		void ExpandCollapseAll(bool isExpanded);
+        void Update(bool isFromObservable = false);
+        void LoadAction(size_t actIndex);
+        void SaveAction(size_t actIndex);
+        void ClearAction();
+        void SelectPicturePathString(long startPos, long lastPos);
+        void SelectCodeString(long startPos, long lastPos );
+        void ReplacePicturePathString(long start, long end, const wxString & str);
+        void ReplaceCodeString(long start, long end, const wxString & str);
+        void SetFocusOnActionCode();
+        void ExpandCollapseAll(bool isExpanded);
     };
 
 #endif

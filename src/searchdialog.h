@@ -28,47 +28,47 @@
 
     enum
     {
-		ID_FIND_NEXT = 10400,
-		ID_FIND_REPL,
-		ID_FIND_REPLALL,
-		ID_FIND_ANEW,
-		ID_FIND_SKIPLOC,
-		ID_TEXT_FIND,
-		ID_TEXT_REPL
+        ID_FIND_NEXT = 10400,
+        ID_FIND_REPL,
+        ID_FIND_REPLALL,
+        ID_FIND_ANEW,
+        ID_FIND_SKIPLOC,
+        ID_TEXT_FIND,
+        ID_TEXT_REPL
     };
 
     class SearchDialog : public wxDialog
     {
-		DECLARE_CLASS(SearchDialog)
-		DECLARE_EVENT_TABLE()
+        DECLARE_CLASS(SearchDialog)
+        DECLARE_EVENT_TABLE()
 
-		wxComboBox    *_textFind,
-					*_textRepl;
-		wxCheckBox  *_chkMatchCase,
-					*_chkWholeWord;
-		wxButton    *_btnClose,
-					*_btnNextSearch,
-					*_btnSearchAgain,
-					*_btnReplace,
-					*_btnReplaceAll,
-					*_btnSkipLoc;
-		wxWindow    *_parent;
-		IControls    *_controls;
-		SearchDataStore *_searchDataStore;
+        wxComboBox    *_textFind,
+                    *_textRepl;
+        wxCheckBox  *_chkMatchCase,
+                    *_chkWholeWord;
+        wxButton    *_btnClose,
+                    *_btnNextSearch,
+                    *_btnSearchAgain,
+                    *_btnReplace,
+                    *_btnReplaceAll,
+                    *_btnSkipLoc;
+        wxWindow    *_parent;
+        IControls    *_controls;
+        SearchDataStore *_searchDataStore;
 
-		void OnFindNext(wxCommandEvent &event);
-		void OnFindAgain(wxCommandEvent &event);
-		void OnFindRepl(wxCommandEvent &event);
-		void OnFindReplAll(wxCommandEvent &event);
-		void OnSkipLoc(wxCommandEvent &event);
-		void OnUpdFindText(wxCommandEvent& event);
+        void OnFindNext(wxCommandEvent &event);
+        void OnFindAgain(wxCommandEvent &event);
+        void OnFindRepl(wxCommandEvent &event);
+        void OnFindReplAll(wxCommandEvent &event);
+        void OnSkipLoc(wxCommandEvent &event);
+        void OnUpdFindText(wxCommandEvent& event);
 
-		void AddSearchText(const wxString &text);
-		void AddReplaceText(const wxString &text);
+        void AddSearchText(const wxString &text);
+        void AddReplaceText(const wxString &text);
     public:
-		SearchDialog(wxWindow *parent, const wxString& title, IControls *controls, int style = 0);
+        SearchDialog(wxWindow *parent, const wxString& title, IControls *controls, int style = 0);
 
-		bool Show(bool show = true);
+        bool Show(bool show = true);
     };
 
 #endif

@@ -78,13 +78,13 @@ void ActionCode::SaveAction( size_t actIndex )
     size_t locIndex = _locPage->GetLocationIndex();
     if (_pathPicTxtCtrl->IsModified())
     {
-		container->SetActionPicturePath(locIndex, actIndex, _pathPicTxtCtrl->GetValue());
-		_pathPicTxtCtrl->SetModified(false);
+        container->SetActionPicturePath(locIndex, actIndex, _pathPicTxtCtrl->GetValue());
+        _pathPicTxtCtrl->SetModified(false);
     }
     if (_actCodeTxt->IsModified())
     {
-		container->SetActionCode(locIndex, actIndex, _actCodeTxt->GetValue());
-		_actCodeTxt->SetModified(false);
+        container->SetActionCode(locIndex, actIndex, _actCodeTxt->GetValue());
+        _actCodeTxt->SetModified(false);
     }
 }
 
@@ -100,9 +100,9 @@ void ActionCode::OnOpenPicture( wxCommandEvent &event )
     wxString str = _controls->SelectPicturePath();
     if ( !str.IsEmpty() )
     {
-		_pathPicTxtCtrl->SetValue(str);
-		_pathPicTxtCtrl->SetModified(true);
-		_locPage->RefreshActions();
+        _pathPicTxtCtrl->SetValue(str);
+        _pathPicTxtCtrl->SetModified(true);
+        _locPage->RefreshActions();
     }
 }
 

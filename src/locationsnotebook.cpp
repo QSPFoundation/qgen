@@ -73,15 +73,15 @@ bool LocationsNotebook::DeleteAllPages( CloseTypePage closeType, int selIndex )
     int i, count = GetPageCount();
     for (i = count - 1; i >= 0; --i)
     {
-		if (selIndex < 0)
-			DeletePage(i);
-		else
-		{
-			page = (LocationPage *)GetPage(i);
-			if ((closeType == CLOSE_ALL && !page->IsFixed()) ||
-				(closeType == CLOSE_ALLEXCEPTSELECTED && i != selIndex && !page->IsFixed()) ||
-				(closeType == CLOSE_SELECTED && i == selIndex)) DeletePage(i);
-		}
+        if (selIndex < 0)
+            DeletePage(i);
+        else
+        {
+            page = (LocationPage *)GetPage(i);
+            if ((closeType == CLOSE_ALL && !page->IsFixed()) ||
+                (closeType == CLOSE_ALLEXCEPTSELECTED && i != selIndex && !page->IsFixed()) ||
+                (closeType == CLOSE_SELECTED && i == selIndex)) DeletePage(i);
+        }
     }
     return true;
 }
@@ -90,7 +90,7 @@ int LocationsNotebook::FindPageIndex(const wxString& namePage)
 {
     size_t i, count = GetPageCount();
     for (i = 0; i < count; ++i)
-		if (namePage == GetPageText(i)) return (int)i;
+        if (namePage == GetPageText(i)) return (int)i;
     return wxNOT_FOUND;
 }
 
@@ -121,22 +121,22 @@ void LocationsNotebook::LoadOpenedPages()
 {
     size_t i, count = GetPageCount();
     for (i = 0; i < count; ++i)
-		((LocationPage *)GetPage(i))->LoadPage();
+        ((LocationPage *)GetPage(i))->LoadPage();
 }
 
 void LocationsNotebook::SaveOpenedPages()
 {
     size_t i, count = GetPageCount();
     for (i = 0; i < count; ++i)
-		((LocationPage *)GetPage(i))->SavePage();
+        ((LocationPage *)GetPage(i))->SavePage();
 }
 
 void LocationsNotebook::OnRightUpClick( wxAuiNotebookEvent &event )
 {
     if (event.GetEventObject() != this)
     {
-		event.Skip();
-		return;
+        event.Skip();
+        return;
     }
     selectedPage = event.GetSelection();
     if (selectedPage < 0) return;
@@ -146,18 +146,18 @@ void LocationsNotebook::OnRightUpClick( wxAuiNotebookEvent &event )
     menu.Append(ID_TAB_CLOSEALL, _("Close all"));
     menu.AppendSeparator();
     if (((LocationPage *)GetPage(selectedPage))->IsFixed())
-		menu.Append(ID_TAB_FIX, _("Unpin"));
+        menu.Append(ID_TAB_FIX, _("Unpin"));
     else
-		menu.Append(ID_TAB_FIX, _("Pin tab"));
+        menu.Append(ID_TAB_FIX, _("Pin tab"));
     PopupMenu(&menu);
 }
 
 void LocationsNotebook::OnNavigationKeyNotebook( wxNavigationKeyEvent &event )
 {
     if (event.IsWindowChange())
-		AdvanceSelection(event.GetDirection());
+        AdvanceSelection(event.GetDirection());
     else
-		wxAuiNotebook::OnNavigationKeyNotebook(event);
+        wxAuiNotebook::OnNavigationKeyNotebook(event);
 }
 
 void LocationsNotebook::SwitchPageFixed( size_t selPage )
@@ -179,21 +179,21 @@ void LocationsNotebook::AdvanceSelection( bool forward )
 {
     int lastIndex = GetPageCount() - 1;
     if (lastIndex <= 0)
-		return;
+        return;
     int currentSelection = GetSelection();
     if (forward)
     {
-		if (currentSelection >= 0 && currentSelection < lastIndex)
-			++currentSelection;
-		else
-			currentSelection = 0;
+        if (currentSelection >= 0 && currentSelection < lastIndex)
+            ++currentSelection;
+        else
+            currentSelection = 0;
     }
     else
     {
-		if (currentSelection > 0)
-			--currentSelection;
-		else
-			currentSelection = lastIndex;
+        if (currentSelection > 0)
+            --currentSelection;
+        else
+            currentSelection = lastIndex;
     }
     SetSelection(currentSelection);
 }

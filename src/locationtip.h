@@ -35,29 +35,29 @@
 
     class LocationTip :    public wxFrame
     {
-		DECLARE_CLASS(LocationTip)
+        DECLARE_CLASS(LocationTip)
     private:
-		wxWindow		*_mainFrame;
-		IControls		*_controls;
-		wxString		_locName;
-		wxString		_actName;
-		wxStaticText    *_title;
-		wxStaticText    *_desc;
-		wxStaticText    *_code;
-		SyntaxTextBox    *_locDesc;
-		SyntaxTextBox    *_locCode;
-		wxButton		*_emptyLabel;
+        wxWindow        *_mainFrame;
+        IControls        *_controls;
+        wxString        _locName;
+        wxString        _actName;
+        wxStaticText    *_title;
+        wxStaticText    *_desc;
+        wxStaticText    *_code;
+        SyntaxTextBox    *_locDesc;
+        SyntaxTextBox    *_locCode;
+        wxButton        *_emptyLabel;
 
-		void LoadTip();
+        void LoadTip();
     public:
-		LocationTip(wxWindow *parent, IControls *controls);
+        LocationTip(wxWindow *parent, IControls *controls);
 
-		void MoveTip(const wxPoint &pos);
-		void HideTip();
-		void SetLocName(const wxString &name);
-		wxString GetLocName() const { return _locName; }
-		void SetActName(const wxString &name);
-		wxString GetActName() const { return _actName; }
+        void MoveTip(const wxPoint &pos);
+        void HideTip();
+        void SetLocName(const wxString &name);
+        wxString GetLocName() const { return _locName; }
+        void SetActName(const wxString &name);
+        wxString GetActName() const { return _actName; }
     };
 
 #endif

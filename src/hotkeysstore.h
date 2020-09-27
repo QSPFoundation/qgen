@@ -28,43 +28,43 @@
 
     struct HotkeyData
     {
-		wxString    CommandText;
-		int			HotKeyCode;
-		int			Flags;
+        wxString    CommandText;
+        int            HotKeyCode;
+        int            Flags;
 
-		HotkeyData()
-		{
-			HotKeyCode = 0;
-			Flags = 0;
-		}
+        HotkeyData()
+        {
+            HotKeyCode = 0;
+            Flags = 0;
+        }
 
-		HotkeyData(int hotKeyCode, int flags, const wxString &data)
-		{
-			HotKeyCode = hotKeyCode;
-			Flags = flags;
-			CommandText = data;
-		}
+        HotkeyData(int hotKeyCode, int flags, const wxString &data)
+        {
+            HotKeyCode = hotKeyCode;
+            Flags = flags;
+            CommandText = data;
+        }
 
-		wxString GetKeysAsString() const
-		{
-			wxString tmp;
-			if (Flags & wxACCEL_ALT)
-				AppendAccel(tmp, wxT("Alt"));
-			if (Flags & wxACCEL_CTRL)
-				AppendAccel(tmp, wxT("Ctrl"));
-			if (Flags & wxACCEL_SHIFT)
-				AppendAccel(tmp, wxT("Shift"));
-			return wxString::Format(wxT("%s+%c"), tmp.wx_str(), HotKeyCode);
-		}
+        wxString GetKeysAsString() const
+        {
+            wxString tmp;
+            if (Flags & wxACCEL_ALT)
+                AppendAccel(tmp, wxT("Alt"));
+            if (Flags & wxACCEL_CTRL)
+                AppendAccel(tmp, wxT("Ctrl"));
+            if (Flags & wxACCEL_SHIFT)
+                AppendAccel(tmp, wxT("Shift"));
+            return wxString::Format(wxT("%s+%c"), tmp.wx_str(), HotKeyCode);
+        }
 
     private:
-		void AppendAccel(wxString &data, const wxString &key) const
-		{
-			if (data.IsEmpty())
-				data.Append(key);
-			else
-				data.Append(wxString::Format(wxT("+%s"), key.wx_str()));
-		}
+        void AppendAccel(wxString &data, const wxString &key) const
+        {
+            if (data.IsEmpty())
+                data.Append(key);
+            else
+                data.Append(wxString::Format(wxT("+%s"), key.wx_str()));
+        }
     };
 
     WX_DECLARE_OBJARRAY(HotkeyData, HotkeyDataArray);
@@ -72,17 +72,17 @@
     class HotkeysStore
     {
     private:
-		HotkeyDataArray _hotkeysData;
+        HotkeyDataArray _hotkeysData;
     public:
-		HotkeysStore();
-		size_t AddHotkeyData(const HotkeyData &hotkeyData);
-		bool DeleteHotkeyData(const HotkeyData &hotkey);
-		void ClearHotkeysData();
-		size_t GetHotkeysCount() const;
-		HotkeyData &GetHotkeyData(size_t index) const;
-		int FindHotkeyDataIndex(const HotkeyData &hotkey) const;
-		void SaveHotkeysData(wxConfigBase &fileConfig);
-		void LoadHotkeysData(wxConfigBase &fileConfig);
+        HotkeysStore();
+        size_t AddHotkeyData(const HotkeyData &hotkeyData);
+        bool DeleteHotkeyData(const HotkeyData &hotkey);
+        void ClearHotkeysData();
+        size_t GetHotkeysCount() const;
+        HotkeyData &GetHotkeyData(size_t index) const;
+        int FindHotkeyDataIndex(const HotkeyData &hotkey) const;
+        void SaveHotkeysData(wxConfigBase &fileConfig);
+        void LoadHotkeysData(wxConfigBase &fileConfig);
     };
 
 #endif

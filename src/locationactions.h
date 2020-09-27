@@ -31,37 +31,37 @@
 
     class LocationActions : public wxPanel, public IObserver
     {
-		DECLARE_CLASS(LocationActions)
+        DECLARE_CLASS(LocationActions)
     private:
-		ILocationPage		*_locPage;
-		IControls			*_controls;
-		ActionsPanel		*_actPanel;
-		ActionCode			*_actCode;
-		wxSplitterWindow    *_splitterv_down;
-		wxStaticText		*_stTextBaseActions;
+        ILocationPage        *_locPage;
+        IControls            *_controls;
+        ActionsPanel        *_actPanel;
+        ActionCode            *_actCode;
+        wxSplitterWindow    *_splitterv_down;
+        wxStaticText        *_stTextBaseActions;
 
-		void ShowActions();
+        void ShowActions();
     public:
-		LocationActions(wxWindow *owner, ILocationPage *locPage, IControls *controls);
-		~LocationActions();
+        LocationActions(wxWindow *owner, ILocationPage *locPage, IControls *controls);
+        ~LocationActions();
 
-		void Update(bool isFromObservable = false);
-		void SaveAction();
-		void LoadAllActions();
-		long GetSelectedAction();
-		void RefreshActions();
-		size_t AddActionToList(const wxString& name);
-		void DeleteActionFromList(size_t actIndex);
-		void RenameActionInList(size_t index, const wxString& name);
-		void MoveActionTo(size_t actIndex, size_t moveTo);
-		void Clear();
-		bool IsActionsListEmpty();
-		void SelectActionInList(size_t actIndex);
-		void SelectPicturePathString(long startPos, long lastPos);
-		void SelectActionCodeString(long startPos, long lastPos);
-		void ReplacePicturePathString(long start, long end, const wxString & str);
-		void ReplaceActionCodeString(long start, long end, const wxString & str);
-		void SetFocusOnActionCode();
+        void Update(bool isFromObservable = false);
+        void SaveAction();
+        void LoadAllActions();
+        long GetSelectedAction();
+        void RefreshActions();
+        size_t AddActionToList(const wxString& name);
+        void DeleteActionFromList(size_t actIndex);
+        void RenameActionInList(size_t index, const wxString& name);
+        void MoveActionTo(size_t actIndex, size_t moveTo);
+        void Clear();
+        bool IsActionsListEmpty();
+        void SelectActionInList(size_t actIndex);
+        void SelectPicturePathString(long startPos, long lastPos);
+        void SelectActionCodeString(long startPos, long lastPos);
+        void ReplacePicturePathString(long start, long end, const wxString & str);
+        void ReplaceActionCodeString(long start, long end, const wxString & str);
+        void SetFocusOnActionCode();
     };
 
 #endif

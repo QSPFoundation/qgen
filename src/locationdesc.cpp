@@ -48,8 +48,8 @@ void LocationDesc::SaveDesc()
 {
     if (_text->IsModified())
     {
-		_controls->GetContainer()->SetLocationDesc( _locPage->GetLocationIndex(), _text->GetValue() );
-		_text->SetModified(false);
+        _controls->GetContainer()->SetLocationDesc( _locPage->GetLocationIndex(), _text->GetValue() );
+        _text->SetModified(false);
     }
 }
 

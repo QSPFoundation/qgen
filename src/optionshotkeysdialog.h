@@ -30,36 +30,36 @@
     #include "syntaxtextbox.h"
     #include "icontrols.h"
     #ifdef __WXMSW__
-		#include "DesktopWindow.h"
+        #include "DesktopWindow.h"
     #endif
 
     enum
     {
-		ID_HOTKEY_TEXT = 10800,
-		ID_HOTKEY_HELP
+        ID_HOTKEY_TEXT = 10800,
+        ID_HOTKEY_HELP
     };
 
     class OptionsHotkeysDialog : public wxDialog
     {
-		DECLARE_CLASS(OptionsHotkeysDialog)
-		DECLARE_EVENT_TABLE()
+        DECLARE_CLASS(OptionsHotkeysDialog)
+        DECLARE_EVENT_TABLE()
     private:
-		HotKeyTextBox    *_txtInputHotkey;
-		SyntaxTextBox    *_txtInputText;
-		wxButton		*_btnOK;
-		wxButton		*_btnCancel;
-		wxButton		*_btnHelp;
-		HotkeyData		_hotkeyData;
-		IControls		*_controls;
+        HotKeyTextBox    *_txtInputHotkey;
+        SyntaxTextBox    *_txtInputText;
+        wxButton        *_btnOK;
+        wxButton        *_btnCancel;
+        wxButton        *_btnHelp;
+        HotkeyData        _hotkeyData;
+        IControls        *_controls;
 
-		void OnOkSettings(wxCommandEvent &event);
-		void OnHelpHotKeys(wxCommandEvent &event);
+        void OnOkSettings(wxCommandEvent &event);
+        void OnHelpHotKeys(wxCommandEvent &event);
     public:
-		OptionsHotkeysDialog(wxWindow *parent, const wxString& title, IControls *controls,
-							 int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
+        OptionsHotkeysDialog(wxWindow *parent, const wxString& title, IControls *controls,
+                             int style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER);
 
-		void SetHotkeyData(const HotkeyData &hotkeyData);
-		HotkeyData GetHotkeyData() const { return _hotkeyData; }
+        void SetHotkeyData(const HotkeyData &hotkeyData);
+        HotkeyData GetHotkeyData() const { return _hotkeyData; }
     };
 
 #endif

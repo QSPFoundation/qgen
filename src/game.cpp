@@ -57,7 +57,7 @@ char qspReverseConvertUC(wchar_t ch, wchar_t *table)
     long i;
     if (ch < 0x80) return (char)ch;
     for (i = 127; i >= 0; --i)
-		if (table[i] == ch) return (char)(i + 0x80);
+        if (table[i] == ch) return (char)(i + 0x80);
     return 0x20;
 }
 
@@ -65,21 +65,21 @@ void qspFreeStrs(char **strs, long count, bool isVerify)
 {
     if (strs)
     {
-		if (isVerify)
-		{
-			while (--count >= 0)
-				if (strs[count]) free(strs[count]);
-		}
-		else
-			while (--count >= 0) free(strs[count]);
-		free(strs);
+        if (isVerify)
+        {
+            while (--count >= 0)
+                if (strs[count]) free(strs[count]);
+        }
+        else
+            while (--count >= 0) free(strs[count]);
+        free(strs);
     }
 }
 
 bool qspIsInList(QGEN_CHAR *list, QGEN_CHAR ch)
 {
     while (*list)
-		if (*list++ == ch) return true;
+        if (*list++ == ch) return true;
     return false;
 }
 
@@ -96,8 +96,8 @@ long qspStrToNum(QGEN_CHAR *s, QGEN_CHAR **endChar)
     num = QGEN_STRTOL(s, endChar, 10);
     if (endChar)
     {
-		*endChar = qspSkipSpaces(*endChar);
-		if (**endChar) return 0;
+        *endChar = qspSkipSpaces(*endChar);
+        if (**endChar) return 0;
     }
     return num;
 }
@@ -114,12 +114,12 @@ char *qspUCS2StrStr(char *str, char *subStr)
     unsigned short *s1, *s2, *cp = (unsigned short *)str;
     while (*cp)
     {
-		s1 = cp;
-		s2 = (unsigned short *)subStr;
-		while (*s1 && *s2 && !(*s1 - *s2))
-			++s1, ++s2;
-		if (!(*s2)) return (char *)cp;
-		++cp;
+        s1 = cp;
+        s2 = (unsigned short *)subStr;
+        while (*s1 && *s2 && !(*s1 - *s2))
+            ++s1, ++s2;
+        if (!(*s2)) return (char *)cp;
+        ++cp;
     }
     return 0;
 }
@@ -139,46 +139,46 @@ char *qspQSPToGameString(const QGEN_CHAR *s, bool isUCS2, bool isCode)
     char ch, *ret = (char *)malloc((len + 1) * (isUCS2 ? 2 : 1));
     if (isUCS2)
     {
-		ptr = (unsigned short *)ret;
-		ptr[len] = 0;
-		if (isCode)
-		{
-			while (--len >= 0)
-			{
-				uCh = QGEN_BTOWC(s[len]);
-				if (uCh == QGEN_CODREMOV)
-					uCh = (unsigned short)-QGEN_CODREMOV;
-				else
-					uCh -= QGEN_CODREMOV;
-				ptr[len] = uCh;
-			}
-		}
-		else
-		{
-			while (--len >= 0)
-				ptr[len] = QGEN_BTOWC(s[len]);
-		}
+        ptr = (unsigned short *)ret;
+        ptr[len] = 0;
+        if (isCode)
+        {
+            while (--len >= 0)
+            {
+                uCh = QGEN_BTOWC(s[len]);
+                if (uCh == QGEN_CODREMOV)
+                    uCh = (unsigned short)-QGEN_CODREMOV;
+                else
+                    uCh -= QGEN_CODREMOV;
+                ptr[len] = uCh;
+            }
+        }
+        else
+        {
+            while (--len >= 0)
+                ptr[len] = QGEN_BTOWC(s[len]);
+        }
     }
     else
     {
-		ret[len] = 0;
-		if (isCode)
-		{
-			while (--len >= 0)
-			{
-				ch = QGEN_FROM_OS_CHAR(s[len]);
-				if (ch == QGEN_CODREMOV)
-					ch = -QGEN_CODREMOV;
-				else
-					ch -= QGEN_CODREMOV;
-				ret[len] = ch;
-			}
-		}
-		else
-		{
-			while (--len >= 0)
-				ret[len] = QGEN_FROM_OS_CHAR(s[len]);
-		}
+        ret[len] = 0;
+        if (isCode)
+        {
+            while (--len >= 0)
+            {
+                ch = QGEN_FROM_OS_CHAR(s[len]);
+                if (ch == QGEN_CODREMOV)
+                    ch = -QGEN_CODREMOV;
+                else
+                    ch -= QGEN_CODREMOV;
+                ret[len] = ch;
+            }
+        }
+        else
+        {
+            while (--len >= 0)
+                ret[len] = QGEN_FROM_OS_CHAR(s[len]);
+        }
     }
     return ret;
 }
@@ -192,44 +192,44 @@ QGEN_CHAR *qspGameToQSPString(char *s, bool isUCS2, bool isCoded)
     ret[len] = 0;
     if (isUCS2)
     {
-		ptr = (unsigned short *)s;
-		if (isCoded)
-		{
-			while (--len >= 0)
-			{
-				uCh = ptr[len];
-				if (uCh == (unsigned short)-QGEN_CODREMOV)
-					uCh = QGEN_CODREMOV;
-				else
-					uCh += QGEN_CODREMOV;
-				ret[len] = QGEN_WCTOB(uCh);
-			}
-		}
-		else
-		{
-			while (--len >= 0)
-				ret[len] = QGEN_WCTOB(ptr[len]);
-		}
+        ptr = (unsigned short *)s;
+        if (isCoded)
+        {
+            while (--len >= 0)
+            {
+                uCh = ptr[len];
+                if (uCh == (unsigned short)-QGEN_CODREMOV)
+                    uCh = QGEN_CODREMOV;
+                else
+                    uCh += QGEN_CODREMOV;
+                ret[len] = QGEN_WCTOB(uCh);
+            }
+        }
+        else
+        {
+            while (--len >= 0)
+                ret[len] = QGEN_WCTOB(ptr[len]);
+        }
     }
     else
     {
-		if (isCoded)
-		{
-			while (--len >= 0)
-			{
-				ch = s[len];
-				if (ch == -QGEN_CODREMOV)
-					ch = QGEN_CODREMOV;
-				else
-					ch += QGEN_CODREMOV;
-				ret[len] = QGEN_TO_OS_CHAR(ch);
-			}
-		}
-		else
-		{
-			while (--len >= 0)
-				ret[len] = QGEN_TO_OS_CHAR(s[len]);
-		}
+        if (isCoded)
+        {
+            while (--len >= 0)
+            {
+                ch = s[len];
+                if (ch == -QGEN_CODREMOV)
+                    ch = QGEN_CODREMOV;
+                else
+                    ch += QGEN_CODREMOV;
+                ret[len] = QGEN_TO_OS_CHAR(ch);
+            }
+        }
+        else
+        {
+            while (--len >= 0)
+                ret[len] = QGEN_TO_OS_CHAR(s[len]);
+        }
     }
     return ret;
 }
@@ -245,28 +245,28 @@ long qspSplitGameStr(char *str, bool isUCS2, QGEN_CHAR *delim, char ***res)
     ret = (char **)malloc(bufSize * sizeof(char *));
     while (found)
     {
-		allocChars = (long)(found - curPos);
-		newStr = (char *)malloc(allocChars + charSize);
-		memcpy(newStr, curPos, allocChars);
-		if (isUCS2)
-			*((unsigned short *)(newStr + allocChars)) = 0;
-		else
-			newStr[allocChars] = 0;
-		if (++count > bufSize)
-		{
-			bufSize <<= 1;
-			ret = (char **)realloc(ret, bufSize * sizeof(char *));
-		}
-		ret[count - 1] = newStr;
-		curPos = found + delimSize;
-		found = (isUCS2 ? qspUCS2StrStr(curPos, delimStr) : strstr(curPos, delimStr));
+        allocChars = (long)(found - curPos);
+        newStr = (char *)malloc(allocChars + charSize);
+        memcpy(newStr, curPos, allocChars);
+        if (isUCS2)
+            *((unsigned short *)(newStr + allocChars)) = 0;
+        else
+            newStr[allocChars] = 0;
+        if (++count > bufSize)
+        {
+            bufSize <<= 1;
+            ret = (char **)realloc(ret, bufSize * sizeof(char *));
+        }
+        ret[count - 1] = newStr;
+        curPos = found + delimSize;
+        found = (isUCS2 ? qspUCS2StrStr(curPos, delimStr) : strstr(curPos, delimStr));
     }
     free(delimStr);
     allocChars = (isUCS2 ? (qspUCS2StrLen(curPos) + 1) * charSize : (long)strlen(curPos) + 1);
     newStr = (char *)malloc(allocChars);
     memcpy(newStr, curPos, allocChars);
     if (++count > bufSize)
-		ret = (char **)realloc(ret, count * sizeof(char *));
+        ret = (char **)realloc(ret, count * sizeof(char *));
     ret[count - 1] = newStr;
     *res = ret;
     return count;
@@ -282,24 +282,24 @@ bool qspCheckQuest(char **strs, long count, bool isUCS2)
     ind = (isOldFormat ? 30 : 4);
     if (ind > count) return false;
     data = (isOldFormat ?
-		qspGameToQSPString(strs[0], isUCS2, false) : qspGameToQSPString(strs[3], isUCS2, true));
+        qspGameToQSPString(strs[0], isUCS2, false) : qspGameToQSPString(strs[3], isUCS2, true));
     locsCount = qspStrToNum(data, 0);
     free(data);
     if (locsCount <= 0) return false;
     for (i = 0; i < locsCount; ++i)
     {
-		if ((ind += 3) > count) return false;
-		if (isOldFormat)
-			actsCount = 20;
-		else
-		{
-			if (ind + 1 > count) return false;
-			data = qspGameToQSPString(strs[ind++], isUCS2, true);
-			actsCount = qspStrToNum(data, 0);
-			free(data);
-			if (actsCount < 0 || actsCount > QGEN_MAXACTIONS) return false;
-		}
-		if ((ind += (actsCount * (isOldFormat ? 2 : 3))) > count) return false;
+        if ((ind += 3) > count) return false;
+        if (isOldFormat)
+            actsCount = 20;
+        else
+        {
+            if (ind + 1 > count) return false;
+            data = qspGameToQSPString(strs[ind++], isUCS2, true);
+            actsCount = qspStrToNum(data, 0);
+            free(data);
+            if (actsCount < 0 || actsCount > QGEN_MAXACTIONS) return false;
+        }
+        if ((ind += (actsCount * (isOldFormat ? 2 : 3))) > count) return false;
     }
     return true;
 }
@@ -314,15 +314,15 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
     char **strs, *buf, *file = qspFromQSPString(fileName);
     if (!(f = fopen(file, "rb")))
     {
-		free(file);
-		return false;
+        free(file);
+        return false;
     }
     free(file);
     fseek(f, 0, SEEK_END);
     if (!(fileSize = ftell(f)))
     {
-		fclose(f);
-		return false;
+        fclose(f);
+        return false;
     }
     dataSize = fileSize + 1;
     buf = (char *)malloc(dataSize);
@@ -334,8 +334,8 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
     free(buf);
     if (!qspCheckQuest(strs, count, isUCS2))
     {
-		qspFreeStrs(strs, count, false);
-		return false;
+        qspFreeStrs(strs, count, false);
+        return false;
     }
     data = qspGameToQSPString(strs[0], isUCS2, false);
     isOldFormat = QGEN_STRCMP(data, QGEN_GAMEID) != 0;
@@ -344,31 +344,31 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
     data = qspGameToQSPString(isOldFormat ? strs[1] : strs[2], isUCS2, true);
     if (QGEN_STRCMP(data, QGEN_PASSWD))
     {
-		wxPasswordEntryDialog dlgEntry(parent, 
-			_("Input password:"),
-			_("Game password"), wxEmptyString);
-		if (dlgEntry.ShowModal() == wxID_OK)
-		{
-			if (dlgEntry.GetValue() != data)
-			{
-				free(data);
-				qspFreeStrs(strs, count, false);
-				controls->ShowMessage(QGEN_MSG_WRONGPASSWORD);
-				return false;
-			}
-		}
-		else
-		{
-			free(data);
-			qspFreeStrs(strs, count, false);
-			return false;
-		}
+        wxPasswordEntryDialog dlgEntry(parent,
+            _("Input password:"),
+            _("Game password"), wxEmptyString);
+        if (dlgEntry.ShowModal() == wxID_OK)
+        {
+            if (dlgEntry.GetValue() != data)
+            {
+                free(data);
+                qspFreeStrs(strs, count, false);
+                controls->ShowMessage(QGEN_MSG_WRONGPASSWORD);
+                return false;
+            }
+        }
+        else
+        {
+            free(data);
+            qspFreeStrs(strs, count, false);
+            return false;
+        }
     }
     DataContainer *container = controls->GetContainer();
     if (!merge)
     {
-		container->Clear();
-		password = data;
+        container->Clear();
+        password = data;
     }
     free(data);
     data = (isOldFormat ? qspGameToQSPString(strs[0], isUCS2, false) : qspGameToQSPString(strs[3], isUCS2, true));
@@ -381,89 +381,89 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
     bool canAddLoc = true;
     for (i = 0; i < locsCount; ++i)
     {
-		indexLoc = wxNOT_FOUND;
-		data = qspGameToQSPString(strs[ind++], isUCS2, true);
-		if (merge)
-		{
-			indexLoc = container->FindLocationIndex(data);
-			if (indexLoc >= 0)
-			{
-				if (!(mergeType & MERGE_ALL))
-				{
-					MergeDialog dialog(parent, _("Replace location"), 
-						wxString::Format(_("Location with the same name already exists!\nLocation: \"%s\"\nReplace existing location?"), data));
-					mergeType = dialog.ShowModal();
-					if (mergeType & MERGE_CANCEL)
-					{
-						free(data);
-						qspFreeStrs(strs, count, false);
-						return true;
-					}
-				}
-				if (mergeType & MERGE_REPLACE) container->ClearLocation(indexLoc);
-				canAddLoc = !(mergeType & MERGE_SKIP);
-			}
-		}
-		if (indexLoc < 0)
-		{
-			indexLoc = container->AddLocation(data);
-			canAddLoc = true;
-		}
-		free(data);
-		if (indexLoc < 0)
-		{
-			container->Clear();
-			qspFreeStrs(strs, count, false);
-			controls->ShowMessage( QGEN_MSG_CANTLOADGAME );
-			return true;
-		}
-		data = qspGameToQSPString(strs[ind++], isUCS2, true);
-		(temp = data).Replace(QGEN_STRSDELIM, wxT("\n"));
-		free(data);
+        indexLoc = wxNOT_FOUND;
+        data = qspGameToQSPString(strs[ind++], isUCS2, true);
+        if (merge)
+        {
+            indexLoc = container->FindLocationIndex(data);
+            if (indexLoc >= 0)
+            {
+                if (!(mergeType & MERGE_ALL))
+                {
+                    MergeDialog dialog(parent, _("Replace location"),
+                        wxString::Format(_("Location with the same name already exists!\nLocation: \"%s\"\nReplace existing location?"), data));
+                    mergeType = dialog.ShowModal();
+                    if (mergeType & MERGE_CANCEL)
+                    {
+                        free(data);
+                        qspFreeStrs(strs, count, false);
+                        return true;
+                    }
+                }
+                if (mergeType & MERGE_REPLACE) container->ClearLocation(indexLoc);
+                canAddLoc = !(mergeType & MERGE_SKIP);
+            }
+        }
+        if (indexLoc < 0)
+        {
+            indexLoc = container->AddLocation(data);
+            canAddLoc = true;
+        }
+        free(data);
+        if (indexLoc < 0)
+        {
+            container->Clear();
+            qspFreeStrs(strs, count, false);
+            controls->ShowMessage( QGEN_MSG_CANTLOADGAME );
+            return true;
+        }
+        data = qspGameToQSPString(strs[ind++], isUCS2, true);
+        (temp = data).Replace(QGEN_STRSDELIM, wxT("\n"));
+        free(data);
 
-		if (canAddLoc) container->SetLocationDesc(indexLoc, temp);
+        if (canAddLoc) container->SetLocationDesc(indexLoc, temp);
 
-		data = qspGameToQSPString(strs[ind++], isUCS2, true);
-		(temp = data).Replace(QGEN_STRSDELIM, wxT("\n"));
-		free(data);
+        data = qspGameToQSPString(strs[ind++], isUCS2, true);
+        (temp = data).Replace(QGEN_STRSDELIM, wxT("\n"));
+        free(data);
 
-		if (canAddLoc) container->SetLocationCode(indexLoc, temp);
+        if (canAddLoc) container->SetLocationCode(indexLoc, temp);
 
-		if (isOldFormat)
-			actsCount = 20;
-		else
-		{
-			data = qspGameToQSPString(strs[ind++], isUCS2, true);
-			actsCount = qspStrToNum(data, 0);
-			free(data);
-		}
+        if (isOldFormat)
+            actsCount = 20;
+        else
+        {
+            data = qspGameToQSPString(strs[ind++], isUCS2, true);
+            actsCount = qspStrToNum(data, 0);
+            free(data);
+        }
 
-		wxString nameAct, actImage;
-		for (j = 0; j < actsCount; ++j)
-		{
-			data = (isOldFormat ? 0 : qspGameToQSPString(strs[ind++], isUCS2, true));
-			(actImage = data).Replace(QGEN_STRSDELIM, wxT("\n"));
-			free(data);
-			data = qspGameToQSPString(strs[ind++], isUCS2, true);
-			(nameAct = data).Replace(QGEN_STRSDELIM, wxT("\n"));
-			free(data);
-			if (!nameAct.empty() && canAddLoc)
-			{
-				indexAct = container->AddAction(indexLoc, nameAct);
-				if (indexAct < 0)
-				{
-					container->Clear();
-					qspFreeStrs(strs, count, false);
-					return true;
-				}
-				container->SetActionPicturePath(indexLoc, indexAct, actImage);
-				data = qspGameToQSPString(strs[ind], isUCS2, true);
-				(temp = data).Replace(QGEN_STRSDELIM, wxT("\n"));
-				free(data);
-				container->SetActionCode(indexLoc, indexAct, temp);
-			}
-			++ind;
-		}
+        wxString nameAct, actImage;
+        for (j = 0; j < actsCount; ++j)
+        {
+            data = (isOldFormat ? 0 : qspGameToQSPString(strs[ind++], isUCS2, true));
+            (actImage = data).Replace(QGEN_STRSDELIM, wxT("\n"));
+            free(data);
+            data = qspGameToQSPString(strs[ind++], isUCS2, true);
+            (nameAct = data).Replace(QGEN_STRSDELIM, wxT("\n"));
+            free(data);
+            if (!nameAct.empty() && canAddLoc)
+            {
+                indexAct = container->AddAction(indexLoc, nameAct);
+                if (indexAct < 0)
+                {
+                    container->Clear();
+                    qspFreeStrs(strs, count, false);
+                    return true;
+                }
+                container->SetActionPicturePath(indexLoc, indexAct, actImage);
+                data = qspGameToQSPString(strs[ind], isUCS2, true);
+                (temp = data).Replace(QGEN_STRSDELIM, wxT("\n"));
+                free(data);
+                container->SetActionCode(indexLoc, indexAct, temp);
+            }
+            ++ind;
+        }
     }
     qspFreeStrs(strs, count, false);
     return true;
@@ -477,29 +477,29 @@ long qspAddGameText(char **dest, char *val, bool isUCS2, long destLen, long valL
     if (valLen < 0) valLen = (isUCS2 ? qspUCS2StrLen(val) : (long)strlen(val));
     if (!isCreate && *dest)
     {
-		if (destLen < 0) destLen = (isUCS2 ? qspUCS2StrLen(*dest) : (long)strlen(*dest));
-		ret = destLen + valLen;
-		destPtr = (char *)realloc(*dest, (ret + 1) * charSize);
-		*dest = destPtr;
-		destPtr += destLen * charSize;
+        if (destLen < 0) destLen = (isUCS2 ? qspUCS2StrLen(*dest) : (long)strlen(*dest));
+        ret = destLen + valLen;
+        destPtr = (char *)realloc(*dest, (ret + 1) * charSize);
+        *dest = destPtr;
+        destPtr += destLen * charSize;
     }
     else
     {
-		ret = valLen;
-		destPtr = (char *)malloc((ret + 1) * charSize);
-		*dest = destPtr;
+        ret = valLen;
+        destPtr = (char *)malloc((ret + 1) * charSize);
+        *dest = destPtr;
     }
     if (isUCS2)
     {
-		valUCS2 = (unsigned short *)val;
-		destUCS2 = (unsigned short *)destPtr;
-		while (valLen && (*destUCS2++ = *valUCS2++)) --valLen;
-		*destUCS2 = 0;
+        valUCS2 = (unsigned short *)val;
+        destUCS2 = (unsigned short *)destPtr;
+        while (valLen && (*destUCS2++ = *valUCS2++)) --valLen;
+        *destUCS2 = 0;
     }
     else
     {
-		strncpy(destPtr, val, valLen);
-		destPtr[valLen] = 0;
+        strncpy(destPtr, val, valLen);
+        destPtr[valLen] = 0;
     }
     return ret;
 }
@@ -509,23 +509,23 @@ QGEN_CHAR *qspNumToStr(QGEN_CHAR *buf, long val)
     QGEN_CHAR temp, *str = buf, *first = str;
     if (val < 0)
     {
-		*str++ = QGEN_FMT('-');
-		val = -val;
-		++first;
+        *str++ = QGEN_FMT('-');
+        val = -val;
+        ++first;
     }
     do
     {
-		*str++ = (QGEN_CHAR)(val % 10 + QGEN_FMT('0'));
-		val /= 10;
+        *str++ = (QGEN_CHAR)(val % 10 + QGEN_FMT('0'));
+        val /= 10;
     } while (val > 0);
     *str-- = 0;
     while (first < str)
     {
-		temp = *str;
-		*str = *first;
-		*first = temp;
-		--str;
-		++first;
+        temp = *str;
+        *str = *first;
+        *first = temp;
+        --str;
+        ++first;
     }
     return buf;
 }
@@ -549,10 +549,10 @@ long qspGameCodeWriteVal(char **s, long len, wxString &val, bool isUCS2, bool is
     char *temp;
     if (!val.IsEmpty())
     {
-		val.Replace(wxT("\n"), QGEN_STRSDELIM);
-		temp = qspQSPToGameString(val.wx_str(), isUCS2, isCode);
-		len = qspAddGameText(s, temp, isUCS2, len, -1, false);
-		free(temp);
+        val.Replace(wxT("\n"), QGEN_STRSDELIM);
+        temp = qspQSPToGameString(val.wx_str(), isUCS2, isCode);
+        len = qspAddGameText(s, temp, isUCS2, len, -1, false);
+        free(temp);
     }
     temp = qspQSPToGameString(QGEN_STRSDELIM, isUCS2, false);
     len = qspAddGameText(s, temp, isUCS2, len, QGEN_LEN(QGEN_STRSDELIM), false);
@@ -569,8 +569,8 @@ bool qspSaveQuest(const QGEN_CHAR *fileName, const wxString &passwd, Controls *c
 
     if (!(f = fopen(file, "wb")))
     {
-		free(file);
-		return false;
+        free(file);
+        return false;
     }
     free(file);
     DataContainer *container = controls->GetContainer();
@@ -585,23 +585,23 @@ bool qspSaveQuest(const QGEN_CHAR *fileName, const wxString &passwd, Controls *c
     len = qspGameCodeWriteIntVal(&buf, len, locsCount, true, true);
     for (i = 0; i < locsCount; ++i)
     {
-		str = container->GetLocationName(i);
-		len = qspGameCodeWriteVal(&buf, len, str, true, true);
-		str = container->GetLocationDesc(i);
-		len = qspGameCodeWriteVal(&buf, len, str, true, true);
-		str = container->GetLocationCode(i);
-		len = qspGameCodeWriteVal(&buf, len, str, true, true);
-		actsCount = container->GetActionsCount(i);
-		len = qspGameCodeWriteIntVal(&buf, len, actsCount, true, true);
-		for (j = 0; j < actsCount; ++j)
-		{
-			str = container->GetActionPicturePath(i, j);
-			len = qspGameCodeWriteVal(&buf, len, str, true, true);
-			str = container->GetActionName(i, j);
-			len = qspGameCodeWriteVal(&buf, len, str, true, true);
-			str = container->GetActionCode(i, j);
-			len = qspGameCodeWriteVal(&buf, len, str, true, true);
-		}
+        str = container->GetLocationName(i);
+        len = qspGameCodeWriteVal(&buf, len, str, true, true);
+        str = container->GetLocationDesc(i);
+        len = qspGameCodeWriteVal(&buf, len, str, true, true);
+        str = container->GetLocationCode(i);
+        len = qspGameCodeWriteVal(&buf, len, str, true, true);
+        actsCount = container->GetActionsCount(i);
+        len = qspGameCodeWriteIntVal(&buf, len, actsCount, true, true);
+        for (j = 0; j < actsCount; ++j)
+        {
+            str = container->GetActionPicturePath(i, j);
+            len = qspGameCodeWriteVal(&buf, len, str, true, true);
+            str = container->GetActionName(i, j);
+            len = qspGameCodeWriteVal(&buf, len, str, true, true);
+            str = container->GetActionCode(i, j);
+            len = qspGameCodeWriteVal(&buf, len, str, true, true);
+        }
     }
     fwrite(buf, 2, len, f);
     free(buf);
@@ -619,71 +619,71 @@ bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
     wxArrayString masStrings;
     if (!(f = fopen(file, "wb")))
     {
-		free(file);
-		return false;
+        free(file);
+        return false;
     }
 
     for (size_t idxLoc = 0; idxLoc < container->GetLocationsCount(); ++idxLoc)
     {
-		str = wxString::Format(_("Location: \"%s\""), container->GetLocationName(idxLoc).wx_str());
-		len = qspGameCodeWriteVal(&buf, len, str, true, false);
-		str = wxString(wxT("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
-		len = qspGameCodeWriteVal(&buf, len, str, true, false);
-		str = container->GetLocationDesc(idxLoc);
-		if (str.Length())
-		{
-			masStrings = wxSplit(str, '\n');
-			str = wxString(_("Location's description:\n"));
-			len = qspGameCodeWriteVal(&buf, len, str, true, false);
-			for (size_t i = 0; i < masStrings.GetCount(); ++i)
-			{
-				str = wxString::Format(wxT("\t%s"), masStrings[i].wx_str());
-				len = qspGameCodeWriteVal(&buf, len, str, true, false);
-			}
-			str = wxEmptyString;
-			len = qspGameCodeWriteVal(&buf, len, str, true, false);
-		}
-		if (container->GetActionsCount(idxLoc))
-		{
-			str = wxString(_("Location's actions:\n"));
-			len = qspGameCodeWriteVal(&buf, len, str, true, false);
-			for (size_t idxAct = 0; idxAct < container->GetActionsCount(idxLoc); ++idxAct)
-			{
-				str = wxString::Format(wxT("\t%s:"), container->GetActionName(idxLoc, idxAct).wx_str());
-				len = qspGameCodeWriteVal(&buf, len, str, true, false);
-				actPictPath = container->GetActionPicturePath(idxLoc, idxAct);
-				if (actPictPath.Length())
-				{
-					str = wxString::Format(_("\tAction's image: %s"), actPictPath);
-					len = qspGameCodeWriteVal(&buf, len, str, true, false);
-				}
-				masStrings = wxSplit(container->GetActionCode(idxLoc, idxAct), '\n');
-				for (size_t i = 0; i < masStrings.GetCount(); ++i)
-				{
-					str = wxString::Format(wxT("\t\t%s"), masStrings[i].wx_str());
-					len = qspGameCodeWriteVal(&buf, len, str, true, false);
-				}
-			}
-			str = wxEmptyString;
-			len = qspGameCodeWriteVal(&buf, len, str, true, false);
-		}
-		str = container->GetLocationCode(idxLoc);
-		if (str.Length())
-		{
-			masStrings = wxSplit(str, '\n');
-			str = wxString(_("Location's description:\n"));
-			len = qspGameCodeWriteVal(&buf, len, str, true, false);
-			for (size_t i = 0; i < masStrings.GetCount(); ++i)
-			{
-				str = wxString::Format(wxT("\t%s"), masStrings[i].wx_str());
-				len = qspGameCodeWriteVal(&buf, len, str, true, false);
-			}
-			str = wxEmptyString;
-			len = qspGameCodeWriteVal(&buf, len, str, true, false);
-		}
-		str = wxString::Format(_("------------ End of location: \"%s\" ------------\n"), 
-				container->GetLocationName(idxLoc).wx_str());
-		len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        str = wxString::Format(_("Location: \"%s\""), container->GetLocationName(idxLoc).wx_str());
+        len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        str = wxString(wxT("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
+        len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        str = container->GetLocationDesc(idxLoc);
+        if (str.Length())
+        {
+            masStrings = wxSplit(str, '\n');
+            str = wxString(_("Location's description:\n"));
+            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            for (size_t i = 0; i < masStrings.GetCount(); ++i)
+            {
+                str = wxString::Format(wxT("\t%s"), masStrings[i].wx_str());
+                len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            }
+            str = wxEmptyString;
+            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        }
+        if (container->GetActionsCount(idxLoc))
+        {
+            str = wxString(_("Location's actions:\n"));
+            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            for (size_t idxAct = 0; idxAct < container->GetActionsCount(idxLoc); ++idxAct)
+            {
+                str = wxString::Format(wxT("\t%s:"), container->GetActionName(idxLoc, idxAct).wx_str());
+                len = qspGameCodeWriteVal(&buf, len, str, true, false);
+                actPictPath = container->GetActionPicturePath(idxLoc, idxAct);
+                if (actPictPath.Length())
+                {
+                    str = wxString::Format(_("\tAction's image: %s"), actPictPath);
+                    len = qspGameCodeWriteVal(&buf, len, str, true, false);
+                }
+                masStrings = wxSplit(container->GetActionCode(idxLoc, idxAct), '\n');
+                for (size_t i = 0; i < masStrings.GetCount(); ++i)
+                {
+                    str = wxString::Format(wxT("\t\t%s"), masStrings[i].wx_str());
+                    len = qspGameCodeWriteVal(&buf, len, str, true, false);
+                }
+            }
+            str = wxEmptyString;
+            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        }
+        str = container->GetLocationCode(idxLoc);
+        if (str.Length())
+        {
+            masStrings = wxSplit(str, '\n');
+            str = wxString(_("Location's description:\n"));
+            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            for (size_t i = 0; i < masStrings.GetCount(); ++i)
+            {
+                str = wxString::Format(wxT("\t%s"), masStrings[i].wx_str());
+                len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            }
+            str = wxEmptyString;
+            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        }
+        str = wxString::Format(_("------------ End of location: \"%s\" ------------\n"),
+                container->GetLocationName(idxLoc).wx_str());
+        len = qspGameCodeWriteVal(&buf, len, str, true, false);
     }
     fwrite(QGEN_BOM, 1, sizeof(QGEN_BOM) - 1, f);
     fwrite(buf, 2, len, f);
@@ -705,70 +705,70 @@ bool qspExportTxt2Game(const QGEN_CHAR *fileName, Controls *controls)
 
     if (!(f = fopen(file, "wb")))
     {
-		free(file);
-		return false;
+        free(file);
+        return false;
     }
 
     for (size_t idxLoc = 0; idxLoc < container->GetLocationsCount(); ++idxLoc)
     {
-		str = wxString::Format(wxT("# %s"), container->GetLocationName(idxLoc).wx_str());
-		len = qspGameCodeWriteVal(&buf, len, str, true, false);
-		str = container->GetLocationDesc(idxLoc);
-		str.Replace(wxT("'"), wxT("''"));
-		masStrings = wxSplit(str, '\n');
-		masCount = masStrings.GetCount();
+        str = wxString::Format(wxT("# %s"), container->GetLocationName(idxLoc).wx_str());
+        len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        str = container->GetLocationDesc(idxLoc);
+        str.Replace(wxT("'"), wxT("''"));
+        masStrings = wxSplit(str, '\n');
+        masCount = masStrings.GetCount();
 
-		for (int i = 0; i < masCount - 1; ++i)
-		{
-			str = masStrings[i];
-			if (str.Length())
-				str = wxString::Format(wxT("*PL '%s'"), str.wx_str());
-			else
-				str = wxT("*NL");
-			len = qspGameCodeWriteVal(&buf, len, str, true, false);
-		}
-		if (masCount)
-		{
-			str = masStrings[masCount - 1];
-			if (str.Length())
-			{
-				str = wxString::Format(wxT("*P '%s'"), str.wx_str());
-				len = qspGameCodeWriteVal(&buf, len, str, true, false);
-			}
-		}
+        for (int i = 0; i < masCount - 1; ++i)
+        {
+            str = masStrings[i];
+            if (str.Length())
+                str = wxString::Format(wxT("*PL '%s'"), str.wx_str());
+            else
+                str = wxT("*NL");
+            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        }
+        if (masCount)
+        {
+            str = masStrings[masCount - 1];
+            if (str.Length())
+            {
+                str = wxString::Format(wxT("*P '%s'"), str.wx_str());
+                len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            }
+        }
 
-		actCount = container->GetActionsCount(idxLoc);
+        actCount = container->GetActionsCount(idxLoc);
 
-		for (size_t idxAct = 0; idxAct < actCount ; ++idxAct)
-		{
-			str = container->GetActionName(idxLoc, idxAct);
-			str.Replace(wxT("'"), wxT("''"));
-			actPictPath = container->GetActionPicturePath(idxLoc, idxAct);
+        for (size_t idxAct = 0; idxAct < actCount ; ++idxAct)
+        {
+            str = container->GetActionName(idxLoc, idxAct);
+            str.Replace(wxT("'"), wxT("''"));
+            actPictPath = container->GetActionPicturePath(idxLoc, idxAct);
 
-			if (actPictPath.Length())
-			{
-				actPictPath.Replace(wxT("'"), wxT("''"));
-				str = wxString::Format(wxT("ACT '%s', '%s':"), str.wx_str(), actPictPath.wx_str());
-			}
-			else
-				str = wxString::Format(wxT("ACT '%s':"), str.wx_str());
+            if (actPictPath.Length())
+            {
+                actPictPath.Replace(wxT("'"), wxT("''"));
+                str = wxString::Format(wxT("ACT '%s', '%s':"), str.wx_str(), actPictPath.wx_str());
+            }
+            else
+                str = wxString::Format(wxT("ACT '%s':"), str.wx_str());
 
-			len = qspGameCodeWriteVal(&buf, len, str, true, false);
-			masStrings = wxSplit(container->GetActionCode(idxLoc, idxAct), '\n');
+            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            masStrings = wxSplit(container->GetActionCode(idxLoc, idxAct), '\n');
 
-			for (size_t i = 0; i < masStrings.GetCount(); ++i)
-			{
-				str = wxString::Format(wxT("\t%s"), masStrings[i].wx_str());
-				len = qspGameCodeWriteVal(&buf, len, str, true, false);
-			}
-			str = wxString(wxT("END"));
-			len = qspGameCodeWriteVal(&buf, len, str, true, false);
-		}
-		str = container->GetLocationCode(idxLoc);
-		len = qspGameCodeWriteVal(&buf, len, str, true, false);
-		str = wxString::Format(wxT("--- %s ---------------------------------\n"), 
-				container->GetLocationName(idxLoc).wx_str());
-		len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            for (size_t i = 0; i < masStrings.GetCount(); ++i)
+            {
+                str = wxString::Format(wxT("\t%s"), masStrings[i].wx_str());
+                len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            }
+            str = wxString(wxT("END"));
+            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        }
+        str = container->GetLocationCode(idxLoc);
+        len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        str = wxString::Format(wxT("--- %s ---------------------------------\n"),
+                container->GetLocationName(idxLoc).wx_str());
+        len = qspGameCodeWriteVal(&buf, len, str, true, false);
     }
     fwrite(QGEN_BOM, 1, sizeof(QGEN_BOM) - 1, f);
     fwrite(buf, 2, len, f);
@@ -780,9 +780,9 @@ bool qspExportTxt2Game(const QGEN_CHAR *fileName, Controls *controls)
 bool qspImportTxt2Game(const QGEN_CHAR *fileName, Controls  *controls)
 {
     if (!wxExecute(wxString::Format(wxT("\"%s\" \"%s\" \"%s\" u"),
-			controls->GetSettings()->GetCurrentTxt2GamPath(), 
-			fileName, controls->GetGamePath()), wxEXEC_SYNC))
-		return true;
+            controls->GetSettings()->GetCurrentTxt2GamPath(),
+            fileName, controls->GetGamePath()), wxEXEC_SYNC))
+        return true;
     return false;
 }
 
@@ -792,34 +792,34 @@ bool ParseConfigFile(DataContainer *container, wxXmlNode *node, long folder, lon
     node = node->GetChildren();
     while (node)
     {
-		if (node->GetName() == wxT("Folder"))
-		{
-			folderName = node->GetAttribute(wxT("name"));
-			long curInd = container->FindFolderIndex(folderName);
-			if (curInd < 0)
-			{
-				++(*pos);
-				++(*folderPos);
-				curInd = container->GetFoldersCount();
-				container->AddFolder(folderName);
-				container->SetFolderPos(curInd, *pos);
-				container->MoveFolder(curInd, *folderPos);
-				if (!ParseConfigFile(container, node, *folderPos, locPos, folderPos, pos))
-					return false;
-			}
-		}
-		else if (node->GetName() == wxT("Location"))
-		{
-			long curInd = container->FindLocationIndex(node->GetAttribute(wxT("name")));
-			if (curInd >= 0)
-			{
-				++(*pos);
-				++(*locPos);
-				container->SetLocFolder(curInd, folder);
-				container->MoveLocationTo(curInd, *locPos);
-			}
-		}
-		node = node->GetNext();
+        if (node->GetName() == wxT("Folder"))
+        {
+            folderName = node->GetAttribute(wxT("name"));
+            long curInd = container->FindFolderIndex(folderName);
+            if (curInd < 0)
+            {
+                ++(*pos);
+                ++(*folderPos);
+                curInd = container->GetFoldersCount();
+                container->AddFolder(folderName);
+                container->SetFolderPos(curInd, *pos);
+                container->MoveFolder(curInd, *folderPos);
+                if (!ParseConfigFile(container, node, *folderPos, locPos, folderPos, pos))
+                    return false;
+            }
+        }
+        else if (node->GetName() == wxT("Location"))
+        {
+            long curInd = container->FindLocationIndex(node->GetAttribute(wxT("name")));
+            if (curInd >= 0)
+            {
+                ++(*pos);
+                ++(*locPos);
+                container->SetLocFolder(curInd, folder);
+                container->MoveLocationTo(curInd, *locPos);
+            }
+        }
+        node = node->GetNext();
     }
     return true;
 }
@@ -835,11 +835,11 @@ bool OpenConfigFile( DataContainer *container, const wxString &file )
     long locPos = -1, folderPos = -1, pos = -1;
     while (structure)
     {
-		if (structure->GetName() == wxT("Structure"))
-		{
-			return ParseConfigFile(container, structure, -1, &locPos, &folderPos, &pos);
-		}
-		structure = structure->GetNext();
+        if (structure->GetName() == wxT("Structure"))
+        {
+            return ParseConfigFile(container, structure, -1, &locPos, &folderPos, &pos);
+        }
+        structure = structure->GetNext();
     }
     return false;
 }
@@ -850,9 +850,9 @@ bool SaveConfigFile( DataContainer *container, const wxString &file )
     // saving file if there are no folders
     if (!container->GetFoldersCount())
     {
-		// We must remove old file if such exists
-		if (wxFileExists(file)) wxRemoveFile(file);
-		return true;
+        // We must remove old file if such exists
+        if (wxFileExists(file)) wxRemoveFile(file);
+        return true;
     }
     wxXmlDocument doc;
     doc.SetVersion(wxT("1.0"));
@@ -867,36 +867,36 @@ bool SaveConfigFile( DataContainer *container, const wxString &file )
     wxXmlNode *structure = node;
     while (pos != oldPos)
     {
-		oldPos = pos;
-		folderIndex = container->FindFolderForPos(pos);
-		if (folderIndex >= 0)
-		{
-			node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("Folder"));
-			node->AddAttribute(wxT("name"), container->GetFolderName(folderIndex));
-			structure->AddChild(node);
-			++pos;
-		}
-		else
-			node = structure;
-		if (locs.GetCount() < locsCount)
-		{
-			for (size_t i = 0; i < locsCount; ++i)
-			{
-				if (locs.Index(i) < 0 && container->GetLocFolder(i) == folderIndex)
-				{
-					if (folderIndex < 0)
-					{
-						if (container->FindFolderForPos(pos) >= 0)
-							break;
-					}
-					wxXmlNode *temp = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("Location"));
-					temp->AddAttribute(wxT("name"), container->GetLocationName(i));
-					node->AddChild(temp);
-					locs.Add(i);
-					++pos;
-				}
-			}
-		}
+        oldPos = pos;
+        folderIndex = container->FindFolderForPos(pos);
+        if (folderIndex >= 0)
+        {
+            node = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("Folder"));
+            node->AddAttribute(wxT("name"), container->GetFolderName(folderIndex));
+            structure->AddChild(node);
+            ++pos;
+        }
+        else
+            node = structure;
+        if (locs.GetCount() < locsCount)
+        {
+            for (size_t i = 0; i < locsCount; ++i)
+            {
+                if (locs.Index(i) < 0 && container->GetLocFolder(i) == folderIndex)
+                {
+                    if (folderIndex < 0)
+                    {
+                        if (container->FindFolderForPos(pos) >= 0)
+                            break;
+                    }
+                    wxXmlNode *temp = new wxXmlNode(wxXML_ELEMENT_NODE, wxT("Location"));
+                    temp->AddAttribute(wxT("name"), container->GetLocationName(i));
+                    node->AddChild(temp);
+                    locs.Add(i);
+                    ++pos;
+                }
+            }
+        }
     }
     return doc.Save(file);
 }

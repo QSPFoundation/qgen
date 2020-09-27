@@ -49,8 +49,8 @@ void LocationCode::SaveCode()
 {
     if (_text->IsModified())
     {
-		_controls->GetContainer()->SetLocationCode( _locPage->GetLocationIndex(), _text->GetValue() );
-		_text->SetModified(false);
+        _controls->GetContainer()->SetLocationCode( _locPage->GetLocationIndex(), _text->GetValue() );
+        _text->SetModified(false);
     }
 }
 

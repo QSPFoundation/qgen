@@ -27,15 +27,15 @@
     class ChkSysHotKey
     {
     private:
-		bool    _isInMenu;
-		int		_keyCode;
-		int		_flags;
+        bool _isInMenu;
+        int _keyCode;
+        int _flags;
 
-		void WalkMenuBar(wxMenuBar *menuBar);
-		void WalkMenu(wxMenu *menu);
-		void WalkMenuItem(wxMenuItem *menuItem);
+        void WalkMenuBar(wxMenuBar *menuBar);
+        void WalkMenu(wxMenu *menu);
+        void WalkMenuItem(wxMenuItem *menuItem);
     public:
-		bool CheckSystemHotKeys(wxMenuBar *menuBar, int keyCode, int flags);
+        bool CheckSystemHotKeys(wxMenuBar *menuBar, int keyCode, int flags);
     };
 
 #endif

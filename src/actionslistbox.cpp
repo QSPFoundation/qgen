@@ -34,7 +34,7 @@ BEGIN_EVENT_TABLE(ActionsListBox, wxHtmlListBox)
 END_EVENT_TABLE()
 
 ActionsListBox::ActionsListBox(wxWindow *owner, wxWindowID id, ILocationPage *locPage, 
-							   ActionCode *actCode, IControls *controls, long style) :
+                               ActionCode *actCode, IControls *controls, long style) :
     wxHtmlListBox( owner, id, wxDefaultPosition, wxDefaultSize, style )
 {
     _locPage = locPage;
@@ -44,10 +44,10 @@ ActionsListBox::ActionsListBox(wxWindow *owner, wxWindowID id, ILocationPage *lo
     _isDragging = false;
     Update();
     wxString commonPart(wxString::Format(
-		wxT("<META HTTP-EQUIV = \"Content-Type\" CONTENT = \"text/html; charset=%s\">")
-		wxT("<FONT COLOR = #%%%%s>%%s<TABLE CELLSPACING = 4 CELLPADDING = 0><TR>%%s</TR></TABLE>%%s</FONT>"),
-		wxFontMapper::GetEncodingName(_font.GetEncoding()).wx_str()
-		));
+        wxT("<META HTTP-EQUIV = \"Content-Type\" CONTENT = \"text/html; charset=%s\">")
+        wxT("<FONT COLOR = #%%%%s>%%s<TABLE CELLSPACING = 4 CELLPADDING = 0><TR>%%s</TR></TABLE>%%s</FONT>"),
+        wxFontMapper::GetEncodingName(_font.GetEncoding()).wx_str()
+        ));
     _outFormat = wxString::Format(commonPart, wxT(""), wxT("<TD WIDTH = 100%%>%s</TD>"), wxT(""));
     _outFormatImage = wxString::Format(commonPart, wxT(""), wxT("<TD><IMG SRC=\"%s\"></TD><TD WIDTH = 100%%>%s</TD>"), wxT(""));
     _outFormatBold = wxString::Format(commonPart, wxT("<B>"), wxT("<TD WIDTH = 100%%>%s</TD>"), wxT("</B>"));
@@ -77,14 +77,14 @@ void ActionsListBox::CreateHTMLParser() const
 {
     if (!m_htmlParser)
     {
-		ActionsListBox *self = wxConstCast(this, ActionsListBox);
-		self->m_htmlParser = new wxHtmlWinParser(self);
-		m_htmlParser->SetDC(new wxClientDC(self));
-		m_htmlParser->SetFS(&self->m_filesystem);
+        ActionsListBox *self = wxConstCast(this, ActionsListBox);
+        self->m_htmlParser = new wxHtmlWinParser(self);
+        m_htmlParser->SetDC(new wxClientDC(self));
+        m_htmlParser->SetFS(&self->m_filesystem);
 #if !wxUSE_UNICODE
-		if (GetFont().Ok()) m_htmlParser->SetInputEncoding(GetFont().GetEncoding());
+        if (GetFont().Ok()) m_htmlParser->SetInputEncoding(GetFont().GetEncoding());
 #endif
-		m_htmlParser->SetStandardFonts();
+        m_htmlParser->SetStandardFonts();
     }
 }
 
@@ -108,28 +108,28 @@ wxString ActionsListBox::OnGetItem(size_t n) const
     wxString outFormat, outFormatImage;
     if (_font.GetWeight() == wxFONTWEIGHT_BOLD && _font.GetStyle() == wxFONTSTYLE_ITALIC)
     {
-		outFormat = _outFormatBoldItalic;
-		outFormatImage = _outFormatBoldItalicImage;
+        outFormat = _outFormatBoldItalic;
+        outFormatImage = _outFormatBoldItalicImage;
     }
     else if (_font.GetWeight() == wxFONTWEIGHT_BOLD)
     {
-		outFormat = _outFormatBold;
-		outFormatImage = _outFormatBoldImage;
+        outFormat = _outFormatBold;
+        outFormatImage = _outFormatBoldImage;
     }
     else if (_font.GetStyle() == wxFONTSTYLE_ITALIC)
     {
-		outFormat = _outFormatItalic;
-		outFormatImage = _outFormatItalicImage;
+        outFormat = _outFormatItalic;
+        outFormatImage = _outFormatItalicImage;
     }
     else
     {
-		outFormat = _outFormat;
-		outFormatImage = _outFormatImage;
+        outFormat = _outFormat;
+        outFormatImage = _outFormatImage;
     }
     if (wxFileExists(image))
-		return wxString::Format(outFormatImage, color.wx_str(), image.wx_str(), text.wx_str());
+        return wxString::Format(outFormatImage, color.wx_str(), image.wx_str(), text.wx_str());
     else
-		return wxString::Format(outFormat, color.wx_str(), text.wx_str());
+        return wxString::Format(outFormat, color.wx_str(), text.wx_str());
 }
 
 void ActionsListBox::OnRightClick(wxMouseEvent & event)
@@ -138,8 +138,8 @@ void ActionsListBox::OnRightClick(wxMouseEvent & event)
     long ind = HitTest(event.GetPosition());
     if (ind >= 0 && ind != _prevActionIndex)
     {
-		SetFocus();
-		Select(ind);
+        SetFocus();
+        Select(ind);
     }
     menu.Append(ID_ACTION_ADD, _("Create..."));
     menu.Append(ID_ACTION_REN, _("Rename..."));
@@ -155,13 +155,13 @@ void ActionsListBox::LoadActionData(size_t actIndex)
     Settings *settings = _controls->GetSettings();
     _actCode->LoadAction(actIndex);
     if (settings->GetCollapseCode())
-		_actCode->ExpandCollapseAll(false);
+        _actCode->ExpandCollapseAll(false);
 }
 
 void ActionsListBox::SaveActionData()
 {
     if (_prevActionIndex >= 0)
-		_actCode->SaveAction(_prevActionIndex);
+        _actCode->SaveAction(_prevActionIndex);
 }
 
 void ActionsListBox::LoadAllActions()
@@ -171,11 +171,11 @@ void ActionsListBox::LoadAllActions()
     DeleteAllActions();
     actionsCount = container->GetActionsCount(locIndex);
     for (size_t i = 0; i < actionsCount; ++i)
-		Append(container->GetActionName(locIndex, i));
+        Append(container->GetActionName(locIndex, i));
     if (actionsCount)
     {
-		Select(0);
-		ScrollToRow(0);
+        Select(0);
+        ScrollToRow(0);
     }
 }
 
@@ -190,8 +190,8 @@ size_t ActionsListBox::AddAction( const wxString& name )
     size_t idx = Append(name);
     if (GetCount() == 1)
     {
-		Select(0);
-		ScrollToRow(0);
+        Select(0);
+        ScrollToRow(0);
     }
     return idx;
 }
@@ -204,8 +204,8 @@ void ActionsListBox::DeleteAction( size_t actIndex )
     size_t count = GetCount();
     if (count > 0)
     {
-		if (actIndex == count) actIndex = count - 1;
-		Select(actIndex);
+        if (actIndex == count) actIndex = count - 1;
+        Select(actIndex);
     }
 }
 
@@ -251,75 +251,75 @@ wxString ActionsListBox::HtmlizeWhitespaces(const wxString& str)
     bool isLastSpace = true;
     for (i = str.begin(); i != str.end(); ++i)
     {
-		switch (ch = *i)
-		{
-		case wxT('<'):
-			quote = 0;
-			while (i != str.end())
-			{
-				ch = *i;
-				if (quote)
-				{
-					if (ch == wxT('&'))
-						out << wxT("&amp;");
-					else
-					{
-						if (ch == wxT('\\'))
-						{
-							out << ch;
-							if (++i == str.end()) break;
-							ch = *i;
-						}
-						else if (ch == quote)
-							quote = 0;
-						out << ch;
-					}
-				}
-				else
-				{
-					out << ch;
-					if (ch == wxT('>'))
-						break;
-					else if (ch == wxT('"') || ch == wxT('\''))
-						quote = ch;
-				}
-				++i;
-			}
-			if (i == str.end()) return out;
-			isLastSpace = true;
-			break;
-		case wxT(' '):
-			if (isLastSpace)
-				out << wxT("&nbsp;");
-			else
-				out << wxT(' ');
-			isLastSpace = !isLastSpace;
-			++linepos;
-			break;
-		case wxT('\r'):
-			break;
-		case wxT('\n'):
-			out << wxT("<br />");
-			isLastSpace = true;
-			linepos = 0;
-			break;
-		case wxT('\t'):
-			for (j = 4 - linepos % 4; j > 0; --j)
-			{
-				if (isLastSpace)
-					out << wxT("&nbsp;");
-				else
-					out << wxT(' ');
-				isLastSpace = !isLastSpace;
-			}
-			linepos += 4 - linepos % 4;
-			break;
-		default:
-			out << ch;
-			isLastSpace = false;
-			++linepos;
-			break;
-		}
+        switch (ch = *i)
+        {
+        case wxT('<'):
+            quote = 0;
+            while (i != str.end())
+            {
+                ch = *i;
+                if (quote)
+                {
+                    if (ch == wxT('&'))
+                        out << wxT("&amp;");
+                    else
+                    {
+                        if (ch == wxT('\\'))
+                        {
+                            out << ch;
+                            if (++i == str.end()) break;
+                            ch = *i;
+                        }
+                        else if (ch == quote)
+                            quote = 0;
+                        out << ch;
+                    }
+                }
+                else
+                {
+                    out << ch;
+                    if (ch == wxT('>'))
+                        break;
+                    else if (ch == wxT('"') || ch == wxT('\''))
+                        quote = ch;
+                }
+                ++i;
+            }
+            if (i == str.end()) return out;
+            isLastSpace = true;
+            break;
+        case wxT(' '):
+            if (isLastSpace)
+                out << wxT("&nbsp;");
+            else
+                out << wxT(' ');
+            isLastSpace = !isLastSpace;
+            ++linepos;
+            break;
+        case wxT('\r'):
+            break;
+        case wxT('\n'):
+            out << wxT("<br />");
+            isLastSpace = true;
+            linepos = 0;
+            break;
+        case wxT('\t'):
+            for (j = 4 - linepos % 4; j > 0; --j)
+            {
+                if (isLastSpace)
+                    out << wxT("&nbsp;");
+                else
+                    out << wxT(' ');
+                isLastSpace = !isLastSpace;
+            }
+            linepos += 4 - linepos % 4;
+            break;
+        default:
+            out << ch;
+            isLastSpace = false;
+            ++linepos;
+            break;
+        }
     }
     return out;
 }
@@ -331,21 +331,21 @@ wxString ActionsListBox::ProceedAsPlain(const wxString& str)
     wxString out;
     for (i = str.begin(); i != str.end(); ++i)
     {
-		switch (ch = *i)
-		{
-		case wxT('<'):
-			out << wxT("&lt;");
-			break;
-		case wxT('>'):
-			out << wxT("&gt;");
-			break;
-		case wxT('&'):
-			out << wxT("&amp;");
-			break;
-		default:
-			out << ch;
-			break;
-		}
+        switch (ch = *i)
+        {
+        case wxT('<'):
+            out << wxT("&lt;");
+            break;
+        case wxT('>'):
+            out << wxT("&gt;");
+            break;
+        case wxT('&'):
+            out << wxT("&amp;");
+            break;
+        default:
+            out << ch;
+            break;
+        }
     }
     return out;
 }
@@ -406,10 +406,10 @@ void ActionsListBox::OnMouseMove( wxMouseEvent &event )
     int item = HitTest(event.GetPosition());
     if (!_isDragging && event.ButtonIsDown(wxMOUSE_BTN_LEFT) && item >= 0)
     {
-		_draggedAction = item;
-		_isDragging = true;
-		SetCursor(wxCursor(wxCURSOR_HAND));
-		CaptureMouse();
+        _draggedAction = item;
+        _isDragging = true;
+        SetCursor(wxCursor(wxCURSOR_HAND));
+        CaptureMouse();
     }
 }
 
@@ -423,17 +423,17 @@ void ActionsListBox::OnMouseLeftUp( wxMouseEvent &event )
 {
     if (_isDragging)
     {
-		int item = HitTest(event.GetPosition());
-		if (item >= 0 && item != _draggedAction)
-			_controls->MoveActionTo(_locPage->GetLocationIndex(), _draggedAction, item);
-		ReleaseMouse();
-		SetCursor(wxNullCursor);
-		_isDragging = false;
+        int item = HitTest(event.GetPosition());
+        if (item >= 0 && item != _draggedAction)
+            _controls->MoveActionTo(_locPage->GetLocationIndex(), _draggedAction, item);
+        ReleaseMouse();
+        SetCursor(wxNullCursor);
+        _isDragging = false;
     }
 }
 
 void ActionsListBox::OnKeyDown( wxKeyEvent &event )
 {
     if (!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
-		event.Skip();
+        event.Skip();
 }

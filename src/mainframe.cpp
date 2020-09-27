@@ -108,11 +108,11 @@ bool MainFrame::Create(const wxSize& size, long style)
     bool res = wxFrame::Create(NULL, wxID_ANY, wxEmptyString, wxDefaultPosition, size, style);
     if (res)
     {
-		#ifdef __WXMSW__
-			SetIcon(wxICON(wxwin16x16));
-		#endif
-		SetMinSize(wxSize(550, 300));
-		CreateControls();
+        #ifdef __WXMSW__
+            SetIcon(wxICON(wxwin16x16));
+        #endif
+        SetMinSize(wxSize(550, 300));
+        CreateControls();
     }
     return res;
 }
@@ -129,10 +129,10 @@ void MainFrame::CreateControls()
     _manager.AddPane(_locNotebook, wxAuiPaneInfo().CenterPane().Name(wxT("LocationsNotebook")));
 
     _manager.AddPane(_toolBar, wxAuiPaneInfo().ToolbarPane().
-		Name(wxT("Toolbar")).Top().LeftDockable(false).RightDockable(false).Floatable(true));
+        Name(wxT("Toolbar")).Top().LeftDockable(false).RightDockable(false).Floatable(true));
 
     _manager.AddPane(_locListBox, wxAuiPaneInfo().Left().
-		Layer(1).PinButton().MinimizeButton().MaximizeButton().Name(wxT("LocationsList")));
+        Layer(1).PinButton().MinimizeButton().MaximizeButton().Name(wxT("LocationsList")));
 
     LoadLayout();
     _manager.Update();
@@ -418,8 +418,8 @@ void MainFrame::OnNewGame( wxCommandEvent &event )
 {
     if (QuestChange())
     {
-		_controls->NewGame();
-		UpdateTitle();
+        _controls->NewGame();
+        UpdateTitle();
     }
 }
 
@@ -427,8 +427,8 @@ void MainFrame::OnQuit( wxCloseEvent &event )
 {
     if (QuestChange())
     {
-		SaveLayout();
-		event.Skip();
+        SaveLayout();
+        event.Skip();
     }
 }
 
@@ -439,7 +439,7 @@ void MainFrame::OnAbout( wxCommandEvent &event )
     info.SetName(QGEN_TITLE);
     info.SetCopyright(wxT("Quest Soft, 2001-2012"));
     info.SetDescription(wxString::Format( _("Version: %s\nCompiled: %s\n\nUsed: %s"),
-		QGEN_VER, wxT(__DATE__) wxT(", ") wxT(__TIME__), wxGetLibraryVersionInfo().ToString()));
+        QGEN_VER, wxT(__DATE__) wxT(", ") wxT(__TIME__), wxGetLibraryVersionInfo().ToString()));
     info.SetWebSite(wxT("http://qsp.su"));
     info.AddDeveloper(wxT("BaxZzZz [baxzzzz@gmail.com]"));
     info.AddDeveloper(wxT("Byte [nporep@mail.ru]"));
@@ -452,36 +452,36 @@ void MainFrame::OnLoadFile(wxCommandEvent &event)
 {
     if (QuestChange())
     {
-		wxFileDialog dialog(this, 
-			_("Open game file"), wxEmptyString, wxEmptyString,
-			_("QSP games (*.qsp;*.gam)|*.qsp;*.gam"), wxFD_OPEN);
-		dialog.CenterOnParent();
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			if (_controls->LoadGame(dialog.GetPath()))
-				UpdateTitle();
-		}
+        wxFileDialog dialog(this,
+            _("Open game file"), wxEmptyString, wxEmptyString,
+            _("QSP games (*.qsp;*.gam)|*.qsp;*.gam"), wxFD_OPEN);
+        dialog.CenterOnParent();
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            if (_controls->LoadGame(dialog.GetPath()))
+                UpdateTitle();
+        }
     }
 }
 
 void MainFrame::OnSaveQuestAs(wxCommandEvent &event)
 {
     wxFileDialog dialog(this,
-		_("Save game file"), wxEmptyString, wxEmptyString,
-		_("QSP games (*.qsp)|*.qsp"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+        _("Save game file"), wxEmptyString, wxEmptyString,
+        _("QSP games (*.qsp)|*.qsp"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
     dialog.CenterOnParent();
     if (dialog.ShowModal() == wxID_OK)
     {
-		wxString password;
-		wxPasswordEntryDialog dlgEntry(this, 
-			_("Input password:"),
-			_("Game password"), wxEmptyString);
-		if (dlgEntry.ShowModal() != wxID_CANCEL) password = dlgEntry.GetValue();
-		if (password.IsEmpty()) password = QGEN_PASSWD;
-		if (_controls->SaveGame(dialog.GetPath(), password))
-			UpdateTitle();
-		else
-			_controls->ShowMessage(QGEN_MSG_CANTSAVEGAME);
+        wxString password;
+        wxPasswordEntryDialog dlgEntry(this,
+            _("Input password:"),
+            _("Game password"), wxEmptyString);
+        if (dlgEntry.ShowModal() != wxID_CANCEL) password = dlgEntry.GetValue();
+        if (password.IsEmpty()) password = QGEN_PASSWD;
+        if (_controls->SaveGame(dialog.GetPath(), password))
+            UpdateTitle();
+        else
+            _controls->ShowMessage(QGEN_MSG_CANTSAVEGAME);
     }
 }
 
@@ -505,20 +505,20 @@ void MainFrame::LoadLayout()
 {
     Settings *settings = _controls->GetSettings();
     SetSize(settings->GetLeftFramePos(), settings->GetTopFramePos(),
-		settings->GetFrameWidth(), settings->GetFrameHeight());
+        settings->GetFrameWidth(), settings->GetFrameHeight());
     Maximize(settings->GetMaximizeFrame());
     wxStatusBar *statusBar = GetStatusBar();
     if (settings->GetShowStatusBar())
     {
-		if (!statusBar) CreateStatusBar();
+        if (!statusBar) CreateStatusBar();
     }
     else
     {
-		if (statusBar)
-		{
-			SetStatusBar(NULL);
-			statusBar->Destroy();
-		}
+        if (statusBar)
+        {
+            SetStatusBar(NULL);
+            statusBar->Destroy();
+        }
     }
 
     _manager.LoadPerspective(settings->GetSetPanelsPos());
@@ -535,11 +535,11 @@ void MainFrame::SaveLayout()
     Settings *settings = _controls->GetSettings();
     if (IsMaximized())
     {
-		settings->SetMaximizeFrame(true);
-		Maximize(false);
+        settings->SetMaximizeFrame(true);
+        Maximize(false);
     }
     else
-		settings->SetMaximizeFrame(false);
+        settings->SetMaximizeFrame(false);
     settings->SetShowStatusBar(GetStatusBar() != NULL);
     if (IsFullScreen()) ShowFullScreen(false);
     if (IsIconized()) Iconize(false);
@@ -557,12 +557,12 @@ void MainFrame::TogglePaneVisibility(const wxString &pane_name)
     size_t i, count;
     for (i = 0, count = all_panes.GetCount(); i < count; ++i)
     {
-		if (all_panes.Item(i).name == pane_name)
-		{
-			all_panes.Item(i).Show(!all_panes.Item(i).IsShown());
-			_manager.Update();
-			break;
-		}
+        if (all_panes.Item(i).name == pane_name)
+        {
+            all_panes.Item(i).Show(!all_panes.Item(i).IsShown());
+            _manager.Update();
+            break;
+        }
     }
 }
 
@@ -571,11 +571,11 @@ void MainFrame::OnPaneClose( wxAuiManagerEvent& event )
     switch (event.GetPane()->window->GetId())
     {
     case ID_LOCSLIST:
-		_menu_bar->Check(ID_TOGGLE_LISTBOX, false);
-		break;
+        _menu_bar->Check(ID_TOGGLE_LISTBOX, false);
+        break;
     case ID_TOOLBAR:
-		_menu_bar->Check(ID_TOGGLE_TOOLBAR, false);
-		break;
+        _menu_bar->Check(ID_TOGGLE_TOOLBAR, false);
+        break;
     }
 }
 
@@ -596,25 +596,25 @@ void MainFrame::OnToggleStatusbar(wxCommandEvent &event)
     wxStatusBar *statusBar = GetStatusBar();
     if (statusBar)
     {
-		SetStatusBar(NULL);
-		statusBar->Destroy();
+        SetStatusBar(NULL);
+        statusBar->Destroy();
     }
     else
-		CreateStatusBar();
+        CreateStatusBar();
 }
 
 void MainFrame::OnFindDialog( wxCommandEvent& event )
 {
     if (!_findDlg)
     {
-		_findDlg = new SearchDialog(this, _("Find / Replace"), _controls, wxRESIZE_BORDER);
-		_findDlg->CenterOnParent();
-		_controls->InitSearchData();
+        _findDlg = new SearchDialog(this, _("Find / Replace"), _controls, wxRESIZE_BORDER);
+        _findDlg->CenterOnParent();
+        _controls->InitSearchData();
     }
     if (_findDlg->IsShown())
-		_findDlg->SetFocus();
+        _findDlg->SetFocus();
     else
-		_findDlg->Show();
+        _findDlg->Show();
 }
 
 void MainFrame::OnCreateLocation( wxCommandEvent &event )
@@ -647,14 +647,14 @@ void MainFrame::OnPasteLocation( wxCommandEvent &event )
     switch (event.GetId())
     {
     case ID_LOC_REPLACE:
-		_controls->PasteLocFromClipboard(PASTE_REPLACE);
-		break;
+        _controls->PasteLocFromClipboard(PASTE_REPLACE);
+        break;
     case ID_LOC_PASTE:
-		_controls->PasteLocFromClipboard(PASTE_NEW_AUTO);
-		break;
+        _controls->PasteLocFromClipboard(PASTE_NEW_AUTO);
+        break;
     case ID_LOC_PASTENEW:
-		_controls->PasteLocFromClipboard(PASTE_NEW);
-		break;
+        _controls->PasteLocFromClipboard(PASTE_NEW);
+        break;
     }
 }
 
@@ -721,8 +721,8 @@ void MainFrame::OnDeleteText( wxCommandEvent &event )
 void MainFrame::OnJoinQuest( wxCommandEvent &event )
 {
     wxFileDialog dialog(this,
-		_("Join game file"), wxEmptyString, wxEmptyString,
-		_("QSP games (*.qsp;*.gam)|*.qsp;*.gam"), wxFD_OPEN);
+        _("Join game file"), wxEmptyString, wxEmptyString,
+        _("QSP games (*.qsp;*.gam)|*.qsp;*.gam"), wxFD_OPEN);
     dialog.CenterOnParent();
     if (dialog.ShowModal() == wxID_OK)
     _controls->JoinGame(dialog.GetPath());
@@ -734,30 +734,30 @@ void MainFrame::OnPlayQuest( wxCommandEvent &event )
     Settings *settings = _controls->GetSettings();
     if (!wxFile::Exists(settings->GetCurrentPlayerPath()))
     {
-		wxFileDialog dialog(this, 
-			_("Select player's file"), wxEmptyString, wxEmptyString,
-			_("Executables (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
-		dialog.CenterOnParent();
-		if (dialog.ShowModal() == wxID_CANCEL) return;
-		settings->SetCurrentPlayerPath(dialog.GetPath());
+        wxFileDialog dialog(this,
+            _("Select player's file"), wxEmptyString, wxEmptyString,
+            _("Executables (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
+        dialog.CenterOnParent();
+        if (dialog.ShowModal() == wxID_CANCEL) return;
+        settings->SetCurrentPlayerPath(dialog.GetPath());
     }
     OnSaveQuest(dummy);
     if (_controls->IsGameSaved())
-		wxExecute(wxString::Format("\"%s\" \"%s\"", settings->GetCurrentPlayerPath(), _controls->GetGamePath()));
+        wxExecute(wxString::Format("\"%s\" \"%s\"", settings->GetCurrentPlayerPath(), _controls->GetGamePath()));
 }
 
 void MainFrame::OnChmHelp( wxCommandEvent &event )
 {
     #ifdef __WXMSW__
-		DesktopWindow desktop;
-		wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
+        DesktopWindow desktop;
+        wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
     #else
-		wxExtHelpController *chmHelp = new wxExtHelpController();
+        wxExtHelpController *chmHelp = new wxExtHelpController();
     #endif
     if (_controls->SearchHelpFile())
     {
-		chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
-		chmHelp->DisplayContents();
+        chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
+        chmHelp->DisplayContents();
     }
     delete chmHelp;
 }
@@ -765,15 +765,15 @@ void MainFrame::OnChmHelp( wxCommandEvent &event )
 void MainFrame::OnSearchHelp( wxCommandEvent &event )
 {
     #ifdef __WXMSW__
-		DesktopWindow desktop;
-		wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
+        DesktopWindow desktop;
+        wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
     #else
-		wxExtHelpController *chmHelp = new wxExtHelpController();
+        wxExtHelpController *chmHelp = new wxExtHelpController();
     #endif
     if (_controls->SearchHelpFile())
     {
-		chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
-		chmHelp->KeywordSearch(_controls->GetSelectedWord());
+        chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
+        chmHelp->KeywordSearch(_controls->GetSelectedWord());
     }
     delete chmHelp;
 }
@@ -781,26 +781,26 @@ void MainFrame::OnSearchHelp( wxCommandEvent &event )
 void MainFrame::OnExportTxtFile( wxCommandEvent &event )
 {
     wxFileDialog dialog(this,
-		_("Save text file"), wxEmptyString, wxEmptyString,
-		_("Text files (*.txt)|*.txt"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+        _("Save text file"), wxEmptyString, wxEmptyString,
+        _("Text files (*.txt)|*.txt"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
     dialog.CenterOnParent();
     if (dialog.ShowModal() == wxID_OK)
     {
-		if (!_controls->ExportTxt(dialog.GetPath()))
-			_controls->ShowMessage(QGEN_MSG_CANTSAVEGAME);
+        if (!_controls->ExportTxt(dialog.GetPath()))
+            _controls->ShowMessage(QGEN_MSG_CANTSAVEGAME);
     }
 }
 
 void MainFrame::OnExportTxt2Gam( wxCommandEvent &event )
 {
     wxFileDialog dialog(this,
-		_("Save text file"), wxEmptyString, wxEmptyString,
-		_("Text files (*.txt)|*.txt"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+        _("Save text file"), wxEmptyString, wxEmptyString,
+        _("Text files (*.txt)|*.txt"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
     dialog.CenterOnParent();
     if (dialog.ShowModal() == wxID_OK)
     {
-		if (!_controls->ExportTxt2Gam(dialog.GetPath()))
-			_controls->ShowMessage(QGEN_MSG_CANTSAVEGAME);
+        if (!_controls->ExportTxt2Gam(dialog.GetPath()))
+            _controls->ShowMessage(QGEN_MSG_CANTSAVEGAME);
     }
 }
 
@@ -808,36 +808,36 @@ void MainFrame::OnImportTxt2Gam( wxCommandEvent &event )
 {
     if (!_controls->GetContainer()->IsEmpty())
     {
-		wxMessageDialog dlgMsg(this,
-			_("The new file will replace current game file. Continue?"),
-			_("Import"),
-			wxYES_NO|wxCENTRE|wxICON_QUESTION);
-		if (dlgMsg.ShowModal() == wxID_NO) return;
+        wxMessageDialog dlgMsg(this,
+            _("The new file will replace current game file. Continue?"),
+            _("Import"),
+            wxYES_NO|wxCENTRE|wxICON_QUESTION);
+        if (dlgMsg.ShowModal() == wxID_NO) return;
     }
     wxFileDialog dialog(this,
-		_("Open text file"), wxEmptyString, wxEmptyString,
-		_("Text files (*.txt)|*.txt"), wxFD_OPEN);
+        _("Open text file"), wxEmptyString, wxEmptyString,
+        _("Text files (*.txt)|*.txt"), wxFD_OPEN);
     dialog.CenterOnParent();
     if (dialog.ShowModal() == wxID_OK)
     {
-		Settings *settings = _controls->GetSettings();
-		if (!wxFile::Exists(settings->GetCurrentTxt2GamPath()))
-		{
-			wxFileDialog dialog2(this, 
-				_("Select converter's file"), wxEmptyString, wxEmptyString,
-				_("Executables (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
-			dialog2.CenterOnParent();
-			if (dialog2.ShowModal() == wxID_CANCEL) return;
-			settings->SetCurrentTxt2GamPath(dialog2.GetPath());
-		}
-		_controls->ImportTxt2Gam(dialog.GetPath());
+        Settings *settings = _controls->GetSettings();
+        if (!wxFile::Exists(settings->GetCurrentTxt2GamPath()))
+        {
+            wxFileDialog dialog2(this,
+                _("Select converter's file"), wxEmptyString, wxEmptyString,
+                _("Executables (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
+            dialog2.CenterOnParent();
+            if (dialog2.ShowModal() == wxID_CANCEL) return;
+            settings->SetCurrentTxt2GamPath(dialog2.GetPath());
+        }
+        _controls->ImportTxt2Gam(dialog.GetPath());
     }
 }
 
 void MainFrame::OnInformationQuest( wxCommandEvent &event )
 {
     wxMessageDialog dialog(this, _controls->GetGameInfo(),
-		_("Game statistics"), wxOK|wxCENTRE|wxICON_INFORMATION);
+        _("Game statistics"), wxOK|wxCENTRE|wxICON_INFORMATION);
     dialog.ShowModal();
 }
 
@@ -857,7 +857,7 @@ void MainFrame::OnTimerAutoSave(wxTimerEvent &event)
 {
     if (!_controls->GetSettings()->GetAutoSave()) return;
     if (wxGetLocalTimeMillis() - _controls->GetLastSaveTime() >= (wxLongLong)_controls->GetSettings()->GetAutoSaveInterval() * 60000)
-		_controls->SaveGameWithCheck();
+        _controls->SaveGameWithCheck();
 }
 
 void MainFrame::OnTimerUpdToolBar(wxTimerEvent &event)
@@ -891,19 +891,19 @@ bool MainFrame::QuestChange()
     wxCommandEvent dummy;
     if (!_controls->IsGameSaved())
     {
-		wxMessageDialog dlgMsg(this,
-			_("Save game file?"),
-			_("File was changed"),
-			wxYES_NO|wxCANCEL|wxCENTRE|wxICON_QUESTION);
-		switch (dlgMsg.ShowModal())
-		{
-		case wxID_YES:
-			OnSaveQuest(dummy);
-			return true;
-		case wxID_NO:
-			return true;
-		}
-		return false;
+        wxMessageDialog dlgMsg(this,
+            _("Save game file?"),
+            _("File was changed"),
+            wxYES_NO|wxCANCEL|wxCENTRE|wxICON_QUESTION);
+        switch (dlgMsg.ShowModal())
+        {
+        case wxID_YES:
+            OnSaveQuest(dummy);
+            return true;
+        case wxID_NO:
+            return true;
+        }
+        return false;
     }
     return true;
 }
@@ -912,9 +912,9 @@ void MainFrame::UpdateTitle()
 {
     wxString title;
     if (_controls->IsGameSaved())
-		title.Printf(wxT("%s - %s %s"), _controls->GetGamePath(), QGEN_TITLE, QGEN_VER);
+        title.Printf(wxT("%s - %s %s"), _controls->GetGamePath(), QGEN_TITLE, QGEN_VER);
     else
-		title.Printf(wxT("* %s - %s %s"), _controls->GetGamePath(), QGEN_TITLE, QGEN_VER);
+        title.Printf(wxT("* %s - %s %s"), _controls->GetGamePath(), QGEN_TITLE, QGEN_VER);
     SetTitle(title);
 }
 
@@ -926,14 +926,14 @@ void MainFrame::OnTabMenu( wxCommandEvent &event )
     switch (event.GetId())
     {
     case ID_TAB_CLOSEALL:
-		type = CLOSE_ALL;
-		break;
+        type = CLOSE_ALL;
+        break;
     case ID_TAB_CLOSEEXCEPTSELECTED:
-		type = CLOSE_ALLEXCEPTSELECTED;
-		break;
+        type = CLOSE_ALLEXCEPTSELECTED;
+        break;
     case ID_TAB_CLOSESELECTED:
-		type = CLOSE_SELECTED;
-		break;
+        type = CLOSE_SELECTED;
+        break;
     }
     _locNotebook->DeleteAllPages(type, selPage);
 }
@@ -973,7 +973,7 @@ void MainFrame::OnJumpLocation( wxCommandEvent &event )
 void MainFrame::OnKeyDown( wxKeyEvent& event )
 {
     if (!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
-		event.Skip();
+        event.Skip();
 }
 
 void MainFrame::OnCreateFolder( wxCommandEvent &event )

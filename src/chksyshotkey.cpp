@@ -34,7 +34,7 @@ bool ChkSysHotKey::CheckSystemHotKeys(wxMenuBar *menuBar, int keyCode, int flags
 void ChkSysHotKey::WalkMenuBar(wxMenuBar *menuBar)
 {
     for (size_t i = 0; i < menuBar->GetMenuCount(); ++i)
-		WalkMenu(menuBar->GetMenu(i));
+        WalkMenu(menuBar->GetMenu(i));
 }
 
 void ChkSysHotKey::WalkMenu(wxMenu *menu)
@@ -42,9 +42,9 @@ void ChkSysHotKey::WalkMenu(wxMenu *menu)
     wxMenuItemList &list = menu->GetMenuItems();
     for (size_t i = 0; i < list.GetCount(); ++i)
     {
-		wxMenuItem *menuItem = list.Item(i)->GetData();
-		if (menuItem->GetKind() != wxITEM_SEPARATOR)
-			WalkMenuItem(menuItem);
+        wxMenuItem *menuItem = list.Item(i)->GetData();
+        if (menuItem->GetKind() != wxITEM_SEPARATOR)
+            WalkMenuItem(menuItem);
     }
 }
 
@@ -52,10 +52,10 @@ void ChkSysHotKey::WalkMenuItem(wxMenuItem *menuItem)
 {
     if (menuItem->GetSubMenu())
     {
-		WalkMenu(menuItem->GetSubMenu());
-		return;
+        WalkMenu(menuItem->GetSubMenu());
+        return;
     }
     wxAcceleratorEntry *accel = menuItem->GetAccel();
     if (accel && _keyCode == accel->GetKeyCode() && _flags == accel->GetFlags())
-		_isInMenu = true;
+        _isInMenu = true;
 }

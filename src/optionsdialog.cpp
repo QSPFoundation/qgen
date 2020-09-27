@@ -105,7 +105,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _cmbLang = new wxComboBox(_general, ID_COMB_LANG, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, 0, wxCB_READONLY);
 
     _spnAutoSaveMin = new wxSpinCtrl(_general, wxID_ANY, wxT("5"), wxDefaultPosition, wxSize(45, wxDefaultCoord),
-										wxSP_ARROW_KEYS, 1, 60, 5);
+                                        wxSP_ARROW_KEYS, 1, 60, 5);
     _txtNameFirsLoc = new wxTextCtrl(_general, wxID_ANY, wxEmptyString);
 
     _autoSaveUnits  = new wxStaticText(_general, wxID_ANY, wxEmptyString);
@@ -365,31 +365,31 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _paths->SetAutoLayout(true);
 
     #ifdef __WXMSW__
-		_hotkeys = new wxPanel(_notebook);
-		_notebook->AddPage(_hotkeys, wxEmptyString);
+        _hotkeys = new wxPanel(_notebook);
+        _notebook->AddPage(_hotkeys, wxEmptyString);
 
-		wxBoxSizer *topSizerHotKeys = new wxBoxSizer(wxVERTICAL);
+        wxBoxSizer *topSizerHotKeys = new wxBoxSizer(wxVERTICAL);
 
-		_stText0001 = new wxStaticText(_hotkeys, wxID_ANY, wxEmptyString);
-		_lstHotKeys = new wxListCtrl(_hotkeys, ID_LIST_HKEYS, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
-		_lstHotKeys->InsertColumn(0, wxEmptyString, wxLIST_FORMAT_LEFT, 150);
-		_lstHotKeys->InsertColumn(1, wxEmptyString, wxLIST_FORMAT_LEFT, 300);
+        _stText0001 = new wxStaticText(_hotkeys, wxID_ANY, wxEmptyString);
+        _lstHotKeys = new wxListCtrl(_hotkeys, ID_LIST_HKEYS, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
+        _lstHotKeys->InsertColumn(0, wxEmptyString, wxLIST_FORMAT_LEFT, 150);
+        _lstHotKeys->InsertColumn(1, wxEmptyString, wxLIST_FORMAT_LEFT, 300);
 
-		wxBoxSizer *btnHotkKeysSizer = new wxBoxSizer(wxHORIZONTAL);
-		_btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEWHKEY, wxEmptyString);
-		_btnEditHotKey = new wxButton(_hotkeys, ID_EDIT_HKEY, wxEmptyString);
-		_btnDelHotKey = new wxButton(_hotkeys, ID_DELETE_HKEY, wxEmptyString);
+        wxBoxSizer *btnHotkKeysSizer = new wxBoxSizer(wxHORIZONTAL);
+        _btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEWHKEY, wxEmptyString);
+        _btnEditHotKey = new wxButton(_hotkeys, ID_EDIT_HKEY, wxEmptyString);
+        _btnDelHotKey = new wxButton(_hotkeys, ID_DELETE_HKEY, wxEmptyString);
 
-		btnHotkKeysSizer->Add(_btnAddNewHotKey, wxALL, 5);
-		btnHotkKeysSizer->Add(_btnEditHotKey, wxALL, 5);
-		btnHotkKeysSizer->Add(_btnDelHotKey, wxALL, 5);
+        btnHotkKeysSizer->Add(_btnAddNewHotKey, wxALL, 5);
+        btnHotkKeysSizer->Add(_btnEditHotKey, wxALL, 5);
+        btnHotkKeysSizer->Add(_btnDelHotKey, wxALL, 5);
 
-		topSizerHotKeys->Add(_stText0001, 0, wxTOP|wxLEFT, 5);
-		topSizerHotKeys->Add(_lstHotKeys, 1, wxALL|wxGROW, 5);
-		topSizerHotKeys->Add(btnHotkKeysSizer, 0, wxGROW);
+        topSizerHotKeys->Add(_stText0001, 0, wxTOP|wxLEFT, 5);
+        topSizerHotKeys->Add(_lstHotKeys, 1, wxALL|wxGROW, 5);
+        topSizerHotKeys->Add(btnHotkKeysSizer, 0, wxGROW);
 
-		_hotkeys->SetSizerAndFit(topSizerHotKeys);
-		_hotkeys->SetAutoLayout(true);
+        _hotkeys->SetSizerAndFit(topSizerHotKeys);
+        _hotkeys->SetAutoLayout(true);
     #endif
 
     notebookSizer->Add(_notebook, 1, wxALL|wxGROW, 3);
@@ -494,19 +494,19 @@ void OptionsDialog::ReCreateGUI()
     _btnPathHelp->SetLabel(_("Select path..."));
     _btnPathTxt2Gam->SetLabel(_("Select path..."));
     #ifdef __WXMSW__
-		//Page HotKeys
-		_notebook->SetPageText(6,  _("Hotkeys"));
-		_stText0001->SetLabel(_("Hotkeys list:"));
-		wxListItem header; 
-		_lstHotKeys->GetColumn(0, header);
-		header.SetText(_("Hotkey"));
-		_lstHotKeys->SetColumn(0, header);
-		_lstHotKeys->GetColumn(1, header);
-		header.SetText(_("Execute"));
-		_lstHotKeys->SetColumn(1, header);
-		_btnAddNewHotKey->SetLabel(_("Add..."));
-		_btnEditHotKey->SetLabel(_("Edit..."));
-		_btnDelHotKey->SetLabel(_("Delete"));
+        //Page HotKeys
+        _notebook->SetPageText(6,  _("Hotkeys"));
+        _stText0001->SetLabel(_("Hotkeys list:"));
+        wxListItem header;
+        _lstHotKeys->GetColumn(0, header);
+        header.SetText(_("Hotkey"));
+        _lstHotKeys->SetColumn(0, header);
+        _lstHotKeys->GetColumn(1, header);
+        header.SetText(_("Execute"));
+        _lstHotKeys->SetColumn(1, header);
+        _btnAddNewHotKey->SetLabel(_("Add..."));
+        _btnEditHotKey->SetLabel(_("Edit..."));
+        _btnDelHotKey->SetLabel(_("Delete"));
     #endif
     GetSizer()->SetSizeHints(this);
 }
@@ -532,134 +532,134 @@ void OptionsDialog::OnColorSelect( wxCommandEvent &event )
     switch(event.GetId())
     {
     case ID_COLORS_STATEMENTS:
-		InitColoursDialog(dialog, _colorStatements->GetBackgroundColour());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxColour col = dialog.GetColourData().GetColour();
-			_colorStatements->SetBackgroundColour(col);
-			_colorStatements->Refresh();
-			_txtFontStatements->SetForegroundColour(col);
-			_btnApply->Enable();
-		}
-		break;
+        InitColoursDialog(dialog, _colorStatements->GetBackgroundColour());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxColour col = dialog.GetColourData().GetColour();
+            _colorStatements->SetBackgroundColour(col);
+            _colorStatements->Refresh();
+            _txtFontStatements->SetForegroundColour(col);
+            _btnApply->Enable();
+        }
+        break;
     case ID_COLORS_FUNCTIONS:
-		InitColoursDialog(dialog, _colorFunctions->GetBackgroundColour());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxColour col = dialog.GetColourData().GetColour();
-			_colorFunctions->SetBackgroundColour(col);
-			_colorFunctions->Refresh();
-			_txtFontFunctions->SetForegroundColour(col);
-			_btnApply->Enable();
-		}
-		break;
+        InitColoursDialog(dialog, _colorFunctions->GetBackgroundColour());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxColour col = dialog.GetColourData().GetColour();
+            _colorFunctions->SetBackgroundColour(col);
+            _colorFunctions->Refresh();
+            _txtFontFunctions->SetForegroundColour(col);
+            _btnApply->Enable();
+        }
+        break;
     case ID_COLORS_SYSVARIABLES:
-		InitColoursDialog(dialog, _colorSysVariables->GetBackgroundColour());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxColour col = dialog.GetColourData().GetColour();
-			_colorSysVariables->SetBackgroundColour(col);
-			_colorSysVariables->Refresh();
-			_txtFontSysVariables->SetForegroundColour(col);
-			_btnApply->Enable();
-		}
-		break;
+        InitColoursDialog(dialog, _colorSysVariables->GetBackgroundColour());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxColour col = dialog.GetColourData().GetColour();
+            _colorSysVariables->SetBackgroundColour(col);
+            _colorSysVariables->Refresh();
+            _txtFontSysVariables->SetForegroundColour(col);
+            _btnApply->Enable();
+        }
+        break;
     case ID_COLORS_NUMBERS:
-		InitColoursDialog(dialog, _colorNumbers->GetBackgroundColour());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxColour col = dialog.GetColourData().GetColour();
-			_colorNumbers->SetBackgroundColour(col);
-			_colorNumbers->Refresh();
-			_txtFontNumbers->SetForegroundColour(col);
-			_btnApply->Enable();
-		}
-		break;
+        InitColoursDialog(dialog, _colorNumbers->GetBackgroundColour());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxColour col = dialog.GetColourData().GetColour();
+            _colorNumbers->SetBackgroundColour(col);
+            _colorNumbers->Refresh();
+            _txtFontNumbers->SetForegroundColour(col);
+            _btnApply->Enable();
+        }
+        break;
     case ID_COLORS_STRINGS:
-		InitColoursDialog(dialog, _colorStrings->GetBackgroundColour());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxColour col = dialog.GetColourData().GetColour();
-			_colorStrings->SetBackgroundColour(col);
-			_colorStrings->Refresh();
-			_txtFontStrings->SetForegroundColour(col);
-			_btnApply->Enable();
-		}
-		break;
+        InitColoursDialog(dialog, _colorStrings->GetBackgroundColour());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxColour col = dialog.GetColourData().GetColour();
+            _colorStrings->SetBackgroundColour(col);
+            _colorStrings->Refresh();
+            _txtFontStrings->SetForegroundColour(col);
+            _btnApply->Enable();
+        }
+        break;
     case ID_COLORS_OPERATIONSBRACKETS:
-		InitColoursDialog(dialog, _colorOptsBrts->GetBackgroundColour());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxColour col = dialog.GetColourData().GetColour();
-			_colorOptsBrts->SetBackgroundColour(col);
-			_colorOptsBrts->Refresh();
-			_txtFontOptsBrts->SetForegroundColour(col);
-			_btnApply->Enable();
-		}
-		break;
+        InitColoursDialog(dialog, _colorOptsBrts->GetBackgroundColour());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxColour col = dialog.GetColourData().GetColour();
+            _colorOptsBrts->SetBackgroundColour(col);
+            _colorOptsBrts->Refresh();
+            _txtFontOptsBrts->SetForegroundColour(col);
+            _btnApply->Enable();
+        }
+        break;
     case ID_COLORS_MARKS:
-		InitColoursDialog(dialog, _colorMarks->GetBackgroundColour());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxColour col = dialog.GetColourData().GetColour();
-			_colorMarks->SetBackgroundColour(col);
-			_colorMarks->Refresh();
-			_txtFontMarks->SetForegroundColour(col);
-			_btnApply->Enable();
-		}
-		break;
+        InitColoursDialog(dialog, _colorMarks->GetBackgroundColour());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxColour col = dialog.GetColourData().GetColour();
+            _colorMarks->SetBackgroundColour(col);
+            _colorMarks->Refresh();
+            _txtFontMarks->SetForegroundColour(col);
+            _btnApply->Enable();
+        }
+        break;
     case ID_COLORS_COMMENTS:
-		InitColoursDialog(dialog, _colorComments->GetBackgroundColour());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxColour col = dialog.GetColourData().GetColour();
-			_colorComments->SetBackgroundColour(col);
-			_colorComments->Refresh();
-			_txtFontComments->SetForegroundColour(col);
-			_btnApply->Enable();
-		}
-		break;
+        InitColoursDialog(dialog, _colorComments->GetBackgroundColour());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxColour col = dialog.GetColourData().GetColour();
+            _colorComments->SetBackgroundColour(col);
+            _colorComments->Refresh();
+            _txtFontComments->SetForegroundColour(col);
+            _btnApply->Enable();
+        }
+        break;
     case ID_COLORS_BASEFONT:
-		InitColoursDialog(dialog, _colorBaseFont->GetBackgroundColour());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxColour col = dialog.GetColourData().GetColour();
-			_colorBaseFont->SetBackgroundColour(col);
-			_colorBaseFont->Refresh();
-			_txtFontBase->SetForegroundColour(col);
-			_btnApply->Enable();
-		}
-		break;
+        InitColoursDialog(dialog, _colorBaseFont->GetBackgroundColour());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxColour col = dialog.GetColourData().GetColour();
+            _colorBaseFont->SetBackgroundColour(col);
+            _colorBaseFont->Refresh();
+            _txtFontBase->SetForegroundColour(col);
+            _btnApply->Enable();
+        }
+        break;
     case ID_COLORS_TEXTBACK:
-		InitColoursDialog(dialog, _colorTextBack->GetBackgroundColour());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxColour col = dialog.GetColourData().GetColour();
-			_colorTextBack->SetBackgroundColour(col);
-			_colorTextBack->Refresh();
-			_txtFontStatements->SetBackgroundColour(col);
-			_txtFontFunctions->SetBackgroundColour(col);
-			_txtFontSysVariables->SetBackgroundColour(col);
-			_txtFontStrings->SetBackgroundColour(col);
-			_txtFontNumbers->SetBackgroundColour(col);
-			_txtFontOptsBrts->SetBackgroundColour(col);
-			_txtFontMarks->SetBackgroundColour(col);
-			_txtFontComments->SetBackgroundColour(col);
-			_txtFontBase->SetBackgroundColour(col);
-			_btnApply->Enable();
+        InitColoursDialog(dialog, _colorTextBack->GetBackgroundColour());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxColour col = dialog.GetColourData().GetColour();
+            _colorTextBack->SetBackgroundColour(col);
+            _colorTextBack->Refresh();
+            _txtFontStatements->SetBackgroundColour(col);
+            _txtFontFunctions->SetBackgroundColour(col);
+            _txtFontSysVariables->SetBackgroundColour(col);
+            _txtFontStrings->SetBackgroundColour(col);
+            _txtFontNumbers->SetBackgroundColour(col);
+            _txtFontOptsBrts->SetBackgroundColour(col);
+            _txtFontMarks->SetBackgroundColour(col);
+            _txtFontComments->SetBackgroundColour(col);
+            _txtFontBase->SetBackgroundColour(col);
+            _btnApply->Enable();
 
-		}
-		break;
+        }
+        break;
     case ID_COLORS_BASEBACK:
-		InitColoursDialog(dialog, _colorBaseBack->GetBackgroundColour());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxColour col = dialog.GetColourData().GetColour();
-			_colorBaseBack->SetBackgroundColour(col);
-			_colorBaseBack->Refresh();
-			_btnApply->Enable();
-		}
-		break;
+        InitColoursDialog(dialog, _colorBaseBack->GetBackgroundColour());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxColour col = dialog.GetColourData().GetColour();
+            _colorBaseBack->SetBackgroundColour(col);
+            _colorBaseBack->Refresh();
+            _btnApply->Enable();
+        }
+        break;
     }
 }
 
@@ -669,104 +669,104 @@ void OptionsDialog::OnFontSelect( wxCommandEvent &event )
     switch(event.GetId())
     {
     case ID_FONTS_STATEMENTS:
-		InitFontsDialog(dialog, _txtFontStatements->GetFont());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxFont font = dialog.GetFontData().GetChosenFont();
-			_txtFontStatements->SetValue(font.GetFaceName());
-			_txtFontStatements->SetFont(font);
-			_txtFontStatements->Refresh();
-			_btnApply->Enable();
-		}
-		break;
+        InitFontsDialog(dialog, _txtFontStatements->GetFont());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxFont font = dialog.GetFontData().GetChosenFont();
+            _txtFontStatements->SetValue(font.GetFaceName());
+            _txtFontStatements->SetFont(font);
+            _txtFontStatements->Refresh();
+            _btnApply->Enable();
+        }
+        break;
     case ID_FONTS_FUNCTIONS:
-		InitFontsDialog(dialog, _txtFontFunctions->GetFont());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxFont font = dialog.GetFontData().GetChosenFont();
-			_txtFontFunctions->SetValue(font.GetFaceName());
-			_txtFontFunctions->SetFont(font);
-			_txtFontFunctions->Refresh();
-			_btnApply->Enable();
-		}
-		break;
+        InitFontsDialog(dialog, _txtFontFunctions->GetFont());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxFont font = dialog.GetFontData().GetChosenFont();
+            _txtFontFunctions->SetValue(font.GetFaceName());
+            _txtFontFunctions->SetFont(font);
+            _txtFontFunctions->Refresh();
+            _btnApply->Enable();
+        }
+        break;
     case ID_FONTS_SYSVARIABLES:
-		InitFontsDialog(dialog, _txtFontSysVariables->GetFont());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxFont font = dialog.GetFontData().GetChosenFont();
-			_txtFontSysVariables->SetValue(font.GetFaceName());
-			_txtFontSysVariables->SetFont(font);
-			_txtFontSysVariables->Refresh();
-			_btnApply->Enable();
-		}
-		break;
+        InitFontsDialog(dialog, _txtFontSysVariables->GetFont());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxFont font = dialog.GetFontData().GetChosenFont();
+            _txtFontSysVariables->SetValue(font.GetFaceName());
+            _txtFontSysVariables->SetFont(font);
+            _txtFontSysVariables->Refresh();
+            _btnApply->Enable();
+        }
+        break;
     case ID_FONTS_NUMBERS:
-		InitFontsDialog(dialog, _txtFontNumbers->GetFont());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxFont font = dialog.GetFontData().GetChosenFont();
-			_txtFontNumbers->SetValue(font.GetFaceName());
-			_txtFontNumbers->SetFont(font);
-			_txtFontNumbers->Refresh();
-			_btnApply->Enable();
-		}
-		break;
+        InitFontsDialog(dialog, _txtFontNumbers->GetFont());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxFont font = dialog.GetFontData().GetChosenFont();
+            _txtFontNumbers->SetValue(font.GetFaceName());
+            _txtFontNumbers->SetFont(font);
+            _txtFontNumbers->Refresh();
+            _btnApply->Enable();
+        }
+        break;
     case ID_FONTS_STRINGS:
-		InitFontsDialog(dialog, _txtFontStrings->GetFont());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxFont font = dialog.GetFontData().GetChosenFont();
-			_txtFontStrings->SetValue(font.GetFaceName());
-			_txtFontStrings->SetFont(font);
-			_txtFontStrings->Refresh();
-			_btnApply->Enable();
-		}
-		break;
+        InitFontsDialog(dialog, _txtFontStrings->GetFont());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxFont font = dialog.GetFontData().GetChosenFont();
+            _txtFontStrings->SetValue(font.GetFaceName());
+            _txtFontStrings->SetFont(font);
+            _txtFontStrings->Refresh();
+            _btnApply->Enable();
+        }
+        break;
     case ID_FONTS_OPERATIONSBRACKETS:
-		InitFontsDialog(dialog, _txtFontOptsBrts->GetFont());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxFont font = dialog.GetFontData().GetChosenFont();
-			_txtFontOptsBrts->SetValue(font.GetFaceName());
-			_txtFontOptsBrts->SetFont(font);
-			_txtFontOptsBrts->Refresh();
-			_btnApply->Enable();
-		}
-		break;
+        InitFontsDialog(dialog, _txtFontOptsBrts->GetFont());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxFont font = dialog.GetFontData().GetChosenFont();
+            _txtFontOptsBrts->SetValue(font.GetFaceName());
+            _txtFontOptsBrts->SetFont(font);
+            _txtFontOptsBrts->Refresh();
+            _btnApply->Enable();
+        }
+        break;
     case ID_FONTS_MARKS:
-		InitFontsDialog(dialog, _txtFontMarks->GetFont());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxFont font = dialog.GetFontData().GetChosenFont();
-			_txtFontMarks->SetValue(font.GetFaceName());
-			_txtFontMarks->SetFont(font);
-			_txtFontMarks->Refresh();
-			_btnApply->Enable();
-		}
-		break;
+        InitFontsDialog(dialog, _txtFontMarks->GetFont());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxFont font = dialog.GetFontData().GetChosenFont();
+            _txtFontMarks->SetValue(font.GetFaceName());
+            _txtFontMarks->SetFont(font);
+            _txtFontMarks->Refresh();
+            _btnApply->Enable();
+        }
+        break;
     case ID_FONTS_COMMENTS:
-		InitFontsDialog(dialog, _txtFontComments->GetFont());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxFont font = dialog.GetFontData().GetChosenFont();
-			_txtFontComments->SetValue(font.GetFaceName());
-			_txtFontComments->SetFont(font);
-			_txtFontComments->Refresh();
-			_btnApply->Enable();
-		}
-		break;
+        InitFontsDialog(dialog, _txtFontComments->GetFont());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxFont font = dialog.GetFontData().GetChosenFont();
+            _txtFontComments->SetValue(font.GetFaceName());
+            _txtFontComments->SetFont(font);
+            _txtFontComments->Refresh();
+            _btnApply->Enable();
+        }
+        break;
     case ID_FONTS_BASE:
-		InitFontsDialog(dialog, _txtFontBase->GetFont());
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			wxFont font = dialog.GetFontData().GetChosenFont();
-			_txtFontBase->SetValue(font.GetFaceName());
-			_txtFontBase->SetFont(font);
-			_txtFontBase->Refresh();
-			_btnApply->Enable();
-		}
-		break;
+        InitFontsDialog(dialog, _txtFontBase->GetFont());
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            wxFont font = dialog.GetFontData().GetChosenFont();
+            _txtFontBase->SetValue(font.GetFaceName());
+            _txtFontBase->SetFont(font);
+            _txtFontBase->Refresh();
+            _btnApply->Enable();
+        }
+        break;
     }
 }
 
@@ -776,32 +776,32 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
     switch (event.GetId())
     {
     case ID_PATH_PLAYER:
-		dialog.Create(this, _("Select player's file"), wxEmptyString, wxEmptyString,
-			_("Player's file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			_txtPathPlayer->SetValue(dialog.GetPath());
-			_btnApply->Enable();
-		}
-		break;
+        dialog.Create(this, _("Select player's file"), wxEmptyString, wxEmptyString,
+            _("Player's file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            _txtPathPlayer->SetValue(dialog.GetPath());
+            _btnApply->Enable();
+        }
+        break;
     case ID_PATH_HELP:
-		dialog.Create(this, _("Select help file"), wxEmptyString, wxEmptyString,
-			_("Help file (*.chm)|*.chm|All files (*.*)|*.*"), wxFD_OPEN);
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			_txtPathHelp->SetValue(dialog.GetPath());
-			_btnApply->Enable();
-		}
-		break;
+        dialog.Create(this, _("Select help file"), wxEmptyString, wxEmptyString,
+            _("Help file (*.chm)|*.chm|All files (*.*)|*.*"), wxFD_OPEN);
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            _txtPathHelp->SetValue(dialog.GetPath());
+            _btnApply->Enable();
+        }
+        break;
     case ID_PATH_TXT2GAM:
-		dialog.Create(this, _("Select converter's file"), wxEmptyString, wxEmptyString,
-			_("Converter's file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			_txtPathTxt2Gam->SetValue(dialog.GetPath());
-			_btnApply->Enable();
-		}
-		break;
+        dialog.Create(this, _("Select converter's file"), wxEmptyString, wxEmptyString,
+            _("Converter's file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            _txtPathTxt2Gam->SetValue(dialog.GetPath());
+            _btnApply->Enable();
+        }
+        break;
     }
 }
 
@@ -832,11 +832,11 @@ void OptionsDialog::OnStateChanged(wxCommandEvent &event)
     switch (event.GetId())
     {
     case ID_AUTO_SAVE:
-		_spnAutoSaveMin->Enable(event.IsChecked());
-		break;
+        _spnAutoSaveMin->Enable(event.IsChecked());
+        break;
     case ID_FIRST_LOC:
-		_txtNameFirsLoc->Enable(event.IsChecked());
-		break;
+        _txtNameFirsLoc->Enable(event.IsChecked());
+        break;
     }
     _btnApply->Enable(true);
 }
@@ -919,23 +919,23 @@ void OptionsDialog::ApplySettings()
     _settings->SetFont(SYNTAX_BASE, _txtFontBase->GetFont());
 
     #ifdef __WXMSW__
-		HotkeyData hotKeyData;
-		size_t count = _lstHotKeys->GetItemCount();
-		HotkeysStore *hotKeysStore = _settings->GetHotKeys();
-		hotKeysStore->ClearHotkeysData();
-		for (size_t i = 0; i < count; ++i)
-			hotKeysStore->AddHotkeyData(_hotkeysData[i]);
+        HotkeyData hotKeyData;
+        size_t count = _lstHotKeys->GetItemCount();
+        HotkeysStore *hotKeysStore = _settings->GetHotKeys();
+        hotKeysStore->ClearHotkeysData();
+        for (size_t i = 0; i < count; ++i)
+            hotKeysStore->AddHotkeyData(_hotkeysData[i]);
     #endif
     int lang = _langTable[_cmbLang->GetStringSelection()];
      _controls->UpdateLocale(lang);
     _settings->SetIdLang(lang);
     if (_chkFirstLoc->GetValue())
-		_settings->SetFirstLocName(_txtNameFirsLoc->GetValue());
+        _settings->SetFirstLocName(_txtNameFirsLoc->GetValue());
     else
     {
-		_settings->SetFirstLocName(wxEmptyString);
-		_settings->PostInitLocaleSettings();
-		_txtNameFirsLoc->SetValue(_settings->GetFirstLocName());
+        _settings->SetFirstLocName(wxEmptyString);
+        _settings->PostInitLocaleSettings();
+        _txtNameFirsLoc->SetValue(_settings->GetFirstLocName());
     }
     _settings->NotifyAll();
     _btnApply->Enable(false);
@@ -1030,17 +1030,17 @@ void OptionsDialog::InitOptionsDialog()
     _spnAutoSaveMin->Enable(_settings->GetAutoSave());
 
     #ifdef __WXMSW__
-		HotkeysStore *hotKeysStore = _settings->GetHotKeys();
-		size_t count = hotKeysStore->GetHotkeysCount();
-		_lstHotKeys->DeleteAllItems();
-		_hotkeysData.Clear();
-		for (size_t i = 0; i < count; ++i)
-		{
-			const HotkeyData &hotKeyData = hotKeysStore->GetHotkeyData(i);
-			_lstHotKeys->InsertItem(i, hotKeyData.GetKeysAsString());
-			_lstHotKeys->SetItem(i, 1, hotKeyData.CommandText);
-			_hotkeysData.Add(hotKeyData);
-		}
+        HotkeysStore *hotKeysStore = _settings->GetHotKeys();
+        size_t count = hotKeysStore->GetHotkeysCount();
+        _lstHotKeys->DeleteAllItems();
+        _hotkeysData.Clear();
+        for (size_t i = 0; i < count; ++i)
+        {
+            const HotkeyData &hotKeyData = hotKeysStore->GetHotkeyData(i);
+            _lstHotKeys->InsertItem(i, hotKeyData.GetKeysAsString());
+            _lstHotKeys->SetItem(i, 1, hotKeyData.CommandText);
+            _hotkeysData.Add(hotKeyData);
+        }
     #endif
     UpdateLanguagesList();
     SetSize(_settings->GetOptionsDialogWidth(), _settings->GetOptionsDialogHeight());
@@ -1055,41 +1055,41 @@ void OptionsDialog::EditHotKey()
     long index = _lstHotKeys->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
     if (index != wxNOT_FOUND)
     {
-		OptionsHotkeysDialog dialog(this, _("Edit macro"), _controls);
-		dialog.SetHotkeyData(_hotkeysData[index]);
-		dialog.CenterOnParent();
-		do
-		{
-			if (dialog.ShowModal() == wxID_OK)
-			{
-				hotKeyData = dialog.GetHotkeyData();
-				if (hotKeyData.HotKeyCode && !hotKeyData.CommandText.IsEmpty())
-				{
-					ChkSysHotKey chkHKey;
-					if (!chkHKey.CheckSystemHotKeys(_parent->GetMenuBar(), hotKeyData.HotKeyCode, hotKeyData.Flags))
-					{
-						long idx = _lstHotKeys->FindItem(-1, hotKeyData.GetKeysAsString());
-						if (idx == wxNOT_FOUND || idx == index)
-						{
-							_lstHotKeys->DeleteItem(index);
-							_lstHotKeys->InsertItem(index, hotKeyData.GetKeysAsString());
-							_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
-							_hotkeysData[index] = hotKeyData;
-							_btnApply->Enable(true);
-							isError = false;
-						}
-						else
-							_controls->ShowMessage(QGEN_MSG_EXISTS_HKEY);
-					}
-					else
-						_controls->ShowMessage(QGEN_MSG_EXISTS_S_HKEY);
-				}
-				else
-					_controls->ShowMessage(QGEN_MSG_EMPTYDATA);
-			}
-			else
-				isError = false;
-		} while (isError);
+        OptionsHotkeysDialog dialog(this, _("Edit macro"), _controls);
+        dialog.SetHotkeyData(_hotkeysData[index]);
+        dialog.CenterOnParent();
+        do
+        {
+            if (dialog.ShowModal() == wxID_OK)
+            {
+                hotKeyData = dialog.GetHotkeyData();
+                if (hotKeyData.HotKeyCode && !hotKeyData.CommandText.IsEmpty())
+                {
+                    ChkSysHotKey chkHKey;
+                    if (!chkHKey.CheckSystemHotKeys(_parent->GetMenuBar(), hotKeyData.HotKeyCode, hotKeyData.Flags))
+                    {
+                        long idx = _lstHotKeys->FindItem(-1, hotKeyData.GetKeysAsString());
+                        if (idx == wxNOT_FOUND || idx == index)
+                        {
+                            _lstHotKeys->DeleteItem(index);
+                            _lstHotKeys->InsertItem(index, hotKeyData.GetKeysAsString());
+                            _lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
+                            _hotkeysData[index] = hotKeyData;
+                            _btnApply->Enable(true);
+                            isError = false;
+                        }
+                        else
+                            _controls->ShowMessage(QGEN_MSG_EXISTS_HKEY);
+                    }
+                    else
+                        _controls->ShowMessage(QGEN_MSG_EXISTS_S_HKEY);
+                }
+                else
+                    _controls->ShowMessage(QGEN_MSG_EMPTYDATA);
+            }
+            else
+                isError = false;
+        } while (isError);
     }
 }
 
@@ -1102,34 +1102,34 @@ void OptionsDialog::AddHotKey()
     dialog.CenterOnParent();
     do
     {
-		if (dialog.ShowModal() == wxID_OK)
-		{
-			hotKeyData = dialog.GetHotkeyData();
-			if (hotKeyData.HotKeyCode && !hotKeyData.CommandText.IsEmpty())
-			{
-				ChkSysHotKey chkHKey;
-				if (!chkHKey.CheckSystemHotKeys(_parent->GetMenuBar(), hotKeyData.HotKeyCode, hotKeyData.Flags))
-				{
-					if (_lstHotKeys->FindItem(-1, hotKeyData.GetKeysAsString()) == wxNOT_FOUND)
-					{
-						index = _lstHotKeys->GetItemCount();
-						_lstHotKeys->InsertItem(index, hotKeyData.GetKeysAsString());
-						_lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
-						_hotkeysData.Add(hotKeyData);
-						_btnApply->Enable(true);
-						isError = false;
-					}
-					else
-						_controls->ShowMessage(QGEN_MSG_EXISTS_HKEY);
-				}
-				else
-					_controls->ShowMessage(QGEN_MSG_EXISTS_S_HKEY);
-			}
-			else
-				_controls->ShowMessage(QGEN_MSG_EMPTYDATA);
-		}
-		else
-			isError = false;
+        if (dialog.ShowModal() == wxID_OK)
+        {
+            hotKeyData = dialog.GetHotkeyData();
+            if (hotKeyData.HotKeyCode && !hotKeyData.CommandText.IsEmpty())
+            {
+                ChkSysHotKey chkHKey;
+                if (!chkHKey.CheckSystemHotKeys(_parent->GetMenuBar(), hotKeyData.HotKeyCode, hotKeyData.Flags))
+                {
+                    if (_lstHotKeys->FindItem(-1, hotKeyData.GetKeysAsString()) == wxNOT_FOUND)
+                    {
+                        index = _lstHotKeys->GetItemCount();
+                        _lstHotKeys->InsertItem(index, hotKeyData.GetKeysAsString());
+                        _lstHotKeys->SetItem(index, 1, hotKeyData.CommandText);
+                        _hotkeysData.Add(hotKeyData);
+                        _btnApply->Enable(true);
+                        isError = false;
+                    }
+                    else
+                        _controls->ShowMessage(QGEN_MSG_EXISTS_HKEY);
+                }
+                else
+                    _controls->ShowMessage(QGEN_MSG_EXISTS_S_HKEY);
+            }
+            else
+                _controls->ShowMessage(QGEN_MSG_EMPTYDATA);
+        }
+        else
+            isError = false;
     } while (isError);
 }
 
@@ -1138,16 +1138,16 @@ void OptionsDialog::DeleteHotKey()
     long index = _lstHotKeys->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
     if (index >= 0)
     {
-		_lstHotKeys->DeleteItem(index);
-		_hotkeysData.RemoveAt(index);
-		if (_lstHotKeys->GetItemCount() == index)
-			--index;
-		if (index >= 0)
-		{
-			_lstHotKeys->SetItemState(index, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-			_lstHotKeys->SetFocus();
-		}
-		_btnApply->Enable(true);
+        _lstHotKeys->DeleteItem(index);
+        _hotkeysData.RemoveAt(index);
+        if (_lstHotKeys->GetItemCount() == index)
+            --index;
+        if (index >= 0)
+        {
+            _lstHotKeys->SetItemState(index, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+            _lstHotKeys->SetFocus();
+        }
+        _btnApply->Enable(true);
     }
 }
 
@@ -1162,17 +1162,17 @@ void OptionsDialog::UpdateLanguagesList()
     wxDir dir(_settings->GetPath() + wxT("langs"));
     if (dir.IsOpened())
     {
-		for (bool cont = dir.GetFirst(&filename, wxT("*"), wxDIR_DEFAULT); cont; cont = dir.GetNext(&filename))
-		{
-			if (langinfo = wxLocale::FindLanguageInfo(filename))
-			{
-				_langTable[langinfo->Description] = langinfo->Language;
-				_cmbLang->Append(langinfo->Description);
-			}
-		}
+        for (bool cont = dir.GetFirst(&filename, wxT("*"), wxDIR_DEFAULT); cont; cont = dir.GetNext(&filename))
+        {
+            if (langinfo = wxLocale::FindLanguageInfo(filename))
+            {
+                _langTable[langinfo->Description] = langinfo->Language;
+                _cmbLang->Append(langinfo->Description);
+            }
+        }
     }
     wxString name(wxLocale::GetLanguageName(_settings->GetLangId()));
     if (name.IsEmpty())
-		name = _("Default");
+        name = _("Default");
     _cmbLang->SetStringSelection(name);
 }

@@ -29,43 +29,43 @@
 
     enum CloseTypePage
     {
-		CLOSE_ALL,
-		CLOSE_ALLEXCEPTSELECTED,
-		CLOSE_SELECTED
+        CLOSE_ALL,
+        CLOSE_ALLEXCEPTSELECTED,
+        CLOSE_SELECTED
     };
 
     class LocationsNotebook : public wxAuiNotebook, public IObserver
     {
-		DECLARE_CLASS(LocationsNotebook)
-		DECLARE_EVENT_TABLE()
+        DECLARE_CLASS(LocationsNotebook)
+        DECLARE_EVENT_TABLE()
     private:
-		IControls		*_controls;
-		DataContainer    *_container;
-		int				selectedPage;
+        IControls        *_controls;
+        DataContainer    *_container;
+        int                selectedPage;
 
-		void OnClosePage(wxAuiNotebookEvent &event);
-		void OnPageChanged(wxAuiNotebookEvent &event);
-		void OnRightUpClick(wxAuiNotebookEvent &event);
-		void OnNavigationKeyNotebook(wxNavigationKeyEvent &event);
+        void OnClosePage(wxAuiNotebookEvent &event);
+        void OnPageChanged(wxAuiNotebookEvent &event);
+        void OnRightUpClick(wxAuiNotebookEvent &event);
+        void OnNavigationKeyNotebook(wxNavigationKeyEvent &event);
 
-		void NotifyClosePage(int index);
+        void NotifyClosePage(int index);
     public:
-		LocationsNotebook(wxWindow *parent, wxWindowID id, IControls *controls,
-						  long style = wxAUI_NB_DEFAULT_STYLE|wxAUI_NB_WINDOWLIST_BUTTON);
+        LocationsNotebook(wxWindow *parent, wxWindowID id, IControls *controls,
+                          long style = wxAUI_NB_DEFAULT_STYLE|wxAUI_NB_WINDOWLIST_BUTTON);
 
-		~LocationsNotebook();
+        ~LocationsNotebook();
 
-		LocationPage *GetSelectedPage();
-		LocationPage *GetPageByLocName(const wxString &name);
-		int FindPageIndex(const wxString& namePage);
-		LocationPage *OpenLocationPage(const wxString& namePage, bool isSelect);
-		bool DeletePage(size_t page);
-		bool DeleteAllPages(CloseTypePage closeType, int selIndex);
-		void LoadOpenedPages();
-		void SaveOpenedPages();
-		void Update(bool isFromObservable = false);
-		void AdvanceSelection(bool forward = true);
-		void SwitchPageFixed(size_t selPage);
+        LocationPage *GetSelectedPage();
+        LocationPage *GetPageByLocName(const wxString &name);
+        int FindPageIndex(const wxString& namePage);
+        LocationPage *OpenLocationPage(const wxString& namePage, bool isSelect);
+        bool DeletePage(size_t page);
+        bool DeleteAllPages(CloseTypePage closeType, int selIndex);
+        void LoadOpenedPages();
+        void SaveOpenedPages();
+        void Update(bool isFromObservable = false);
+        void AdvanceSelection(bool forward = true);
+        void SwitchPageFixed(size_t selPage);
     };
 
 #endif

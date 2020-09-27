@@ -38,9 +38,9 @@ HotKeyTextBox::HotKeyTextBox( wxWindow *parent, wxWindowID id, const wxString &v
 void HotKeyTextBox::AppendAccel(wxString &data, const wxString &key) const
 {
     if (data.IsEmpty())
-		data.Append(key);
+        data.Append(key);
     else
-		data.Append(wxString::Format(wxT("+%s"), key.wx_str()));
+        data.Append(wxString::Format(wxT("+%s"), key.wx_str()));
 }
 
 void HotKeyTextBox::OnKeyDown( wxKeyEvent& event )
@@ -48,35 +48,35 @@ void HotKeyTextBox::OnKeyDown( wxKeyEvent& event )
     int keyCode = event.GetKeyCode();
     if (_hotKeyCode)
     {
-		_hotKey.Clear();
-		_flags = 0;
-		_hotKeyCode = 0;
+        _hotKey.Clear();
+        _flags = 0;
+        _hotKeyCode = 0;
     }
     if (event.GetModifiers() != wxMOD_NONE)
     {
-		if (event.AltDown() && !(_flags & wxACCEL_ALT))
-		{
-			AppendAccel(_hotKey, wxT("Alt"));
-			_flags |= wxACCEL_ALT;
-		}
-		if (event.ControlDown() && !(_flags & wxACCEL_CTRL))
-		{
-			AppendAccel(_hotKey, wxT("Ctrl"));
-			_flags |= wxACCEL_CTRL;
-		}
-		if (event.ShiftDown() && !(_flags & wxACCEL_SHIFT))
-		{
-			AppendAccel(_hotKey, wxT("Shift"));
-			_flags |= wxACCEL_SHIFT;
-		}
-		if (((keyCode >= wxT('A') && keyCode <= wxT('Z')) || 
-			(keyCode >= wxT('0') && keyCode <= wxT('9'))) && 
-			!_hotKeyCode)
-		{
-			_hotKey = wxString::Format(wxT("%s+%c"), _hotKey.wx_str(), keyCode);
-			_hotKeyCode = keyCode;
-		}
-		SetValue(_hotKey);
+        if (event.AltDown() && !(_flags & wxACCEL_ALT))
+        {
+            AppendAccel(_hotKey, wxT("Alt"));
+            _flags |= wxACCEL_ALT;
+        }
+        if (event.ControlDown() && !(_flags & wxACCEL_CTRL))
+        {
+            AppendAccel(_hotKey, wxT("Ctrl"));
+            _flags |= wxACCEL_CTRL;
+        }
+        if (event.ShiftDown() && !(_flags & wxACCEL_SHIFT))
+        {
+            AppendAccel(_hotKey, wxT("Shift"));
+            _flags |= wxACCEL_SHIFT;
+        }
+        if (((keyCode >= wxT('A') && keyCode <= wxT('Z')) ||
+            (keyCode >= wxT('0') && keyCode <= wxT('9'))) &&
+            !_hotKeyCode)
+        {
+            _hotKey = wxString::Format(wxT("%s+%c"), _hotKey.wx_str(), keyCode);
+            _hotKeyCode = keyCode;
+        }
+        SetValue(_hotKey);
     }
 }
 
@@ -84,8 +84,8 @@ void HotKeyTextBox::OnKeyUp( wxKeyEvent& event )
 {
     if (!_hotKeyCode)
     {
-		Clear();
-		_hotKey.Clear();
-		_flags = 0;
+        Clear();
+        _hotKey.Clear();
+        _flags = 0;
     }
 }

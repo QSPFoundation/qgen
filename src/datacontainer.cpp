@@ -46,7 +46,7 @@ int DataContainer::FindFolderIndex( const wxString &name ) const
     wxString lwrName(name.Lower());
     int i, count = _folders.GetCount();
     for (i = 0; i < count; ++i)
-		if (lwrName == _folders[i].name.Lower()) return i;
+        if (lwrName == _folders[i].name.Lower()) return i;
     return wxNOT_FOUND;
 }
 
@@ -55,7 +55,7 @@ int DataContainer::FindLocationIndex(const wxString & nameLocation) const
     wxString lwrName(nameLocation.Lower());
     int i, count = locationArray.GetCount();
     for (i = 0; i < count; ++i)
-		if (lwrName == locationArray[i].name.Lower()) return i;
+        if (lwrName == locationArray[i].name.Lower()) return i;
     return wxNOT_FOUND;
 }
 
@@ -65,7 +65,7 @@ int DataContainer::FindActionIndex(size_t indexLoc, const wxString& actName) con
     LocationData &loc = locationArray[indexLoc];
     int i, count = loc.actionArray.GetCount();
     for (i = 0; i < count; ++i)
-		if (lwrName == loc.actionArray[i].description.Lower()) return i;
+        if (lwrName == loc.actionArray[i].description.Lower()) return i;
     return wxNOT_FOUND;
 }
 
@@ -180,8 +180,8 @@ void DataContainer::DeleteAllActions( size_t locIndex )
 bool DataContainer::IsEmptyLoc(size_t locIndex) const
 {
     if (locationArray[locIndex].onVisit.IsEmpty() &&
-		locationArray[locIndex].description.IsEmpty() &&
-		locationArray[locIndex].actionArray.IsEmpty()) return true;
+        locationArray[locIndex].description.IsEmpty() &&
+        locationArray[locIndex].actionArray.IsEmpty()) return true;
     return false;
 }
 
@@ -223,7 +223,7 @@ bool DataContainer::GetLocActions( size_t indexLoc, wxArrayString & actions ) co
 {
     actions.Clear();
     for (size_t i = 0; i < locationArray[indexLoc].actionArray.Count(); ++i)
-		actions.Add(locationArray[indexLoc].actionArray[i].description);
+        actions.Add(locationArray[indexLoc].actionArray[i].description);
     return true;
 }
 
@@ -245,7 +245,7 @@ void DataContainer::MoveActionTo( size_t locIndex, size_t actIndex, size_t moveT
 void DataContainer::SetLocFolder( size_t locIndex, int folderIndex )
 {
     if (locationArray[locIndex].folderIndex == folderIndex)
-		return;
+        return;
     locationArray[locIndex].folderIndex = folderIndex;
     _isSaved = false;
 }
@@ -280,16 +280,16 @@ void DataContainer::DeleteFolder( size_t folderIndex )
     long count = locationArray.GetCount();
     for (long i = count - 1; i >= 0; --i)
     {
-		if (locationArray[i].folderIndex == folderIndex)
-			locationArray[i].folderIndex = -1;
-		else if (locationArray[i].folderIndex > (int)folderIndex)
-			locationArray[i].folderIndex--;
+        if (locationArray[i].folderIndex == folderIndex)
+            locationArray[i].folderIndex = -1;
+        else if (locationArray[i].folderIndex > (int)folderIndex)
+            locationArray[i].folderIndex--;
     }
     count = _folders.GetCount();
     for (long i = count - 1; i >= 0; --i)
     {
-		if ((size_t) i > folderIndex)
-			_folders[i].pos--;
+        if ((size_t) i > folderIndex)
+            _folders[i].pos--;
     }
     _folders.RemoveAt(folderIndex);
     _isSaved = false;
@@ -325,8 +325,8 @@ int DataContainer::FindFolderForPos( size_t pos ) const
     size_t count = _folders.GetCount();
     for (size_t i = 0; i < count; ++i)
     {
-		if (_folders[i].pos == pos)
-			return i;
+        if (_folders[i].pos == pos)
+            return i;
     }
     return wxNOT_FOUND;
 }
@@ -340,27 +340,27 @@ void DataContainer::SortLocsInFolder( int folderIndex, bool isAscending )
     long startIndex = -1;
     for (size_t i = 0; i < count; ++i)
     {
-		if (locationArray[i].folderIndex == folderIndex)
-		{
-			if (startIndex < 0) startIndex = i;
-			positions.Add(startIndex);
-			names.Add(locationArray[i].name);
-		}
-		else
-			startIndex = -1;
+        if (locationArray[i].folderIndex == folderIndex)
+        {
+            if (startIndex < 0) startIndex = i;
+            positions.Add(startIndex);
+            names.Add(locationArray[i].name);
+        }
+        else
+            startIndex = -1;
     }
     if (isAscending)
-		names.Sort(CmpLocationsAsc);
+        names.Sort(CmpLocationsAsc);
     else
-		names.Sort(CmpLocationsDesc);
+        names.Sort(CmpLocationsDesc);
     size_t namesCount = names.GetCount();
     for (size_t i = 0; i < namesCount; ++i)
     {
-		long index = FindLocationIndex(names[i]);
-		long moveTo = i + positions[i];
-		if (moveTo >= count)
-			moveTo = count - 1;
-		MoveLocationTo(index, moveTo);
+        long index = FindLocationIndex(names[i]);
+        long moveTo = i + positions[i];
+        if (moveTo >= count)
+            moveTo = count - 1;
+        MoveLocationTo(index, moveTo);
     }
     locationArray.Insert(data, 0);
 }

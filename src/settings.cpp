@@ -34,9 +34,9 @@ Settings::Settings(const wxString &path)
 void Settings::InitSettings()
 {
     #ifdef __WXMSW__
-		_currentConfigPath = _path;
+        _currentConfigPath = _path;
     #else
-		_currentConfigPath = wxGetHomeDir();
+        _currentConfigPath = wxGetHomeDir();
     #endif
     _currentConfigPath = wxFileName(_currentConfigPath, wxT("qgen.cfg")).GetFullPath();
     _currentPlayerPath = wxFileName(_path, wxT("qspgui.exe")).GetFullPath();
@@ -52,10 +52,10 @@ void Settings::InitSettings()
     _isShowStatusBar = true;
 
     _panelsPos = wxT("layout2|")\
-		wxT("name=LocationsNotebook;state=768;dir=5;layer=0;row=0;pos=0;prop=100000|")\
-		wxT("name=Toolbar;state=2106096;dir=1;layer=10;row=0;pos=0;prop=100000;bestw=540;besth=34|")\
-		wxT("name=LocationsList;state=31459324;dir=4;layer=1;row=0;pos=0;prop=100000;bestw=166|")\
-		wxT("dock_size(5,0,0)=186|dock_size(4,1,0)=168|dock_size(1,10,0)=28|");
+        wxT("name=LocationsNotebook;state=768;dir=5;layer=0;row=0;pos=0;prop=100000|")\
+        wxT("name=Toolbar;state=2106096;dir=1;layer=10;row=0;pos=0;prop=100000;bestw=540;besth=34|")\
+        wxT("name=LocationsList;state=31459324;dir=4;layer=1;row=0;pos=0;prop=100000;bestw=166|")\
+        wxT("dock_size(5,0,0)=186|dock_size(4,1,0)=168|dock_size(1,10,0)=28|");
 
     _isAutoSave = false;
     _autoSaveInterval = 5;
@@ -103,7 +103,7 @@ void Settings::InitSettings()
 void Settings::PostInitLocaleSettings()
 {
     if (_firstLocName.IsEmpty())
-		_firstLocName = _("Start");
+        _firstLocName = _("Start");
 }
 
 void Settings::LoadSettings()
@@ -172,14 +172,14 @@ void Settings::LoadSettings()
     _searchDataStore.LoadSearchData(cfg);
 
     if (langName.IsEmpty())
-		_idLang = wxLANGUAGE_DEFAULT;
+        _idLang = wxLANGUAGE_DEFAULT;
     else
     {
-		const wxLanguageInfo *langInfo = wxLocale::FindLanguageInfo(langName);
-		if (langInfo)
-			_idLang = langInfo->Language;
-		else
-			_idLang = wxLANGUAGE_DEFAULT;
+        const wxLanguageInfo *langInfo = wxLocale::FindLanguageInfo(langName);
+        if (langInfo)
+            _idLang = langInfo->Language;
+        else
+            _idLang = wxLANGUAGE_DEFAULT;
     }
 }
 
@@ -267,5 +267,5 @@ void Settings::RemoveAllObservers()
 void Settings::NotifyAll()
 {
     for (ObserversList::const_iterator i = _observers.begin(); i != _observers.end(); ++i)
-		(*i)->Update(true);
+        (*i)->Update(true);
 }

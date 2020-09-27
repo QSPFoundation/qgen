@@ -103,27 +103,27 @@ void KeysParser::ParseText(const wxString &text)
     ::GetKeyboardState(oldStates);
     if (oldStates[VK_MENU]) ReleaseAlt();
     for (int key = 0; key < 256; ++key)
-		oldStates[key] &= 0x7F;
+        oldStates[key] &= 0x7F;
     ::SetKeyboardState(oldStates);
     while (i != text.end())
     {
-		if (*i == wxT('{'))
-		{
-			keys.clear();
-			while (++i != text.end())
-			{
-				if (*i == wxT('}'))
-				{
-					OnKeysPress(keys);
-					break;
-				}
-				keys.append(*i);
-			}
-			if (i == text.end()) break;
-		}
-		else
-			OnKeyPress(*i);
-		++i;
+        if (*i == wxT('{'))
+        {
+            keys.clear();
+            while (++i != text.end())
+            {
+                if (*i == wxT('}'))
+                {
+                    OnKeysPress(keys);
+                    break;
+                }
+                keys.append(*i);
+            }
+            if (i == text.end()) break;
+        }
+        else
+            OnKeyPress(*i);
+        ++i;
     }
     wxYieldIfNeeded();
 }
@@ -138,28 +138,28 @@ void KeysParser::OnKeysPress(const wxString &text)
     bool hasEvent = false;
     for (size_t i = 0; i < strs.GetCount(); ++i)
     {
-		if (count >= 9) break;
-		str = strs[i].Trim().Trim(false);
-		length = str.length();
-		if (length == 0) continue;
-		code = (length > 1 ? _keysTable[str] : str[0]);
-		switch (code)
-		{
-		case 0xFF:
-			hasEvent = true;
-		case 0:
-			continue;
-		}
-		inputs[count].type = INPUT_KEYBOARD;
-		inputs[count].ki.wVk = code;
-		++count;
+        if (count >= 9) break;
+        str = strs[i].Trim().Trim(false);
+        length = str.length();
+        if (length == 0) continue;
+        code = (length > 1 ? _keysTable[str] : str[0]);
+        switch (code)
+        {
+        case 0xFF:
+            hasEvent = true;
+        case 0:
+            continue;
+        }
+        inputs[count].type = INPUT_KEYBOARD;
+        inputs[count].ki.wVk = code;
+        ++count;
     }
     if (count > 0)
     {
-		::SendInput(count, inputs, sizeof(INPUT));
-		for (size_t i = 0; i < count; ++i)
-			inputs[i].ki.dwFlags |= KEYEVENTF_KEYUP;
-		::SendInput(count, inputs, sizeof(INPUT));
+        ::SendInput(count, inputs, sizeof(INPUT));
+        for (size_t i = 0; i < count; ++i)
+            inputs[i].ki.dwFlags |= KEYEVENTF_KEYUP;
+        ::SendInput(count, inputs, sizeof(INPUT));
     }
     if (hasEvent) wxYieldIfNeeded();
 }
@@ -169,12 +169,12 @@ bool KeysParser::ExecuteHotkeyAction( int keyCode, int modifiers )
     size_t countHotKeys = _hotKeysStore->GetHotkeysCount();
     for (size_t i = 0; i < countHotKeys; ++i)
     {
-		const HotkeyData &hotKey = _hotKeysStore->GetHotkeyData(i);
-		if (keyCode == hotKey.HotKeyCode && modifiers == hotKey.Flags)
-		{
-			ParseText(hotKey.CommandText);
-			return true;
-		}
+        const HotkeyData &hotKey = _hotKeysStore->GetHotkeyData(i);
+        if (keyCode == hotKey.HotKeyCode && modifiers == hotKey.Flags)
+        {
+            ParseText(hotKey.CommandText);
+            return true;
+        }
     }
     return false;
 }

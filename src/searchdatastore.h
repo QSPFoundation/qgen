@@ -28,19 +28,19 @@
     class SearchDataStore
     {
     private:
-		wxArrayString _searchStrings;
-		wxArrayString _replaceStrings;
+        wxArrayString _searchStrings;
+        wxArrayString _replaceStrings;
 
     public:
-		SearchDataStore();
+        SearchDataStore();
 
-		const wxArrayString &GetSearchStrings() const { return _searchStrings; }
-		const wxArrayString &GetReplaceStrings() const { return _replaceStrings; }
-		void AddSearchString(const wxString &text);
-		void AddReplaceString(const wxString &text);
-		void ClearStore();
-		void SaveSearchData(wxConfigBase &fileConfig);
-		void LoadSearchData(wxConfigBase &fileConfig);
+        const wxArrayString &GetSearchStrings() const { return _searchStrings; }
+        const wxArrayString &GetReplaceStrings() const { return _replaceStrings; }
+        void AddSearchString(const wxString &text);
+        void AddReplaceString(const wxString &text);
+        void ClearStore();
+        void SaveSearchData(wxConfigBase &fileConfig);
+        void LoadSearchData(wxConfigBase &fileConfig);
     };
 
 #endif

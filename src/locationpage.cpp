@@ -77,18 +77,18 @@ void LocationPage::LocDescVisible(bool isVisible)
     int pageWidth  = _splitterv_up->GetSize().GetWidth();
     if (isVisible)
     {
-		_splitterv_up->SetSashGravity(_settings->GetWidthsCoeff1());
-		if (_descWidth < 0 || _descWidth > pageWidth)
-			_descWidth = pageWidth * _settings->GetWidthsCoeff1();
-		Freeze();
-		_splitterv_up->SplitVertically(_locDesc, _locCode);
-		_splitterv_up->SetSashPosition(_descWidth);
-		Thaw();
+        _splitterv_up->SetSashGravity(_settings->GetWidthsCoeff1());
+        if (_descWidth < 0 || _descWidth > pageWidth)
+            _descWidth = pageWidth * _settings->GetWidthsCoeff1();
+        Freeze();
+        _splitterv_up->SplitVertically(_locDesc, _locCode);
+        _splitterv_up->SetSashPosition(_descWidth);
+        Thaw();
     }
     else
     {
-		_descWidth = _splitterv_up->GetSashPosition();
-		_splitterv_up->Unsplit(_locDesc);
+        _descWidth = _splitterv_up->GetSashPosition();
+        _splitterv_up->Unsplit(_locDesc);
     }
 }
 
@@ -97,18 +97,18 @@ void LocationPage::LocActsVisible(bool isVisible)
     int pageHeight = _splitterh->GetSize().GetHeight();
     if (isVisible)
     {
-		_splitterh->SetSashGravity(_settings->GetHeightsCoeff());
-		if (_actsHeight < 0 || _actsHeight > pageHeight)
-			_actsHeight = pageHeight * _settings->GetHeightsCoeff();
-		Freeze();
-		_splitterh->SplitHorizontally(_splitterv_up, _locActs);
-		_splitterh->SetSashPosition(_actsHeight);
-		Thaw();
+        _splitterh->SetSashGravity(_settings->GetHeightsCoeff());
+        if (_actsHeight < 0 || _actsHeight > pageHeight)
+            _actsHeight = pageHeight * _settings->GetHeightsCoeff();
+        Freeze();
+        _splitterh->SplitHorizontally(_splitterv_up, _locActs);
+        _splitterh->SetSashPosition(_actsHeight);
+        Thaw();
     }
     else
     {
-		_actsHeight = _splitterh->GetSashPosition();
-		_splitterh->Unsplit(_locActs);
+        _actsHeight = _splitterh->GetSashPosition();
+        _splitterh->Unsplit(_locActs);
     }
 }
 

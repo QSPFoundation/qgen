@@ -28,17 +28,17 @@
 
     class ToolBar : public wxAuiToolBar, public IObserver
     {
-		DECLARE_CLASS(ToolBar)
-		DECLARE_EVENT_TABLE()
+        DECLARE_CLASS(ToolBar)
+        DECLARE_EVENT_TABLE()
     public:
-		ToolBar(wxWindow *parent, wxWindowID id, IControls *controls);
-		~ToolBar();
+        ToolBar(wxWindow *parent, wxWindowID id, IControls *controls);
+        ~ToolBar();
     private:
-		IControls *_controls;
+        IControls *_controls;
 
-		void OnMotion(wxMouseEvent &evt);
-		void OnLeaveWindow(wxMouseEvent &evt);
-		void Update(bool isFromObservable = false);
+        void OnMotion(wxMouseEvent &evt);
+        void OnLeaveWindow(wxMouseEvent &evt);
+        void Update(bool isFromObservable = false);
     };
 
 #endif

@@ -25,8 +25,8 @@
     class ILocationPage
     {
     public:
-		virtual size_t GetLocationIndex() = 0;
-		virtual void RefreshActions() = 0;
+        virtual size_t GetLocationIndex() = 0;
+        virtual void RefreshActions() = 0;
     };
 
 #endif

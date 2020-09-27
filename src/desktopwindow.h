@@ -27,7 +27,7 @@
     class DesktopWindow : public wxWindow
     {
     public:
-		HWND GetHWND() const { return ::GetDesktopWindow(); }
+        HWND GetHWND() const { return ::GetDesktopWindow(); }
     };
 
 #endif

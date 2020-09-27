@@ -34,161 +34,161 @@
     #include "mergedialog.h"
     #include "game.h"
     #ifdef __WXMSW__
-		#include "keysparser.h"
+        #include "keysparser.h"
     #endif
 
     struct DataSearch
     {
-		int			idxLoc;
-		int			idxAct;
-		long		startPos;
-		long		stringLen;
-		int			countChecking;
-		SearchPlace foundAt;
-		SearchPlace findAt;
-		bool		isFoundAny;
+        int            idxLoc;
+        int            idxAct;
+        long        startPos;
+        long        stringLen;
+        int            countChecking;
+        SearchPlace foundAt;
+        SearchPlace findAt;
+        bool        isFoundAny;
     };
 
     class Controls : public IControls
     {
     private:
-		MainFrame			*_mainFrame;
-		LocationsListBox    *_locListBox;
-		LocationsNotebook    *_locNotebook;
-		DataContainer		*_container;
-		Settings			*_settings;
+        MainFrame            *_mainFrame;
+        LocationsListBox    *_locListBox;
+        LocationsNotebook    *_locNotebook;
+        DataContainer        *_container;
+        Settings            *_settings;
 
-		#ifdef __WXMSW__
-			KeysParser		*_keysParser;
-		#endif
+        #ifdef __WXMSW__
+            KeysParser        *_keysParser;
+        #endif
 
-		KeywordsStore		*_keywordsStore;
-		DataSearch			_dataSearch;
-		wxString			_currentPath;
-		wxString			_currentGamePath;
-		wxString			_currentGamePass;
-		wxLongLong			_lastSaveTime;
-		long				_execHotkeyEnters;
-		wxLocale			*_locale;
+        KeywordsStore        *_keywordsStore;
+        DataSearch            _dataSearch;
+        wxString            _currentPath;
+        wxString            _currentGamePath;
+        wxString            _currentGamePass;
+        wxLongLong            _lastSaveTime;
+        long                _execHotkeyEnters;
+        wxLocale            *_locale;
 
-		static wxString ConvertSearchString(const wxString& s, bool isMatchCase);
-		static int FindSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind = 0);
-		static wxWindow *GetParent();
+        static wxString ConvertSearchString(const wxString& s, bool isMatchCase);
+        static int FindSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind = 0);
+        static wxWindow *GetParent();
 
-		void InitData();
+        void InitData();
     public:
-		Controls(const wxString &path);
-		~Controls();
+        Controls(const wxString &path);
+        ~Controls();
 
-		Settings *GetSettings() const { return _settings; }
-		DataContainer *GetContainer() const { return _container; }
-		KeywordsStore *GetKeywordsStore() const { return _keywordsStore; }
+        Settings *GetSettings() const { return _settings; }
+        DataContainer *GetContainer() const { return _container; }
+        KeywordsStore *GetKeywordsStore() const { return _keywordsStore; }
 
-		void SetMainFrame(MainFrame *mainFrame) { _mainFrame = mainFrame; }
-		void SetLocListBox(LocationsListBox *locListBox) { _locListBox = locListBox; }
-		void SetNotebook(LocationsNotebook *locNotebook) { _locNotebook = locNotebook; }
+        void SetMainFrame(MainFrame *mainFrame) { _mainFrame = mainFrame; }
+        void SetLocListBox(LocationsListBox *locListBox) { _locListBox = locListBox; }
+        void SetNotebook(LocationsNotebook *locNotebook) { _locNotebook = locNotebook; }
 
-		wxString GetGamePath() const { return _currentGamePath; }
-		wxString GetGamePass() const { return _currentGamePass; }
+        wxString GetGamePath() const { return _currentGamePath; }
+        wxString GetGamePass() const { return _currentGamePass; }
 
-		int GetSelectedLocationIndex() const;
-		int GetSelectedFolderIndex() const;
-		void SelectLocation(size_t locIndex);
-		bool RenameFolder(size_t folderIndex, const wxString &name);
-		bool RenameLocation(size_t locIndex, const wxString &name);
-		bool RenameAction(size_t locIndex, size_t actIndex, const wxString &name);
-		int AddLocationByName(const wxString &name);
-		int AddLocation(const wxString &name = wxEmptyString);
-		void UpdateActionsOnAllLocs();
+        int GetSelectedLocationIndex() const;
+        int GetSelectedFolderIndex() const;
+        void SelectLocation(size_t locIndex);
+        bool RenameFolder(size_t folderIndex, const wxString &name);
+        bool RenameLocation(size_t locIndex, const wxString &name);
+        bool RenameAction(size_t locIndex, size_t actIndex, const wxString &name);
+        int AddLocationByName(const wxString &name);
+        int AddLocation(const wxString &name = wxEmptyString);
+        void UpdateActionsOnAllLocs();
 
-		bool DeleteSelectedLocation();
-		bool RenameSelectedLocation();
-		void SortLocations(bool isAscending);
-		void ClearSelectedLocation();
-		void UpdateLocationsList();
-		void UpdateOpenedLocationsIndexes();
-		void UpdateLocationIcon(size_t locIndex, bool isOpened);
-		void UpdateMenuItems(wxMenu *menu);
-		void ShowOpenedLocationsIcons();
-		void SyncWithLocationsList();
+        bool DeleteSelectedLocation();
+        bool RenameSelectedLocation();
+        void SortLocations(bool isAscending);
+        void ClearSelectedLocation();
+        void UpdateLocationsList();
+        void UpdateOpenedLocationsIndexes();
+        void UpdateLocationIcon(size_t locIndex, bool isOpened);
+        void UpdateMenuItems(wxMenu *menu);
+        void ShowOpenedLocationsIcons();
+        void SyncWithLocationsList();
 
-		bool AddActionOnSelectedLoc();
-		bool DeleteSelectedAction();
-		bool RenameSelectedAction();
-		bool DeleteAllActions();
+        bool AddActionOnSelectedLoc();
+        bool DeleteSelectedAction();
+        bool RenameSelectedAction();
+        bool DeleteAllActions();
 
-		void ShowMessage(long errorNum);
-		static wxString GetMessageDesc(long errorNum);
+        void ShowMessage(long errorNum);
+        static wxString GetMessageDesc(long errorNum);
 
-		bool GetBufferedLocName(const wxString &buffer, wxString &locName);
-		void CopySelectedLocToClipboard();
-		void PasteLocFromClipboard(PasteType type);
+        bool GetBufferedLocName(const wxString &buffer, wxString &locName);
+        void CopySelectedLocToClipboard();
+        void PasteLocFromClipboard(PasteType type);
 
-		wxString EncodeString(const wxString &str);
-		wxString DecodeString(const wxString &str);
+        wxString EncodeString(const wxString &str);
+        wxString DecodeString(const wxString &str);
 
-		bool IsSelectedLocationEmpty() const;
-		bool IsAllLocsClosed() const;
-		bool IsActionsOnSelectedLocEmpty() const;
-		bool IsClipboardEmpty();
-		bool IsGameSaved();
-		bool IsCorrectDataFormat(const wxString &str);
-		bool IsInHotkeyExecution() const { return _execHotkeyEnters != 0; }
+        bool IsSelectedLocationEmpty() const;
+        bool IsAllLocsClosed() const;
+        bool IsActionsOnSelectedLocEmpty() const;
+        bool IsClipboardEmpty();
+        bool IsGameSaved();
+        bool IsCorrectDataFormat(const wxString &str);
+        bool IsInHotkeyExecution() const { return _execHotkeyEnters != 0; }
 
-		static wxTextEntryBase *GetCurrentTextBox();
-		bool CanUndoText() const;
-		bool CanRedoText() const;
-		bool CanCopyText();
-		bool CanPasteText();
-		bool CanCutText();
-		bool CanSelectText();
-		void UndoText();
-		void RedoText();
-		void CopySelectedTextToClipboard();
-		void CutSelectedTextToClipboard();
-		void PasteTextFromClipboard();
-		void DeleteSelectedText();
-		void SelectAllText();
+        static wxTextEntryBase *GetCurrentTextBox();
+        bool CanUndoText() const;
+        bool CanRedoText() const;
+        bool CanCopyText();
+        bool CanPasteText();
+        bool CanCutText();
+        bool CanSelectText();
+        void UndoText();
+        void RedoText();
+        void CopySelectedTextToClipboard();
+        void CutSelectedTextToClipboard();
+        void PasteTextFromClipboard();
+        void DeleteSelectedText();
+        void SelectAllText();
 
-		bool SerializeLocData(size_t locIndex, wxString &buffer);
-		bool DeserializeLocData(size_t locIndex, const wxString &buffer);
+        bool SerializeLocData(size_t locIndex, wxString &buffer);
+        bool DeserializeLocData(size_t locIndex, const wxString &buffer);
 
-		wxString SelectPicturePath();
+        wxString SelectPicturePath();
 
-		bool SaveGameWithCheck();
-		bool SaveGame(const wxString &path, const wxString &password);
-		bool LoadGame(const wxString &filename);
-		void NewGame();
-		bool JoinGame(const wxString &filename);
-		bool ExportTxt(const wxString &filename);
-		bool ExportTxt2Gam(const wxString &filename);
-		bool ImportTxt2Gam(const wxString &filename);
+        bool SaveGameWithCheck();
+        bool SaveGame(const wxString &path, const wxString &password);
+        bool LoadGame(const wxString &filename);
+        void NewGame();
+        bool JoinGame(const wxString &filename);
+        bool ExportTxt(const wxString &filename);
+        bool ExportTxt2Gam(const wxString &filename);
+        bool ImportTxt2Gam(const wxString &filename);
 
-		wxString GetSelectedWord() const;
-		void JumpToSelectedLoc();
-		bool SearchString(const wxString &str, bool findAgain, bool isMatchCase = false, bool isWholeString = false);
-		void ReplaceSearchString(const wxString & replaceString);
-		bool SearchNextLoc();
-		void InitSearchData();
-		wxString GetGameInfo() const;
+        wxString GetSelectedWord() const;
+        void JumpToSelectedLoc();
+        bool SearchString(const wxString &str, bool findAgain, bool isMatchCase = false, bool isWholeString = false);
+        void ReplaceSearchString(const wxString & replaceString);
+        bool SearchNextLoc();
+        void InitSearchData();
+        wxString GetGameInfo() const;
 
-		void SwitchLocDesc();
-		void SwitchLocActs();
+        void SwitchLocDesc();
+        void SwitchLocActs();
 
-		LocationPage *ShowLocation(const wxString & locName);
-		void MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo);
+        LocationPage *ShowLocation(const wxString & locName);
+        void MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo);
 
-		void SetLastSaveTime(wxLongLong lastSaveTime) { _lastSaveTime = lastSaveTime; }
-		wxLongLong GetLastSaveTime() const { return _lastSaveTime; }
-		bool ExecuteHotkey(int keyCode, int modifiers);
-		void SetStatusText(const wxString &text);
+        void SetLastSaveTime(wxLongLong lastSaveTime) { _lastSaveTime = lastSaveTime; }
+        wxLongLong GetLastSaveTime() const { return _lastSaveTime; }
+        bool ExecuteHotkey(int keyCode, int modifiers);
+        void SetStatusText(const wxString &text);
 
-		bool AddFolder();
-		bool DeleteSelectedFolder();
-		bool RenameSelectedFolder();
+        bool AddFolder();
+        bool DeleteSelectedFolder();
+        bool RenameSelectedFolder();
 
-		bool SearchHelpFile();
-		void UpdateLocale(int lang);
+        bool SearchHelpFile();
+        void UpdateLocale(int lang);
     };
 
 #endif

@@ -86,9 +86,9 @@ void ToolBar::OnMotion( wxMouseEvent &evt )
 {
     wxAuiToolBar::OnMotion(evt);
     if (m_tipItem)
-		_controls->SetStatusText(m_tipItem->GetShortHelp());
+        _controls->SetStatusText(m_tipItem->GetShortHelp());
     else
-		_controls->SetStatusText(wxEmptyString);
+        _controls->SetStatusText(wxEmptyString);
 }
 
 void ToolBar::OnLeaveWindow( wxMouseEvent &evt )

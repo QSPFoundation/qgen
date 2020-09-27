@@ -33,55 +33,55 @@
 
     class LocationPage : public wxPanel, public ILocationPage, public IObserver
     {
-		DECLARE_CLASS(LocationPage)
+        DECLARE_CLASS(LocationPage)
     private:
-		IControls			*_controls;
-		LocationCode		*_locCode;
-		LocationDesc		*_locDesc;
-		LocationActions		*_locActs;
-		size_t				_locIndex;
-		wxSplitterWindow    *_splitterh;
-		wxSplitterWindow    *_splitterv_up;
-		Settings			*_settings;
-		int					_descWidth;
-		int					_actsHeight;
-		bool				_isFixed;
+        IControls            *_controls;
+        LocationCode        *_locCode;
+        LocationDesc        *_locDesc;
+        LocationActions        *_locActs;
+        size_t                _locIndex;
+        wxSplitterWindow    *_splitterh;
+        wxSplitterWindow    *_splitterv_up;
+        Settings            *_settings;
+        int                    _descWidth;
+        int                    _actsHeight;
+        bool                _isFixed;
     public:
-		LocationPage( wxAuiNotebook *owner, IControls *controls );
-		~LocationPage();
+        LocationPage( wxAuiNotebook *owner, IControls *controls );
+        ~LocationPage();
 
-		void Update(bool isFromObservable = false);
-		void SetFixed(bool isFix);
-		bool IsFixed() const { return _isFixed; }
-		void LocDescVisible(bool isVisible);
-		void LocActsVisible(bool isVisible);
-		void SavePage();
-		void LoadPage();
-		void ExpandCollapseAll(bool isExpanded);
-		size_t GetLocationIndex();
-		long GetSelectedAction();
-		void SetLocationIndex(size_t locIndex);
-		size_t AddAction(const wxString& name);
-		void DeleteAction(size_t actIndex);
-		void RenameAction(size_t actIndex, const wxString& name);
-		void MoveActionTo(size_t actIndex, size_t moveTo);
-		void DeleteAllActions();
-		void Clear();
-		bool IsActionsEmpty();
-		bool IsActsShown() const { return _splitterh->IsSplit(); }
-		bool IsDescShown() const { return _splitterv_up->IsSplit(); }
-		void RefreshActions();
-		void SelectLocDescString( long startPos, long lastPos );
-		void SelectLocCodeString( long startPos, long lastPos );
-		void SelectAction( size_t actIndex );
-		void SetFocusOnActionCode();
-		void SelectPicturePathString( long startPos, long lastPos );
-		void SelectActionCodeString( long startPos, long lastPos);
+        void Update(bool isFromObservable = false);
+        void SetFixed(bool isFix);
+        bool IsFixed() const { return _isFixed; }
+        void LocDescVisible(bool isVisible);
+        void LocActsVisible(bool isVisible);
+        void SavePage();
+        void LoadPage();
+        void ExpandCollapseAll(bool isExpanded);
+        size_t GetLocationIndex();
+        long GetSelectedAction();
+        void SetLocationIndex(size_t locIndex);
+        size_t AddAction(const wxString& name);
+        void DeleteAction(size_t actIndex);
+        void RenameAction(size_t actIndex, const wxString& name);
+        void MoveActionTo(size_t actIndex, size_t moveTo);
+        void DeleteAllActions();
+        void Clear();
+        bool IsActionsEmpty();
+        bool IsActsShown() const { return _splitterh->IsSplit(); }
+        bool IsDescShown() const { return _splitterv_up->IsSplit(); }
+        void RefreshActions();
+        void SelectLocDescString( long startPos, long lastPos );
+        void SelectLocCodeString( long startPos, long lastPos );
+        void SelectAction( size_t actIndex );
+        void SetFocusOnActionCode();
+        void SelectPicturePathString( long startPos, long lastPos );
+        void SelectActionCodeString( long startPos, long lastPos);
 
-		void ReplaceLocDescString(long start, long end, const wxString & str);
-		void ReplaceLocCodeString(long start, long end, const wxString & str);
-		void ReplacePicturePathString(long start, long end, const wxString & str);
-		void ReplaceActionCodeString(long start, long end, const wxString & str);
+        void ReplaceLocDescString(long start, long end, const wxString & str);
+        void ReplaceLocCodeString(long start, long end, const wxString & str);
+        void ReplacePicturePathString(long start, long end, const wxString & str);
+        void ReplaceActionCodeString(long start, long end, const wxString & str);
     };
 
 #endif

@@ -26,23 +26,23 @@
 
     class HotKeyTextBox : public wxTextCtrl
     {
-		DECLARE_CLASS(HotKeyTextBox)
-		DECLARE_EVENT_TABLE()
+        DECLARE_CLASS(HotKeyTextBox)
+        DECLARE_EVENT_TABLE()
     private:
-		wxString		_hotKey;
-		int				_hotKeyCode;
-		int				_flags;
+        wxString        _hotKey;
+        int                _hotKeyCode;
+        int                _flags;
 
-		void OnKeyDown(wxKeyEvent& event);
-		void OnKeyUp(wxKeyEvent& event);
-		void AppendAccel(wxString &data, const wxString &key) const;
+        void OnKeyDown(wxKeyEvent& event);
+        void OnKeyUp(wxKeyEvent& event);
+        void AppendAccel(wxString &data, const wxString &key) const;
     public:
-		HotKeyTextBox(wxWindow *parent, wxWindowID id, const wxString &value = wxEmptyString);
+        HotKeyTextBox(wxWindow *parent, wxWindowID id, const wxString &value = wxEmptyString);
 
-		void SetFlags(int flags) { _flags = flags; }
-		int GetFlags() const { return _flags; }
-		void SetHotKeyCode(int hotKeyCode) { _hotKeyCode = hotKeyCode; }
-		int GetHotKeyCode() const { return _hotKeyCode; }
+        void SetFlags(int flags) { _flags = flags; }
+        int GetFlags() const { return _flags; }
+        void SetHotKeyCode(int hotKeyCode) { _hotKeyCode = hotKeyCode; }
+        int GetHotKeyCode() const { return _hotKeyCode; }
     };
 
 #endif

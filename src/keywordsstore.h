@@ -27,24 +27,24 @@
 
     enum KeywordType
     {
-		STATEMENT,
-		EXPRESSION,
-		VARIABLE,
+        STATEMENT,
+        EXPRESSION,
+        VARIABLE,
     };
 
     struct Keyword
     {
-		wxString    word;
-		wxString    desc;
-		KeywordType type;
+        wxString    word;
+        wxString    desc;
+        KeywordType type;
 
-		Keyword() { }
-		Keyword(const wxString &word, const wxString &desc, KeywordType type)
-		{
-			this->word = word;
-			this->desc = desc;
-			this->type = type;
-		}
+        Keyword() { }
+        Keyword(const wxString &word, const wxString &desc, KeywordType type)
+        {
+            this->word = word;
+            this->desc = desc;
+            this->type = type;
+        }
     };
 
     WX_DECLARE_OBJARRAY(Keyword, KeywordsArray);
@@ -52,15 +52,15 @@
     class KeywordsStore
     {
     public:
-		KeywordsStore() { }
-		bool Load(const wxString &filename);
-		wxString GetWords(KeywordType type) const;
-		size_t GetCount();
-		wxString GetWord(size_t index) const;
-		wxString FindTip(const wxString &word) const;
+        KeywordsStore() { }
+        bool Load(const wxString &filename);
+        wxString GetWords(KeywordType type) const;
+        size_t GetCount();
+        wxString GetWord(size_t index) const;
+        wxString FindTip(const wxString &word) const;
     private:
-		KeywordsArray    _keywords;
-		
-		void ParseKeywords(wxXmlNode *node, KeywordType type);
+        KeywordsArray    _keywords;
+
+        void ParseKeywords(wxXmlNode *node, KeywordType type);
     };
 #endif

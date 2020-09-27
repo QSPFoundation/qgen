@@ -31,23 +31,23 @@
 
     class LocationCode : public wxPanel, public IObserver
     {
-		DECLARE_CLASS(LocationCode)
+        DECLARE_CLASS(LocationCode)
     private:
-		ILocationPage		*_locPage;
-		SyntaxTextBox		*_text;
-		IControls			*_controls;
-		wxStaticText		*_stTextExec;
+        ILocationPage        *_locPage;
+        SyntaxTextBox        *_text;
+        IControls            *_controls;
+        wxStaticText        *_stTextExec;
     public:
-		LocationCode(wxWindow *owner, ILocationPage *locPage, IControls *controls);
-		~LocationCode();
+        LocationCode(wxWindow *owner, ILocationPage *locPage, IControls *controls);
+        ~LocationCode();
 
-		void Update(bool isFromObservable = false);
-		void SaveCode();
-		void LoadCode();
-		void Clear();
-		void SelectString(long startPos, long lastPos);
-		void ReplaceString(long start, long end, const wxString &str);
-		void ExpandCollapseAll(bool isExpanded);
+        void Update(bool isFromObservable = false);
+        void SaveCode();
+        void LoadCode();
+        void Clear();
+        void SelectString(long startPos, long lastPos);
+        void ReplaceString(long start, long end, const wxString &str);
+        void ExpandCollapseAll(bool isExpanded);
     };
 
 #endif

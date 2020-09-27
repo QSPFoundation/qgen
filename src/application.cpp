@@ -42,21 +42,21 @@ bool Application::OnInit()
     wxCmdLineParser cmdParser(argc, argv);
     if (argc > 1)
     {
-		cmdParser.AddParam();
-		cmdParser.Parse(false);
-		wxFileName path(cmdParser.GetParam());
-		path.MakeAbsolute();
-		initEvent.SetInitString(path.GetFullPath());
-		wxPostEvent(mainFrame, initEvent);
+        cmdParser.AddParam();
+        cmdParser.Parse(false);
+        wxFileName path(cmdParser.GetParam());
+        path.MakeAbsolute();
+        initEvent.SetInitString(path.GetFullPath());
+        wxPostEvent(mainFrame, initEvent);
     }
     else
     {
-		Settings *settings = _controls->GetSettings();
-		if (settings->GetOpenLastGame())
-		{
-			initEvent.SetInitString(settings->GetLastGamePath());
-			wxPostEvent(mainFrame, initEvent);
-		}
+        Settings *settings = _controls->GetSettings();
+        if (settings->GetOpenLastGame())
+        {
+            initEvent.SetInitString(settings->GetLastGamePath());
+            wxPostEvent(mainFrame, initEvent);
+        }
     }
     return true;
 }

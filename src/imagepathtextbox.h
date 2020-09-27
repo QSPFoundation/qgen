@@ -28,19 +28,19 @@
 
     class ImagePathTextBox : public wxTextCtrl, public IObserver
     {
-		DECLARE_CLASS(ImagePathTextBox)
-		DECLARE_EVENT_TABLE()
+        DECLARE_CLASS(ImagePathTextBox)
+        DECLARE_EVENT_TABLE()
     private:
-		ILocationPage    *_locPage;
-		IControls		*_controls;
+        ILocationPage    *_locPage;
+        IControls        *_controls;
 
-		void OnLostFocus(wxFocusEvent &event);
-		void OnKeyDown(wxKeyEvent& event);
+        void OnLostFocus(wxFocusEvent &event);
+        void OnKeyDown(wxKeyEvent& event);
     public:
-		ImagePathTextBox(wxWindow *owner, wxWindowID id, ILocationPage *locPage, IControls *controls);
-		~ImagePathTextBox();
+        ImagePathTextBox(wxWindow *owner, wxWindowID id, ILocationPage *locPage, IControls *controls);
+        ~ImagePathTextBox();
 
-		void Update(bool isFromObservable = false);
+        void Update(bool isFromObservable = false);
     };
 
 #endif

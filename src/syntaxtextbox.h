@@ -28,57 +28,57 @@
 
     enum
     {
-		SYNTAX_FOLD_MARGIN = 1,
-		SYNTAX_NUM_MARGIN
+        SYNTAX_FOLD_MARGIN = 1,
+        SYNTAX_NUM_MARGIN
     };
 
     enum
     {
-		 SYNTAX_STYLE_SIMPLE =			0,
-		 SYNTAX_STYLE_COLORED =			1 << 0,
-		 SYNTAX_STYLE_NOHOTKEYS =		1 << 1,
-		 SYNTAX_STYLE_SIMPLEMENU =		1 << 2,
-		 SYNTAX_STYLE_NOSCROLLBARS =    1 << 3,
-		 SYNTAX_STYLE_NOMARGINS =		1 << 4,
-		 SYNTAX_STYLE_NOHELPTIPS =		1 << 5
+         SYNTAX_STYLE_SIMPLE =            0,
+         SYNTAX_STYLE_COLORED =            1 << 0,
+         SYNTAX_STYLE_NOHOTKEYS =        1 << 1,
+         SYNTAX_STYLE_SIMPLEMENU =        1 << 2,
+         SYNTAX_STYLE_NOSCROLLBARS =    1 << 3,
+         SYNTAX_STYLE_NOMARGINS =        1 << 4,
+         SYNTAX_STYLE_NOHELPTIPS =        1 << 5
     };
 
     class SyntaxTextBox : public wxStyledTextCtrl, public IObserver
     {
-		DECLARE_CLASS(SyntaxTextBox)
-		DECLARE_EVENT_TABLE()
+        DECLARE_CLASS(SyntaxTextBox)
+        DECLARE_EVENT_TABLE()
     private:
-		IControls					*_controls;
-		KeywordsStore				*_keywordsStore;
-		int							_style;
+        IControls                    *_controls;
+        KeywordsStore                *_keywordsStore;
+        int                            _style;
 
-		static wxString GetArrayAsString(const wxArrayString &arr);
-		int GetCharPosition(int startPos, int chars);
-		int GetCharIndexFromPosition(int fromPos, int pos);
-		bool StartAutoComplete();
-		void Expand(int &line, bool doExpand, bool force = false, int visLevels = 0, int level = -1);
-		wxString GetWordFromPos(int pos);
-		void Tip(int pos);
+        static wxString GetArrayAsString(const wxArrayString &arr);
+        int GetCharPosition(int startPos, int chars);
+        int GetCharIndexFromPosition(int fromPos, int pos);
+        bool StartAutoComplete();
+        void Expand(int &line, bool doExpand, bool force = false, int visLevels = 0, int level = -1);
+        wxString GetWordFromPos(int pos);
+        void Tip(int pos);
 
-		void OnKeyDown(wxKeyEvent& event);
-		void OnKeyUp(wxKeyEvent& event);
-		void OnRightClick(wxMouseEvent& event);
-		void OnMarginClicked(wxStyledTextEvent &event);
-		void OnCharAdded(wxStyledTextEvent &event);
-		void OnMouseMove(wxMouseEvent& event);
+        void OnKeyDown(wxKeyEvent& event);
+        void OnKeyUp(wxKeyEvent& event);
+        void OnRightClick(wxMouseEvent& event);
+        void OnMarginClicked(wxStyledTextEvent &event);
+        void OnCharAdded(wxStyledTextEvent &event);
+        void OnMouseMove(wxMouseEvent& event);
     public:
-		SyntaxTextBox(wxWindow *owner, IControls *controls, int style);
-		~SyntaxTextBox();
+        SyntaxTextBox(wxWindow *owner, IControls *controls, int style);
+        ~SyntaxTextBox();
 
-		void Update(bool isFromObservable = false);
-		void SetValue(const wxString &str);
-		void SetSelection(long from, long to);
-		void Replace(long from, long to, const wxString &str);
-		long GetInsertionPoint() const;
-		wxString GetStringSelection() const;
-		void RemoveSelection();
-		void Clear();
-		void ExpandCollapseAll(bool isExpanded);
+        void Update(bool isFromObservable = false);
+        void SetValue(const wxString &str);
+        void SetSelection(long from, long to);
+        void Replace(long from, long to, const wxString &str);
+        long GetInsertionPoint() const;
+        wxString GetStringSelection() const;
+        void RemoveSelection();
+        void Clear();
+        void ExpandCollapseAll(bool isExpanded);
     };
 
 #endif

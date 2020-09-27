@@ -31,22 +31,22 @@
 
     class LocationDesc : public wxPanel, public IObserver
     {
-		DECLARE_CLASS(LocationDesc)
+        DECLARE_CLASS(LocationDesc)
     private:
-		ILocationPage		*_locPage;
-		SyntaxTextBox		*_text;
-		IControls			*_controls;
-		wxStaticText		*_stTextDesc;
+        ILocationPage        *_locPage;
+        SyntaxTextBox        *_text;
+        IControls            *_controls;
+        wxStaticText        *_stTextDesc;
     public:
-		LocationDesc(wxWindow *owner, ILocationPage *locPage, IControls *controls);
-		~LocationDesc();
+        LocationDesc(wxWindow *owner, ILocationPage *locPage, IControls *controls);
+        ~LocationDesc();
 
-		void Update(bool isFromObservable = false);
-		void SaveDesc();
-		void LoadDesc();
-		void Clear();
-		void SelectString(long startPos, long lastPos);
-		void ReplaceString(long start, long end, const wxString &str);
+        void Update(bool isFromObservable = false);
+        void SaveDesc();
+        void LoadDesc();
+        void Clear();
+        void SelectString(long startPos, long lastPos);
+        void ReplaceString(long start, long end, const wxString &str);
     };
 
 #endif

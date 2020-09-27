@@ -43,7 +43,7 @@ OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& tit
 
     wxStaticText *stText02 = new wxStaticText(this, wxID_ANY, _("Text:"));
     _txtInputText = new SyntaxTextBox(this, controls, SYNTAX_STYLE_COLORED | SYNTAX_STYLE_NOHOTKEYS |
-													  SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOHELPTIPS);
+                                                      SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOHELPTIPS);
 
     wxSizer *btnSizer = new wxBoxSizer(wxHORIZONTAL);
     _btnHelp = new wxButton(this, ID_HOTKEY_HELP, _("Help"));
@@ -87,15 +87,15 @@ void OptionsHotkeysDialog::SetHotkeyData( const HotkeyData &hotKeyData )
 void OptionsHotkeysDialog::OnHelpHotKeys( wxCommandEvent &event )
 {
     #ifdef __WXMSW__
-		DesktopWindow desktop;
-		wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
+        DesktopWindow desktop;
+        wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
     #else
-		wxExtHelpController *chmHelp = new wxExtHelpController();
+        wxExtHelpController *chmHelp = new wxExtHelpController();
     #endif
     if (_controls->SearchHelpFile())
     {
-		chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
-		chmHelp->KeywordSearch(wxT("Macros"));
+        chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
+        chmHelp->KeywordSearch(wxT("Macros"));
     }
     delete chmHelp;
 }

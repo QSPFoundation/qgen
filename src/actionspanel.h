@@ -33,23 +33,23 @@
 
     class ActionsPanel : public wxPanel
     {
-		DECLARE_CLASS(ActionsPanel)
-		DECLARE_EVENT_TABLE()
+        DECLARE_CLASS(ActionsPanel)
+        DECLARE_EVENT_TABLE()
     private:
-		ActionsListBox    *_actList;
-		wxButton		*_addActButton;
-		wxButton		*_renActButton;
-		wxButton		*_delActButton;
-		IControls		*_controls;
+        ActionsListBox    *_actList;
+        wxButton        *_addActButton;
+        wxButton        *_renActButton;
+        wxButton        *_delActButton;
+        IControls        *_controls;
 
-		void OnAddAction( wxCommandEvent &event );
-		void OnRenAction( wxCommandEvent &event );
-		void OnDelAction( wxCommandEvent &event );
+        void OnAddAction( wxCommandEvent &event );
+        void OnRenAction( wxCommandEvent &event );
+        void OnDelAction( wxCommandEvent &event );
     public:
-		ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode *_actCode, IControls *controls );
+        ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode *_actCode, IControls *controls );
 
-		void EnableButtons();
-		ActionsListBox *GetActionsListBox() { return _actList; };
+        void EnableButtons();
+        ActionsListBox *GetActionsListBox() { return _actList; };
     };
 
 #endif

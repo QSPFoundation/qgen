@@ -25,7 +25,7 @@
     class IObserver
     {
     public:
-		virtual void Update(bool isFromObservable) = 0;
+        virtual void Update(bool isFromObservable) = 0;
     };
 
 #endif
