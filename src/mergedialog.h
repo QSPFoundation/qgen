@@ -45,10 +45,10 @@
         DECLARE_CLASS(MergeDialog)
         DECLARE_EVENT_TABLE()
 
-        wxButton    *_replace;
-        wxButton    *_skip;
-        wxButton    *_cancel;
-        wxCheckBox    *_chkToAll;
+        wxButton * _replace;
+        wxButton * _skip;
+        wxButton * _cancel;
+        wxCheckBox * _chkToAll;
 
         void OnButton(wxCommandEvent &event);
 

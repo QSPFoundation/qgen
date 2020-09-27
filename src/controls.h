@@ -52,24 +52,24 @@
     class Controls : public IControls
     {
     private:
-        MainFrame            *_mainFrame;
-        LocationsListBox    *_locListBox;
-        LocationsNotebook    *_locNotebook;
-        DataContainer        *_container;
-        Settings            *_settings;
+        MainFrame * _mainFrame;
+        LocationsListBox * _locListBox;
+        LocationsNotebook * _locNotebook;
+        DataContainer * _container;
+        Settings * _settings;
 
         #ifdef __WXMSW__
-            KeysParser        *_keysParser;
+            KeysParser * _keysParser;
         #endif
 
-        KeywordsStore        *_keywordsStore;
-        DataSearch            _dataSearch;
-        wxString            _currentPath;
-        wxString            _currentGamePath;
-        wxString            _currentGamePass;
-        wxLongLong            _lastSaveTime;
-        long                _execHotkeyEnters;
-        wxLocale            *_locale;
+        KeywordsStore * _keywordsStore;
+        DataSearch _dataSearch;
+        wxString _currentPath;
+        wxString _currentGamePath;
+        wxString _currentGamePass;
+        wxLongLong _lastSaveTime;
+        long _execHotkeyEnters;
+        wxLocale * _locale;
 
         static wxString ConvertSearchString(const wxString& s, bool isMatchCase);
         static int FindSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind = 0);

@@ -33,12 +33,12 @@
     {
         DECLARE_CLASS(LocationActions)
     private:
-        ILocationPage        *_locPage;
-        IControls            *_controls;
-        ActionsPanel        *_actPanel;
-        ActionCode            *_actCode;
-        wxSplitterWindow    *_splitterv_down;
-        wxStaticText        *_stTextBaseActions;
+        ILocationPage * _locPage;
+        IControls * _controls;
+        ActionsPanel * _actPanel;
+        ActionCode * _actCode;
+        wxSplitterWindow * _splitterv_down;
+        wxStaticText * _stTextBaseActions;
 
         void ShowActions();
     public:

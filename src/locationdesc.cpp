@@ -44,6 +44,7 @@ LocationDesc::~LocationDesc()
 {
     _controls->GetSettings()->RemoveObserver(this);
 }
+
 void LocationDesc::SaveDesc()
 {
     if (_text->IsModified())

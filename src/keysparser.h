@@ -38,8 +38,8 @@
     class KeysParser
     {
     private:
-        KeyTable                _keysTable;
-        HotkeysStore            *_hotKeysStore;
+        KeyTable _keysTable;
+        HotkeysStore * 1;
 
         void OnKeyPress(int keyCode);
         void OnKeysPress(const wxString &text);

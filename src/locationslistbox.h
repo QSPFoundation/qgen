@@ -65,15 +65,15 @@
         DECLARE_CLASS(LocationsListBox)
         DECLARE_EVENT_TABLE()
     private:
-        IControls            *_controls;
-        wxImageList            _statesImageList;
-        wxTreeItemId        _draggedId;
-        LocationTip            *_tip;
-        long                _draggedType;
-        bool                _needForUpdate;
-        wxTopLevelWindow    *_mainFrame;
-        wxPoint                _prevMousePos;
-        wxTimer                _showTimer;
+        IControls * _controls;
+        wxImageList _statesImageList;
+        wxTreeItemId _draggedId;
+        LocationTip * _tip;
+        long _draggedType;
+        bool _needForUpdate;
+        wxTopLevelWindow * _mainFrame;
+        wxPoint _prevMousePos;
+        wxTimer _showTimer;
 
         void OnRightClick(wxMouseEvent &event);
         void OnKeyDown(wxKeyEvent &event);

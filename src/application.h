@@ -33,7 +33,7 @@
     class Application : public wxApp
     {
     private:
-        Controls        *_controls;
+        Controls * _controls;
     public:
         virtual bool OnInit();
         virtual int OnExit();

@@ -48,9 +48,9 @@
         DECLARE_CLASS(SyntaxTextBox)
         DECLARE_EVENT_TABLE()
     private:
-        IControls                    *_controls;
-        KeywordsStore                *_keywordsStore;
-        int                            _style;
+        IControls * _controls;
+        KeywordsStore * _keywordsStore;
+        int _style;
 
         static wxString GetArrayAsString(const wxArrayString &arr);
         int GetCharPosition(int startPos, int chars);

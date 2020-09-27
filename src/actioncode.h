@@ -35,11 +35,11 @@
         DECLARE_CLASS(ActionCode)
         DECLARE_EVENT_TABLE()
     private:
-        ImagePathTextBox    *_pathPicTxtCtrl;
-        SyntaxTextBox        *_actCodeTxt;
-        wxButton            *_button;
-        IControls            *_controls;
-        ILocationPage        *_locPage;
+        ImagePathTextBox * _pathPicTxtCtrl;
+        SyntaxTextBox * _actCodeTxt;
+        wxButton * _button;
+        IControls * _controls;
+        ILocationPage * _locPage;
 
         void OnOpenPicture(wxCommandEvent &event);
         bool Enable(bool status = true);

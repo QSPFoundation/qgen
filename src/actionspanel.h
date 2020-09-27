@@ -36,11 +36,11 @@
         DECLARE_CLASS(ActionsPanel)
         DECLARE_EVENT_TABLE()
     private:
-        ActionsListBox    *_actList;
-        wxButton        *_addActButton;
-        wxButton        *_renActButton;
-        wxButton        *_delActButton;
-        IControls        *_controls;
+        ActionsListBox * _actList;
+        wxButton * _addActButton;
+        wxButton * _renActButton;
+        wxButton * _delActButton;
+        IControls * _controls;
 
         void OnAddAction( wxCommandEvent &event );
         void OnRenAction( wxCommandEvent &event );

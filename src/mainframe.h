@@ -143,15 +143,15 @@
     {
         DECLARE_EVENT_TABLE()
     private:
-        wxAuiManager        _manager;
-        wxTimer                _timerAutoSave;
-        wxTimer                _timerUpdToolBar;
-        ToolBar                *_toolBar;
-        wxMenuBar            *_menu_bar;
-        LocationsListBox    *_locListBox;
-        LocationsNotebook    *_locNotebook;
-        IControls            *_controls;
-        SearchDialog        *_findDlg;
+        wxAuiManager _manager;
+        wxTimer _timerAutoSave;
+        wxTimer _timerUpdToolBar;
+        ToolBar * _toolBar;
+        wxMenuBar * _menu_bar;
+        LocationsListBox * _locListBox;
+        LocationsNotebook * _locNotebook;
+        IControls * _controls;
+        SearchDialog * _findDlg;
 
         void OnInit(InitEvent &event);
         void OnExit(wxCommandEvent &event);

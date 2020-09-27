@@ -31,8 +31,8 @@
         DECLARE_CLASS(ImagePathTextBox)
         DECLARE_EVENT_TABLE()
     private:
-        ILocationPage    *_locPage;
-        IControls        *_controls;
+        ILocationPage * _locPage;
+        IControls * _controls;
 
         void OnLostFocus(wxFocusEvent &event);
         void OnKeyDown(wxKeyEvent& event);

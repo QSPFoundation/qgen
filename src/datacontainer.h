@@ -57,8 +57,8 @@
     {
     private:
         LocationDataArray    locationArray;
-        FolderDataArray        _folders;
-        bool                _isSaved;
+        FolderDataArray _folders;
+        bool _isSaved;
     public:
         DataContainer();
 

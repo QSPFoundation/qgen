@@ -29,9 +29,9 @@
         DECLARE_CLASS(HotKeyTextBox)
         DECLARE_EVENT_TABLE()
     private:
-        wxString        _hotKey;
-        int                _hotKeyCode;
-        int                _flags;
+        wxString _hotKey;
+        int _hotKeyCode;
+        int _flags;
 
         void OnKeyDown(wxKeyEvent& event);
         void OnKeyUp(wxKeyEvent& event);

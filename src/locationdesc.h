@@ -33,10 +33,10 @@
     {
         DECLARE_CLASS(LocationDesc)
     private:
-        ILocationPage        *_locPage;
-        SyntaxTextBox        *_text;
-        IControls            *_controls;
-        wxStaticText        *_stTextDesc;
+        ILocationPage * _locPage;
+        SyntaxTextBox * _text;
+        IControls * _controls;
+        wxStaticText * _stTextDesc;
     public:
         LocationDesc(wxWindow *owner, ILocationPage *locPage, IControls *controls);
         ~LocationDesc();

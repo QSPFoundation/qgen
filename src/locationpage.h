@@ -35,17 +35,17 @@
     {
         DECLARE_CLASS(LocationPage)
     private:
-        IControls            *_controls;
-        LocationCode        *_locCode;
-        LocationDesc        *_locDesc;
-        LocationActions        *_locActs;
-        size_t                _locIndex;
-        wxSplitterWindow    *_splitterh;
-        wxSplitterWindow    *_splitterv_up;
-        Settings            *_settings;
-        int                    _descWidth;
-        int                    _actsHeight;
-        bool                _isFixed;
+        IControls        * _controls;
+        LocationCode     * _locCode;
+        LocationDesc     * _locDesc;
+        LocationActions  * _locActs;
+        size_t _locIndex;
+        wxSplitterWindow * _splitterh;
+        wxSplitterWindow * _splitterv_up;
+        Settings         * _settings;
+        int _descWidth;
+        int _actsHeight;
+        bool _isFixed;
     public:
         LocationPage( wxAuiNotebook *owner, IControls *controls );
         ~LocationPage();

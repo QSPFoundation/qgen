@@ -44,13 +44,13 @@
         DECLARE_CLASS(OptionsHotkeysDialog)
         DECLARE_EVENT_TABLE()
     private:
-        HotKeyTextBox    *_txtInputHotkey;
-        SyntaxTextBox    *_txtInputText;
-        wxButton        *_btnOK;
-        wxButton        *_btnCancel;
-        wxButton        *_btnHelp;
-        HotkeyData        _hotkeyData;
-        IControls        *_controls;
+        HotKeyTextBox * _txtInputHotkey;
+        SyntaxTextBox * _txtInputText;
+        wxButton * _btnOK;
+        wxButton * _btnCancel;
+        wxButton * _btnHelp;
+        HotkeyData _hotkeyData;
+        IControls * _controls;
 
         void OnOkSettings(wxCommandEvent &event);
         void OnHelpHotKeys(wxCommandEvent &event);

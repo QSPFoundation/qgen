@@ -37,16 +37,16 @@
     {
         DECLARE_CLASS(LocationTip)
     private:
-        wxWindow        *_mainFrame;
-        IControls        *_controls;
-        wxString        _locName;
-        wxString        _actName;
-        wxStaticText    *_title;
-        wxStaticText    *_desc;
-        wxStaticText    *_code;
-        SyntaxTextBox    *_locDesc;
-        SyntaxTextBox    *_locCode;
-        wxButton        *_emptyLabel;
+        wxWindow * _mainFrame;
+        IControls * _controls;
+        wxString _locName;
+        wxString _actName;
+        wxStaticText * _title;
+        wxStaticText * _desc;
+        wxStaticText * _code;
+        SyntaxTextBox * _locDesc;
+        SyntaxTextBox * _locCode;
+        wxButton * _emptyLabel;
 
         void LoadTip();
     public:

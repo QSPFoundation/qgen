@@ -39,8 +39,8 @@
         DECLARE_CLASS(LocationsNotebook)
         DECLARE_EVENT_TABLE()
     private:
-        IControls        *_controls;
-        DataContainer    *_container;
+        IControls * _controls;
+        DataContainer * _container;
         int                selectedPage;
 
         void OnClosePage(wxAuiNotebookEvent &event);

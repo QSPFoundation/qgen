@@ -42,18 +42,11 @@
         DECLARE_CLASS(SearchDialog)
         DECLARE_EVENT_TABLE()
 
-        wxComboBox    *_textFind,
-                    *_textRepl;
-        wxCheckBox  *_chkMatchCase,
-                    *_chkWholeWord;
-        wxButton    *_btnClose,
-                    *_btnNextSearch,
-                    *_btnSearchAgain,
-                    *_btnReplace,
-                    *_btnReplaceAll,
-                    *_btnSkipLoc;
-        wxWindow    *_parent;
-        IControls    *_controls;
+        wxComboBox * _textFind, * _textRepl;
+        wxCheckBox * _chkMatchCase, * _chkWholeWord;
+        wxButton * _btnClose, * _btnNextSearch, * _btnSearchAgain, * _btnReplace, * _btnReplaceAll, * _btnSkipLoc;
+        wxWindow * _parent;
+        IControls * _controls;
         SearchDataStore *_searchDataStore;
 
         void OnFindNext(wxCommandEvent &event);

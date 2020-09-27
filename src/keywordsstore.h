@@ -59,7 +59,7 @@
         wxString GetWord(size_t index) const;
         wxString FindTip(const wxString &word) const;
     private:
-        KeywordsArray    _keywords;
+        KeywordsArray _keywords;
 
         void ParseKeywords(wxXmlNode *node, KeywordType type);
     };

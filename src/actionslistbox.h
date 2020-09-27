@@ -33,23 +33,23 @@
         DECLARE_CLASS(ActionsListBox)
         DECLARE_EVENT_TABLE()
     private:
-        ILocationPage      *_locPage;
-        IControls          *_controls;
-        ActionCode          *_actCode;
-        DataContainer      *_container;
-        wxString          _outFormat;
-        wxString          _outFormatImage;
-        wxString          _outFormatBold;
-        wxString          _outFormatBoldImage;
-        wxString          _outFormatItalic;
-        wxString          _outFormatItalicImage;
-        wxString          _outFormatBoldItalic;
-        wxString          _outFormatBoldItalicImage;
-        wxArrayString      _items;
-        bool              _isDragging;
-        int                  _draggedAction;
-        int                  _prevActionIndex;
-        wxFont              _font;
+        ILocationPage * _locPage;
+        IControls * _controls;
+        ActionCode * _actCode;
+        DataContainer * _container;
+        wxString _outFormat;
+        wxString _outFormatImage;
+        wxString _outFormatBold;
+        wxString _outFormatBoldImage;
+        wxString _outFormatItalic;
+        wxString _outFormatItalicImage;
+        wxString _outFormatBoldItalic;
+        wxString _outFormatBoldItalicImage;
+        wxArrayString _items;
+        bool _isDragging;
+        int _draggedAction;
+        int _prevActionIndex;
+        wxFont _font;
 
         void OnRightClick(wxMouseEvent &event);
         void OnKeyDown(wxKeyEvent &event);

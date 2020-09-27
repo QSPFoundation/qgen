@@ -33,10 +33,10 @@
     {
         DECLARE_CLASS(LocationCode)
     private:
-        ILocationPage        *_locPage;
-        SyntaxTextBox        *_text;
-        IControls            *_controls;
-        wxStaticText        *_stTextExec;
+        ILocationPage * _locPage;
+        SyntaxTextBox * _text;
+        IControls * _controls;
+        wxStaticText * _stTextExec;
     public:
         LocationCode(wxWindow *owner, ILocationPage *locPage, IControls *controls);
         ~LocationCode();
