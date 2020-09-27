@@ -46,8 +46,8 @@ MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString
     _skip = new wxButton(this, ID_MERGE_SKIP, _("Skip"));
     _cancel = new wxButton(this, ID_MERGE_CANCEL, _("Cancel"));
 
-    _chkToAll= new wxCheckBox(this, wxID_ANY, _("for all"));
-,
+    _chkToAll = new wxCheckBox(this, wxID_ANY, _("for all"));
+
     msgSizer->Add(info_icon, 0, wxALIGN_LEFT);
     msgSizer->AddSpacer(8);
     msgSizer->Add(msgText, 0, wxGROW);
