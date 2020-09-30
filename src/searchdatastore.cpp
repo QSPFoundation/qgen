@@ -38,10 +38,11 @@ void SearchDataStore::SaveSearchData( wxConfigBase &fileConfig )
 
 void SearchDataStore::LoadSearchData( wxConfigBase &fileConfig )
 {
+    int i;
     wxString str;
-    size_t i = 0;
     _searchStrings.Clear();
     _replaceStrings.Clear();
+    i = 0;
     while (1)
     {
         if (!fileConfig.Read(wxString::Format(wxT("SearchData/Search%d_Text"), i), &str)) break;

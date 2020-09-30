@@ -25,7 +25,9 @@ IMPLEMENT_APP(Application)
 
 bool Application::OnInit()
 {
-    InitEvent initEvent;
+    if (!wxApp::OnInit())
+        return false;
+
     wxInitAllImageHandlers();
     wxFileName appPath(wxStandardPaths::Get().GetExecutablePath());
     wxRegisterId(20000);
@@ -39,12 +41,11 @@ bool Application::OnInit()
     _controls->NewGame();
     mainFrame->UpdateTitle();
     mainFrame->Show();
-    wxCmdLineParser cmdParser(argc, argv);
-    if (argc > 1)
+
+    InitEvent initEvent;
+    if (!_gameFile.IsEmpty())
     {
-        cmdParser.AddParam();
-        cmdParser.Parse(false);
-        wxFileName path(cmdParser.GetParam());
+        wxFileName path(_gameFile);
         path.MakeAbsolute();
         initEvent.SetInitString(path.GetFullPath());
         wxPostEvent(mainFrame, initEvent);
@@ -68,4 +69,23 @@ int Application::OnExit()
     settings->SaveSettings();
     delete _controls;
     return wxApp::OnExit();
+}
+
+void Application::OnInitCmdLine(wxCmdLineParser &parser)
+{
+    wxApp::OnInitCmdLine(parser);
+
+    parser.AddParam("game file",
+                    wxCMD_LINE_VAL_STRING,
+                    wxCMD_LINE_PARAM_OPTIONAL);
+}
+
+bool Application::OnCmdLineParsed(wxCmdLineParser &parser)
+{
+    if (!wxApp::OnCmdLineParsed(parser))
+        return false;
+
+    if (parser.GetParamCount() > 0)
+        _gameFile = parser.GetParam();
+    return true;
 }

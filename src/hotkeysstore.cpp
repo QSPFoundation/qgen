@@ -79,7 +79,7 @@ void HotkeysStore::SaveHotkeysData(wxConfigBase &fileConfig)
     wxString str;
     size_t count = _hotkeysData.GetCount();
     fileConfig.DeleteGroup(wxT("HotKeys"));
-    for (size_t i = 0; i < count; i++)
+    for (int i = 0; i < count; i++)
     {
         str = wxString::Format(wxT("HotKeys/Hotkey%d_KeyCode"), i);
         fileConfig.Write(str, _hotkeysData[i].HotKeyCode);
@@ -94,7 +94,7 @@ void HotkeysStore::LoadHotkeysData(wxConfigBase &fileConfig)
 {
     wxString str, dataVal;
     int keyCode, flags;
-    size_t i = 0;
+    int i = 0;
     _hotkeysData.Clear();
     while (1)
     {
