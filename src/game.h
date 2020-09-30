@@ -117,7 +117,6 @@
             return wxBitmap(wxImage(is, wxBITMAP_TYPE_ANY, -1), -1);
         }
 
-
     class Controls;
 
     bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *controls, wxString &password, bool merge);
