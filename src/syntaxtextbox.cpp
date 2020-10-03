@@ -51,14 +51,14 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
     }
     if (!(_style & SYNTAX_STYLE_SIMPLEMENU))
     {
-        UsePopUp(false);
+        UsePopUp(wxSTC_POPUP_NEVER);
     }
     if (_style & SYNTAX_STYLE_COLORED)
     {
         SetScrollWidth(-1);
         SetScrollWidthTracking(true);
 
-        SetLexer(wxSTC_LEX_VB);
+        SetLexer(wxSTC_LEX_QSP);
         SetKeyWords(0, _keywordsStore->GetWords(STATEMENT));
         SetKeyWords(1, _keywordsStore->GetWords(EXPRESSION));
         SetKeyWords(2, _keywordsStore->GetWords(VARIABLE));
@@ -127,10 +127,10 @@ void SyntaxTextBox::Update(bool isFromObservable)
         if (!(_style & SYNTAX_STYLE_NOMARGINS))
         {
             SetFoldMarginColour(true, backColour);
-            // ��������� �����
+            // Line numbers
             SetMarginWidth(SYNTAX_NUM_MARGIN, settings->GetShowLinesNums() ? 40 : 0);
         }
-        // �������� �����
+        // Keywords
         font = settings->GetFont(SYNTAX_STATEMENTS);
         StyleSetFont(wxSTC_B_KEYWORD, font);
         StyleSetForeground(wxSTC_B_KEYWORD, settings->GetColour(SYNTAX_STATEMENTS));
@@ -140,25 +140,25 @@ void SyntaxTextBox::Update(bool isFromObservable)
         font = settings->GetFont(SYNTAX_SYS_VARIABLES);
         StyleSetFont(wxSTC_B_KEYWORD3, font);
         StyleSetForeground(wxSTC_B_KEYWORD3, settings->GetColour(SYNTAX_SYS_VARIABLES));
-        // ������
+        // Strings
         font = settings->GetFont(SYNTAX_STRINGS);
         StyleSetFont(wxSTC_B_STRING, font);
         StyleSetForeground(wxSTC_B_STRING, settings->GetColour(SYNTAX_STRINGS));
         StyleSetFont(wxSTC_B_STRINGEOL, font);
         StyleSetForeground(wxSTC_B_STRINGEOL, settings->GetColour(SYNTAX_STRINGS));
-        // �����
+        // Numbers
         font = settings->GetFont(SYNTAX_NUMBERS);
         StyleSetFont(wxSTC_B_NUMBER, font);
         StyleSetForeground(wxSTC_B_NUMBER, settings->GetColour(SYNTAX_NUMBERS));
-        // ��������
+        // Operations
         font = settings->GetFont(SYNTAX_OPERATIONS);
         StyleSetFont(wxSTC_B_OPERATOR, font);
         StyleSetForeground(wxSTC_B_OPERATOR, settings->GetColour(SYNTAX_OPERATIONS));
-        // �����
+        // Labels
         font = settings->GetFont(SYNTAX_LABELS);
         StyleSetFont(wxSTC_B_LABEL, font);
         StyleSetForeground(wxSTC_B_LABEL, settings->GetColour(SYNTAX_LABELS));
-        // �����������
+        // Comments
         font = settings->GetFont(SYNTAX_COMMENTS);
         StyleSetFont(wxSTC_B_COMMENT, font);
         StyleSetForeground(wxSTC_B_COMMENT, settings->GetColour(SYNTAX_COMMENTS));
@@ -299,16 +299,16 @@ wxString SyntaxTextBox::GetArrayAsString( const wxArrayString &arr )
     return res;
 }
 
-int SyntaxTextBox::GetCharPosition( int startPos, int chars )
+long SyntaxTextBox::GetCharPosition( long startPos, long chars )
 {
     while (chars--)
         startPos = PositionAfter(startPos);
     return startPos;
 }
 
-int SyntaxTextBox::GetCharIndexFromPosition( int fromPos, int pos )
+long SyntaxTextBox::GetCharIndexFromPosition( long fromPos, long pos )
 {
-    int index = 0;
+    long index = 0;
     while (pos != fromPos)
     {
         pos = PositionBefore(pos);
@@ -319,8 +319,8 @@ int SyntaxTextBox::GetCharIndexFromPosition( int fromPos, int pos )
 
 void SyntaxTextBox::SetSelection( long from, long to )
 {
-    int start = GetCharPosition(0, from);
-    int end = GetCharPosition(start, to - from);
+    long start = GetCharPosition(0, from);
+    long end = GetCharPosition(start, to - from);
     EnsureVisibleEnforcePolicy(LineFromPosition(start));
     GotoPos(end);
     GotoPos(start);
@@ -329,8 +329,8 @@ void SyntaxTextBox::SetSelection( long from, long to )
 
 void SyntaxTextBox::Replace( long from, long to, const wxString &str )
 {
-    int start = GetCharPosition(0, from);
-    int end = GetCharPosition(start, to - from);
+    long start = GetCharPosition(0, from);
+    long end = GetCharPosition(start, to - from);
     EnsureVisibleEnforcePolicy(LineFromPosition(start));
     GotoPos(end);
     GotoPos(start);
@@ -433,12 +433,12 @@ void SyntaxTextBox::OnMouseMove(wxMouseEvent& event)
         Tip(PositionFromPoint(event.GetPosition()));
 }
 
-wxString SyntaxTextBox::GetWordFromPos(int pos)
+wxString SyntaxTextBox::GetWordFromPos(long pos)
 {
     wxString str;
-    int beginPos, lastPos;
+    long beginPos, lastPos;
     int lineInd = LineFromPosition(pos);
-    int realPos = GetCharIndexFromPosition(PositionFromLine(lineInd), pos);
+    long realPos = GetCharIndexFromPosition(PositionFromLine(lineInd), pos);
     wxString lineStr = GetLine(lineInd).Trim();
     if (!lineStr.IsEmpty())
     {
@@ -462,9 +462,8 @@ wxString SyntaxTextBox::GetWordFromPos(int pos)
     return str;
 }
 
-void SyntaxTextBox::Tip(int pos)
+void SyntaxTextBox::Tip(long pos)
 {
-    bool tipFound = false;
     wxString str = GetWordFromPos(pos).Lower();
     if (!str.IsEmpty())
         _controls->SetStatusText(_keywordsStore->FindTip(str));

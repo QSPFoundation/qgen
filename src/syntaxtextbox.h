@@ -53,12 +53,12 @@
         int _style;
 
         static wxString GetArrayAsString(const wxArrayString &arr);
-        int GetCharPosition(int startPos, int chars);
-        int GetCharIndexFromPosition(int fromPos, int pos);
+        long GetCharPosition(long startPos, long chars);
+        long GetCharIndexFromPosition(long fromPos, long pos);
         bool StartAutoComplete();
         void Expand(int &line, bool doExpand, bool force = false, int visLevels = 0, int level = -1);
-        wxString GetWordFromPos(int pos);
-        void Tip(int pos);
+        wxString GetWordFromPos(long pos);
+        void Tip(long pos);
 
         void OnKeyDown(wxKeyEvent& event);
         void OnKeyUp(wxKeyEvent& event);
