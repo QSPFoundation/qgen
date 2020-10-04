@@ -892,7 +892,7 @@ bool MainFrame::QuestChange()
     if (!_controls->IsGameSaved())
     {
         wxMessageDialog dlgMsg(this,
-            _("Save game file?"),
+            _("Do you want to save the game file?"),
             _("File was changed"),
             wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
         switch (dlgMsg.ShowModal())

@@ -684,7 +684,7 @@ msgstr "Сохранить игру (Ctrl+S)"
 msgid "Save game file"
 msgstr "Сохранить игру"
 
-msgid "Save game file?"
+msgid "Do you want to save the game file?"
 msgstr "Сохранить игру?"
 
 msgid "Save game into another file..."
