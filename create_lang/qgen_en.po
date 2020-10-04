@@ -73,8 +73,8 @@ msgstr "&Import"
 msgid "&Locations"
 msgstr "&Locations"
 
-msgid "&Locations list"
-msgstr "&Locations list"
+msgid "&Location list"
+msgstr "&Location list"
 
 msgid "&Merge game...\tCtrl+M"
 msgstr "&Merge game...\tCtrl+M"
@@ -127,8 +127,8 @@ msgstr "&Utilities"
 msgid "&View"
 msgstr "&View"
 
-msgid "&Windows list"
-msgstr "&Windows list"
+msgid "&Window list"
+msgstr "&Window list"
 
 msgid "(empty)"
 msgstr "(empty)"

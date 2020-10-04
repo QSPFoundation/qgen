@@ -52,9 +52,9 @@ void Settings::InitSettings()
     _isShowStatusBar = true;
 
     _panelsPos = wxT("layout2|")\
-        wxT("name=LocationsNotebook;state=768;dir=5;layer=0;row=0;pos=0;prop=100000|")\
+        wxT("name=LocationNotebook;state=768;dir=5;layer=0;row=0;pos=0;prop=100000|")\
         wxT("name=Toolbar;state=2106096;dir=1;layer=10;row=0;pos=0;prop=100000;bestw=540;besth=34|")\
-        wxT("name=LocationsList;state=31459324;dir=4;layer=1;row=0;pos=0;prop=100000;bestw=166|")\
+        wxT("name=LocationList;state=31459324;dir=4;layer=1;row=0;pos=0;prop=100000;bestw=166|")\
         wxT("dock_size(5,0,0)=186|dock_size(4,1,0)=168|dock_size(1,10,0)=28|");
 
     _isAutoSave = false;

@@ -73,7 +73,7 @@ msgstr "&Импорт"
 msgid "&Locations"
 msgstr "&Локации"
 
-msgid "&Locations list"
+msgid "&Location list"
 msgstr "&Окно списка локаций"
 
 msgid "&Merge game...\tCtrl+M"
@@ -127,7 +127,7 @@ msgstr "&Утилиты"
 msgid "&View"
 msgstr "&Вид"
 
-msgid "&Windows list"
+msgid "&Window list"
 msgstr "&Список окон"
 
 msgid "(empty)"

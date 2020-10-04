@@ -126,13 +126,13 @@ void MainFrame::CreateControls()
     CreateNotebook();
     CreateLocListBox();
 
-    _manager.AddPane(_locNotebook, wxAuiPaneInfo().CenterPane().Name(wxT("LocationsNotebook")));
+    _manager.AddPane(_locNotebook, wxAuiPaneInfo().CenterPane().Name(wxT("LocationNotebook")));
 
     _manager.AddPane(_toolBar, wxAuiPaneInfo().ToolbarPane().
         Name(wxT("Toolbar")).Top().LeftDockable(false).RightDockable(false).Floatable(true));
 
     _manager.AddPane(_locListBox, wxAuiPaneInfo().Left().
-        Layer(1).PinButton().MinimizeButton().MaximizeButton().Name(wxT("LocationsList")));
+        Layer(1).PinButton().MinimizeButton().MaximizeButton().Name(wxT("LocationList")));
 
     LoadLayout();
     _manager.Update();
@@ -385,9 +385,9 @@ void MainFrame::Update( bool isFromObservable /*= false*/ )
     menuBar->SetLabel(ID_TEXT_DEL, _("&Delete\tCtrl+D"));
     menuBar->SetLabel(ID_TEXT_SELALL, _("S&elect all\tCtrl+A"));
     //View
-    menuBar->SetLabel(ID_TOGGLE, _("&Windows list"));
+    menuBar->SetLabel(ID_TOGGLE, _("&Window list"));
     menuBar->SetLabel(ID_TOGGLE_TOOLBAR, _("&Toolbar"));
-    menuBar->SetLabel(ID_TOGGLE_LISTBOX, _("&Locations list"));
+    menuBar->SetLabel(ID_TOGGLE_LISTBOX, _("&Location list"));
     menuBar->SetLabel(ID_TOGGLE_STATUSBAR, _("&Statusbar"));
     menuBar->SetLabel(ID_TAB_CLOSEALL, _("&Close all tabs\tCtrl+Alt+F4"));
     menuBar->SetLabel(ID_TAB_CLOSEEXCEPTSELECTED, _("Close all tabs &except current"));
@@ -587,7 +587,7 @@ void MainFrame::OnToggleToolbar(wxCommandEvent &event)
 
 void MainFrame::OnToggleLocations(wxCommandEvent &event)
 {
-    TogglePaneVisibility(wxT("LocationsList"));
+    TogglePaneVisibility(wxT("LocationList"));
     _manager.Update();
 }
 
