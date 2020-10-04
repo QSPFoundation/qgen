@@ -467,8 +467,8 @@ void MainFrame::OnLoadFile(wxCommandEvent &event)
 void MainFrame::OnSaveQuestAs(wxCommandEvent &event)
 {
     wxFileDialog dialog(this,
-        _("Save game file"), wxEmptyString, wxEmptyString,
-        _("QSP games (*.qsp)|*.qsp"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+        _("Save game file"), wxEmptyString, wxT("game.qsp"),
+        _("QSP games (*.qsp)|*.qsp"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
     dialog.CenterOnParent();
     if (dialog.ShowModal() == wxID_OK)
     {
@@ -781,8 +781,8 @@ void MainFrame::OnSearchHelp( wxCommandEvent &event )
 void MainFrame::OnExportTxtFile( wxCommandEvent &event )
 {
     wxFileDialog dialog(this,
-        _("Save text file"), wxEmptyString, wxEmptyString,
-        _("Text files (*.txt)|*.txt"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+        _("Save text file"), wxEmptyString, wxT("game.txt"),
+        _("Text files (*.txt)|*.txt"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
     dialog.CenterOnParent();
     if (dialog.ShowModal() == wxID_OK)
     {
@@ -794,8 +794,8 @@ void MainFrame::OnExportTxtFile( wxCommandEvent &event )
 void MainFrame::OnExportTxt2Gam( wxCommandEvent &event )
 {
     wxFileDialog dialog(this,
-        _("Save text file"), wxEmptyString, wxEmptyString,
-        _("Text files (*.txt)|*.txt"), wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+        _("Save text file"), wxEmptyString, wxT("game.txt"),
+        _("Text files (*.txt)|*.txt"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
     dialog.CenterOnParent();
     if (dialog.ShowModal() == wxID_OK)
     {
@@ -811,7 +811,7 @@ void MainFrame::OnImportTxt2Gam( wxCommandEvent &event )
         wxMessageDialog dlgMsg(this,
             _("The new file will replace current game file. Continue?"),
             _("Import"),
-            wxYES_NO|wxCENTRE|wxICON_QUESTION);
+            wxYES_NO | wxCENTRE | wxICON_QUESTION);
         if (dlgMsg.ShowModal() == wxID_NO) return;
     }
     wxFileDialog dialog(this,
@@ -837,7 +837,7 @@ void MainFrame::OnImportTxt2Gam( wxCommandEvent &event )
 void MainFrame::OnInformationQuest( wxCommandEvent &event )
 {
     wxMessageDialog dialog(this, _controls->GetGameInfo(),
-        _("Game statistics"), wxOK|wxCENTRE|wxICON_INFORMATION);
+        _("Game statistics"), wxOK | wxCENTRE | wxICON_INFORMATION);
     dialog.ShowModal();
 }
 
@@ -894,7 +894,7 @@ bool MainFrame::QuestChange()
         wxMessageDialog dlgMsg(this,
             _("Save game file?"),
             _("File was changed"),
-            wxYES_NO|wxCANCEL|wxCENTRE|wxICON_QUESTION);
+            wxYES_NO | wxCANCEL | wxCENTRE | wxICON_QUESTION);
         switch (dlgMsg.ShowModal())
         {
         case wxID_YES:

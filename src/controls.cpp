@@ -714,12 +714,12 @@ void Controls::SelectAllText()
 
 wxString Controls::SelectPicturePath()
 {
-    wxFileDialog filedlg( GetParent(), _( "Select image file" ),
+    wxFileDialog fileDlg( GetParent(), _( "Select image file" ),
         wxEmptyString, wxEmptyString, _( "Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*.*" ), wxFD_OPEN );
-    filedlg.CentreOnParent();
-    if ( filedlg.ShowModal() == wxID_OK )
+    fileDlg.CentreOnParent();
+    if ( fileDlg.ShowModal() == wxID_OK )
     {
-        wxFileName path(filedlg.GetPath());
+        wxFileName path(fileDlg.GetPath());
         path.MakeRelativeTo(wxFileName(_currentGamePath).GetPath());
         return path.GetFullPath();
     }
