@@ -19,6 +19,8 @@ cmake --build . --target install --config Release
 
 ## TODO
 
+* Add filtering for shown locations
+* Fix initial window sizes
 * Fix installation into a local directory (Linux)
 
 ## Chat group
