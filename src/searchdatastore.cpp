@@ -27,12 +27,12 @@ SearchDataStore::SearchDataStore()
 
 void SearchDataStore::SaveSearchData( wxConfigBase &fileConfig )
 {
-    size_t count = _searchStrings.GetCount();
+    int count = (int)_searchStrings.GetCount();
     fileConfig.DeleteGroup(wxT("SearchData"));
-    for (size_t i = 0; i < count; i++)
+    for (int i = 0; i < count; i++)
         fileConfig.Write(wxString::Format(wxT("SearchData/Search%d_Text"), i), _searchStrings[i]);
     count = _replaceStrings.GetCount();
-    for (size_t i = 0; i < count; i++)
+    for (int i = 0; i < count; i++)
         fileConfig.Write(wxString::Format(wxT("SearchData/Replace%d_Text"), i), _replaceStrings[i]);
 }
 
