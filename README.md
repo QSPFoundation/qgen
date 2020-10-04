@@ -19,8 +19,7 @@ cmake --build . --target install --config Release
 
 ## TODO
 
-* Fix Win32/Linux build
-* Update QSP keywords
+* Fix installation into a local directory (Linux)
 
 ## Chat group
 
