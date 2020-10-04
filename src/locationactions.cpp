@@ -2,7 +2,7 @@
 // Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
-// Valeriy Argunov (nporep AT mail DOT ru)
+// Valeriy Argunov (byte AT qsp DOT org)
 /*
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
