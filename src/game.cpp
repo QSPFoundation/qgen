@@ -633,7 +633,7 @@ bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
         if (str.Length())
         {
             masStrings = wxSplit(str, '\n');
-            str = wxString(_("Location's description:\n"));
+            str = wxString(_("Location description:\n"));
             len = qspGameCodeWriteVal(&buf, len, str, true, false);
             for (size_t i = 0; i < masStrings.GetCount(); ++i)
             {
@@ -645,7 +645,7 @@ bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
         }
         if (container->GetActionsCount(idxLoc))
         {
-            str = wxString(_("Location's actions:\n"));
+            str = wxString(_("Location actions:\n"));
             len = qspGameCodeWriteVal(&buf, len, str, true, false);
             for (size_t idxAct = 0; idxAct < container->GetActionsCount(idxLoc); ++idxAct)
             {
@@ -654,7 +654,7 @@ bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
                 actPictPath = container->GetActionPicturePath(idxLoc, idxAct);
                 if (actPictPath.Length())
                 {
-                    str = wxString::Format(_("\tAction's image: %s"), actPictPath);
+                    str = wxString::Format(_("\tAction image: %s"), actPictPath);
                     len = qspGameCodeWriteVal(&buf, len, str, true, false);
                 }
                 masStrings = wxSplit(container->GetActionCode(idxLoc, idxAct), '\n');
@@ -671,7 +671,7 @@ bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
         if (str.Length())
         {
             masStrings = wxSplit(str, '\n');
-            str = wxString(_("Location's description:\n"));
+            str = wxString(_("Location description:\n"));
             len = qspGameCodeWriteVal(&buf, len, str, true, false);
             for (size_t i = 0; i < masStrings.GetCount(); ++i)
             {

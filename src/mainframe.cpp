@@ -393,8 +393,8 @@ void MainFrame::Update( bool isFromObservable /*= false*/ )
     menuBar->SetLabel(ID_TAB_CLOSEEXCEPTSELECTED, _("Close all tabs &except current"));
     menuBar->SetLabel(ID_TAB_CLOSESELECTED, _("Close c&urrent tab\tCtrl+F4"));
     menuBar->SetLabel(ID_TAB_FIX, _("Pin/Unpin &tab"));
-    menuBar->SetLabel(ID_LOC_DESCVISIBLE, _("Show/Hide location's &description\tCtrl+Alt+D"));
-    menuBar->SetLabel(ID_LOC_ACTVISIBLE, _("Show/Hide location's &actions\tCtrl+Alt+A"));
+    menuBar->SetLabel(ID_LOC_DESCVISIBLE, _("Show/Hide location &description\tCtrl+Alt+D"));
+    menuBar->SetLabel(ID_LOC_ACTVISIBLE, _("Show/Hide location &actions\tCtrl+Alt+A"));
     //Help
     menuBar->SetLabel(ID_HELP, _("&Help\tF1"));
     menuBar->SetLabel(ID_HELP_SEARCH, _("Help by &keyword\tCtrl+F1"));
@@ -735,7 +735,7 @@ void MainFrame::OnPlayQuest( wxCommandEvent &event )
     if (!wxFile::Exists(settings->GetCurrentPlayerPath()))
     {
         wxFileDialog dialog(this,
-            _("Select player's file"), wxEmptyString, wxEmptyString,
+            _("Select player file"), wxEmptyString, wxEmptyString,
             _("Executables (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
         dialog.CenterOnParent();
         if (dialog.ShowModal() == wxID_CANCEL) return;
@@ -824,7 +824,7 @@ void MainFrame::OnImportTxt2Gam( wxCommandEvent &event )
         if (!wxFile::Exists(settings->GetCurrentTxt2GamPath()))
         {
             wxFileDialog dialog2(this,
-                _("Select converter's file"), wxEmptyString, wxEmptyString,
+                _("Select converter file"), wxEmptyString, wxEmptyString,
                 _("Executables (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
             dialog2.CenterOnParent();
             if (dialog2.ShowModal() == wxID_CANCEL) return;

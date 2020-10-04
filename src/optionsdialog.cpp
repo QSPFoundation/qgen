@@ -412,12 +412,12 @@ OptionsDialog::~OptionsDialog()
 
 void OptionsDialog::ReCreateGUI()
 {
-    //Main button
+    // Main button
     _btnOK->SetLabel(_("OK"));
     _btnCancel->SetLabel(_("Cancel"));
     _btnApply->SetLabel(_("Apply"));
     _btnReset->SetLabel(_("Reset"));
-    //Page General
+    // Page General
     _notebook->SetPageText(0, _("General"));
     _chkAutoSave->SetLabel(_("Auto save every"));
     _chkFirstLoc->SetLabel(_("Auto create first location:"));
@@ -425,23 +425,23 @@ void OptionsDialog::ReCreateGUI()
     _chkOpeningLoc->SetLabel(_("Open location after creation"));
     _chkOpeningAct->SetLabel(_("Open action after creation"));
     _chkOnLocActIcons->SetLabel(_("Show locations icons"));
-    _chkLocDescVisible->SetLabel(_("Show base description on location's tab"));
-    _chkLocActsVisible->SetLabel(_("Show base actions on location's tab"));
+    _chkLocDescVisible->SetLabel(_("Show base description on location tab"));
+    _chkLocActsVisible->SetLabel(_("Show base actions on location tab"));
     _chkOpenLastGame->SetLabel(_("Remember game file on exit"));
     _stTextCmbLang->SetLabel(_("UI language"));
     _autoSaveUnits->SetLabel(_("minutes"));
-    //Page Editor
+    // Page Editor
     _notebook->SetPageText(1, _("Code editor"));
     _chkWrapLines->SetLabel(_("Wrap lines by words"));
     _chkShowLinesNums->SetLabel(_("Show lines numbers"));
     _chkCollapseCode->SetLabel(_("Collapse blocks of code when location is opened"));
-    //Page Sizes
+    // Page Sizes
     _notebook->SetPageText(2, _("Sizes"));
-    _stTextHeights->SetLabel(_("Relative height of description and location's\ncode fields to the tab's height (%):"));
-    _stTextWidth1->SetLabel(_("Relative width of location's description field\nto the tab's height (%):"));
-    _stTextWidth2->SetLabel(_("Relative width of actions list to the tab's width (%):"));
+    _stTextHeights->SetLabel(_("Relative height of description and location\ncode fields to the tab's height (%):"));
+    _stTextWidth1->SetLabel(_("Relative width of location description field\nto the tab's height (%):"));
+    _stTextWidth2->SetLabel(_("Relative width of actions list to the tab width (%):"));
     _stTextTabSize->SetLabel(_("Size of TAB:"));
-    //Page Colors
+    // Page Colors
     _notebook->SetPageText(3, _("Colors"));
     _stText1->SetLabel(_("Statements color:"));
     _stText2->SetLabel(_("Functions color:"));
@@ -451,7 +451,7 @@ void OptionsDialog::ReCreateGUI()
     _stText6->SetLabel(_("Operations color:"));
     _stText7->SetLabel(_("Labels color:"));
     _stText8->SetLabel(_("Comments color:"));
-    _stText9->SetLabel(_("Base font's color:"));
+    _stText9->SetLabel(_("Base font color:"));
     _stText10->SetLabel(_("Tabs background color:"));
     _stText11->SetLabel(_("Main background color:"));
     _btnClrsStatements->SetLabel(_("Select color..."));
@@ -465,7 +465,7 @@ void OptionsDialog::ReCreateGUI()
     _btnClrsBaseFont->SetLabel(_("Select color..."));
     _btnClrsTextBack->SetLabel(_("Select color..."));
     _btnClrsBaseBack->SetLabel(_("Select color..."));
-    //Page Fonts
+    // Page Fonts
     _notebook->SetPageText(4, _("Fonts"));
     _stText01->SetLabel(_("Statements font:"));
     _stText02->SetLabel(_("Functions font:"));
@@ -485,7 +485,7 @@ void OptionsDialog::ReCreateGUI()
     _btnFontsMarks->SetLabel(_("Select font..."));
     _btnFontsComments->SetLabel(_("Select font..."));
     _btnFontsBase->SetLabel(_("Select font..."));
-    //Page Paths
+    // Page Paths
     _notebook->SetPageText(5, _("Paths"));
     _stText001->SetLabel(_("Path to player:"));
     _stText002->SetLabel(_("Path to help:"));
@@ -776,8 +776,8 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
     switch (event.GetId())
     {
     case ID_PATH_PLAYER:
-        dialog.Create(this, _("Select player's file"), wxEmptyString, wxEmptyString,
-            _("Player's file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
+        dialog.Create(this, _("Select player file"), wxEmptyString, wxEmptyString,
+            _("Player file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
         if (dialog.ShowModal() == wxID_OK)
         {
             _txtPathPlayer->SetValue(dialog.GetPath());
@@ -794,8 +794,8 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event )
         }
         break;
     case ID_PATH_TXT2GAM:
-        dialog.Create(this, _("Select converter's file"), wxEmptyString, wxEmptyString,
-            _("Converter's file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
+        dialog.Create(this, _("Select converter file"), wxEmptyString, wxEmptyString,
+            _("Converter file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
         if (dialog.ShowModal() == wxID_OK)
         {
             _txtPathTxt2Gam->SetValue(dialog.GetPath());

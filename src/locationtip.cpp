@@ -110,7 +110,7 @@ void LocationTip::LoadTip()
         _sizer->Show(_desc, hasDesc);
         _sizer->Show(_locDesc, hasDesc);
         _locDesc->SetValue(descText);
-        _code->SetLabel(_("Location's code:"));
+        _code->SetLabel(_("Location code:"));
         wxString codeText(container->GetLocationCode(locIndex));
         hasCode = !codeText.IsEmpty();
         _sizer->Show(_code, hasCode);
@@ -128,7 +128,7 @@ void LocationTip::LoadTip()
         _sizer->Hide(_locDesc);
         _sizer->Show(_code, hasCode);
         _sizer->Show(_locCode, hasCode);
-        _code->SetLabel(_("Action's code:"));
+        _code->SetLabel(_("Action code:"));
         _locCode->SetValue(actCode);
         if (!hasCode) showEmpty = true;
     }

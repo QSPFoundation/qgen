@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-msgid "\tAction's image: %s"
+msgid "\tAction image: %s"
 msgstr "\tФайл иконки: %s"
 
 msgid "&About..."
@@ -136,10 +136,10 @@ msgstr "(пусто)"
 msgid "------------ End of location: \"%s\" ------------\n"
 msgstr "------------ Конец локации: %s ------------\n"
 
-msgid "Action's code:"
+msgid "Action code:"
 msgstr "Код действия:"
 
-msgid "Action's name can't contain more than %i characters!"
+msgid "Action name can't contain more than %i characters!"
 msgstr "Название действия не может содержать более %i символов."
 
 msgid "Actions without code: %i\n"
@@ -184,7 +184,7 @@ msgstr "Средний размер локации: %i символ(а/ов)\n"
 msgid "Base actions:"
 msgstr "Базовые действия:"
 
-msgid "Base font's color:"
+msgid "Base font color:"
 msgstr "Цвет основного шрифта:"
 
 msgid "C&lear\tCtrl+Shift+D"
@@ -259,7 +259,7 @@ msgstr "Шрифт комментариев:"
 msgid "Continue search"
 msgstr "Продолжить поиск"
 
-msgid "Converter's file (*.exe)|*.exe|All files (*.*)|*.*"
+msgid "Converter file (*.exe)|*.exe|All files (*.*)|*.*"
 msgstr "Файл конвертера (*.exe)|*.exe|Все файлы (*.*)|*.*"
 
 msgid "Copy"
@@ -358,7 +358,7 @@ msgstr "Поиск и замена текста"
 msgid "Folder"
 msgstr "Папка"
 
-msgid "Folder's name can't contain more than %i characters!"
+msgid "Folder name can't contain more than %i characters!"
 msgstr "Название папки не может содержать более %i символов."
 
 msgid "Fonts"
@@ -430,13 +430,13 @@ msgstr "Введите название новой папки:"
 msgid "Input name for a new location:"
 msgstr "Введите название новой локации:"
 
-msgid "Input new action's name:"
+msgid "Input new action name:"
 msgstr "Введите новое название действия:"
 
-msgid "Input new folder's name:"
+msgid "Input new folder name:"
 msgstr "Введите новое название папки:"
 
-msgid "Input new location's name:"
+msgid "Input new location name:"
 msgstr "Введите новое название локации:"
 
 msgid "Input password:"
@@ -460,16 +460,16 @@ msgstr ""
 "Название локации: %s\n"
 "Заменить существующую локацию?"
 
-msgid "Location's actions:\n"
+msgid "Location actions:\n"
 msgstr "Действия на локации:\n"
 
-msgid "Location's code:"
+msgid "Location code:"
 msgstr "Код локации:"
 
-msgid "Location's description:\n"
+msgid "Location description:\n"
 msgstr "Описание локации:\n"
 
-msgid "Location's name can't contain more than %i characters!"
+msgid "Location name can't contain more than %i characters!"
 msgstr "Название локации не может содержать более %i символов."
 
 msgid "Location: \"%s\""
@@ -565,7 +565,7 @@ msgstr "Закрепить вкладку"
 msgid "Pin/Unpin &tab"
 msgstr "Закрепить/открепить &вкладку"
 
-msgid "Player's file (*.exe)|*.exe|All files (*.*)|*.*"
+msgid "Player file (*.exe)|*.exe|All files (*.*)|*.*"
 msgstr "Файл плеера (*.exe)|*.exe|Все файлы (*.*)|*.*"
 
 msgid "QSP games (*.qsp)|*.qsp"
@@ -581,18 +581,18 @@ msgid "Redo (Ctrl+Y)"
 msgstr "Повторить (Ctrl+Y)"
 
 msgid ""
-"Relative height of description and location's\n"
-"code fields to the tab's height (%):"
+"Relative height of description and location\n"
+"code fields to the tab height (%):"
 msgstr ""
 "Относительная высота полей описания и кода\n"
 "локации к высоте вкладки (%):"
 
-msgid "Relative width of actions list to the tab's width (%):"
+msgid "Relative width of actions list to the tab width (%):"
 msgstr "Относительная ширина списка действий к ширине вкладки (%):"
 
 msgid ""
-"Relative width of location's description field\n"
-"to the tab's height (%):"
+"Relative width of location description field\n"
+"to the tab height (%):"
 msgstr ""
 "Относительная ширина поля описания локации к ширине\n"
 "вкладки (%):"
@@ -705,7 +705,7 @@ msgstr "Выделить всё"
 msgid "Select color..."
 msgstr "Выбрать цвет..."
 
-msgid "Select converter's file"
+msgid "Select converter file"
 msgstr "Выберите файл конвертера"
 
 msgid "Select font..."
@@ -720,7 +720,7 @@ msgstr "Выберите изображение"
 msgid "Select path..."
 msgstr "Выбрать путь..."
 
-msgid "Select player's file"
+msgid "Select player file"
 msgstr "Выберите файл плеера"
 
 msgid "Settings"
@@ -729,10 +729,10 @@ msgstr "Настройки"
 msgid "Settings... (Ctrl+P)"
 msgstr "Настройки... (Ctrl+P)"
 
-msgid "Show base actions on location's tab"
+msgid "Show base actions on location tab"
 msgstr "Показывать базовые действия локаций"
 
-msgid "Show base description on location's tab"
+msgid "Show base description on location tab"
 msgstr "Показывать базовые описания локаций"
 
 msgid "Show game statistics (Ctrl+I)"
@@ -750,10 +750,10 @@ msgstr "Показывать краткие описания локаций"
 msgid "Show short statistics"
 msgstr "Показать краткую статистику"
 
-msgid "Show/Hide location's &actions\tCtrl+Alt+A"
+msgid "Show/Hide location &actions\tCtrl+Alt+A"
 msgstr "Показать/скрыть &действия локации\tCtrl+Alt+A"
 
-msgid "Show/Hide location's &description\tCtrl+Alt+D"
+msgid "Show/Hide location &description\tCtrl+Alt+D"
 msgstr "Показать/скрыть &описание локации\tCtrl+Alt+D"
 
 msgid "Size of TAB:"

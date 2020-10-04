@@ -117,7 +117,7 @@ bool Controls::RenameSelectedLocation()
     while (1)
     {
         wxTextEntryDialog dlgEntry(GetParent(),
-            _("Input new location's name:"),
+            _("Input new location name:"),
             _("Rename location"), name);
         if (dlgEntry.ShowModal() == wxID_OK)
         {
@@ -257,7 +257,7 @@ bool Controls::RenameSelectedAction()
     while (1)
     {
         wxTextEntryDialog dlgEntry(GetParent(),
-            _("Input new action's name:"),
+            _("Input new action name:"),
             _("Rename action"), name);
         if (dlgEntry.ShowModal() == wxID_OK)
         {
@@ -299,9 +299,9 @@ wxString Controls::GetMessageDesc( long errorNum )
         case QGEN_MSG_SEARCHENDED: str = _("The specified text was not found anymore."); break;
         case QGEN_MSG_WRONGFORMAT: str = _("Incorrect format!"); break;
         case QGEN_MSG_MAXACTIONSCOUNTREACHED: str = wxString::Format(_("Can't add more than %i actions."), QGEN_MAXACTIONS); break;
-        case QGEN_MSG_TOOLONGLOCATIONNAME: str = wxString::Format(_("Location's name can't contain more than %i characters!"), QGEN_MAXLOCATIONNAMELEN); break;
-        case QGEN_MSG_TOOLONGACTIONNAME: str = wxString::Format(_("Action's name can't contain more than %i characters!"), QGEN_MAXACTIONNAMELEN); break;
-        case QGEN_MSG_TOOLONGFOLDERNAME: str = wxString::Format(_("Folder's name can't contain more than %i characters!"), QGEN_MAXFOLDERNAMELEN); break;
+        case QGEN_MSG_TOOLONGLOCATIONNAME: str = wxString::Format(_("Location name can't contain more than %i characters!"), QGEN_MAXLOCATIONNAMELEN); break;
+        case QGEN_MSG_TOOLONGACTIONNAME: str = wxString::Format(_("Action name can't contain more than %i characters!"), QGEN_MAXACTIONNAMELEN); break;
+        case QGEN_MSG_TOOLONGFOLDERNAME: str = wxString::Format(_("Folder name can't contain more than %i characters!"), QGEN_MAXFOLDERNAMELEN); break;
         default: str = _("Unknown error!"); break;
     }
     return str;
@@ -1582,7 +1582,7 @@ bool Controls::RenameSelectedFolder()
     while (1)
     {
         wxTextEntryDialog dlgEntry(GetParent(),
-            _("Input new folder's name:"),
+            _("Input new folder name:"),
             _("Rename folder"), name);
         if (dlgEntry.ShowModal() == wxID_OK)
         {
