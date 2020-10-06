@@ -592,7 +592,7 @@ msgstr "Относительная ширина списка действий к
 
 msgid ""
 "Relative width of location description field\n"
-"to the tab height (%):"
+"to the tab width (%):"
 msgstr ""
 "Относительная ширина поля описания локации к ширине\n"
 "вкладки (%):"

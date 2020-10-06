@@ -592,10 +592,10 @@ msgstr "Relative width of actions list to the tab width (%):"
 
 msgid ""
 "Relative width of location description field\n"
-"to the tab height (%):"
+"to the tab width (%):"
 msgstr ""
 "Relative width of location description field\n"
-"to the tab height (%):"
+"to the tab width (%):"
 
 msgid "Remember game file on exit"
 msgstr "Remember game file on exit"

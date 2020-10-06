@@ -438,7 +438,7 @@ void OptionsDialog::ReCreateGUI()
     // Page Sizes
     _notebook->SetPageText(2, _("Sizes"));
     _stTextHeights->SetLabel(_("Relative height of description and location\ncode fields to the tab's height (%):"));
-    _stTextWidth1->SetLabel(_("Relative width of location description field\nto the tab's height (%):"));
+    _stTextWidth1->SetLabel(_("Relative width of location description field\nto the tab's width (%):"));
     _stTextWidth2->SetLabel(_("Relative width of actions list to the tab width (%):"));
     _stTextTabSize->SetLabel(_("Size of TAB:"));
     // Page Colors
