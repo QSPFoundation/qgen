@@ -74,7 +74,7 @@ void LocationPage::Update(bool isFromObservable)
 
 void LocationPage::LocDescVisible(bool isVisible)
 {
-    int pageWidth  = _splitterv_up->GetSize().GetWidth();
+    int pageWidth  = GetParent()->GetClientSize().GetWidth();
     if (isVisible)
     {
         _splitterv_up->SetSashGravity(_settings->GetWidthsCoeff1());
@@ -94,7 +94,7 @@ void LocationPage::LocDescVisible(bool isVisible)
 
 void LocationPage::LocActsVisible(bool isVisible)
 {
-    int pageHeight = _splitterh->GetSize().GetHeight();
+    int pageHeight = GetParent()->GetClientSize().GetHeight();
     if (isVisible)
     {
         _splitterh->SetSashGravity(_settings->GetHeightsCoeff());
