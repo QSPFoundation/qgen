@@ -22,6 +22,7 @@ cmake --build . --target install --config Release
 * Add filtering for shown locations
 * Fix initial window sizes
 * Fix installation into a local directory (Linux)
+* Build web editor
 
 ## Chat group
 
