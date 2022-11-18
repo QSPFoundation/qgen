@@ -26,4 +26,4 @@ cmake --build . --target install --config Release
 
 ## Chat group
 
-https://discord.gg/vyyyTrd
+https://discord.gg/6gWVYUtUGZ
