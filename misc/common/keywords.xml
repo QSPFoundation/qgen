@@ -120,6 +120,8 @@
     <Keyword name="$selact" desc="$SELACT - возвращает название выделенного действия"/>
     <Keyword name="curacts" desc="CURACTS - возвращает в виде кода все текущие действия"/>
     <Keyword name="$curacts" desc="$CURACTS - возвращает в виде кода все текущие действия"/>
+    <Keyword name="curobjs" desc="CUROBJS - возвращает в виде кода все текущие предметы"/>
+    <Keyword name="$curobjs" desc="$CUROBJS - возвращает в виде кода все текущие предметы"/>
     <Keyword name="user_text" desc="USER_TEXT - возвращает текст в строке ввода"/>
     <Keyword name="$user_text" desc="$USER_TEXT - возвращает текст в строке ввода"/>
     <Keyword name="usrtxt" desc="USRTXT - возвращает текст в строке ввода"/>
