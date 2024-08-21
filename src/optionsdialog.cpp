@@ -364,33 +364,33 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _paths->SetSizerAndFit(topSizerPaths);
     _paths->SetAutoLayout(true);
 
-    #ifdef __WXMSW__
-        _hotkeys = new wxPanel(_notebook);
-        _notebook->AddPage(_hotkeys, wxEmptyString);
+#ifdef __WXMSW__
+    _hotkeys = new wxPanel(_notebook);
+    _notebook->AddPage(_hotkeys, wxEmptyString);
 
-        wxBoxSizer *topSizerHotKeys = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer *topSizerHotKeys = new wxBoxSizer(wxVERTICAL);
 
-        _stText0001 = new wxStaticText(_hotkeys, wxID_ANY, wxEmptyString);
-        _lstHotKeys = new wxListCtrl(_hotkeys, ID_LIST_HKEYS, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
-        _lstHotKeys->InsertColumn(0, wxEmptyString, wxLIST_FORMAT_LEFT, 150);
-        _lstHotKeys->InsertColumn(1, wxEmptyString, wxLIST_FORMAT_LEFT, 300);
+    _stText0001 = new wxStaticText(_hotkeys, wxID_ANY, wxEmptyString);
+    _lstHotKeys = new wxListCtrl(_hotkeys, ID_LIST_HKEYS, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
+    _lstHotKeys->InsertColumn(0, wxEmptyString, wxLIST_FORMAT_LEFT, 150);
+    _lstHotKeys->InsertColumn(1, wxEmptyString, wxLIST_FORMAT_LEFT, 300);
 
-        wxBoxSizer *btnHotkKeysSizer = new wxBoxSizer(wxHORIZONTAL);
-        _btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEWHKEY, wxEmptyString);
-        _btnEditHotKey = new wxButton(_hotkeys, ID_EDIT_HKEY, wxEmptyString);
-        _btnDelHotKey = new wxButton(_hotkeys, ID_DELETE_HKEY, wxEmptyString);
+    wxBoxSizer *btnHotkKeysSizer = new wxBoxSizer(wxHORIZONTAL);
+    _btnAddNewHotKey = new wxButton(_hotkeys, ID_ADD_NEWHKEY, wxEmptyString);
+    _btnEditHotKey = new wxButton(_hotkeys, ID_EDIT_HKEY, wxEmptyString);
+    _btnDelHotKey = new wxButton(_hotkeys, ID_DELETE_HKEY, wxEmptyString);
 
-        btnHotkKeysSizer->Add(_btnAddNewHotKey, wxALL, 5);
-        btnHotkKeysSizer->Add(_btnEditHotKey, wxALL, 5);
-        btnHotkKeysSizer->Add(_btnDelHotKey, wxALL, 5);
+    btnHotkKeysSizer->Add(_btnAddNewHotKey, wxALL, 5);
+    btnHotkKeysSizer->Add(_btnEditHotKey, wxALL, 5);
+    btnHotkKeysSizer->Add(_btnDelHotKey, wxALL, 5);
 
-        topSizerHotKeys->Add(_stText0001, 0, wxTOP|wxLEFT, 5);
-        topSizerHotKeys->Add(_lstHotKeys, 1, wxALL|wxGROW, 5);
-        topSizerHotKeys->Add(btnHotkKeysSizer, 0, wxGROW);
+    topSizerHotKeys->Add(_stText0001, 0, wxTOP|wxLEFT, 5);
+    topSizerHotKeys->Add(_lstHotKeys, 1, wxALL|wxGROW, 5);
+    topSizerHotKeys->Add(btnHotkKeysSizer, 0, wxGROW);
 
-        _hotkeys->SetSizerAndFit(topSizerHotKeys);
-        _hotkeys->SetAutoLayout(true);
-    #endif
+    _hotkeys->SetSizerAndFit(topSizerHotKeys);
+    _hotkeys->SetAutoLayout(true);
+#endif
 
     notebookSizer->Add(_notebook, 1, wxALL|wxGROW, 3);
 
@@ -493,21 +493,21 @@ void OptionsDialog::ReCreateGUI()
     _btnPathPlayer->SetLabel(_("Select path..."));
     _btnPathHelp->SetLabel(_("Select path..."));
     _btnPathTxt2Gam->SetLabel(_("Select path..."));
-    #ifdef __WXMSW__
-        //Page HotKeys
-        _notebook->SetPageText(6,  _("Hotkeys"));
-        _stText0001->SetLabel(_("Hotkeys list:"));
-        wxListItem header;
-        _lstHotKeys->GetColumn(0, header);
-        header.SetText(_("Hotkey"));
-        _lstHotKeys->SetColumn(0, header);
-        _lstHotKeys->GetColumn(1, header);
-        header.SetText(_("Execute"));
-        _lstHotKeys->SetColumn(1, header);
-        _btnAddNewHotKey->SetLabel(_("Add..."));
-        _btnEditHotKey->SetLabel(_("Edit..."));
-        _btnDelHotKey->SetLabel(_("Delete"));
-    #endif
+#ifdef __WXMSW__
+    //Page HotKeys
+    _notebook->SetPageText(6,  _("Hotkeys"));
+    _stText0001->SetLabel(_("Hotkeys list:"));
+    wxListItem header;
+    _lstHotKeys->GetColumn(0, header);
+    header.SetText(_("Hotkey"));
+    _lstHotKeys->SetColumn(0, header);
+    _lstHotKeys->GetColumn(1, header);
+    header.SetText(_("Execute"));
+    _lstHotKeys->SetColumn(1, header);
+    _btnAddNewHotKey->SetLabel(_("Add..."));
+    _btnEditHotKey->SetLabel(_("Edit..."));
+    _btnDelHotKey->SetLabel(_("Delete"));
+#endif
     GetSizer()->SetSizeHints(this);
 }
 
@@ -918,14 +918,14 @@ void OptionsDialog::ApplySettings()
     _settings->SetFont(SYNTAX_COMMENTS, _txtFontComments->GetFont());
     _settings->SetFont(SYNTAX_BASE, _txtFontBase->GetFont());
 
-    #ifdef __WXMSW__
-        HotkeyData hotKeyData;
-        size_t count = _lstHotKeys->GetItemCount();
-        HotkeysStore *hotKeysStore = _settings->GetHotKeys();
-        hotKeysStore->ClearHotkeysData();
-        for (size_t i = 0; i < count; ++i)
-            hotKeysStore->AddHotkeyData(_hotkeysData[i]);
-    #endif
+#ifdef __WXMSW__
+    HotkeyData hotKeyData;
+    size_t count = _lstHotKeys->GetItemCount();
+    HotkeysStore *hotKeysStore = _settings->GetHotKeys();
+    hotKeysStore->ClearHotkeysData();
+    for (size_t i = 0; i < count; ++i)
+        hotKeysStore->AddHotkeyData(_hotkeysData[i]);
+#endif
     int lang = _langTable[_cmbLang->GetStringSelection()];
      _controls->UpdateLocale(lang);
     _settings->SetIdLang(lang);
@@ -1029,19 +1029,20 @@ void OptionsDialog::InitOptionsDialog()
     _txtNameFirsLoc->Enable(_settings->GetCreateFirstLoc());
     _spnAutoSaveMin->Enable(_settings->GetAutoSave());
 
-    #ifdef __WXMSW__
-        HotkeysStore *hotKeysStore = _settings->GetHotKeys();
-        size_t count = hotKeysStore->GetHotkeysCount();
-        _lstHotKeys->DeleteAllItems();
-        _hotkeysData.Clear();
-        for (size_t i = 0; i < count; ++i)
-        {
-            const HotkeyData &hotKeyData = hotKeysStore->GetHotkeyData(i);
-            _lstHotKeys->InsertItem(i, hotKeyData.GetKeysAsString());
-            _lstHotKeys->SetItem(i, 1, hotKeyData.CommandText);
-            _hotkeysData.Add(hotKeyData);
-        }
-    #endif
+#ifdef __WXMSW__
+    HotkeysStore *hotKeysStore = _settings->GetHotKeys();
+    size_t count = hotKeysStore->GetHotkeysCount();
+    _lstHotKeys->DeleteAllItems();
+    _hotkeysData.Clear();
+    for (size_t i = 0; i < count; ++i)
+    {
+        const HotkeyData &hotKeyData = hotKeysStore->GetHotkeyData(i);
+        _lstHotKeys->InsertItem(i, hotKeyData.GetKeysAsString());
+        _lstHotKeys->SetItem(i, 1, hotKeyData.CommandText);
+        _hotkeysData.Add(hotKeyData);
+    }
+#endif
+
     UpdateLanguagesList();
     SetSize(_settings->GetOptionsDialogWidth(), _settings->GetOptionsDialogHeight());
     _btnApply->Enable(false);

@@ -1,20 +1,8 @@
-diff --git a/build/cmake/lib/stc/CMakeLists.txt b/build/cmake/lib/stc/CMakeLists.txt
-index bd6acd858c..88c1c8bfb4 100644
---- a/build/cmake/lib/stc/CMakeLists.txt
-+++ b/build/cmake/lib/stc/CMakeLists.txt
-@@ -95,6 +95,7 @@ wx_add_builtin_library(wxscintilla
-     src/stc/scintilla/lexers/LexProps.cxx
-     src/stc/scintilla/lexers/LexPS.cxx
-     src/stc/scintilla/lexers/LexPython.cxx
-+    src/stc/scintilla/lexers/LexQSP.cxx
-     src/stc/scintilla/lexers/LexR.cxx
-     src/stc/scintilla/lexers/LexRebol.cxx
-     src/stc/scintilla/lexers/LexRegistry.cxx
 diff --git a/include/wx/generic/animate.h b/include/wx/generic/animate.h
-index 46413e01dd..cc607a1bc0 100644
+index e673fa9928..f2338e1141 100644
 --- a/include/wx/generic/animate.h
 +++ b/include/wx/generic/animate.h
-@@ -130,6 +130,10 @@ protected:
+@@ -139,6 +139,10 @@ protected:
      wxBitmap      m_backingStore;     // The frames are drawn here and then blitted
                                        // on the screen
  
@@ -23,13 +11,13 @@ index 46413e01dd..cc607a1bc0 100644
 +    int m_scaleWidth;
 +    int m_scaleHeight;
  private:
-     typedef wxAnimationCtrlBase base_type;
-     wxDECLARE_DYNAMIC_CLASS(wxGenericAnimationCtrl);
+     // True if we need to show the next frame after painting the current one.
+     bool m_needToShowNextFrame = false;
 diff --git a/include/wx/htmllbox.h b/include/wx/htmllbox.h
-index a65fa566e5..06f827c899 100644
+index 969f32c304..c81987e328 100644
 --- a/include/wx/htmllbox.h
 +++ b/include/wx/htmllbox.h
-@@ -133,6 +133,15 @@ protected:
+@@ -132,6 +132,15 @@ protected:
      // ensure that the given item is cached
      void CacheItem(size_t n) const;
  
@@ -44,8 +32,8 @@ index a65fa566e5..06f827c899 100644
 +
  private:
      // wxHtmlWindowInterface methods:
-     virtual void SetHTMLWindowTitle(const wxString& title) wxOVERRIDE;
-@@ -173,14 +182,6 @@ private:
+     virtual void SetHTMLWindowTitle(const wxString& title) override;
+@@ -172,14 +181,6 @@ private:
      // this class caches the pre-parsed HTML to speed up display
      wxHtmlListBoxCache *m_cache;
  
@@ -60,23 +48,11 @@ index a65fa566e5..06f827c899 100644
      // rendering style for the parser which allows us to customize our colours
      wxHtmlListBoxStyle *m_htmlRendStyle;
  
-diff --git a/include/wx/stc/stc.h b/include/wx/stc/stc.h
-index 4887511ead..d838433446 100644
---- a/include/wx/stc/stc.h
-+++ b/include/wx/stc/stc.h
-@@ -569,6 +569,7 @@ class WXDLLIMPEXP_FWD_CORE wxScrollBar;
- #define wxSTC_LEX_TEHEX 119
- #define wxSTC_LEX_JSON 120
- #define wxSTC_LEX_EDIFACT 121
-+#define wxSTC_LEX_QSP 200
- 
- /// When a lexer specifies its language as SCLEX_AUTOMATIC it receives a
- /// value assigned in sequence from SCLEX_AUTOMATIC+1.
 diff --git a/src/aui/floatpane.cpp b/src/aui/floatpane.cpp
-index 4953c1e238..80ecd45978 100644
+index 5fe6f64bab..5d7522ad3f 100644
 --- a/src/aui/floatpane.cpp
 +++ b/src/aui/floatpane.cpp
-@@ -133,10 +133,6 @@ void wxAuiFloatingFrame::SetPaneWindow(const wxAuiPaneInfo& pane)
+@@ -129,10 +129,6 @@ void wxAuiFloatingFrame::SetPaneWindow(const wxAuiPaneInfo& pane)
      // pane.floating_size from inside it so we must also record its original
      // value before doing it.
      const bool hasFloatingSize = pane.floating_size != wxDefaultSize;
@@ -88,10 +64,10 @@ index 4953c1e238..80ecd45978 100644
      if ( hasFloatingSize )
      {
 diff --git a/src/aui/framemanager.cpp b/src/aui/framemanager.cpp
-index e9aed4e5f0..b4a8421e4c 100644
+index c88e3070da..466c8ba01e 100644
 --- a/src/aui/framemanager.cpp
 +++ b/src/aui/framemanager.cpp
-@@ -2685,6 +2685,7 @@ void wxAuiManager::Update()
+@@ -2394,6 +2394,7 @@ void wxAuiManager::Update()
                  p.window->Refresh();
                  p.window->Update();
              }
@@ -100,10 +76,10 @@ index e9aed4e5f0..b4a8421e4c 100644
      }
  
 diff --git a/src/generic/animateg.cpp b/src/generic/animateg.cpp
-index 578827b52b..82712ac939 100644
+index 365ffd0579..52672ef8b4 100644
 --- a/src/generic/animateg.cpp
 +++ b/src/generic/animateg.cpp
-@@ -178,6 +178,7 @@ void wxGenericAnimationCtrl::Init()
+@@ -174,6 +174,7 @@ void wxGenericAnimationCtrl::Init()
      m_currentFrame = 0;
      m_looped = false;
      m_isPlaying = false;
@@ -111,16 +87,16 @@ index 578827b52b..82712ac939 100644
  
      // use the window background colour by default to be consistent
      // with the GTK+ native version
-@@ -250,6 +251,9 @@ void wxGenericAnimationCtrl::SetAnimation(const wxAnimation& animation)
+@@ -274,6 +275,9 @@ void wxGenericAnimationCtrl::SetAnimation(const wxAnimationBundle& animations)
+     if (!this->HasFlag(wxAC_NO_AUTORESIZE))
+         FitToAnimation();
  
-     // set new animation even if it's wxNullAnimation
-     m_animation = animation;
-+    wxSizeEvent e;
-+    OnSize(e);
++    //wxSizeEvent e;
++    //OnSize(e);
 +
-     if (!m_animation.IsOk())
-     {
-         DisplayStaticImage();
+     DisplayStaticImage();
+ }
+ 
 @@ -354,18 +358,14 @@ bool wxGenericAnimationCtrl::RebuildBackingStoreUpToFrame(unsigned int frame)
  {
      // if we've not created the backing store yet or it's too
@@ -144,7 +120,7 @@ index 578827b52b..82712ac939 100644
      wxMemoryDC dc;
      dc.SelectObject(m_backingStore);
  
-@@ -498,7 +498,11 @@ void wxGenericAnimationCtrl::DrawCurrentFrame(wxDC& dc)
+@@ -496,7 +496,11 @@ void wxGenericAnimationCtrl::DrawCurrentFrame(wxDC& dc)
      wxASSERT( m_backingStore.IsOk() );
  
      // m_backingStore always contains the current frame
@@ -157,7 +133,7 @@ index 578827b52b..82712ac939 100644
  }
  
  void wxGenericAnimationCtrl::DisposeToBackground()
-@@ -546,7 +550,11 @@ void wxGenericAnimationCtrl::OnPaint(wxPaintEvent& WXUNUSED(event))
+@@ -544,7 +548,11 @@ void wxGenericAnimationCtrl::OnPaint(wxPaintEvent& WXUNUSED(event))
          // NOTE: we draw the bitmap explicitly ignoring the mask (if any);
          //       i.e. we don't want to combine the backing store with the
          //       possibly wrong preexisting contents of the window!
@@ -170,7 +146,7 @@ index 578827b52b..82712ac939 100644
      }
      else
      {
-@@ -606,6 +614,19 @@ void wxGenericAnimationCtrl::OnSize(wxSizeEvent &WXUNUSED(event))
+@@ -605,6 +613,19 @@ void wxGenericAnimationCtrl::OnSize(wxSizeEvent &WXUNUSED(event))
              if (!RebuildBackingStoreUpToFrame(m_currentFrame))
                  Stop();     // in case we are playing
          }
@@ -191,10 +167,10 @@ index 578827b52b..82712ac939 100644
  }
  
 diff --git a/src/generic/scrlwing.cpp b/src/generic/scrlwing.cpp
-index 53a556af22..35e69d346a 100644
+index 148722a598..e1b31fe583 100644
 --- a/src/generic/scrlwing.cpp
 +++ b/src/generic/scrlwing.cpp
-@@ -556,14 +556,9 @@ void wxScrollHelperBase::HandleOnScroll(wxScrollWinEvent& event)
+@@ -536,20 +536,11 @@ void wxScrollHelperBase::HandleOnScroll(wxScrollWinEvent& event)
          m_win->SetScrollPos(wxVERTICAL, m_yScrollPosition);
      }
  
@@ -203,31 +179,37 @@ index 53a556af22..35e69d346a 100644
 -        m_targetWindow->Refresh(true, GetScrollRect());
 -    }
 -    else
--    {
 +    m_targetWindow->Refresh(true, GetScrollRect());
 +    if (!needsRefresh)
+     {
          m_targetWindow->ScrollWindow(dx, dy, GetScrollRect());
+     }
+-#ifdef __WXUNIVERSAL__
+-    if (m_win != m_targetWindow)
+-    {
+-        m_win->Refresh(true, GetScrollRect());
 -    }
+-#endif // __WXUNIVERSAL__
  }
  
  int wxScrollHelperBase::CalcScrollInc(wxScrollWinEvent& event)
 diff --git a/src/html/htmlwin.cpp b/src/html/htmlwin.cpp
-index 6662d1cd77..8ba82eee39 100644
+index 1f5f138fe9..eaa6db1809 100644
 --- a/src/html/htmlwin.cpp
 +++ b/src/html/htmlwin.cpp
-@@ -488,7 +488,6 @@ bool wxHtmlWindow::DoSetPage(const wxString& source)
+@@ -493,7 +493,6 @@ bool wxHtmlWindow::DoSetPage(const wxString& source)
      // ...and run the parser on it:
      wxClientDC dc(this);
      dc.SetMapMode(wxMM_TEXT);
--    SetBackgroundColour(wxColour(0xFF, 0xFF, 0xFF));
+-    SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
      SetBackgroundImage(wxNullBitmap);
  
      double pixelScale = 1.0;
 diff --git a/src/html/m_image.cpp b/src/html/m_image.cpp
-index edef506fd1..1d557d8383 100644
+index cee2fdfc9d..67980a98ca 100644
 --- a/src/html/m_image.cpp
 +++ b/src/html/m_image.cpp
-@@ -320,6 +320,8 @@ private:
+@@ -312,6 +312,8 @@ private:
      wxBitmap           *m_bitmap;
      int                 m_align;
      int                 m_bmpW, m_bmpH;
@@ -236,15 +218,15 @@ index edef506fd1..1d557d8383 100644
      bool                m_bmpWpercent:1;
      bool                m_bmpHpresent:1;
      bool                m_showFrame:1;
-@@ -373,6 +375,7 @@ wxHtmlImageCell::wxHtmlImageCell(wxHtmlWindowInterface *windowIface,
-     m_bitmap = NULL;
+@@ -365,6 +367,7 @@ wxHtmlImageCell::wxHtmlImageCell(wxHtmlWindowInterface *windowIface,
+     m_bitmap = nullptr;
      m_bmpW   = w;
      m_bmpH   = h;
 +    m_bmpMaxW = m_bmpMaxH = wxDefaultCoord;
      m_align  = align;
      m_bmpWpercent = wpercent;
      m_bmpHpresent = hpresent;
-@@ -403,20 +406,21 @@ wxHtmlImageCell::wxHtmlImageCell(wxHtmlWindowInterface *windowIface,
+@@ -395,20 +398,21 @@ wxHtmlImageCell::wxHtmlImageCell(wxHtmlWindowInterface *windowIface,
                      if ( m_gifDecoder->LoadGIF(*s) == wxGIF_OK )
                      {
                          wxImage img;
@@ -270,9 +252,9 @@ index edef506fd1..1d557d8383 100644
                          {
                              wxDELETE(m_gifDecoder);
                          }
-@@ -438,19 +442,8 @@ wxHtmlImageCell::wxHtmlImageCell(wxHtmlWindowInterface *windowIface,
+@@ -430,19 +434,8 @@ wxHtmlImageCell::wxHtmlImageCell(wxHtmlWindowInterface *windowIface,
          }
-         else // input==NULL, use "broken image" bitmap
+         else // input==nullptr, use "broken image" bitmap
          {
 -            if ( m_bmpW == wxDefaultCoord && m_bmpH == wxDefaultCoord )
 -            {
@@ -292,7 +274,7 @@ index edef506fd1..1d557d8383 100644
          }
      }
      //else: ignore the 0-sized images used sometimes on the Web pages
-@@ -468,14 +461,26 @@ void wxHtmlImageCell::SetImage(const wxImage& img, double scaleHDPI)
+@@ -460,14 +453,26 @@ void wxHtmlImageCell::SetImage(const wxImage& img, double scaleHDPI)
          ww = img.GetWidth();
          hh = img.GetHeight();
  
@@ -324,7 +306,7 @@ index edef506fd1..1d557d8383 100644
      }
  #endif
  }
-@@ -500,7 +505,6 @@ void wxHtmlImageCell::AdvanceAnimation(wxTimer *timer)
+@@ -492,7 +497,6 @@ void wxHtmlImageCell::AdvanceAnimation(wxTimer *timer)
      if (m_nCurrFrame == m_gifDecoder->GetFrameCount())
          m_nCurrFrame = 0;
  
@@ -332,7 +314,7 @@ index edef506fd1..1d557d8383 100644
      {
          m_physX = m_physY = 0;
          for (wxHtmlCell *cell = this; cell; cell = cell->GetParent())
-@@ -519,18 +523,24 @@ void wxHtmlImageCell::AdvanceAnimation(wxTimer *timer)
+@@ -511,18 +515,24 @@ void wxHtmlImageCell::AdvanceAnimation(wxTimer *timer)
           m_gifDecoder->ConvertToImage(m_nCurrFrame, &img) )
      {
  #if !defined(__WXMSW__) || wxUSE_WXDIB
@@ -362,7 +344,7 @@ index edef506fd1..1d557d8383 100644
          win->Refresh(img.HasMask(), &rect);
      }
  
-@@ -557,6 +567,15 @@ void wxHtmlImageCell::Layout(int w)
+@@ -549,6 +559,15 @@ void wxHtmlImageCell::Layout(int w)
          m_Width  = static_cast<int>(m_scale*m_bmpW);
          m_Height = static_cast<int>(m_scale*m_bmpH);
      }
@@ -378,13 +360,14 @@ index edef506fd1..1d557d8383 100644
  
      switch (m_align)
      {
-@@ -597,48 +616,9 @@ void wxHtmlImageCell::Draw(wxDC& dc, int x, int y,
+@@ -589,49 +608,9 @@ void wxHtmlImageCell::Draw(wxDC& dc, int x, int y,
          dc.SetBrush(*wxTRANSPARENT_BRUSH);
          dc.SetPen(*wxBLACK_PEN);
          dc.DrawRectangle(x + m_PosX, y + m_PosY, m_Width, m_Height);
--        x++, y++;
+-        x++;
+-        y++;
 -    }
--    if ( m_bitmap )
+-    if ( m_bitmap && m_Width && m_Height )
 -    {
 -        // We add in the scaling from the desired bitmap width
 -        // and height, so we only do the scaling once.
@@ -394,7 +377,7 @@ index edef506fd1..1d557d8383 100644
 -        // Optimisation for Windows: WIN32 scaling for window DCs is very poor,
 -        // so unless we're using a printer DC, do the scaling ourselves.
 -#if defined(__WXMSW__) && wxUSE_IMAGE
--        if (m_Width >= 0 && m_Width != m_bitmap->GetWidth()
+-        if (m_Width != m_bitmap->GetWidth()
 -    #if wxUSE_PRINTING_ARCHITECTURE
 -            && !dc.IsKindOf(CLASSINFO(wxPrinterDC))
 -    #endif
@@ -411,10 +394,10 @@ index edef506fd1..1d557d8383 100644
 -        }
 -#endif 
 -
--        if (m_Width != m_bitmap->GetScaledWidth())
--            imageScaleX = (double) m_Width / (double) m_bitmap->GetScaledWidth();
--        if (m_Height != m_bitmap->GetScaledHeight())
--            imageScaleY = (double) m_Height / (double) m_bitmap->GetScaledHeight();
+-        if (m_Width != m_bitmap->GetLogicalWidth())
+-            imageScaleX = (double) m_Width / (double) m_bitmap->GetLogicalWidth();
+-        if (m_Height != m_bitmap->GetLogicalHeight())
+-            imageScaleY = (double) m_Height / (double) m_bitmap->GetLogicalHeight();
 -
 -        double us_x, us_y;
 -        dc.GetUserScale(&us_x, &us_y);
@@ -430,10 +413,10 @@ index edef506fd1..1d557d8383 100644
  
  wxHtmlLinkInfo *wxHtmlImageCell::GetLink( int x, int y ) const
 diff --git a/src/html/m_links.cpp b/src/html/m_links.cpp
-index 5acfea0973..fc1a07363d 100644
+index f9e197f31e..963c2439a0 100644
 --- a/src/html/m_links.cpp
 +++ b/src/html/m_links.cpp
-@@ -84,7 +84,8 @@ TAG_HANDLER_BEGIN(A, "A")
+@@ -81,7 +81,8 @@ TAG_HANDLER_BEGIN(A, "A")
              // set default styles, might get overridden by ApplyStyle
              m_WParser->SetActualColor(m_WParser->GetLinkColor());
              m_WParser->GetContainer()->InsertCell(new wxHtmlColourCell(m_WParser->GetLinkColor()));
@@ -444,26 +427,26 @@ index 5acfea0973..fc1a07363d 100644
              m_WParser->SetLink(wxHtmlLinkInfo(href, target));
  
 diff --git a/src/html/winpars.cpp b/src/html/winpars.cpp
-index 96650b2b37..c1b577f2e8 100644
+index 07bc8ef592..dc0ec1310c 100644
 --- a/src/html/winpars.cpp
 +++ b/src/html/winpars.cpp
-@@ -55,6 +55,7 @@ wxHtmlWinParser::wxHtmlWinParser(wxHtmlWindowInterface *wndIface)
+@@ -47,6 +47,7 @@ wxHtmlWinParser::wxHtmlWinParser(wxHtmlWindowInterface *wndIface)
      m_whitespaceMode = Whitespace_Normal;
-     m_lastWordCell = NULL;
+     m_lastWordCell = nullptr;
      m_posColumn = 0;
 +    m_LinkColor.Set(0, 0, 0xFF);
  
      {
          int i, j, k, l, m;
-@@ -211,7 +212,6 @@ void wxHtmlWinParser::InitParser(const wxString& source)
+@@ -193,7 +194,6 @@ void wxHtmlWinParser::InitParser(const wxString& source)
  
      m_UseLink = false;
      m_Link = wxHtmlLinkInfo( wxEmptyString );
--    m_LinkColor.Set(0, 0, 0xFF);
-     m_ActualColor.Set(0, 0, 0);
-     const wxColour windowColour = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW) ;
+-    m_LinkColor = wxPrivate::GetLinkColour();
+     m_ActualColor = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
      m_ActualBackgroundColor = m_windowInterface
-@@ -289,36 +289,6 @@ wxFSFile *wxHtmlWinParser::OpenURL(wxHtmlURLType type,
+                             ? m_windowInterface->GetHTMLBackgroundColour()
+@@ -257,36 +257,6 @@ wxFSFile *wxHtmlWinParser::OpenURL(wxHtmlURLType type,
      for (;;)
      {
          wxString myfullurl(myurl);
@@ -500,35 +483,80 @@ index 96650b2b37..c1b577f2e8 100644
          wxString redirect;
          status = m_windowInterface->OnHTMLOpeningURL(type, myfullurl, &redirect);
          if ( status != wxHTML_REDIRECT )
-diff --git a/src/stc/scintilla/include/SciLexer.h b/src/stc/scintilla/include/SciLexer.h
-index 44c02a84ae..4c4eb40619 100644
---- a/src/stc/scintilla/include/SciLexer.h
-+++ b/src/stc/scintilla/include/SciLexer.h
-@@ -134,6 +134,7 @@
- #define SCLEX_TEHEX 119
- #define SCLEX_JSON 120
- #define SCLEX_EDIFACT 121
+Submodule src/stc/lexilla contains modified content
+diff --git a/include/wx/stc/stc.h b/include/wx/stc/stc.h
+index d1d2af926a..cfa5682b5a 100644
+--- a/include/wx/stc/stc.h
++++ b/include/wx/stc/stc.h
+@@ -626,6 +626,7 @@ class WXDLLIMPEXP_FWD_CORE wxScrollBar;
+ #define wxSTC_LEX_JULIA 133
+ #define wxSTC_LEX_ASCIIDOC 134
+ #define wxSTC_LEX_GDSCRIPT 135
++#define wxSTC_LEX_QSP 200
+
+ /// When a lexer specifies its language as SCLEX_AUTOMATIC it receives a
+ /// value assigned in sequence from SCLEX_AUTOMATIC+1.
+diff --git a/src/stc/lexilla/include/LexicalStyles.iface b/src/stc/lexilla/include/LexicalStyles.iface
+index 02097f64..63d5785c 100644
+--- a/src/stc/lexilla/include/LexicalStyles.iface
++++ b/src/stc/lexilla/include/LexicalStyles.iface
+@@ -144,6 +144,7 @@ val SCLEX_FSHARP=132
+ val SCLEX_JULIA=133
+ val SCLEX_ASCIIDOC=134
+ val SCLEX_GDSCRIPT=135
++val SCLEX_QSP=200
+
+ # When a lexer specifies its language as SCLEX_AUTOMATIC it receives a
+ # value assigned in sequence from SCLEX_AUTOMATIC+1.
+diff --git a/src/stc/lexilla/include/SciLexer.h b/src/stc/lexilla/include/SciLexer.h
+index 495c8df5..6593cce4 100644
+--- a/src/stc/lexilla/include/SciLexer.h
++++ b/src/stc/lexilla/include/SciLexer.h
+@@ -148,6 +148,7 @@
+ #define SCLEX_JULIA 133
+ #define SCLEX_ASCIIDOC 134
+ #define SCLEX_GDSCRIPT 135
 +#define SCLEX_QSP 200
  #define SCLEX_AUTOMATIC 1000
  #define SCE_P_DEFAULT 0
  #define SCE_P_COMMENTLINE 1
-diff --git a/src/stc/scintilla/include/Scintilla.iface b/src/stc/scintilla/include/Scintilla.iface
-index 035d80235f..2499ab0d37 100644
---- a/src/stc/scintilla/include/Scintilla.iface
-+++ b/src/stc/scintilla/include/Scintilla.iface
-@@ -2891,6 +2891,7 @@ val SCLEX_IHEX=118
- val SCLEX_TEHEX=119
- val SCLEX_JSON=120
- val SCLEX_EDIFACT=121
-+val SCLEX_QSP=200
- 
- # When a lexer specifies its language as SCLEX_AUTOMATIC it receives a
- # value assigned in sequence from SCLEX_AUTOMATIC+1.
-diff --git a/src/stc/scintilla/lexers/LexQSP.cxx b/src/stc/scintilla/lexers/LexQSP.cxx
+diff --git a/build/cmake/lib/stc/lexilla.cmake b/build/cmake/lib/stc/lexilla.cmake
+index edab41179c..96f99acb40 100644
+--- a/build/cmake/lib/stc/lexilla.cmake
++++ b/build/cmake/lib/stc/lexilla.cmake
+@@ -105,6 +105,7 @@ wx_add_builtin_library(wxlexilla
+     ${LEXILLA_SRC_DIR}/lexers/LexProgress.cxx
+     ${LEXILLA_SRC_DIR}/lexers/LexProps.cxx
+     ${LEXILLA_SRC_DIR}/lexers/LexPython.cxx
++    ${LEXILLA_SRC_DIR}/lexers/LexQSP.cxx
+     ${LEXILLA_SRC_DIR}/lexers/LexR.cxx
+     ${LEXILLA_SRC_DIR}/lexers/LexRaku.cxx
+     ${LEXILLA_SRC_DIR}/lexers/LexRebol.cxx
+diff --git a/src/stc/lexilla/src/Lexilla.cxx b/src/stc/lexilla/src/Lexilla.cxx
+index 4a0ce4e5..693655d6 100644
+--- a/src/stc/lexilla/src/Lexilla.cxx
++++ b/src/stc/lexilla/src/Lexilla.cxx
+@@ -127,6 +127,7 @@ extern LexerModule lmProps;
+ extern LexerModule lmPS;
+ extern LexerModule lmPureBasic;
+ extern LexerModule lmPython;
++extern LexerModule lmQSP;
+ extern LexerModule lmR;
+ extern LexerModule lmRaku;
+ extern LexerModule lmREBOL;
+@@ -275,6 +276,7 @@ void AddEachLexer() {
+                &lmPS,
+                &lmPureBasic,
+                &lmPython,
++               &lmQSP,
+                &lmR,
+                &lmRaku,
+                &lmREBOL,
+diff --git a/src/stc/lexilla/lexers/LexQSP.cxx b/src/stc/lexilla/lexers/LexQSP.cxx
 new file mode 100644
 index 0000000000..22f635b086
 --- /dev/null
-+++ b/src/stc/scintilla/lexers/LexQSP.cxx
++++ b/src/stc/lexilla/lexers/LexQSP.cxx
 @@ -0,0 +1,281 @@
 +// Scintilla source code edit control
 +/** @file LexQSP.cxx
@@ -544,6 +572,8 @@ index 0000000000..22f635b086
 +#include <assert.h>
 +#include <ctype.h>
 +
++#include <string>
++
 +#include "ILexer.h"
 +#include "Scintilla.h"
 +#include "SciLexer.h"
@@ -552,14 +582,12 @@ index 0000000000..22f635b086
 +#include "LexAccessor.h"
 +#include "Accessor.h"
 +#include "StyleContext.h"
-+#include "CharacterSet.h"
++#include "LexCharacterSet.h"
 +#include "LexerModule.h"
 +
-+#ifdef SCI_NAMESPACE
-+using namespace Scintilla;
-+#endif
++using namespace Lexilla;
 +
-+static bool IsComment(Accessor &styler, int pos, int len) {
++static bool IsComment(Accessor &styler, Sci_Position pos, Sci_Position len) {
 +    char style = styler.StyleAt(pos);
 +    return len > 0 && (style == SCE_B_PREPROCESSOR || style == SCE_B_DATE || style == SCE_B_COMMENT);
 +}
@@ -811,15 +839,3 @@ index 0000000000..22f635b086
 +};
 +
 +LexerModule lmQSP(SCLEX_QSP, ColouriseQSPDoc, "qsp", FoldQSPDoc, qspWordListDesc);
-diff --git a/src/stc/scintilla/src/Catalogue.cxx b/src/stc/scintilla/src/Catalogue.cxx
-index 2eadd95096..1b1ea99112 100644
---- a/src/stc/scintilla/src/Catalogue.cxx
-+++ b/src/stc/scintilla/src/Catalogue.cxx
-@@ -166,6 +166,7 @@ int Scintilla_LinkLexers() {
- 	LINK_LEXER(lmPS);
- 	LINK_LEXER(lmPureBasic);
- 	LINK_LEXER(lmPython);
-+	LINK_LEXER(lmQSP);
- 	LINK_LEXER(lmR);
- 	LINK_LEXER(lmREBOL);
- 	LINK_LEXER(lmRegistry);

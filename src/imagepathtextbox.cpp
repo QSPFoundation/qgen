@@ -49,16 +49,16 @@ void ImagePathTextBox::Update(bool isFromObservable)
     SetFont(settings->GetFont(SYNTAX_BASE));
     SetForegroundColour(settings->GetColour(SYNTAX_BASE));
     SetBackgroundColour(settings->GetTextBackColour());
-    #ifdef __WXMSW__
-        ToggleWindowStyle(wxTE_MULTILINE);
-        SetInitialSize(wxSize(1, GetBestSize().GetHeight()));
-        ToggleWindowStyle(wxTE_MULTILINE);
-    #else
-        wxTextCtrl *temp = new wxTextCtrl(GetParent(), wxID_ANY);
-        int size = temp->GetSize().GetHeight() - temp->GetCharHeight();
-        SetInitialSize(wxSize(1, GetCharHeight() + size));
-        delete temp;
-    #endif
+#ifdef __WXMSW__
+    ToggleWindowStyle(wxTE_MULTILINE);
+    SetInitialSize(wxSize(1, GetBestSize().GetHeight()));
+    ToggleWindowStyle(wxTE_MULTILINE);
+#else
+    wxTextCtrl *temp = new wxTextCtrl(GetParent(), wxID_ANY);
+    int size = temp->GetSize().GetHeight() - temp->GetCharHeight();
+    SetInitialSize(wxSize(1, GetCharHeight() + size));
+    delete temp;
+#endif
     Refresh();
 }
 

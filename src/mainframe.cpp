@@ -748,12 +748,12 @@ void MainFrame::OnPlayQuest( wxCommandEvent &event )
 
 void MainFrame::OnChmHelp( wxCommandEvent &event )
 {
-    #ifdef __WXMSW__
-        DesktopWindow desktop;
-        wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
-    #else
-        wxExtHelpController *chmHelp = new wxExtHelpController();
-    #endif
+#ifdef __WXMSW__
+    DesktopWindow desktop;
+    wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
+#else
+    wxExtHelpController *chmHelp = new wxExtHelpController();
+#endif
     if (_controls->SearchHelpFile())
     {
         chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());
@@ -764,12 +764,12 @@ void MainFrame::OnChmHelp( wxCommandEvent &event )
 
 void MainFrame::OnSearchHelp( wxCommandEvent &event )
 {
-    #ifdef __WXMSW__
-        DesktopWindow desktop;
-        wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
-    #else
-        wxExtHelpController *chmHelp = new wxExtHelpController();
-    #endif
+#ifdef __WXMSW__
+    DesktopWindow desktop;
+    wxCHMHelpController *chmHelp = new wxCHMHelpController(&desktop);
+#else
+    wxExtHelpController *chmHelp = new wxExtHelpController();
+#endif
     if (_controls->SearchHelpFile())
     {
         chmHelp->LoadFile(_controls->GetSettings()->GetCurrentHelpPath());

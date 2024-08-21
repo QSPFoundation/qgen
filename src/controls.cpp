@@ -33,9 +33,9 @@ Controls::Controls(const wxString &path)
     _settings = new Settings(_currentPath);
     _container = new DataContainer();
 
-    #ifdef __WXMSW__
-        _keysParser = new KeysParser(_settings->GetHotKeys());
-    #endif
+#ifdef __WXMSW__
+    _keysParser = new KeysParser(_settings->GetHotKeys());
+#endif
 
     _keywordsStore = new KeywordsStore();
      wxString filename = wxFileName(_currentPath, wxT("keywords.xml")).GetFullPath();
@@ -49,9 +49,9 @@ Controls::~Controls()
     delete _settings;
     delete _container;
 
-    #ifdef __WXMSW__
-        delete _keysParser;
-    #endif
+#ifdef __WXMSW__
+    delete _keysParser;
+#endif
 
     delete _keywordsStore;
     if (_locale) delete _locale;
@@ -1503,11 +1503,11 @@ void Controls::SwitchLocActs()
 bool Controls::ExecuteHotkey( int keyCode, int modifiers )
 {
     bool res = false;
-    #ifdef __WXMSW__
+#ifdef __WXMSW__
     ++_execHotkeyEnters;
     res = _keysParser->ExecuteHotkeyAction(keyCode, modifiers);
     --_execHotkeyEnters;
-    #endif
+#endif
     return res;
 }
 
