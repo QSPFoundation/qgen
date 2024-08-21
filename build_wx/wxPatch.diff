@@ -593,11 +593,11 @@ index 0000000000..22f635b086
 +}
 +
 +static inline bool IsAWordChar(int ch) {
-+    return (ch >= 0x80 || isalnum(ch) || ch == '_' || ch == '$');
++    return (ch >= 0x80 || isalnum(ch) || ch == '_' || ch == '$' || ch == '%');
 +}
 +
 +static inline bool IsAWordStart(int ch) {
-+    return (ch >= 0x80 || isalpha(ch) || ch == '_' || ch == '$');
++    return (ch >= 0x80 || isalpha(ch) || ch == '_' || ch == '$' || ch == '%');
 +}
 +
 +static inline bool IsANumberChar(int ch) {
