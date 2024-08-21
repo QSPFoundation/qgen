@@ -505,7 +505,7 @@ index 02097f64..63d5785c 100644
  val SCLEX_ASCIIDOC=134
  val SCLEX_GDSCRIPT=135
 +val SCLEX_QSP=200
-
+ 
  # When a lexer specifies its language as SCLEX_AUTOMATIC it receives a
  # value assigned in sequence from SCLEX_AUTOMATIC+1.
 diff --git a/src/stc/lexilla/include/SciLexer.h b/src/stc/lexilla/include/SciLexer.h
