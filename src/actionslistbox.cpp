@@ -135,7 +135,7 @@ wxString ActionsListBox::OnGetItem(size_t n) const
 void ActionsListBox::OnRightClick(wxMouseEvent & event)
 {
     wxMenu menu;
-    long ind = HitTest(event.GetPosition());
+    long ind = VirtualHitTest(event.GetY());
     if (ind >= 0 && ind != _prevActionIndex)
     {
         SetFocus();
@@ -403,7 +403,7 @@ void ActionsListBox::RefreshActions()
 
 void ActionsListBox::OnMouseMove( wxMouseEvent &event )
 {
-    int item = HitTest(event.GetPosition());
+    int item = VirtualHitTest(event.GetY());
     if (!_isDragging && event.ButtonIsDown(wxMOUSE_BTN_LEFT) && item >= 0)
     {
         _draggedAction = item;
@@ -423,7 +423,7 @@ void ActionsListBox::OnMouseLeftUp( wxMouseEvent &event )
 {
     if (_isDragging)
     {
-        int item = HitTest(event.GetPosition());
+        int item = VirtualHitTest(event.GetY());
         if (item >= 0 && item != _draggedAction)
             _controls->MoveActionTo(_locPage->GetLocationIndex(), _draggedAction, item);
         ReleaseMouse();
