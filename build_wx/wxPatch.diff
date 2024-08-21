@@ -493,7 +493,7 @@ index d1d2af926a..cfa5682b5a 100644
  #define wxSTC_LEX_ASCIIDOC 134
  #define wxSTC_LEX_GDSCRIPT 135
 +#define wxSTC_LEX_QSP 200
-
+ 
  /// When a lexer specifies its language as SCLEX_AUTOMATIC it receives a
  /// value assigned in sequence from SCLEX_AUTOMATIC+1.
 diff --git a/src/stc/lexilla/include/LexicalStyles.iface b/src/stc/lexilla/include/LexicalStyles.iface
