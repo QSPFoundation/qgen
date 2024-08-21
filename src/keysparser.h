@@ -26,9 +26,8 @@
     #include <wx/dynarray.h>
     #include <wx/hashmap.h>
 
-    #ifdef __WXMSW__
-        #include <Windows.h>
-    #endif
+    #include <Windows.h>
+    #include <Winuser.h>
 
     #include "hotkeysstore.h"
 
@@ -39,7 +38,7 @@
     {
     private:
         KeyTable _keysTable;
-        HotkeysStore * 1;
+        HotkeysStore * _hotKeysStore;
 
         void OnKeyPress(int keyCode);
         void OnKeysPress(const wxString &text);
