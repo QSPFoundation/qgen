@@ -40,7 +40,8 @@ LocationPage::LocationPage(wxAuiNotebook *owner, IControls *controls ) : wxPanel
 
     wxSizer *sizerUp = new wxBoxSizer(wxVERTICAL);
     sizerUp->Add(_splitterv_up, 1, wxALL|wxGROW);
-    _splitterv_up->SetSizerAndFit(sizerUp);
+
+    _splitterh->SetSizer(sizerUp);
     _splitterv_up->SetAutoLayout(true);
 
     // ----------------------------------------
