@@ -95,40 +95,40 @@ else()
 endif()
 
 set(QGEN_SOURCES
-	src/optionsdialog.cpp
-	src/chksyshotkey.cpp
-	src/actioncode.cpp
-	src/mainframe.cpp
-	src/actionslistbox.cpp
-	src/optionshotkeysdialog.cpp
-	src/locationcode.cpp
-	src/locationslistbox.cpp
-	src/application.cpp
-	src/datacontainer.cpp
-	src/hotkeytextbox.cpp
-	src/toolbar.cpp
-	src/locationpage.cpp
-	src/keywordsstore.cpp
-	src/initevent.cpp
-	src/keysparser.cpp
-	src/locationsnotebook.cpp
-	src/searchdialog.cpp
-	src/hotkeysstore.cpp
-	src/locationtip.cpp
-	src/game.cpp
-	src/syntaxtextbox.cpp
-	src/mergedialog.cpp
-	src/locationactions.cpp
-	src/imagepathtextbox.cpp
-	src/searchdatastore.cpp
-	src/locationdesc.cpp
-	src/controls.cpp
-	src/settings.cpp
-	src/actionspanel.cpp
+	qgen/optionsdialog.cpp
+	qgen/chksyshotkey.cpp
+	qgen/actioncode.cpp
+	qgen/mainframe.cpp
+	qgen/actionslistbox.cpp
+	qgen/optionshotkeysdialog.cpp
+	qgen/locationcode.cpp
+	qgen/locationslistbox.cpp
+	qgen/application.cpp
+	qgen/datacontainer.cpp
+	qgen/hotkeytextbox.cpp
+	qgen/toolbar.cpp
+	qgen/locationpage.cpp
+	qgen/keywordsstore.cpp
+	qgen/initevent.cpp
+	qgen/keysparser.cpp
+	qgen/locationsnotebook.cpp
+	qgen/searchdialog.cpp
+	qgen/hotkeysstore.cpp
+	qgen/locationtip.cpp
+	qgen/game.cpp
+	qgen/syntaxtextbox.cpp
+	qgen/mergedialog.cpp
+	qgen/locationactions.cpp
+	qgen/imagepathtextbox.cpp
+	qgen/searchdatastore.cpp
+	qgen/locationdesc.cpp
+	qgen/controls.cpp
+	qgen/settings.cpp
+	qgen/actionspanel.cpp
 )
 if(WIN32)
-	list(APPEND QGEN_SOURCES src/winresource.rc)
-	configure_file("${CMAKE_SOURCE_DIR}/src/bitmaps/qgen.ico" "${CMAKE_BINARY_DIR}/misc/icons/qgen.ico" COPYONLY)
+	list(APPEND QGEN_SOURCES qgen/winresource.rc)
+	configure_file("${CMAKE_SOURCE_DIR}/qgen/bitmaps/qgen.ico" "${CMAKE_BINARY_DIR}/misc/icons/qgen.ico" COPYONLY)
 	add_executable(qgen WIN32 ${QGEN_SOURCES})
 	target_compile_definitions(qgen PRIVATE _CRT_SECURE_NO_WARNINGS)
 	set(RESOURCES_DIR "${CMAKE_INSTALL_PREFIX}/bin")
