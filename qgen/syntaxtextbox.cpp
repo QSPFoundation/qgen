@@ -176,7 +176,7 @@ bool SyntaxTextBox::StartAutoComplete()
     int caretChar = GetCharIndexFromPosition(PositionFromLine(curLineIndex), GetCurrentPos());
     int startword = caretChar - 1;
     while (startword >= 0)
-        if (QGEN_STRCHR(QGEN_DELIMS, line[startword]))
+        if (QSP_STRCHR(QSP_DELIMS, line[startword]))
             break;
         else
             --startword;
@@ -447,12 +447,12 @@ wxString SyntaxTextBox::GetWordFromPos(long pos)
         beginPos = realPos;
         lastPos = realPos;
         while (beginPos >= 0)
-            if (QGEN_STRCHR(QGEN_DELIMS, lineStr[beginPos]))
+            if (QSP_STRCHR(QSP_DELIMS, lineStr[beginPos]))
                 break;
             else
                 --beginPos;
         while ((size_t)lastPos < lineStr.Length())
-            if (QGEN_STRCHR(QGEN_DELIMS, lineStr[lastPos]))
+            if (QSP_STRCHR(QSP_DELIMS, lineStr[lastPos]))
                 break;
             else
                 ++lastPos;

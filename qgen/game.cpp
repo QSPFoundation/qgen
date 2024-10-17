@@ -76,24 +76,24 @@ void qspFreeStrs(char **strs, long count, bool isVerify)
     }
 }
 
-bool qspIsInList(QGEN_CHAR *list, QGEN_CHAR ch)
+bool qspIsInList(QSP_CHAR *list, QSP_CHAR ch)
 {
     while (*list)
         if (*list++ == ch) return true;
     return false;
 }
 
-QGEN_CHAR *qspSkipSpaces(QGEN_CHAR *s)
+QSP_CHAR *qspSkipSpaces(QSP_CHAR *s)
 {
-    while (qspIsInList(QGEN_SPACES, *s)) ++s;
+    while (qspIsInList(QSP_SPACES, *s)) ++s;
     return s;
 }
 
-long qspStrToNum(QGEN_CHAR *s, QGEN_CHAR **endChar)
+long qspStrToNum(QSP_CHAR *s, QSP_CHAR **endChar)
 {
     long num;
     s = qspSkipSpaces(s);
-    num = QGEN_STRTOL(s, endChar, 10);
+    num = QSP_STRTOL(s, endChar, 10);
     if (endChar)
     {
         *endChar = qspSkipSpaces(*endChar);
@@ -124,18 +124,18 @@ char *qspUCS2StrStr(char *str, char *subStr)
     return 0;
 }
 
-char *qspFromQSPString(const QGEN_CHAR *s)
+char *qspFromQSPString(const QSP_CHAR *s)
 {
-    long len = (long)QGEN_WCSTOMBSLEN(s) + 1;
+    long len = (long)QSP_WCSTOMBSLEN(s) + 1;
     char *ret = (char *)malloc(len);
-    QGEN_WCSTOMBS(ret, s, len);
+    QSP_WCSTOMBS(ret, s, len);
     return ret;
 }
 
-char *qspQSPToGameString(const QGEN_CHAR *s, bool isUCS2, bool isCode)
+char *qspQSPToGameString(const QSP_CHAR *s, bool isUCS2, bool isCode)
 {
     unsigned short uCh, *ptr;
-    long len = (long)QGEN_STRLEN(s);
+    long len = (long)QSP_STRLEN(s);
     char ch, *ret = (char *)malloc((len + 1) * (isUCS2 ? 2 : 1));
     if (isUCS2)
     {
@@ -145,18 +145,18 @@ char *qspQSPToGameString(const QGEN_CHAR *s, bool isUCS2, bool isCode)
         {
             while (--len >= 0)
             {
-                uCh = QGEN_BTOWC(s[len]);
-                if (uCh == QGEN_CODREMOV)
-                    uCh = (unsigned short)-QGEN_CODREMOV;
+                uCh = QSP_BTOWC(s[len]);
+                if (uCh == QSP_CODREMOV)
+                    uCh = (unsigned short)-QSP_CODREMOV;
                 else
-                    uCh -= QGEN_CODREMOV;
+                    uCh -= QSP_CODREMOV;
                 ptr[len] = uCh;
             }
         }
         else
         {
             while (--len >= 0)
-                ptr[len] = QGEN_BTOWC(s[len]);
+                ptr[len] = QSP_BTOWC(s[len]);
         }
     }
     else
@@ -166,29 +166,29 @@ char *qspQSPToGameString(const QGEN_CHAR *s, bool isUCS2, bool isCode)
         {
             while (--len >= 0)
             {
-                ch = QGEN_FROM_OS_CHAR(s[len]);
-                if (ch == QGEN_CODREMOV)
-                    ch = -QGEN_CODREMOV;
+                ch = QSP_FROM_OS_CHAR(s[len]);
+                if (ch == QSP_CODREMOV)
+                    ch = -QSP_CODREMOV;
                 else
-                    ch -= QGEN_CODREMOV;
+                    ch -= QSP_CODREMOV;
                 ret[len] = ch;
             }
         }
         else
         {
             while (--len >= 0)
-                ret[len] = QGEN_FROM_OS_CHAR(s[len]);
+                ret[len] = QSP_FROM_OS_CHAR(s[len]);
         }
     }
     return ret;
 }
 
-QGEN_CHAR *qspGameToQSPString(char *s, bool isUCS2, bool isCoded)
+QSP_CHAR *qspGameToQSPString(char *s, bool isUCS2, bool isCoded)
 {
     char ch;
     unsigned short uCh, *ptr;
     long len = (isUCS2 ? qspUCS2StrLen(s) : (long)strlen(s));
-    QGEN_CHAR *ret = (QGEN_CHAR *)malloc((len + 1) * sizeof(QGEN_CHAR));
+    QSP_CHAR *ret = (QSP_CHAR *)malloc((len + 1) * sizeof(QSP_CHAR));
     ret[len] = 0;
     if (isUCS2)
     {
@@ -198,17 +198,17 @@ QGEN_CHAR *qspGameToQSPString(char *s, bool isUCS2, bool isCoded)
             while (--len >= 0)
             {
                 uCh = ptr[len];
-                if (uCh == (unsigned short)-QGEN_CODREMOV)
-                    uCh = QGEN_CODREMOV;
+                if (uCh == (unsigned short)-QSP_CODREMOV)
+                    uCh = QSP_CODREMOV;
                 else
-                    uCh += QGEN_CODREMOV;
-                ret[len] = QGEN_WCTOB(uCh);
+                    uCh += QSP_CODREMOV;
+                ret[len] = QSP_WCTOB(uCh);
             }
         }
         else
         {
             while (--len >= 0)
-                ret[len] = QGEN_WCTOB(ptr[len]);
+                ret[len] = QSP_WCTOB(ptr[len]);
         }
     }
     else
@@ -218,28 +218,28 @@ QGEN_CHAR *qspGameToQSPString(char *s, bool isUCS2, bool isCoded)
             while (--len >= 0)
             {
                 ch = s[len];
-                if (ch == -QGEN_CODREMOV)
-                    ch = QGEN_CODREMOV;
+                if (ch == -QSP_CODREMOV)
+                    ch = QSP_CODREMOV;
                 else
-                    ch += QGEN_CODREMOV;
-                ret[len] = QGEN_TO_OS_CHAR(ch);
+                    ch += QSP_CODREMOV;
+                ret[len] = QSP_TO_OS_CHAR(ch);
             }
         }
         else
         {
             while (--len >= 0)
-                ret[len] = QGEN_TO_OS_CHAR(s[len]);
+                ret[len] = QSP_TO_OS_CHAR(s[len]);
         }
     }
     return ret;
 }
 
-long qspSplitGameStr(char *str, bool isUCS2, QGEN_CHAR *delim, char ***res)
+long qspSplitGameStr(char *str, bool isUCS2, QSP_CHAR *delim, char ***res)
 {
     char *delimStr, *newStr, **ret, *found, *curPos = str;
     long charSize, delimSize, allocChars, count = 0, bufSize = 8;
     charSize = (isUCS2 ? 2 : 1);
-    delimSize = (long)QGEN_STRLEN(delim) * charSize;
+    delimSize = (long)QSP_STRLEN(delim) * charSize;
     delimStr = qspQSPToGameString(delim, isUCS2, false);
     found = (isUCS2 ? qspUCS2StrStr(str, delimStr) : strstr(str, delimStr));
     ret = (char **)malloc(bufSize * sizeof(char *));
@@ -276,8 +276,8 @@ bool qspCheckQuest(char **strs, long count, bool isUCS2)
 {
     long i, ind, locsCount, actsCount;
     bool isOldFormat;
-    QGEN_CHAR *data = qspGameToQSPString(strs[0], isUCS2, false);
-    isOldFormat = QGEN_STRCMP(data, QGEN_GAMEID) != 0;
+    QSP_CHAR *data = qspGameToQSPString(strs[0], isUCS2, false);
+    isOldFormat = QSP_STRCMP(data, QSP_GAMEID) != 0;
     free(data);
     ind = (isOldFormat ? 30 : 4);
     if (ind > count) return false;
@@ -304,12 +304,12 @@ bool qspCheckQuest(char **strs, long count, bool isUCS2)
     return true;
 }
 
-bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *controls, wxString &password, bool merge)
+bool qspOpenQuest(const QSP_CHAR *fileName, wxWindow *parent, Controls *controls, wxString &password, bool merge)
 {
     FILE *f;
     bool isOldFormat, isUCS2;
     long i, j, ind, fileSize, dataSize, count, locsCount, actsCount;
-    QGEN_CHAR *data;
+    QSP_CHAR *data;
     wxString temp;
     char **strs, *buf, *file = qspFromQSPString(fileName);
     if (!(f = fopen(file, "rb")))
@@ -331,9 +331,9 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
     fclose(f);
     buf[fileSize] = 0;
 
-    QGEN_CHAR *str = qspGameToQSPString(buf, false, false);
+    QSP_CHAR *str = qspGameToQSPString(buf, false, false);
 
-    count = qspSplitGameStr(buf, isUCS2 = !buf[1], QGEN_STRSDELIM, &strs);
+    count = qspSplitGameStr(buf, isUCS2 = !buf[1], QSP_STRSDELIM, &strs);
     free(buf);
     if (!qspCheckQuest(strs, count, isUCS2))
     {
@@ -341,11 +341,11 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
         return false;
     }
     data = qspGameToQSPString(strs[0], isUCS2, false);
-    isOldFormat = QGEN_STRCMP(data, QGEN_GAMEID) != 0;
+    isOldFormat = QSP_STRCMP(data, QSP_GAMEID) != 0;
     free(data);
 
     data = qspGameToQSPString(isOldFormat ? strs[1] : strs[2], isUCS2, true);
-    if (QGEN_STRCMP(data, QGEN_PASSWD))
+    if (QSP_STRCMP(data, QGEN_PASSWD))
     {
         wxPasswordEntryDialog dlgEntry(parent,
             _("Input password:"),
@@ -422,13 +422,13 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
         }
         data = qspGameToQSPString(strs[ind++], isUCS2, false);
 
-        (temp = data).Replace(QGEN_STRSDELIM, wxT("\n"));
+        (temp = data).Replace(QSP_STRSDELIM, wxT("\n"));
         free(data);
 
         if (canAddLoc) container->SetLocationDesc(indexLoc, temp);
 
         data = qspGameToQSPString(strs[ind++], isUCS2, true);
-        (temp = data).Replace(QGEN_STRSDELIM, wxT("\n"));
+        (temp = data).Replace(QSP_STRSDELIM, wxT("\n"));
         free(data);
 
         if (canAddLoc) container->SetLocationCode(indexLoc, temp);
@@ -446,10 +446,10 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
         for (j = 0; j < actsCount; ++j)
         {
             data = (isOldFormat ? 0 : qspGameToQSPString(strs[ind++], isUCS2, true));
-            (actImage = data).Replace(QGEN_STRSDELIM, wxT("\n"));
+            (actImage = data).Replace(QSP_STRSDELIM, wxT("\n"));
             free(data);
             data = qspGameToQSPString(strs[ind++], isUCS2, true);
-            (nameAct = data).Replace(QGEN_STRSDELIM, wxT("\n"));
+            (nameAct = data).Replace(QSP_STRSDELIM, wxT("\n"));
             free(data);
             if (!nameAct.empty() && canAddLoc)
             {
@@ -462,7 +462,7 @@ bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *control
                 }
                 container->SetActionPicturePath(indexLoc, indexAct, actImage);
                 data = qspGameToQSPString(strs[ind], isUCS2, true);
-                (temp = data).Replace(QGEN_STRSDELIM, wxT("\n"));
+                (temp = data).Replace(QSP_STRSDELIM, wxT("\n"));
                 free(data);
                 container->SetActionCode(indexLoc, indexAct, temp);
             }
@@ -508,18 +508,18 @@ long qspAddGameText(char **dest, char *val, bool isUCS2, long destLen, long valL
     return ret;
 }
 
-QGEN_CHAR *qspNumToStr(QGEN_CHAR *buf, long val)
+QSP_CHAR *qspNumToStr(QSP_CHAR *buf, long val)
 {
-    QGEN_CHAR temp, *str = buf, *first = str;
+    QSP_CHAR temp, *str = buf, *first = str;
     if (val < 0)
     {
-        *str++ = QGEN_FMT('-');
+        *str++ = QSP_FMT('-');
         val = -val;
         ++first;
     }
     do
     {
-        *str++ = (QGEN_CHAR)(val % 10 + QGEN_FMT('0'));
+        *str++ = (QSP_CHAR)(val % 10 + QSP_FMT('0'));
         val /= 10;
     } while (val > 0);
     *str-- = 0;
@@ -537,13 +537,13 @@ QGEN_CHAR *qspNumToStr(QGEN_CHAR *buf, long val)
 long qspGameCodeWriteIntVal(char **s, long len, long val, bool isUCS2, bool isCode)
 {
     char *temp;
-    QGEN_CHAR buf[12];
+    QSP_CHAR buf[12];
     qspNumToStr(buf, val);
     temp = qspQSPToGameString(buf, isUCS2, isCode);
     len = qspAddGameText(s, temp, isUCS2, len, -1, false);
     free(temp);
-    temp = qspQSPToGameString(QGEN_STRSDELIM, isUCS2, false);
-    len = qspAddGameText(s, temp, isUCS2, len, QGEN_LEN(QGEN_STRSDELIM), false);
+    temp = qspQSPToGameString(QSP_STRSDELIM, isUCS2, false);
+    len = qspAddGameText(s, temp, isUCS2, len, QSP_LEN(QSP_STRSDELIM), false);
     free(temp);
     return len;
 }
@@ -553,18 +553,18 @@ long qspGameCodeWriteVal(char **s, long len, wxString &val, bool isUCS2, bool is
     char *temp;
     if (!val.IsEmpty())
     {
-        val.Replace(wxT("\n"), QGEN_STRSDELIM);
+        val.Replace(wxT("\n"), QSP_STRSDELIM);
         temp = qspQSPToGameString(val.wx_str(), isUCS2, isCode);
         len = qspAddGameText(s, temp, isUCS2, len, -1, false);
         free(temp);
     }
-    temp = qspQSPToGameString(QGEN_STRSDELIM, isUCS2, false);
-    len = qspAddGameText(s, temp, isUCS2, len, QGEN_LEN(QGEN_STRSDELIM), false);
+    temp = qspQSPToGameString(QSP_STRSDELIM, isUCS2, false);
+    len = qspAddGameText(s, temp, isUCS2, len, QSP_LEN(QSP_STRSDELIM), false);
     free(temp);
     return len;
 }
 
-bool qspSaveQuest(const QGEN_CHAR *fileName, const wxString &passwd, Controls *controls)
+bool qspSaveQuest(const QSP_CHAR *fileName, const wxString &passwd, Controls *controls)
 {
     long i, j, len, locsCount, actsCount;
     FILE *f;
@@ -580,7 +580,7 @@ bool qspSaveQuest(const QGEN_CHAR *fileName, const wxString &passwd, Controls *c
     DataContainer *container = controls->GetContainer();
     locsCount = container->GetLocationsCount();
     buf = 0;
-    str = wxString(QGEN_GAMEID);
+    str = wxString(QSP_GAMEID);
     len = qspGameCodeWriteVal(&buf, 0, str, true, false);
     str = wxString(QGEN_VER);
     len = qspGameCodeWriteVal(&buf, len, str, true, false);
@@ -613,7 +613,7 @@ bool qspSaveQuest(const QGEN_CHAR *fileName, const wxString &passwd, Controls *c
     return true;
 }
 
-bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
+bool qspExportTxt(const QSP_CHAR *fileName, Controls *controls)
 {
     DataContainer *container = controls->GetContainer();
     char *buf = 0, *file = qspFromQSPString(fileName);
@@ -696,7 +696,7 @@ bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls)
     return true;
 }
 
-bool qspExportTxt2Game(const QGEN_CHAR *fileName, Controls *controls)
+bool qspExportTxt2Game(const QSP_CHAR *fileName, Controls *controls)
 {
     DataContainer *container = controls->GetContainer();
     char *buf = 0, *file = qspFromQSPString(fileName);
@@ -781,7 +781,7 @@ bool qspExportTxt2Game(const QGEN_CHAR *fileName, Controls *controls)
     return true;
 }
 
-bool qspImportTxt2Game(const QGEN_CHAR *fileName, Controls  *controls)
+bool qspImportTxt2Game(const QSP_CHAR *fileName, Controls  *controls)
 {
     if (!wxExecute(wxString::Format(wxT("\"%s\" \"%s\" \"%s\" u"),
             controls->GetSettings()->GetCurrentTxt2GamPath(),

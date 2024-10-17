@@ -28,86 +28,81 @@
     #include "datacontainer.h"
 
     #ifdef _UNICODE
-        typedef wchar_t QGEN_CHAR;
-        #define QGEN_FMT2(x) L##x
-        #define QGEN_FMT(x) QGEN_FMT2(x)
+        typedef wchar_t QSP_CHAR;
+        #define QSP_FMT2(x) L##x
+        #define QSP_FMT(x) QSP_FMT2(x)
     #else
-        typedef char QGEN_CHAR;
-        #define QGEN_FMT(x) x
+        typedef char QSP_CHAR;
+        #define QSP_FMT(x) x
     #endif
 
     #ifdef _UNICODE
-        #define QGEN_STRCPY wcscpy
-        #define QGEN_STRNCPY wcsncpy
-        #define QGEN_STRLEN wcslen
-        #define QGEN_STRSTR wcsstr
-        #define QGEN_STRCHR wcschr
-        #define QGEN_STRTOL wcstol
-        #define QGEN_CHRLWR towlower
-        #define QGEN_CHRUPR towupper
-        #define QGEN_STRCMP wcscmp
-        #define QGEN_STRCOLL wcscmp
-        #define QGEN_STRPBRK wcspbrk
-        #define QGEN_ISDIGIT iswdigit
-        #define QGEN_WCSTOMBSLEN(a) wcstombs(0, a, 0)
-        #define QGEN_WCSTOMBS wcstombs
-        #define QGEN_MBTOSB(a) ((a) % 256)
-        #define QGEN_FROM_OS_CHAR(a) qspReverseConvertUC(a, qspCP1251ToUnicodeTable)
-        #define QGEN_TO_OS_CHAR(a) qspDirectConvertUC(a, qspCP1251ToUnicodeTable)
-        #define QGEN_WCTOB
-        #define QGEN_BTOWC
+        #define QSP_STRCPY wcscpy
+        #define QSP_STRNCPY wcsncpy
+        #define QSP_STRLEN wcslen
+        #define QSP_STRSTR wcsstr
+        #define QSP_STRCHR wcschr
+        #define QSP_STRTOL wcstol
+        #define QSP_CHRLWR towlower
+        #define QSP_CHRUPR towupper
+        #define QSP_STRCMP wcscmp
+        #define QSP_STRCOLL wcscmp
+        #define QSP_STRPBRK wcspbrk
+        #define QSP_ISDIGIT iswdigit
+        #define QSP_WCSTOMBSLEN(a) wcstombs(0, a, 0)
+        #define QSP_WCSTOMBS wcstombs
+        #define QSP_MBTOSB(a) ((a) % 256)
+        #define QSP_FROM_OS_CHAR(a) qspReverseConvertUC(a, qspCP1251ToUnicodeTable)
+        #define QSP_TO_OS_CHAR(a) qspDirectConvertUC(a, qspCP1251ToUnicodeTable)
+        #define QSP_WCTOB
+        #define QSP_BTOWC
     #else
-        #define QGEN_STRCPY strcpy
-        #define QGEN_STRNCPY strncpy
-        #define QGEN_STRLEN strlen
-        #define QGEN_STRSTR strstr
-        #define QGEN_STRCHR strchr
-        #define QGEN_STRTOL strtol
-        #define QGEN_STRCMP strcmp
-        #define QGEN_STRPBRK strpbrk
-        #define QGEN_ISDIGIT isdigit
-        #define QGEN_WCSTOMBSLEN strlen
-        #define QGEN_WCSTOMBS strncpy
-        #define QGEN_MBTOSB
+        #define QSP_STRCPY strcpy
+        #define QSP_STRNCPY strncpy
+        #define QSP_STRLEN strlen
+        #define QSP_STRSTR strstr
+        #define QSP_STRCHR strchr
+        #define QSP_STRTOL strtol
+        #define QSP_STRCMP strcmp
+        #define QSP_STRPBRK strpbrk
+        #define QSP_ISDIGIT isdigit
+        #define QSP_WCSTOMBSLEN strlen
+        #define QSP_WCSTOMBS strncpy
+        #define QSP_MBTOSB
         #ifdef _WINDOWS
-            #define QGEN_FROM_OS_CHAR
-            #define QGEN_TO_OS_CHAR
-            #define QGEN_WCTOB(a) qspReverseConvertUC(a, qspCP1251ToUnicodeTable)
-            #define QGEN_BTOWC(a) qspDirectConvertUC(a, qspCP1251ToUnicodeTable)
-            #define QGEN_CHRLWR(a) qspCP1251ToLowerTable[(unsigned char)(a)]
-            #define QGEN_CHRUPR(a) qspCP1251ToUpperTable[(unsigned char)(a)]
-            #define QGEN_STRCOLL(a, b) qspStrCmpSB(a, b, qspCP1251OrderTable)
+            #define QSP_FROM_OS_CHAR
+            #define QSP_TO_OS_CHAR
+            #define QSP_WCTOB(a) qspReverseConvertUC(a, qspCP1251ToUnicodeTable)
+            #define QSP_BTOWC(a) qspDirectConvertUC(a, qspCP1251ToUnicodeTable)
+            #define QSP_CHRLWR(a) qspCP1251ToLowerTable[(unsigned char)(a)]
+            #define QSP_CHRUPR(a) qspCP1251ToUpperTable[(unsigned char)(a)]
+            #define QSP_STRCOLL(a, b) qspStrCmpSB(a, b, qspCP1251OrderTable)
         #else
-            #define QGEN_FROM_OS_CHAR(a) qspReverseConvertSB(a, qspCP1251ToKOI8RTable)
-            #define QGEN_TO_OS_CHAR(a) qspDirectConvertSB(a, qspCP1251ToKOI8RTable)
-            #define QGEN_WCTOB(a) qspReverseConvertUC(a, qspKOI8RToUnicodeTable)
-            #define QGEN_BTOWC(a) qspDirectConvertUC(a, qspKOI8RToUnicodeTable)
-            #define QGEN_CHRLWR(a) qspKOI8RToLowerTable[(unsigned char)(a)]
-            #define QGEN_CHRUPR(a) qspKOI8RToUpperTable[(unsigned char)(a)]
-            #define QGEN_STRCOLL(a, b) qspStrCmpSB(a, b, qspKOI8ROrderTable)
+            #define QSP_FROM_OS_CHAR(a) qspReverseConvertSB(a, qspCP1251ToKOI8RTable)
+            #define QSP_TO_OS_CHAR(a) qspDirectConvertSB(a, qspCP1251ToKOI8RTable)
+            #define QSP_WCTOB(a) qspReverseConvertUC(a, qspKOI8RToUnicodeTable)
+            #define QSP_BTOWC(a) qspDirectConvertUC(a, qspKOI8RToUnicodeTable)
+            #define QSP_CHRLWR(a) qspKOI8RToLowerTable[(unsigned char)(a)]
+            #define QSP_CHRUPR(a) qspKOI8RToUpperTable[(unsigned char)(a)]
+            #define QSP_STRCOLL(a, b) qspStrCmpSB(a, b, qspKOI8ROrderTable)
         #endif
     #endif
 
-    #ifdef _WINDOWS
-        #define QGEN_PATHDELIM QGEN_FMT("\\")
-    #else
-        #define QGEN_PATHDELIM QGEN_FMT("/")
-    #endif
+    #define QSP_LEN(x) (sizeof(x) / sizeof(QSP_CHAR) - 1)
 
-    #define QGEN_LEN(x) (sizeof(x) / sizeof(QGEN_CHAR) - 1)
+    #define QSP_CODREMOV 5
+    #define QSP_SPACES QSP_FMT(" \t")
+    #define QSP_STRSDELIM QSP_FMT("\r\n")
+    #define QSP_DELIMS QSP_FMT("():=+-*/<>!&,[] '\"\t{}%@#^;.?~\\|\r\n")
 
-    #define QGEN_CODREMOV 5
-    #define QGEN_SPACES QGEN_FMT(" \t")
-    #define QGEN_STRSDELIM QGEN_FMT("\r\n")
-    #define QGEN_GAMEID QGEN_FMT("QSPGAME")
-    #define QGEN_VER QGEN_FMT("4.0.0 beta 1")
-    #define QGEN_NAME QGEN_FMT("QGEN")
-    #define QGEN_PASSWD QGEN_FMT("No")
+    #define QSP_GAMEID QSP_FMT("QSPGAME")
+    #define QGEN_VER QSP_FMT("4.0.0 beta 1")
+    #define QGEN_NAME QSP_FMT("QGEN")
+    #define QGEN_PASSWD QSP_FMT("No")
     #define QGEN_MAXACTIONS 50
     #define QGEN_MAXFOLDERNAMELEN 100
     #define QGEN_MAXLOCATIONNAMELEN 100
     #define QGEN_MAXACTIONNAMELEN 500
-    #define QGEN_DELIMS QGEN_FMT("():=+-*/<>!&,[] '\"\t{}%@#^;.?~\\|\r\n")
     #define QGEN_BOM "\xFF\xFE"
 
     #define wxGetBitmapFromMemory(name) _wxGetBitmapFromMemory(name ## _png, sizeof(name ## _png))
@@ -119,11 +114,11 @@
 
     class Controls;
 
-    bool qspOpenQuest(const QGEN_CHAR *fileName, wxWindow *parent, Controls *controls, wxString &password, bool merge);
-    bool qspSaveQuest(const QGEN_CHAR *fileName, const wxString &passwd, Controls *controls);
-    bool qspExportTxt(const QGEN_CHAR *fileName, Controls *controls);
-    bool qspExportTxt2Game(const QGEN_CHAR *fileName, Controls *controls);
-    bool qspImportTxt2Game(const QGEN_CHAR *fileName, Controls *controls);
+    bool qspOpenQuest(const QSP_CHAR *fileName, wxWindow *parent, Controls *controls, wxString &password, bool merge);
+    bool qspSaveQuest(const QSP_CHAR *fileName, const wxString &passwd, Controls *controls);
+    bool qspExportTxt(const QSP_CHAR *fileName, Controls *controls);
+    bool qspExportTxt2Game(const QSP_CHAR *fileName, Controls *controls);
+    bool qspImportTxt2Game(const QSP_CHAR *fileName, Controls *controls);
 
     bool OpenConfigFile(DataContainer *container, const wxString &file);
     bool SaveConfigFile(DataContainer *container, const wxString &file);

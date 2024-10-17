@@ -370,29 +370,29 @@ bool Controls::IsClipboardEmpty()
 bool Controls::SerializeLocData( size_t locIndex, wxString &buffer )
 {
     size_t actsCount;
-    buffer.Append(QGEN_GAMEID);
-    buffer.Append(QGEN_STRSDELIM);
+    buffer.Append(QSP_GAMEID);
+    buffer.Append(QSP_STRSDELIM);
     buffer.Append(QGEN_NAME);
     buffer.Append(wxT(" "));
     buffer.Append(QGEN_VER);
-    buffer.Append(QGEN_STRSDELIM);
+    buffer.Append(QSP_STRSDELIM);
     buffer.Append(_container->GetLocationName(locIndex));
-    buffer.Append(QGEN_STRSDELIM);
+    buffer.Append(QSP_STRSDELIM);
     buffer.Append(EncodeString(_container->GetLocationDesc(locIndex)));
-    buffer.Append(QGEN_STRSDELIM);
+    buffer.Append(QSP_STRSDELIM);
     buffer.Append(EncodeString(_container->GetLocationCode(locIndex)));
-    buffer.Append(QGEN_STRSDELIM);
+    buffer.Append(QSP_STRSDELIM);
     actsCount = _container->GetActionsCount(locIndex);
     buffer.Append(EncodeString(wxString::Format(wxT("%ld"), actsCount)));
-    buffer.Append(QGEN_STRSDELIM);
+    buffer.Append(QSP_STRSDELIM);
     for (size_t i = 0; i < actsCount; ++i)
     {
         buffer.Append(EncodeString(_container->GetActionPicturePath(locIndex, i)));
-        buffer.Append(QGEN_STRSDELIM);
+        buffer.Append(QSP_STRSDELIM);
         buffer.Append(EncodeString(_container->GetActionName(locIndex, i)));
-        buffer.Append(QGEN_STRSDELIM);
+        buffer.Append(QSP_STRSDELIM);
         buffer.Append(EncodeString(_container->GetActionCode(locIndex, i)));
-        buffer.Append(QGEN_STRSDELIM);
+        buffer.Append(QSP_STRSDELIM);
     }
     return true;
 }
@@ -406,12 +406,12 @@ bool Controls::GetBufferedLocName(const wxString &buffer, wxString &locName)
         return false;
     }
     //ID ������� �����
-    last = buffer.find(QGEN_STRSDELIM);
+    last = buffer.find(QSP_STRSDELIM);
     //������ � ������ ���������
-    last = buffer.find(QGEN_STRSDELIM, last + QGEN_LEN(QGEN_STRSDELIM));
+    last = buffer.find(QSP_STRSDELIM, last + QSP_LEN(QSP_STRSDELIM));
     //��� �������
-    first = last + QGEN_LEN(QGEN_STRSDELIM);
-    last = buffer.find(QGEN_STRSDELIM, first);
+    first = last + QSP_LEN(QSP_STRSDELIM);
+    last = buffer.find(QSP_STRSDELIM, first);
     locName = buffer.Mid(first, last - first);
     return true;
 }
@@ -430,48 +430,48 @@ bool Controls::DeserializeLocData(size_t locIndex, const wxString &buffer)
     }
     _container->ClearLocation(locIndex);
     //ID ������� �����
-    last = buffer.find(QGEN_STRSDELIM);
+    last = buffer.find(QSP_STRSDELIM);
     //������ � ������ ���������
-    last = buffer.find(QGEN_STRSDELIM, last + QGEN_LEN(QGEN_STRSDELIM));
+    last = buffer.find(QSP_STRSDELIM, last + QSP_LEN(QSP_STRSDELIM));
     //��� �������
-    last = buffer.find(QGEN_STRSDELIM, last + QGEN_LEN(QGEN_STRSDELIM));
+    last = buffer.find(QSP_STRSDELIM, last + QSP_LEN(QSP_STRSDELIM));
 
     //�������� �������
-    first = last + QGEN_LEN(QGEN_STRSDELIM);
-    last = buffer.find(QGEN_STRSDELIM, first);
+    first = last + QSP_LEN(QSP_STRSDELIM);
+    last = buffer.find(QSP_STRSDELIM, first);
     str = buffer.Mid(first, last - first);
     _container->SetLocationDesc(locIndex, DecodeString(str));
 
     //��� �������
-    first = last + QGEN_LEN(QGEN_STRSDELIM);
-    last = buffer.find(QGEN_STRSDELIM, first);
+    first = last + QSP_LEN(QSP_STRSDELIM);
+    last = buffer.find(QSP_STRSDELIM, first);
     str = buffer.Mid(first, last - first);
     _container->SetLocationCode(locIndex, DecodeString(str));
 
     //���������� ��������
-    first = last + QGEN_LEN(QGEN_STRSDELIM);
-    last = buffer.find(QGEN_STRSDELIM, first);
+    first = last + QSP_LEN(QSP_STRSDELIM);
+    last = buffer.find(QSP_STRSDELIM, first);
     str = DecodeString(buffer.Mid(first, last - first));
     str.ToLong(&actsCount);
 
     for (long i = 0; i < actsCount; ++i)
     {
         //�����������
-        first = last + QGEN_LEN(QGEN_STRSDELIM);
-        last = buffer.find(QGEN_STRSDELIM, first);
+        first = last + QSP_LEN(QSP_STRSDELIM);
+        last = buffer.find(QSP_STRSDELIM, first);
         str = buffer.Mid(first, last - first);
         actImage = DecodeString(str);
 
         //��������
-        first = last + QGEN_LEN(QGEN_STRSDELIM);
-        last = buffer.find(QGEN_STRSDELIM, first);
+        first = last + QSP_LEN(QSP_STRSDELIM);
+        last = buffer.find(QSP_STRSDELIM, first);
         str = buffer.Mid(first, last - first);
         _container->AddAction(locIndex, DecodeString(str));
         _container->SetActionPicturePath(locIndex, i, actImage);
 
         //���
-        first = last + QGEN_LEN(QGEN_STRSDELIM);
-        last = buffer.find(QGEN_STRSDELIM, first);
+        first = last + QSP_LEN(QSP_STRSDELIM);
+        last = buffer.find(QSP_STRSDELIM, first);
         str = buffer.Mid(first, last - first);
         _container->SetActionCode(locIndex, i, DecodeString(str));
     }
@@ -573,10 +573,10 @@ wxString Controls::EncodeString(const wxString &str)
     for (size_t i = 0; i < str.Length(); i++)
     {
         ch = str[i];
-        if (ch == QGEN_CODREMOV)
-            ch = -QGEN_CODREMOV;
+        if (ch == QSP_CODREMOV)
+            ch = -QSP_CODREMOV;
         else
-            ch -= QGEN_CODREMOV;
+            ch -= QSP_CODREMOV;
         result.Append(ch);
     }
     return result;
@@ -589,10 +589,10 @@ wxString Controls::DecodeString(const wxString &str)
     for (size_t i = 0; i < str.Length(); i++)
     {
         ch = str[i];
-        if (ch == (wxChar)-QGEN_CODREMOV)
-            ch = QGEN_CODREMOV;
+        if (ch == (wxChar)-QSP_CODREMOV)
+            ch = QSP_CODREMOV;
         else
-            ch += QGEN_CODREMOV;
+            ch += QSP_CODREMOV;
         result.Append(ch);
     }
     return result;
@@ -858,19 +858,19 @@ bool Controls::IsCorrectDataFormat(const wxString &str)
     wxArrayString strArray;
     int last, first = 0;
 
-    last = str.find(QGEN_STRSDELIM);
+    last = str.find(QSP_STRSDELIM);
     if (last == wxNOT_FOUND) return false;
     do
     {
         ++count;
         strArray.Add(str.Mid(first, last - first));
-        first = last + QGEN_LEN(QGEN_STRSDELIM);
-        last = str.find(QGEN_STRSDELIM, first);
+        first = last + QSP_LEN(QSP_STRSDELIM);
+        last = str.find(QSP_STRSDELIM, first);
     } while (last != wxNOT_FOUND);
 
     if (count <= 5) return false;
     //ID ������� �����
-    if (!strArray[0].IsSameAs(QGEN_GAMEID)) return false;
+    if (!strArray[0].IsSameAs(QSP_GAMEID)) return false;
     //���������� ��������
     int actsCount = wxAtoi(strArray[5]);
     if (actsCount < 0) return false;
@@ -896,8 +896,8 @@ int Controls::FindSubString(const wxString& s, const wxString& sub, bool isWhole
             if (ind < 0) break;
             ind2 = ind + subLen;
         } while (!(
-            (ind == 0 || QGEN_STRCHR(QGEN_DELIMS, s[ind - 1])) &&
-            (ind2 >= length || QGEN_STRCHR(QGEN_DELIMS, s[ind2]))
+            (ind == 0 || QSP_STRCHR(QSP_DELIMS, s[ind - 1])) &&
+            (ind2 >= length || QSP_STRCHR(QSP_DELIMS, s[ind2]))
             ));
         return ind;
     }
@@ -947,12 +947,12 @@ wxString Controls::GetSelectedWord() const
             beginPos = curPos;
             lastPos = curPos;
             while (beginPos >= 0)
-                if (QGEN_STRCHR(QGEN_DELIMS, data[beginPos]))
+                if (QSP_STRCHR(QSP_DELIMS, data[beginPos]))
                     break;
                 else
                     --beginPos;
             while ((size_t)lastPos < data.Length())
-                if (QGEN_STRCHR(QGEN_DELIMS, data[lastPos]))
+                if (QSP_STRCHR(QSP_DELIMS, data[lastPos]))
                     break;
                 else
                     ++lastPos;
