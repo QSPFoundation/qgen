@@ -26,8 +26,8 @@
     #include <wx/dynarray.h>
     #include <wx/hashmap.h>
 
-    #include <Windows.h>
-    #include <Winuser.h>
+    #include <windows.h>
+    #include <winuser.h>
 
     #include "hotkeysstore.h"
 

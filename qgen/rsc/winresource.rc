@@ -1,0 +1,7 @@
+#ifndef wxUSE_DPI_AWARE_MANIFEST
+#define wxUSE_DPI_AWARE_MANIFEST 2
+#endif
+#include "wx/msw/wx.rc"
+#include "winresource.h"
+
+IDI_QGEN ICON "misc/icons/qgen.ico"

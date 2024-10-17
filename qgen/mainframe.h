@@ -36,7 +36,7 @@
     #include "optionsdialog.h"
     #include "toolbar.h"
     #ifdef __WXMSW__
-        #include "DesktopWindow.h"
+        #include "desktopwindow.h"
     #endif
     #include "bitmaps/toolbar_game_play.xpm"
     #include "bitmaps/toolbar_game_info.xpm"

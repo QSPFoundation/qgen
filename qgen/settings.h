@@ -26,6 +26,7 @@
     #include <wx/fontdlg.h>
     #include <wx/filename.h>
     #include <wx/fileconf.h>
+    #include <wx/stdpaths.h>
     #include <wx/list.h>
     #include "iobserver.h"
     #include "hotkeysstore.h"
@@ -75,8 +76,8 @@
         double _heightsCoeff;
         double _widthsCoeff1;
         double _widthsCoeff2;
-        wxFont            _font[SYNTAX_DUMMY];
-        wxColour        _colour[SYNTAX_DUMMY];
+        wxFont _font[SYNTAX_DUMMY];
+        wxColour _colour[SYNTAX_DUMMY];
         wxColour _textBackColour;
         wxColour _baseBackColour;
         wxString _path;

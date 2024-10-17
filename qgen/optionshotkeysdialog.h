@@ -30,7 +30,7 @@
     #include "syntaxtextbox.h"
     #include "icontrols.h"
     #ifdef __WXMSW__
-        #include "DesktopWindow.h"
+        #include "desktopwindow.h"
     #endif
 
     enum

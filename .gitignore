@@ -1,4 +1,6 @@
 build/*
+dist/*
+build_packages/*
 
 # CMake files
 CMakeCache.txt
@@ -39,6 +41,10 @@ _deps
 *.exe
 *.out
 *.app
+
+# Release files
+/build_packages/linux64/
+/build_packages/win32/
 
 # Visual Studio files
 /.vs/

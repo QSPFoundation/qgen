@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=QGen
+Type=Application
+Terminal=false
+Categories=Game;Development;
+Exec=qgen
+Icon=qgen

@@ -109,7 +109,7 @@ bool MainFrame::Create(const wxSize& size, long style)
     if (res)
     {
         #ifdef __WXMSW__
-            SetIcon(wxICON(wxwin16x16));
+            SetIcon(wxICON(qgen));
         #endif
         SetMinSize(wxSize(550, 300));
         CreateControls();
@@ -259,12 +259,12 @@ void MainFrame::CreateMenuBar()
     text_menu->AppendSeparator();
     text_menu->Append(ID_TEXT_SELALL, wxT("-"));
 
-    wxMenu *list_controls= new wxMenu;
+    wxMenu *list_controls = new wxMenu;
     list_controls->Append(ID_TOGGLE_TOOLBAR, wxT("-"), wxEmptyString, wxITEM_CHECK);
     list_controls->Append(ID_TOGGLE_LISTBOX, wxT("-"), wxEmptyString, wxITEM_CHECK);
     list_controls->Append(ID_TOGGLE_STATUSBAR, wxT("-"), wxEmptyString, wxITEM_CHECK);
 
-    wxMenu *view_menu= new wxMenu;
+    wxMenu *view_menu = new wxMenu;
     view_menu->Append(ID_TOGGLE, wxT("-"), list_controls);
     view_menu->AppendSeparator();
     view_menu->Append(ID_TAB_CLOSEALL, wxT("-"));

@@ -33,11 +33,10 @@ Settings::Settings(const wxString &path)
 
 void Settings::InitSettings()
 {
-#ifdef __WXMSW__
-    _currentConfigPath = _path;
-#else
-    _currentConfigPath = wxGetHomeDir();
-#endif
+    if (wxFileName::IsDirWritable(_path))
+        _currentConfigPath = _path;
+    else
+        _currentConfigPath = wxStandardPaths::Get().GetUserDir(wxStandardPathsBase::Dir_Config);
     _currentConfigPath = wxFileName(_currentConfigPath, wxT("qgen.cfg")).GetFullPath();
     _currentPlayerPath = wxFileName(_path, wxT("qspgui.exe")).GetFullPath();
     _currentHelpPath = wxFileName(_path, wxT("qsp.chm")).GetFullPath();

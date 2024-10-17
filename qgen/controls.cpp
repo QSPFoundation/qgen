@@ -38,8 +38,13 @@ Controls::Controls(const wxString &path)
 #endif
 
     _keywordsStore = new KeywordsStore();
-     wxString filename = wxFileName(_currentPath, wxT("keywords.xml")).GetFullPath();
-    _keywordsStore->Load(filename);
+    wxFileName keywordsFile(_currentPath, wxT("keywords.xml"));
+    if (!keywordsFile.Exists())
+    {
+        keywordsFile.Assign(wxStandardPaths::Get().GetResourcesDir(), keywordsFile.GetFullName());
+        keywordsFile.AppendDir(QGEN_APPNAME);
+    }
+    _keywordsStore->Load(keywordsFile.GetFullPath());
 
     InitData();
 }
@@ -85,7 +90,7 @@ int Controls::AddLocationByName(const wxString &name)
 int Controls::AddLocation(const wxString &name)
 {
     wxString locName(name);
-    while (1)
+    while (true)
     {
         wxTextEntryDialog dlgEntry(GetParent(),
             _("Input name for a new location:"),
@@ -114,7 +119,7 @@ bool Controls::RenameSelectedLocation()
     if (locIndex < 0) return false;
 
     wxString name(_container->GetLocationName(locIndex));
-    while (1)
+    while (true)
     {
         wxTextEntryDialog dlgEntry(GetParent(),
             _("Input new location name:"),
@@ -171,7 +176,7 @@ bool Controls::AddActionOnSelectedLoc()
         return false;
     }
 
-    while (1)
+    while (true)
     {
         wxTextEntryDialog dlgEntry(GetParent(),
             _("Input name for a new action"),
@@ -254,7 +259,7 @@ bool Controls::RenameSelectedAction()
     if (actIndex < 0) return false;
 
     wxString name(_container->GetActionName(locIndex, actIndex));
-    while (1)
+    while (true)
     {
         wxTextEntryDialog dlgEntry(GetParent(),
             _("Input new action name:"),
@@ -264,7 +269,7 @@ bool Controls::RenameSelectedAction()
             name = dlgEntry.GetValue();
             if (name.IsEmpty())
                 ShowMessage( QGEN_MSG_EMPTYDATA );
-            else if ((int)name.Len()>QGEN_MAXACTIONNAMELEN)
+            else if ((int)name.Len() > QGEN_MAXACTIONNAMELEN)
                 ShowMessage( QGEN_MSG_TOOLONGACTIONNAME );
             else
             {
@@ -1525,7 +1530,7 @@ void Controls::SelectLocation( size_t locIndex )
 bool Controls::AddFolder()
 {
     wxString name;
-    while (1)
+    while (true)
     {
         wxTextEntryDialog dlgEntry(GetParent(),
             _("Input name for a new folder:"),
@@ -1579,7 +1584,7 @@ bool Controls::RenameSelectedFolder()
     if (folder < 0) return false;
 
     wxString name(_container->GetFolderName(folder));
-    while (1)
+    while (true)
     {
         wxTextEntryDialog dlgEntry(GetParent(),
             _("Input new folder name:"),
@@ -1635,7 +1640,16 @@ void Controls::UpdateLocale(int lang)
     if (_locale) delete _locale;
     _locale = new wxLocale;
     _locale->Init(lang);
-    _locale->AddCatalogLookupPathPrefix(_currentPath + wxT("langs"));
+
+    wxFileName langsPath = wxFileName::DirName(_currentPath);
+    langsPath.AppendDir(wxT("langs"));
+    if (!langsPath.Exists())
+    {
+        langsPath = wxFileName::DirName(wxStandardPaths::Get().GetResourcesDir());
+        langsPath.AppendDir(QGEN_APPNAME);
+        langsPath.AppendDir(wxT("langs"));
+    }
+    _locale->AddCatalogLookupPathPrefix(langsPath.GetPath());
 
     if (!_locale->AddCatalog(QGEN_APPNAME))
         _locale->AddCatalog(wxString(QGEN_APPNAME) + wxT('_') + _locale->GetCanonicalName().BeforeFirst(wxT('_')));

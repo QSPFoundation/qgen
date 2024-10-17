@@ -1,28 +1,33 @@
-# QGen
+# QGen game editor
 
-## Linux build
+Please check [Releases](https://github.com/QSPFoundation/qgen/releases) section.
+
+## Linux & MacOS build
 
 ```bash
-mkdir build && cd build
-cmake -DCMAKE_BUILD_TYPE=Release ..
-cmake --build .
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build
 ```
 
 ## Windows build
 
 ```bash
-mkdir build
-cd build
-cmake -G "Visual Studio 15 2017" -A Win32 -DCMAKE_INSTALL_PREFIX=out ..
-cmake --build . --target install --config Release
+cmake -S . -B build -G "Visual Studio 17 2022" -A Win32 -DCMAKE_INSTALL_PREFIX=out
+cmake --build build --target install --config Release
 ```
 
 ## TODO
 
 * Add filtering for shown locations
 * Fix initial window sizes
-* Fix installation into a local directory (Linux)
 * Build web editor
+
+## Support us
+
+Please consider supporting our development on:
+* Buy me a coffee: https://buymeacoffee.com/varg
+* Ethereum/EVM: 0x4537B99e27deD6C8459C1eFCdE0E7fa48357e44D
+* [![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate/?hosted_button_id=RB8B6EQW4FW6N)
 
 ## Chat group
 
