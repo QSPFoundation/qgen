@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.21)
 
-set(APP_VERSION CACHE STRING "0.0.0")
+if (NOT DEFINED APP_VERSION)
+	set(APP_VERSION "0.0.0" CACHE STRING "App version" FORCE)
+endif()
 
 project(qgen VERSION ${APP_VERSION} HOMEPAGE_URL "https://qsp.org")
 
@@ -108,6 +110,8 @@ else()
 					 "${CMAKE_BINARY_DIR}/wxWidgets-build"
 	)
 endif()
+
+configure_file(qgen_config.h.cmakein qgen_config.h @ONLY)
 
 set(QGEN_SOURCES
 	qgen/optionsdialog.cpp

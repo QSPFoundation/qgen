@@ -1,0 +1,6 @@
+#ifndef QGEN_CONFIG_H
+#define QGEN_CONFIG_H
+
+#define QGEN_VER_STR "@qgen_VERSION@"
+
+#endif
