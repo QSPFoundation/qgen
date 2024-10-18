@@ -1483,7 +1483,7 @@ bool Controls::ExportTxt2Gam(const wxString &filename)
 {
     SyncWithLocationsList();
     _locNotebook->SaveOpenedPages();
-    return qspExportTxt2Game(filename.wx_str(), this);
+    return qspExportTxt2Gam(filename.wx_str(), this);
 }
 
 bool Controls::ImportTxt2Gam(const wxString &filename)

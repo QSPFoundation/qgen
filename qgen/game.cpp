@@ -330,9 +330,6 @@ bool qspOpenQuest(const QSP_CHAR *fileName, wxWindow *parent, Controls *controls
     fread(buf, 1, fileSize, f);
     fclose(f);
     buf[fileSize] = 0;
-
-    QSP_CHAR *str = qspGameToQSPString(buf, false, false);
-
     count = qspSplitGameStr(buf, isUCS2 = !buf[1], QSP_STRSDELIM, &strs);
     free(buf);
     if (!qspCheckQuest(strs, count, isUCS2))
@@ -417,11 +414,10 @@ bool qspOpenQuest(const QSP_CHAR *fileName, wxWindow *parent, Controls *controls
         {
             container->Clear();
             qspFreeStrs(strs, count, false);
-            controls->ShowMessage( QGEN_MSG_CANTLOADGAME );
+            controls->ShowMessage(QGEN_MSG_CANTLOADGAME);
             return true;
         }
-        data = qspGameToQSPString(strs[ind++], isUCS2, false);
-
+        data = qspGameToQSPString(strs[ind++], isUCS2, true);
         (temp = data).Replace(QSP_STRSDELIM, wxT("\n"));
         free(data);
 
@@ -570,7 +566,6 @@ bool qspSaveQuest(const QSP_CHAR *fileName, const wxString &passwd, Controls *co
     FILE *f;
     char *buf, *file = qspFromQSPString(fileName);
     wxString str;
-
     if (!(f = fopen(file, "wb")))
     {
         free(file);
@@ -626,7 +621,7 @@ bool qspExportTxt(const QSP_CHAR *fileName, Controls *controls)
         free(file);
         return false;
     }
-
+    free(file);
     for (size_t idxLoc = 0; idxLoc < container->GetLocationsCount(); ++idxLoc)
     {
         str = wxString::Format(_("Location: \"%s\""), container->GetLocationName(idxLoc).wx_str());
@@ -696,23 +691,22 @@ bool qspExportTxt(const QSP_CHAR *fileName, Controls *controls)
     return true;
 }
 
-bool qspExportTxt2Game(const QSP_CHAR *fileName, Controls *controls)
+bool qspExportTxt2Gam(const QSP_CHAR *fileName, Controls *controls)
 {
-    DataContainer *container = controls->GetContainer();
-    char *buf = 0, *file = qspFromQSPString(fileName);
     FILE *f;
-    long len = 0;
     wxString str, actPictPath;
     wxArrayString masStrings;
     int masCount;
     size_t actCount;
-
+    DataContainer *container = controls->GetContainer();
+    long len = 0;
+    char *buf = 0, *file = qspFromQSPString(fileName);
     if (!(f = fopen(file, "wb")))
     {
         free(file);
         return false;
     }
-
+    free(file);
     for (size_t idxLoc = 0; idxLoc < container->GetLocationsCount(); ++idxLoc)
     {
         str = wxString::Format(wxT("# %s"), container->GetLocationName(idxLoc).wx_str());

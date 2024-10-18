@@ -117,7 +117,7 @@
     bool qspOpenQuest(const QSP_CHAR *fileName, wxWindow *parent, Controls *controls, wxString &password, bool merge);
     bool qspSaveQuest(const QSP_CHAR *fileName, const wxString &passwd, Controls *controls);
     bool qspExportTxt(const QSP_CHAR *fileName, Controls *controls);
-    bool qspExportTxt2Game(const QSP_CHAR *fileName, Controls *controls);
+    bool qspExportTxt2Gam(const QSP_CHAR *fileName, Controls *controls);
     bool qspImportTxt2Game(const QSP_CHAR *fileName, Controls *controls);
 
     bool OpenConfigFile(DataContainer *container, const wxString &file);
