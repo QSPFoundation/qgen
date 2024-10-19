@@ -23,6 +23,7 @@
     #define _QGEN_LOCATION_TIP_H_
 
     #include <wx/wx.h>
+    #include <wx/tipwin.h>
     #include "icontrols.h"
     #include "syntaxtextbox.h"
 
@@ -33,7 +34,7 @@
     #define TIP_X_OFFSET 5
     #define TIP_Y_OFFSET 20
 
-    class LocationTip :    public wxFrame
+    class LocationTip : public wxPopupWindow
     {
         DECLARE_CLASS(LocationTip)
     private:

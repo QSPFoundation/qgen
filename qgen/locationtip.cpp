@@ -24,8 +24,7 @@
 IMPLEMENT_CLASS(LocationTip, wxFrame);
 
 LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
-    wxFrame(parent, wxID_ANY, wxEmptyString, wxDefaultPosition,
-        wxSize(TIP_SIZE_X, TIP_SIZE_Y), wxFRAME_TOOL_WINDOW)
+    wxPopupWindow(parent)
 {
     _mainFrame = parent;
     _controls = controls;
@@ -69,6 +68,7 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
 
     SetSizer(_sizer);
     SetAutoLayout(true);
+    SetSize(TIP_SIZE_X, TIP_SIZE_Y);
 }
 
 void LocationTip::MoveTip(const wxPoint &pos)
@@ -99,44 +99,56 @@ void LocationTip::HideTip()
 
 void LocationTip::LoadTip()
 {
-    bool hasDesc, hasCode, showEmpty = false;
-    wxSizer *_sizer = GetSizer();
+    bool showEmpty = true;
     DataContainer *container = _controls->GetContainer();
-    size_t locIndex = container->FindLocationIndex(_locName);
-    _sizer->Hide(_emptyLabel);
+    int locIndex = container->FindLocationIndex(_locName);
+
+    wxSizer *sizer = GetSizer();
+    sizer->Hide(_emptyLabel);
+
     if (_actName.IsEmpty())
     {
         _title->SetLabel(_locName);
-        wxString descText(container->GetLocationDesc(locIndex));
-        hasDesc = !descText.IsEmpty();
-        _sizer->Show(_desc, hasDesc);
-        _sizer->Show(_locDesc, hasDesc);
-        _locDesc->SetValue(descText);
-        _code->SetLabel(_("Location code:"));
-        wxString codeText(container->GetLocationCode(locIndex));
-        hasCode = !codeText.IsEmpty();
-        _sizer->Show(_code, hasCode);
-        _sizer->Show(_locCode, hasCode);
-        _locCode->SetValue(codeText);
-        if (!(hasCode || hasDesc)) showEmpty = true;
+        if (locIndex >= 0)
+        {
+            wxString descText(container->GetLocationDesc(locIndex));
+            bool hasDesc = !descText.IsEmpty();
+            sizer->Show(_desc, hasDesc);
+            sizer->Show(_locDesc, hasDesc);
+            _locDesc->SetValue(descText);
+            _code->SetLabel(_("Location code:"));
+            wxString codeText(container->GetLocationCode(locIndex));
+            bool hasCode = !codeText.IsEmpty();
+            sizer->Show(_code, hasCode);
+            sizer->Show(_locCode, hasCode);
+            _locCode->SetValue(codeText);
+            if (hasCode || hasDesc) showEmpty = false;
+        }
     }
     else
     {
         _title->SetLabel(_actName);
-        size_t actIndex = container->FindActionIndex(locIndex, _actName);
-        wxString actCode(container->GetActionCode(locIndex, actIndex));
-        hasCode = !actCode.IsEmpty();
-        _sizer->Hide(_desc);
-        _sizer->Hide(_locDesc);
-        _sizer->Show(_code, hasCode);
-        _sizer->Show(_locCode, hasCode);
-        _code->SetLabel(_("Action code:"));
-        _locCode->SetValue(actCode);
-        if (!hasCode) showEmpty = true;
+        if (locIndex >= 0)
+        {
+            int actIndex = container->FindActionIndex(locIndex, _actName);
+            if (actIndex >= 0)
+            {
+                wxString actCode(container->GetActionCode(locIndex, actIndex));
+                bool hasCode = !actCode.IsEmpty();
+                sizer->Hide(_desc);
+                sizer->Hide(_locDesc);
+                sizer->Show(_code, hasCode);
+                sizer->Show(_locCode, hasCode);
+                _code->SetLabel(_("Action code:"));
+                _locCode->SetValue(actCode);
+                if (hasCode) showEmpty = false;
+            }
+        }
     }
+
     if (showEmpty)
     {
-        _sizer->Show(_emptyLabel);
+        sizer->Show(_emptyLabel);
         SetSize(TIP_EMPTY_SIZE_X, TIP_EMPTY_SIZE_Y);
     }
     else
@@ -148,6 +160,7 @@ void LocationTip::LoadTip()
 void LocationTip::SetLocName(const wxString &name)
 {
     _locName = name;
+    _actName.Clear();
 }
 
 void LocationTip::SetActName(const wxString &name)

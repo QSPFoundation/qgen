@@ -574,11 +574,11 @@ bool LocationsListBox::IsFolderItem( const wxTreeItemId &id)
 
 void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 {
+    event.Skip();
+
     if (!_mainFrame->IsActive() || !_controls->GetSettings()->GetShowShortLocsDescs())
-    {
-        event.Skip();
         return;
-    }
+
     int flags;
     wxPoint mousePos = event.GetPosition();
     if (_prevMousePos != mousePos)
@@ -596,9 +596,9 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
                     if (GetItemText(id) != _tip->GetActName())
                     {
                         _tip->HideTip();
-                        _tip->SetActName(GetItemText(id));
                         _tip->SetLocName(GetItemText(GetItemParent(id)));
-                        _showTimer.Start(500, true);
+                        _tip->SetActName(GetItemText(id));
+                        _showTimer.Start(300, true);
                     }
                     break;
                 case DRAG_LOCATION:
@@ -606,7 +606,7 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
                     {
                         _tip->HideTip();
                         _tip->SetLocName(GetItemText(id));
-                        _showTimer.Start(500, true);
+                        _showTimer.Start(300, true);
                     }
                     break;
                 }
@@ -620,21 +620,17 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
             _tip->HideTip();
         }
     }
-
-    event.Skip();
 }
 
 void LocationsListBox::OnLeaveWindow(wxMouseEvent &event)
 {
+    event.Skip();
+
     if (!_mainFrame->IsActive() || !_controls->GetSettings()->GetShowShortLocsDescs())
-    {
-        event.Skip();
         return;
-    }
     if (_showTimer.IsRunning())
         _showTimer.Stop();
     _tip->HideTip();
-    event.Skip();
 }
 
 void LocationsListBox::OnTimer(wxTimerEvent &event)
