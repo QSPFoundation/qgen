@@ -20,7 +20,6 @@
 */
 
 #include "optionsdialog.h"
-#include "mainframe.h"
 
 IMPLEMENT_CLASS(OptionsDialog, wxDialog)
 
@@ -1167,7 +1166,6 @@ void OptionsDialog::UpdateLanguagesList()
     if (!langsPath.Exists())
     {
         langsPath = wxFileName::DirName(wxStandardPaths::Get().GetResourcesDir());
-        langsPath.AppendDir(QGEN_APPNAME);
         langsPath.AppendDir(wxT("langs"));
     }
 

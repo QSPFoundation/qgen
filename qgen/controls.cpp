@@ -40,10 +40,7 @@ Controls::Controls(const wxString &path)
     _keywordsStore = new KeywordsStore();
     wxFileName keywordsFile(_currentPath, wxT("keywords.xml"));
     if (!keywordsFile.Exists())
-    {
         keywordsFile.Assign(wxStandardPaths::Get().GetResourcesDir(), keywordsFile.GetFullName());
-        keywordsFile.AppendDir(QGEN_APPNAME);
-    }
     _keywordsStore->Load(keywordsFile.GetFullPath());
 
     InitData();
@@ -1646,7 +1643,6 @@ void Controls::UpdateLocale(int lang)
     if (!langsPath.Exists())
     {
         langsPath = wxFileName::DirName(wxStandardPaths::Get().GetResourcesDir());
-        langsPath.AppendDir(QGEN_APPNAME);
         langsPath.AppendDir(wxT("langs"));
     }
     _locale->AddCatalogLookupPathPrefix(langsPath.GetPath());
