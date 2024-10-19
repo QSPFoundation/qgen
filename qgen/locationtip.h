@@ -23,7 +23,7 @@
     #define _QGEN_LOCATION_TIP_H_
 
     #include <wx/wx.h>
-    #include <wx/tipwin.h>
+    #include <wx/popupwin.h>
     #include "icontrols.h"
     #include "syntaxtextbox.h"
 
