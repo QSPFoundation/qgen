@@ -440,9 +440,9 @@ void MainFrame::OnAbout( wxCommandEvent &event )
     info.SetCopyright(wxT("QSP Foundation, 2001-2024"));
     info.SetDescription(wxString::Format( _("Version: %s\nCompiled: %s\n\nUsed: %s"),
         QGEN_VER, wxT(__DATE__) wxT(", ") wxT(__TIME__), wxGetLibraryVersionInfo().ToString()));
-    info.SetWebSite(wxT("http://qsp.su"));
+    info.SetWebSite(wxT("https://qsp.org"));
     info.AddDeveloper(wxT("BaxZzZz [baxzzzz@gmail.com]"));
-    info.AddDeveloper(wxT("Byte [nporep@mail.ru]"));
+    info.AddDeveloper(wxT("Byte [byte@qsp.org]"));
     info.AddDeveloper(wxT("Nex [nex@otaku.ru]"));
     info.AddDeveloper(wxT("rrock.ru [rrock.ru@gmail.com]"));
     wxAboutBox(info);
