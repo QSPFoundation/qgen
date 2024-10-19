@@ -33,11 +33,11 @@ Settings::Settings(const wxString &path)
 
 void Settings::InitSettings()
 {
-    if (wxFileName::IsDirWritable(_path))
-        _currentConfigPath = _path;
-    else
-        _currentConfigPath = wxStandardPaths::Get().GetUserDir(wxStandardPathsBase::Dir_Config);
-    _currentConfigPath = wxFileName(_currentConfigPath, wxT("qgen.cfg")).GetFullPath();
+    wxString configPath = Utils::GetAppPath(wxEmptyString, QGEN_CONFIG);
+    if (!wxFileExists(configPath) && !wxFileName::IsDirWritable(Utils::GetAppPath()))
+        configPath = Utils::GetConfigPath(wxEmptyString, QGEN_CONFIG);
+
+    _currentConfigPath = configPath;
     _currentPlayerPath = wxFileName(_path, wxT("qspgui.exe")).GetFullPath();
     _currentHelpPath = wxFileName(_path, wxT("qsp.chm")).GetFullPath();
     _currentTxt2GamPath = wxFileName(_path, wxT("txt2gam.exe")).GetFullPath();

@@ -1161,15 +1161,7 @@ void OptionsDialog::UpdateLanguagesList()
     _langTable[_("Default")] = wxLANGUAGE_DEFAULT;
     _cmbLang->Append(_("Default"));
 
-    wxFileName langsPath = wxFileName::DirName(_settings->GetPath());
-    langsPath.AppendDir(wxT("langs"));
-    if (!langsPath.Exists())
-    {
-        langsPath = wxFileName::DirName(wxStandardPaths::Get().GetResourcesDir());
-        langsPath.AppendDir(wxT("langs"));
-    }
-
-    wxDir dir(langsPath.GetPath());
+    wxDir dir(Utils::GetResourcePath(QGEN_TRANSLATIONS));
     if (dir.IsOpened())
     {
         for (bool cont = dir.GetFirst(&filename, wxT("*"), wxDIR_DEFAULT); cont; cont = dir.GetNext(&filename))

@@ -144,6 +144,7 @@ set(QGEN_SOURCES
 	qgen/controls.cpp
 	qgen/settings.cpp
 	qgen/actionspanel.cpp
+	qgen/utils.cpp
 )
 if (WIN32)
 	list(APPEND QGEN_SOURCES qgen/rsc/winresource.rc)

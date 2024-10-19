@@ -36,6 +36,7 @@
     #ifdef __WXMSW__
         #include "keysparser.h"
     #endif
+    #include "utils.h"
 
     struct DataSearch
     {

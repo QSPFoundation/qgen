@@ -38,6 +38,8 @@
     #ifdef __WXMSW__
         #include "desktopwindow.h"
     #endif
+    #include "utils.h"
+
     #include "bitmaps/toolbar_game_play.xpm"
     #include "bitmaps/toolbar_game_info.xpm"
     #include "bitmaps/toolbar_file_saveas.xpm"
@@ -72,7 +74,6 @@
     #include "bitmaps/menu_exit.xpm"
 
     #define QGEN_TITLE wxT("Quests Generator")
-    #define QGEN_APPNAME wxT("qgen")
 
     enum
     {

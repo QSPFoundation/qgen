@@ -38,10 +38,8 @@ Controls::Controls(const wxString &path)
 #endif
 
     _keywordsStore = new KeywordsStore();
-    wxFileName keywordsFile(_currentPath, wxT("keywords.xml"));
-    if (!keywordsFile.Exists())
-        keywordsFile.Assign(wxStandardPaths::Get().GetResourcesDir(), keywordsFile.GetFullName());
-    _keywordsStore->Load(keywordsFile.GetFullPath());
+    wxString keywordsFile(Utils::GetResourcePath(wxEmptyString, QGEN_KEYWORDS));
+    _keywordsStore->Load(keywordsFile);
 
     InitData();
 }
@@ -369,7 +367,7 @@ bool Controls::SerializeLocData( size_t locIndex, wxString &buffer )
     size_t actsCount;
     buffer.Append(QSP_GAMEID);
     buffer.Append(QSP_STRSDELIM);
-    buffer.Append(QGEN_NAME);
+    buffer.Append(QGEN_APPNAME);
     buffer.Append(wxT(" "));
     buffer.Append(QGEN_VER);
     buffer.Append(QSP_STRSDELIM);
@@ -1638,14 +1636,8 @@ void Controls::UpdateLocale(int lang)
     _locale = new wxLocale;
     _locale->Init(lang);
 
-    wxFileName langsPath = wxFileName::DirName(_currentPath);
-    langsPath.AppendDir(wxT("langs"));
-    if (!langsPath.Exists())
-    {
-        langsPath = wxFileName::DirName(wxStandardPaths::Get().GetResourcesDir());
-        langsPath.AppendDir(wxT("langs"));
-    }
-    _locale->AddCatalogLookupPathPrefix(langsPath.GetPath());
+    wxString langsPath(Utils::GetResourcePath(QGEN_TRANSLATIONS));
+    _locale->AddCatalogLookupPathPrefix(langsPath);
 
     if (!_locale->AddCatalog(QGEN_APPNAME))
         _locale->AddCatalog(wxString(QGEN_APPNAME) + wxT('_') + _locale->GetCanonicalName().BeforeFirst(wxT('_')));

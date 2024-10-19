@@ -35,6 +35,7 @@
     #include "icontrols.h"
     #include "optionshotkeysdialog.h"
     #include "chksyshotkey.h"
+    #include "utils.h"
 
     enum
     {

@@ -31,6 +31,7 @@
     #include "iobserver.h"
     #include "hotkeysstore.h"
     #include "searchdatastore.h"
+    #include "utils.h"
 
     enum SyntaxType
     {

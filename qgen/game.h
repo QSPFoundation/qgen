@@ -26,8 +26,7 @@
     #include <wx/xml/xml.h>
     #include <wx/mstream.h>
     #include "datacontainer.h"
-
-    #include "qgen_config.h"
+    #include "utils.h"
 
     #ifdef _UNICODE
         typedef wchar_t QSP_CHAR;
@@ -98,8 +97,6 @@
     #define QSP_DELIMS QSP_FMT("():=+-*/<>!&,[] '\"\t{}%@#^;.?~\\|\r\n")
 
     #define QSP_GAMEID QSP_FMT("QSPGAME")
-    #define QGEN_VER QSP_FMT(QGEN_VER_STR)
-    #define QGEN_NAME QSP_FMT("QGEN")
     #define QGEN_PASSWD QSP_FMT("No")
     #define QGEN_MAXACTIONS 50
     #define QGEN_MAXFOLDERNAMELEN 100
