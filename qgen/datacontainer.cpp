@@ -46,26 +46,26 @@ int DataContainer::FindFolderIndex(const wxString &name) const
     wxString lwrName(name.Lower());
     int i, count = _folders.GetCount();
     for (i = 0; i < count; ++i)
-        if (lwrName == _folders[i].name.Lower()) return i;
+        if (lwrName == _folders[i].Name.Lower()) return i;
     return wxNOT_FOUND;
 }
 
 int DataContainer::FindLocationIndex(const wxString& nameLocation) const
 {
     wxString lwrName(nameLocation.Lower());
-    int i, count = locationArray.GetCount();
+    int i, count = _locationArray.GetCount();
     for (i = 0; i < count; ++i)
-        if (lwrName == locationArray[i].name.Lower()) return i;
+        if (lwrName == _locationArray[i].Name.Lower()) return i;
     return wxNOT_FOUND;
 }
 
 int DataContainer::FindActionIndex(size_t indexLoc, const wxString& actName) const
 {
     wxString lwrName(actName.Lower());
-    LocationData &loc = locationArray[indexLoc];
-    int i, count = loc.actionArray.GetCount();
+    LocationData &loc = _locationArray[indexLoc];
+    int i, count = loc.Actions.GetCount();
     for (i = 0; i < count; ++i)
-        if (lwrName == loc.actionArray[i].description.Lower()) return i;
+        if (lwrName == loc.Actions[i].Description.Lower()) return i;
     return wxNOT_FOUND;
 }
 
@@ -73,31 +73,31 @@ int DataContainer::AddLocation(const wxString &name)
 {
     if (FindLocationIndex(name) >= 0) return wxNOT_FOUND;
     LocationData *loc = new LocationData;
-    loc->name = name;
-    loc->folderIndex = wxNOT_FOUND;
-    locationArray.Add(loc);
+    loc->Name = name;
+    loc->FolderIndex = wxNOT_FOUND;
+    _locationArray.Add(loc);
     _isSaved = false;
-    return locationArray.GetCount() - 1;
+    return _locationArray.GetCount() - 1;
 }
 
 bool DataContainer::RenameLocation(size_t locIndex, const wxString& newName)
 {
     int index = FindLocationIndex(newName);
     if (index >= 0 && index != locIndex) return false;
-    locationArray[locIndex].name = newName;
+    _locationArray[locIndex].Name = newName;
     _isSaved = false;
     return true;
 }
 
 void DataContainer::DeleteLocation(size_t locIndex)
 {
-    locationArray.RemoveAt(locIndex);
+    _locationArray.RemoveAt(locIndex);
     _isSaved = false;
 }
 
 void DataContainer::DeleteAction(size_t locIndex, size_t actIndex)
 {
-    locationArray[locIndex].actionArray.RemoveAt(actIndex);
+    _locationArray[locIndex].Actions.RemoveAt(actIndex);
     _isSaved = false;
 }
 
@@ -105,162 +105,162 @@ int DataContainer::AddAction(size_t indexLoc, const wxString& actName)
 {
     if (FindActionIndex(indexLoc, actName) >= 0) return wxNOT_FOUND;
     ActionData *act = new ActionData;
-    act->description = actName;
-    locationArray[indexLoc].actionArray.Add(act);
+    act->Description = actName;
+    _locationArray[indexLoc].Actions.Add(act);
     _isSaved = false;
-    return locationArray[indexLoc].actionArray.GetCount() - 1;
+    return _locationArray[indexLoc].Actions.GetCount() - 1;
 }
 
 bool DataContainer::RenameAction(size_t locIndex, size_t actIndex, const wxString& actNewName)
 {
     int index = FindActionIndex(locIndex, actNewName);
     if (index >= 0 && index != actIndex) return false;
-    locationArray[locIndex].actionArray[actIndex].description = actNewName;
+    _locationArray[locIndex].Actions[actIndex].Description = actNewName;
     _isSaved = false;
     return true;
 }
 
 void DataContainer::SetActionCode(size_t indexLoc,size_t indexAct, const wxString& actCode)
 {
-    locationArray[indexLoc].actionArray[indexAct].onPress = actCode;
+    _locationArray[indexLoc].Actions[indexAct].Code = actCode;
     _isSaved = false;
 }
 
 wxString DataContainer::GetActionCode(size_t locIndex, size_t actIndex) const
 {
-    return locationArray[locIndex].actionArray[actIndex].onPress;
+    return _locationArray[locIndex].Actions[actIndex].Code;
 }
 
 size_t DataContainer::GetActionsCount(size_t locIndex) const
 {
-    return locationArray[locIndex].actionArray.GetCount();
+    return _locationArray[locIndex].Actions.GetCount();
 }
 
 wxString DataContainer::GetActionName(size_t locIndex, size_t actIndex) const
 {
-    return locationArray[locIndex].actionArray[actIndex].description;
+    return _locationArray[locIndex].Actions[actIndex].Description;
 }
 
 void DataContainer::SetLocationDesc(size_t indexLoc, const wxString& desc)
 {
-    locationArray[indexLoc].description = desc;
+    _locationArray[indexLoc].Description = desc;
     _isSaved = false;
 }
 
 void DataContainer::SetLocationCode(size_t indexLoc, const wxString& code)
 {
-    locationArray[indexLoc].onVisit = code;
+    _locationArray[indexLoc].Code = code;
     _isSaved = false;
 }
 
 wxString DataContainer::GetLocationDesc(size_t indexLoc) const
 {
-    return locationArray[indexLoc].description;
+    return _locationArray[indexLoc].Description;
 }
 
 wxString DataContainer::GetLocationCode(size_t indexLoc) const
 {
-    return locationArray[indexLoc].onVisit;
+    return _locationArray[indexLoc].Code;
 }
 
 void DataContainer::ClearLocation(size_t locIndex)
 {
-    locationArray[locIndex].description.Clear();
-    locationArray[locIndex].onVisit.Clear();
-    locationArray[locIndex].actionArray.Clear();
+    _locationArray[locIndex].Description.Clear();
+    _locationArray[locIndex].Code.Clear();
+    _locationArray[locIndex].Actions.Clear();
     _isSaved = false;
 }
 
 void DataContainer::DeleteAllActions(size_t locIndex)
 {
-    locationArray[locIndex].actionArray.Clear();
+    _locationArray[locIndex].Actions.Clear();
     _isSaved = false;
 }
 
 bool DataContainer::IsEmptyLoc(size_t locIndex) const
 {
-    if (locationArray[locIndex].onVisit.IsEmpty() &&
-        locationArray[locIndex].description.IsEmpty() &&
-        locationArray[locIndex].actionArray.IsEmpty()) return true;
+    if (_locationArray[locIndex].Code.IsEmpty() &&
+        _locationArray[locIndex].Description.IsEmpty() &&
+        _locationArray[locIndex].Actions.IsEmpty()) return true;
     return false;
 }
 
 wxString DataContainer::GetLocationName(const size_t &locIndex) const
 {
-    return locationArray[locIndex].name;
+    return _locationArray[locIndex].Name;
 }
 
 wxString DataContainer::GetActionPicturePath(size_t locIndex, size_t actIndex) const
 {
-    return locationArray[locIndex].actionArray[actIndex].pathPicture;
+    return _locationArray[locIndex].Actions[actIndex].ImagePath;
 }
 
 bool DataContainer::SetActionPicturePath(size_t indexLoc, size_t indexAct, const wxString &pathPict)
 {
-    locationArray[indexLoc].actionArray[indexAct].pathPicture = pathPict;
+    _locationArray[indexLoc].Actions[indexAct].ImagePath = pathPict;
     _isSaved = false;
     return true;
 }
 
 size_t DataContainer::GetLocationsCount() const
 {
-    return locationArray.GetCount();
+    return _locationArray.GetCount();
 }
 
 void DataContainer::Clear()
 {
-    locationArray.Clear();
+    _locationArray.Clear();
     _folders.Clear();
     _isSaved = false;
 }
 
 bool DataContainer::IsEmpty() const
 {
-    return locationArray.IsEmpty();
+    return _locationArray.IsEmpty();
 }
 
 bool DataContainer::GetLocActions(size_t indexLoc, wxArrayString& actions) const
 {
     actions.Clear();
-    for (size_t i = 0; i < locationArray[indexLoc].actionArray.Count(); ++i)
-        actions.Add(locationArray[indexLoc].actionArray[i].description);
+    for (size_t i = 0; i < _locationArray[indexLoc].Actions.Count(); ++i)
+        actions.Add(_locationArray[indexLoc].Actions[i].Description);
     return true;
 }
 
 void DataContainer::MoveLocationTo(size_t locIndex, size_t moveTo)
 {
     if (locIndex == moveTo) return;
-    LocationData *data = locationArray.Detach(locIndex);
-    locationArray.Insert(data, moveTo);
+    LocationData *data = _locationArray.Detach(locIndex);
+    _locationArray.Insert(data, moveTo);
     _isSaved = false;
 }
 
 void DataContainer::MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo)
 {
-    ActionData *data = locationArray[locIndex].actionArray.Detach(actIndex);
-    locationArray[locIndex].actionArray.Insert(data, moveTo);
+    ActionData *data = _locationArray[locIndex].Actions.Detach(actIndex);
+    _locationArray[locIndex].Actions.Insert(data, moveTo);
     _isSaved = false;
 }
 
 void DataContainer::SetLocFolder(size_t locIndex, int folderIndex)
 {
-    if (locationArray[locIndex].folderIndex == folderIndex)
+    if (_locationArray[locIndex].FolderIndex == folderIndex)
         return;
-    locationArray[locIndex].folderIndex = folderIndex;
+    _locationArray[locIndex].FolderIndex = folderIndex;
     _isSaved = false;
 }
 
 int DataContainer::GetLocFolder(size_t locIndex) const
 {
-    return locationArray[locIndex].folderIndex;
+    return _locationArray[locIndex].FolderIndex;
 }
 
 int DataContainer::AddFolder(const wxString &name)
 {
     if (FindFolderIndex(name) >= 0) return wxNOT_FOUND;
     FolderData *data = new FolderData;
-    data->name = name;
-    data->pos = wxNOT_FOUND;
+    data->Name = name;
+    data->Position = wxNOT_FOUND;
     _folders.Add(data);
     _isSaved = false;
     return _folders.GetCount() - 1;
@@ -270,26 +270,26 @@ bool DataContainer::RenameFolder(size_t folderIndex, const wxString &newName)
 {
     int index = FindFolderIndex(newName);
     if (index >= 0 && index != folderIndex) return false;
-    _folders[folderIndex].name = newName;
+    _folders[folderIndex].Name = newName;
     _isSaved = false;
     return true;
 }
 
 void DataContainer::DeleteFolder(size_t folderIndex)
 {
-    long count = locationArray.GetCount();
+    long count = _locationArray.GetCount();
     for (long i = count - 1; i >= 0; --i)
     {
-        if (locationArray[i].folderIndex == folderIndex)
-            locationArray[i].folderIndex = -1;
-        else if (locationArray[i].folderIndex > (int)folderIndex)
-            locationArray[i].folderIndex--;
+        if (_locationArray[i].FolderIndex == folderIndex)
+            _locationArray[i].FolderIndex = -1;
+        else if (_locationArray[i].FolderIndex > (int)folderIndex)
+            _locationArray[i].FolderIndex--;
     }
     count = _folders.GetCount();
     for (long i = count - 1; i >= 0; --i)
     {
         if ((size_t) i > folderIndex)
-            _folders[i].pos--;
+            _folders[i].Position--;
     }
     _folders.RemoveAt(folderIndex);
     _isSaved = false;
@@ -305,8 +305,8 @@ void DataContainer::MoveFolder(size_t folderIndex, size_t moveToSecPos)
 
 void DataContainer::SetFolderPos(size_t folderIndex, long pos)
 {
-    if (_folders[folderIndex].pos == pos) return;
-    _folders[folderIndex].pos = pos;
+    if (_folders[folderIndex].Position == pos) return;
+    _folders[folderIndex].Position = pos;
     _isSaved = false;
 }
 
@@ -317,7 +317,7 @@ size_t DataContainer::GetFoldersCount() const
 
 wxString DataContainer::GetFolderName(size_t index) const
 {
-    return _folders[index].name;
+    return _folders[index].Name;
 }
 
 int DataContainer::FindFolderForPos(size_t pos) const
@@ -325,7 +325,7 @@ int DataContainer::FindFolderForPos(size_t pos) const
     size_t count = _folders.GetCount();
     for (size_t i = 0; i < count; ++i)
     {
-        if (_folders[i].pos == pos)
+        if (_folders[i].Position == pos)
             return i;
     }
     return wxNOT_FOUND;
@@ -335,16 +335,16 @@ void DataContainer::SortLocsInFolder(int folderIndex, bool isAscending)
 {
     wxArrayString names;
     wxArrayInt positions;
-    LocationData *data = locationArray.Detach(0);
-    size_t count = locationArray.GetCount();
+    LocationData *data = _locationArray.Detach(0);
+    size_t count = _locationArray.GetCount();
     long startIndex = -1;
     for (size_t i = 0; i < count; ++i)
     {
-        if (locationArray[i].folderIndex == folderIndex)
+        if (_locationArray[i].FolderIndex == folderIndex)
         {
             if (startIndex < 0) startIndex = i;
             positions.Add(startIndex);
-            names.Add(locationArray[i].name);
+            names.Add(_locationArray[i].Name);
         }
         else
             startIndex = -1;
@@ -362,5 +362,5 @@ void DataContainer::SortLocsInFolder(int folderIndex, bool isAscending)
             moveTo = count - 1;
         MoveLocationTo(index, moveTo);
     }
-    locationArray.Insert(data, 0);
+    _locationArray.Insert(data, 0);
 }

@@ -27,28 +27,28 @@
 
     struct ActionData
     {
-        wxString pathPicture;            //����������� ��� �������� - ������������� ���� � �����
-        wxString description;            //�������� ��������
-        wxString onPress;                //��� ������� "����� ��������"
+        wxString ImagePath;
+        wxString Description;
+        wxString Code;
     };
 
     WX_DECLARE_OBJARRAY(ActionData, ActionDataArray);
 
     struct LocationData
     {
-        wxString        name;            //�������� �������
-        wxString        description;    //�������� �������
-        wxString        onVisit;        //��� ������� "��������� �������"
-        ActionDataArray    actionArray;    //������ ��������
-        int                folderIndex;    //������ ������
+        wxString        Name;
+        wxString        Description;
+        wxString        Code;
+        ActionDataArray    Actions;
+        int                FolderIndex;
     };
 
     WX_DECLARE_OBJARRAY(LocationData, LocationDataArray);
 
     struct FolderData
     {
-        wxString    name;                //��� ������
-        int            pos;                //������� ������
+        wxString    Name;
+        int         Position;
     };
 
     WX_DECLARE_OBJARRAY(FolderData, FolderDataArray);
@@ -56,7 +56,7 @@
     class DataContainer
     {
     private:
-        LocationDataArray    locationArray;
+        LocationDataArray _locationArray;
         FolderDataArray _folders;
         bool _isSaved;
     public:
