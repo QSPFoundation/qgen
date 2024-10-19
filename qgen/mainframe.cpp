@@ -62,7 +62,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_GAME_OPEN, MainFrame::OnLoadFile)
     EVT_MENU(ID_GAME_SAVE, MainFrame::OnSaveQuest)
     EVT_MENU(ID_GAME_SAVEAS, MainFrame::OnSaveQuestAs)
-    EVT_MENU(ID_GAME_JOIN, MainFrame::OnJoinQuest)
+    EVT_MENU(ID_GAME_MERGE, MainFrame::OnMergeQuest)
     EVT_MENU(ID_GAME_PLAY, MainFrame::OnPlayQuest)
     EVT_MENU(ID_UTIL_FIND, MainFrame::OnFindDialog)
     EVT_MENU(ID_UTIL_INF, MainFrame::OnInformationQuest)
@@ -155,7 +155,7 @@ void MainFrame::CreateMenuBar()
     openFileItem->SetBitmap(wxBitmap(menu_file_open_xpm));
     file_menu->Append(openFileItem);
 
-    file_menu->Append(ID_GAME_JOIN, wxT("-"));
+    file_menu->Append(ID_GAME_MERGE, wxT("-"));
 
     wxMenuItem *saveFileItem = new wxMenuItem(file_menu, ID_GAME_SAVE, wxT("-"));
     saveFileItem->SetBitmap(wxBitmap(menu_file_save_xpm));
@@ -319,8 +319,8 @@ void MainFrame::Update(bool isFromObservable /*= false*/)
     menuBar->SetHelpString(ID_GAME_NEW, _("Create new game"));
     menuBar->SetLabel(ID_GAME_OPEN, _("&Open...\tCtrl+O"));
     menuBar->SetHelpString(ID_GAME_OPEN, _("Open game file"));
-    menuBar->SetLabel(ID_GAME_JOIN, _("&Merge game...\tCtrl+M"));
-    menuBar->SetHelpString(ID_GAME_JOIN, _("Add locations from another game"));
+    menuBar->SetLabel(ID_GAME_MERGE, _("&Merge game...\tCtrl+M"));
+    menuBar->SetHelpString(ID_GAME_MERGE, _("Add locations from another game"));
     menuBar->SetLabel(ID_GAME_SAVE, _("&Save\tCtrl+S"));
     menuBar->SetHelpString(ID_GAME_SAVE, _("Save game"));
     menuBar->SetLabel(ID_GAME_SAVEAS, _("Save &as...\tCtrl+W"));
@@ -718,10 +718,10 @@ void MainFrame::OnDeleteText(wxCommandEvent &event)
     _controls->DeleteSelectedText();
 }
 
-void MainFrame::OnJoinQuest(wxCommandEvent &event )
+void MainFrame::OnMergeQuest(wxCommandEvent &event )
 {
     wxFileDialog dialog(this,
-        _("Join game file"), wxEmptyString, wxEmptyString,
+        _("Merge game file"), wxEmptyString, wxEmptyString,
         _("QSP games (*.qsp;*.gam)|*.qsp;*.gam"), wxFD_OPEN);
     dialog.CenterOnParent();
     if (dialog.ShowModal() == wxID_OK)

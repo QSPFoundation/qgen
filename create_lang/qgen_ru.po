@@ -442,7 +442,7 @@ msgstr "Введите новое название локации:"
 msgid "Input password:"
 msgstr "Введите пароль:"
 
-msgid "Join game file"
+msgid "Merge game file"
 msgstr "Присоединить файл игры"
 
 msgid "Labels color:"

@@ -87,7 +87,7 @@
         ID_TOGGLE_LISTBOX,
         ID_GAME_NEW,
         ID_GAME_OPEN,
-        ID_GAME_JOIN,
+        ID_GAME_MERGE,
         ID_GAME_SAVE,
         ID_GAME_SAVEAS,
         ID_GAME_EXPORT,
@@ -164,7 +164,7 @@
         void OnSaveQuestAs(wxCommandEvent &event);
         void OnSaveQuest(wxCommandEvent &event);
         void OnNewGame(wxCommandEvent &event);
-        void OnJoinQuest(wxCommandEvent &event);
+        void OnMergeQuest(wxCommandEvent &event);
         void OnPlayQuest(wxCommandEvent &event);
         void OnExportTxtFile(wxCommandEvent &event);
         void OnExportTxt2Gam(wxCommandEvent &event);

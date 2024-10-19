@@ -442,8 +442,8 @@ msgstr "Input new location name:"
 msgid "Input password:"
 msgstr "Input password:"
 
-msgid "Join game file"
-msgstr "Join game file"
+msgid "Merge game file"
+msgstr "Merge game file"
 
 msgid "Labels color:"
 msgstr "Labels color:"
