@@ -244,7 +244,7 @@ msgstr "Редактор кода"
 msgid "Collapse all"
 msgstr "Свернуть все"
 
-msgid "Collapse blocks of code when location is opened"
+msgid "Collapse blocks of code when location gets opened"
 msgstr "Сворачивать блоки кода при открытии"
 
 msgid "Colors"

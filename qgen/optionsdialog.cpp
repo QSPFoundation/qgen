@@ -434,7 +434,7 @@ void OptionsDialog::ReCreateGUI()
     _notebook->SetPageText(1, _("Code editor"));
     _chkWrapLines->SetLabel(_("Wrap lines by words"));
     _chkShowLinesNums->SetLabel(_("Show line numbers"));
-    _chkCollapseCode->SetLabel(_("Collapse blocks of code when location is opened"));
+    _chkCollapseCode->SetLabel(_("Collapse blocks of code when location gets opened"));
     // Page Sizes
     _notebook->SetPageText(2, _("Sizes"));
     _stTextHeights->SetLabel(_("Relative height of description and location\ncode fields to the tab's height (%):"));

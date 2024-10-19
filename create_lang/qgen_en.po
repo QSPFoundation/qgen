@@ -244,8 +244,8 @@ msgstr "Code editor"
 msgid "Collapse all"
 msgstr "Collapse all"
 
-msgid "Collapse blocks of code when location is opened"
-msgstr "Collapse blocks of code when location is opened"
+msgid "Collapse blocks of code when location gets opened"
+msgstr "Collapse blocks of code when location gets opened"
 
 msgid "Colors"
 msgstr "Colors"
