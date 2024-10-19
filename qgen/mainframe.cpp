@@ -304,7 +304,7 @@ void MainFrame::CreateToolBar()
     _toolBar = new ToolBar(this, ID_TOOLBAR, _controls);
 }
 
-void MainFrame::Update( bool isFromObservable /*= false*/ )
+void MainFrame::Update(bool isFromObservable /*= false*/)
 {
     wxMenuBar *menuBar = GetMenuBar();
     //Menu
@@ -404,17 +404,17 @@ void MainFrame::Update( bool isFromObservable /*= false*/ )
     _manager.Update();
 }
 
-void MainFrame::OnInit( InitEvent &event )
+void MainFrame::OnInit(InitEvent &event)
 {
     if (_controls->LoadGame(event.GetInitString())) UpdateTitle();
 }
 
-void MainFrame::OnExit( wxCommandEvent &event )
+void MainFrame::OnExit(wxCommandEvent &event)
 {
     Close();
 }
 
-void MainFrame::OnNewGame( wxCommandEvent &event )
+void MainFrame::OnNewGame(wxCommandEvent &event)
 {
     if (QuestChange())
     {
@@ -423,7 +423,7 @@ void MainFrame::OnNewGame( wxCommandEvent &event )
     }
 }
 
-void MainFrame::OnQuit( wxCloseEvent &event )
+void MainFrame::OnQuit(wxCloseEvent &event)
 {
     if (QuestChange())
     {
@@ -432,7 +432,7 @@ void MainFrame::OnQuit( wxCloseEvent &event )
     }
 }
 
-void MainFrame::OnAbout( wxCommandEvent &event )
+void MainFrame::OnAbout(wxCommandEvent &event)
 {
     wxAboutDialogInfo info;
     info.SetIcon(wxIcon(about_logo_xpm));
@@ -485,7 +485,7 @@ void MainFrame::OnSaveQuestAs(wxCommandEvent &event)
     }
 }
 
-void MainFrame::OnSaveQuest( wxCommandEvent &event )
+void MainFrame::OnSaveQuest( wxCommandEvent &event)
 {
     wxCommandEvent dummy;
     if (!_controls->SaveGameWithCheck()) OnSaveQuestAs(dummy);
@@ -566,7 +566,7 @@ void MainFrame::TogglePaneVisibility(const wxString &pane_name)
     }
 }
 
-void MainFrame::OnPaneClose( wxAuiManagerEvent& event )
+void MainFrame::OnPaneClose( wxAuiManagerEvent& event)
 {
     switch (event.GetPane()->window->GetId())
     {
@@ -603,7 +603,7 @@ void MainFrame::OnToggleStatusbar(wxCommandEvent &event)
         CreateStatusBar();
 }
 
-void MainFrame::OnFindDialog( wxCommandEvent& event )
+void MainFrame::OnFindDialog( wxCommandEvent& event)
 {
     if (!_findDlg)
     {

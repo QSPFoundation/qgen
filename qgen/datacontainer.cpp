@@ -41,7 +41,7 @@ DataContainer::DataContainer()
     _isSaved = true;
 }
 
-int DataContainer::FindFolderIndex( const wxString &name ) const
+int DataContainer::FindFolderIndex(const wxString &name ) const
 {
     wxString lwrName(name.Lower());
     int i, count = _folders.GetCount();

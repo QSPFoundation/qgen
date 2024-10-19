@@ -23,7 +23,7 @@
 
 IMPLEMENT_CLASS(LocationCode, wxPanel)
 
-LocationCode::LocationCode( wxWindow *owner, ILocationPage *locPage, IControls *controls ) :
+LocationCode::LocationCode(wxWindow *owner, ILocationPage *locPage, IControls *controls) :
     wxPanel(owner, wxID_ANY)
 {
     _locPage  = locPage;
@@ -49,7 +49,7 @@ void LocationCode::SaveCode()
 {
     if (_text->IsModified())
     {
-        _controls->GetContainer()->SetLocationCode( _locPage->GetLocationIndex(), _text->GetValue() );
+        _controls->GetContainer()->SetLocationCode(_locPage->GetLocationIndex(), _text->GetValue());
         _text->SetModified(false);
     }
 }
@@ -64,22 +64,22 @@ void LocationCode::Clear()
     _text->Clear();
 }
 
-void LocationCode::SelectString( long startPos, long lastPos )
+void LocationCode::SelectString(long startPos, long lastPos)
 {
-    _text->SetSelection( startPos, lastPos );
+    _text->SetSelection(startPos, lastPos);
 }
 
-void LocationCode::ReplaceString( long start, long end, const wxString & str )
+void LocationCode::ReplaceString(long start, long end, const wxString & str)
 {
     _text->Replace(start, end, str);
 }
 
-void LocationCode::ExpandCollapseAll( bool isExpanded )
+void LocationCode::ExpandCollapseAll(bool isExpanded)
 {
     _text->ExpandCollapseAll(isExpanded);
 }
 
-void LocationCode::Update( bool isFromObservable /*= false*/ )
+void LocationCode::Update( bool isFromObservable /*= false*/)
 {
     _stTextExec->SetLabel(_("Execute on visit:"));
     GetSizer()->Layout();

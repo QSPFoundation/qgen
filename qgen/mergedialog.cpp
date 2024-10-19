@@ -30,8 +30,8 @@ BEGIN_EVENT_TABLE(MergeDialog, wxDialog)
 END_EVENT_TABLE()
 
 MergeDialog::MergeDialog(wxWindow *parent, const wxString& title, const wxString &message, int style) :
-    wxDialog( parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize,
-              style|wxDEFAULT_DIALOG_STYLE|wxICON_INFORMATION )
+    wxDialog(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize,
+              style|wxDEFAULT_DIALOG_STYLE|wxICON_INFORMATION)
 {
     wxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
     wxSizer *msgSizer = new wxBoxSizer(wxHORIZONTAL);

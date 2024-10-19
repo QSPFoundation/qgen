@@ -47,7 +47,7 @@
         int _actsHeight;
         bool _isFixed;
     public:
-        LocationPage( wxAuiNotebook *owner, IControls *controls );
+        LocationPage(wxAuiNotebook *owner, IControls *controls);
         ~LocationPage();
 
         void Update(bool isFromObservable = false);
@@ -71,12 +71,12 @@
         bool IsActsShown() const { return _splitterh->IsSplit(); }
         bool IsDescShown() const { return _splitterv_up->IsSplit(); }
         void RefreshActions();
-        void SelectLocDescString( long startPos, long lastPos );
-        void SelectLocCodeString( long startPos, long lastPos );
-        void SelectAction( size_t actIndex );
+        void SelectLocDescString(long startPos, long lastPos);
+        void SelectLocCodeString(long startPos, long lastPos);
+        void SelectAction(size_t actIndex);
         void SetFocusOnActionCode();
-        void SelectPicturePathString( long startPos, long lastPos );
-        void SelectActionCodeString( long startPos, long lastPos);
+        void SelectPicturePathString(long startPos, long lastPos);
+        void SelectActionCodeString(long startPos, long lastPos);
 
         void ReplaceLocDescString(long start, long end, const wxString & str);
         void ReplaceLocCodeString(long start, long end, const wxString & str);

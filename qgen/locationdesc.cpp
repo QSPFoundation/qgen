@@ -21,9 +21,9 @@
 
 #include "locationdesc.h"
 
-IMPLEMENT_CLASS( LocationDesc, wxPanel )
+IMPLEMENT_CLASS(LocationDesc, wxPanel)
 
-LocationDesc::LocationDesc( wxWindow *owner, ILocationPage *locPage, IControls *controls ) :
+LocationDesc::LocationDesc(wxWindow *owner, ILocationPage *locPage, IControls *controls) :
     wxPanel(owner, wxID_ANY)
 {
     _locPage  = locPage;
@@ -32,7 +32,7 @@ LocationDesc::LocationDesc( wxWindow *owner, ILocationPage *locPage, IControls *
     _text = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_SIMPLE | SYNTAX_STYLE_NOHELPTIPS);
     wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
     _stTextDesc = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
-    sizer->Add( _stTextDesc, 0, wxALL|wxGROW, 1);
+    sizer->Add(_stTextDesc, 0, wxALL|wxGROW, 1);
     sizer->Add(_text, 1, wxALL|wxGROW, 1);
     SetSizerAndFit(sizer);
     SetAutoLayout(true);
@@ -49,7 +49,7 @@ void LocationDesc::SaveDesc()
 {
     if (_text->IsModified())
     {
-        _controls->GetContainer()->SetLocationDesc( _locPage->GetLocationIndex(), _text->GetValue() );
+        _controls->GetContainer()->SetLocationDesc(_locPage->GetLocationIndex(), _text->GetValue());
         _text->SetModified(false);
     }
 }
@@ -66,10 +66,10 @@ void LocationDesc::Clear()
 
 void LocationDesc::SelectString(long startPos, long lastPos)
 {
-    _text->SetSelection( startPos, lastPos );
+    _text->SetSelection(startPos, lastPos);
 }
 
-void LocationDesc::ReplaceString( long start, long end, const wxString & str )
+void LocationDesc::ReplaceString(long start, long end, const wxString & str )
 {
     _text->Replace(start, end, str);
 }

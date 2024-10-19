@@ -248,12 +248,12 @@ void Settings::SaveSettings()
     _searchDataStore.SaveSearchData(cfg);
 }
 
-void Settings::AddObserver( IObserver *obj )
+void Settings::AddObserver(IObserver *obj)
 {
     _observers.push_back(obj);
 }
 
-void Settings::RemoveObserver( IObserver *obj )
+void Settings::RemoveObserver(IObserver *obj)
 {
     _observers.remove(obj);
 }

@@ -29,7 +29,7 @@ BEGIN_EVENT_TABLE(ToolBar, wxAuiToolBar)
     EVT_LEAVE_WINDOW(ToolBar::OnLeaveWindow)
 END_EVENT_TABLE()
 
-ToolBar::ToolBar( wxWindow *parent, wxWindowID id, IControls *controls ) : wxAuiToolBar( parent, id )
+ToolBar::ToolBar(wxWindow *parent, wxWindowID id, IControls *controls) : wxAuiToolBar(parent, id)
 {
     _controls = controls;
     SetToolBitmapSize(wxSize(24, 24));
@@ -63,7 +63,7 @@ ToolBar::~ToolBar()
     _controls->GetSettings()->RemoveObserver(this);
 }
 
-void ToolBar::Update( bool isFromObservable /*= false*/ )
+void ToolBar::Update(bool isFromObservable /*= false*/)
 {
     SetToolShortHelp(ID_LOC_CREATE, _("Create location... (F7)"));
     SetToolShortHelp(ID_LOC_RENAME, _("Rename selected location... (F6)"));
@@ -82,7 +82,7 @@ void ToolBar::Update( bool isFromObservable /*= false*/ )
     SetToolShortHelp(ID_UTIL_OPTIONS, _("Settings... (Ctrl+P)"));
 }
 
-void ToolBar::OnMotion( wxMouseEvent &evt )
+void ToolBar::OnMotion(wxMouseEvent &evt)
 {
     wxAuiToolBar::OnMotion(evt);
     if (m_tipItem)
@@ -91,7 +91,7 @@ void ToolBar::OnMotion( wxMouseEvent &evt )
         _controls->SetStatusText(wxEmptyString);
 }
 
-void ToolBar::OnLeaveWindow( wxMouseEvent &evt )
+void ToolBar::OnLeaveWindow(wxMouseEvent &evt)
 {
     wxAuiToolBar::OnLeaveWindow(evt);
     _controls->SetStatusText(wxEmptyString);

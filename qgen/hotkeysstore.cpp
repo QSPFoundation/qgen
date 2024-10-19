@@ -28,7 +28,7 @@ HotkeysStore::HotkeysStore()
 {
 }
 
-size_t HotkeysStore::AddHotkeyData( const HotkeyData &hotKeyData )
+size_t HotkeysStore::AddHotkeyData(const HotkeyData &hotKeyData)
 {
     int index = FindHotkeyDataIndex(hotKeyData);
     if (index < 0)
@@ -40,10 +40,10 @@ size_t HotkeysStore::AddHotkeyData( const HotkeyData &hotKeyData )
     return (size_t)index;
 }
 
-bool HotkeysStore::DeleteHotkeyData( const HotkeyData &hotKey )
+bool HotkeysStore::DeleteHotkeyData(const HotkeyData &hotKey)
 {
     int index = FindHotkeyDataIndex(hotKey);
-    if ( index < 0) return false;
+    if (index < 0) return false;
     _hotkeysData.RemoveAt(index);
     return true;
 }
@@ -53,7 +53,7 @@ void HotkeysStore::ClearHotkeysData()
     _hotkeysData.Clear();
 }
 
-HotkeyData &HotkeysStore::GetHotkeyData( size_t index ) const
+HotkeyData &HotkeysStore::GetHotkeyData(size_t index) const
 {
     return _hotkeysData[index];
 }

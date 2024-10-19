@@ -822,7 +822,7 @@ bool ParseConfigFile(DataContainer *container, wxXmlNode *node, long folder, lon
     return true;
 }
 
-bool OpenConfigFile( DataContainer *container, const wxString &file )
+bool OpenConfigFile(DataContainer *container, const wxString &file)
 {
     wxXmlDocument doc;
     if (!(wxFileExists(file) && doc.Load(file))) return false;
@@ -842,7 +842,7 @@ bool OpenConfigFile( DataContainer *container, const wxString &file )
     return false;
 }
 
-bool SaveConfigFile( DataContainer *container, const wxString &file )
+bool SaveConfigFile(DataContainer *container, const wxString &file)
 {
     // Now config stores only folders structure that's why we can simply skip
     // saving file if there are no folders

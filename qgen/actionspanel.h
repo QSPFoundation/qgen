@@ -42,11 +42,11 @@
         wxButton * _delActButton;
         IControls * _controls;
 
-        void OnAddAction( wxCommandEvent &event );
-        void OnRenAction( wxCommandEvent &event );
-        void OnDelAction( wxCommandEvent &event );
+        void OnAddAction(wxCommandEvent &event);
+        void OnRenAction(wxCommandEvent &event);
+        void OnDelAction(wxCommandEvent &event);
     public:
-        ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode *_actCode, IControls *controls );
+        ActionsPanel(wxWindow *owner, ILocationPage *locPage, ActionCode *_actCode, IControls *controls);
 
         void EnableButtons();
         ActionsListBox *GetActionsListBox() { return _actList; };

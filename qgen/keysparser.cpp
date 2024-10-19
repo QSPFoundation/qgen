@@ -163,7 +163,7 @@ void KeysParser::OnKeysPress(const wxString &text)
     if (hasEvent) wxYieldIfNeeded();
 }
 
-bool KeysParser::ExecuteHotkeyAction( int keyCode, int modifiers )
+bool KeysParser::ExecuteHotkeyAction(int keyCode, int modifiers)
 {
     size_t countHotKeys = _hotKeysStore->GetHotkeysCount();
     for (size_t i = 0; i < countHotKeys; ++i)

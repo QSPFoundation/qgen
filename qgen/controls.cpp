@@ -94,9 +94,9 @@ int Controls::AddLocation(const wxString &name)
         {
             locName = dlgEntry.GetValue().Trim().Trim(false);
             if (locName.IsEmpty())
-                ShowMessage( QGEN_MSG_EMPTYDATA );
+                ShowMessage(QGEN_MSG_EMPTYDATA);
             else if ((int)locName.Len()>QGEN_MAXLOCATIONNAMELEN)
-                ShowMessage( QGEN_MSG_TOOLONGLOCATIONNAME );
+                ShowMessage(QGEN_MSG_TOOLONGLOCATIONNAME);
             else
             {
                 int index = AddLocationByName(locName);
@@ -123,9 +123,9 @@ bool Controls::RenameSelectedLocation()
         {
             name = dlgEntry.GetValue().Trim().Trim(false);
             if (name.IsEmpty())
-                ShowMessage( QGEN_MSG_EMPTYDATA );
+                ShowMessage(QGEN_MSG_EMPTYDATA);
             else if ((int)name.Len()>QGEN_MAXLOCATIONNAMELEN)
-                ShowMessage( QGEN_MSG_TOOLONGLOCATIONNAME );
+                ShowMessage(QGEN_MSG_TOOLONGLOCATIONNAME);
             else
             {
                 if (RenameLocation(locIndex, name)) return true;
@@ -148,7 +148,7 @@ bool Controls::DeleteSelectedLocation()
     if (dlgMsg.ShowModal() == wxID_YES)
     {
         int index = _locNotebook->FindPageIndex(locName);
-        if ( index >= 0 ) _locNotebook->DeletePage(index);
+        if (index >= 0) _locNotebook->DeletePage(index);
         _locListBox->Delete(locName);
         _container->DeleteLocation(locIndex);
         UpdateOpenedLocationsIndexes();
@@ -167,7 +167,7 @@ bool Controls::AddActionOnSelectedLoc()
     size_t locIndex = page->GetLocationIndex();
     if (_container->GetActionsCount(locIndex) >= QGEN_MAXACTIONS)
     {
-        ShowMessage( QGEN_MSG_MAXACTIONSCOUNTREACHED );
+        ShowMessage(QGEN_MSG_MAXACTIONSCOUNTREACHED);
         return false;
     }
 
@@ -181,9 +181,9 @@ bool Controls::AddActionOnSelectedLoc()
         {
             name = dlgEntry.GetValue();
             if (name.IsEmpty())
-                ShowMessage( QGEN_MSG_EMPTYDATA );
+                ShowMessage(QGEN_MSG_EMPTYDATA);
             else if ((int)name.Len()>QGEN_MAXACTIONNAMELEN)
-                ShowMessage( QGEN_MSG_TOOLONGACTIONNAME );
+                ShowMessage(QGEN_MSG_TOOLONGACTIONNAME);
             else
             {
                 if (_container->AddAction(locIndex, name) >= 0)
@@ -198,7 +198,7 @@ bool Controls::AddActionOnSelectedLoc()
                     return true;
                 }
                 else
-                    ShowMessage( QGEN_MSG_EXISTS );
+                    ShowMessage(QGEN_MSG_EXISTS);
             }
         }
         else
@@ -263,9 +263,9 @@ bool Controls::RenameSelectedAction()
         {
             name = dlgEntry.GetValue();
             if (name.IsEmpty())
-                ShowMessage( QGEN_MSG_EMPTYDATA );
+                ShowMessage(QGEN_MSG_EMPTYDATA);
             else if ((int)name.Len() > QGEN_MAXACTIONNAMELEN)
-                ShowMessage( QGEN_MSG_TOOLONGACTIONNAME );
+                ShowMessage(QGEN_MSG_TOOLONGACTIONNAME);
             else
             {
                 if (RenameAction(locIndex, actIndex, name)) return true;
@@ -276,14 +276,14 @@ bool Controls::RenameSelectedAction()
     }
 }
 
-void Controls::ShowMessage( long errorNum )
+void Controls::ShowMessage(long errorNum)
 {
     wxMessageDialog dlgMsg(GetParent(), GetMessageDesc(errorNum),
         _("Info"), wxOK|wxICON_INFORMATION|wxCENTRE);
     dlgMsg.ShowModal();
 }
 
-wxString Controls::GetMessageDesc( long errorNum )
+wxString Controls::GetMessageDesc(long errorNum)
 {
     wxString str;
     switch (errorNum)
@@ -349,7 +349,7 @@ bool Controls::IsClipboardEmpty()
 {
     wxTextDataObject data;
     bool canGetData = false, res = true;
-    if ( !wxTheClipboard->IsOpened() && wxTheClipboard->Open() )
+    if (!wxTheClipboard->IsOpened() && wxTheClipboard->Open())
     {
         if (wxTheClipboard->IsSupported(wxDF_TEXT))
         {
@@ -362,7 +362,7 @@ bool Controls::IsClipboardEmpty()
     return res;
 }
 
-bool Controls::SerializeLocData( size_t locIndex, wxString &buffer )
+bool Controls::SerializeLocData(size_t locIndex, wxString &buffer)
 {
     size_t actsCount;
     buffer.Append(QSP_GAMEID);
@@ -482,14 +482,14 @@ void Controls::CopySelectedLocToClipboard()
 
     wxString buffer;
     SerializeLocData(locIndex, buffer);
-    if ( !wxTheClipboard->IsOpened() && wxTheClipboard->Open() )
+    if (!wxTheClipboard->IsOpened() && wxTheClipboard->Open())
     {
-        wxTheClipboard->SetData( new wxTextDataObject( buffer ) );
+        wxTheClipboard->SetData(new wxTextDataObject( buffer));
         wxTheClipboard->Close();
     }
 }
 
-void Controls::PasteLocFromClipboard( PasteType type )
+void Controls::PasteLocFromClipboard(PasteType type)
 {
     int locIndex;
     bool canGetData = false;
@@ -780,7 +780,7 @@ bool Controls::LoadGame(const wxString &filename)
     return false;
 }
 
-bool Controls::JoinGame( const wxString &filename )
+bool Controls::JoinGame(const wxString &filename)
 {
     wxString dummy;
     if (qspOpenQuest(filename.wx_str(), GetParent(), this, dummy, true))
@@ -1228,7 +1228,7 @@ void Controls::UpdateOpenedLocationsIndexes()
     }
 }
 
-void Controls::UpdateLocationIcon( size_t locIndex, bool isOpened )
+void Controls::UpdateLocationIcon(size_t locIndex, bool isOpened)
 {
     _locListBox->SetLocStatus(_container->GetLocationName(locIndex), isOpened);
 }
@@ -1356,7 +1356,7 @@ void Controls::UpdateMenuItems(wxMenu *menu)
     if (showHideLocActs) menu->Enable(ID_LOC_ACTVISIBLE, res);
 }
 
-bool Controls::RenameFolder( size_t folderIndex, const wxString &name )
+bool Controls::RenameFolder(size_t folderIndex, const wxString &name)
 {
     wxString oldName(_container->GetFolderName(folderIndex));
     if (_container->RenameFolder(folderIndex, name))
@@ -1369,7 +1369,7 @@ bool Controls::RenameFolder( size_t folderIndex, const wxString &name )
     return false;
 }
 
-bool Controls::RenameLocation( size_t locIndex, const wxString &name )
+bool Controls::RenameLocation(size_t locIndex, const wxString &name)
 {
     wxString oldName(_container->GetLocationName(locIndex));
     if (_container->RenameLocation(locIndex, name))
@@ -1384,7 +1384,7 @@ bool Controls::RenameLocation( size_t locIndex, const wxString &name )
     return false;
 }
 
-bool Controls::RenameAction( size_t locIndex, size_t actIndex, const wxString &name )
+bool Controls::RenameAction(size_t locIndex, size_t actIndex, const wxString &name)
 {
     if (_container->RenameAction(locIndex, actIndex, name))
     {
@@ -1398,7 +1398,7 @@ bool Controls::RenameAction( size_t locIndex, size_t actIndex, const wxString &n
     return false;
 }
 
-void Controls::MoveActionTo( size_t locIndex, size_t actIndex, size_t moveTo )
+void Controls::MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo)
 {
     _container->MoveActionTo(locIndex, actIndex, moveTo);
     wxString locName(_container->GetLocationName(locIndex));
@@ -1500,7 +1500,7 @@ void Controls::SwitchLocActs()
     if (page) page->LocActsVisible(!page->IsActsShown());
 }
 
-bool Controls::ExecuteHotkey( int keyCode, int modifiers )
+bool Controls::ExecuteHotkey(int keyCode, int modifiers)
 {
     bool res = false;
 #ifdef __WXMSW__
@@ -1511,13 +1511,13 @@ bool Controls::ExecuteHotkey( int keyCode, int modifiers )
     return res;
 }
 
-void Controls::SetStatusText( const wxString &text )
+void Controls::SetStatusText(const wxString &text)
 {
     wxStatusBar *statusBar = _mainFrame->GetStatusBar();
     if (statusBar) statusBar->SetStatusText(text);
 }
 
-void Controls::SelectLocation( size_t locIndex )
+void Controls::SelectLocation(size_t locIndex)
 {
     _locListBox->Select(_container->GetLocationName(locIndex));
 }

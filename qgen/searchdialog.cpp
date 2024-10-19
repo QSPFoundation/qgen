@@ -90,7 +90,7 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, IControls *c
     _btnNextSearch->SetDefault();
 }
 
-void SearchDialog::OnFindNext( wxCommandEvent &event )
+void SearchDialog::OnFindNext(wxCommandEvent &event)
 {
     wxString str = _textFind->GetValue();
     _controls->SearchString(str, false,

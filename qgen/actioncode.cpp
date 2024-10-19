@@ -21,33 +21,33 @@
 
 #include "actioncode.h"
 
-IMPLEMENT_CLASS( ActionCode, wxPanel )
+IMPLEMENT_CLASS(ActionCode, wxPanel)
 
 BEGIN_EVENT_TABLE(ActionCode, wxPanel)
     EVT_BUTTON(ID_PICT_OPEN, ActionCode::OnOpenPicture)
 END_EVENT_TABLE()
 
-ActionCode::ActionCode( wxWindow *owner, ILocationPage *locPage, IControls *controls ) : wxPanel( owner )
+ActionCode::ActionCode(wxWindow *owner, ILocationPage *locPage, IControls *controls) : wxPanel(owner)
 {
     _locPage = locPage;
     _controls = controls;
 
-    wxBoxSizer *topSizer = new wxBoxSizer( wxVERTICAL );
-    wxBoxSizer *sizerPathPict = new wxBoxSizer( wxHORIZONTAL );
+    wxBoxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer *sizerPathPict = new wxBoxSizer(wxHORIZONTAL);
 
-    _button = new wxButton( this, ID_PICT_OPEN, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT );
-    _pathPicTxtCtrl = new ImagePathTextBox( this, wxID_ANY, locPage, _controls );
+    _button = new wxButton(this, ID_PICT_OPEN, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
+    _pathPicTxtCtrl = new ImagePathTextBox(this, wxID_ANY, locPage, _controls);
 
-    sizerPathPict->Add( _pathPicTxtCtrl, 1, wxALL|wxGROW, 1 );
-    sizerPathPict->Add( _button, 0, wxALL|wxGROW, 1 );
+    sizerPathPict->Add(_pathPicTxtCtrl, 1, wxALL|wxGROW, 1);
+    sizerPathPict->Add(_button, 0, wxALL|wxGROW, 1);
 
-    _actCodeTxt = new SyntaxTextBox( this, _controls, SYNTAX_STYLE_COLORED );
+    _actCodeTxt = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_COLORED);
 
-    topSizer->Add( sizerPathPict, 0, wxALL|wxGROW );
-    topSizer->Add( _actCodeTxt, 1, wxALL|wxGROW, 1 );
+    topSizer->Add(sizerPathPict, 0, wxALL|wxGROW);
+    topSizer->Add(_actCodeTxt, 1, wxALL|wxGROW, 1);
 
-    SetSizerAndFit( topSizer );
-    SetAutoLayout( true );
+    SetSizerAndFit(topSizer);
+    SetAutoLayout(true);
     Update();
     _controls->GetSettings()->AddObserver(this);
 }
@@ -63,7 +63,7 @@ void ActionCode::Update(bool isFromObservable)
     GetSizer()->Layout();
 }
 
-void ActionCode::LoadAction( size_t actIndex )
+void ActionCode::LoadAction(size_t actIndex)
 {
     DataContainer *container = _controls->GetContainer();
     size_t locIndex = _locPage->GetLocationIndex();
@@ -72,7 +72,7 @@ void ActionCode::LoadAction( size_t actIndex )
     Enable();
 }
 
-void ActionCode::SaveAction( size_t actIndex )
+void ActionCode::SaveAction(size_t actIndex)
 {
     DataContainer *container = _controls->GetContainer();
     size_t locIndex = _locPage->GetLocationIndex();
@@ -95,10 +95,10 @@ void ActionCode::ClearAction()
     Enable(false);
 }
 
-void ActionCode::OnOpenPicture( wxCommandEvent &event )
+void ActionCode::OnOpenPicture(wxCommandEvent &event)
 {
     wxString str = _controls->SelectPicturePath();
-    if ( !str.IsEmpty() )
+    if (!str.IsEmpty())
     {
         _pathPicTxtCtrl->SetValue(str);
         _pathPicTxtCtrl->SetModified(true);
@@ -106,7 +106,7 @@ void ActionCode::OnOpenPicture( wxCommandEvent &event )
     }
 }
 
-bool ActionCode::Enable( bool status /*= true*/ )
+bool ActionCode::Enable(bool status /*= true*/)
 {
     _pathPicTxtCtrl->SetEditable(status);
     _button->Enable(status);
@@ -117,21 +117,21 @@ bool ActionCode::Enable( bool status /*= true*/ )
 void ActionCode::SelectPicturePathString(long startPos, long lastPos)
 {
     _pathPicTxtCtrl->SetFocus();
-    _pathPicTxtCtrl->SetSelection( startPos, lastPos );
+    _pathPicTxtCtrl->SetSelection(startPos, lastPos);
 }
 
-void ActionCode::SelectCodeString(long startPos, long lastPos )
+void ActionCode::SelectCodeString(long startPos, long lastPos)
 {
     _actCodeTxt->SetFocus();
-    _actCodeTxt->SetSelection( startPos, lastPos );
+    _actCodeTxt->SetSelection(startPos, lastPos);
 }
 
-void ActionCode::ReplacePicturePathString( long start, long end, const wxString & str )
+void ActionCode::ReplacePicturePathString( long start, long end, const wxString & str)
 {
     _pathPicTxtCtrl->Replace(start, end, str);
 }
 
-void ActionCode::ReplaceCodeString( long start, long end, const wxString & str )
+void ActionCode::ReplaceCodeString( long start, long end, const wxString & str)
 {
     _actCodeTxt->Replace(start, end, str);
 }

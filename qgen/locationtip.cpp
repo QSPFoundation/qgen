@@ -66,7 +66,7 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
     _sizer->Add(_emptyLabel, 1, wxGROW);
 
     SetSizer(_sizer);
-    SetAutoLayout( true );
+    SetAutoLayout(true);
 }
 
 void LocationTip::MoveTip(const wxPoint &pos)
@@ -143,12 +143,12 @@ void LocationTip::LoadTip()
     Layout();
 }
 
-void LocationTip::SetLocName( const wxString &name )
+void LocationTip::SetLocName(const wxString &name)
 {
     _locName = name;
 }
 
-void LocationTip::SetActName( const wxString &name )
+void LocationTip::SetActName(const wxString &name)
 {
     _actName = name;
 }

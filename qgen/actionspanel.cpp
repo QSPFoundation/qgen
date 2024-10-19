@@ -30,16 +30,16 @@ BEGIN_EVENT_TABLE(ActionsPanel, wxPanel)
     EVT_BUTTON(ID_ACTION_DEL, ActionsPanel::OnDelAction)
 END_EVENT_TABLE()
 
-ActionsPanel::ActionsPanel( wxWindow *owner, ILocationPage *locPage, ActionCode *actCode, IControls *controls ) : wxPanel( owner )
+ActionsPanel::ActionsPanel(wxWindow *owner, ILocationPage *locPage, ActionCode *actCode, IControls *controls) : wxPanel(owner)
 {
     _controls = controls;
 
-    _actList = new ActionsListBox( this, wxID_ANY, locPage, actCode, controls );
-    wxSizer *sizer2 = new wxBoxSizer ( wxHORIZONTAL );
+    _actList = new ActionsListBox(this, wxID_ANY, locPage, actCode, controls);
+    wxSizer *sizer2 = new wxBoxSizer (wxHORIZONTAL);
 
-    _addActButton = new wxBitmapButton( this, ID_ACTION_ADD, wxBitmap(toolbar_action_new_xpm), wxDefaultPosition, wxSize(32,26) );
-    _renActButton = new wxBitmapButton( this, ID_ACTION_REN, wxBitmap(toolbar_action_rename_xpm), wxDefaultPosition, wxSize(32,26) );
-    _delActButton = new wxBitmapButton( this, ID_ACTION_DEL, wxBitmap(toolbar_action_delete_xpm), wxDefaultPosition, wxSize(32,26) );
+    _addActButton = new wxBitmapButton(this, ID_ACTION_ADD, wxBitmap(toolbar_action_new_xpm), wxDefaultPosition, wxSize(32,26));
+    _renActButton = new wxBitmapButton(this, ID_ACTION_REN, wxBitmap(toolbar_action_rename_xpm), wxDefaultPosition, wxSize(32,26));
+    _delActButton = new wxBitmapButton(this, ID_ACTION_DEL, wxBitmap(toolbar_action_delete_xpm), wxDefaultPosition, wxSize(32,26));
 
     sizer2->Add( _addActButton, 0, wxALL, 1 );
     sizer2->Add( _renActButton, 0, wxALL, 1 );
