@@ -438,7 +438,7 @@ void MainFrame::OnAbout(wxCommandEvent &event)
     info.SetIcon(wxIcon(about_logo_xpm));
     info.SetName(QGEN_TITLE);
     info.SetCopyright(wxT("QSP Foundation, 2001-2024"));
-    info.SetDescription(wxString::Format( _("Version: %s\nCompiled: %s\n\nUsed: %s"),
+    info.SetDescription(wxString::Format(_("Version: %s\nCompiled: %s\n\nUsed: %s"),
         QGEN_VER, wxT(__DATE__) wxT(", ") wxT(__TIME__), wxGetLibraryVersionInfo().ToString()));
     info.SetWebSite(wxT("https://qsp.org"));
     info.AddDeveloper(wxT("BaxZzZz [baxzzzz@gmail.com]"));
@@ -485,7 +485,7 @@ void MainFrame::OnSaveQuestAs(wxCommandEvent &event)
     }
 }
 
-void MainFrame::OnSaveQuest( wxCommandEvent &event)
+void MainFrame::OnSaveQuest(wxCommandEvent &event)
 {
     wxCommandEvent dummy;
     if (!_controls->SaveGameWithCheck()) OnSaveQuestAs(dummy);
@@ -545,7 +545,7 @@ void MainFrame::SaveLayout()
     if (IsIconized()) Iconize(false);
     settings->SetPanelsPos(_manager.SavePerspective());
     wxRect r = GetRect();
-    settings->SetLeftFramePos( r.GetLeft());
+    settings->SetLeftFramePos(r.GetLeft());
     settings->SetTopFramePos(r.GetTop());
     settings->SetFrameWidth(r.GetWidth());
     settings->SetFrameHeight(r.GetHeight());
@@ -566,7 +566,7 @@ void MainFrame::TogglePaneVisibility(const wxString &pane_name)
     }
 }
 
-void MainFrame::OnPaneClose( wxAuiManagerEvent& event)
+void MainFrame::OnPaneClose(wxAuiManagerEvent& event)
 {
     switch (event.GetPane()->window->GetId())
     {
@@ -603,7 +603,7 @@ void MainFrame::OnToggleStatusbar(wxCommandEvent &event)
         CreateStatusBar();
 }
 
-void MainFrame::OnFindDialog( wxCommandEvent& event)
+void MainFrame::OnFindDialog(wxCommandEvent& event)
 {
     if (!_findDlg)
     {
@@ -617,32 +617,32 @@ void MainFrame::OnFindDialog( wxCommandEvent& event)
         _findDlg->Show();
 }
 
-void MainFrame::OnCreateLocation( wxCommandEvent &event )
+void MainFrame::OnCreateLocation(wxCommandEvent &event)
 {
     _controls->AddLocation();
 }
 
-void MainFrame::OnDeleteLocation( wxCommandEvent &event )
+void MainFrame::OnDeleteLocation(wxCommandEvent &event)
 {
     _controls->DeleteSelectedLocation();
 }
 
-void MainFrame::OnRenameLocation( wxCommandEvent &event )
+void MainFrame::OnRenameLocation(wxCommandEvent &event)
 {
     _controls->RenameSelectedLocation();
 }
 
-void MainFrame::OnClearLocation( wxCommandEvent &event )
+void MainFrame::OnClearLocation(wxCommandEvent &event)
 {
     _controls->ClearSelectedLocation();
 }
 
-void MainFrame::OnCopyLocation( wxCommandEvent &event )
+void MainFrame::OnCopyLocation(wxCommandEvent &event )
 {
     _controls->CopySelectedLocToClipboard();
 }
 
-void MainFrame::OnPasteLocation( wxCommandEvent &event )
+void MainFrame::OnPasteLocation(wxCommandEvent &event )
 {
     switch (event.GetId())
     {
@@ -658,32 +658,32 @@ void MainFrame::OnPasteLocation( wxCommandEvent &event )
     }
 }
 
-void MainFrame::OnSortLocations( wxCommandEvent &event )
+void MainFrame::OnSortLocations(wxCommandEvent &event )
 {
     _controls->SortLocations(event.GetId() == ID_LOC_SORTASC);
 }
 
-void MainFrame::OnCreateAction( wxCommandEvent &event )
+void MainFrame::OnCreateAction(wxCommandEvent &event )
 {
     _controls->AddActionOnSelectedLoc();
 }
 
-void MainFrame::OnDeleteAction( wxCommandEvent &event )
+void MainFrame::OnDeleteAction(wxCommandEvent &event )
 {
     _controls->DeleteSelectedAction();
 }
 
-void MainFrame::OnDeleteAllActions( wxCommandEvent &event )
+void MainFrame::OnDeleteAllActions(wxCommandEvent &event )
 {
     _controls->DeleteAllActions();
 }
 
-void MainFrame::OnRenameAction( wxCommandEvent &event )
+void MainFrame::OnRenameAction(wxCommandEvent &event )
 {
     _controls->RenameSelectedAction();
 }
 
-void MainFrame::OnUndoText( wxCommandEvent &event )
+void MainFrame::OnUndoText(wxCommandEvent &event )
 {
     _controls->UndoText();
 }

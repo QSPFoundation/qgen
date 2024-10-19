@@ -126,12 +126,12 @@ void ActionCode::SelectCodeString(long startPos, long lastPos)
     _actCodeTxt->SetSelection(startPos, lastPos);
 }
 
-void ActionCode::ReplacePicturePathString( long start, long end, const wxString & str)
+void ActionCode::ReplacePicturePathString(long start, long end, const wxString & str)
 {
     _pathPicTxtCtrl->Replace(start, end, str);
 }
 
-void ActionCode::ReplaceCodeString( long start, long end, const wxString & str)
+void ActionCode::ReplaceCodeString(long start, long end, const wxString & str)
 {
     _actCodeTxt->Replace(start, end, str);
 }
@@ -141,7 +141,7 @@ void ActionCode::SetFocusOnActionCode()
     _actCodeTxt->SetFocus();
 }
 
-void ActionCode::ExpandCollapseAll( bool isExpanded )
+void ActionCode::ExpandCollapseAll(bool isExpanded)
 {
     _actCodeTxt->ExpandCollapseAll(isExpanded);
 }

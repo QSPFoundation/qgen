@@ -484,7 +484,7 @@ void Controls::CopySelectedLocToClipboard()
     SerializeLocData(locIndex, buffer);
     if (!wxTheClipboard->IsOpened() && wxTheClipboard->Open())
     {
-        wxTheClipboard->SetData(new wxTextDataObject( buffer));
+        wxTheClipboard->SetData(new wxTextDataObject(buffer));
         wxTheClipboard->Close();
     }
 }
@@ -495,13 +495,13 @@ void Controls::PasteLocFromClipboard(PasteType type)
     bool canGetData = false;
     wxTextDataObject data;
     wxString locName, baseLocName, buffer;
-    if ( IsClipboardEmpty() ) return;
+    if (IsClipboardEmpty()) return;
 
-    if ( !wxTheClipboard->IsOpened() && wxTheClipboard->Open() )
+    if (!wxTheClipboard->IsOpened() && wxTheClipboard->Open())
     {
         if (wxTheClipboard->IsSupported(wxDF_TEXT))
         {
-            wxTheClipboard->GetData( data );
+            wxTheClipboard->GetData(data);
             canGetData = true;
         }
         wxTheClipboard->Close();
@@ -548,7 +548,7 @@ void Controls::PasteLocFromClipboard(PasteType type)
             locIndex = wxNOT_FOUND;
         break;
     }
-    if ( locIndex >= 0 && DeserializeLocData(locIndex, buffer) )
+    if (locIndex >= 0 && DeserializeLocData(locIndex, buffer))
     {
         _locListBox->UpdateLocationActions(locName);
         LocationPage *page = _locNotebook->GetPageByLocName(locName);
@@ -714,7 +714,7 @@ void Controls::SelectAllText()
 
 wxString Controls::SelectPicturePath()
 {
-    wxFileDialog fileDlg( GetParent(), _( "Select image file" ),
+    wxFileDialog fileDlg(GetParent(), _("Select image file"),
         wxEmptyString, wxEmptyString, _( "Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*.*" ), wxFD_OPEN );
     fileDlg.CentreOnParent();
     if ( fileDlg.ShowModal() == wxID_OK )

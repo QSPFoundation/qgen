@@ -79,7 +79,7 @@ void LocationCode::ExpandCollapseAll(bool isExpanded)
     _text->ExpandCollapseAll(isExpanded);
 }
 
-void LocationCode::Update( bool isFromObservable /*= false*/)
+void LocationCode::Update(bool isFromObservable /*= false*/)
 {
     _stTextExec->SetLabel(_("Execute on visit:"));
     GetSizer()->Layout();

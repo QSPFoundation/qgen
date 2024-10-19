@@ -24,12 +24,12 @@
 
 WX_DEFINE_OBJARRAY(KeywordsArray);
 
-int CmpWordsAsc( Keyword **first, Keyword **second )
+int CmpWordsAsc(Keyword **first, Keyword **second)
 {
     return (*first)->word.CmpNoCase((*second)->word);
 }
 
-bool KeywordsStore::Load( const wxString &filename )
+bool KeywordsStore::Load(const wxString &filename)
 {
     wxXmlDocument doc;
     wxXmlNode *node;
@@ -58,7 +58,7 @@ bool KeywordsStore::Load( const wxString &filename )
     return true;
 }
 
-void KeywordsStore::ParseKeywords( wxXmlNode *node, KeywordType type )
+void KeywordsStore::ParseKeywords(wxXmlNode *node, KeywordType type)
 {
     Keyword *keyword;
 
@@ -77,7 +77,7 @@ void KeywordsStore::ParseKeywords( wxXmlNode *node, KeywordType type )
     }
 }
 
-wxString KeywordsStore::GetWords( KeywordType type ) const
+wxString KeywordsStore::GetWords(KeywordType type) const
 {
     wxString result;
 
@@ -100,13 +100,13 @@ size_t KeywordsStore::GetCount()
     return _keywords.GetCount();
 }
 
-wxString KeywordsStore::GetWord( size_t index ) const
+wxString KeywordsStore::GetWord(size_t index) const
 {
     if (index >= _keywords.GetCount()) return wxEmptyString;
     return _keywords[index].word;
 }
 
-wxString KeywordsStore::FindTip( const wxString &word ) const
+wxString KeywordsStore::FindTip(const wxString &word) const
 {
     wxString result;
     int idx, first = 0;

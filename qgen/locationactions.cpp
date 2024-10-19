@@ -23,21 +23,21 @@
 
 IMPLEMENT_CLASS(LocationActions, wxPanel)
 
-LocationActions::LocationActions(wxWindow *owner, ILocationPage *locPage, IControls *controls ) : wxPanel( owner )
+LocationActions::LocationActions(wxWindow *owner, ILocationPage *locPage, IControls *controls) : wxPanel(owner)
 {
     _locPage = locPage;
     _controls = controls;
-    _splitterv_down = new wxSplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3DSASH );
+    _splitterv_down = new wxSplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3DSASH);
 
-    _actCode = new ActionCode( _splitterv_down, _locPage, _controls );
-    _actPanel = new ActionsPanel( _splitterv_down, _locPage, _actCode, _controls );
+    _actCode = new ActionCode( _splitterv_down, _locPage, _controls);
+    _actPanel = new ActionsPanel( _splitterv_down, _locPage, _actCode, _controls);
 
-    wxSizer *sizerDown = new wxBoxSizer( wxVERTICAL );
+    wxSizer *sizerDown = new wxBoxSizer( wxVERTICAL);
     _splitterv_down->SetMinimumPaneSize(1);
-    _splitterv_down->SplitVertically( _actPanel, _actCode );
+    _splitterv_down->SplitVertically( _actPanel, _actCode);
 
     _stTextBaseActions = new wxStaticText( this, wxID_ANY, wxEmptyString,
-        wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE );
+        wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
     sizerDown->Add( _stTextBaseActions, 0, wxALL|wxGROW );
     sizerDown->Add( _splitterv_down, 1, wxALL|wxGROW );
 

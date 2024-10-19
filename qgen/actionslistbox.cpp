@@ -35,7 +35,7 @@ END_EVENT_TABLE()
 
 ActionsListBox::ActionsListBox(wxWindow *owner, wxWindowID id, ILocationPage *locPage, 
                                ActionCode *actCode, IControls *controls, long style) :
-    wxHtmlListBox( owner, id, wxDefaultPosition, wxDefaultSize, style )
+    wxHtmlListBox(owner, id, wxDefaultPosition, wxDefaultSize, style)
 {
     _locPage = locPage;
     _controls = controls;
@@ -47,7 +47,7 @@ ActionsListBox::ActionsListBox(wxWindow *owner, wxWindowID id, ILocationPage *lo
         wxT("<META HTTP-EQUIV = \"Content-Type\" CONTENT = \"text/html; charset=%s\">")
         wxT("<FONT COLOR = #%%%%s>%%s<TABLE CELLSPACING = 4 CELLPADDING = 0><TR>%%s</TR></TABLE>%%s</FONT>"),
         wxFontMapper::GetEncodingName(_font.GetEncoding()).wx_str()
-        ));
+       ));
     _outFormat = wxString::Format(commonPart, wxT(""), wxT("<TD WIDTH = 100%%>%s</TD>"), wxT(""));
     _outFormatImage = wxString::Format(commonPart, wxT(""), wxT("<TD><IMG SRC=\"%s\"></TD><TD WIDTH = 100%%>%s</TD>"), wxT(""));
     _outFormatBold = wxString::Format(commonPart, wxT("<B>"), wxT("<TD WIDTH = 100%%>%s</TD>"), wxT("</B>"));
@@ -179,13 +179,13 @@ void ActionsListBox::LoadAllActions()
     }
 }
 
-void ActionsListBox::OnActionChange( wxCommandEvent &event )
+void ActionsListBox::OnActionChange(wxCommandEvent &event)
 {
     int index = event.GetSelection();
     if (index != _prevActionIndex) Select(index);
 }
 
-size_t ActionsListBox::AddAction( const wxString& name )
+size_t ActionsListBox::AddAction( const wxString& name)
 {
     size_t idx = Append(name);
     if (GetCount() == 1)
@@ -196,7 +196,7 @@ size_t ActionsListBox::AddAction( const wxString& name )
     return idx;
 }
 
-void ActionsListBox::DeleteAction( size_t actIndex )
+void ActionsListBox::DeleteAction( size_t actIndex)
 {
     Delete(actIndex);
     _actCode->ClearAction();
@@ -216,7 +216,7 @@ void ActionsListBox::DeleteAllActions()
     _prevActionIndex = wxNOT_FOUND;
 }
 
-void ActionsListBox::Select( int index )
+void ActionsListBox::Select( int index)
 {
     SetSelection(index);
     SaveActionData();
@@ -224,7 +224,7 @@ void ActionsListBox::Select( int index )
     _prevActionIndex = index;
 }
 
-void ActionsListBox::MoveItemTo( size_t actIndex, size_t moveTo )
+void ActionsListBox::MoveItemTo( size_t actIndex, size_t moveTo)
 {
     wxString label(GetString(actIndex));
     Delete(actIndex);
@@ -350,7 +350,7 @@ wxString ActionsListBox::ProceedAsPlain(const wxString& str)
     return out;
 }
 
-size_t ActionsListBox::Append( const wxString &name )
+size_t ActionsListBox::Append( const wxString &name)
 {
     size_t newIndex = _items.Add(name);
     SetItemCount(newIndex + 1);
@@ -363,14 +363,14 @@ size_t ActionsListBox::GetCount() const
     return _items.GetCount();
 }
 
-void ActionsListBox::Delete( size_t index )
+void ActionsListBox::Delete( size_t index)
 {
     _items.RemoveAt(index);
     SetItemCount(_items.GetCount());
     RefreshAll();
 }
 
-wxString ActionsListBox::GetString( size_t index ) const
+wxString ActionsListBox::GetString( size_t index) const
 {
     return _items[index];
 }

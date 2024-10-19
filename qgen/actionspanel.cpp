@@ -41,29 +41,29 @@ ActionsPanel::ActionsPanel(wxWindow *owner, ILocationPage *locPage, ActionCode *
     _renActButton = new wxBitmapButton(this, ID_ACTION_REN, wxBitmap(toolbar_action_rename_xpm), wxDefaultPosition, wxSize(32,26));
     _delActButton = new wxBitmapButton(this, ID_ACTION_DEL, wxBitmap(toolbar_action_delete_xpm), wxDefaultPosition, wxSize(32,26));
 
-    sizer2->Add( _addActButton, 0, wxALL, 1 );
-    sizer2->Add( _renActButton, 0, wxALL, 1 );
-    sizer2->Add( _delActButton, 0, wxALL, 1 );
+    sizer2->Add(_addActButton, 0, wxALL, 1);
+    sizer2->Add(_renActButton, 0, wxALL, 1);
+    sizer2->Add(_delActButton, 0, wxALL, 1);
 
-    wxSizer *sizer1 = new wxBoxSizer( wxVERTICAL );
-    sizer1->Add( sizer2 );
-    sizer1->Add( _actList, 1, wxALL|wxGROW );
+    wxSizer *sizer1 = new wxBoxSizer(wxVERTICAL);
+    sizer1->Add(sizer2);
+    sizer1->Add(_actList, 1, wxALL|wxGROW);
 
-    SetSizerAndFit( sizer1 );
-    SetAutoLayout( true );
+    SetSizerAndFit(sizer1);
+    SetAutoLayout(true);
 }
 
-void ActionsPanel::OnAddAction( wxCommandEvent &event )
+void ActionsPanel::OnAddAction(wxCommandEvent &event)
 {
     _controls->AddActionOnSelectedLoc();
 }
 
-void ActionsPanel::OnRenAction( wxCommandEvent &event )
+void ActionsPanel::OnRenAction(wxCommandEvent &event)
 {
     _controls->RenameSelectedAction();
 }
 
-void ActionsPanel::OnDelAction( wxCommandEvent &event )
+void ActionsPanel::OnDelAction(wxCommandEvent &event)
 {
     _controls->DeleteSelectedAction();
 }

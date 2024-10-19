@@ -201,7 +201,7 @@ bool SyntaxTextBox::StartAutoComplete()
     return false;
 }
 
-void SyntaxTextBox::OnMarginClicked( wxStyledTextEvent &event )
+void SyntaxTextBox::OnMarginClicked(wxStyledTextEvent &event)
 {
     switch (event.GetMargin())
     {
@@ -211,7 +211,7 @@ void SyntaxTextBox::OnMarginClicked( wxStyledTextEvent &event )
     }
 }
 
-void SyntaxTextBox::OnCharAdded( wxStyledTextEvent &event )
+void SyntaxTextBox::OnCharAdded(wxStyledTextEvent &event)
 {
     if ((_style & SYNTAX_STYLE_COLORED) && event.GetKey() == '\n' && !_controls->IsInHotkeyExecution())
     {
@@ -230,7 +230,7 @@ void SyntaxTextBox::OnCharAdded( wxStyledTextEvent &event )
     }
 }
 
-void SyntaxTextBox::OnKeyDown( wxKeyEvent& event )
+void SyntaxTextBox::OnKeyDown(wxKeyEvent& event)
 {
     if (_style & SYNTAX_STYLE_COLORED)
     {
@@ -280,14 +280,14 @@ void SyntaxTextBox::OnRightClick(wxMouseEvent& event)
     }
 }
 
-void SyntaxTextBox::SetValue( const wxString &str )
+void SyntaxTextBox::SetValue(const wxString &str)
 {
     SetText(str);
     SetModified(false);
     EmptyUndoBuffer();
 }
 
-wxString SyntaxTextBox::GetArrayAsString( const wxArrayString &arr )
+wxString SyntaxTextBox::GetArrayAsString(const wxArrayString &arr)
 {
     wxString res;
     if (arr.GetCount() > 0)
@@ -299,14 +299,14 @@ wxString SyntaxTextBox::GetArrayAsString( const wxArrayString &arr )
     return res;
 }
 
-long SyntaxTextBox::GetCharPosition( long startPos, long chars )
+long SyntaxTextBox::GetCharPosition(long startPos, long chars)
 {
     while (chars--)
         startPos = PositionAfter(startPos);
     return startPos;
 }
 
-long SyntaxTextBox::GetCharIndexFromPosition( long fromPos, long pos )
+long SyntaxTextBox::GetCharIndexFromPosition(long fromPos, long pos)
 {
     long index = 0;
     while (pos != fromPos)
@@ -317,7 +317,7 @@ long SyntaxTextBox::GetCharIndexFromPosition( long fromPos, long pos )
     return index;
 }
 
-void SyntaxTextBox::SetSelection( long from, long to )
+void SyntaxTextBox::SetSelection(long from, long to )
 {
     long start = GetCharPosition(0, from);
     long end = GetCharPosition(start, to - from);

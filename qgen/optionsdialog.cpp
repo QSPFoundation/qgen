@@ -526,7 +526,7 @@ void OptionsDialog::InitFontsDialog(wxFontDialog &dialog, const wxFont &font)
     dialog.Create(this, data);
 }
 
-void OptionsDialog::OnColorSelect( wxCommandEvent &event )
+void OptionsDialog::OnColorSelect(wxCommandEvent &event)
 {
     wxColourDialog dialog(this);
     switch(event.GetId())
