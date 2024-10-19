@@ -741,10 +741,10 @@ msgstr "Краткая информация об игре (Ctrl+I)"
 msgid "Show lines numbers"
 msgstr "Показывать номера строк"
 
-msgid "Show locations icons"
+msgid "Show location icons"
 msgstr "Отображать иконки в списке локаций"
 
-msgid "Show short locations descriptions"
+msgid "Show short location descriptions"
 msgstr "Показывать краткие описания локаций"
 
 msgid "Show short statistics"

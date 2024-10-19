@@ -741,11 +741,11 @@ msgstr "Show game statistics (Ctrl+I)"
 msgid "Show lines numbers"
 msgstr "Show lines numbers"
 
-msgid "Show locations icons"
-msgstr "Show locations icons"
+msgid "Show location icons"
+msgstr "Show location icons"
 
-msgid "Show short locations descriptions"
-msgstr "Show short locations descriptions"
+msgid "Show short location descriptions"
+msgstr "Show short location descriptions"
 
 msgid "Show short statistics"
 msgstr "Show short statistics"
