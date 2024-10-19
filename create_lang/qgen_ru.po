@@ -738,7 +738,7 @@ msgstr "Показывать базовые описания локаций"
 msgid "Show game statistics (Ctrl+I)"
 msgstr "Краткая информация об игре (Ctrl+I)"
 
-msgid "Show lines numbers"
+msgid "Show line numbers"
 msgstr "Показывать номера строк"
 
 msgid "Show location icons"

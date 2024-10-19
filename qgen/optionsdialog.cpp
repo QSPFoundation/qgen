@@ -433,7 +433,7 @@ void OptionsDialog::ReCreateGUI()
     // Page Editor
     _notebook->SetPageText(1, _("Code editor"));
     _chkWrapLines->SetLabel(_("Wrap lines by words"));
-    _chkShowLinesNums->SetLabel(_("Show lines numbers"));
+    _chkShowLinesNums->SetLabel(_("Show line numbers"));
     _chkCollapseCode->SetLabel(_("Collapse blocks of code when location is opened"));
     // Page Sizes
     _notebook->SetPageText(2, _("Sizes"));

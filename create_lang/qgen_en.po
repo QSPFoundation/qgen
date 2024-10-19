@@ -738,8 +738,8 @@ msgstr "Show base description on location tab"
 msgid "Show game statistics (Ctrl+I)"
 msgstr "Show game statistics (Ctrl+I)"
 
-msgid "Show lines numbers"
-msgstr "Show lines numbers"
+msgid "Show line numbers"
+msgstr "Show line numbers"
 
 msgid "Show location icons"
 msgstr "Show location icons"
