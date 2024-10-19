@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 
-if (NOT DEFINED APP_VERSION)
+if ("${APP_VERSION}" STREQUAL "")
 	set(APP_VERSION "0.0.0" CACHE STRING "App version" FORCE)
 endif()
 
