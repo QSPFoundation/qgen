@@ -18,6 +18,7 @@ cmake --build build --target install --config Release
 
 ## TODO
 
+* Improve "Search & Replace" functionality
 * Add filtering for shown locations
 * Fix initial window sizes
 * Build web editor
