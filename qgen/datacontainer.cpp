@@ -50,7 +50,7 @@ int DataContainer::FindFolderIndex(const wxString &name) const
     return wxNOT_FOUND;
 }
 
-int DataContainer::FindLocationIndex(const wxString & nameLocation) const
+int DataContainer::FindLocationIndex(const wxString& nameLocation) const
 {
     wxString lwrName(nameLocation.Lower());
     int i, count = locationArray.GetCount();
@@ -219,7 +219,7 @@ bool DataContainer::IsEmpty() const
     return locationArray.IsEmpty();
 }
 
-bool DataContainer::GetLocActions(size_t indexLoc, wxArrayString & actions) const
+bool DataContainer::GetLocActions(size_t indexLoc, wxArrayString& actions) const
 {
     actions.Clear();
     for (size_t i = 0; i < locationArray[indexLoc].actionArray.Count(); ++i)
@@ -295,7 +295,7 @@ void DataContainer::DeleteFolder(size_t folderIndex)
     _isSaved = false;
 }
 
-void DataContainer::MoveFolder( size_t folderIndex, size_t moveToSecPos)
+void DataContainer::MoveFolder(size_t folderIndex, size_t moveToSecPos)
 {
     if (folderIndex == moveToSecPos) return;
     FolderData *data = _folders.Detach(folderIndex);
@@ -303,7 +303,7 @@ void DataContainer::MoveFolder( size_t folderIndex, size_t moveToSecPos)
     _isSaved = false;
 }
 
-void DataContainer::SetFolderPos( size_t folderIndex, long pos )
+void DataContainer::SetFolderPos(size_t folderIndex, long pos)
 {
     if (_folders[folderIndex].pos == pos) return;
     _folders[folderIndex].pos = pos;
@@ -315,12 +315,12 @@ size_t DataContainer::GetFoldersCount() const
     return _folders.GetCount();
 }
 
-wxString DataContainer::GetFolderName( size_t index ) const
+wxString DataContainer::GetFolderName(size_t index) const
 {
     return _folders[index].name;
 }
 
-int DataContainer::FindFolderForPos( size_t pos ) const
+int DataContainer::FindFolderForPos(size_t pos) const
 {
     size_t count = _folders.GetCount();
     for (size_t i = 0; i < count; ++i)
@@ -331,7 +331,7 @@ int DataContainer::FindFolderForPos( size_t pos ) const
     return wxNOT_FOUND;
 }
 
-void DataContainer::SortLocsInFolder( int folderIndex, bool isAscending )
+void DataContainer::SortLocsInFolder(int folderIndex, bool isAscending)
 {
     wxArrayString names;
     wxArrayInt positions;

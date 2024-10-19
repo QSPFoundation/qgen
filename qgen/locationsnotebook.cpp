@@ -32,7 +32,7 @@ BEGIN_EVENT_TABLE(LocationsNotebook, wxAuiNotebook)
 END_EVENT_TABLE()
 
 LocationsNotebook::LocationsNotebook(wxWindow* parent, wxWindowID id, IControls *controls, long style) :
-    wxAuiNotebook( parent, id, wxDefaultPosition, wxDefaultSize, style )
+    wxAuiNotebook(parent, id, wxDefaultPosition, wxDefaultSize, style)
 {
     _controls = controls;
     Update();
@@ -44,14 +44,14 @@ LocationsNotebook::~LocationsNotebook()
     _controls->GetSettings()->RemoveObserver(this);
 }
 
-void LocationsNotebook::NotifyClosePage( int index )
+void LocationsNotebook::NotifyClosePage(int index)
 {
     LocationPage *page = (LocationPage *)GetPage(index);
     page->SavePage();
     _controls->UpdateLocationIcon(page->GetLocationIndex(), false);
 }
 
-bool LocationsNotebook::DeletePage( size_t page )
+bool LocationsNotebook::DeletePage(size_t page)
 {
     NotifyClosePage(page);
     return wxAuiNotebook::DeletePage(page);
@@ -62,12 +62,12 @@ void LocationsNotebook::OnClosePage(wxAuiNotebookEvent& event)
     NotifyClosePage(event.GetSelection());
 }
 
-void LocationsNotebook::OnPageChanged( wxAuiNotebookEvent &event )
+void LocationsNotebook::OnPageChanged(wxAuiNotebookEvent &event)
 {
     _controls->SelectLocation(((LocationPage *)GetPage(event.GetSelection()))->GetLocationIndex());
 }
 
-bool LocationsNotebook::DeleteAllPages( CloseTypePage closeType, int selIndex )
+bool LocationsNotebook::DeleteAllPages(CloseTypePage closeType, int selIndex)
 {
     LocationPage *page;
     int i, count = GetPageCount();
@@ -94,7 +94,7 @@ int LocationsNotebook::FindPageIndex(const wxString& namePage)
     return wxNOT_FOUND;
 }
 
-LocationPage * LocationsNotebook::OpenLocationPage( const wxString& namePage, bool isSelect )
+LocationPage * LocationsNotebook::OpenLocationPage(const wxString& namePage, bool isSelect)
 {
     size_t locIndex = _controls->GetContainer()->FindLocationIndex(namePage);
     LocationPage *page = new LocationPage(this, _controls);
@@ -108,13 +108,13 @@ LocationPage * LocationsNotebook::OpenLocationPage( const wxString& namePage, bo
 LocationPage * LocationsNotebook::GetSelectedPage()
 {
     int selPage = GetSelection();
-    return (GetPageCount() && selPage >= 0 ? ( LocationPage * )GetPage(selPage) : NULL);
+    return (GetPageCount() && selPage >= 0 ? (LocationPage *)GetPage(selPage) : NULL);
 }
 
-LocationPage * LocationsNotebook::GetPageByLocName( const wxString &name )
+LocationPage * LocationsNotebook::GetPageByLocName(const wxString &name)
 {
-    int idx = FindPageIndex( name );
-    return (idx >= 0 ? ( LocationPage * )GetPage(idx) : NULL);
+    int idx = FindPageIndex(name);
+    return (idx >= 0 ? (LocationPage *)GetPage(idx) : NULL);
 }
 
 void LocationsNotebook::LoadOpenedPages()
@@ -131,7 +131,7 @@ void LocationsNotebook::SaveOpenedPages()
         ((LocationPage *)GetPage(i))->SavePage();
 }
 
-void LocationsNotebook::OnRightUpClick( wxAuiNotebookEvent &event )
+void LocationsNotebook::OnRightUpClick(wxAuiNotebookEvent &event)
 {
     if (event.GetEventObject() != this)
     {
@@ -152,7 +152,7 @@ void LocationsNotebook::OnRightUpClick( wxAuiNotebookEvent &event )
     PopupMenu(&menu);
 }
 
-void LocationsNotebook::OnNavigationKeyNotebook( wxNavigationKeyEvent &event )
+void LocationsNotebook::OnNavigationKeyNotebook(wxNavigationKeyEvent &event)
 {
     if (event.IsWindowChange())
         AdvanceSelection(event.GetDirection());
@@ -160,7 +160,7 @@ void LocationsNotebook::OnNavigationKeyNotebook( wxNavigationKeyEvent &event )
         wxAuiNotebook::OnNavigationKeyNotebook(event);
 }
 
-void LocationsNotebook::SwitchPageFixed( size_t selPage )
+void LocationsNotebook::SwitchPageFixed(size_t selPage)
 {
     LocationPage *page = (LocationPage *)GetPage(selPage);
     bool isFixed = !page->IsFixed();
@@ -175,7 +175,7 @@ void LocationsNotebook::Update(bool isFromObservable)
     m_mgr.Update();
 }
 
-void LocationsNotebook::AdvanceSelection( bool forward )
+void LocationsNotebook::AdvanceSelection(bool forward)
 {
     int lastIndex = GetPageCount() - 1;
     if (lastIndex <= 0)

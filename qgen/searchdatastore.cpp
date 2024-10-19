@@ -25,7 +25,7 @@ SearchDataStore::SearchDataStore()
 {
 }
 
-void SearchDataStore::SaveSearchData( wxConfigBase &fileConfig )
+void SearchDataStore::SaveSearchData(wxConfigBase &fileConfig)
 {
     int count = (int)_searchStrings.GetCount();
     fileConfig.DeleteGroup(wxT("SearchData"));
@@ -36,7 +36,7 @@ void SearchDataStore::SaveSearchData( wxConfigBase &fileConfig )
         fileConfig.Write(wxString::Format(wxT("SearchData/Replace%d_Text"), i), _replaceStrings[i]);
 }
 
-void SearchDataStore::LoadSearchData( wxConfigBase &fileConfig )
+void SearchDataStore::LoadSearchData(wxConfigBase &fileConfig)
 {
     int i;
     wxString str;
@@ -64,7 +64,7 @@ void SearchDataStore::ClearStore()
     _replaceStrings.Clear();
 }
 
-void SearchDataStore::AddSearchString( const wxString &text )
+void SearchDataStore::AddSearchString(const wxString &text)
 {
     if (_searchStrings.Index(text) == wxNOT_FOUND)
     {
@@ -76,7 +76,7 @@ void SearchDataStore::AddSearchString( const wxString &text )
     _searchStrings.Insert(text, 0);
 }
 
-void SearchDataStore::AddReplaceString( const wxString &text )
+void SearchDataStore::AddReplaceString(const wxString &text)
 {
     if (_replaceStrings.Index(text) == wxNOT_FOUND)
     {

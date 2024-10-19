@@ -317,7 +317,7 @@ long SyntaxTextBox::GetCharIndexFromPosition(long fromPos, long pos)
     return index;
 }
 
-void SyntaxTextBox::SetSelection(long from, long to )
+void SyntaxTextBox::SetSelection(long from, long to)
 {
     long start = GetCharPosition(0, from);
     long end = GetCharPosition(start, to - from);
@@ -327,7 +327,7 @@ void SyntaxTextBox::SetSelection(long from, long to )
     wxStyledTextCtrl::SetSelection(start, end);
 }
 
-void SyntaxTextBox::Replace( long from, long to, const wxString &str )
+void SyntaxTextBox::Replace(long from, long to, const wxString &str)
 {
     long start = GetCharPosition(0, from);
     long end = GetCharPosition(start, to - from);
@@ -395,7 +395,7 @@ void SyntaxTextBox::Expand(int &line, bool doExpand, bool force, int visLevels, 
     }
 }
 
-void SyntaxTextBox::ExpandCollapseAll( bool isExpanded )
+void SyntaxTextBox::ExpandCollapseAll(bool isExpanded)
 {
     int linesCount = GetLineCount();
     SetProperty(wxT("fold.all"), wxT("1"));

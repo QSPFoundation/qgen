@@ -663,7 +663,7 @@ void OptionsDialog::OnColorSelect(wxCommandEvent &event)
     }
 }
 
-void OptionsDialog::OnFontSelect( wxCommandEvent &event )
+void OptionsDialog::OnFontSelect(wxCommandEvent &event)
 {
     wxFontDialog dialog;
     switch(event.GetId())
@@ -770,7 +770,7 @@ void OptionsDialog::OnFontSelect( wxCommandEvent &event )
     }
 }
 
-void OptionsDialog::OnPathSelect( wxCommandEvent &event )
+void OptionsDialog::OnPathSelect( wxCommandEvent &event)
 {
     wxFileDialog dialog(this);
     switch (event.GetId())

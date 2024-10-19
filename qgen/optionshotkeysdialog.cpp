@@ -75,7 +75,7 @@ void OptionsHotkeysDialog::OnOkSettings(wxCommandEvent &event)
     event.Skip();
 }
 
-void OptionsHotkeysDialog::SetHotkeyData( const HotkeyData &hotKeyData )
+void OptionsHotkeysDialog::SetHotkeyData(const HotkeyData &hotKeyData)
 {
     _hotkeyData = hotKeyData;
     _txtInputHotkey->SetValue(_hotkeyData.GetKeysAsString());
@@ -84,7 +84,7 @@ void OptionsHotkeysDialog::SetHotkeyData( const HotkeyData &hotKeyData )
     _txtInputText->SetValue(_hotkeyData.CommandText);
 }
 
-void OptionsHotkeysDialog::OnHelpHotKeys( wxCommandEvent &event )
+void OptionsHotkeysDialog::OnHelpHotKeys(wxCommandEvent &event)
 {
 #ifdef __WXMSW__
     DesktopWindow desktop;

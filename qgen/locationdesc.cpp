@@ -69,7 +69,7 @@ void LocationDesc::SelectString(long startPos, long lastPos)
     _text->SetSelection(startPos, lastPos);
 }
 
-void LocationDesc::ReplaceString(long start, long end, const wxString & str)
+void LocationDesc::ReplaceString(long start, long end, const wxString& str)
 {
     _text->Replace(start, end, str);
 }

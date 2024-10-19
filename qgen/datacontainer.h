@@ -91,7 +91,7 @@
         size_t GetLocationsCount() const;
         void Clear();
         bool IsEmpty() const;
-        bool GetLocActions(size_t indexLoc, wxArrayString & actions) const;
+        bool GetLocActions(size_t indexLoc, wxArrayString& actions) const;
         void MoveLocationTo(size_t locIndex, size_t moveTo);
         void MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo);
 

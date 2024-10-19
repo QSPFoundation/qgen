@@ -201,22 +201,22 @@ void LocationPage::SelectActionCodeString(long startPos, long lastPos)
     _locActs->SelectActionCodeString(startPos, lastPos);
 }
 
-void LocationPage::ReplaceLocDescString(long start, long end, const wxString & str)
+void LocationPage::ReplaceLocDescString(long start, long end, const wxString& str)
 {
     _locDesc->ReplaceString(start, end, str);
 }
 
-void LocationPage::ReplaceLocCodeString(long start, long end, const wxString & str)
+void LocationPage::ReplaceLocCodeString(long start, long end, const wxString& str)
 {
     _locCode->ReplaceString(start, end, str);
 }
 
-void LocationPage::ReplacePicturePathString(long start, long end, const wxString & str)
+void LocationPage::ReplacePicturePathString(long start, long end, const wxString& str)
 {
     _locActs->ReplacePicturePathString(start, end, str);
 }
 
-void LocationPage::ReplaceActionCodeString(long start, long end, const wxString & str)
+void LocationPage::ReplaceActionCodeString(long start, long end, const wxString& str)
 {
     _locActs->ReplaceActionCodeString(start, end, str);
 }

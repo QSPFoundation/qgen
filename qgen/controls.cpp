@@ -307,7 +307,7 @@ wxString Controls::GetMessageDesc(long errorNum)
     return str;
 }
 
-LocationPage *Controls::ShowLocation(const wxString & locName)
+LocationPage *Controls::ShowLocation(const wxString& locName)
 {
     int indexPage = _locNotebook->FindPageIndex(locName);
     if (indexPage >= 0)
@@ -715,9 +715,9 @@ void Controls::SelectAllText()
 wxString Controls::SelectPicturePath()
 {
     wxFileDialog fileDlg(GetParent(), _("Select image file"),
-        wxEmptyString, wxEmptyString, _( "Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*.*" ), wxFD_OPEN );
+        wxEmptyString, wxEmptyString, _("Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*.*"), wxFD_OPEN);
     fileDlg.CentreOnParent();
-    if ( fileDlg.ShowModal() == wxID_OK )
+    if (fileDlg.ShowModal() == wxID_OK)
     {
         wxFileName path(fileDlg.GetPath());
         path.MakeRelativeTo(wxFileName(_currentGamePath).GetPath());
@@ -893,7 +893,7 @@ int Controls::FindSubString(const wxString& s, const wxString& sub, bool isWhole
         } while (!(
             (ind == 0 || QSP_STRCHR(QSP_DELIMS, s[ind - 1])) &&
             (ind2 >= length || QSP_STRCHR(QSP_DELIMS, s[ind2]))
-            ));
+           ));
         return ind;
     }
     else
@@ -957,7 +957,7 @@ wxString Controls::GetSelectedWord() const
     return str;
 }
 
-bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCase, bool isWholeString )
+bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCase, bool isWholeString)
 {
     wxString data;
     wxString locName;
@@ -1100,7 +1100,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
                     lastPos += startPos;
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
-                    page->SelectAction( _dataSearch.idxAct );
+                    page->SelectAction( _dataSearch.idxAct);
                     page->SelectActionCodeString(startPos, lastPos);
                     _dataSearch.startPos = startPos;
                     _dataSearch.foundAt = SEARCH_ACTCODE;
@@ -1120,7 +1120,7 @@ bool Controls::SearchString( const wxString &str, bool findAgain, bool isMatchCa
     return false;
 }
 
-void Controls::ReplaceSearchString(const wxString & replaceString)
+void Controls::ReplaceSearchString(const wxString& replaceString)
 {
     wxString temp;
     if (_dataSearch.foundAt == SEARCH_NONE) return;

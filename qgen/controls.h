@@ -168,7 +168,7 @@
         wxString GetSelectedWord() const;
         void JumpToSelectedLoc();
         bool SearchString(const wxString &str, bool findAgain, bool isMatchCase = false, bool isWholeString = false);
-        void ReplaceSearchString(const wxString & replaceString);
+        void ReplaceSearchString(const wxString& replaceString);
         bool SearchNextLoc();
         void InitSearchData();
         wxString GetGameInfo() const;
@@ -176,7 +176,7 @@
         void SwitchLocDesc();
         void SwitchLocActs();
 
-        LocationPage *ShowLocation(const wxString & locName);
+        LocationPage *ShowLocation(const wxString& locName);
         void MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo);
 
         void SetLastSaveTime(wxLongLong lastSaveTime) { _lastSaveTime = lastSaveTime; }

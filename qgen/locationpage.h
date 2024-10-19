@@ -78,10 +78,10 @@
         void SelectPicturePathString(long startPos, long lastPos);
         void SelectActionCodeString(long startPos, long lastPos);
 
-        void ReplaceLocDescString(long start, long end, const wxString & str);
-        void ReplaceLocCodeString(long start, long end, const wxString & str);
-        void ReplacePicturePathString(long start, long end, const wxString & str);
-        void ReplaceActionCodeString(long start, long end, const wxString & str);
+        void ReplaceLocDescString(long start, long end, const wxString& str);
+        void ReplaceLocCodeString(long start, long end, const wxString& str);
+        void ReplacePicturePathString(long start, long end, const wxString& str);
+        void ReplaceActionCodeString(long start, long end, const wxString& str);
     };
 
 #endif

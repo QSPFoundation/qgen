@@ -21,14 +21,14 @@
 
 #include "imagepathtextbox.h"
 
-IMPLEMENT_CLASS( ImagePathTextBox, wxTextCtrl )
+IMPLEMENT_CLASS(ImagePathTextBox, wxTextCtrl)
 
 BEGIN_EVENT_TABLE(ImagePathTextBox, wxTextCtrl)
     EVT_KILL_FOCUS(ImagePathTextBox::OnLostFocus)
     EVT_KEY_DOWN(ImagePathTextBox::OnKeyDown)
 END_EVENT_TABLE()
 
-ImagePathTextBox::ImagePathTextBox( wxWindow *owner, wxWindowID id, ILocationPage *locPage, IControls *controls ) :
+ImagePathTextBox::ImagePathTextBox(wxWindow *owner, wxWindowID id, ILocationPage *locPage, IControls *controls) :
     wxTextCtrl(owner, id, wxEmptyString, wxDefaultPosition, wxSize(1, 1), wxTE_MULTILINE)
 {
     _locPage = locPage;
@@ -62,13 +62,13 @@ void ImagePathTextBox::Update(bool isFromObservable)
     Refresh();
 }
 
-void ImagePathTextBox::OnLostFocus( wxFocusEvent &event )
+void ImagePathTextBox::OnLostFocus(wxFocusEvent &event)
 {
     _locPage->RefreshActions();
     event.Skip();
 }
 
-void ImagePathTextBox::OnKeyDown( wxKeyEvent& event )
+void ImagePathTextBox::OnKeyDown(wxKeyEvent& event)
 {
     if (!_controls->ExecuteHotkey(event.GetKeyCode(), event.GetModifiers()))
         event.Skip();

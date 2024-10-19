@@ -100,7 +100,7 @@ class LocationPage;
         virtual bool SaveGame(const wxString &path, const wxString &password) = 0;
         virtual bool SaveGameWithCheck() = 0;
         virtual bool SearchString(const wxString &str, bool findAgain, bool isMatchCase = false, bool isWholeString = false) = 0;
-        virtual void ReplaceSearchString(const wxString & replaceString) = 0;
+        virtual void ReplaceSearchString(const wxString& replaceString) = 0;
         virtual bool SearchNextLoc() = 0;
         virtual void InitSearchData() = 0;
         virtual int AddLocation(const wxString &name = wxEmptyString) = 0;

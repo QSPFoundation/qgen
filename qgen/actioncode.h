@@ -53,8 +53,8 @@
         void ClearAction();
         void SelectPicturePathString(long startPos, long lastPos);
         void SelectCodeString(long startPos, long lastPos);
-        void ReplacePicturePathString(long start, long end, const wxString & str);
-        void ReplaceCodeString(long start, long end, const wxString & str);
+        void ReplacePicturePathString(long start, long end, const wxString& str);
+        void ReplaceCodeString(long start, long end, const wxString& str);
         void SetFocusOnActionCode();
         void ExpandCollapseAll(bool isExpanded);
     };

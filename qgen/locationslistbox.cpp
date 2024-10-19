@@ -78,7 +78,7 @@ void LocationsListBox::Update(bool isFromObservable)
     }
 }
 
-bool LocationsListBox::IsItemOk( wxTreeItemId id, int flags )
+bool LocationsListBox::IsItemOk(wxTreeItemId id, int flags)
 {
     return id.IsOk() &&
         ((flags & wxTREE_HITTEST_ONITEMINDENT) |
@@ -87,7 +87,7 @@ bool LocationsListBox::IsItemOk( wxTreeItemId id, int flags )
          (flags & wxTREE_HITTEST_ONITEMRIGHT));
 }
 
-void LocationsListBox::OnRightClick( wxMouseEvent &event )
+void LocationsListBox::OnRightClick(wxMouseEvent &event)
 {
     wxMenu menu;
     int flags;
@@ -120,7 +120,7 @@ void LocationsListBox::OnRightClick( wxMouseEvent &event )
     PopupMenu(&menu);
 }
 
-void LocationsListBox::OnDoubleClick(wxMouseEvent &event )
+void LocationsListBox::OnDoubleClick(wxMouseEvent &event)
 {
     int flags;
     wxTreeItemId id(HitTest(event.GetPosition(), flags));
@@ -159,7 +159,7 @@ void LocationsListBox::Insert(const wxString &name, const wxString &pos, const w
     _needForUpdate = true;
 }
 
-wxTreeItemId LocationsListBox::GetLocByName( const wxTreeItemId &parent, const wxString &name )
+wxTreeItemId LocationsListBox::GetLocByName(const wxTreeItemId &parent, const wxString &name)
 {
     wxTreeItemIdValue cookie;
     wxTreeItemId idCur(GetFirstChild(parent, cookie));
@@ -179,7 +179,7 @@ wxTreeItemId LocationsListBox::GetLocByName( const wxTreeItemId &parent, const w
     return wxTreeItemId();
 }
 
-wxTreeItemId LocationsListBox::GetFolderByName( const wxString &name )
+wxTreeItemId LocationsListBox::GetFolderByName(const wxString &name)
 {
     wxTreeItemIdValue cookie;
     wxTreeItemId parent(GetRootItem());
@@ -195,7 +195,7 @@ wxTreeItemId LocationsListBox::GetFolderByName( const wxString &name )
     return idCur;
 }
 
-void LocationsListBox::Select( const wxString &name )
+void LocationsListBox::Select(const wxString &name)
 {
     SelectItem(GetLocByName(GetRootItem(), name));
 }
@@ -257,7 +257,7 @@ void LocationsListBox::Clear()
     Thaw();
 }
 
-void LocationsListBox::UpdateLocationActions( const wxString &name )
+void LocationsListBox::UpdateLocationActions(const wxString &name)
 {
     wxArrayString actions;
     long locIndex = _controls->GetContainer()->FindLocationIndex(name);
@@ -271,7 +271,7 @@ void LocationsListBox::UpdateLocationActions( const wxString &name )
         for (i = 0; i < count; ++i) AppendItem(id, actions[i]);
 }
 
-void LocationsListBox::Delete( const wxString &name )
+void LocationsListBox::Delete(const wxString &name)
 {
     wxTreeItemId id(GetLocByName(GetRootItem(), name));
     if (id.IsOk())
@@ -300,7 +300,7 @@ void LocationsListBox::ExpandCollapseItems(bool isExpand)
     Thaw();
 }
 
-void LocationsListBox::OnEndLabelEdit( wxTreeEvent &event )
+void LocationsListBox::OnEndLabelEdit(wxTreeEvent &event)
 {
     if (event.IsEditCancelled()) return;
     wxTreeItemId id(event.GetItem());
@@ -312,20 +312,20 @@ void LocationsListBox::OnEndLabelEdit( wxTreeEvent &event )
     case DRAG_FOLDER:
         label = label.Trim().Trim(false);
         if (label.IsEmpty())
-            _controls->ShowMessage( QGEN_MSG_EMPTYDATA );
+            _controls->ShowMessage(QGEN_MSG_EMPTYDATA);
         else
             _controls->RenameFolder(container->FindFolderIndex(oldLabel), label);
         break;
     case DRAG_LOCATION:
         label = label.Trim().Trim(false);
         if (label.IsEmpty())
-            _controls->ShowMessage( QGEN_MSG_EMPTYDATA );
+            _controls->ShowMessage(QGEN_MSG_EMPTYDATA);
         else
             _controls->RenameLocation(container->FindLocationIndex(oldLabel), label);
         break;
     case DRAG_ACTION:
         if (label.IsEmpty())
-            _controls->ShowMessage( QGEN_MSG_EMPTYDATA );
+            _controls->ShowMessage(QGEN_MSG_EMPTYDATA);
         else
         {
             size_t locIndex = container->FindLocationIndex(GetItemText(GetItemParent(id)));
@@ -336,7 +336,7 @@ void LocationsListBox::OnEndLabelEdit( wxTreeEvent &event )
     event.Veto();
 }
 
-void LocationsListBox::OnBeginDrag( wxTreeEvent &event )
+void LocationsListBox::OnBeginDrag(wxTreeEvent &event)
 {
     int flags;
     wxTreeItemId draggedItemId(HitTest(event.GetPoint(), flags));
@@ -349,7 +349,7 @@ void LocationsListBox::OnBeginDrag( wxTreeEvent &event )
     }
 }
 
-void LocationsListBox::OnEndDrag( wxTreeEvent &event )
+void LocationsListBox::OnEndDrag(wxTreeEvent &event)
 {
     ApplyStatesImageList();
     wxTreeItemId id(event.GetItem());
@@ -427,7 +427,7 @@ void LocationsListBox::OnEndDrag( wxTreeEvent &event )
     }
 }
 
-void LocationsListBox::SetLocStatus( const wxString &name, bool isOpened )
+void LocationsListBox::SetLocStatus(const wxString &name, bool isOpened)
 {
     if (_controls->GetSettings()->GetShowLocsIcons())
         SetItemImage(GetLocByName(GetRootItem(), name), isOpened ? ICON_ACTIVELOC : ICON_NOTACTIVELOC);
@@ -441,7 +441,7 @@ void LocationsListBox::ApplyStatesImageList()
         SetImageList(NULL);
 }
 
-void LocationsListBox::AddFolder( const wxString &name )
+void LocationsListBox::AddFolder(const wxString &name)
 {
     if (_controls->GetSettings()->GetShowLocsIcons())
     {
@@ -453,7 +453,7 @@ void LocationsListBox::AddFolder( const wxString &name )
     _needForUpdate = true;
 }
 
-long LocationsListBox::GetItemType( const wxTreeItemId &id )
+long LocationsListBox::GetItemType(const wxTreeItemId &id)
 {
     wxTreeItemId parentId = GetItemParent(id);
     if (parentId == GetRootItem()) // location or folder
@@ -472,7 +472,7 @@ long LocationsListBox::GetItemType( const wxTreeItemId &id )
     }
 }
 
-void LocationsListBox::UpdateFolderLocations( const wxString &name )
+void LocationsListBox::UpdateFolderLocations(const wxString &name)
 {
     wxString text;
     wxTreeItemId parent(GetFolderByName(name));
@@ -494,7 +494,7 @@ void LocationsListBox::UpdateFolderLocations( const wxString &name )
     _controls->ShowOpenedLocationsIcons();
 }
 
-long LocationsListBox::GetItemPos( const wxTreeItemId &parent, const wxTreeItemId &id )
+long LocationsListBox::GetItemPos(const wxTreeItemId &parent, const wxTreeItemId &id)
 {
     long pos = 0;
     wxTreeItemIdValue cookie;
@@ -508,14 +508,14 @@ long LocationsListBox::GetItemPos( const wxTreeItemId &parent, const wxTreeItemI
     return -1;
 }
 
-void LocationsListBox::SetLocName( const wxString &name, const wxString &newName )
+void LocationsListBox::SetLocName(const wxString &name, const wxString &newName)
 {
     wxTreeItemId id(GetLocByName(GetRootItem(), name));
     if (id.IsOk())
         SetItemText(id, newName);
 }
 
-void LocationsListBox::SetFolderName( const wxString &name, const wxString &newName )
+void LocationsListBox::SetFolderName(const wxString &name, const wxString &newName)
 {
     wxTreeItemId id(GetFolderByName(name));
     if (id.IsOk())
@@ -529,7 +529,7 @@ void LocationsListBox::UpdateDataContainer()
     _needForUpdate = false;
 }
 
-void LocationsListBox::UpdateDataContainer( const wxTreeItemId &parent, long folder, long *locPos, long *folderPos, long *pos )
+void LocationsListBox::UpdateDataContainer( const wxTreeItemId &parent, long folder, long *locPos, long *folderPos, long *pos)
 {
     DataContainer *container = _controls->GetContainer();
     wxTreeItemIdValue cookie;
@@ -556,7 +556,7 @@ void LocationsListBox::UpdateDataContainer( const wxTreeItemId &parent, long fol
     }
 }
 
-void LocationsListBox::DeleteFolder( const wxString &name )
+void LocationsListBox::DeleteFolder( const wxString &name)
 {
     wxTreeItemId id(GetFolderByName(name));
     if (id.IsOk())
@@ -566,7 +566,7 @@ void LocationsListBox::DeleteFolder( const wxString &name )
     }
 }
 
-bool LocationsListBox::IsFolderItem( const wxTreeItemId &id )
+bool LocationsListBox::IsFolderItem( const wxTreeItemId &id)
 {
     FolderItem *data = dynamic_cast<FolderItem *>(GetItemData(id));
     return (data != NULL);

@@ -637,12 +637,12 @@ void MainFrame::OnClearLocation(wxCommandEvent &event)
     _controls->ClearSelectedLocation();
 }
 
-void MainFrame::OnCopyLocation(wxCommandEvent &event )
+void MainFrame::OnCopyLocation(wxCommandEvent &event)
 {
     _controls->CopySelectedLocToClipboard();
 }
 
-void MainFrame::OnPasteLocation(wxCommandEvent &event )
+void MainFrame::OnPasteLocation(wxCommandEvent &event)
 {
     switch (event.GetId())
     {
@@ -658,67 +658,67 @@ void MainFrame::OnPasteLocation(wxCommandEvent &event )
     }
 }
 
-void MainFrame::OnSortLocations(wxCommandEvent &event )
+void MainFrame::OnSortLocations(wxCommandEvent &event)
 {
     _controls->SortLocations(event.GetId() == ID_LOC_SORTASC);
 }
 
-void MainFrame::OnCreateAction(wxCommandEvent &event )
+void MainFrame::OnCreateAction(wxCommandEvent &event)
 {
     _controls->AddActionOnSelectedLoc();
 }
 
-void MainFrame::OnDeleteAction(wxCommandEvent &event )
+void MainFrame::OnDeleteAction(wxCommandEvent &event)
 {
     _controls->DeleteSelectedAction();
 }
 
-void MainFrame::OnDeleteAllActions(wxCommandEvent &event )
+void MainFrame::OnDeleteAllActions(wxCommandEvent &event)
 {
     _controls->DeleteAllActions();
 }
 
-void MainFrame::OnRenameAction(wxCommandEvent &event )
+void MainFrame::OnRenameAction(wxCommandEvent &event)
 {
     _controls->RenameSelectedAction();
 }
 
-void MainFrame::OnUndoText(wxCommandEvent &event )
+void MainFrame::OnUndoText(wxCommandEvent &event)
 {
     _controls->UndoText();
 }
 
-void MainFrame::OnRedoText( wxCommandEvent &event )
+void MainFrame::OnRedoText(wxCommandEvent &event)
 {
     _controls->RedoText();
 }
 
-void MainFrame::OnCopyText( wxCommandEvent &event )
+void MainFrame::OnCopyText(wxCommandEvent &event)
 {
     _controls->CopySelectedTextToClipboard();
 }
 
-void MainFrame::OnCutText( wxCommandEvent &event )
+void MainFrame::OnCutText(wxCommandEvent &event)
 {
     _controls->CutSelectedTextToClipboard();
 }
 
-void MainFrame::OnPasteText( wxCommandEvent &event )
+void MainFrame::OnPasteText(wxCommandEvent &event)
 {
     _controls->PasteTextFromClipboard();
 }
 
-void MainFrame::OnSelectAllText( wxCommandEvent &event )
+void MainFrame::OnSelectAllText(wxCommandEvent &event)
 {
     _controls->SelectAllText();
 }
 
-void MainFrame::OnDeleteText( wxCommandEvent &event )
+void MainFrame::OnDeleteText(wxCommandEvent &event)
 {
     _controls->DeleteSelectedText();
 }
 
-void MainFrame::OnJoinQuest( wxCommandEvent &event )
+void MainFrame::OnJoinQuest(wxCommandEvent &event )
 {
     wxFileDialog dialog(this,
         _("Join game file"), wxEmptyString, wxEmptyString,
@@ -728,7 +728,7 @@ void MainFrame::OnJoinQuest( wxCommandEvent &event )
     _controls->JoinGame(dialog.GetPath());
 }
 
-void MainFrame::OnPlayQuest( wxCommandEvent &event )
+void MainFrame::OnPlayQuest(wxCommandEvent &event )
 {
     wxCommandEvent dummy;
     Settings *settings = _controls->GetSettings();
@@ -746,7 +746,7 @@ void MainFrame::OnPlayQuest( wxCommandEvent &event )
         wxExecute(wxString::Format("\"%s\" \"%s\"", settings->GetCurrentPlayerPath(), _controls->GetGamePath()));
 }
 
-void MainFrame::OnChmHelp( wxCommandEvent &event )
+void MainFrame::OnChmHelp(wxCommandEvent &event )
 {
 #ifdef __WXMSW__
     DesktopWindow desktop;
@@ -762,7 +762,7 @@ void MainFrame::OnChmHelp( wxCommandEvent &event )
     delete chmHelp;
 }
 
-void MainFrame::OnSearchHelp( wxCommandEvent &event )
+void MainFrame::OnSearchHelp(wxCommandEvent &event )
 {
 #ifdef __WXMSW__
     DesktopWindow desktop;

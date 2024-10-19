@@ -89,8 +89,8 @@
         size_t GetCount() const;
         void Delete(size_t index);
         wxString GetString(size_t index) const;
-        void SetString(size_t index, const wxString & name);
-        void Insert(const wxString & name, size_t index);
+        void SetString(size_t index, const wxString& name);
+        void Insert(const wxString& name, size_t index);
         void Clear();
     };
 
