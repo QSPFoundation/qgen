@@ -40,14 +40,14 @@
 
     struct DataSearch
     {
-        int            idxLoc;
-        int            idxAct;
-        long        startPos;
-        long        stringLen;
-        int            countChecking;
-        SearchPlace foundAt;
-        SearchPlace findAt;
-        bool        isFoundAny;
+        int         LocIndex;
+        int         ActIndex;
+        long        StartPos;
+        long        StringLen;
+        int         CountChecking;
+        SearchPlace FoundAt;
+        SearchPlace FindAt;
+        bool        IsFoundAny;
     };
 
     class Controls : public IControls
@@ -65,7 +65,6 @@
 
         KeywordsStore * _keywordsStore;
         DataSearch _dataSearch;
-        wxString _currentPath;
         wxString _currentGamePath;
         wxString _currentGamePass;
         wxLongLong _lastSaveTime;
@@ -78,7 +77,7 @@
 
         void InitData();
     public:
-        Controls(const wxString &path);
+        Controls();
         ~Controls();
 
         Settings *GetSettings() const { return _settings; }

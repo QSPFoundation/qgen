@@ -29,9 +29,8 @@ bool Application::OnInit()
         return false;
 
     wxInitAllImageHandlers();
-    wxFileName appPath(wxStandardPaths::Get().GetExecutablePath());
     wxRegisterId(20000);
-    _controls = new Controls(appPath.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR));
+    _controls = new Controls();
     _controls->UpdateLocale(_controls->GetSettings()->GetLangId());
     _controls->GetSettings()->PostInitLocaleSettings();
     MainFrame *mainFrame = new MainFrame(_controls);

@@ -21,16 +21,15 @@
 
 #include "controls.h"
 
-Controls::Controls(const wxString &path)
+Controls::Controls()
 {
     _mainFrame = NULL;
     _locListBox = NULL;
     _locNotebook = NULL;
     _locale = NULL;
     _execHotkeyEnters = 0;
-    _currentPath = path;
 
-    _settings = new Settings(_currentPath);
+    _settings = new Settings();
     _container = new DataContainer();
 
 #ifdef __WXMSW__
@@ -908,12 +907,12 @@ int Controls::FindSubString(const wxString& s, const wxString& sub, bool isWhole
 bool Controls::SearchNextLoc()
 {
     int countLocs = _container->GetLocationsCount();
-    _dataSearch.findAt = SEARCH_LOCNAME;
-    _dataSearch.startPos = wxNOT_FOUND;
-    if (++_dataSearch.idxLoc >= countLocs) _dataSearch.idxLoc = 0;
-    if (++_dataSearch.countChecking >= countLocs)
+    _dataSearch.FindAt = SEARCH_LOCNAME;
+    _dataSearch.StartPos = wxNOT_FOUND;
+    if (++_dataSearch.LocIndex >= countLocs) _dataSearch.LocIndex = 0;
+    if (++_dataSearch.CountChecking >= countLocs)
     {
-        ShowMessage(_dataSearch.isFoundAny ? QGEN_MSG_SEARCHENDED : QGEN_MSG_NOTFOUND);
+        ShowMessage(_dataSearch.IsFoundAny ? QGEN_MSG_SEARCHENDED : QGEN_MSG_NOTFOUND);
         return false;
     }
     return true;
@@ -978,38 +977,38 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
 
     _locNotebook->SaveOpenedPages();
 
-    if (findAgain || _dataSearch.idxLoc >= countLocs || _dataSearch.countChecking >= countLocs)
+    if (findAgain || _dataSearch.LocIndex >= countLocs || _dataSearch.CountChecking >= countLocs)
     {
         InitSearchData();
         locIndex = GetSelectedLocationIndex();
         if (locIndex < 0) locIndex = 0;
-        _dataSearch.idxLoc = locIndex;
+        _dataSearch.LocIndex = locIndex;
     }
 
-    _dataSearch.foundAt = SEARCH_NONE;
-    _dataSearch.stringLen = str.Length();
+    _dataSearch.FoundAt = SEARCH_NONE;
+    _dataSearch.StringLen = str.Length();
 
-    while (_dataSearch.idxLoc < countLocs)
+    while (_dataSearch.LocIndex < countLocs)
     {
-        locName = _container->GetLocationName(_dataSearch.idxLoc);
-        if (_dataSearch.findAt == SEARCH_LOCNAME)
+        locName = _container->GetLocationName(_dataSearch.LocIndex);
+        if (_dataSearch.FindAt == SEARCH_LOCNAME)
         {
-            _dataSearch.findAt = SEARCH_LOCDESC;
-            _dataSearch.startPos = wxNOT_FOUND;
+            _dataSearch.FindAt = SEARCH_LOCDESC;
+            _dataSearch.StartPos = wxNOT_FOUND;
             if (FindSubString(ConvertSearchString(locName, isMatchCase), lwrStr, isWholeString) != wxNOT_FOUND)
             {
                 _locListBox->Select(locName);
                 ShowLocation(locName);
                 _locListBox->SetFocus();
-                _dataSearch.foundAt = SEARCH_LOCNAME;
-                _dataSearch.isFoundAny = true;
+                _dataSearch.FoundAt = SEARCH_LOCNAME;
+                _dataSearch.IsFoundAny = true;
                 return true;
             }
         }
-        if (_dataSearch.findAt == SEARCH_LOCDESC)
+        if (_dataSearch.FindAt == SEARCH_LOCDESC)
         {
-            data = _container->GetLocationDesc(_dataSearch.idxLoc);
-            startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.startPos + 1);
+            data = _container->GetLocationDesc(_dataSearch.LocIndex);
+            startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.StartPos + 1);
             if (startPos != wxNOT_FOUND)
             {
                 lastPos = lwrStr.Length();
@@ -1017,22 +1016,22 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
                 _locListBox->Select(locName);
                 page = ShowLocation(locName);
                 page->SelectLocDescString(startPos, lastPos);
-                _dataSearch.startPos = startPos;
-                _dataSearch.foundAt = SEARCH_LOCDESC;
-                _dataSearch.isFoundAny = true;
+                _dataSearch.StartPos = startPos;
+                _dataSearch.FoundAt = SEARCH_LOCDESC;
+                _dataSearch.IsFoundAny = true;
                 return true;
             }
             else
             {
-                _dataSearch.findAt = SEARCH_LOCCODE;
-                _dataSearch.startPos = wxNOT_FOUND;
+                _dataSearch.FindAt = SEARCH_LOCCODE;
+                _dataSearch.StartPos = wxNOT_FOUND;
             }
         }
 
-        if (_dataSearch.findAt == SEARCH_LOCCODE)
+        if (_dataSearch.FindAt == SEARCH_LOCCODE)
         {
-            data = _container->GetLocationCode(_dataSearch.idxLoc);
-            startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.startPos + 1);
+            data = _container->GetLocationCode(_dataSearch.LocIndex);
+            startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.StartPos + 1);
             if (startPos != wxNOT_FOUND)
             {
                 lastPos = lwrStr.Length();
@@ -1040,82 +1039,82 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
                 _locListBox->Select(locName);
                 page = ShowLocation(locName);
                 page->SelectLocCodeString(startPos, lastPos);
-                _dataSearch.startPos = startPos;
-                _dataSearch.foundAt = SEARCH_LOCCODE;
-                _dataSearch.isFoundAny = true;
+                _dataSearch.StartPos = startPos;
+                _dataSearch.FoundAt = SEARCH_LOCCODE;
+                _dataSearch.IsFoundAny = true;
                 return true;
             }
             else
             {
-                _dataSearch.findAt = SEARCH_ACTNAME;
-                _dataSearch.startPos = wxNOT_FOUND;
-                _dataSearch.idxAct = 0;
+                _dataSearch.FindAt = SEARCH_ACTNAME;
+                _dataSearch.StartPos = wxNOT_FOUND;
+                _dataSearch.ActIndex = 0;
             }
         }
 
-        int countActs = _container->GetActionsCount(_dataSearch.idxLoc);
+        int countActs = _container->GetActionsCount(_dataSearch.LocIndex);
 
-        for(; _dataSearch.idxAct < countActs; ++_dataSearch.idxAct)
+        for(; _dataSearch.ActIndex < countActs; ++_dataSearch.ActIndex)
         {
-            if (_dataSearch.findAt == SEARCH_ACTNAME)
+            if (_dataSearch.FindAt == SEARCH_ACTNAME)
             {
-                _dataSearch.findAt = SEARCH_PATHPICT;
-                _dataSearch.startPos = wxNOT_FOUND;
-                actName = _container->GetActionName(_dataSearch.idxLoc, _dataSearch.idxAct);
+                _dataSearch.FindAt = SEARCH_PATHPICT;
+                _dataSearch.StartPos = wxNOT_FOUND;
+                actName = _container->GetActionName(_dataSearch.LocIndex, _dataSearch.ActIndex);
                 if (FindSubString(ConvertSearchString(actName, isMatchCase), lwrStr, isWholeString) != wxNOT_FOUND)
                 {
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
-                    page->SelectAction(_dataSearch.idxAct);
-                    _dataSearch.foundAt = SEARCH_ACTNAME;
-                    _dataSearch.isFoundAny = true;
+                    page->SelectAction(_dataSearch.ActIndex);
+                    _dataSearch.FoundAt = SEARCH_ACTNAME;
+                    _dataSearch.IsFoundAny = true;
                     return true;
                 }
             }
-            if (_dataSearch.findAt == SEARCH_PATHPICT)
+            if (_dataSearch.FindAt == SEARCH_PATHPICT)
             {
-                data = _container->GetActionPicturePath(_dataSearch.idxLoc, _dataSearch.idxAct);
-                startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.startPos + 1);
+                data = _container->GetActionPicturePath(_dataSearch.LocIndex, _dataSearch.ActIndex);
+                startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.StartPos + 1);
                 if (startPos != wxNOT_FOUND)
                 {
                     lastPos = lwrStr.Length();
                     lastPos += startPos;
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
-                    page->SelectAction(_dataSearch.idxAct);
+                    page->SelectAction(_dataSearch.ActIndex);
                     page->SelectPicturePathString(startPos, lastPos);
-                    _dataSearch.startPos = startPos;
-                    _dataSearch.foundAt = SEARCH_PATHPICT;
-                    _dataSearch.isFoundAny = true;
+                    _dataSearch.StartPos = startPos;
+                    _dataSearch.FoundAt = SEARCH_PATHPICT;
+                    _dataSearch.IsFoundAny = true;
                     return true;
                 }
                 else
                 {
-                    _dataSearch.findAt = SEARCH_ACTCODE;
-                    _dataSearch.startPos = wxNOT_FOUND;
+                    _dataSearch.FindAt = SEARCH_ACTCODE;
+                    _dataSearch.StartPos = wxNOT_FOUND;
                 }
             }
-            if (_dataSearch.findAt == SEARCH_ACTCODE)
+            if (_dataSearch.FindAt == SEARCH_ACTCODE)
             {
-                data = _container->GetActionCode(_dataSearch.idxLoc, _dataSearch.idxAct);
-                startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.startPos + 1);
+                data = _container->GetActionCode(_dataSearch.LocIndex, _dataSearch.ActIndex);
+                startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.StartPos + 1);
                 if (startPos != wxNOT_FOUND)
                 {
                     lastPos = lwrStr.Length();
                     lastPos += startPos;
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
-                    page->SelectAction( _dataSearch.idxAct);
+                    page->SelectAction( _dataSearch.ActIndex);
                     page->SelectActionCodeString(startPos, lastPos);
-                    _dataSearch.startPos = startPos;
-                    _dataSearch.foundAt = SEARCH_ACTCODE;
-                    _dataSearch.isFoundAny = true;
+                    _dataSearch.StartPos = startPos;
+                    _dataSearch.FoundAt = SEARCH_ACTCODE;
+                    _dataSearch.IsFoundAny = true;
                     return true;
                 }
                 else
                 {
-                    _dataSearch.findAt = SEARCH_ACTNAME;
-                    _dataSearch.startPos = wxNOT_FOUND;
+                    _dataSearch.FindAt = SEARCH_ACTNAME;
+                    _dataSearch.StartPos = wxNOT_FOUND;
                 }
             }
         }
@@ -1128,60 +1127,60 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
 void Controls::ReplaceSearchString(const wxString& replaceString)
 {
     wxString temp;
-    if (_dataSearch.foundAt == SEARCH_NONE) return;
-    LocationPage *page = _locNotebook->GetPageByLocName(_container->GetLocationName(_dataSearch.idxLoc));
-    switch (_dataSearch.foundAt)
+    if (_dataSearch.FoundAt == SEARCH_NONE) return;
+    LocationPage *page = _locNotebook->GetPageByLocName(_container->GetLocationName(_dataSearch.LocIndex));
+    switch (_dataSearch.FoundAt)
     {
     case SEARCH_LOCDESC:
-        temp = _container->GetLocationDesc(_dataSearch.idxLoc);
-        temp.replace(_dataSearch.startPos, _dataSearch.stringLen, replaceString);
-        _container->SetLocationDesc(_dataSearch.idxLoc, temp);
+        temp = _container->GetLocationDesc(_dataSearch.LocIndex);
+        temp.replace(_dataSearch.StartPos, _dataSearch.StringLen, replaceString);
+        _container->SetLocationDesc(_dataSearch.LocIndex, temp);
         if (page)
-            page->ReplaceLocDescString(_dataSearch.startPos, _dataSearch.startPos + _dataSearch.stringLen, replaceString);
+            page->ReplaceLocDescString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.StringLen, replaceString);
         break;
     case SEARCH_LOCCODE:
-        temp = _container->GetLocationCode(_dataSearch.idxLoc);
-        temp.replace(_dataSearch.startPos, _dataSearch.stringLen, replaceString);
-        _container->SetLocationCode(_dataSearch.idxLoc, temp);
+        temp = _container->GetLocationCode(_dataSearch.LocIndex);
+        temp.replace(_dataSearch.StartPos, _dataSearch.StringLen, replaceString);
+        _container->SetLocationCode(_dataSearch.LocIndex, temp);
         if (page)
-            page->ReplaceLocCodeString(_dataSearch.startPos, _dataSearch.startPos + _dataSearch.stringLen, replaceString);
+            page->ReplaceLocCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.StringLen, replaceString);
         break;
     case SEARCH_PATHPICT:
-        temp = _container->GetActionPicturePath(_dataSearch.idxLoc, _dataSearch.idxAct);
-        temp.replace(_dataSearch.startPos, _dataSearch.stringLen, replaceString);
-        _container->SetActionPicturePath(_dataSearch.idxLoc, _dataSearch.idxAct, temp);
+        temp = _container->GetActionPicturePath(_dataSearch.LocIndex, _dataSearch.ActIndex);
+        temp.replace(_dataSearch.StartPos, _dataSearch.StringLen, replaceString);
+        _container->SetActionPicturePath(_dataSearch.LocIndex, _dataSearch.ActIndex, temp);
         if (page)
-            page->ReplacePicturePathString(_dataSearch.startPos, _dataSearch.startPos + _dataSearch.stringLen, replaceString);
+            page->ReplacePicturePathString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.StringLen, replaceString);
         break;
     case SEARCH_ACTCODE:
-        temp = _container->GetActionCode(_dataSearch.idxLoc, _dataSearch.idxAct);
-        temp.replace(_dataSearch.startPos, _dataSearch.stringLen, replaceString);
-        _container->SetActionCode(_dataSearch.idxLoc, _dataSearch.idxAct, temp);
+        temp = _container->GetActionCode(_dataSearch.LocIndex, _dataSearch.ActIndex);
+        temp.replace(_dataSearch.StartPos, _dataSearch.StringLen, replaceString);
+        _container->SetActionCode(_dataSearch.LocIndex, _dataSearch.ActIndex, temp);
         if (page)
-            page->ReplaceActionCodeString(_dataSearch.startPos, _dataSearch.startPos + _dataSearch.stringLen, replaceString);
+            page->ReplaceActionCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.StringLen, replaceString);
         break;
     }
-    _dataSearch.startPos += replaceString.Length() - 1;
-    _dataSearch.foundAt = SEARCH_NONE;
+    _dataSearch.StartPos += replaceString.Length() - 1;
+    _dataSearch.FoundAt = SEARCH_NONE;
 }
 
 void Controls::InitSearchData()
 {
-    _dataSearch.foundAt = SEARCH_NONE;
-    _dataSearch.findAt = SEARCH_LOCNAME;
+    _dataSearch.FoundAt = SEARCH_NONE;
+    _dataSearch.FindAt = SEARCH_LOCNAME;
 
-    _dataSearch.idxLoc = 0;
-    _dataSearch.idxAct = 0;
-    _dataSearch.startPos = wxNOT_FOUND;
-    _dataSearch.stringLen = 0;
+    _dataSearch.LocIndex = 0;
+    _dataSearch.ActIndex = 0;
+    _dataSearch.StartPos = wxNOT_FOUND;
+    _dataSearch.StringLen = 0;
 
-    _dataSearch.countChecking = 0;
-    _dataSearch.isFoundAny = false;
+    _dataSearch.CountChecking = 0;
+    _dataSearch.IsFoundAny = false;
 }
 
 void Controls::InitData()
 {
-    _currentGamePath = wxFileName(_currentPath, wxT("NoName.qsp")).GetFullPath();
+    _currentGamePath = Utils::GetDocumentsPath(wxEmptyString, wxT("NoName.qsp"));
     _currentGamePass = QGEN_PASSWD;
     InitSearchData();
     _lastSaveTime = 0;

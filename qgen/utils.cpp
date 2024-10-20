@@ -21,6 +21,13 @@
 
 #include "utils.h"
 
+wxString Utils::GetDocumentsPath(const wxString &path, const wxString &file)
+{
+    wxFileName docsFullPath(wxStandardPaths::Get().GetUserDir(wxStandardPaths::Dir_Documents));
+    wxFileName docsPath(docsFullPath.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + path, file);
+    return docsPath.GetFullPath();
+}
+
 wxString Utils::GetAppPath(const wxString &path, const wxString &file)
 {
     wxFileName appFullPath(wxStandardPaths::Get().GetExecutablePath());

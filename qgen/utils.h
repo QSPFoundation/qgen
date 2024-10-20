@@ -39,6 +39,7 @@
     class Utils
     {
     public:
+        static wxString GetDocumentsPath(const wxString &path = wxEmptyString, const wxString &file = wxEmptyString);
         static wxString GetAppPath(const wxString &path = wxEmptyString, const wxString &file = wxEmptyString);
         static wxString GetResourcePath(const wxString &path = wxEmptyString, const wxString &file = wxEmptyString);
         static wxString GetConfigPath(const wxString &path = wxEmptyString, const wxString &file = wxEmptyString);

@@ -81,7 +81,6 @@
         wxColour _colour[SYNTAX_DUMMY];
         wxColour _textBackColour;
         wxColour _baseBackColour;
-        wxString _path;
         wxString _currentConfigPath;
         wxString _currentPlayerPath;
         wxString _currentHelpPath;
@@ -94,7 +93,7 @@
         int _idLang;
         ObserversList _observers;
     public:
-        Settings(const wxString &path);
+        Settings();
 
         void LoadSettings();
         void SaveSettings();
@@ -180,7 +179,6 @@
         SearchDataStore *GetSearchDataStore() { return &_searchDataStore; }
         void SetIdLang(int id) { _idLang = id; }
         int GetLangId() { return _idLang; }
-        wxString GetPath() const { return _path; }
     };
 
 #endif

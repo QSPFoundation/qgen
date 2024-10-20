@@ -24,9 +24,8 @@
 
 WX_DEFINE_LIST(ObserversList);
 
-Settings::Settings(const wxString &path)
+Settings::Settings()
 {
-    _path = path;
     InitSettings();
     LoadSettings();
 }
@@ -38,9 +37,9 @@ void Settings::InitSettings()
         configPath = Utils::GetConfigPath(wxEmptyString, QGEN_CONFIG);
 
     _currentConfigPath = configPath;
-    _currentPlayerPath = wxFileName(_path, wxT("qspgui.exe")).GetFullPath();
-    _currentHelpPath = wxFileName(_path, wxT("qsp.chm")).GetFullPath();
-    _currentTxt2GamPath = wxFileName(_path, wxT("txt2gam.exe")).GetFullPath();
+    _currentPlayerPath = Utils::GetAppPath(wxEmptyString, wxT("qspgui.exe"));
+    _currentHelpPath = Utils::GetAppPath(wxEmptyString, wxT("qsp.chm"));
+    _currentTxt2GamPath = Utils::GetAppPath(wxEmptyString, wxT("txt2gam.exe"));
     _leftFramePos = 10;
     _topFramePos = 10;
     _frameWidth = 700;
