@@ -23,7 +23,6 @@
 #include "mainframe.h"
 #include "game.h"
 
-
 IMPLEMENT_CLASS(SyntaxTextBox, wxStyledTextCtrl)
 
 BEGIN_EVENT_TABLE(SyntaxTextBox, wxStyledTextCtrl)
@@ -407,32 +406,8 @@ void SyntaxTextBox::Expand(int &line, bool doExpand, bool force, int visLevels, 
 
 void SyntaxTextBox::ExpandCollapseAll(bool isExpanded)
 {
-    int linesCount = GetLineCount();
-    SetProperty(wxT("fold.all"), wxT("1"));
-    wxStyledTextCtrl::Update();
-    SetProperty(wxT("fold.all"), wxT("0"));
     Freeze();
-    for (int line = 0; line < linesCount; line++)
-    {
-        int level = GetFoldLevel(line);
-        if ((level & wxSTC_FOLDLEVELHEADERFLAG) &&
-            (wxSTC_FOLDLEVELBASE == (level & wxSTC_FOLDLEVELNUMBERMASK)))
-        {
-            if (isExpanded)
-            {
-                SetFoldExpanded(line, true);
-                Expand(line, true, false, 0, level);
-                line--;
-            }
-            else
-            {
-                int lineMaxSubord = GetLastChild(line, -1);
-                SetFoldExpanded(line, false);
-                if (lineMaxSubord > line)
-                    HideLines(line + 1, lineMaxSubord);
-            }
-        }
-    }
+    FoldAll(isExpanded ? wxSTC_FOLDACTION_EXPAND : wxSTC_FOLDACTION_CONTRACT);
     Thaw();
 }
 

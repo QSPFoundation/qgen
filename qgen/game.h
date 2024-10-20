@@ -94,7 +94,7 @@
     #define QSP_CODREMOV 5
     #define QSP_SPACES QSP_FMT(" \t")
     #define QSP_STRSDELIM QSP_FMT("\r\n")
-    #define QSP_DELIMS QSP_FMT("():=+-*/<>!&,[] '\"\t{}%@#^;.?~\\|\r\n")
+    #define QSP_DELIMS QSP_FMT("():;=+-*/<>!&,[] \t'\"{}^.?~\\|\r\n")
 
     #define QSP_GAMEID QSP_FMT("QSPGAME")
     #define QGEN_PASSWD QSP_FMT("No")
