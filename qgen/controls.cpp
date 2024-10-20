@@ -750,15 +750,20 @@ bool Controls::SaveGame(const wxString &filename, const wxString &password)
 {
     SyncWithLocationsList();
     _locNotebook->SaveOpenedPages();
-    if (qspSaveQuest(filename.wx_str(), password, this))
+    // We save game to a temporary file & replace the target file if everything goes well
+    wxString tempFile(wxFileName::CreateTempFileName(QGEN_APPNAME));
+    if (qspSaveQuest(tempFile.wx_str(), password, this))
     {
-        wxFileName file(filename);
-        SaveConfigFile(_container, file.GetPathWithSep() + file.GetName() + wxT(".qproj"));
-        _container->Save();
-        _lastSaveTime = wxGetLocalTimeMillis();
-        _currentGamePath = filename;
-        _currentGamePass = password;
-        return true;
+        if (wxRenameFile(tempFile, filename, true))
+        {
+            wxFileName file(filename);
+            SaveConfigFile(_container, file.GetPathWithSep() + file.GetName() + wxT(".qproj"));
+            _container->Save();
+            _lastSaveTime = wxGetLocalTimeMillis();
+            _currentGamePath = filename;
+            _currentGamePass = password;
+            return true;
+        }
     }
     return false;
 }
@@ -1203,8 +1208,7 @@ void Controls::NewGame()
 
 bool Controls::IsGameSaved()
 {
-    // It's need to call SyncWithLocationsList because some locations
-    // can be moved in the locs list
+    // We have to call SyncWithLocationsList because some locations could be moved in the locs list
     SyncWithLocationsList();
     _locNotebook->SaveOpenedPages();
     return _container->IsSaved();
