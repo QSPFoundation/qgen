@@ -21,11 +21,11 @@
 
 #include "utils.h"
 
-wxString Utils::GetDocumentsPath(const wxString &path, const wxString &file)
+wxString Utils::GetDocumentPath(const wxString &path, const wxString &file)
 {
-    wxFileName docsFullPath(wxStandardPaths::Get().GetUserDir(wxStandardPaths::Dir_Documents));
-    wxFileName docsPath(docsFullPath.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + path, file);
-    return docsPath.GetFullPath();
+    wxFileName docFullPath(wxStandardPaths::Get().GetUserDir(wxStandardPaths::Dir_Documents));
+    wxFileName docPath(docFullPath.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + path, file);
+    return docPath.GetFullPath();
 }
 
 wxString Utils::GetAppPath(const wxString &path, const wxString &file)

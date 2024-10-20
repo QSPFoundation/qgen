@@ -1180,7 +1180,7 @@ void Controls::InitSearchData()
 
 void Controls::InitData()
 {
-    _currentGamePath = Utils::GetDocumentsPath(wxEmptyString, wxT("NoName.qsp"));
+    _currentGamePath = Utils::GetDocumentPath(wxEmptyString, wxT("NoName.qsp"));
     _currentGamePass = QGEN_PASSWD;
     InitSearchData();
     _lastSaveTime = 0;
