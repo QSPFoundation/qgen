@@ -376,17 +376,17 @@ bool qspOpenQuest(const QSP_CHAR *fileName, wxWindow *parent, Controls *controls
     free(data);
     ind = (isOldFormat ? 30 : 4);
 
-    int indexLoc, indexAct;
+    int locIndex, actIndex;
     int mergeType = 0;
     bool canAddLoc = true;
     for (i = 0; i < locsCount; ++i)
     {
-        indexLoc = wxNOT_FOUND;
+        locIndex = -1;
         data = qspGameToQSPString(strs[ind++], isUCS2, true);
         if (merge)
         {
-            indexLoc = container->FindLocationIndex(data);
-            if (indexLoc >= 0)
+            locIndex = container->FindLocationIndex(data);
+            if (locIndex >= 0)
             {
                 if (!(mergeType & MERGE_ALL))
                 {
@@ -400,17 +400,17 @@ bool qspOpenQuest(const QSP_CHAR *fileName, wxWindow *parent, Controls *controls
                         return true;
                     }
                 }
-                if (mergeType & MERGE_REPLACE) container->ClearLocation(indexLoc);
+                if (mergeType & MERGE_REPLACE) container->ClearLocation(locIndex);
                 canAddLoc = !(mergeType & MERGE_SKIP);
             }
         }
-        if (indexLoc < 0)
+        if (locIndex < 0)
         {
-            indexLoc = container->AddLocation(data);
+            locIndex = container->AddLocation(data);
             canAddLoc = true;
         }
         free(data);
-        if (indexLoc < 0)
+        if (locIndex < 0)
         {
             container->Clear();
             qspFreeStrs(strs, count, false);
@@ -421,13 +421,13 @@ bool qspOpenQuest(const QSP_CHAR *fileName, wxWindow *parent, Controls *controls
         (temp = data).Replace(QSP_STRSDELIM, wxT("\n"));
         free(data);
 
-        if (canAddLoc) container->SetLocationDesc(indexLoc, temp);
+        if (canAddLoc) container->SetLocationDesc(locIndex, temp);
 
         data = qspGameToQSPString(strs[ind++], isUCS2, true);
         (temp = data).Replace(QSP_STRSDELIM, wxT("\n"));
         free(data);
 
-        if (canAddLoc) container->SetLocationCode(indexLoc, temp);
+        if (canAddLoc) container->SetLocationCode(locIndex, temp);
 
         if (isOldFormat)
             actsCount = 20;
@@ -441,26 +441,29 @@ bool qspOpenQuest(const QSP_CHAR *fileName, wxWindow *parent, Controls *controls
         wxString nameAct, actImage;
         for (j = 0; j < actsCount; ++j)
         {
-            data = (isOldFormat ? 0 : qspGameToQSPString(strs[ind++], isUCS2, true));
-            (actImage = data).Replace(QSP_STRSDELIM, wxT("\n"));
-            free(data);
+            if (!isOldFormat)
+            {
+                data = qspGameToQSPString(strs[ind++], isUCS2, true);
+                (actImage = data).Replace(QSP_STRSDELIM, wxT("\n"));
+                free(data);
+            }
             data = qspGameToQSPString(strs[ind++], isUCS2, true);
             (nameAct = data).Replace(QSP_STRSDELIM, wxT("\n"));
             free(data);
             if (!nameAct.empty() && canAddLoc)
             {
-                indexAct = container->AddAction(indexLoc, nameAct);
-                if (indexAct < 0)
+                actIndex = container->AddAction(locIndex, nameAct);
+                if (actIndex < 0)
                 {
                     container->Clear();
                     qspFreeStrs(strs, count, false);
                     return true;
                 }
-                container->SetActionPicturePath(indexLoc, indexAct, actImage);
+                container->SetActionPicturePath(locIndex, actIndex, actImage);
                 data = qspGameToQSPString(strs[ind], isUCS2, true);
                 (temp = data).Replace(QSP_STRSDELIM, wxT("\n"));
                 free(data);
-                container->SetActionCode(indexLoc, indexAct, temp);
+                container->SetActionCode(locIndex, actIndex, temp);
             }
             ++ind;
         }

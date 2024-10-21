@@ -175,8 +175,8 @@ msgstr "Название начальной локации:"
 msgid "Auto save every"
 msgstr "Автосохранение каждые"
 
-msgid "Average count of actions per location: %i\n"
-msgstr "Среднее число базовых действий на 1 локацию: %i\n"
+msgid "Average count of actions per location: %.2f\n"
+msgstr "Среднее число базовых действий на 1 локацию: %.2f\n"
 
 msgid "Average location size: %i characters\n"
 msgstr "Средний размер локации: %i символ(а/ов)\n"

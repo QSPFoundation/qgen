@@ -62,7 +62,7 @@ int Controls::GetSelectedLocationIndex() const
     if (page && !_locListBox->HasFocus()) return page->GetLocationIndex();
     wxString locName(_locListBox->GetStringSelection());
     if (!locName.IsEmpty()) return _container->FindLocationIndex(locName);
-    return wxNOT_FOUND;
+    return -1;
 }
 
 int Controls::AddLocationByName(const wxString &name)
@@ -78,7 +78,7 @@ int Controls::AddLocationByName(const wxString &name)
     }
     else
         ShowMessage(QGEN_MSG_EXISTS);
-    return wxNOT_FOUND;
+    return -1;
 }
 
 int Controls::AddLocation(const wxString &name)
@@ -86,7 +86,7 @@ int Controls::AddLocation(const wxString &name)
     wxString locName(name);
     while (true)
     {
-        wxTextEntryDialog dlgEntry(GetParent(),
+        wxTextEntryDialog dlgEntry(GetCurrentTopLevelWindow(),
             _("Input name for a new location:"),
             _("Add location"), locName);
         if (dlgEntry.ShowModal() == wxID_OK)
@@ -103,7 +103,7 @@ int Controls::AddLocation(const wxString &name)
             }
         }
         else
-            return wxNOT_FOUND;
+            return -1;
     }
 }
 
@@ -115,7 +115,7 @@ bool Controls::RenameSelectedLocation()
     wxString name(_container->GetLocationName(locIndex));
     while (true)
     {
-        wxTextEntryDialog dlgEntry(GetParent(),
+        wxTextEntryDialog dlgEntry(GetCurrentTopLevelWindow(),
             _("Input new location name:"),
             _("Rename location"), name);
         if (dlgEntry.ShowModal() == wxID_OK)
@@ -141,13 +141,13 @@ bool Controls::DeleteSelectedLocation()
     if (locIndex < 0) return false;
 
     wxString locName(_container->GetLocationName(locIndex));
-    wxMessageDialog dlgMsg(GetParent(),
+    wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
         wxString::Format(_("Remove \"%s\" location?"), locName),
         _("Remove location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
     if (dlgMsg.ShowModal() == wxID_YES)
     {
         int index = _locNotebook->FindPageIndex(locName);
-        if (index >= 0) _locNotebook->DeletePage(index);
+        if (index >= 0) _locNotebook->ClosePage(index);
         _locListBox->Delete(locName);
         _container->DeleteLocation(locIndex);
         UpdateOpenedLocationsIndexes();
@@ -172,7 +172,7 @@ bool Controls::AddActionOnSelectedLoc()
 
     while (true)
     {
-        wxTextEntryDialog dlgEntry(GetParent(),
+        wxTextEntryDialog dlgEntry(GetCurrentTopLevelWindow(),
             _("Input name for a new action"),
             _("Add action"), name);
 
@@ -229,7 +229,7 @@ bool Controls::DeleteAllActions()
     size_t locIndex = page->GetLocationIndex();
     wxString locName(_container->GetLocationName(locIndex));
 
-    wxMessageDialog dlgMsg(GetParent(),
+    wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
         wxString::Format(_("Remove all actions on \"%s\" location?"), locName),
         _("Remove all actions"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
     if (dlgMsg.ShowModal() == wxID_YES)
@@ -255,7 +255,7 @@ bool Controls::RenameSelectedAction()
     wxString name(_container->GetActionName(locIndex, actIndex));
     while (true)
     {
-        wxTextEntryDialog dlgEntry(GetParent(),
+        wxTextEntryDialog dlgEntry(GetCurrentTopLevelWindow(),
             _("Input new action name:"),
             _("Rename action"), name);
         if (dlgEntry.ShowModal() == wxID_OK)
@@ -277,7 +277,7 @@ bool Controls::RenameSelectedAction()
 
 void Controls::ShowMessage(long errorNum)
 {
-    wxMessageDialog dlgMsg(GetParent(), GetMessageDesc(errorNum),
+    wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(), GetMessageDesc(errorNum),
         _("Info"), wxOK|wxICON_INFORMATION|wxCENTRE);
     dlgMsg.ShowModal();
 }
@@ -399,11 +399,11 @@ bool Controls::GetBufferedLocName(const wxString &buffer, wxString &locName)
         ShowMessage(QGEN_MSG_WRONGFORMAT);
         return false;
     }
-    //ID ������� �����
+    // skip game id
     last = buffer.find(QSP_STRSDELIM);
-    //������ � ������ ���������
+    // skip app name
     last = buffer.find(QSP_STRSDELIM, last + QSP_LEN(QSP_STRSDELIM));
-    //��� �������
+    // get location name
     first = last + QSP_LEN(QSP_STRSDELIM);
     last = buffer.find(QSP_STRSDELIM, first);
     locName = buffer.Mid(first, last - first);
@@ -423,26 +423,26 @@ bool Controls::DeserializeLocData(size_t locIndex, const wxString &buffer)
         return false;
     }
     _container->ClearLocation(locIndex);
-    //ID ������� �����
+    // skip game id
     last = buffer.find(QSP_STRSDELIM);
-    //������ � ������ ���������
+    // skip app name
     last = buffer.find(QSP_STRSDELIM, last + QSP_LEN(QSP_STRSDELIM));
-    //��� �������
+    // skip location name
     last = buffer.find(QSP_STRSDELIM, last + QSP_LEN(QSP_STRSDELIM));
 
-    //�������� �������
+    // get location desc
     first = last + QSP_LEN(QSP_STRSDELIM);
     last = buffer.find(QSP_STRSDELIM, first);
     str = buffer.Mid(first, last - first);
     _container->SetLocationDesc(locIndex, DecodeString(str));
 
-    //��� �������
+    // get location code
     first = last + QSP_LEN(QSP_STRSDELIM);
     last = buffer.find(QSP_STRSDELIM, first);
     str = buffer.Mid(first, last - first);
     _container->SetLocationCode(locIndex, DecodeString(str));
 
-    //���������� ��������
+    // get actions count
     first = last + QSP_LEN(QSP_STRSDELIM);
     last = buffer.find(QSP_STRSDELIM, first);
     str = DecodeString(buffer.Mid(first, last - first));
@@ -450,20 +450,21 @@ bool Controls::DeserializeLocData(size_t locIndex, const wxString &buffer)
 
     for (long i = 0; i < actsCount; ++i)
     {
-        //�����������
+        // get action image
         first = last + QSP_LEN(QSP_STRSDELIM);
         last = buffer.find(QSP_STRSDELIM, first);
         str = buffer.Mid(first, last - first);
         actImage = DecodeString(str);
 
-        //��������
+        // get action name
         first = last + QSP_LEN(QSP_STRSDELIM);
         last = buffer.find(QSP_STRSDELIM, first);
         str = buffer.Mid(first, last - first);
+
         _container->AddAction(locIndex, DecodeString(str));
         _container->SetActionPicturePath(locIndex, i, actImage);
 
-        //���
+        // get action code
         first = last + QSP_LEN(QSP_STRSDELIM);
         last = buffer.find(QSP_STRSDELIM, first);
         str = buffer.Mid(first, last - first);
@@ -517,13 +518,13 @@ void Controls::PasteLocFromClipboard(PasteType type)
             _locNotebook->SaveOpenedPages();
             if (!_container->IsEmptyLoc(locIndex))
             {
-                wxMessageDialog dlgMsg(GetParent(),
+                wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
                     wxString::Format(_("Replace \"%s\" location?"), locName),
                     _("Replace location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
                 if (dlgMsg.ShowModal() == wxID_YES)
                     InitSearchData();
                 else
-                    locIndex = wxNOT_FOUND;
+                    locIndex = -1;
             }
         }
         break;
@@ -544,7 +545,7 @@ void Controls::PasteLocFromClipboard(PasteType type)
             locIndex = AddLocationByName(locName);
         }
         else
-            locIndex = wxNOT_FOUND;
+            locIndex = -1;
         break;
     }
     if (locIndex >= 0 && DeserializeLocData(locIndex, buffer))
@@ -600,7 +601,7 @@ void Controls::ClearSelectedLocation()
     if (_container->IsEmptyLoc(locIndex)) return;
 
     wxString locName(_container->GetLocationName(locIndex));
-    wxMessageDialog dlgMsg(GetParent(),
+    wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
         wxString::Format(_("Clean \"%s\" location?"), locName),
         _("Clean location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
     if (dlgMsg.ShowModal() == wxID_YES)
@@ -713,7 +714,7 @@ void Controls::SelectAllText()
 
 wxString Controls::SelectPicturePath()
 {
-    wxFileDialog fileDlg(GetParent(), _("Select image file"),
+    wxFileDialog fileDlg(GetCurrentTopLevelWindow(), _("Select image file"),
         wxEmptyString, wxEmptyString, _("Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*.*"), wxFD_OPEN);
     fileDlg.CentreOnParent();
     if (fileDlg.ShowModal() == wxID_OK)
@@ -769,8 +770,8 @@ bool Controls::SaveGame(const wxString &filename, const wxString &password)
 
 bool Controls::LoadGame(const wxString &filename)
 {
-    _locNotebook->DeleteAllPages(CLOSE_ALL, wxNOT_FOUND);
-    if (qspOpenQuest(filename.wx_str(), GetParent(), this, _currentGamePass, false))
+    _locNotebook->ClosePages(CLOSE_ALL);
+    if (qspOpenQuest(filename.wx_str(), GetCurrentTopLevelWindow(), this, _currentGamePass, false))
     {
         wxFileName file(filename);
         OpenConfigFile(_container, file.GetPathWithSep() + file.GetName() + wxT(".qproj"));
@@ -787,7 +788,7 @@ bool Controls::LoadGame(const wxString &filename)
 bool Controls::JoinGame(const wxString &filename)
 {
     wxString dummy;
-    if (qspOpenQuest(filename.wx_str(), GetParent(), this, dummy, true))
+    if (qspOpenQuest(filename.wx_str(), GetCurrentTopLevelWindow(), this, dummy, true))
     {
         InitSearchData();
         UpdateLocationsList();
@@ -855,25 +856,21 @@ bool Controls::IsCorrectDataFormat(const wxString &str)
 {
     size_t count = 0;
     wxArrayString strArray;
-    int last, first = 0;
-
+    size_t last, first = 0;
     last = str.find(QSP_STRSDELIM);
-    if (last == wxNOT_FOUND) return false;
+    if (last == wxString::npos) return false;
     do
     {
         ++count;
         strArray.Add(str.Mid(first, last - first));
         first = last + QSP_LEN(QSP_STRSDELIM);
         last = str.find(QSP_STRSDELIM, first);
-    } while (last != wxNOT_FOUND);
+    } while (last != wxString::npos);
 
     if (count <= 5) return false;
-    //ID ������� �����
     if (!strArray[0].IsSameAs(QSP_GAMEID)) return false;
-    //���������� ��������
     int actsCount = wxAtoi(strArray[5]);
     if (actsCount < 0) return false;
-    //����� ��������� �����
     if (count < 5 + (size_t)actsCount * 3) return false;
     return true;
 }
@@ -883,36 +880,39 @@ wxString Controls::ConvertSearchString(const wxString& s, bool isMatchCase)
     return (isMatchCase ? s : s.Lower());
 }
 
-int Controls::FindSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind)
+int Controls::FindSubString(const wxString& s, const wxString& sub, bool isWholeString, size_t startInd)
 {
     if (isWholeString)
     {
-        int length = s.length(), subLen = sub.length(), ind2;
-        --ind;
-        do
+        size_t length = s.length(), subLen = sub.length(), textEndInd;
+        while (true)
         {
-            ind = s.find(sub, ind + 1);
-            if (ind < 0) break;
-            ind2 = ind + subLen;
-        } while (!(
-            (ind == 0 || QSP_STRCHR(QSP_DELIMS, s[ind - 1])) &&
-            (ind2 >= length || QSP_STRCHR(QSP_DELIMS, s[ind2]))
-           ));
-        return ind;
+            startInd = s.find(sub, startInd);
+            if (startInd == wxString::npos) return -1;
+            textEndInd = startInd + subLen;
+            if ((startInd == 0 || QSP_STRCHR(QSP_DELIMS, s[startInd - 1])) &&
+                (textEndInd >= length || QSP_STRCHR(QSP_DELIMS, s[textEndInd])))
+                return (int)startInd;
+            ++startInd;
+        }
     }
     else
-        return s.find(sub, ind);
+    {
+        startInd = s.find(sub, startInd);
+        if (startInd == wxString::npos) return -1;
+        return (int)startInd;
+    }
 }
 
 bool Controls::SearchNextLoc()
 {
-    int countLocs = _container->GetLocationsCount();
+    size_t locsCount = _container->GetLocationsCount();
     _dataSearch.FindAt = SEARCH_LOCNAME;
-    _dataSearch.StartPos = wxNOT_FOUND;
-    if (++_dataSearch.LocIndex >= countLocs) _dataSearch.LocIndex = 0;
-    if (++_dataSearch.CountChecking >= countLocs)
+    _dataSearch.StartPos = 0;
+    if (++_dataSearch.LocIndex >= locsCount) _dataSearch.LocIndex = 0;
+    if (++_dataSearch.LocsChecked >= locsCount)
     {
-        ShowMessage(_dataSearch.IsFoundAny ? QGEN_MSG_SEARCHENDED : QGEN_MSG_NOTFOUND);
+        ShowMessage(_dataSearch.FoundAny ? QGEN_MSG_SEARCHENDED : QGEN_MSG_NOTFOUND);
         return false;
     }
     return true;
@@ -967,161 +967,151 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
     wxString locName;
     wxString actName;
     LocationPage *page = NULL;
-    int startPos = wxNOT_FOUND;
-    int lastPos;
-    int locIndex, countLocs = _container->GetLocationsCount();
-    if (!countLocs) return false;
+    size_t locsCount = _container->GetLocationsCount();
+    if (!locsCount) return false;
     SyncWithLocationsList();
-
-    wxString lwrStr = ConvertSearchString(str, isMatchCase);
 
     _locNotebook->SaveOpenedPages();
 
-    if (findAgain || _dataSearch.LocIndex >= countLocs || _dataSearch.CountChecking >= countLocs)
+    if (findAgain
+        || str != _dataSearch.SearchString
+        || _dataSearch.LocsChecked >= locsCount
+        || _dataSearch.LocIndex >= locsCount)
     {
         InitSearchData();
-        locIndex = GetSelectedLocationIndex();
+        int locIndex = GetSelectedLocationIndex();
         if (locIndex < 0) locIndex = 0;
         _dataSearch.LocIndex = locIndex;
     }
 
     _dataSearch.FoundAt = SEARCH_NONE;
-    _dataSearch.StringLen = str.Length();
+    _dataSearch.SearchString = str;
 
-    while (_dataSearch.LocIndex < countLocs)
+    wxString textToSearch = ConvertSearchString(str, isMatchCase);
+    while (true) // we stop when _dataSearch.LocsChecked >= locsCount
     {
         locName = _container->GetLocationName(_dataSearch.LocIndex);
         if (_dataSearch.FindAt == SEARCH_LOCNAME)
         {
             _dataSearch.FindAt = SEARCH_LOCDESC;
-            _dataSearch.StartPos = wxNOT_FOUND;
-            if (FindSubString(ConvertSearchString(locName, isMatchCase), lwrStr, isWholeString) != wxNOT_FOUND)
+            _dataSearch.StartPos = 0;
+            if (FindSubString(ConvertSearchString(locName, isMatchCase), textToSearch, isWholeString) >= 0)
             {
                 _locListBox->Select(locName);
                 ShowLocation(locName);
                 _locListBox->SetFocus();
                 _dataSearch.FoundAt = SEARCH_LOCNAME;
-                _dataSearch.IsFoundAny = true;
+                _dataSearch.FoundAny = true;
                 return true;
             }
         }
         if (_dataSearch.FindAt == SEARCH_LOCDESC)
         {
             data = _container->GetLocationDesc(_dataSearch.LocIndex);
-            startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.StartPos + 1);
-            if (startPos != wxNOT_FOUND)
+            int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos);
+            if (startPos >= 0)
             {
-                lastPos = lwrStr.Length();
-                lastPos += startPos;
                 _locListBox->Select(locName);
                 page = ShowLocation(locName);
-                page->SelectLocDescString(startPos, lastPos);
-                _dataSearch.StartPos = startPos;
+                page->SelectLocDescString(startPos, startPos + textToSearch.Length());
+                _dataSearch.StartPos = startPos + 1;
                 _dataSearch.FoundAt = SEARCH_LOCDESC;
-                _dataSearch.IsFoundAny = true;
+                _dataSearch.FoundAny = true;
                 return true;
             }
             else
             {
                 _dataSearch.FindAt = SEARCH_LOCCODE;
-                _dataSearch.StartPos = wxNOT_FOUND;
+                _dataSearch.StartPos = 0;
             }
         }
 
         if (_dataSearch.FindAt == SEARCH_LOCCODE)
         {
             data = _container->GetLocationCode(_dataSearch.LocIndex);
-            startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.StartPos + 1);
-            if (startPos != wxNOT_FOUND)
+            int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos);
+            if (startPos >= 0)
             {
-                lastPos = lwrStr.Length();
-                lastPos += startPos;
                 _locListBox->Select(locName);
                 page = ShowLocation(locName);
-                page->SelectLocCodeString(startPos, lastPos);
-                _dataSearch.StartPos = startPos;
+                page->SelectLocCodeString(startPos, startPos + textToSearch.Length());
+                _dataSearch.StartPos = startPos + 1;
                 _dataSearch.FoundAt = SEARCH_LOCCODE;
-                _dataSearch.IsFoundAny = true;
+                _dataSearch.FoundAny = true;
                 return true;
             }
             else
             {
                 _dataSearch.FindAt = SEARCH_ACTNAME;
-                _dataSearch.StartPos = wxNOT_FOUND;
+                _dataSearch.StartPos = 0;
                 _dataSearch.ActIndex = 0;
             }
         }
 
-        int countActs = _container->GetActionsCount(_dataSearch.LocIndex);
+        size_t actsCount = _container->GetActionsCount(_dataSearch.LocIndex);
 
-        for(; _dataSearch.ActIndex < countActs; ++_dataSearch.ActIndex)
+        for(; _dataSearch.ActIndex < actsCount; ++_dataSearch.ActIndex)
         {
             if (_dataSearch.FindAt == SEARCH_ACTNAME)
             {
                 _dataSearch.FindAt = SEARCH_PATHPICT;
-                _dataSearch.StartPos = wxNOT_FOUND;
+                _dataSearch.StartPos = 0;
                 actName = _container->GetActionName(_dataSearch.LocIndex, _dataSearch.ActIndex);
-                if (FindSubString(ConvertSearchString(actName, isMatchCase), lwrStr, isWholeString) != wxNOT_FOUND)
+                if (FindSubString(ConvertSearchString(actName, isMatchCase), textToSearch, isWholeString) >= 0)
                 {
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
                     page->SelectAction(_dataSearch.ActIndex);
                     _dataSearch.FoundAt = SEARCH_ACTNAME;
-                    _dataSearch.IsFoundAny = true;
+                    _dataSearch.FoundAny = true;
                     return true;
                 }
             }
             if (_dataSearch.FindAt == SEARCH_PATHPICT)
             {
                 data = _container->GetActionPicturePath(_dataSearch.LocIndex, _dataSearch.ActIndex);
-                startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.StartPos + 1);
-                if (startPos != wxNOT_FOUND)
+                int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos);
+                if (startPos >= 0)
                 {
-                    lastPos = lwrStr.Length();
-                    lastPos += startPos;
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
                     page->SelectAction(_dataSearch.ActIndex);
-                    page->SelectPicturePathString(startPos, lastPos);
-                    _dataSearch.StartPos = startPos;
+                    page->SelectPicturePathString(startPos, startPos + textToSearch.Length());
+                    _dataSearch.StartPos = startPos + 1;
                     _dataSearch.FoundAt = SEARCH_PATHPICT;
-                    _dataSearch.IsFoundAny = true;
+                    _dataSearch.FoundAny = true;
                     return true;
                 }
                 else
                 {
                     _dataSearch.FindAt = SEARCH_ACTCODE;
-                    _dataSearch.StartPos = wxNOT_FOUND;
+                    _dataSearch.StartPos = 0;
                 }
             }
             if (_dataSearch.FindAt == SEARCH_ACTCODE)
             {
                 data = _container->GetActionCode(_dataSearch.LocIndex, _dataSearch.ActIndex);
-                startPos = FindSubString(ConvertSearchString(data, isMatchCase), lwrStr, isWholeString, _dataSearch.StartPos + 1);
-                if (startPos != wxNOT_FOUND)
+                int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos);
+                if (startPos >= 0)
                 {
-                    lastPos = lwrStr.Length();
-                    lastPos += startPos;
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
                     page->SelectAction( _dataSearch.ActIndex);
-                    page->SelectActionCodeString(startPos, lastPos);
-                    _dataSearch.StartPos = startPos;
+                    page->SelectActionCodeString(startPos, startPos + textToSearch.Length());
+                    _dataSearch.StartPos = startPos + 1;
                     _dataSearch.FoundAt = SEARCH_ACTCODE;
-                    _dataSearch.IsFoundAny = true;
+                    _dataSearch.FoundAny = true;
                     return true;
                 }
                 else
                 {
                     _dataSearch.FindAt = SEARCH_ACTNAME;
-                    _dataSearch.StartPos = wxNOT_FOUND;
+                    _dataSearch.StartPos = 0;
                 }
             }
         }
         if (!SearchNextLoc()) return false;
     }
-    ShowMessage(QGEN_MSG_NOTFOUND);
-    return false;
 }
 
 void Controls::ReplaceSearchString(const wxString& replaceString)
@@ -1133,49 +1123,50 @@ void Controls::ReplaceSearchString(const wxString& replaceString)
     {
     case SEARCH_LOCDESC:
         temp = _container->GetLocationDesc(_dataSearch.LocIndex);
-        temp.replace(_dataSearch.StartPos, _dataSearch.StringLen, replaceString);
+        temp.replace(_dataSearch.StartPos, _dataSearch.SearchString.length(), replaceString);
         _container->SetLocationDesc(_dataSearch.LocIndex, temp);
         if (page)
-            page->ReplaceLocDescString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.StringLen, replaceString);
+            page->ReplaceLocDescString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.SearchString.length(), replaceString);
         break;
     case SEARCH_LOCCODE:
         temp = _container->GetLocationCode(_dataSearch.LocIndex);
-        temp.replace(_dataSearch.StartPos, _dataSearch.StringLen, replaceString);
+        temp.replace(_dataSearch.StartPos, _dataSearch.SearchString.length(), replaceString);
         _container->SetLocationCode(_dataSearch.LocIndex, temp);
         if (page)
-            page->ReplaceLocCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.StringLen, replaceString);
+            page->ReplaceLocCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.SearchString.length(), replaceString);
         break;
     case SEARCH_PATHPICT:
         temp = _container->GetActionPicturePath(_dataSearch.LocIndex, _dataSearch.ActIndex);
-        temp.replace(_dataSearch.StartPos, _dataSearch.StringLen, replaceString);
+        temp.replace(_dataSearch.StartPos, _dataSearch.SearchString.length(), replaceString);
         _container->SetActionPicturePath(_dataSearch.LocIndex, _dataSearch.ActIndex, temp);
         if (page)
-            page->ReplacePicturePathString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.StringLen, replaceString);
+            page->ReplacePicturePathString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.SearchString.length(), replaceString);
         break;
     case SEARCH_ACTCODE:
         temp = _container->GetActionCode(_dataSearch.LocIndex, _dataSearch.ActIndex);
-        temp.replace(_dataSearch.StartPos, _dataSearch.StringLen, replaceString);
+        temp.replace(_dataSearch.StartPos, _dataSearch.SearchString.length(), replaceString);
         _container->SetActionCode(_dataSearch.LocIndex, _dataSearch.ActIndex, temp);
         if (page)
-            page->ReplaceActionCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.StringLen, replaceString);
+            page->ReplaceActionCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.SearchString.length(), replaceString);
         break;
     }
-    _dataSearch.StartPos += replaceString.Length() - 1;
+    _dataSearch.StartPos += replaceString.Length();
     _dataSearch.FoundAt = SEARCH_NONE;
 }
 
 void Controls::InitSearchData()
 {
+    _dataSearch.SearchString.Clear();
+
     _dataSearch.FoundAt = SEARCH_NONE;
     _dataSearch.FindAt = SEARCH_LOCNAME;
 
     _dataSearch.LocIndex = 0;
     _dataSearch.ActIndex = 0;
-    _dataSearch.StartPos = wxNOT_FOUND;
-    _dataSearch.StringLen = 0;
+    _dataSearch.StartPos = 0;
 
-    _dataSearch.CountChecking = 0;
-    _dataSearch.IsFoundAny = false;
+    _dataSearch.LocsChecked = 0;
+    _dataSearch.FoundAny = false;
 }
 
 void Controls::InitData()
@@ -1188,15 +1179,15 @@ void Controls::InitData()
 
 void Controls::NewGame()
 {
-    if ( !_container->IsEmpty() )
+    if (!_container->IsEmpty())
     {
-        _locNotebook->DeleteAllPages(CLOSE_ALL, wxNOT_FOUND);
+        _locNotebook->ClosePages(CLOSE_ALL);
         _locListBox->Clear();
         _container->Clear();
         _container->Save();
     }
     InitData();
-    wxString locName = _settings->GetFirstLocName().Trim().Trim(false);
+    wxString locName = _settings->GetFirstLocName().Trim(true).Trim(false);
     if (_settings->GetCreateFirstLoc() && !locName.IsEmpty())
     {
         _container->AddLocation(locName);
@@ -1226,7 +1217,7 @@ void Controls::UpdateOpenedLocationsIndexes()
     size_t count = _locNotebook->GetPageCount();
     for (size_t index = 0; index < count; ++index)
     {
-        page = ( LocationPage * )_locNotebook->GetPage(index);
+        page = (LocationPage *)_locNotebook->GetPage(index);
         page->SetLocationIndex(_container->FindLocationIndex(_locNotebook->GetPageText(index)));
     }
 }
@@ -1413,6 +1404,7 @@ void Controls::MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo)
 
 wxString Controls::GetGameInfo() const
 {
+    wxString locName, actName, data;
     int totalLocsCount,
         totalEmptyDesc = 0,
         totalEmptyCode = 0,
@@ -1420,11 +1412,10 @@ wxString Controls::GetGameInfo() const
         totalLocsSize = 0,
         totalActs = 0,
         maxLocSize = 0,
-        avgActions = 0,
-        avgSize = 0,
         locSize,
-        actsCount;
-    wxString locName, actName, data;
+        actsCount,
+        avgLocSize;
+    float avgActionsPerLoc = 0.0f;
 
     totalLocsCount = _container->GetLocationsCount();
     if (totalLocsCount > 0)
@@ -1435,10 +1426,12 @@ wxString Controls::GetGameInfo() const
             locSize = locName.Length();
             data = _container->GetLocationDesc(i);
             locSize += data.Length();
-            if (data.Trim().Trim(false).IsEmpty()) ++totalEmptyDesc;
+            if (data.Trim(true).Trim(false).IsEmpty())
+                ++totalEmptyDesc;
             data = _container->GetLocationCode(i);
             locSize += data.Length();
-            if (data.Trim().Trim(false).IsEmpty()) ++totalEmptyCode;
+            if (data.Trim(true).Trim(false).IsEmpty())
+                ++totalEmptyCode;
             actsCount = _container->GetActionsCount(i);
             if (actsCount)
             {
@@ -1450,22 +1443,23 @@ wxString Controls::GetGameInfo() const
                     locSize += _container->GetActionPicturePath(i, j).Length();
                     data = _container->GetActionCode(i, j);
                     locSize += data.Length();
-                    if (data.Trim().Trim(false).IsEmpty()) ++totalEmptyActsCode;
+                    if (data.Trim(true).Trim(false).IsEmpty())
+                        ++totalEmptyActsCode;
                 }
             }
             if (locSize > maxLocSize) maxLocSize = locSize;
             totalLocsSize += locSize;
         }
-        avgActions = (int)((float)totalActs / totalLocsCount + 0.5);
-        avgSize = (int)((float)totalLocsSize / totalLocsCount + 0.5);
+        avgActionsPerLoc = (float)((double)totalActs / totalLocsCount);
+        avgLocSize = (int)((double)(totalLocsSize / totalLocsCount) + 0.5);
     }
     wxString message = wxString::Format(_("This game contains %i location(s)\n"), totalLocsCount);
     message += wxString::Format(_("Locations without base description: %i\n"), totalEmptyDesc);
     message += wxString::Format(_("Locations without \"on visit\" code: %i\n"), totalEmptyCode);
-    message += wxString::Format(_("Average count of actions per location: %i\n"), avgActions);
+    message += wxString::Format(_("Average count of actions per location: %.2f\n"), avgActionsPerLoc);
     message += wxString::Format(_("Actions without code: %i\n"), totalEmptyActsCode);
     message += wxString::Format(_("Max location size: %i characters\n"), maxLocSize);
-    message += wxString::Format(_("Average location size: %i characters\n"), avgSize);
+    message += wxString::Format(_("Average location size: %i characters\n"), avgLocSize);
     message += wxString::Format(_("Total game size: %i characters"), totalLocsSize);
     return message;
 }
@@ -1530,7 +1524,7 @@ bool Controls::AddFolder()
     wxString name;
     while (true)
     {
-        wxTextEntryDialog dlgEntry(GetParent(),
+        wxTextEntryDialog dlgEntry(GetCurrentTopLevelWindow(),
             _("Input name for a new folder:"),
             _("Add folder"), name);
         if (dlgEntry.ShowModal() == wxID_OK)
@@ -1563,7 +1557,7 @@ bool Controls::DeleteSelectedFolder()
     if (folder < 0) return false;
 
     wxString folderName(_container->GetFolderName(folder));
-    wxMessageDialog dlgMsg(GetParent(),
+    wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
         wxString::Format(_("Remove \"%s\" folder?"), folderName),
         _("Remove folder"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
     if (dlgMsg.ShowModal() == wxID_YES)
@@ -1584,7 +1578,7 @@ bool Controls::RenameSelectedFolder()
     wxString name(_container->GetFolderName(folder));
     while (true)
     {
-        wxTextEntryDialog dlgEntry(GetParent(),
+        wxTextEntryDialog dlgEntry(GetCurrentTopLevelWindow(),
             _("Input new folder name:"),
             _("Rename folder"), name);
         if (dlgEntry.ShowModal() == wxID_OK)
@@ -1618,7 +1612,7 @@ bool Controls::SearchHelpFile()
 {
     if (!wxFile::Exists(_settings->GetCurrentHelpPath()))
     {
-        wxFileDialog dialog(GetParent(),
+        wxFileDialog dialog(GetCurrentTopLevelWindow(),
             _("Select help file"), wxEmptyString, wxEmptyString,
             _("Help file (*.chm)|*.chm|All files (*.*)|*.*"), wxFD_OPEN);
         dialog.CenterOnParent();
@@ -1628,7 +1622,7 @@ bool Controls::SearchHelpFile()
     return true;
 }
 
-wxWindow *Controls::GetParent()
+wxWindow *Controls::GetCurrentTopLevelWindow()
 {
     return wxGetTopLevelParent(wxGetActiveWindow());
 }

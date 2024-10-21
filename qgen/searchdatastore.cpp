@@ -43,14 +43,14 @@ void SearchDataStore::LoadSearchData(wxConfigBase &fileConfig)
     _searchStrings.Clear();
     _replaceStrings.Clear();
     i = 0;
-    while (1)
+    while (true)
     {
         if (!fileConfig.Read(wxString::Format(wxT("SearchData/Search%d_Text"), i), &str)) break;
         _searchStrings.Add(str);
         ++i;
     }
     i = 0;
-    while (1)
+    while (true)
     {
         if (!fileConfig.Read(wxString::Format(wxT("SearchData/Replace%d_Text"), i), &str)) break;
         _replaceStrings.Add(str);

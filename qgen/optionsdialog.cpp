@@ -1054,7 +1054,7 @@ void OptionsDialog::EditHotKey()
     HotkeyData hotKeyData;
     bool isError = true;
     long index = _lstHotKeys->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-    if (index != wxNOT_FOUND)
+    if (index >= 0)
     {
         OptionsHotkeysDialog dialog(this, _("Edit macro"), _controls);
         dialog.SetHotkeyData(_hotkeysData[index]);

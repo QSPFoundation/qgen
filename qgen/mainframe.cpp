@@ -921,21 +921,19 @@ void MainFrame::UpdateTitle()
 void MainFrame::OnTabMenu( wxCommandEvent &event )
 {
     CloseTypePage type;
-    int selPage = _locNotebook->GetSelection();
-    if (selPage < 0) return;
     switch (event.GetId())
     {
     case ID_TAB_CLOSEALL:
-        type = CLOSE_ALL;
+        type = CLOSE_ALL_NONFIXED;
         break;
     case ID_TAB_CLOSEEXCEPTSELECTED:
-        type = CLOSE_ALLEXCEPTSELECTED;
+        type = CLOSE_ALL_NONFIXED_EXCEPT_SELECTED;
         break;
     case ID_TAB_CLOSESELECTED:
         type = CLOSE_SELECTED;
         break;
     }
-    _locNotebook->DeleteAllPages(type, selPage);
+    _locNotebook->ClosePages(type);
 }
 
 void MainFrame::OnFixPage( wxCommandEvent &event )

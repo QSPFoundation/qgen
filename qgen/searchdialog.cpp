@@ -92,22 +92,22 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, IControls *c
 
 void SearchDialog::OnFindNext(wxCommandEvent &event)
 {
-    wxString str = _textFind->GetValue();
-    _controls->SearchString(str, false,
+    wxString searchString = _textFind->GetValue();
+    _controls->SearchString(searchString, false,
         _chkMatchCase->GetValue(),
         _chkWholeWord->GetValue());
-    AddSearchText(str);
+    AddSearchText(searchString);
     _textFind->SetFocus();
     _btnNextSearch->SetDefault();
 }
 
 void SearchDialog::OnFindAgain(wxCommandEvent &event)
 {
-    wxString str = _textFind->GetValue();
-    _controls->SearchString(str, true,
+    wxString searchString = _textFind->GetValue();
+    _controls->SearchString(searchString, true,
         _chkMatchCase->GetValue(),
         _chkWholeWord->GetValue());
-    AddSearchText(str);
+    AddSearchText(searchString);
     _textFind->SetFocus();
     _btnNextSearch->SetDefault();
 }
@@ -115,28 +115,28 @@ void SearchDialog::OnFindAgain(wxCommandEvent &event)
 void SearchDialog::OnFindRepl(wxCommandEvent &event)
 {
     wxCommandEvent dummy;
-    wxString str = _textRepl->GetValue();
-    _controls->ReplaceSearchString(str);
+    wxString replaceWithString = _textRepl->GetValue();
+    _controls->ReplaceSearchString(replaceWithString);
     OnFindNext(dummy);
-    AddReplaceText(str);
+    AddReplaceText(replaceWithString);
     _textRepl->SetFocus();
     _btnNextSearch->SetDefault();
 }
 
 void SearchDialog::OnFindReplAll(wxCommandEvent &event)
 {
-    wxString str = _textRepl->GetValue();
-    _controls->ReplaceSearchString(str);
-    wxString str1 = _textFind->GetValue();
-    bool flag = _controls->SearchString(str1, true,
+    wxString replaceWithString = _textRepl->GetValue();
+    _controls->ReplaceSearchString(replaceWithString);
+    wxString searchString = _textFind->GetValue();
+    bool flag = _controls->SearchString(searchString, true,
         _chkMatchCase->GetValue(),
         _chkWholeWord->GetValue());
-    AddSearchText(str1);
-    AddReplaceText(str);
+    AddSearchText(searchString);
+    AddReplaceText(replaceWithString);
     while (flag)
     {
-        _controls->ReplaceSearchString(str);
-        flag = _controls->SearchString(str1, false,
+        _controls->ReplaceSearchString(replaceWithString);
+        flag = _controls->SearchString(searchString, false,
                 _chkMatchCase->GetValue(),
                 _chkWholeWord->GetValue());
     }
@@ -146,22 +146,22 @@ void SearchDialog::OnFindReplAll(wxCommandEvent &event)
 
 void SearchDialog::OnUpdFindText(wxCommandEvent& event)
 {
-    bool status = !_textFind->GetValue().IsEmpty();
-    _btnNextSearch->Enable(status);
-    _btnSearchAgain->Enable(status);
-    _btnSkipLoc->Enable(status);
-    _btnReplace->Enable(status);
-    _btnReplaceAll->Enable(status);
+    bool hasSearchString = !_textFind->GetValue().IsEmpty();
+    _btnNextSearch->Enable(hasSearchString);
+    _btnSearchAgain->Enable(hasSearchString);
+    _btnSkipLoc->Enable(hasSearchString);
+    _btnReplace->Enable(hasSearchString);
+    _btnReplaceAll->Enable(hasSearchString);
 }
 
 void SearchDialog::OnSkipLoc(wxCommandEvent &event)
 {
-    wxString str = _textFind->GetValue();
+    wxString searchString = _textFind->GetValue();
     if (_controls->SearchNextLoc())
-        _controls->SearchString(str, false,
+        _controls->SearchString(searchString, false,
             _chkMatchCase->GetValue(),
             _chkWholeWord->GetValue());
-    AddSearchText(str);
+    AddSearchText(searchString);
     _textFind->SetFocus();
     _btnNextSearch->SetDefault();
 }

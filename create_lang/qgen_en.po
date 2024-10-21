@@ -175,8 +175,8 @@ msgstr "Auto create first location:"
 msgid "Auto save every"
 msgstr "Auto save every"
 
-msgid "Average count of actions per location: %i\n"
-msgstr "Average count of actions per location: %i\n"
+msgid "Average count of actions per location: %.2f\n"
+msgstr "Average count of actions per location: %.2f\n"
 
 msgid "Average location size: %i characters\n"
 msgstr "Average location size: %i characters\n"

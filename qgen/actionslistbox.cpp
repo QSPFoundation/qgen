@@ -40,7 +40,7 @@ ActionsListBox::ActionsListBox(wxWindow *owner, wxWindowID id, ILocationPage *lo
     _locPage = locPage;
     _controls = controls;
     _actCode = actCode;
-    _prevActionIndex = wxNOT_FOUND;
+    _prevActionIndex = -1;
     _isDragging = false;
     Update();
     wxString commonPart(wxString::Format(
@@ -200,7 +200,7 @@ void ActionsListBox::DeleteAction(size_t actIndex)
 {
     Delete(actIndex);
     _actCode->ClearAction();
-    _prevActionIndex = wxNOT_FOUND;
+    _prevActionIndex = -1;
     size_t count = GetCount();
     if (count > 0)
     {
@@ -213,7 +213,7 @@ void ActionsListBox::DeleteAllActions()
 {
     Clear();
     _actCode->ClearAction();
-    _prevActionIndex = wxNOT_FOUND;
+    _prevActionIndex = -1;
 }
 
 void ActionsListBox::Select(int index)

@@ -51,7 +51,7 @@ void LocationsNotebook::NotifyClosePage(int index)
     _controls->UpdateLocationIcon(page->GetLocationIndex(), false);
 }
 
-bool LocationsNotebook::DeletePage(size_t page)
+bool LocationsNotebook::ClosePage(size_t page)
 {
     NotifyClosePage(page);
     return wxAuiNotebook::DeletePage(page);
@@ -67,20 +67,30 @@ void LocationsNotebook::OnPageChanged(wxAuiNotebookEvent &event)
     _controls->SelectLocation(((LocationPage *)GetPage(event.GetSelection()))->GetLocationIndex());
 }
 
-bool LocationsNotebook::DeleteAllPages(CloseTypePage closeType, int selIndex)
+bool LocationsNotebook::ClosePages(CloseTypePage closeType)
 {
     LocationPage *page;
-    int i, count = GetPageCount();
+    int i, count = (int)GetPageCount(), selIndex = GetSelection();
     for (i = count - 1; i >= 0; --i)
     {
-        if (selIndex < 0)
-            DeletePage(i);
-        else
+        page = (LocationPage *)GetPage(i);
+        switch (closeType)
         {
-            page = (LocationPage *)GetPage(i);
-            if ((closeType == CLOSE_ALL && !page->IsFixed()) ||
-                (closeType == CLOSE_ALLEXCEPTSELECTED && i != selIndex && !page->IsFixed()) ||
-                (closeType == CLOSE_SELECTED && i == selIndex)) DeletePage(i);
+        case CLOSE_ALL:
+            ClosePage(i);
+            break;
+        case CLOSE_ALL_NONFIXED:
+            if (!page->IsFixed())
+                ClosePage(i);
+            break;
+        case CLOSE_SELECTED:
+            if (i == selIndex)
+                ClosePage(i);
+            break;
+        case CLOSE_ALL_NONFIXED_EXCEPT_SELECTED:
+            if (i != selIndex && !page->IsFixed())
+                ClosePage(i);
+            break;
         }
     }
     return true;
@@ -91,7 +101,7 @@ int LocationsNotebook::FindPageIndex(const wxString& namePage)
     size_t i, count = GetPageCount();
     for (i = 0; i < count; ++i)
         if (namePage == GetPageText(i)) return (int)i;
-    return wxNOT_FOUND;
+    return -1;
 }
 
 LocationPage * LocationsNotebook::OpenLocationPage(const wxString& namePage, bool isSelect)

@@ -60,13 +60,13 @@ HotkeyData &HotkeysStore::GetHotkeyData(size_t index) const
 
 int HotkeysStore::FindHotkeyDataIndex(const HotkeyData &hotKey) const
 {
-    int count = _hotkeysData.GetCount();
+    int count = (int)_hotkeysData.GetCount();
     for (int i = 0; i < count; i++)
     {
         if (hotKey.HotKeyCode == _hotkeysData[i].HotKeyCode && hotKey.Flags == _hotkeysData[i].Flags)
             return i;
     }
-    return wxNOT_FOUND;
+    return -1;
 }
 
 size_t HotkeysStore::GetHotkeysCount() const
@@ -96,7 +96,7 @@ void HotkeysStore::LoadHotkeysData(wxConfigBase &fileConfig)
     int keyCode, flags;
     int i = 0;
     _hotkeysData.Clear();
-    while (1)
+    while (true)
     {
         str = wxString::Format(wxT("HotKeys/Hotkey%d_KeyCode"), i);
         if (!fileConfig.Read(str, &keyCode)) break;

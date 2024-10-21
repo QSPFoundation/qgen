@@ -30,7 +30,8 @@
     enum CloseTypePage
     {
         CLOSE_ALL,
-        CLOSE_ALLEXCEPTSELECTED,
+        CLOSE_ALL_NONFIXED,
+        CLOSE_ALL_NONFIXED_EXCEPT_SELECTED,
         CLOSE_SELECTED
     };
 
@@ -59,8 +60,8 @@
         LocationPage *GetPageByLocName(const wxString &name);
         int FindPageIndex(const wxString& namePage);
         LocationPage *OpenLocationPage(const wxString& namePage, bool isSelect);
-        bool DeletePage(size_t page);
-        bool DeleteAllPages(CloseTypePage closeType, int selIndex);
+        bool ClosePage(size_t page);
+        bool ClosePages(CloseTypePage closeType);
         void LoadOpenedPages();
         void SaveOpenedPages();
         void Update(bool isFromObservable = false);

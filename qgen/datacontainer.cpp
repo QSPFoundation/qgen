@@ -47,37 +47,37 @@ int DataContainer::FindFolderIndex(const wxString &name) const
     int i, count = _folders.GetCount();
     for (i = 0; i < count; ++i)
         if (lwrName == _folders[i].Name.Lower()) return i;
-    return wxNOT_FOUND;
+    return -1;
 }
 
-int DataContainer::FindLocationIndex(const wxString& nameLocation) const
+int DataContainer::FindLocationIndex(const wxString& locName) const
 {
-    wxString lwrName(nameLocation.Lower());
+    wxString lwrName(locName.Lower());
     int i, count = _locationArray.GetCount();
     for (i = 0; i < count; ++i)
         if (lwrName == _locationArray[i].Name.Lower()) return i;
-    return wxNOT_FOUND;
+    return -1;
 }
 
-int DataContainer::FindActionIndex(size_t indexLoc, const wxString& actName) const
+int DataContainer::FindActionIndex(size_t locIndex, const wxString& actName) const
 {
     wxString lwrName(actName.Lower());
-    LocationData &loc = _locationArray[indexLoc];
+    LocationData &loc = _locationArray[locIndex];
     int i, count = loc.Actions.GetCount();
     for (i = 0; i < count; ++i)
         if (lwrName == loc.Actions[i].Description.Lower()) return i;
-    return wxNOT_FOUND;
+    return -1;
 }
 
 int DataContainer::AddLocation(const wxString &name)
 {
-    if (FindLocationIndex(name) >= 0) return wxNOT_FOUND;
+    if (FindLocationIndex(name) >= 0) return -1;
     LocationData *loc = new LocationData;
     loc->Name = name;
-    loc->FolderIndex = wxNOT_FOUND;
+    loc->FolderIndex = -1;
     _locationArray.Add(loc);
     _isSaved = false;
-    return _locationArray.GetCount() - 1;
+    return (int)_locationArray.GetCount() - 1;
 }
 
 bool DataContainer::RenameLocation(size_t locIndex, const wxString& newName)
@@ -101,14 +101,14 @@ void DataContainer::DeleteAction(size_t locIndex, size_t actIndex)
     _isSaved = false;
 }
 
-int DataContainer::AddAction(size_t indexLoc, const wxString& actName)
+int DataContainer::AddAction(size_t locIndex, const wxString& actName)
 {
-    if (FindActionIndex(indexLoc, actName) >= 0) return wxNOT_FOUND;
+    if (FindActionIndex(locIndex, actName) >= 0) return -1;
     ActionData *act = new ActionData;
     act->Description = actName;
-    _locationArray[indexLoc].Actions.Add(act);
+    _locationArray[locIndex].Actions.Add(act);
     _isSaved = false;
-    return _locationArray[indexLoc].Actions.GetCount() - 1;
+    return (int)_locationArray[locIndex].Actions.GetCount() - 1;
 }
 
 bool DataContainer::RenameAction(size_t locIndex, size_t actIndex, const wxString& actNewName)
@@ -120,9 +120,9 @@ bool DataContainer::RenameAction(size_t locIndex, size_t actIndex, const wxStrin
     return true;
 }
 
-void DataContainer::SetActionCode(size_t indexLoc,size_t indexAct, const wxString& actCode)
+void DataContainer::SetActionCode(size_t locIndex, size_t actIndex, const wxString& actCode)
 {
-    _locationArray[indexLoc].Actions[indexAct].Code = actCode;
+    _locationArray[locIndex].Actions[actIndex].Code = actCode;
     _isSaved = false;
 }
 
@@ -141,26 +141,26 @@ wxString DataContainer::GetActionName(size_t locIndex, size_t actIndex) const
     return _locationArray[locIndex].Actions[actIndex].Description;
 }
 
-void DataContainer::SetLocationDesc(size_t indexLoc, const wxString& desc)
+void DataContainer::SetLocationDesc(size_t locIndex, const wxString& desc)
 {
-    _locationArray[indexLoc].Description = desc;
+    _locationArray[locIndex].Description = desc;
     _isSaved = false;
 }
 
-void DataContainer::SetLocationCode(size_t indexLoc, const wxString& code)
+void DataContainer::SetLocationCode(size_t locIndex, const wxString& code)
 {
-    _locationArray[indexLoc].Code = code;
+    _locationArray[locIndex].Code = code;
     _isSaved = false;
 }
 
-wxString DataContainer::GetLocationDesc(size_t indexLoc) const
+wxString DataContainer::GetLocationDesc(size_t locIndex) const
 {
-    return _locationArray[indexLoc].Description;
+    return _locationArray[locIndex].Description;
 }
 
-wxString DataContainer::GetLocationCode(size_t indexLoc) const
+wxString DataContainer::GetLocationCode(size_t locIndex) const
 {
-    return _locationArray[indexLoc].Code;
+    return _locationArray[locIndex].Code;
 }
 
 void DataContainer::ClearLocation(size_t locIndex)
@@ -195,9 +195,9 @@ wxString DataContainer::GetActionPicturePath(size_t locIndex, size_t actIndex) c
     return _locationArray[locIndex].Actions[actIndex].ImagePath;
 }
 
-bool DataContainer::SetActionPicturePath(size_t indexLoc, size_t indexAct, const wxString &pathPict)
+bool DataContainer::SetActionPicturePath(size_t locIndex, size_t actIndex, const wxString &pathPict)
 {
-    _locationArray[indexLoc].Actions[indexAct].ImagePath = pathPict;
+    _locationArray[locIndex].Actions[actIndex].ImagePath = pathPict;
     _isSaved = false;
     return true;
 }
@@ -219,11 +219,11 @@ bool DataContainer::IsEmpty() const
     return _locationArray.IsEmpty();
 }
 
-bool DataContainer::GetLocActions(size_t indexLoc, wxArrayString& actions) const
+bool DataContainer::GetLocActions(size_t locIndex, wxArrayString& actions) const
 {
     actions.Clear();
-    for (size_t i = 0; i < _locationArray[indexLoc].Actions.Count(); ++i)
-        actions.Add(_locationArray[indexLoc].Actions[i].Description);
+    for (size_t i = 0; i < _locationArray[locIndex].Actions.Count(); ++i)
+        actions.Add(_locationArray[locIndex].Actions[i].Description);
     return true;
 }
 
@@ -257,13 +257,13 @@ int DataContainer::GetLocFolder(size_t locIndex) const
 
 int DataContainer::AddFolder(const wxString &name)
 {
-    if (FindFolderIndex(name) >= 0) return wxNOT_FOUND;
+    if (FindFolderIndex(name) >= 0) return -1;
     FolderData *data = new FolderData;
     data->Name = name;
-    data->Position = wxNOT_FOUND;
+    data->Position = -1;
     _folders.Add(data);
     _isSaved = false;
-    return _folders.GetCount() - 1;
+    return (int)_folders.GetCount() - 1;
 }
 
 bool DataContainer::RenameFolder(size_t folderIndex, const wxString &newName)
@@ -277,18 +277,18 @@ bool DataContainer::RenameFolder(size_t folderIndex, const wxString &newName)
 
 void DataContainer::DeleteFolder(size_t folderIndex)
 {
-    long count = _locationArray.GetCount();
-    for (long i = count - 1; i >= 0; --i)
+    int count = (int)_locationArray.GetCount();
+    for (int i = count - 1; i >= 0; --i)
     {
         if (_locationArray[i].FolderIndex == folderIndex)
             _locationArray[i].FolderIndex = -1;
         else if (_locationArray[i].FolderIndex > (int)folderIndex)
             _locationArray[i].FolderIndex--;
     }
-    count = _folders.GetCount();
-    for (long i = count - 1; i >= 0; --i)
+    count = (int)_folders.GetCount();
+    for (int i = count - 1; i >= 0; --i)
     {
-        if ((size_t) i > folderIndex)
+        if (i > (int)folderIndex)
             _folders[i].Position--;
     }
     _folders.RemoveAt(folderIndex);
@@ -326,9 +326,9 @@ int DataContainer::FindFolderForPos(size_t pos) const
     for (size_t i = 0; i < count; ++i)
     {
         if (_folders[i].Position == pos)
-            return i;
+            return (int)i;
     }
-    return wxNOT_FOUND;
+    return -1;
 }
 
 void DataContainer::SortLocsInFolder(int folderIndex, bool isAscending)

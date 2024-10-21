@@ -40,14 +40,14 @@
 
     struct DataSearch
     {
-        int         LocIndex;
-        int         ActIndex;
-        long        StartPos;
-        long        StringLen;
-        int         CountChecking;
+        wxString    SearchString;
+        size_t      LocIndex;
+        size_t      ActIndex;
+        size_t      StartPos;
+        size_t      LocsChecked;
         SearchPlace FoundAt;
         SearchPlace FindAt;
-        bool        IsFoundAny;
+        bool        FoundAny; // true if we found anything during the search session
     };
 
     class Controls : public IControls
@@ -72,8 +72,8 @@
         wxLocale * _locale;
 
         static wxString ConvertSearchString(const wxString& s, bool isMatchCase);
-        static int FindSubString(const wxString& s, const wxString& sub, bool isWholeString, int ind = 0);
-        static wxWindow *GetParent();
+        static int FindSubString(const wxString& s, const wxString& sub, bool isWholeString, size_t startInd = 0);
+        static wxWindow *GetCurrentTopLevelWindow();
 
         void InitData();
     public:
