@@ -43,6 +43,7 @@
         SYNTAX_OPERATIONS,
         SYNTAX_LABELS,
         SYNTAX_COMMENTS,
+        SYNTAX_LINE_NUMBERS,
         SYNTAX_BASE,
         SYNTAX_DUMMY
     };

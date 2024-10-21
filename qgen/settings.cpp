@@ -76,6 +76,7 @@ void Settings::InitSettings()
     _idLang = wxLANGUAGE_DEFAULT;
 
     _font[SYNTAX_BASE] = wxFont(10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Courier New"));
+    _font[SYNTAX_LINE_NUMBERS] = wxFont(10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Courier New"));
     _font[SYNTAX_STATEMENTS] = wxFont(10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
     _font[SYNTAX_FUNCTIONS] = wxFont(10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
     _font[SYNTAX_SYS_VARIABLES] = wxFont(10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Courier New"));
@@ -88,6 +89,7 @@ void Settings::InitSettings()
     _textBackColour = wxColour(220, 220, 220);
     _baseBackColour = wxColour(220, 220, 220);
     _colour[SYNTAX_BASE] = *wxBLACK;
+    _colour[SYNTAX_LINE_NUMBERS] = wxColour(100, 100, 100);
     _colour[SYNTAX_STATEMENTS] = *wxBLUE;
     _colour[SYNTAX_FUNCTIONS] = *wxBLUE;
     _colour[SYNTAX_SYS_VARIABLES] = *wxBLUE;
@@ -154,6 +156,7 @@ void Settings::LoadSettings()
     cfg.Read(wxT("Fonts/Operations"), &_font[SYNTAX_OPERATIONS]);
     cfg.Read(wxT("Fonts/Labels"), &_font[SYNTAX_LABELS]);
     cfg.Read(wxT("Fonts/Comments"), &_font[SYNTAX_COMMENTS]);
+    cfg.Read(wxT("Fonts/LineNumbers"), &_font[SYNTAX_LINE_NUMBERS]);
     cfg.Read(wxT("Fonts/Base"), &_font[SYNTAX_BASE]);
     cfg.Read(wxT("Colours/Statements"), &_colour[SYNTAX_STATEMENTS]);
     cfg.Read(wxT("Colours/Functions"), &_colour[SYNTAX_FUNCTIONS]);
@@ -163,6 +166,7 @@ void Settings::LoadSettings()
     cfg.Read(wxT("Colours/Operations"), &_colour[SYNTAX_OPERATIONS]);
     cfg.Read(wxT("Colours/Labels"), &_colour[SYNTAX_LABELS]);
     cfg.Read(wxT("Colours/Comments"), &_colour[SYNTAX_COMMENTS]);
+    cfg.Read(wxT("Colours/LineNumbers"), &_colour[SYNTAX_LINE_NUMBERS]);
     cfg.Read(wxT("Colours/Base"), &_colour[SYNTAX_BASE]);
     cfg.Read(wxT("Colours/TextBackground"), &_textBackColour);
     cfg.Read(wxT("Colours/BaseBackground"), &_baseBackColour);
@@ -231,6 +235,7 @@ void Settings::SaveSettings()
     cfg.Write(wxT("Fonts/Operations"), _font[SYNTAX_OPERATIONS]);
     cfg.Write(wxT("Fonts/Labels"), _font[SYNTAX_LABELS]);
     cfg.Write(wxT("Fonts/Comments"), _font[SYNTAX_COMMENTS]);
+    cfg.Write(wxT("Fonts/LineNumbers"), _font[SYNTAX_LINE_NUMBERS]);
     cfg.Write(wxT("Fonts/Base"), _font[SYNTAX_BASE]);
     cfg.Write(wxT("Colours/Statements"), _colour[SYNTAX_STATEMENTS]);
     cfg.Write(wxT("Colours/Functions"), _colour[SYNTAX_FUNCTIONS]);
@@ -240,6 +245,7 @@ void Settings::SaveSettings()
     cfg.Write(wxT("Colours/Operations"), _colour[SYNTAX_OPERATIONS]);
     cfg.Write(wxT("Colours/Labels"), _colour[SYNTAX_LABELS]);
     cfg.Write(wxT("Colours/Comments"), _colour[SYNTAX_COMMENTS]);
+    cfg.Write(wxT("Colours/LineNumbers"), _colour[SYNTAX_LINE_NUMBERS]);
     cfg.Write(wxT("Colours/Base"), _colour[SYNTAX_BASE]);
     cfg.Write(wxT("Colours/TextBackground"), _textBackColour);
     cfg.Write(wxT("Colours/BaseBackground"), _baseBackColour);

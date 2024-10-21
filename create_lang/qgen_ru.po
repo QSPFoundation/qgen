@@ -187,6 +187,9 @@ msgstr "Базовые действия:"
 msgid "Base font color:"
 msgstr "Цвет основного шрифта:"
 
+msgid "Line numbers color:"
+msgstr "Цвет номеров строк:"
+
 msgid "C&lear\tCtrl+Shift+D"
 msgstr "&Очистить\tCtrl+Shift+D"
 
@@ -489,6 +492,9 @@ msgstr "Цвет основного фона:"
 
 msgid "Main font:"
 msgstr "Основной шрифт:"
+
+msgid "Line numbers font:"
+msgstr "Шрифт номеров строк:"
 
 msgid "Match case"
 msgstr "Точное совпадение"

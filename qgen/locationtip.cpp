@@ -49,7 +49,7 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
     _code = new wxStaticText(this, wxID_ANY, wxEmptyString);
     _code->SetFont(_code->GetFont().MakeBold());
     _code->SetForegroundColour(textColor);
-    _locCode = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_COLORED |
+    _locCode = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_CODE |
                                                         SYNTAX_STYLE_NOHOTKEYS | SYNTAX_STYLE_SIMPLEMENU |
                                                         SYNTAX_STYLE_NOMARGINS | SYNTAX_STYLE_NOHELPTIPS |
                                                         SYNTAX_STYLE_READONLY);

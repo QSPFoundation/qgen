@@ -52,7 +52,7 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
     {
         UsePopUp(wxSTC_POPUP_NEVER);
     }
-    if (_style & SYNTAX_STYLE_COLORED)
+    if (_style & SYNTAX_STYLE_CODE)
     {
         SetScrollWidth(-1);
         SetScrollWidthTracking(true);
@@ -68,32 +68,34 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
         AutoCompSetChooseSingle(true);
         AutoCompSetIgnoreCase(true);
         AutoCompSetDropRestOfWord(true);
+
+        if (!(_style & SYNTAX_STYLE_NOMARGINS))
+        {
+            SetProperty(wxT("fold"), wxT("1"));
+            //    SetProperty(wxT("fold.compact"), wxT("0"));
+            //    SetProperty(wxT("fold.comment"), wxT("1"));
+            SetFoldFlags(wxSTC_FOLDLEVELBASE);
+
+            SetMarginType(SYNTAX_FOLD_MARGIN, wxSTC_MARGIN_SYMBOL);
+            SetMarginMask(SYNTAX_FOLD_MARGIN, wxSTC_MASK_FOLDERS);
+            SetMarginWidth(SYNTAX_FOLD_MARGIN, 20);
+
+            SetMarginType(SYNTAX_NUM_MARGIN, wxSTC_MARGIN_NUMBER);
+
+            MarkerDefine(wxSTC_MARKNUM_FOLDER, wxSTC_MARK_PLUS);
+            MarkerDefine(wxSTC_MARKNUM_FOLDEROPEN, wxSTC_MARK_MINUS);
+            MarkerDefine(wxSTC_MARKNUM_FOLDEREND, wxSTC_MARK_EMPTY);
+            MarkerDefine(wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_EMPTY);
+            MarkerDefine(wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_EMPTY);
+            MarkerDefine(wxSTC_MARKNUM_FOLDERSUB, wxSTC_MARK_EMPTY);
+            MarkerDefine(wxSTC_MARKNUM_FOLDERTAIL, wxSTC_MARK_EMPTY);
+
+            SetFoldFlags(wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED);
+
+            SetMarginSensitive(SYNTAX_FOLD_MARGIN, true);
+        }
     }
-    if (!(_style & SYNTAX_STYLE_NOMARGINS))
-    {
-        SetProperty(wxT("fold"), wxT("1"));
-        //    SetProperty(wxT("fold.compact"), wxT("0"));
-        //    SetProperty(wxT("fold.comment"), wxT("1"));
-        SetFoldFlags(wxSTC_FOLDLEVELBASE);
 
-        SetMarginType(SYNTAX_FOLD_MARGIN, wxSTC_MARGIN_SYMBOL);
-        SetMarginMask(SYNTAX_FOLD_MARGIN, wxSTC_MASK_FOLDERS);
-        SetMarginWidth(SYNTAX_FOLD_MARGIN, 20);
-
-        SetMarginType(SYNTAX_NUM_MARGIN, wxSTC_MARGIN_NUMBER);
-
-        MarkerDefine(wxSTC_MARKNUM_FOLDER, wxSTC_MARK_PLUS);
-        MarkerDefine(wxSTC_MARKNUM_FOLDEROPEN, wxSTC_MARK_MINUS);
-        MarkerDefine(wxSTC_MARKNUM_FOLDEREND, wxSTC_MARK_EMPTY);
-        MarkerDefine(wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_EMPTY);
-        MarkerDefine(wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_EMPTY);
-        MarkerDefine(wxSTC_MARKNUM_FOLDERSUB, wxSTC_MARK_EMPTY);
-        MarkerDefine(wxSTC_MARKNUM_FOLDERTAIL, wxSTC_MARK_EMPTY);
-
-        SetFoldFlags(wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED);
-
-        SetMarginSensitive(SYNTAX_FOLD_MARGIN, true);
-    }
     if (_style & SYNTAX_STYLE_READONLY)
         SetReadOnly(true);
 
@@ -109,30 +111,26 @@ SyntaxTextBox::~SyntaxTextBox()
 void SyntaxTextBox::Update(bool isFromObservable)
 {
     Settings *settings = _controls->GetSettings();
-    wxColour backColour = settings->GetTextBackColour();
+    wxColour backColor = settings->GetTextBackColour();
+    wxColour altBackColor = settings->GetTextBackColour().ChangeLightness(110);
     wxFont font;
     int tabSize;
 
-    SetCaretForeground((backColour.Blue() << 16 | backColour.Green() << 8 | backColour.Red()) ^ 0xFFFFFF);
+    SetCaretForeground((backColor.Blue() << 16 | backColor.Green() << 8 | backColor.Red()) ^ 0xFFFFFF);
     SetSelBackground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT));
     SetSelForeground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHTTEXT));
     StyleSetForeground(wxSTC_STYLE_DEFAULT, settings->GetColour(SYNTAX_BASE));
-    StyleSetBackground(wxSTC_STYLE_DEFAULT, backColour);
+    StyleSetBackground(wxSTC_STYLE_DEFAULT, backColor);
     font = settings->GetFont(SYNTAX_BASE);
     StyleSetFont(wxSTC_STYLE_DEFAULT, font);
     tabSize = settings->GetTabSize();
     SetTabWidth(tabSize);
     StyleClearAll();
 
-    if (_style & SYNTAX_STYLE_COLORED)
+    if (_style & SYNTAX_STYLE_CODE)
     {
         SetWrapMode(settings->GetWrapLines() ? wxSTC_WRAP_WORD : wxSTC_WRAP_NONE);
-        if (!(_style & SYNTAX_STYLE_NOMARGINS))
-        {
-            SetFoldMarginColour(true, backColour);
-            // Line numbers
-            SetMarginWidth(SYNTAX_NUM_MARGIN, settings->GetShowLinesNums() ? 40 : 0);
-        }
+
         // Keywords
         font = settings->GetFont(SYNTAX_STATEMENTS);
         StyleSetFont(wxSTC_B_KEYWORD, font);
@@ -169,6 +167,20 @@ void SyntaxTextBox::Update(bool isFromObservable)
         StyleSetForeground(wxSTC_B_PREPROCESSOR, settings->GetColour(SYNTAX_COMMENTS));
         StyleSetFont(wxSTC_B_DATE, font);
         StyleSetForeground(wxSTC_B_DATE, settings->GetColour(SYNTAX_COMMENTS));
+
+        if (!(_style & SYNTAX_STYLE_NOMARGINS))
+        {
+            // Fold margin
+            SetFoldMarginColour(true, altBackColor);
+            SetFoldMarginHiColour(true, altBackColor);
+
+            // Line numbers
+            font = settings->GetFont(SYNTAX_LINE_NUMBERS);
+            StyleSetFont(wxSTC_STYLE_LINENUMBER, font);
+            StyleSetForeground(wxSTC_STYLE_LINENUMBER, settings->GetColour(SYNTAX_LINE_NUMBERS));
+            StyleSetBackground(wxSTC_STYLE_LINENUMBER, altBackColor);
+            SetMarginWidth(SYNTAX_NUM_MARGIN, settings->GetShowLinesNums() ? 40 : 0);
+        }
     }
 }
 
@@ -216,7 +228,7 @@ void SyntaxTextBox::OnMarginClicked(wxStyledTextEvent &event)
 
 void SyntaxTextBox::OnCharAdded(wxStyledTextEvent &event)
 {
-    if ((_style & SYNTAX_STYLE_COLORED) && event.GetKey() == '\n' && !_controls->IsInHotkeyExecution())
+    if ((_style & SYNTAX_STYLE_CODE) && event.GetKey() == '\n' && !_controls->IsInHotkeyExecution())
     {
         int curLine = GetCurrentLine();
         if (curLine > 0 && GetLineLength(curLine) <= 2)
@@ -235,7 +247,7 @@ void SyntaxTextBox::OnCharAdded(wxStyledTextEvent &event)
 
 void SyntaxTextBox::OnKeyDown(wxKeyEvent& event)
 {
-    if (_style & SYNTAX_STYLE_COLORED)
+    if (_style & SYNTAX_STYLE_CODE)
     {
         switch (event.GetKeyCode())
         {
@@ -273,7 +285,7 @@ void SyntaxTextBox::OnRightClick(wxMouseEvent& event)
         menu.Append(ID_TEXT_DEL, _("Delete"));
         menu.AppendSeparator();
         menu.Append(ID_TEXT_SELALL, _("Select all"));
-        if (_style & SYNTAX_STYLE_COLORED)
+        if (_style & SYNTAX_STYLE_CODE)
         {
             menu.AppendSeparator();
             menu.Append(ID_LOC_JUMPLOC, _("Go to selected location"));

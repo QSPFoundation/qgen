@@ -34,14 +34,14 @@
 
     enum
     {
-        SYNTAX_STYLE_SIMPLE =         0,
-        SYNTAX_STYLE_COLORED =        1 << 0,
-        SYNTAX_STYLE_NOHOTKEYS =      1 << 1,
-        SYNTAX_STYLE_SIMPLEMENU =     1 << 2,
-        SYNTAX_STYLE_NOSCROLLBARS =   1 << 3,
-        SYNTAX_STYLE_NOMARGINS =      1 << 4,
-        SYNTAX_STYLE_NOHELPTIPS =     1 << 5,
-        SYNTAX_STYLE_READONLY =       1 << 6,
+        SYNTAX_STYLE_SIMPLE =       0,
+        SYNTAX_STYLE_CODE =         1 << 0,
+        SYNTAX_STYLE_NOHOTKEYS =    1 << 1,
+        SYNTAX_STYLE_SIMPLEMENU =   1 << 2,
+        SYNTAX_STYLE_NOSCROLLBARS = 1 << 3,
+        SYNTAX_STYLE_NOMARGINS =    1 << 4,
+        SYNTAX_STYLE_NOHELPTIPS =   1 << 5,
+        SYNTAX_STYLE_READONLY =     1 << 6,
     };
 
     class SyntaxTextBox : public wxStyledTextCtrl, public IObserver

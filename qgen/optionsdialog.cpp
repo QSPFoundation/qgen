@@ -32,6 +32,7 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
     EVT_BUTTON(ID_COLORS_OPERATIONSBRACKETS, OptionsDialog::OnColorSelect)
     EVT_BUTTON(ID_COLORS_MARKS, OptionsDialog::OnColorSelect)
     EVT_BUTTON(ID_COLORS_COMMENTS, OptionsDialog::OnColorSelect)
+    EVT_BUTTON(ID_COLORS_LINE_NUMBERS, OptionsDialog::OnColorSelect)
     EVT_BUTTON(ID_COLORS_BASEFONT, OptionsDialog::OnColorSelect)
     EVT_BUTTON(ID_COLORS_TEXTBACK, OptionsDialog::OnColorSelect)
     EVT_BUTTON(ID_COLORS_BASEBACK, OptionsDialog::OnColorSelect)
@@ -43,6 +44,7 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
     EVT_BUTTON(ID_FONTS_OPERATIONSBRACKETS, OptionsDialog::OnFontSelect)
     EVT_BUTTON(ID_FONTS_MARKS, OptionsDialog::OnFontSelect)
     EVT_BUTTON(ID_FONTS_COMMENTS, OptionsDialog::OnFontSelect)
+    EVT_BUTTON(ID_FONTS_LINE_NUMBERS, OptionsDialog::OnFontSelect)
     EVT_BUTTON(ID_FONTS_BASE, OptionsDialog::OnFontSelect)
     EVT_BUTTON(ID_PATH_PLAYER, OptionsDialog::OnPathSelect)
     EVT_BUTTON(ID_PATH_HELP, OptionsDialog::OnPathSelect)
@@ -106,7 +108,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
 
     _spnAutoSaveMin = new wxSpinCtrl(_general, wxID_ANY, wxT("5"), wxDefaultPosition, wxSize(45, wxDefaultCoord),
                                         wxSP_ARROW_KEYS, 1, 60, 5);
-    _txtNameFirsLoc = new wxTextCtrl(_general, wxID_ANY, wxEmptyString);
+    _txtFirstLocName = new wxTextCtrl(_general, wxID_ANY, wxEmptyString);
 
     _autoSaveUnits  = new wxStaticText(_general, wxID_ANY, wxEmptyString);
 
@@ -116,7 +118,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     topSizerGeneral->Add(_chkAutoSave, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
     topSizerGeneral->Add(sizerAutoSave, 0, wxALL, 2);
     topSizerGeneral->Add(_chkFirstLoc, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerGeneral->Add(_txtNameFirsLoc, 0, wxALL|wxGROW, 2);
+    topSizerGeneral->Add(_txtFirstLocName, 0, wxALL|wxGROW, 2);
     topSizerGeneral->Add(_chkDescOfLoc, 0, wxALL, 5);
     topSizerGeneral->AddStretchSpacer(0);
     topSizerGeneral->Add(_chkOpeningLoc, 0, wxALL, 5);
@@ -192,75 +194,33 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
 
     wxFlexGridSizer *topSizerColors = new wxFlexGridSizer(3);
 
-    _stText1 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
-    _stText2 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
-    _stText3 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
-    _stText4 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
-    _stText5 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
-    _stText6 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
-    _stText7 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
-    _stText8 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
-    _stText9 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
-    _stText10 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
-    _stText11 = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
-
-    _colorStatements = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
-    _colorFunctions = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
-    _colorSysVariables = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
-    _colorStrings = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
-    _colorNumbers = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
-    _colorOptsBrts = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
-    _colorMarks = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
-    _colorComments = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
-    _colorBaseFont = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
-    _colorTextBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+    _stBaseBackColor = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
     _colorBaseBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+    _btnBaseBackColor = new wxButton(_colors, ID_COLORS_BASEBACK, wxEmptyString);
 
-    _btnClrsStatements = new wxButton(_colors, ID_COLORS_STATEMENTS, wxEmptyString);
-    _btnClrsFunctions = new wxButton(_colors, ID_COLORS_FUNCTIONS, wxEmptyString);
-    _btnClrsSysVariables = new wxButton(_colors, ID_COLORS_SYSVARIABLES, wxEmptyString);
-    _btnClrsStrings = new wxButton(_colors, ID_COLORS_STRINGS, wxEmptyString);
-    _btnClrsNumbers = new wxButton(_colors, ID_COLORS_NUMBERS, wxEmptyString);
-    _btnClrsOptsBrts = new wxButton(_colors, ID_COLORS_OPERATIONSBRACKETS, wxEmptyString);
-    _btnClrsMarks = new wxButton(_colors, ID_COLORS_MARKS, wxEmptyString);
-    _btnClrsComments = new wxButton(_colors, ID_COLORS_COMMENTS, wxEmptyString);
-    _btnClrsBaseFont = new wxButton(_colors, ID_COLORS_BASEFONT, wxEmptyString);
-    _btnClrsTextBack = new wxButton(_colors, ID_COLORS_TEXTBACK, wxEmptyString);
-    _btnClrsBaseBack = new wxButton(_colors, ID_COLORS_BASEBACK, wxEmptyString);
-
-    topSizerColors->Add(_stText11, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerColors->Add(_stBaseBackColor, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
     topSizerColors->Add(_colorBaseBack, 0, wxALL|wxALIGN_RIGHT, 2);
-    topSizerColors->Add(_btnClrsBaseBack, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerColors->Add(_stText10, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerColors->Add(_btnBaseBackColor, 0, wxALIGN_CENTER_VERTICAL);
+
+    _stTextBackColor = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
+    _colorTextBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+    _btnTextBackColor = new wxButton(_colors, ID_COLORS_TEXTBACK, wxEmptyString);
+
+    topSizerColors->Add(_stTextBackColor, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
     topSizerColors->Add(_colorTextBack, 0, wxALL|wxALIGN_RIGHT, 2);
-    topSizerColors->Add(_btnClrsTextBack, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerColors->Add(_stText9, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerColors->Add(_colorBaseFont, 0, wxALL|wxALIGN_RIGHT, 2);
-    topSizerColors->Add(_btnClrsBaseFont, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerColors->Add(_stText1, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerColors->Add(_colorStatements, 0, wxALL|wxALIGN_RIGHT, 2);
-    topSizerColors->Add(_btnClrsStatements, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerColors->Add(_stText2, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerColors->Add(_colorFunctions, 0, wxALL|wxALIGN_RIGHT, 2);
-    topSizerColors->Add(_btnClrsFunctions, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerColors->Add(_stText3, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerColors->Add(_colorSysVariables, 0, wxALL|wxALIGN_RIGHT, 2);
-    topSizerColors->Add(_btnClrsSysVariables, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerColors->Add(_stText4, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerColors->Add(_colorStrings, 0, wxALL|wxALIGN_RIGHT, 2);
-    topSizerColors->Add(_btnClrsStrings, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerColors->Add(_stText5, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerColors->Add(_colorNumbers, 0, wxALL|wxALIGN_RIGHT, 2);
-    topSizerColors->Add(_btnClrsNumbers, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerColors->Add(_stText6, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerColors->Add(_colorOptsBrts, 0, wxALL|wxALIGN_RIGHT, 2);
-    topSizerColors->Add(_btnClrsOptsBrts, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerColors->Add(_stText7, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerColors->Add(_colorMarks, 0, wxALL|wxALIGN_RIGHT, 2);
-    topSizerColors->Add(_btnClrsMarks, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerColors->Add(_stText8, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerColors->Add(_colorComments, 0, wxALL|wxALIGN_RIGHT, 2);
-    topSizerColors->Add(_btnClrsComments, 0, wxALIGN_CENTER_VERTICAL);
+    topSizerColors->Add(_btnTextBackColor, 0, wxALIGN_CENTER_VERTICAL);
+
+    AddSyntaxColorConfig(ID_COLORS_BASEFONT, SYNTAX_BASE, wxT("Base font color:"), topSizerColors);
+    AddSyntaxColorConfig(ID_COLORS_LINE_NUMBERS, SYNTAX_LINE_NUMBERS, wxT("Line numbers color:"), topSizerColors);
+    AddSyntaxColorConfig(ID_COLORS_STATEMENTS, SYNTAX_STATEMENTS, wxT("Statements color:"), topSizerColors);
+    AddSyntaxColorConfig(ID_COLORS_FUNCTIONS, SYNTAX_FUNCTIONS, wxT("Functions color:"), topSizerColors);
+    AddSyntaxColorConfig(ID_COLORS_SYSVARIABLES, SYNTAX_SYS_VARIABLES, wxT("System variables color:"), topSizerColors);
+    AddSyntaxColorConfig(ID_COLORS_STRINGS, SYNTAX_STRINGS, wxT("Strings color:"), topSizerColors);
+    AddSyntaxColorConfig(ID_COLORS_NUMBERS, SYNTAX_NUMBERS, wxT("Numbers color:"), topSizerColors);
+    AddSyntaxColorConfig(ID_COLORS_OPERATIONSBRACKETS, SYNTAX_OPERATIONS, wxT("Operations color:"), topSizerColors);
+    AddSyntaxColorConfig(ID_COLORS_MARKS, SYNTAX_LABELS, wxT("Labels color:"), topSizerColors);
+    AddSyntaxColorConfig(ID_COLORS_COMMENTS, SYNTAX_COMMENTS, wxT("Comments color:"), topSizerColors);
+
     topSizerColors->AddGrowableCol(0, 1);
 
     _colors->SetSizerAndFit(topSizerColors);
@@ -271,63 +231,17 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
 
     wxFlexGridSizer *topSizerFonts = new wxFlexGridSizer(3);
 
-    _stText01 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
-    _stText02 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
-    _stText03 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
-    _stText04 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
-    _stText05 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
-    _stText06 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
-    _stText07 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
-    _stText08 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
-    _stText09 = new wxStaticText(_fonts, wxID_ANY, wxEmptyString);
+    AddSyntaxFontConfig(ID_FONTS_BASE, SYNTAX_BASE, wxT("Main font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_LINE_NUMBERS, SYNTAX_LINE_NUMBERS, wxT("Line numbers font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_STATEMENTS, SYNTAX_STATEMENTS, wxT("Statements font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_FUNCTIONS, SYNTAX_FUNCTIONS, wxT("Functions font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_SYSVARIABLES, SYNTAX_SYS_VARIABLES, wxT("System variables font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_STRINGS, SYNTAX_STRINGS, wxT("Strings font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_NUMBERS, SYNTAX_NUMBERS, wxT("Numbers font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_OPERATIONSBRACKETS, SYNTAX_OPERATIONS, wxT("Operations font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_MARKS, SYNTAX_LABELS, wxT("Labels font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_COMMENTS, SYNTAX_COMMENTS, wxT("Comments font:"), topSizerFonts);
 
-    _txtFontStatements = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
-    _txtFontFunctions = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
-    _txtFontSysVariables = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
-    _txtFontStrings = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
-    _txtFontNumbers = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
-    _txtFontOptsBrts = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
-    _txtFontMarks = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
-    _txtFontComments = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
-    _txtFontBase = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
-
-    _btnFontsStatements = new wxButton(_fonts, ID_FONTS_STATEMENTS, wxEmptyString);
-    _btnFontsFunctions = new wxButton(_fonts, ID_FONTS_FUNCTIONS, wxEmptyString);
-    _btnFontsSysVariables = new wxButton(_fonts, ID_FONTS_SYSVARIABLES, wxEmptyString);
-    _btnFontsStrings = new wxButton(_fonts, ID_FONTS_STRINGS, wxEmptyString);
-    _btnFontsNumbers = new wxButton(_fonts, ID_FONTS_NUMBERS, wxEmptyString);
-    _btnFontsOptsBrts = new wxButton(_fonts, ID_FONTS_OPERATIONSBRACKETS, wxEmptyString);
-    _btnFontsMarks = new wxButton(_fonts, ID_FONTS_MARKS, wxEmptyString);
-    _btnFontsComments = new wxButton(_fonts, ID_FONTS_COMMENTS, wxEmptyString);
-    _btnFontsBase = new wxButton(_fonts, ID_FONTS_BASE, wxEmptyString);
-
-    topSizerFonts->Add(_stText09, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerFonts->Add(_txtFontBase, 0, wxGROW|wxALL, 2);
-    topSizerFonts->Add(_btnFontsBase, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerFonts->Add(_stText01, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerFonts->Add(_txtFontStatements, 0, wxGROW|wxALL, 2);
-    topSizerFonts->Add(_btnFontsStatements, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerFonts->Add(_stText02, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerFonts->Add(_txtFontFunctions, 0, wxGROW|wxALL, 2);
-    topSizerFonts->Add(_btnFontsFunctions, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerFonts->Add(_stText03, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerFonts->Add(_txtFontSysVariables, 0, wxGROW|wxALL, 2);
-    topSizerFonts->Add(_btnFontsSysVariables, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerFonts->Add(_stText04, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerFonts->Add(_txtFontStrings, 0, wxGROW|wxALL, 2);
-    topSizerFonts->Add(_btnFontsStrings, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerFonts->Add(_stText05, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerFonts->Add(_txtFontNumbers, 0, wxGROW|wxALL, 2);
-    topSizerFonts->Add(_btnFontsNumbers, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerFonts->Add(_stText06, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerFonts->Add(_txtFontOptsBrts, 0, wxGROW|wxALL, 2);
-    topSizerFonts->Add(_btnFontsOptsBrts, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerFonts->Add(_stText07, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerFonts->Add(_txtFontMarks, 0, wxGROW|wxALL, 2);
-    topSizerFonts->Add(_btnFontsMarks, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerFonts->Add(_stText08, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerFonts->Add(_txtFontComments, 0, wxGROW|wxALL, 2);
-    topSizerFonts->Add(_btnFontsComments, 0, wxALIGN_CENTER_VERTICAL);
     topSizerFonts->AddGrowableCol(1, 0);
 
     _fonts->SetSizerAndFit(topSizerFonts);
@@ -338,9 +252,9 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
 
     wxFlexGridSizer *topSizerPaths = new wxFlexGridSizer(3);
 
-    _stText001 = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
-    _stText002 = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
-    _stText003 = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
+    _stPlayerPath = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
+    _stHelpPath = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
+    _stTxt2GamPath = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
 
     _txtPathPlayer = new wxTextCtrl(_paths, wxID_ANY);
     _txtPathHelp = new wxTextCtrl(_paths, wxID_ANY);
@@ -350,13 +264,13 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _btnPathHelp = new wxButton(_paths, ID_PATH_HELP, wxEmptyString);
     _btnPathTxt2Gam = new wxButton(_paths, ID_PATH_TXT2GAM, wxEmptyString);
 
-    topSizerPaths->Add(_stText001, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerPaths->Add(_stPlayerPath, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
     topSizerPaths->Add(_txtPathPlayer, 0, wxALL|wxGROW, 2);
     topSizerPaths->Add(_btnPathPlayer, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerPaths->Add(_stText002, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerPaths->Add(_stHelpPath, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
     topSizerPaths->Add(_txtPathHelp, 0, wxALL|wxGROW, 2);
     topSizerPaths->Add(_btnPathHelp, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerPaths->Add(_stText003, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerPaths->Add(_stTxt2GamPath, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
     topSizerPaths->Add(_txtPathTxt2Gam, 0, wxALL|wxGROW, 2);
     topSizerPaths->Add(_btnPathTxt2Gam, 0, wxALIGN_CENTER_VERTICAL);
     topSizerPaths->AddGrowableCol(1, 0);
@@ -370,7 +284,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
 
     wxBoxSizer *topSizerHotKeys = new wxBoxSizer(wxVERTICAL);
 
-    _stText0001 = new wxStaticText(_hotkeys, wxID_ANY, wxEmptyString);
+    _stHotKeys = new wxStaticText(_hotkeys, wxID_ANY, wxEmptyString);
     _lstHotKeys = new wxListCtrl(_hotkeys, ID_LIST_HKEYS, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
     _lstHotKeys->InsertColumn(0, wxEmptyString, wxLIST_FORMAT_LEFT, 150);
     _lstHotKeys->InsertColumn(1, wxEmptyString, wxLIST_FORMAT_LEFT, 300);
@@ -384,7 +298,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     btnHotkKeysSizer->Add(_btnEditHotKey, wxALL, 5);
     btnHotkKeysSizer->Add(_btnDelHotKey, wxALL, 5);
 
-    topSizerHotKeys->Add(_stText0001, 0, wxTOP|wxLEFT, 5);
+    topSizerHotKeys->Add(_stHotKeys, 0, wxTOP|wxLEFT, 5);
     topSizerHotKeys->Add(_lstHotKeys, 1, wxALL|wxGROW, 5);
     topSizerHotKeys->Add(btnHotkKeysSizer, 0, wxGROW);
 
@@ -408,6 +322,122 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
 OptionsDialog::~OptionsDialog()
 {
     _langTable.clear();
+    _fontConfigs.clear();
+    _colorConfigs.clear();
+}
+
+void OptionsDialog::AddSyntaxFontConfig(int componentId, SyntaxType syntaxType, const wxString& descriptionKey, wxFlexGridSizer *topSizerFonts)
+{
+    FontConfig config;
+
+    config.ComponentId = componentId;
+    config.Type = syntaxType;
+    config.DescriptionKey = descriptionKey;
+    config.Description = new wxStaticText(_fonts, wxID_ANY, wxGetTranslation(descriptionKey));
+    config.TextSample = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
+    config.SelectButton = new wxButton(_fonts, componentId, wxEmptyString);
+
+    topSizerFonts->Add(config.Description, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerFonts->Add(config.TextSample, 0, wxGROW|wxALL, 2);
+    topSizerFonts->Add(config.SelectButton, 0, wxALIGN_CENTER_VERTICAL);
+
+    _fontConfigs[componentId] = config;
+}
+
+void OptionsDialog::UpdateSyntaxFontConfigUi()
+{
+    for (FontConfigTable::iterator it = _fontConfigs.begin(); it != _fontConfigs.end(); ++it)
+    {
+        FontConfig& config = it->second;
+        config.Description->SetLabel(wxGetTranslation(config.DescriptionKey));
+        config.SelectButton->SetLabel(_("Select font..."));
+    }
+}
+
+void OptionsDialog::SaveSyntaxFontSettings()
+{
+    for (FontConfigTable::iterator it = _fontConfigs.begin(); it != _fontConfigs.end(); ++it)
+    {
+        FontConfig& config = it->second;
+        _settings->SetFont(config.Type, config.TextSample->GetFont());
+    }
+}
+
+void OptionsDialog::ApplySyntaxFontSettings()
+{
+    wxColour textBackColour = _settings->GetTextBackColour();
+
+    for (FontConfigTable::iterator it = _fontConfigs.begin(); it != _fontConfigs.end(); ++it)
+    {
+        FontConfig& config = it->second;
+        wxTextCtrl * textSample = config.TextSample;
+
+        textSample->SetValue(_settings->GetFont(config.Type).GetFaceName());
+        textSample->SetFont(_settings->GetFont(config.Type));
+        textSample->SetForegroundColour(_settings->GetColour(config.Type));
+        textSample->SetBackgroundColour(textBackColour);
+    }
+}
+
+void OptionsDialog::AddSyntaxColorConfig(int componentId, SyntaxType syntaxType, const wxString& descriptionKey, wxFlexGridSizer *topSizerColors)
+{
+    ColorConfig config;
+
+    config.ComponentId = componentId;
+    config.Type = syntaxType;
+    config.DescriptionKey = descriptionKey;
+    config.Description = new wxStaticText(_colors, wxID_ANY, wxGetTranslation(descriptionKey));
+    config.ColorSample = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+    config.SelectButton = new wxButton(_colors, componentId, wxEmptyString);
+
+    topSizerColors->Add(config.Description, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerColors->Add(config.ColorSample, 0, wxALL|wxALIGN_RIGHT, 2);
+    topSizerColors->Add(config.SelectButton, 0, wxALIGN_CENTER_VERTICAL);
+
+    _colorConfigs[componentId] = config;
+}
+
+void OptionsDialog::UpdateSyntaxColorConfigUi()
+{
+    for (ColorConfigTable::iterator it = _colorConfigs.begin(); it != _colorConfigs.end(); ++it)
+    {
+        ColorConfig& config = it->second;
+        config.Description->SetLabel(wxGetTranslation(config.DescriptionKey));
+        config.SelectButton->SetLabel(_("Select color..."));
+    }
+}
+
+void OptionsDialog::SaveSyntaxColorSettings()
+{
+    for (ColorConfigTable::iterator it = _colorConfigs.begin(); it != _colorConfigs.end(); ++it)
+    {
+        ColorConfig& config = it->second;
+        _settings->SetColour(config.Type, config.ColorSample->GetBackgroundColour());
+    }
+}
+
+void OptionsDialog::ApplySyntaxColorSettings()
+{
+    for (ColorConfigTable::iterator it = _colorConfigs.begin(); it != _colorConfigs.end(); ++it)
+    {
+        ColorConfig& config = it->second;
+        config.ColorSample->SetBackgroundColour(_settings->GetColour(config.Type));
+    }
+}
+
+void OptionsDialog::UpdateFontColor(int componentId, const wxColour& color)
+{
+    FontConfig& config = _fontConfigs[componentId];
+    config.TextSample->SetForegroundColour(color);
+}
+
+void OptionsDialog::UpdateFontBackgroundColor(const wxColour& color)
+{
+    for (FontConfigTable::iterator it = _fontConfigs.begin(); it != _fontConfigs.end(); ++it)
+    {
+        FontConfig& config = it->second;
+        config.TextSample->SetBackgroundColour(color);
+    }
 }
 
 void OptionsDialog::ReCreateGUI()
@@ -443,60 +473,26 @@ void OptionsDialog::ReCreateGUI()
     _stTextTabSize->SetLabel(_("Size of TAB:"));
     // Page Colors
     _notebook->SetPageText(3, _("Colors"));
-    _stText1->SetLabel(_("Statements color:"));
-    _stText2->SetLabel(_("Functions color:"));
-    _stText3->SetLabel(_("System variables color:"));
-    _stText4->SetLabel(_("Strings color:"));
-    _stText5->SetLabel(_("Numbers color:"));
-    _stText6->SetLabel(_("Operations color:"));
-    _stText7->SetLabel(_("Labels color:"));
-    _stText8->SetLabel(_("Comments color:"));
-    _stText9->SetLabel(_("Base font color:"));
-    _stText10->SetLabel(_("Tabs background color:"));
-    _stText11->SetLabel(_("Main background color:"));
-    _btnClrsStatements->SetLabel(_("Select color..."));
-    _btnClrsFunctions->SetLabel(_("Select color..."));
-    _btnClrsSysVariables->SetLabel(_("Select color..."));
-    _btnClrsStrings->SetLabel(_("Select color..."));
-    _btnClrsNumbers->SetLabel(_("Select color..."));
-    _btnClrsOptsBrts->SetLabel(_("Select color..."));
-    _btnClrsMarks->SetLabel(_("Select color..."));
-    _btnClrsComments->SetLabel(_("Select color..."));
-    _btnClrsBaseFont->SetLabel(_("Select color..."));
-    _btnClrsTextBack->SetLabel(_("Select color..."));
-    _btnClrsBaseBack->SetLabel(_("Select color..."));
+    _stTextBackColor->SetLabel(_("Tabs background color:"));
+    _btnTextBackColor->SetLabel(_("Select color..."));
+    _stBaseBackColor->SetLabel(_("Main background color:"));
+    _btnBaseBackColor->SetLabel(_("Select color..."));
+    UpdateSyntaxColorConfigUi();
     // Page Fonts
     _notebook->SetPageText(4, _("Fonts"));
-    _stText01->SetLabel(_("Statements font:"));
-    _stText02->SetLabel(_("Functions font:"));
-    _stText03->SetLabel(_("System variables font:"));
-    _stText04->SetLabel(_("Strings font:"));
-    _stText05->SetLabel(_("Numbers font:"));
-    _stText06->SetLabel(_("Operations font:"));
-    _stText07->SetLabel(_("Labels font:"));
-    _stText08->SetLabel(_("Comments font:"));
-    _stText09->SetLabel(_("Main font:"));
-    _btnFontsStatements->SetLabel(_("Select font..."));
-    _btnFontsFunctions->SetLabel(_("Select font..."));
-    _btnFontsSysVariables->SetLabel(_("Select font..."));
-    _btnFontsStrings->SetLabel(_("Select font..."));
-    _btnFontsNumbers->SetLabel(_("Select font..."));
-    _btnFontsOptsBrts->SetLabel(_("Select font..."));
-    _btnFontsMarks->SetLabel(_("Select font..."));
-    _btnFontsComments->SetLabel(_("Select font..."));
-    _btnFontsBase->SetLabel(_("Select font..."));
+    UpdateSyntaxFontConfigUi();
     // Page Paths
     _notebook->SetPageText(5, _("Paths"));
-    _stText001->SetLabel(_("Path to player:"));
-    _stText002->SetLabel(_("Path to help:"));
-    _stText003->SetLabel(_("Path to TXT2GAM:"));
+    _stPlayerPath->SetLabel(_("Path to player:"));
+    _stHelpPath->SetLabel(_("Path to help:"));
+    _stTxt2GamPath->SetLabel(_("Path to TXT2GAM:"));
     _btnPathPlayer->SetLabel(_("Select path..."));
     _btnPathHelp->SetLabel(_("Select path..."));
     _btnPathTxt2Gam->SetLabel(_("Select path..."));
 #ifdef __WXMSW__
     //Page HotKeys
     _notebook->SetPageText(6,  _("Hotkeys"));
-    _stText0001->SetLabel(_("Hotkeys list:"));
+    _stHotKeys->SetLabel(_("Hotkeys list:"));
     wxListItem header;
     _lstHotKeys->GetColumn(0, header);
     header.SetText(_("Hotkey"));
@@ -511,262 +507,76 @@ void OptionsDialog::ReCreateGUI()
     GetSizer()->SetSizeHints(this);
 }
 
-void OptionsDialog::InitColoursDialog(wxColourDialog &dialog, const wxColour &col)
-{
-    wxColourData data;
-    data.SetColour(col);
-    dialog.Create(this, &data);
-}
-
-void OptionsDialog::InitFontsDialog(wxFontDialog &dialog, const wxFont &font)
-{
-    wxFontData data;
-    data.SetInitialFont(font);
-    data.EnableEffects(false);
-    dialog.Create(this, data);
-}
-
 void OptionsDialog::OnColorSelect(wxCommandEvent &event)
 {
-    wxColourDialog dialog(this);
-    switch(event.GetId())
+    switch (event.GetId())
     {
-    case ID_COLORS_STATEMENTS:
-        InitColoursDialog(dialog, _colorStatements->GetBackgroundColour());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxColour col = dialog.GetColourData().GetColour();
-            _colorStatements->SetBackgroundColour(col);
-            _colorStatements->Refresh();
-            _txtFontStatements->SetForegroundColour(col);
-            _btnApply->Enable();
-        }
-        break;
-    case ID_COLORS_FUNCTIONS:
-        InitColoursDialog(dialog, _colorFunctions->GetBackgroundColour());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxColour col = dialog.GetColourData().GetColour();
-            _colorFunctions->SetBackgroundColour(col);
-            _colorFunctions->Refresh();
-            _txtFontFunctions->SetForegroundColour(col);
-            _btnApply->Enable();
-        }
-        break;
-    case ID_COLORS_SYSVARIABLES:
-        InitColoursDialog(dialog, _colorSysVariables->GetBackgroundColour());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxColour col = dialog.GetColourData().GetColour();
-            _colorSysVariables->SetBackgroundColour(col);
-            _colorSysVariables->Refresh();
-            _txtFontSysVariables->SetForegroundColour(col);
-            _btnApply->Enable();
-        }
-        break;
-    case ID_COLORS_NUMBERS:
-        InitColoursDialog(dialog, _colorNumbers->GetBackgroundColour());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxColour col = dialog.GetColourData().GetColour();
-            _colorNumbers->SetBackgroundColour(col);
-            _colorNumbers->Refresh();
-            _txtFontNumbers->SetForegroundColour(col);
-            _btnApply->Enable();
-        }
-        break;
-    case ID_COLORS_STRINGS:
-        InitColoursDialog(dialog, _colorStrings->GetBackgroundColour());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxColour col = dialog.GetColourData().GetColour();
-            _colorStrings->SetBackgroundColour(col);
-            _colorStrings->Refresh();
-            _txtFontStrings->SetForegroundColour(col);
-            _btnApply->Enable();
-        }
-        break;
-    case ID_COLORS_OPERATIONSBRACKETS:
-        InitColoursDialog(dialog, _colorOptsBrts->GetBackgroundColour());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxColour col = dialog.GetColourData().GetColour();
-            _colorOptsBrts->SetBackgroundColour(col);
-            _colorOptsBrts->Refresh();
-            _txtFontOptsBrts->SetForegroundColour(col);
-            _btnApply->Enable();
-        }
-        break;
-    case ID_COLORS_MARKS:
-        InitColoursDialog(dialog, _colorMarks->GetBackgroundColour());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxColour col = dialog.GetColourData().GetColour();
-            _colorMarks->SetBackgroundColour(col);
-            _colorMarks->Refresh();
-            _txtFontMarks->SetForegroundColour(col);
-            _btnApply->Enable();
-        }
-        break;
-    case ID_COLORS_COMMENTS:
-        InitColoursDialog(dialog, _colorComments->GetBackgroundColour());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxColour col = dialog.GetColourData().GetColour();
-            _colorComments->SetBackgroundColour(col);
-            _colorComments->Refresh();
-            _txtFontComments->SetForegroundColour(col);
-            _btnApply->Enable();
-        }
-        break;
-    case ID_COLORS_BASEFONT:
-        InitColoursDialog(dialog, _colorBaseFont->GetBackgroundColour());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxColour col = dialog.GetColourData().GetColour();
-            _colorBaseFont->SetBackgroundColour(col);
-            _colorBaseFont->Refresh();
-            _txtFontBase->SetForegroundColour(col);
-            _btnApply->Enable();
-        }
-        break;
     case ID_COLORS_TEXTBACK:
-        InitColoursDialog(dialog, _colorTextBack->GetBackgroundColour());
-        if (dialog.ShowModal() == wxID_OK)
         {
-            wxColour col = dialog.GetColourData().GetColour();
-            _colorTextBack->SetBackgroundColour(col);
-            _colorTextBack->Refresh();
-            _txtFontStatements->SetBackgroundColour(col);
-            _txtFontFunctions->SetBackgroundColour(col);
-            _txtFontSysVariables->SetBackgroundColour(col);
-            _txtFontStrings->SetBackgroundColour(col);
-            _txtFontNumbers->SetBackgroundColour(col);
-            _txtFontOptsBrts->SetBackgroundColour(col);
-            _txtFontMarks->SetBackgroundColour(col);
-            _txtFontComments->SetBackgroundColour(col);
-            _txtFontBase->SetBackgroundColour(col);
-            _btnApply->Enable();
-
+            wxColourData data;
+            data.SetColour(_colorTextBack->GetBackgroundColour());
+            wxColourDialog dialog(this, &data);
+            if (dialog.ShowModal() == wxID_OK)
+            {
+                wxColour color = dialog.GetColourData().GetColour();
+                UpdateFontBackgroundColor(color);
+                _colorTextBack->SetBackgroundColour(color);
+                _colorTextBack->Refresh();
+                _btnApply->Enable();
+            }
+            break;
         }
-        break;
     case ID_COLORS_BASEBACK:
-        InitColoursDialog(dialog, _colorBaseBack->GetBackgroundColour());
-        if (dialog.ShowModal() == wxID_OK)
         {
-            wxColour col = dialog.GetColourData().GetColour();
-            _colorBaseBack->SetBackgroundColour(col);
-            _colorBaseBack->Refresh();
-            _btnApply->Enable();
+            wxColourData data;
+            data.SetColour(_colorBaseBack->GetBackgroundColour());
+            wxColourDialog dialog(this, &data);
+            if (dialog.ShowModal() == wxID_OK)
+            {
+                wxColour color = dialog.GetColourData().GetColour();
+                _colorBaseBack->SetBackgroundColour(color);
+                _colorBaseBack->Refresh();
+                _btnApply->Enable();
+            }
+            break;
         }
-        break;
+    default:
+        {
+            wxColourData data;
+            ColorConfig& config = _colorConfigs[event.GetId()];
+            wxWindow * colorSample = config.ColorSample;
+
+            data.SetColour(colorSample->GetBackgroundColour());
+            wxColourDialog dialog(this, &data);
+            if (dialog.ShowModal() == wxID_OK)
+            {
+                wxColour color = dialog.GetColourData().GetColour();
+                colorSample->SetBackgroundColour(color);
+                colorSample->Refresh();
+                UpdateFontColor(config.ComponentId, color);
+                _btnApply->Enable();
+            }
+            break;
+        }
     }
 }
 
 void OptionsDialog::OnFontSelect(wxCommandEvent &event)
 {
-    wxFontDialog dialog;
-    switch(event.GetId())
+    wxFontData data;
+    FontConfig& config = _fontConfigs[event.GetId()];
+    wxTextCtrl * textSample = config.TextSample;
+
+    data.SetInitialFont(textSample->GetFont());
+    data.EnableEffects(false);
+    wxFontDialog dialog(this, data);
+    if (dialog.ShowModal() == wxID_OK)
     {
-    case ID_FONTS_STATEMENTS:
-        InitFontsDialog(dialog, _txtFontStatements->GetFont());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxFont font = dialog.GetFontData().GetChosenFont();
-            _txtFontStatements->SetValue(font.GetFaceName());
-            _txtFontStatements->SetFont(font);
-            _txtFontStatements->Refresh();
-            _btnApply->Enable();
-        }
-        break;
-    case ID_FONTS_FUNCTIONS:
-        InitFontsDialog(dialog, _txtFontFunctions->GetFont());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxFont font = dialog.GetFontData().GetChosenFont();
-            _txtFontFunctions->SetValue(font.GetFaceName());
-            _txtFontFunctions->SetFont(font);
-            _txtFontFunctions->Refresh();
-            _btnApply->Enable();
-        }
-        break;
-    case ID_FONTS_SYSVARIABLES:
-        InitFontsDialog(dialog, _txtFontSysVariables->GetFont());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxFont font = dialog.GetFontData().GetChosenFont();
-            _txtFontSysVariables->SetValue(font.GetFaceName());
-            _txtFontSysVariables->SetFont(font);
-            _txtFontSysVariables->Refresh();
-            _btnApply->Enable();
-        }
-        break;
-    case ID_FONTS_NUMBERS:
-        InitFontsDialog(dialog, _txtFontNumbers->GetFont());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxFont font = dialog.GetFontData().GetChosenFont();
-            _txtFontNumbers->SetValue(font.GetFaceName());
-            _txtFontNumbers->SetFont(font);
-            _txtFontNumbers->Refresh();
-            _btnApply->Enable();
-        }
-        break;
-    case ID_FONTS_STRINGS:
-        InitFontsDialog(dialog, _txtFontStrings->GetFont());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxFont font = dialog.GetFontData().GetChosenFont();
-            _txtFontStrings->SetValue(font.GetFaceName());
-            _txtFontStrings->SetFont(font);
-            _txtFontStrings->Refresh();
-            _btnApply->Enable();
-        }
-        break;
-    case ID_FONTS_OPERATIONSBRACKETS:
-        InitFontsDialog(dialog, _txtFontOptsBrts->GetFont());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxFont font = dialog.GetFontData().GetChosenFont();
-            _txtFontOptsBrts->SetValue(font.GetFaceName());
-            _txtFontOptsBrts->SetFont(font);
-            _txtFontOptsBrts->Refresh();
-            _btnApply->Enable();
-        }
-        break;
-    case ID_FONTS_MARKS:
-        InitFontsDialog(dialog, _txtFontMarks->GetFont());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxFont font = dialog.GetFontData().GetChosenFont();
-            _txtFontMarks->SetValue(font.GetFaceName());
-            _txtFontMarks->SetFont(font);
-            _txtFontMarks->Refresh();
-            _btnApply->Enable();
-        }
-        break;
-    case ID_FONTS_COMMENTS:
-        InitFontsDialog(dialog, _txtFontComments->GetFont());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxFont font = dialog.GetFontData().GetChosenFont();
-            _txtFontComments->SetValue(font.GetFaceName());
-            _txtFontComments->SetFont(font);
-            _txtFontComments->Refresh();
-            _btnApply->Enable();
-        }
-        break;
-    case ID_FONTS_BASE:
-        InitFontsDialog(dialog, _txtFontBase->GetFont());
-        if (dialog.ShowModal() == wxID_OK)
-        {
-            wxFont font = dialog.GetFontData().GetChosenFont();
-            _txtFontBase->SetValue(font.GetFaceName());
-            _txtFontBase->SetFont(font);
-            _txtFontBase->Refresh();
-            _btnApply->Enable();
-        }
-        break;
+        wxFont font = dialog.GetFontData().GetChosenFont();
+        textSample->SetValue(font.GetFaceName());
+        textSample->SetFont(font);
+        textSample->Refresh();
+        _btnApply->Enable();
     }
 }
 
@@ -835,7 +645,7 @@ void OptionsDialog::OnStateChanged(wxCommandEvent &event)
         _spnAutoSaveMin->Enable(event.IsChecked());
         break;
     case ID_FIRST_LOC:
-        _txtNameFirsLoc->Enable(event.IsChecked());
+        _txtFirstLocName->Enable(event.IsChecked());
         break;
     }
     _btnApply->Enable(true);
@@ -888,35 +698,19 @@ void OptionsDialog::ApplySettings()
     _settings->SetCreateFirstLoc(_chkFirstLoc->GetValue());
     _settings->SetShowLocsIcons(_chkOnLocActIcons->GetValue());
     _settings->SetCollapseCode(_chkCollapseCode->GetValue());
-    _settings->SetHeightsCoeff((double)_spnHeights->GetValue()/100);
-    _settings->SetWidthsCoeff1((double)_spnWidth1->GetValue()/100);
-    _settings->SetWidthsCoeff2((double)_spnWidth2->GetValue()/100);
+    _settings->SetHeightsCoeff((double)_spnHeights->GetValue() / 100);
+    _settings->SetWidthsCoeff1((double)_spnWidth1->GetValue() / 100);
+    _settings->SetWidthsCoeff2((double)_spnWidth2->GetValue() / 100);
     _settings->SetTabSize(_spnTabSize->GetValue());
     _settings->SetCurrentHelpPath(_txtPathHelp->GetValue());
     _settings->SetCurrentPlayerPath(_txtPathPlayer->GetValue());
     _settings->SetCurrentTxt2GamPath(_txtPathTxt2Gam->GetValue());
 
-    _settings->SetColour(SYNTAX_STATEMENTS, _colorStatements->GetBackgroundColour());
-    _settings->SetColour(SYNTAX_FUNCTIONS, _colorFunctions->GetBackgroundColour());
-    _settings->SetColour(SYNTAX_SYS_VARIABLES, _colorSysVariables->GetBackgroundColour());
-    _settings->SetColour(SYNTAX_STRINGS, _colorStrings->GetBackgroundColour());
-    _settings->SetColour(SYNTAX_NUMBERS, _colorNumbers->GetBackgroundColour());
-    _settings->SetColour(SYNTAX_OPERATIONS, _colorOptsBrts->GetBackgroundColour());
-    _settings->SetColour(SYNTAX_LABELS, _colorMarks->GetBackgroundColour());
-    _settings->SetColour(SYNTAX_COMMENTS, _colorComments->GetBackgroundColour());
-    _settings->SetColour(SYNTAX_BASE, _colorBaseFont->GetBackgroundColour());
     _settings->SetTextBackColour(_colorTextBack->GetBackgroundColour());
     _settings->SetBaseBackColour(_colorBaseBack->GetBackgroundColour());
 
-    _settings->SetFont(SYNTAX_STATEMENTS, _txtFontStatements->GetFont());
-    _settings->SetFont(SYNTAX_FUNCTIONS, _txtFontFunctions->GetFont());
-    _settings->SetFont(SYNTAX_SYS_VARIABLES, _txtFontSysVariables->GetFont());
-    _settings->SetFont(SYNTAX_STRINGS, _txtFontStrings->GetFont());
-    _settings->SetFont(SYNTAX_NUMBERS, _txtFontNumbers->GetFont());
-    _settings->SetFont(SYNTAX_OPERATIONS, _txtFontOptsBrts->GetFont());
-    _settings->SetFont(SYNTAX_LABELS, _txtFontMarks->GetFont());
-    _settings->SetFont(SYNTAX_COMMENTS, _txtFontComments->GetFont());
-    _settings->SetFont(SYNTAX_BASE, _txtFontBase->GetFont());
+    SaveSyntaxColorSettings();
+    SaveSyntaxFontSettings();
 
 #ifdef __WXMSW__
     HotkeyData hotKeyData;
@@ -930,12 +724,12 @@ void OptionsDialog::ApplySettings()
      _controls->UpdateLocale(lang);
     _settings->SetIdLang(lang);
     if (_chkFirstLoc->GetValue())
-        _settings->SetFirstLocName(_txtNameFirsLoc->GetValue());
+        _settings->SetFirstLocName(_txtFirstLocName->GetValue());
     else
     {
         _settings->SetFirstLocName(wxEmptyString);
         _settings->PostInitLocaleSettings();
-        _txtNameFirsLoc->SetValue(_settings->GetFirstLocName());
+        _txtFirstLocName->SetValue(_settings->GetFirstLocName());
     }
     _settings->NotifyAll();
     _btnApply->Enable(false);
@@ -954,79 +748,26 @@ void OptionsDialog::InitOptionsDialog()
     _chkOpenLastGame->SetValue(_settings->GetOpenLastGame());
     _chkShowLinesNums->SetValue(_settings->GetShowLinesNums());
     _chkFirstLoc->SetValue(_settings->GetCreateFirstLoc());
-    _txtNameFirsLoc->SetValue(_settings->GetFirstLocName());
+    _txtFirstLocName->SetValue(_settings->GetFirstLocName());
     _chkOnLocActIcons->SetValue(_settings->GetShowLocsIcons());
     _chkCollapseCode->SetValue(_settings->GetCollapseCode());
 
-    _spnHeights->SetValue(_settings->GetHeightsCoeff()*100);
-    _spnWidth1->SetValue(_settings->GetWidthsCoeff1()*100);
-    _spnWidth2->SetValue(_settings->GetWidthsCoeff2()*100);
+    _spnHeights->SetValue(_settings->GetHeightsCoeff() * 100);
+    _spnWidth1->SetValue(_settings->GetWidthsCoeff1() * 100);
+    _spnWidth2->SetValue(_settings->GetWidthsCoeff2() * 100);
     _spnTabSize->SetValue(_settings->GetTabSize());
 
     _txtPathHelp->SetValue(_settings->GetCurrentHelpPath());
     _txtPathPlayer->SetValue(_settings->GetCurrentPlayerPath());
     _txtPathTxt2Gam->SetValue(_settings->GetCurrentTxt2GamPath());
 
-    _colorStatements->SetBackgroundColour(_settings->GetColour(SYNTAX_STATEMENTS));
-    _colorFunctions->SetBackgroundColour(_settings->GetColour(SYNTAX_FUNCTIONS));
-    _colorSysVariables->SetBackgroundColour(_settings->GetColour(SYNTAX_SYS_VARIABLES));
-    _colorStrings->SetBackgroundColour(_settings->GetColour(SYNTAX_STRINGS));
-    _colorNumbers->SetBackgroundColour(_settings->GetColour(SYNTAX_NUMBERS));
-    _colorOptsBrts->SetBackgroundColour(_settings->GetColour(SYNTAX_OPERATIONS));
-    _colorMarks->SetBackgroundColour(_settings->GetColour(SYNTAX_LABELS));
-    _colorComments->SetBackgroundColour(_settings->GetColour(SYNTAX_COMMENTS));
-    _colorBaseFont->SetBackgroundColour(_settings->GetColour(SYNTAX_BASE));
     _colorTextBack->SetBackgroundColour(_settings->GetTextBackColour());
     _colorBaseBack->SetBackgroundColour(_settings->GetBaseBackColour());
 
-    wxColour textBackColour = _settings->GetTextBackColour();
+    ApplySyntaxColorSettings();
+    ApplySyntaxFontSettings();
 
-    _txtFontStatements->SetValue(_settings->GetFont(SYNTAX_STATEMENTS).GetFaceName());
-    _txtFontStatements->SetFont(_settings->GetFont(SYNTAX_STATEMENTS));
-    _txtFontStatements->SetForegroundColour(_settings->GetColour(SYNTAX_STATEMENTS));
-    _txtFontStatements->SetBackgroundColour(textBackColour);
-
-    _txtFontFunctions->SetValue(_settings->GetFont(SYNTAX_FUNCTIONS).GetFaceName());
-    _txtFontFunctions->SetFont(_settings->GetFont(SYNTAX_FUNCTIONS));
-    _txtFontFunctions->SetForegroundColour(_settings->GetColour(SYNTAX_FUNCTIONS));
-    _txtFontFunctions->SetBackgroundColour(textBackColour);
-
-    _txtFontSysVariables->SetValue(_settings->GetFont(SYNTAX_SYS_VARIABLES).GetFaceName());
-    _txtFontSysVariables->SetFont(_settings->GetFont(SYNTAX_SYS_VARIABLES));
-    _txtFontSysVariables->SetForegroundColour(_settings->GetColour(SYNTAX_SYS_VARIABLES));
-    _txtFontSysVariables->SetBackgroundColour(textBackColour);
-
-    _txtFontStrings->SetValue(_settings->GetFont(SYNTAX_STRINGS).GetFaceName());
-    _txtFontStrings->SetFont(_settings->GetFont(SYNTAX_STRINGS));
-    _txtFontStrings->SetForegroundColour(_settings->GetColour(SYNTAX_STRINGS));
-    _txtFontStrings->SetBackgroundColour(textBackColour);
-
-    _txtFontNumbers->SetValue(_settings->GetFont(SYNTAX_NUMBERS).GetFaceName());
-    _txtFontNumbers->SetFont(_settings->GetFont(SYNTAX_NUMBERS));
-    _txtFontNumbers->SetForegroundColour(_settings->GetColour(SYNTAX_NUMBERS));
-    _txtFontNumbers->SetBackgroundColour(textBackColour);
-
-    _txtFontOptsBrts->SetValue(_settings->GetFont(SYNTAX_OPERATIONS).GetFaceName());
-    _txtFontOptsBrts->SetFont(_settings->GetFont(SYNTAX_OPERATIONS));
-    _txtFontOptsBrts->SetForegroundColour(_settings->GetColour(SYNTAX_OPERATIONS));
-    _txtFontOptsBrts->SetBackgroundColour(textBackColour);
-
-    _txtFontMarks->SetValue(_settings->GetFont(SYNTAX_LABELS).GetFaceName());
-    _txtFontMarks->SetFont(_settings->GetFont(SYNTAX_LABELS));
-    _txtFontMarks->SetForegroundColour(_settings->GetColour(SYNTAX_LABELS));
-    _txtFontMarks->SetBackgroundColour(textBackColour);
-
-    _txtFontComments->SetValue(_settings->GetFont(SYNTAX_COMMENTS).GetFaceName());
-    _txtFontComments->SetFont(_settings->GetFont(SYNTAX_COMMENTS));
-    _txtFontComments->SetForegroundColour(_settings->GetColour(SYNTAX_COMMENTS));
-    _txtFontComments->SetBackgroundColour(textBackColour);
-
-    _txtFontBase->SetValue(_settings->GetFont(SYNTAX_BASE).GetFaceName());
-    _txtFontBase->SetFont(_settings->GetFont(SYNTAX_BASE));
-    _txtFontBase->SetForegroundColour(_settings->GetColour(SYNTAX_BASE));
-    _txtFontBase->SetBackgroundColour(textBackColour);
-
-    _txtNameFirsLoc->Enable(_settings->GetCreateFirstLoc());
+    _txtFirstLocName->Enable(_settings->GetCreateFirstLoc());
     _spnAutoSaveMin->Enable(_settings->GetAutoSave());
 
 #ifdef __WXMSW__

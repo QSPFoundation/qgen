@@ -47,6 +47,7 @@
         ID_COLORS_OPERATIONSBRACKETS,
         ID_COLORS_MARKS,
         ID_COLORS_COMMENTS,
+        ID_COLORS_LINE_NUMBERS,
         ID_COLORS_BASEFONT,
         ID_COLORS_TEXTBACK,
         ID_COLORS_BASEBACK,
@@ -58,6 +59,7 @@
         ID_FONTS_OPERATIONSBRACKETS,
         ID_FONTS_MARKS,
         ID_FONTS_COMMENTS,
+        ID_FONTS_LINE_NUMBERS,
         ID_FONTS_BASE,
         ID_PATH_PLAYER,
         ID_PATH_HELP,
@@ -74,7 +76,29 @@
         ID_COMB_LANG
     };
 
+    struct FontConfig
+    {
+        int ComponentId;
+        SyntaxType Type;
+        wxString DescriptionKey;
+        wxButton *SelectButton;
+        wxTextCtrl *TextSample;
+        wxStaticText *Description;
+    };
+
+    struct ColorConfig
+    {
+        int ComponentId;
+        SyntaxType Type;
+        wxString DescriptionKey;
+        wxButton *SelectButton;
+        wxWindow *ColorSample;
+        wxStaticText *Description;
+    };
+
     WX_DECLARE_STRING_HASH_MAP(int, LangTable);
+    WX_DECLARE_HASH_MAP(int, FontConfig, wxIntegerHash, wxIntegerEqual, FontConfigTable);
+    WX_DECLARE_HASH_MAP(int, ColorConfig, wxIntegerHash, wxIntegerEqual, ColorConfigTable);
 
     class OptionsDialog : public wxDialog
     {
@@ -112,51 +136,18 @@
         wxSpinCtrl * _spnWidth1;
         wxSpinCtrl * _spnWidth2;
         wxSpinCtrl * _spnTabSize;
-        wxTextCtrl * _txtNameFirsLoc;
+        wxTextCtrl * _txtFirstLocName;
 
-        wxWindow * _colorStatements;
-        wxWindow * _colorFunctions;
-        wxWindow * _colorSysVariables;
-        wxWindow * _colorStrings;
-        wxWindow * _colorNumbers;
-        wxWindow * _colorOptsBrts;
-        wxWindow * _colorMarks;
-        wxWindow * _colorComments;
-        wxWindow * _colorBaseFont;
+        FontConfigTable _fontConfigs;
+        ColorConfigTable _colorConfigs;
+
+        wxStaticText *_stTextBackColor;
         wxWindow * _colorTextBack;
+        wxButton * _btnTextBackColor;
+
+        wxStaticText *_stBaseBackColor;
         wxWindow * _colorBaseBack;
-
-        wxButton * _btnClrsStatements;
-        wxButton * _btnClrsFunctions;
-        wxButton * _btnClrsSysVariables;
-        wxButton * _btnClrsStrings;
-        wxButton * _btnClrsNumbers;
-        wxButton * _btnClrsOptsBrts;
-        wxButton * _btnClrsMarks;
-        wxButton * _btnClrsComments;
-        wxButton * _btnClrsBaseFont;
-        wxButton * _btnClrsTextBack;
-        wxButton * _btnClrsBaseBack;
-
-        wxButton * _btnFontsStatements;
-        wxButton * _btnFontsFunctions;
-        wxButton * _btnFontsSysVariables;
-        wxButton * _btnFontsStrings;
-        wxButton * _btnFontsNumbers;
-        wxButton * _btnFontsOptsBrts;
-        wxButton * _btnFontsMarks;
-        wxButton * _btnFontsComments;
-        wxButton * _btnFontsBase;
-
-        wxTextCtrl * _txtFontStatements;
-        wxTextCtrl * _txtFontFunctions;
-        wxTextCtrl * _txtFontSysVariables;
-        wxTextCtrl * _txtFontStrings;
-        wxTextCtrl * _txtFontNumbers;
-        wxTextCtrl * _txtFontOptsBrts;
-        wxTextCtrl * _txtFontMarks;
-        wxTextCtrl * _txtFontComments;
-        wxTextCtrl * _txtFontBase;
+        wxButton * _btnBaseBackColor;
 
         wxTextCtrl * _txtPathPlayer;
         wxTextCtrl * _txtPathHelp;
@@ -184,38 +175,28 @@
         wxStaticText *_stTextCmbLang;
         wxStaticText *_autoSaveUnits;
 
-        wxStaticText *_stText1;
-        wxStaticText *_stText2;
-        wxStaticText *_stText3;
-        wxStaticText *_stText4;
-        wxStaticText *_stText5;
-        wxStaticText *_stText6;
-        wxStaticText *_stText7;
-        wxStaticText *_stText8;
-        wxStaticText *_stText9;
-        wxStaticText *_stText10;
-        wxStaticText *_stText11;
+        wxStaticText *_stPlayerPath;
+        wxStaticText *_stHelpPath;
+        wxStaticText *_stTxt2GamPath;
 
-        wxStaticText *_stText01;
-        wxStaticText *_stText02;
-        wxStaticText *_stText03;
-        wxStaticText *_stText04;
-        wxStaticText *_stText05;
-        wxStaticText *_stText06;
-        wxStaticText *_stText07;
-        wxStaticText *_stText08;
-        wxStaticText *_stText09;
-
-        wxStaticText *_stText001;
-        wxStaticText *_stText002;
-        wxStaticText *_stText003;
-
-        wxStaticText *_stText0001;
+        wxStaticText *_stHotKeys;
 
         HotkeyDataArray _hotkeysData;
 
         wxComboBox * _cmbLang;
         LangTable _langTable;
+
+        void AddSyntaxFontConfig(int componentId, SyntaxType syntaxType, const wxString& descriptionKey, wxFlexGridSizer *topSizerFonts);
+        void UpdateSyntaxFontConfigUi();
+        void SaveSyntaxFontSettings();
+        void ApplySyntaxFontSettings();
+
+        void AddSyntaxColorConfig(int componentId, SyntaxType syntaxType, const wxString& descriptionKey, wxFlexGridSizer *topSizerColors);
+        void UpdateSyntaxColorConfigUi();
+        void SaveSyntaxColorSettings();
+        void ApplySyntaxColorSettings();
+        void UpdateFontColor(int componentId, const wxColour& color);
+        void UpdateFontBackgroundColor(const wxColour& color);
 
         void OnColorSelect(wxCommandEvent &event);
         void OnFontSelect(wxCommandEvent &event);
@@ -231,8 +212,6 @@
         void OnDblClickHotKeysList(wxListEvent &event);
         void OnCloseDialog(wxCloseEvent &event);
 
-        void InitFontsDialog(wxFontDialog &dialog, const wxFont &font);
-        void InitColoursDialog(wxColourDialog &dialog, const wxColour &col);
         void InitOptionsDialog();
         void ApplySettings();
         void EditHotKey();

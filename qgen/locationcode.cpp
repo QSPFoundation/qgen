@@ -29,7 +29,7 @@ LocationCode::LocationCode(wxWindow *owner, ILocationPage *locPage, IControls *c
     _locPage  = locPage;
     _controls = controls;
 
-    _text = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_COLORED);
+    _text = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_CODE);
     wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
     _stTextExec = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
     sizer->Add(_stTextExec, 0, wxALL|wxGROW, 1);

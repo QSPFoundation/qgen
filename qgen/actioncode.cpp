@@ -41,7 +41,7 @@ ActionCode::ActionCode(wxWindow *owner, ILocationPage *locPage, IControls *contr
     sizerPathPict->Add(_pathPicTxtCtrl, 1, wxALL|wxGROW, 1);
     sizerPathPict->Add(_button, 0, wxALL|wxGROW, 1);
 
-    _actCodeTxt = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_COLORED);
+    _actCodeTxt = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_CODE);
 
     topSizer->Add(sizerPathPict, 0, wxALL|wxGROW);
     topSizer->Add(_actCodeTxt, 1, wxALL|wxGROW, 1);
