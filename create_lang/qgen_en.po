@@ -175,8 +175,8 @@ msgstr "Auto create first location:"
 msgid "Auto save every"
 msgstr "Auto save every"
 
-msgid "Average count of actions per location: %.2f\n"
-msgstr "Average count of actions per location: %.2f\n"
+msgid "Average number of actions per location: %.2f\n"
+msgstr "Average number of actions per location: %.2f\n"
 
 msgid "Average location size: %i characters\n"
 msgstr "Average location size: %i characters\n"
@@ -819,8 +819,8 @@ msgstr "Text files (*.txt)|*.txt"
 msgid "Text:"
 msgstr "Text:"
 
-msgid "The new file will replace current game file. Continue?"
-msgstr "The new file will replace current game file. Continue?"
+msgid "The new file will replace the current game file. Continue?"
+msgstr "The new file will replace the current game file. Continue?"
 
 msgid "The specified text was not found"
 msgstr "The specified text was not found"
@@ -831,11 +831,11 @@ msgstr "The specified text was not found anymore."
 msgid "This game contains %i location(s)\n"
 msgstr "This game contains %i location(s)\n"
 
-msgid "This keys combination is used already by the system! Select another combination."
-msgstr "This keys combination is used already by the system! Select another combination."
+msgid "This key combination is used already by the system! Select another combination."
+msgstr "This key combination is used already by the system! Select another combination."
 
-msgid "This keys combination is used already! Select another combination."
-msgstr "This keys combination is used already! Select another combination."
+msgid "This key combination is used already! Select another combination."
+msgstr "This key combination is used already! Select another combination."
 
 msgid "Total game size: %i characters"
 msgstr "Total game size: %i characters"

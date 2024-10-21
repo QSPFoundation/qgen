@@ -809,7 +809,7 @@ void MainFrame::OnImportTxt2Gam( wxCommandEvent &event )
     if (!_controls->GetContainer()->IsEmpty())
     {
         wxMessageDialog dlgMsg(this,
-            _("The new file will replace current game file. Continue?"),
+            _("The new file will replace the current game file. Continue?"),
             _("Import"),
             wxYES_NO | wxCENTRE | wxICON_QUESTION);
         if (dlgMsg.ShowModal() == wxID_NO) return;

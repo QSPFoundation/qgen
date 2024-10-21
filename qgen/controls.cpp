@@ -288,8 +288,8 @@ wxString Controls::GetMessageDesc(long errorNum)
     switch (errorNum)
     {
         case QGEN_MSG_EXISTS: str = _("Such name already exists! Input another name."); break;
-        case QGEN_MSG_EXISTS_HKEY: str = _("This keys combination is used already! Select another combination."); break;
-        case QGEN_MSG_EXISTS_S_HKEY: str = _("This keys combination is used already by the system! Select another combination."); break;
+        case QGEN_MSG_EXISTS_HKEY: str = _("This key combination is used already! Select another combination."); break;
+        case QGEN_MSG_EXISTS_S_HKEY: str = _("This key combination is used already by the system! Select another combination."); break;
         case QGEN_MSG_EMPTYDATA: str = _("An empty field, input the value!"); break;
         case QGEN_MSG_WRONGPASSWORD: str = _("Wrong password!"); break;
         case QGEN_MSG_CANTSAVEGAME: str = _("Can't write file!"); break;
@@ -1404,7 +1404,6 @@ void Controls::MoveActionTo(size_t locIndex, size_t actIndex, size_t moveTo)
 
 wxString Controls::GetGameInfo() const
 {
-    wxString locName, actName, data;
     int totalLocsCount,
         totalEmptyDesc = 0,
         totalEmptyCode = 0,
@@ -1412,9 +1411,7 @@ wxString Controls::GetGameInfo() const
         totalLocsSize = 0,
         totalActs = 0,
         maxLocSize = 0,
-        locSize,
-        actsCount,
-        avgLocSize;
+        avgLocSize = 0;
     float avgActionsPerLoc = 0.0f;
 
     totalLocsCount = _container->GetLocationsCount();
@@ -1422,28 +1419,29 @@ wxString Controls::GetGameInfo() const
     {
         for (int i = 0; i < totalLocsCount; ++i)
         {
-            locName = _container->GetLocationName(i);
+            int locSize = 0;
+            wxString locName = _container->GetLocationName(i);
             locSize = locName.Length();
-            data = _container->GetLocationDesc(i);
-            locSize += data.Length();
-            if (data.Trim(true).Trim(false).IsEmpty())
+            wxString locDesc = _container->GetLocationDesc(i);
+            locSize += locDesc.Length();
+            if (locDesc.Trim(true).Trim(false).IsEmpty())
                 ++totalEmptyDesc;
-            data = _container->GetLocationCode(i);
-            locSize += data.Length();
-            if (data.Trim(true).Trim(false).IsEmpty())
+            wxString locCode = _container->GetLocationCode(i);
+            locSize += locCode.Length();
+            if (locCode.Trim(true).Trim(false).IsEmpty())
                 ++totalEmptyCode;
-            actsCount = _container->GetActionsCount(i);
+            int actsCount = _container->GetActionsCount(i);
             if (actsCount)
             {
                 totalActs += actsCount;
                 for (int j = 0; j < actsCount; ++j)
                 {
-                    actName = _container->GetActionName(i, j);
+                    wxString actName = _container->GetActionName(i, j);
                     locSize += actName.Length();
                     locSize += _container->GetActionPicturePath(i, j).Length();
-                    data = _container->GetActionCode(i, j);
-                    locSize += data.Length();
-                    if (data.Trim(true).Trim(false).IsEmpty())
+                    wxString actCode = _container->GetActionCode(i, j);
+                    locSize += actCode.Length();
+                    if (actCode.Trim(true).Trim(false).IsEmpty())
                         ++totalEmptyActsCode;
                 }
             }
@@ -1451,12 +1449,12 @@ wxString Controls::GetGameInfo() const
             totalLocsSize += locSize;
         }
         avgActionsPerLoc = (float)((double)totalActs / totalLocsCount);
-        avgLocSize = (int)((double)(totalLocsSize / totalLocsCount) + 0.5);
+        avgLocSize = (int)((double)totalLocsSize / totalLocsCount + 0.5);
     }
     wxString message = wxString::Format(_("This game contains %i location(s)\n"), totalLocsCount);
     message += wxString::Format(_("Locations without base description: %i\n"), totalEmptyDesc);
     message += wxString::Format(_("Locations without \"on visit\" code: %i\n"), totalEmptyCode);
-    message += wxString::Format(_("Average count of actions per location: %.2f\n"), avgActionsPerLoc);
+    message += wxString::Format(_("Average number of actions per location: %.2f\n"), avgActionsPerLoc);
     message += wxString::Format(_("Actions without code: %i\n"), totalEmptyActsCode);
     message += wxString::Format(_("Max location size: %i characters\n"), maxLocSize);
     message += wxString::Format(_("Average location size: %i characters\n"), avgLocSize);

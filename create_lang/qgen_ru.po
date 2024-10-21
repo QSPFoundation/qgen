@@ -175,7 +175,7 @@ msgstr "Название начальной локации:"
 msgid "Auto save every"
 msgstr "Автосохранение каждые"
 
-msgid "Average count of actions per location: %.2f\n"
+msgid "Average number of actions per location: %.2f\n"
 msgstr "Среднее число базовых действий на 1 локацию: %.2f\n"
 
 msgid "Average location size: %i characters\n"
@@ -819,7 +819,7 @@ msgstr "Текстовые файлы (*.txt)|*.txt"
 msgid "Text:"
 msgstr "Текст:"
 
-msgid "The new file will replace current game file. Continue?"
+msgid "The new file will replace the current game file. Continue?"
 msgstr "Импортируемый файл заменит текущий файл игры. Продолжить?"
 
 msgid "The specified text was not found"
@@ -831,10 +831,10 @@ msgstr "Указанный текст больше не найден."
 msgid "This game contains %i location(s)\n"
 msgstr "Игра содержит %i локаци(ю/и/й)\n"
 
-msgid "This keys combination is used already by the system! Select another combination."
+msgid "This key combination is used already by the system! Select another combination."
 msgstr "Такая комбинация клавиш уже используется системой, введите другую комбинацию!"
 
-msgid "This keys combination is used already! Select another combination."
+msgid "This key combination is used already! Select another combination."
 msgstr "Такая комбинация клавиш уже используется, введите другую комбинацию!"
 
 msgid "Total game size: %i characters"
