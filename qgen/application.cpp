@@ -28,6 +28,9 @@ bool Application::OnInit()
     if (!wxApp::OnInit())
         return false;
 
+    wxLog::EnableLogging(true);
+    delete wxLog::SetActiveTarget(new wxLogStderr());
+
     wxInitAllImageHandlers();
     wxRegisterId(20000);
     _controls = new Controls();
