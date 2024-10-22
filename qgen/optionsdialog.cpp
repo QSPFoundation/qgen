@@ -175,14 +175,14 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _spnWidth2 = new wxSpinCtrl(_sizes, wxID_ANY, wxT("100"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 1, 100, 100);
     _spnTabSize = new wxSpinCtrl(_sizes, wxID_ANY, wxT("8"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 2, 8, 8);
 
-    topSizerSizes->Add(_stTextHeights, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
-    topSizerSizes->Add(_spnHeights, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerSizes->Add(_stTextWidth1, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
-    topSizerSizes->Add(_spnWidth1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerSizes->Add(_stTextWidth2, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
-    topSizerSizes->Add(_spnWidth2, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerSizes->Add(_stTextTabSize, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
-    topSizerSizes->Add(_spnTabSize, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerSizes->Add(_stTextHeights, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 2);
+    topSizerSizes->Add(_spnHeights, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
+    topSizerSizes->Add(_stTextWidth1, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 2);
+    topSizerSizes->Add(_spnWidth1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
+    topSizerSizes->Add(_stTextWidth2, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 2);
+    topSizerSizes->Add(_spnWidth2, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
+    topSizerSizes->Add(_stTextTabSize, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 2);
+    topSizerSizes->Add(_spnTabSize, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
 
     topSizerSizes->AddGrowableCol(0, 1);
 
@@ -471,8 +471,8 @@ void OptionsDialog::ReCreateGUI()
     _chkCollapseCode->SetLabel(_("Collapse blocks of code when location gets opened"));
     // Page Sizes
     _notebook->SetPageText(2, _("Sizes"));
-    _stTextHeights->SetLabel(_("Relative height of description and location\ncode fields to the tab's height (%):"));
-    _stTextWidth1->SetLabel(_("Relative width of location description field\nto the tab's width (%):"));
+    _stTextHeights->SetLabel(_("Relative height of description and location\ncode fields to the tab height (%):"));
+    _stTextWidth1->SetLabel(_("Relative width of location description field\nto the tab width (%):"));
     _stTextWidth2->SetLabel(_("Relative width of actions list to the tab width (%):"));
     _stTextTabSize->SetLabel(_("Size of TAB:"));
     // Page Colors
