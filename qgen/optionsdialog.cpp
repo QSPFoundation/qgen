@@ -134,7 +134,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     topSizerGeneral->Add(_chkOpenLastGame, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerGeneral->AddStretchSpacer(0);
     topSizerGeneral->Add(_stTextCmbLang, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
-    topSizerGeneral->Add(_cmbLang, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerGeneral->Add(_cmbLang, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
     topSizerGeneral->AddGrowableCol(0, 1);
 
     _general->SetSizerAndFit(topSizerGeneral);
