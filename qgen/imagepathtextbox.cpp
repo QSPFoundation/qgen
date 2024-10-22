@@ -29,7 +29,7 @@ BEGIN_EVENT_TABLE(ImagePathTextBox, wxTextCtrl)
 END_EVENT_TABLE()
 
 ImagePathTextBox::ImagePathTextBox(wxWindow *owner, wxWindowID id, ILocationPage *locPage, IControls *controls) :
-    wxTextCtrl(owner, id, wxEmptyString, wxDefaultPosition, wxSize(1, 1), wxTE_MULTILINE)
+    wxTextCtrl(owner, id)
 {
     _locPage = locPage;
     _controls = controls;
@@ -49,16 +49,6 @@ void ImagePathTextBox::Update(bool isFromObservable)
     SetFont(settings->GetFont(SYNTAX_BASE));
     SetForegroundColour(settings->GetColour(SYNTAX_BASE));
     SetBackgroundColour(settings->GetTextBackColour());
-#ifdef __WXMSW__
-    ToggleWindowStyle(wxTE_MULTILINE);
-    SetInitialSize(wxSize(1, GetBestSize().GetHeight()));
-    ToggleWindowStyle(wxTE_MULTILINE);
-#else
-    wxTextCtrl *temp = new wxTextCtrl(GetParent(), wxID_ANY);
-    int size = temp->GetSize().GetHeight() - temp->GetCharHeight();
-    SetInitialSize(wxSize(1, GetCharHeight() + size));
-    delete temp;
-#endif
     Refresh();
 }
 
