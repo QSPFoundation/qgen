@@ -195,7 +195,7 @@
         void UpdateSyntaxColorConfigUi();
         void SaveSyntaxColorSettings();
         void ApplySyntaxColorSettings();
-        void UpdateFontColor(int componentId, const wxColour& color);
+        void UpdateFontColor(SyntaxType syntaxType, const wxColour& color);
         void UpdateFontBackgroundColor(const wxColour& color);
 
         void OnColorSelect(wxCommandEvent &event);

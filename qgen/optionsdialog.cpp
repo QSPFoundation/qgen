@@ -425,10 +425,14 @@ void OptionsDialog::ApplySyntaxColorSettings()
     }
 }
 
-void OptionsDialog::UpdateFontColor(int componentId, const wxColour& color)
+void OptionsDialog::UpdateFontColor(SyntaxType syntaxType, const wxColour& color)
 {
-    FontConfig& config = _fontConfigs[componentId];
-    config.TextSample->SetForegroundColour(color);
+    for (FontConfigTable::iterator it = _fontConfigs.begin(); it != _fontConfigs.end(); ++it)
+    {
+        FontConfig& config = it->second;
+        if (config.Type == syntaxType)
+            config.TextSample->SetForegroundColour(color);
+    }
 }
 
 void OptionsDialog::UpdateFontBackgroundColor(const wxColour& color)
@@ -553,7 +557,7 @@ void OptionsDialog::OnColorSelect(wxCommandEvent &event)
                 wxColour color = dialog.GetColourData().GetColour();
                 colorSample->SetBackgroundColour(color);
                 colorSample->Refresh();
-                UpdateFontColor(config.ComponentId, color);
+                UpdateFontColor(config.Type, color);
                 _btnApply->Enable();
             }
             break;
