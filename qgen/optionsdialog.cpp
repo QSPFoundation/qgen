@@ -90,7 +90,6 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _notebook->AddPage(_general, wxEmptyString);
 
     wxFlexGridSizer *topSizerGeneral = new wxFlexGridSizer(2);
-    wxSizer *sizerAutoSave = new wxBoxSizer(wxHORIZONTAL);
 
     _chkAutoSave = new wxCheckBox(_general, ID_AUTO_SAVE, wxEmptyString);
     _chkFirstLoc = new wxCheckBox(_general, ID_FIRST_LOC, wxEmptyString);
@@ -112,30 +111,31 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
 
     _autoSaveUnits  = new wxStaticText(_general, wxID_ANY, wxEmptyString);
 
-    sizerAutoSave->Add(_spnAutoSaveMin);
+    wxSizer* sizerAutoSave = new wxBoxSizer(wxHORIZONTAL);
+    sizerAutoSave->Add(_spnAutoSaveMin, 0, wxALIGN_CENTER_VERTICAL);
     sizerAutoSave->Add(_autoSaveUnits, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 2);
 
-    topSizerGeneral->Add(_chkAutoSave, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerGeneral->Add(sizerAutoSave, 0, wxALL, 2);
-    topSizerGeneral->Add(_chkFirstLoc, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerGeneral->Add(_txtFirstLocName, 0, wxALL|wxGROW, 2);
-    topSizerGeneral->Add(_chkDescOfLoc, 0, wxALL, 5);
+    topSizerGeneral->Add(_chkAutoSave, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerGeneral->Add(sizerAutoSave, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
+    topSizerGeneral->Add(_chkFirstLoc, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerGeneral->Add(_txtFirstLocName, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
+    topSizerGeneral->Add(_chkDescOfLoc, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerGeneral->AddStretchSpacer(0);
-    topSizerGeneral->Add(_chkOpeningLoc, 0, wxALL, 5);
+    topSizerGeneral->Add(_chkOpeningLoc, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerGeneral->AddStretchSpacer(0);
-    topSizerGeneral->Add(_chkOpeningAct, 0, wxALL, 5);
+    topSizerGeneral->Add(_chkOpeningAct, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerGeneral->AddStretchSpacer(0);
-    topSizerGeneral->Add(_chkOnLocActIcons, 0, wxALL, 5);
+    topSizerGeneral->Add(_chkOnLocActIcons, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerGeneral->AddStretchSpacer(0);
-    topSizerGeneral->Add(_chkLocDescVisible, 0, wxALL, 5);
+    topSizerGeneral->Add(_chkLocDescVisible, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerGeneral->AddStretchSpacer(0);
-    topSizerGeneral->Add(_chkLocActsVisible, 0, wxALL, 5);
+    topSizerGeneral->Add(_chkLocActsVisible, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerGeneral->AddStretchSpacer(0);
-    topSizerGeneral->Add(_chkOpenLastGame, 0, wxALL, 5);
+    topSizerGeneral->Add(_chkOpenLastGame, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerGeneral->AddStretchSpacer(0);
-    topSizerGeneral->Add(_stTextCmbLang, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerGeneral->Add(_cmbLang, 0, wxALL, 5);
-    topSizerGeneral->AddGrowableCol(1, 0);
+    topSizerGeneral->Add(_stTextCmbLang, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerGeneral->Add(_cmbLang, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerGeneral->AddGrowableCol(0, 1);
 
     _general->SetSizerAndFit(topSizerGeneral);
     _general->SetAutoLayout(true);
@@ -149,13 +149,13 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _chkShowLinesNums = new wxCheckBox(_editor, wxID_ANY, wxEmptyString);
     _chkCollapseCode = new wxCheckBox(_editor, wxID_ANY, wxEmptyString);
 
-    topSizerEditor->Add(_chkWrapLines, 0, wxALL, 5);
+    topSizerEditor->Add(_chkWrapLines, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerEditor->AddStretchSpacer(0);
-    topSizerEditor->Add(_chkShowLinesNums, 0, wxALL, 5);
+    topSizerEditor->Add(_chkShowLinesNums, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerEditor->AddStretchSpacer(0);
-    topSizerEditor->Add(_chkCollapseCode, 0, wxALL, 5);
+    topSizerEditor->Add(_chkCollapseCode, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerEditor->AddStretchSpacer(0);
-    topSizerEditor->AddGrowableCol(1, 0);
+    topSizerEditor->AddGrowableCol(0, 1);
 
     _editor->SetSizerAndFit(topSizerEditor);
     _editor->SetAutoLayout(true);
@@ -175,14 +175,14 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _spnWidth2 = new wxSpinCtrl(_sizes, wxID_ANY, wxT("100"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 1, 100, 100);
     _spnTabSize = new wxSpinCtrl(_sizes, wxID_ANY, wxT("8"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 2, 8, 8);
 
-    topSizerSizes->Add(_stTextHeights, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerSizes->Add(_spnHeights, 0, wxALL, 5);
-    topSizerSizes->Add(_stTextWidth1, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerSizes->Add(_spnWidth1, 0, wxALL, 5);
-    topSizerSizes->Add(_stTextWidth2, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerSizes->Add(_spnWidth2, 0, wxALL, 5);
-    topSizerSizes->Add(_stTextTabSize, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerSizes->Add(_spnTabSize, 0, wxALL, 5);
+    topSizerSizes->Add(_stTextHeights, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerSizes->Add(_spnHeights, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerSizes->Add(_stTextWidth1, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerSizes->Add(_spnWidth1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerSizes->Add(_stTextWidth2, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerSizes->Add(_spnWidth2, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerSizes->Add(_stTextTabSize, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerSizes->Add(_spnTabSize, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
 
     topSizerSizes->AddGrowableCol(0, 1);
 
@@ -198,16 +198,16 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _colorBaseBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
     _btnBaseBackColor = new wxButton(_colors, ID_COLORS_BASEBACK, wxEmptyString);
 
-    topSizerColors->Add(_stBaseBackColor, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerColors->Add(_colorBaseBack, 0, wxALL|wxALIGN_RIGHT, 2);
+    topSizerColors->Add(_stBaseBackColor, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerColors->Add(_colorBaseBack, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
     topSizerColors->Add(_btnBaseBackColor, 0, wxALIGN_CENTER_VERTICAL);
 
     _stTextBackColor = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
     _colorTextBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
     _btnTextBackColor = new wxButton(_colors, ID_COLORS_TEXTBACK, wxEmptyString);
 
-    topSizerColors->Add(_stTextBackColor, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerColors->Add(_colorTextBack, 0, wxALL|wxALIGN_RIGHT, 2);
+    topSizerColors->Add(_stTextBackColor, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerColors->Add(_colorTextBack, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
     topSizerColors->Add(_btnTextBackColor, 0, wxALIGN_CENTER_VERTICAL);
 
     AddSyntaxColorConfig(ID_COLORS_BASEFONT, SYNTAX_BASE, wxT("Base font color:"), topSizerColors);
@@ -242,7 +242,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     AddSyntaxFontConfig(ID_FONTS_MARKS, SYNTAX_LABELS, wxT("Labels font:"), topSizerFonts);
     AddSyntaxFontConfig(ID_FONTS_COMMENTS, SYNTAX_COMMENTS, wxT("Comments font:"), topSizerFonts);
 
-    topSizerFonts->AddGrowableCol(1, 0);
+    topSizerFonts->AddGrowableCol(1, 1);
 
     _fonts->SetSizerAndFit(topSizerFonts);
     _fonts->SetAutoLayout(true);
@@ -264,16 +264,16 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _btnPathHelp = new wxButton(_paths, ID_PATH_HELP, wxEmptyString);
     _btnPathTxt2Gam = new wxButton(_paths, ID_PATH_TXT2GAM, wxEmptyString);
 
-    topSizerPaths->Add(_stPlayerPath, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerPaths->Add(_txtPathPlayer, 0, wxALL|wxGROW, 2);
+    topSizerPaths->Add(_stPlayerPath, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerPaths->Add(_txtPathPlayer, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 2);
     topSizerPaths->Add(_btnPathPlayer, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerPaths->Add(_stHelpPath, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerPaths->Add(_txtPathHelp, 0, wxALL|wxGROW, 2);
+    topSizerPaths->Add(_stHelpPath, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerPaths->Add(_txtPathHelp, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 2);
     topSizerPaths->Add(_btnPathHelp, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerPaths->Add(_stTxt2GamPath, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerPaths->Add(_txtPathTxt2Gam, 0, wxALL|wxGROW, 2);
+    topSizerPaths->Add(_stTxt2GamPath, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerPaths->Add(_txtPathTxt2Gam, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 2);
     topSizerPaths->Add(_btnPathTxt2Gam, 0, wxALIGN_CENTER_VERTICAL);
-    topSizerPaths->AddGrowableCol(1, 0);
+    topSizerPaths->AddGrowableCol(1, 1);
 
     _paths->SetSizerAndFit(topSizerPaths);
     _paths->SetAutoLayout(true);
@@ -298,7 +298,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     btnHotkKeysSizer->Add(_btnEditHotKey, wxALL, 5);
     btnHotkKeysSizer->Add(_btnDelHotKey, wxALL, 5);
 
-    topSizerHotKeys->Add(_stHotKeys, 0, wxTOP|wxLEFT, 5);
+    topSizerHotKeys->Add(_stHotKeys, 0, wxALL, 5);
     topSizerHotKeys->Add(_lstHotKeys, 1, wxALL|wxGROW, 5);
     topSizerHotKeys->Add(btnHotkKeysSizer, 0, wxGROW);
 
@@ -337,8 +337,8 @@ void OptionsDialog::AddSyntaxFontConfig(int componentId, SyntaxType syntaxType, 
     config.TextSample = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
     config.SelectButton = new wxButton(_fonts, componentId, wxEmptyString);
 
-    topSizerFonts->Add(config.Description, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerFonts->Add(config.TextSample, 0, wxGROW|wxALL, 2);
+    topSizerFonts->Add(config.Description, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
+    topSizerFonts->Add(config.TextSample, 1, wxALL|wxGROW, 2);
     topSizerFonts->Add(config.SelectButton, 0, wxALIGN_CENTER_VERTICAL);
 
     _fontConfigs[componentId] = config;
@@ -390,8 +390,8 @@ void OptionsDialog::AddSyntaxColorConfig(int componentId, SyntaxType syntaxType,
     config.ColorSample = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
     config.SelectButton = new wxButton(_colors, componentId, wxEmptyString);
 
-    topSizerColors->Add(config.Description, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
-    topSizerColors->Add(config.ColorSample, 0, wxALL|wxALIGN_RIGHT, 2);
+    topSizerColors->Add(config.Description, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerColors->Add(config.ColorSample, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
     topSizerColors->Add(config.SelectButton, 0, wxALIGN_CENTER_VERTICAL);
 
     _colorConfigs[componentId] = config;
