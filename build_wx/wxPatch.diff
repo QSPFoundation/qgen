@@ -571,7 +571,7 @@ new file mode 100644
 index 0000000000..22f635b086
 --- /dev/null
 +++ b/src/stc/lexilla/lexers/LexQSP.cxx
-@@ -0,0 +1,281 @@
+@@ -0,0 +1,298 @@
 +// Scintilla source code edit control
 +/** @file LexQSP.cxx
 + ** Lexer for QSP.
@@ -600,6 +600,23 @@ index 0000000000..22f635b086
 +#include "LexerModule.h"
 +
 +using namespace Lexilla;
++
++/*
++ * Definitions of states:
++ * SCE_B_DEFAULT - Line of code / the normal code
++ * SCE_B_CONSTANT - Statement expected
++ * SCE_B_COMMENT - Comments
++ * SCE_B_STRING - String 1 (apostrophes)
++ * SCE_B_PREPROCESSOR - String 1 (apostrophes) in the comments
++ * SCE_B_STRINGEOL - String 2 (quotes)
++ * SCE_B_DATE - String 2 (quotes) in the comments
++ * SCE_B_ASM - Line continuation (" _")
++ * SCE_B_ERROR - Line continuation (" _") in the comments
++ * SCE_B_OPERATOR - Delimiter (+, -, *, /, etc)
++ * SCE_B_LABEL - Label
++ * SCE_B_NUMBER - Digits
++ * SCE_B_IDENTIFIER - Identifier
++*/
 +
 +static bool IsComment(Accessor &styler, Sci_Position pos, Sci_Position len) {
 +    char style = styler.StyleAt(pos);
@@ -647,7 +664,7 @@ index 0000000000..22f635b086
 +        sc.state != SCE_B_PREPROCESSOR && sc.state != SCE_B_DATE &&
 +        sc.state != SCE_B_ASM && sc.state != SCE_B_ERROR &&
 +        !commentState) {
-+        sc.SetState(SCE_B_CONSTANT); // Begin of line
++        sc.SetState(SCE_B_CONSTANT); // Statement expected
 +    }
 +
 +    while (sc.More()) {
@@ -734,8 +751,8 @@ index 0000000000..22f635b086
 +                sc.SetState(SCE_B_IDENTIFIER);
 +            } else if (isoperator(static_cast<char>(sc.ch)) && (sc.state != SCE_B_CONSTANT || (sc.ch != ' ' && sc.ch != '\t'))) {
 +                sc.SetState(SCE_B_OPERATOR);
-+                if (sc.ch == '&') {
-+                    sc.ForwardSetState(SCE_B_CONSTANT); // Begin of line
++                if (sc.ch == '&' || sc.ch == ':') {
++                    sc.ForwardSetState(SCE_B_CONSTANT); // Statement expected
 +                    continue;
 +                }
 +            }
@@ -756,7 +773,7 @@ index 0000000000..22f635b086
 +                if (sc.state == SCE_B_COMMENT)
 +                    ++commentState;
 +                else {
-+                    sc.ForwardSetState(SCE_B_CONSTANT); // Begin of line
++                    sc.ForwardSetState(SCE_B_CONSTANT); // Statement expected
 +                    continue;
 +                }
 +            } else if (sc.ch == '}' && lineState) {
@@ -770,7 +787,7 @@ index 0000000000..22f635b086
 +                sc.state != SCE_B_PREPROCESSOR && sc.state != SCE_B_DATE &&
 +                sc.state != SCE_B_ASM && sc.state != SCE_B_ERROR &&
 +                !commentState) {
-+                sc.SetState(SCE_B_CONSTANT); // Begin of line
++                sc.SetState(SCE_B_CONSTANT); // Statement expected
 +            }
 +        }
 +        sc.Forward();
