@@ -149,12 +149,18 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _chkShowLinesNums = new wxCheckBox(_editor, wxID_ANY, wxEmptyString);
     _chkCollapseCode = new wxCheckBox(_editor, wxID_ANY, wxEmptyString);
 
+    _stTextTabSize = new wxStaticText(_editor, wxID_ANY, wxEmptyString);
+    _spnTabSize = new wxSpinCtrl(_editor, wxID_ANY, wxT("8"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 2, 8, 8);
+
     topSizerEditor->Add(_chkWrapLines, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerEditor->AddStretchSpacer(0);
     topSizerEditor->Add(_chkShowLinesNums, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerEditor->AddStretchSpacer(0);
     topSizerEditor->Add(_chkCollapseCode, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerEditor->AddStretchSpacer(0);
+    topSizerEditor->Add(_stTextTabSize, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerEditor->Add(_spnTabSize, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
+
     topSizerEditor->AddGrowableCol(0, 1);
 
     _editor->SetSizerAndFit(topSizerEditor);
@@ -168,21 +174,17 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _stTextHeights = new wxStaticText(_sizes, wxID_ANY, wxEmptyString);
     _stTextWidth1 = new wxStaticText(_sizes, wxID_ANY, wxEmptyString);
     _stTextWidth2 = new wxStaticText(_sizes, wxID_ANY, wxEmptyString);
-    _stTextTabSize = new wxStaticText(_sizes, wxID_ANY, wxEmptyString);
 
     _spnHeights = new wxSpinCtrl(_sizes, wxID_ANY, wxT("100"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 1, 100, 100);
     _spnWidth1 = new wxSpinCtrl(_sizes, wxID_ANY, wxT("100"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 1, 100, 100);
     _spnWidth2 = new wxSpinCtrl(_sizes, wxID_ANY, wxT("100"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 1, 100, 100);
-    _spnTabSize = new wxSpinCtrl(_sizes, wxID_ANY, wxT("8"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 2, 8, 8);
 
-    topSizerSizes->Add(_stTextHeights, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 2);
+    topSizerSizes->Add(_stTextHeights, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerSizes->Add(_spnHeights, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
-    topSizerSizes->Add(_stTextWidth1, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 2);
+    topSizerSizes->Add(_stTextWidth1, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerSizes->Add(_spnWidth1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
-    topSizerSizes->Add(_stTextWidth2, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 2);
+    topSizerSizes->Add(_stTextWidth2, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerSizes->Add(_spnWidth2, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
-    topSizerSizes->Add(_stTextTabSize, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 2);
-    topSizerSizes->Add(_spnTabSize, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
 
     topSizerSizes->AddGrowableCol(0, 1);
 

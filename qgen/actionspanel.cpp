@@ -36,20 +36,20 @@ ActionsPanel::ActionsPanel(wxWindow *owner, ILocationPage *locPage, ActionCode *
 
     _actList = new ActionsListBox(this, wxID_ANY, locPage, actCode, controls);
 
-    _addActButton = new wxBitmapButton(this, ID_ACTION_ADD, wxBitmap(toolbar_action_new_xpm), wxDefaultPosition, wxSize(32, 28));
-    _renActButton = new wxBitmapButton(this, ID_ACTION_REN, wxBitmap(toolbar_action_rename_xpm), wxDefaultPosition, wxSize(32, 28));
-    _delActButton = new wxBitmapButton(this, ID_ACTION_DEL, wxBitmap(toolbar_action_delete_xpm), wxDefaultPosition, wxSize(32, 28));
+    _addActButton = new wxBitmapButton(this, ID_ACTION_ADD, wxBitmap(toolbar_action_new_xpm), wxDefaultPosition, wxSize(32, 32));
+    _renActButton = new wxBitmapButton(this, ID_ACTION_REN, wxBitmap(toolbar_action_rename_xpm), wxDefaultPosition, wxSize(32, 32));
+    _delActButton = new wxBitmapButton(this, ID_ACTION_DEL, wxBitmap(toolbar_action_delete_xpm), wxDefaultPosition, wxSize(32, 32));
 
-    wxSizer* sizer2 = new wxBoxSizer(wxHORIZONTAL);
-    sizer2->Add(_addActButton, 0, wxRIGHT, 4);
-    sizer2->Add(_renActButton, 0, wxRIGHT, 4);
-    sizer2->Add(_delActButton, 0, wxRIGHT, 4);
+    wxSizer* sizerButtons = new wxBoxSizer(wxVERTICAL);
+    sizerButtons->Add(_addActButton, 0, wxALL, 2);
+    sizerButtons->Add(_renActButton, 0, wxALL, 2);
+    sizerButtons->Add(_delActButton, 0, wxALL, 2);
 
-    wxSizer *sizer1 = new wxBoxSizer(wxVERTICAL);
-    sizer1->Add(sizer2);
-    sizer1->Add(_actList, 1, wxTOP|wxGROW, 2);
+    wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+    sizer->Add(sizerButtons);
+    sizer->Add(_actList, 1, wxGROW);
 
-    SetSizerAndFit(sizer1);
+    SetSizerAndFit(sizer);
     SetAutoLayout(true);
 }
 

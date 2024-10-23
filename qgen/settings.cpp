@@ -143,11 +143,11 @@ void Settings::LoadSettings()
     cfg.Read(wxT("General/CreateFirstLoc"), &_isCreateFirstLoc);
     cfg.Read(wxT("General/FirstLocName"), &_firstLocName);
     cfg.Read(wxT("General/ShowLocsIcons"), &_isShowLocsIcons);
-    cfg.Read(wxT("General/TabSize"), &_tabSize);
     cfg.Read(wxT("General/Language"), &langName);
     cfg.Read(wxT("Editor/WrapLines"), &_isWrapLines);
     cfg.Read(wxT("Editor/ShowLinesNums"), &_isShowLinesNums);
     cfg.Read(wxT("Editor/CollapseCode"), &_isCollapseCode);
+    cfg.Read(wxT("Editor/TabSize"), &_tabSize);
     cfg.Read(wxT("Fonts/Statements"), &_font[SYNTAX_STATEMENTS]);
     cfg.Read(wxT("Fonts/Functions"), &_font[SYNTAX_FUNCTIONS]);
     cfg.Read(wxT("Fonts/SysVariables"), &_font[SYNTAX_SYS_VARIABLES]);
@@ -222,11 +222,11 @@ void Settings::SaveSettings()
     cfg.Write(wxT("General/CreateFirstLoc"), _isCreateFirstLoc);
     cfg.Write(wxT("General/FirstLocName"), _firstLocName);
     cfg.Write(wxT("General/ShowLocsIcons"), _isShowLocsIcons);
-    cfg.Write(wxT("General/TabSize"), _tabSize);
     cfg.Write(wxT("General/Language"), langName);
     cfg.Write(wxT("Editor/WrapLines"), _isWrapLines);
     cfg.Write(wxT("Editor/ShowLinesNums"),_isShowLinesNums);
     cfg.Write(wxT("Editor/CollapseCode"), _isCollapseCode);
+    cfg.Write(wxT("Editor/TabSize"), _tabSize);
     cfg.Write(wxT("Fonts/Statements"), _font[SYNTAX_STATEMENTS]);
     cfg.Write(wxT("Fonts/Functions"), _font[SYNTAX_FUNCTIONS]);
     cfg.Write(wxT("Fonts/SysVariables"), _font[SYNTAX_SYS_VARIABLES]);
