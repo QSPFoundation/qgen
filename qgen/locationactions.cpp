@@ -29,7 +29,7 @@ LocationActions::LocationActions(wxWindow *owner, ILocationPage *locPage, IContr
     _controls = controls;
     _actsWidth = -1;
 
-    _splitterv_down = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3DSASH);
+    _splitterv_down = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH);
     _actCode = new ActionCode(_splitterv_down, _locPage, _controls);
     _actPanel = new ActionsPanel(_splitterv_down, _locPage, _actCode, _controls);
     _splitterv_down->SetMinimumPaneSize(1);
@@ -44,6 +44,7 @@ LocationActions::LocationActions(wxWindow *owner, ILocationPage *locPage, IContr
 
     SetSizerAndFit(sizerDown);
     SetAutoLayout(true);
+    FitInside();
 
     Update();
     _actsWidth = -1;
@@ -62,7 +63,7 @@ void LocationActions::Update(bool isFromObservable)
     int pageWidth = _locPage->GetPageWidth();
     _splitterv_down->SetSashGravity(settings->GetWidthsCoeff2());
     if (_actsWidth < 0 || _actsWidth > pageWidth)
-        _actsWidth = pageWidth * settings->GetWidthsCoeff2();
+        _actsWidth = pageWidth * settings->GetWidthsCoeff2() - _splitterv_down->GetSashSize();
     Freeze();
     _splitterv_down->SplitVertically(_actPanel, _actCode);
     _splitterv_down->SetSashPosition(_actsWidth);

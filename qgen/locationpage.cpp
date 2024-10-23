@@ -30,9 +30,9 @@ LocationPage::LocationPage(wxAuiNotebook *owner, IControls *controls) : wxPanel(
     _descWidth = _actsHeight = -1;
     _isFixed = false;
 
-    _splitterh = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3DSASH);
+    _splitterh = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH);
 
-    _splitterv_up = new wxSplitterWindow(_splitterh, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3DSASH);
+    _splitterv_up = new wxSplitterWindow(_splitterh, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH);
     _locDesc = new LocationDesc(_splitterv_up, this, _controls);
     _locCode = new LocationCode(_splitterv_up, this, _controls);
     _splitterv_up->SetMinimumPaneSize(1);
@@ -52,6 +52,7 @@ LocationPage::LocationPage(wxAuiNotebook *owner, IControls *controls) : wxPanel(
 
     SetSizerAndFit(sizerMain);
     SetAutoLayout(true);
+    FitInside();
 
     Update();
     _descWidth = _actsHeight = -1;
@@ -77,7 +78,7 @@ void LocationPage::LocDescVisible(bool isVisible)
     {
         _splitterv_up->SetSashGravity(_settings->GetWidthsCoeff1());
         if (_descWidth < 0 || _descWidth > pageWidth)
-            _descWidth = pageWidth * _settings->GetWidthsCoeff1();
+            _descWidth = pageWidth * _settings->GetWidthsCoeff1() - _splitterv_up->GetSashSize();
         Freeze();
         _splitterv_up->SplitVertically(_locDesc, _locCode);
         _splitterv_up->SetSashPosition(_descWidth);
@@ -97,7 +98,7 @@ void LocationPage::LocActsVisible(bool isVisible)
     {
         _splitterh->SetSashGravity(_settings->GetHeightsCoeff());
         if (_actsHeight < 0 || _actsHeight > pageHeight)
-            _actsHeight = pageHeight * _settings->GetHeightsCoeff();
+            _actsHeight = pageHeight * _settings->GetHeightsCoeff() - _splitterh->GetSashSize();
         Freeze();
         _splitterh->SplitHorizontally(_splitterv_up, _locActs);
         _splitterh->SetSashPosition(_actsHeight);
