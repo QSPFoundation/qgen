@@ -38,10 +38,6 @@ LocationPage::LocationPage(wxAuiNotebook *owner, IControls *controls) : wxPanel(
     _splitterv_up->SetMinimumPaneSize(1);
     _splitterv_up->SplitVertically(_locDesc, _locCode);
 
-    wxSizer *sizerUp = new wxBoxSizer(wxVERTICAL);
-    sizerUp->Add(_splitterv_up, 1, wxGROW);
-
-    // ----------------------------------------
     _locActs = new LocationActions(_splitterh, this, _controls);
 
     _splitterh->SetMinimumPaneSize(1);
