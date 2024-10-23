@@ -135,6 +135,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     topSizerGeneral->AddStretchSpacer(0);
     topSizerGeneral->Add(_stTextCmbLang, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerGeneral->Add(_cmbLang, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
+
     topSizerGeneral->AddGrowableCol(0, 1);
 
     _general->SetSizerAndFit(topSizerGeneral);
@@ -255,15 +256,15 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     wxFlexGridSizer *topSizerPaths = new wxFlexGridSizer(3);
 
     _stPlayerPath = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
-    _stHelpPath = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
-    _stTxt2GamPath = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
-
     _txtPathPlayer = new wxTextCtrl(_paths, wxID_ANY);
-    _txtPathHelp = new wxTextCtrl(_paths, wxID_ANY);
-    _txtPathTxt2Gam = new wxTextCtrl(_paths, wxID_ANY);
-
     _btnPathPlayer = new wxButton(_paths, ID_PATH_PLAYER, wxEmptyString);
+
+    _stHelpPath = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
+    _txtPathHelp = new wxTextCtrl(_paths, wxID_ANY);
     _btnPathHelp = new wxButton(_paths, ID_PATH_HELP, wxEmptyString);
+
+    _stTxt2GamPath = new wxStaticText(_paths, wxID_ANY, wxEmptyString);
+    _txtPathTxt2Gam = new wxTextCtrl(_paths, wxID_ANY);
     _btnPathTxt2Gam = new wxButton(_paths, ID_PATH_TXT2GAM, wxEmptyString);
 
     topSizerPaths->Add(_stPlayerPath, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
@@ -275,6 +276,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     topSizerPaths->Add(_stTxt2GamPath, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
     topSizerPaths->Add(_txtPathTxt2Gam, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 2);
     topSizerPaths->Add(_btnPathTxt2Gam, 0, wxALIGN_CENTER_VERTICAL);
+
     topSizerPaths->AddGrowableCol(1, 1);
 
     _paths->SetSizerAndFit(topSizerPaths);
@@ -510,7 +512,12 @@ void OptionsDialog::ReCreateGUI()
     _btnEditHotKey->SetLabel(_("Edit..."));
     _btnDelHotKey->SetLabel(_("Delete"));
 #endif
-    GetSizer()->SetSizeHints(this);
+    for (size_t i = 0; i < _notebook->GetPageCount(); ++i)
+    {
+        wxSizer *pageSizer = _notebook->GetPage(i)->GetSizer();
+        if (pageSizer) pageSizer->Layout();
+    }
+    GetSizer()->Layout();
 }
 
 void OptionsDialog::OnColorSelect(wxCommandEvent &event)
