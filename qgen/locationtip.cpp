@@ -21,7 +21,7 @@
 
 #include "locationtip.h"
 
-IMPLEMENT_CLASS(LocationTip, wxFrame);
+IMPLEMENT_CLASS(LocationTip, wxPopupWindow);
 
 LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
     wxPopupWindow(parent)
