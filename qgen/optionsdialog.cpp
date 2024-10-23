@@ -111,7 +111,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
 
     _autoSaveUnits  = new wxStaticText(_general, wxID_ANY, wxEmptyString);
 
-    wxSizer* sizerAutoSave = new wxBoxSizer(wxHORIZONTAL);
+    wxSizer *sizerAutoSave = new wxBoxSizer(wxHORIZONTAL);
     sizerAutoSave->Add(_spnAutoSaveMin, 0, wxALIGN_CENTER_VERTICAL);
     sizerAutoSave->Add(_autoSaveUnits, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 2);
 
@@ -317,7 +317,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
 
     SetSizerAndFit(topSizer);
     SetAutoLayout(true);
-    SetMinClientSize(wxSize(500, 400));
+    SetMinClientSize(wxSize(500, 450));
     InitOptionsDialog();
     _btnOK->SetDefault();
     ReCreateGUI();
