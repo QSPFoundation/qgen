@@ -35,7 +35,7 @@
         DECLARE_CLASS(ActionCode)
         DECLARE_EVENT_TABLE()
     private:
-        ImagePathTextBox * _pathPicTxtCtrl;
+        ImagePathTextBox * _picPathTxt;
         SyntaxTextBox * _actCodeTxt;
         wxButton * _button;
         IControls * _controls;
