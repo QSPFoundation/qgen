@@ -39,6 +39,7 @@
         ActionCode * _actCode;
         wxSplitterWindow * _splitterv_down;
         wxStaticText * _stTextBaseActions;
+        int _actsWidth;
 
         void ShowActions();
     public:

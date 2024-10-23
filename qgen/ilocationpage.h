@@ -27,6 +27,8 @@
     public:
         virtual size_t GetLocationIndex() = 0;
         virtual void RefreshActions() = 0;
+        virtual int GetPageWidth() const = 0;
+        virtual int GetPageHeight() const = 0;
     };
 
 #endif

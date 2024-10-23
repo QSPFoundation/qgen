@@ -30,7 +30,7 @@ LocationPage::LocationPage(wxAuiNotebook *owner, IControls *controls) : wxPanel(
     _descWidth = _actsHeight = -1;
     _isFixed = false;
 
-    _splitterh = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_NOBORDER);
+    _splitterh = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3DSASH);
 
     _splitterv_up = new wxSplitterWindow(_splitterh, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3DSASH);
     _locDesc = new LocationDesc(_splitterv_up, this, _controls);
@@ -40,9 +40,6 @@ LocationPage::LocationPage(wxAuiNotebook *owner, IControls *controls) : wxPanel(
 
     wxSizer *sizerUp = new wxBoxSizer(wxVERTICAL);
     sizerUp->Add(_splitterv_up, 1, wxGROW);
-
-    _splitterh->SetSizer(sizerUp);
-    _splitterv_up->SetAutoLayout(true);
 
     // ----------------------------------------
     _locActs = new LocationActions(_splitterh, this, _controls);
@@ -75,7 +72,7 @@ void LocationPage::Update(bool isFromObservable)
 
 void LocationPage::LocDescVisible(bool isVisible)
 {
-    int pageWidth  = GetParent()->GetClientSize().GetWidth();
+    int pageWidth = GetPageWidth();
     if (isVisible)
     {
         _splitterv_up->SetSashGravity(_settings->GetWidthsCoeff1());
@@ -95,7 +92,7 @@ void LocationPage::LocDescVisible(bool isVisible)
 
 void LocationPage::LocActsVisible(bool isVisible)
 {
-    int pageHeight = GetParent()->GetClientSize().GetHeight();
+    int pageHeight = GetPageHeight();
     if (isVisible)
     {
         _splitterh->SetSashGravity(_settings->GetHeightsCoeff());

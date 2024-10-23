@@ -53,6 +53,8 @@
         void Update(bool isFromObservable = false);
         void SetFixed(bool isFix);
         bool IsFixed() const { return _isFixed; }
+        int GetPageWidth() const { return GetParent()->GetClientSize().GetWidth(); }
+        int GetPageHeight() const { return GetParent()->GetClientSize().GetHeight(); }
         void LocDescVisible(bool isVisible);
         void LocActsVisible(bool isVisible);
         void SavePage();
