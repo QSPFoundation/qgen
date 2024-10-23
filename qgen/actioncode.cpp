@@ -33,18 +33,18 @@ ActionCode::ActionCode(wxWindow *owner, ILocationPage *locPage, IControls *contr
     _controls = controls;
 
     wxBoxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
-    wxBoxSizer *sizerPathPict = new wxBoxSizer(wxHORIZONTAL);
 
     _button = new wxButton(this, ID_PICT_OPEN, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT);
-    _pathPicTxtCtrl = new ImagePathTextBox(this, wxID_ANY, locPage, _controls);
+    _picPathTxt = new ImagePathTextBox(this, wxID_ANY, locPage, _controls);
 
-    sizerPathPict->Add(_pathPicTxtCtrl, 1, wxALL|wxGROW, 1);
-    sizerPathPict->Add(_button, 0, wxALL|wxGROW, 1);
+    wxBoxSizer *sizerPicPath = new wxBoxSizer(wxHORIZONTAL);
+    sizerPicPath->Add(_picPathTxt, 1, wxGROW);
+    sizerPicPath->Add(_button, 0, wxLEFT, 2);
 
     _actCodeTxt = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_CODE);
 
-    topSizer->Add(sizerPathPict, 0, wxALL|wxGROW);
-    topSizer->Add(_actCodeTxt, 1, wxALL|wxGROW, 1);
+    topSizer->Add(sizerPicPath, 0, wxGROW);
+    topSizer->Add(_actCodeTxt, 1, wxTOP|wxGROW, 2);
 
     SetSizerAndFit(topSizer);
     SetAutoLayout(true);
@@ -67,7 +67,7 @@ void ActionCode::LoadAction(size_t actIndex)
 {
     DataContainer *container = _controls->GetContainer();
     size_t locIndex = _locPage->GetLocationIndex();
-    _pathPicTxtCtrl->SetValue(container->GetActionPicturePath(locIndex, actIndex));
+    _picPathTxt->SetValue(container->GetActionPicturePath(locIndex, actIndex));
     _actCodeTxt->SetValue(container->GetActionCode(locIndex, actIndex));
     Enable();
 }
@@ -76,10 +76,10 @@ void ActionCode::SaveAction(size_t actIndex)
 {
     DataContainer *container = _controls->GetContainer();
     size_t locIndex = _locPage->GetLocationIndex();
-    if (_pathPicTxtCtrl->IsModified())
+    if (_picPathTxt->IsModified())
     {
-        container->SetActionPicturePath(locIndex, actIndex, _pathPicTxtCtrl->GetValue());
-        _pathPicTxtCtrl->SetModified(false);
+        container->SetActionPicturePath(locIndex, actIndex, _picPathTxt->GetValue());
+        _picPathTxt->SetModified(false);
     }
     if (_actCodeTxt->IsModified())
     {
@@ -90,7 +90,7 @@ void ActionCode::SaveAction(size_t actIndex)
 
 void ActionCode::ClearAction()
 {
-    _pathPicTxtCtrl->Clear();
+    _picPathTxt->Clear();
     _actCodeTxt->Clear();
     Enable(false);
 }
@@ -100,15 +100,15 @@ void ActionCode::OnOpenPicture(wxCommandEvent &event)
     wxString str = _controls->SelectPicturePath();
     if (!str.IsEmpty())
     {
-        _pathPicTxtCtrl->SetValue(str);
-        _pathPicTxtCtrl->SetModified(true);
+        _picPathTxt->SetValue(str);
+        _picPathTxt->SetModified(true);
         _locPage->RefreshActions();
     }
 }
 
 bool ActionCode::Enable(bool status /*= true*/)
 {
-    _pathPicTxtCtrl->SetEditable(status);
+    _picPathTxt->SetEditable(status);
     _button->Enable(status);
     _actCodeTxt->Enable(status);
     return true;
@@ -116,8 +116,8 @@ bool ActionCode::Enable(bool status /*= true*/)
 
 void ActionCode::SelectPicturePathString(long startPos, long lastPos)
 {
-    _pathPicTxtCtrl->SetFocus();
-    _pathPicTxtCtrl->SetSelection(startPos, lastPos);
+    _picPathTxt->SetFocus();
+    _picPathTxt->SetSelection(startPos, lastPos);
 }
 
 void ActionCode::SelectCodeString(long startPos, long lastPos)
@@ -128,7 +128,7 @@ void ActionCode::SelectCodeString(long startPos, long lastPos)
 
 void ActionCode::ReplacePicturePathString(long start, long end, const wxString& str)
 {
-    _pathPicTxtCtrl->Replace(start, end, str);
+    _picPathTxt->Replace(start, end, str);
 }
 
 void ActionCode::ReplaceCodeString(long start, long end, const wxString& str)

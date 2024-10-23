@@ -39,7 +39,7 @@ LocationPage::LocationPage(wxAuiNotebook *owner, IControls *controls) : wxPanel(
     _splitterv_up->SplitVertically(_locDesc, _locCode);
 
     wxSizer *sizerUp = new wxBoxSizer(wxVERTICAL);
-    sizerUp->Add(_splitterv_up, 1, wxALL|wxGROW);
+    sizerUp->Add(_splitterv_up, 1, wxGROW);
 
     _splitterh->SetSizer(sizerUp);
     _splitterv_up->SetAutoLayout(true);
@@ -51,7 +51,7 @@ LocationPage::LocationPage(wxAuiNotebook *owner, IControls *controls) : wxPanel(
     _splitterh->SplitHorizontally(_splitterv_up, _locActs);
 
     wxSizer *sizerMain = new wxBoxSizer(wxVERTICAL);
-    sizerMain->Add(_splitterh, 1, wxALL|wxGROW, 1);
+    sizerMain->Add(_splitterh, 1, wxGROW);
 
     SetSizerAndFit(sizerMain);
     SetAutoLayout(true);

@@ -30,10 +30,12 @@ LocationDesc::LocationDesc(wxWindow *owner, ILocationPage *locPage, IControls *c
     _controls = controls;
 
     _text = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_SIMPLE | SYNTAX_STYLE_NOMARGINS | SYNTAX_STYLE_NOHELPTIPS);
-    wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
     _stTextDesc = new wxStaticText(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
-    sizer->Add(_stTextDesc, 0, wxALL|wxGROW, 1);
-    sizer->Add(_text, 1, wxALL|wxGROW, 1);
+
+    wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+    sizer->Add(_stTextDesc, 0, wxGROW);
+    sizer->Add(_text, 1, wxGROW);
+
     SetSizerAndFit(sizer);
     SetAutoLayout(true);
     Update();

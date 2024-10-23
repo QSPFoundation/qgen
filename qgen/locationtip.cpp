@@ -32,7 +32,6 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
     wxColour backColor(wxSystemSettings::GetColour(wxSYS_COLOUR_INFOBK));
 
     SetBackgroundColour(backColor);
-    wxBoxSizer *_sizer = new wxBoxSizer(wxVERTICAL);
 
     _title = new wxStaticText(this, wxID_ANY, wxEmptyString);
     _title->SetFont(_title->GetFont().MakeBold().MakeLarger());
@@ -59,14 +58,16 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
     _emptyLabel->SetBackgroundColour(backColor);
     _emptyLabel->SetForegroundColour(textColor);
 
-    _sizer->Add(_title, 0, wxALL|wxALIGN_CENTER, 4);
-    _sizer->Add(_desc, 0, wxLEFT|wxRIGHT|wxGROW, 4);
-    _sizer->Add(_locDesc, 1, wxALL|wxGROW, 4);
-    _sizer->Add(_code, 0, wxLEFT|wxRIGHT|wxGROW, 4);
-    _sizer->Add(_locCode, 1, wxALL|wxGROW, 4);
-    _sizer->Add(_emptyLabel, 1, wxGROW);
+    wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
 
-    SetSizer(_sizer);
+    sizer->Add(_title, 0, wxALL|wxALIGN_CENTER, 4);
+    sizer->Add(_desc, 0, wxLEFT|wxRIGHT|wxGROW, 4);
+    sizer->Add(_locDesc, 1, wxALL|wxGROW, 4);
+    sizer->Add(_code, 0, wxLEFT|wxRIGHT|wxGROW, 4);
+    sizer->Add(_locCode, 1, wxALL|wxGROW, 4);
+    sizer->Add(_emptyLabel, 1, wxGROW);
+
+    SetSizer(sizer);
     SetAutoLayout(true);
     SetSize(TIP_SIZE_X, TIP_SIZE_Y);
 }
