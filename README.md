@@ -4,7 +4,7 @@ Please check [Releases](https://github.com/QSPFoundation/qgen/releases) section.
 
 ## Screenshots
 
-<img alt="Screenshot 1" src="screenshots/example1.png" height="400px" /> <img alt="Screenshot 2" src="screenshots/example2.png" height="400px" />
+<img alt="Screenshot 1" src="screenshots/example1.png" height="300px" /> <img alt="Screenshot 2" src="screenshots/example2.png" height="300px" />
 
 ## Linux & MacOS build
 
