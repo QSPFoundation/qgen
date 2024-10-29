@@ -4,9 +4,9 @@ set -e
 
 # Validation
 [ ! -d "./build_packages" ] && echo "Run this script from the project root directory" && exit
-[ -z "$QGEN_RELEASE_VER" ] && echo "QGEN_RELEASE_VER isn't specified" && exit
+[ -z "$RELEASE_VER" ] && echo "RELEASE_VER isn't specified" && exit
 
-CMAKE_VER=$(echo "$QGEN_RELEASE_VER" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+CMAKE_VER=$(echo "$RELEASE_VER" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
 
 # Build
 mkdir -p ./build_packages/linux64
@@ -29,6 +29,6 @@ docker run --rm \
   $IMAGE "/work/$SCRIPT"
 
 # Move to dist
-mv ./build_packages/linux64/packages/*.rpm "./dist/qgen-$QGEN_RELEASE_VER-linux64.rpm"
-mv ./build_packages/linux64/packages/*.deb "./dist/qgen-$QGEN_RELEASE_VER-linux64.deb"
-mv ./build_packages/linux64/packages/*.tar.gz "./dist/qgen-$QGEN_RELEASE_VER-linux64.tar.gz"
+mv ./build_packages/linux64/packages/*.rpm "./dist/qgen-$RELEASE_VER-linux64.rpm"
+mv ./build_packages/linux64/packages/*.deb "./dist/qgen-$RELEASE_VER-linux64.deb"
+mv ./build_packages/linux64/packages/*.tar.gz "./dist/qgen-$RELEASE_VER-linux64.tar.gz"

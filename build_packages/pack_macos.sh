@@ -4,9 +4,9 @@ set -e
 
 # Validation
 [ ! -d "./build_packages" ] && echo "Run this script from the project root directory" && exit
-[ -z "$QGEN_RELEASE_VER" ] && echo "QGEN_RELEASE_VER isn't specified" && exit
+[ -z "$RELEASE_VER" ] && echo "RELEASE_VER isn't specified" && exit
 
-CMAKE_VER=$(echo "$QGEN_RELEASE_VER" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+CMAKE_VER=$(echo "$RELEASE_VER" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
 
 # Build
 mkdir -p ./build_packages/macos
@@ -27,4 +27,4 @@ cmake --install $REL_BUILD_DIR --component Main --strip
 cpack -B $REL_BUILD_DIR --config $REL_BUILD_DIR/CPackConfig.cmake
 
 # Move to dist
-mv ./build_packages/macos/packages/*.dmg "./dist/qgen-$QGEN_RELEASE_VER-universal.dmg"
+mv ./build_packages/macos/packages/*.dmg "./dist/qgen-$RELEASE_VER-universal.dmg"
