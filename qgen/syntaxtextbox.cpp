@@ -79,8 +79,8 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
             SetMarginType(SYNTAX_FOLD_MARGIN, wxSTC_MARGIN_SYMBOL);
             SetMarginMask(SYNTAX_FOLD_MARGIN, wxSTC_MASK_FOLDERS);
             SetMarginWidth(SYNTAX_FOLD_MARGIN, 20);
-
-            SetMarginType(SYNTAX_NUM_MARGIN, wxSTC_MARGIN_NUMBER);
+            SetMarginCursor(SYNTAX_FOLD_MARGIN, wxSTC_CURSORNORMAL);
+            SetMarginSensitive(SYNTAX_FOLD_MARGIN, true);
 
             MarkerDefine(wxSTC_MARKNUM_FOLDER, wxSTC_MARK_PLUS);
             MarkerDefine(wxSTC_MARKNUM_FOLDEROPEN, wxSTC_MARK_MINUS);
@@ -92,7 +92,8 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
 
             SetFoldFlags(wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED);
 
-            SetMarginSensitive(SYNTAX_FOLD_MARGIN, true);
+            SetMarginType(SYNTAX_NUM_MARGIN, wxSTC_MARGIN_NUMBER);
+            SetMarginCursor(SYNTAX_NUM_MARGIN, wxSTC_CURSORNORMAL);
         }
     }
 
