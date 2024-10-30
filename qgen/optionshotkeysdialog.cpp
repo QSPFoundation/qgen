@@ -62,6 +62,7 @@ OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& tit
 
     SetSizerAndFit(topSizer);
     SetAutoLayout(true);
+
     SetMinClientSize(wxSize(330, 230));
     SetSize(wxSize(630, 430));
 

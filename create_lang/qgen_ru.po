@@ -810,8 +810,11 @@ msgstr "Цвет системных переменных:"
 msgid "System variables font:"
 msgstr "Шрифт системных переменных:"
 
-msgid "Tabs background color:"
+msgid "Background color of location tabs:"
 msgstr "Цвет фона вкладок локаций:"
+
+msgid "Background color of line numbers:"
+msgstr "Цвет фона номеров строк:"
 
 msgid "Text file in TXT2GAM format..."
 msgstr "Текстовый файл формата TXT2GAM..."

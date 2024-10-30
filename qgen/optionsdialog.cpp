@@ -35,6 +35,7 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
     EVT_BUTTON(ID_COLORS_LINE_NUMBERS, OptionsDialog::OnColorSelect)
     EVT_BUTTON(ID_COLORS_BASEFONT, OptionsDialog::OnColorSelect)
     EVT_BUTTON(ID_COLORS_TEXTBACK, OptionsDialog::OnColorSelect)
+    EVT_BUTTON(ID_COLORS_ALTTEXTBACK, OptionsDialog::OnColorSelect)
     EVT_BUTTON(ID_COLORS_BASEBACK, OptionsDialog::OnColorSelect)
     EVT_BUTTON(ID_FONTS_STATEMENTS, OptionsDialog::OnFontSelect)
     EVT_BUTTON(ID_FONTS_FUNCTIONS, OptionsDialog::OnFontSelect)
@@ -42,7 +43,7 @@ BEGIN_EVENT_TABLE(OptionsDialog, wxDialog)
     EVT_BUTTON(ID_FONTS_STRINGS, OptionsDialog::OnFontSelect)
     EVT_BUTTON(ID_FONTS_NUMBERS, OptionsDialog::OnFontSelect)
     EVT_BUTTON(ID_FONTS_OPERATIONSBRACKETS, OptionsDialog::OnFontSelect)
-    EVT_BUTTON(ID_FONTS_MARKS, OptionsDialog::OnFontSelect)
+    EVT_BUTTON(ID_FONTS_LABELS, OptionsDialog::OnFontSelect)
     EVT_BUTTON(ID_FONTS_COMMENTS, OptionsDialog::OnFontSelect)
     EVT_BUTTON(ID_FONTS_LINE_NUMBERS, OptionsDialog::OnFontSelect)
     EVT_BUTTON(ID_FONTS_BASE, OptionsDialog::OnFontSelect)
@@ -213,6 +214,14 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     topSizerColors->Add(_colorTextBack, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
     topSizerColors->Add(_btnTextBackColor, 0, wxALIGN_CENTER_VERTICAL);
 
+    _stAltTextBackColor = new wxStaticText(_colors, wxID_ANY, wxEmptyString);
+    _colorAltTextBack = new wxWindow(_colors, wxID_ANY, wxDefaultPosition, wxSize(50, 25));
+    _btnAltTextBackColor = new wxButton(_colors, ID_COLORS_ALTTEXTBACK, wxEmptyString);
+
+    topSizerColors->Add(_stAltTextBackColor, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerColors->Add(_colorAltTextBack, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
+    topSizerColors->Add(_btnAltTextBackColor, 0, wxALIGN_CENTER_VERTICAL);
+
     AddSyntaxColorConfig(ID_COLORS_BASEFONT, SYNTAX_BASE, wxT("Base font color:"), topSizerColors);
     AddSyntaxColorConfig(ID_COLORS_LINE_NUMBERS, SYNTAX_LINE_NUMBERS, wxT("Line numbers color:"), topSizerColors);
     AddSyntaxColorConfig(ID_COLORS_STATEMENTS, SYNTAX_STATEMENTS, wxT("Statements color:"), topSizerColors);
@@ -234,16 +243,16 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
 
     wxFlexGridSizer *topSizerFonts = new wxFlexGridSizer(3);
 
-    AddSyntaxFontConfig(ID_FONTS_BASE, SYNTAX_BASE, wxT("Main font:"), topSizerFonts);
-    AddSyntaxFontConfig(ID_FONTS_LINE_NUMBERS, SYNTAX_LINE_NUMBERS, wxT("Line numbers font:"), topSizerFonts);
-    AddSyntaxFontConfig(ID_FONTS_STATEMENTS, SYNTAX_STATEMENTS, wxT("Statements font:"), topSizerFonts);
-    AddSyntaxFontConfig(ID_FONTS_FUNCTIONS, SYNTAX_FUNCTIONS, wxT("Functions font:"), topSizerFonts);
-    AddSyntaxFontConfig(ID_FONTS_SYSVARIABLES, SYNTAX_SYS_VARIABLES, wxT("System variables font:"), topSizerFonts);
-    AddSyntaxFontConfig(ID_FONTS_STRINGS, SYNTAX_STRINGS, wxT("Strings font:"), topSizerFonts);
-    AddSyntaxFontConfig(ID_FONTS_NUMBERS, SYNTAX_NUMBERS, wxT("Numbers font:"), topSizerFonts);
-    AddSyntaxFontConfig(ID_FONTS_OPERATIONSBRACKETS, SYNTAX_OPERATIONS, wxT("Operations font:"), topSizerFonts);
-    AddSyntaxFontConfig(ID_FONTS_MARKS, SYNTAX_LABELS, wxT("Labels font:"), topSizerFonts);
-    AddSyntaxFontConfig(ID_FONTS_COMMENTS, SYNTAX_COMMENTS, wxT("Comments font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_BASE, SYNTAX_BASE, false, wxT("Main font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_LINE_NUMBERS, SYNTAX_LINE_NUMBERS, true, wxT("Line numbers font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_STATEMENTS, SYNTAX_STATEMENTS, false, wxT("Statements font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_FUNCTIONS, SYNTAX_FUNCTIONS, false, wxT("Functions font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_SYSVARIABLES, SYNTAX_SYS_VARIABLES, false, wxT("System variables font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_STRINGS, SYNTAX_STRINGS, false, wxT("Strings font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_NUMBERS, SYNTAX_NUMBERS, false, wxT("Numbers font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_OPERATIONSBRACKETS, SYNTAX_OPERATIONS, false, wxT("Operations font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_LABELS, SYNTAX_LABELS, false, wxT("Labels font:"), topSizerFonts);
+    AddSyntaxFontConfig(ID_FONTS_COMMENTS, SYNTAX_COMMENTS, false, wxT("Comments font:"), topSizerFonts);
 
     topSizerFonts->AddGrowableCol(1, 1);
 
@@ -317,7 +326,9 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
 
     SetSizerAndFit(topSizer);
     SetAutoLayout(true);
-    SetMinClientSize(wxSize(500, 450));
+
+    SetMinClientSize(wxSize(500, 550));
+
     InitOptionsDialog();
     _btnOK->SetDefault();
     ReCreateGUI();
@@ -330,12 +341,13 @@ OptionsDialog::~OptionsDialog()
     _colorConfigs.clear();
 }
 
-void OptionsDialog::AddSyntaxFontConfig(int componentId, SyntaxType syntaxType, const wxString& descriptionKey, wxFlexGridSizer *topSizerFonts)
+void OptionsDialog::AddSyntaxFontConfig(int componentId, SyntaxType syntaxType, bool useAltBackground, const wxString& descriptionKey, wxFlexGridSizer *topSizerFonts)
 {
     FontConfig config;
 
     config.ComponentId = componentId;
     config.Type = syntaxType;
+    config.UseAltBackground = useAltBackground;
     config.DescriptionKey = descriptionKey;
     config.Description = new wxStaticText(_fonts, wxID_ANY, wxGetTranslation(descriptionKey));
     config.TextSample = new wxTextCtrl(_fonts, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE|wxTE_READONLY);
@@ -370,6 +382,7 @@ void OptionsDialog::SaveSyntaxFontSettings()
 void OptionsDialog::ApplySyntaxFontSettings()
 {
     wxColour textBackColour = _settings->GetTextBackColour();
+    wxColour altTextBackColour = _settings->GetAltTextBackColour();
 
     for (FontConfigTable::iterator it = _fontConfigs.begin(); it != _fontConfigs.end(); ++it)
     {
@@ -379,7 +392,10 @@ void OptionsDialog::ApplySyntaxFontSettings()
         textSample->SetValue(_settings->GetFont(config.Type).GetFaceName());
         textSample->SetFont(_settings->GetFont(config.Type));
         textSample->SetForegroundColour(_settings->GetColour(config.Type));
-        textSample->SetBackgroundColour(textBackColour);
+        if (config.UseAltBackground)
+            textSample->SetBackgroundColour(altTextBackColour);
+        else
+            textSample->SetBackgroundColour(textBackColour);
     }
 }
 
@@ -439,12 +455,15 @@ void OptionsDialog::UpdateFontColor(SyntaxType syntaxType, const wxColour& color
     }
 }
 
-void OptionsDialog::UpdateFontBackgroundColor(const wxColour& color)
+void OptionsDialog::UpdateFontBackgroundColor(const wxColour& color, const wxColour& altColor)
 {
     for (FontConfigTable::iterator it = _fontConfigs.begin(); it != _fontConfigs.end(); ++it)
     {
         FontConfig& config = it->second;
-        config.TextSample->SetBackgroundColour(color);
+        if (config.UseAltBackground)
+            config.TextSample->SetBackgroundColour(altColor);
+        else
+            config.TextSample->SetBackgroundColour(color);
     }
 }
 
@@ -481,8 +500,10 @@ void OptionsDialog::ReCreateGUI()
     _stTextTabSize->SetLabel(_("Size of TAB:"));
     // Page Colors
     _notebook->SetPageText(3, _("Colors"));
-    _stTextBackColor->SetLabel(_("Tabs background color:"));
+    _stTextBackColor->SetLabel(_("Background color of location tabs:"));
     _btnTextBackColor->SetLabel(_("Select color..."));
+    _stAltTextBackColor->SetLabel(_("Background color of line numbers:"));
+    _btnAltTextBackColor->SetLabel(_("Select color..."));
     _stBaseBackColor->SetLabel(_("Main background color:"));
     _btnBaseBackColor->SetLabel(_("Select color..."));
     UpdateSyntaxColorConfigUi();
@@ -532,9 +553,24 @@ void OptionsDialog::OnColorSelect(wxCommandEvent &event)
             if (dialog.ShowModal() == wxID_OK)
             {
                 wxColour color = dialog.GetColourData().GetColour();
-                UpdateFontBackgroundColor(color);
+                UpdateFontBackgroundColor(color, _colorAltTextBack->GetBackgroundColour());
                 _colorTextBack->SetBackgroundColour(color);
                 _colorTextBack->Refresh();
+                _btnApply->Enable();
+            }
+            break;
+        }
+    case ID_COLORS_ALTTEXTBACK:
+        {
+            wxColourData data;
+            data.SetColour(_colorAltTextBack->GetBackgroundColour());
+            wxColourDialog dialog(this, &data);
+            if (dialog.ShowModal() == wxID_OK)
+            {
+                wxColour color = dialog.GetColourData().GetColour();
+                UpdateFontBackgroundColor(_colorTextBack->GetBackgroundColour(), color);
+                _colorAltTextBack->SetBackgroundColour(color);
+                _colorAltTextBack->Refresh();
                 _btnApply->Enable();
             }
             break;
@@ -720,6 +756,7 @@ void OptionsDialog::ApplySettings()
     _settings->SetCurrentTxt2GamPath(_txtPathTxt2Gam->GetValue());
 
     _settings->SetTextBackColour(_colorTextBack->GetBackgroundColour());
+    _settings->SetAltTextBackColour(_colorAltTextBack->GetBackgroundColour());
     _settings->SetBaseBackColour(_colorBaseBack->GetBackgroundColour());
 
     SaveSyntaxColorSettings();
@@ -775,6 +812,7 @@ void OptionsDialog::InitOptionsDialog()
     _txtPathTxt2Gam->SetValue(_settings->GetCurrentTxt2GamPath());
 
     _colorTextBack->SetBackgroundColour(_settings->GetTextBackColour());
+    _colorAltTextBack->SetBackgroundColour(_settings->GetAltTextBackColour());
     _colorBaseBack->SetBackgroundColour(_settings->GetBaseBackColour());
 
     ApplySyntaxColorSettings();

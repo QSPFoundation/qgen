@@ -50,6 +50,7 @@
         ID_COLORS_LINE_NUMBERS,
         ID_COLORS_BASEFONT,
         ID_COLORS_TEXTBACK,
+        ID_COLORS_ALTTEXTBACK,
         ID_COLORS_BASEBACK,
         ID_FONTS_STATEMENTS,
         ID_FONTS_FUNCTIONS,
@@ -57,7 +58,7 @@
         ID_FONTS_NUMBERS,
         ID_FONTS_STRINGS,
         ID_FONTS_OPERATIONSBRACKETS,
-        ID_FONTS_MARKS,
+        ID_FONTS_LABELS,
         ID_FONTS_COMMENTS,
         ID_FONTS_LINE_NUMBERS,
         ID_FONTS_BASE,
@@ -84,6 +85,7 @@
         wxButton *SelectButton;
         wxTextCtrl *TextSample;
         wxStaticText *Description;
+        bool UseAltBackground;
     };
 
     struct ColorConfig
@@ -145,6 +147,10 @@
         wxWindow * _colorTextBack;
         wxButton * _btnTextBackColor;
 
+        wxStaticText *_stAltTextBackColor;
+        wxWindow * _colorAltTextBack;
+        wxButton * _btnAltTextBackColor;
+
         wxStaticText *_stBaseBackColor;
         wxWindow * _colorBaseBack;
         wxButton * _btnBaseBackColor;
@@ -186,7 +192,7 @@
         wxComboBox * _cmbLang;
         LangTable _langTable;
 
-        void AddSyntaxFontConfig(int componentId, SyntaxType syntaxType, const wxString& descriptionKey, wxFlexGridSizer *topSizerFonts);
+        void AddSyntaxFontConfig(int componentId, SyntaxType syntaxType, bool useAltBackground, const wxString& descriptionKey, wxFlexGridSizer *topSizerFonts);
         void UpdateSyntaxFontConfigUi();
         void SaveSyntaxFontSettings();
         void ApplySyntaxFontSettings();
@@ -196,7 +202,7 @@
         void SaveSyntaxColorSettings();
         void ApplySyntaxColorSettings();
         void UpdateFontColor(SyntaxType syntaxType, const wxColour& color);
-        void UpdateFontBackgroundColor(const wxColour& color);
+        void UpdateFontBackgroundColor(const wxColour& color, const wxColour& altColor);
 
         void OnColorSelect(wxCommandEvent &event);
         void OnFontSelect(wxCommandEvent &event);

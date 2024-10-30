@@ -87,6 +87,7 @@ void Settings::InitSettings()
     _font[SYNTAX_COMMENTS] = wxFont(10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Courier New"));
 
     _textBackColour = wxColour(220, 220, 220);
+    _altTextBackColour = wxColour(230, 230, 230);
     _baseBackColour = wxColour(220, 220, 220);
     _colour[SYNTAX_BASE] = *wxBLACK;
     _colour[SYNTAX_LINE_NUMBERS] = wxColour(100, 100, 100);
@@ -169,6 +170,7 @@ void Settings::LoadSettings()
     cfg.Read(wxT("Colours/LineNumbers"), &_colour[SYNTAX_LINE_NUMBERS]);
     cfg.Read(wxT("Colours/Base"), &_colour[SYNTAX_BASE]);
     cfg.Read(wxT("Colours/TextBackground"), &_textBackColour);
+    cfg.Read(wxT("Colours/AltTextBackground"), &_altTextBackColour);
     cfg.Read(wxT("Colours/BaseBackground"), &_baseBackColour);
     _hotkeysStore.LoadHotkeysData(cfg);
     _searchDataStore.LoadSearchData(cfg);
@@ -248,6 +250,7 @@ void Settings::SaveSettings()
     cfg.Write(wxT("Colours/LineNumbers"), _colour[SYNTAX_LINE_NUMBERS]);
     cfg.Write(wxT("Colours/Base"), _colour[SYNTAX_BASE]);
     cfg.Write(wxT("Colours/TextBackground"), _textBackColour);
+    cfg.Write(wxT("Colours/AltTextBackground"), _altTextBackColour);
     cfg.Write(wxT("Colours/BaseBackground"), _baseBackColour);
     _hotkeysStore.SaveHotkeysData(cfg);
     _searchDataStore.SaveSearchData(cfg);

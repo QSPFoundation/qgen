@@ -113,7 +113,7 @@ void SyntaxTextBox::Update(bool isFromObservable)
 {
     Settings *settings = _controls->GetSettings();
     wxColour backColor = settings->GetTextBackColour();
-    wxColour altBackColor = settings->GetTextBackColour().ChangeLightness(110);
+    wxColour altBackColor = settings->GetAltTextBackColour();
     wxFont font;
     int tabSize;
 

@@ -810,8 +810,11 @@ msgstr "System variables color:"
 msgid "System variables font:"
 msgstr "System variables font:"
 
-msgid "Tabs background color:"
-msgstr "Tabs background color:"
+msgid "Background color of location tabs:"
+msgstr "Background color of location tabs:"
+
+msgid "Background color of line numbers:"
+msgstr "Background color of line numbers:"
 
 msgid "Text file in TXT2GAM format..."
 msgstr "Text file in TXT2GAM format..."

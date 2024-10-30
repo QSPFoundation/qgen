@@ -81,6 +81,7 @@
         wxFont _font[SYNTAX_DUMMY];
         wxColour _colour[SYNTAX_DUMMY];
         wxColour _textBackColour;
+        wxColour _altTextBackColour;
         wxColour _baseBackColour;
         wxString _currentConfigPath;
         wxString _currentPlayerPath;
@@ -155,6 +156,8 @@
         void SetColour(SyntaxType type, const wxColour &col) { _colour[type] = col; }
         wxColour GetTextBackColour() { return _textBackColour; }
         void SetTextBackColour(const wxColour &col) { _textBackColour = col; }
+        wxColour GetAltTextBackColour() { return _altTextBackColour; }
+        void SetAltTextBackColour(const wxColour &col) { _altTextBackColour = col; }
         wxColour GetBaseBackColour() { return _baseBackColour; }
         void SetBaseBackColour(const wxColour &col) { _baseBackColour = col; }
         void SetLeftFramePos(int left) { _leftFramePos = left; }
