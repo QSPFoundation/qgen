@@ -65,7 +65,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_GAME_MERGE, MainFrame::OnMergeQuest)
     EVT_MENU(ID_GAME_PLAY, MainFrame::OnPlayQuest)
     EVT_MENU(ID_UTIL_FIND, MainFrame::OnFindDialog)
-    EVT_MENU(ID_UTIL_INF, MainFrame::OnInformationQuest)
+    EVT_MENU(ID_UTIL_INF, MainFrame::OnQuestInformation)
     EVT_MENU(ID_UTIL_OPTIONS, MainFrame::OnOptionsDialog)
     EVT_MENU(ID_TEXT_UNDO, MainFrame::OnUndoText)
     EVT_MENU(ID_TEXT_REDO, MainFrame::OnRedoText)
@@ -614,7 +614,12 @@ void MainFrame::OnFindDialog(wxCommandEvent& event)
     if (_findDlg->IsShown())
         _findDlg->SetFocus();
     else
+    {
+        wxString word = _controls->GetSelectedWord();
+        if (!word.IsEmpty())
+            _findDlg->SetTextToSearch(word);
         _findDlg->Show();
+    }
 }
 
 void MainFrame::OnCreateLocation(wxCommandEvent &event)
@@ -834,7 +839,7 @@ void MainFrame::OnImportTxt2Gam( wxCommandEvent &event )
     }
 }
 
-void MainFrame::OnInformationQuest( wxCommandEvent &event )
+void MainFrame::OnQuestInformation( wxCommandEvent &event )
 {
     wxMessageDialog dialog(this, _controls->GetGameInfo(),
         _("Game statistics"), wxOK | wxCENTRE | wxICON_INFORMATION);

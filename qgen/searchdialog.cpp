@@ -193,3 +193,8 @@ bool SearchDialog::Show(bool show)
     }
     return true;
 }
+
+void SearchDialog::SetTextToSearch(const wxString &text)
+{
+    _textFind->SetValue(text);
+}

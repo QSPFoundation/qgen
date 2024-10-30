@@ -67,6 +67,8 @@ class LocationPage;
     class IControls
     {
     public:
+        virtual ~IControls() {}
+
         virtual Settings *GetSettings() const = 0;
         virtual DataContainer *GetContainer() const = 0;
         virtual KeywordsStore *GetKeywordsStore() const = 0;

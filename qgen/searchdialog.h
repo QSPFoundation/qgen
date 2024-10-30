@@ -62,6 +62,7 @@
         SearchDialog(wxWindow *parent, const wxString& title, IControls *controls, int style = 0);
 
         bool Show(bool show = true);
+        void SetTextToSearch(const wxString &text);
     };
 
 #endif

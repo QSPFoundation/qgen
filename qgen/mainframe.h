@@ -187,7 +187,7 @@
         void OnToggleLocations(wxCommandEvent &event);
         void OnToggleStatusbar(wxCommandEvent &event);
         void OnFindDialog(wxCommandEvent&event);
-        void OnInformationQuest(wxCommandEvent &event);
+        void OnQuestInformation(wxCommandEvent &event);
         void OnOptionsDialog(wxCommandEvent &event);
         void OnOpenMenu(wxMenuEvent& event);
         void OnCreateAction(wxCommandEvent &event);
