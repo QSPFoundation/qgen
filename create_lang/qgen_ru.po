@@ -747,6 +747,9 @@ msgstr "Краткая информация об игре (Ctrl+I)"
 msgid "Show line numbers"
 msgstr "Показывать номера строк"
 
+msgid "Show hidden characters"
+msgstr "Показывать скрытые символы"
+
 msgid "Show location icons"
 msgstr "Отображать иконки в списке локаций"
 

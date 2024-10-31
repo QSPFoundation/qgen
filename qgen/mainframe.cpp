@@ -521,7 +521,7 @@ void MainFrame::LoadLayout()
         }
     }
 
-    _manager.LoadPerspective(settings->GetSetPanelsPos());
+    _manager.LoadPerspective(settings->GetPanelsConfig());
     wxAuiPaneInfo &locsListPane = _manager.GetPane(_locListBox);
     locsListPane.Caption(_("Locations"));
     _manager.RestoreMaximizedPane();
@@ -543,7 +543,7 @@ void MainFrame::SaveLayout()
     settings->SetShowStatusBar(GetStatusBar() != NULL);
     if (IsFullScreen()) ShowFullScreen(false);
     if (IsIconized()) Iconize(false);
-    settings->SetPanelsPos(_manager.SavePerspective());
+    settings->SetPanelsConfig(_manager.SavePerspective());
     wxRect r = GetRect();
     settings->SetLeftFramePos(r.GetLeft());
     settings->SetTopFramePos(r.GetTop());

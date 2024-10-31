@@ -43,7 +43,7 @@ OptionsHotkeysDialog::OptionsHotkeysDialog(wxWindow *parent, const wxString& tit
 
     wxStaticText *stText02 = new wxStaticText(this, wxID_ANY, _("Text:"));
     _txtInputText = new SyntaxTextBox(this, controls, SYNTAX_STYLE_CODE | SYNTAX_STYLE_NOHOTKEYS |
-                                                      SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOHELPTIPS);
+                                                            SYNTAX_STYLE_SIMPLEMENU | SYNTAX_STYLE_NOHELPTIPS);
 
     wxSizer *btnSizer = new wxBoxSizer(wxHORIZONTAL);
     _btnHelp = new wxButton(this, ID_HOTKEY_HELP, _("Help"));

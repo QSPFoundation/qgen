@@ -61,8 +61,6 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
         SetKeyWords(0, _keywordsStore->GetWords(STATEMENT));
         SetKeyWords(1, _keywordsStore->GetWords(EXPRESSION));
         SetKeyWords(2, _keywordsStore->GetWords(VARIABLE));
-        //    SetViewEOL(true);
-        //    SetViewWhiteSpace(true);
         SetIndentationGuides(true);
 
         AutoCompSetChooseSingle(true);
@@ -117,6 +115,8 @@ void SyntaxTextBox::Update(bool isFromObservable)
     wxFont font;
     int tabSize;
 
+    SetViewEOL(settings->GetShowHiddenChars());
+    SetViewWhiteSpace(settings->GetShowHiddenChars());
     SetCaretForeground((backColor.Blue() << 16 | backColor.Green() << 8 | backColor.Red()) ^ 0xFFFFFF);
     SetSelBackground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT));
     SetSelForeground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHTTEXT));
@@ -231,6 +231,7 @@ void SyntaxTextBox::OnCharAdded(wxStyledTextEvent &event)
 {
     if ((_style & SYNTAX_STYLE_CODE) && event.GetKey() == '\n' && !_controls->IsInHotkeyExecution())
     {
+        // Use indentation of the previous line
         int curLine = GetCurrentLine();
         if (curLine > 0 && GetLineLength(curLine) <= 2)
         {

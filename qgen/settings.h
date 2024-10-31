@@ -62,19 +62,20 @@
         int _autoSaveInterval;
         int _tabSize;
         bool _isFrameMaximized;
-        bool _isShowStatusBar;
-        bool _isAutoSave;
-        bool _isShowShortLocsDescs;
+        bool _toShowStatusBar;
+        bool _toAutoSave;
+        bool _toShowShortLocsDescs;
         bool _isLocDescVisible;
         bool _isLocActsVisible;
-        bool _isWrapLines;
-        bool _isOpenNewLoc;
-        bool _isOpenNewAct;
-        bool _isOpenLastGame;
-        bool _isShowLinesNums;
-        bool _isCreateFirstLoc;
-        bool _isShowLocsIcons;
-        bool _isCollapseCode;
+        bool _toWrapLines;
+        bool _toOpenNewLoc;
+        bool _toOpenNewAct;
+        bool _toOpenLastGame;
+        bool _toShowLinesNums;
+        bool _toShowHiddenChars;
+        bool _toCreateFirstLoc;
+        bool _toShowLocsIcons;
+        bool _toCollapseCode;
         double _heightsCoeff;
         double _widthsCoeff1;
         double _widthsCoeff2;
@@ -89,7 +90,7 @@
         wxString _currentTxt2GamPath;
         wxString _firstLocName;
         wxString _lastGamePath;
-        wxString _panelsPos;
+        wxString _panelsConfig;
         HotkeysStore _hotkeysStore;
         SearchDataStore _searchDataStore;
         int _idLang;
@@ -107,82 +108,84 @@
         void NotifyAll();
 
         void SetFirstLocName(const wxString &name) { _firstLocName = name; }
-        wxString GetFirstLocName() { return _firstLocName; }
-        void SetAutoSave(bool status) { _isAutoSave = status; }
-        bool GetAutoSave() { return _isAutoSave; }
-        void SetShowShortLocsDescs(bool status) { _isShowShortLocsDescs = status; }
-        bool GetShowShortLocsDescs() { return _isShowShortLocsDescs; }
+        wxString GetFirstLocName() const { return _firstLocName; }
+        void SetAutoSave(bool status) { _toAutoSave = status; }
+        bool GetAutoSave() const { return _toAutoSave; }
+        void SetShowShortLocsDescs(bool status) { _toShowShortLocsDescs = status; }
+        bool GetShowShortLocsDescs() const { return _toShowShortLocsDescs; }
         void SetLocDescVisible(bool status) { _isLocDescVisible = status; }
-        bool GetLocDescVisible() { return _isLocDescVisible; }
+        bool GetLocDescVisible() const { return _isLocDescVisible; }
         void SetLocActsVisible(bool status) { _isLocActsVisible = status; }
-        bool GetLocActsVisible() { return _isLocActsVisible; }
-        void SetWrapLines(bool status){ _isWrapLines = status; }
-        bool GetWrapLines(){ return _isWrapLines; }
-        void SetOpenNewLoc(bool status) { _isOpenNewLoc = status; }
-        bool GetOpenNewLoc() { return _isOpenNewLoc; }
-        void SetOpenNewAct(bool status) { _isOpenNewAct = status; }
-        bool GetOpenNewAct() { return _isOpenNewAct; }
-        void SetOpenLastGame(bool status) { _isOpenLastGame = status; }
-        bool GetOpenLastGame() { return _isOpenLastGame; }
-        void SetShowLinesNums(bool status) { _isShowLinesNums = status; }
-        bool GetShowLinesNums() { return _isShowLinesNums; }
+        bool GetLocActsVisible() const { return _isLocActsVisible; }
+        void SetWrapLines(bool status){ _toWrapLines = status; }
+        bool GetWrapLines() const { return _toWrapLines; }
+        void SetOpenNewLoc(bool status) { _toOpenNewLoc = status; }
+        bool GetOpenNewLoc() const { return _toOpenNewLoc; }
+        void SetOpenNewAct(bool status) { _toOpenNewAct = status; }
+        bool GetOpenNewAct() const { return _toOpenNewAct; }
+        void SetOpenLastGame(bool status) { _toOpenLastGame = status; }
+        bool GetOpenLastGame() const { return _toOpenLastGame; }
+        void SetShowLinesNums(bool status) { _toShowLinesNums = status; }
+        bool GetShowLinesNums() const { return _toShowLinesNums; }
+        void SetShowHiddenChars(bool status) { _toShowHiddenChars = status; }
+        bool GetShowHiddenChars() const { return _toShowHiddenChars; }
         void SetLastGamePath(const wxString &path) { _lastGamePath = path; }
-        wxString GetLastGamePath() { return _lastGamePath; }
-        void SetCreateFirstLoc(bool status) { _isCreateFirstLoc = status; }
-        bool GetCreateFirstLoc() { return _isCreateFirstLoc; }
-        void SetShowLocsIcons(bool status) { _isShowLocsIcons = status; }
-        bool GetShowLocsIcons() { return _isShowLocsIcons; }
-        void SetCollapseCode(bool status) { _isCollapseCode = status; }
-        bool GetCollapseCode() { return _isCollapseCode; }
+        wxString GetLastGamePath() const { return _lastGamePath; }
+        void SetCreateFirstLoc(bool status) { _toCreateFirstLoc = status; }
+        bool GetCreateFirstLoc() const { return _toCreateFirstLoc; }
+        void SetShowLocsIcons(bool status) { _toShowLocsIcons = status; }
+        bool GetShowLocsIcons() const { return _toShowLocsIcons; }
+        void SetCollapseCode(bool status) { _toCollapseCode = status; }
+        bool GetCollapseCode() const { return _toCollapseCode; }
         void SetCurrentPlayerPath(const wxString &path) { _currentPlayerPath = path; }
-        wxString GetCurrentPlayerPath() { return _currentPlayerPath; }
+        wxString GetCurrentPlayerPath() const { return _currentPlayerPath; }
         void SetCurrentHelpPath(const wxString &path) { _currentHelpPath = path; }
-        wxString GetCurrentHelpPath() { return _currentHelpPath; }
+        wxString GetCurrentHelpPath() const { return _currentHelpPath; }
         void SetCurrentTxt2GamPath(const wxString &path) { _currentTxt2GamPath = path; }
-        wxString GetCurrentTxt2GamPath() { return _currentTxt2GamPath; }
+        wxString GetCurrentTxt2GamPath() const { return _currentTxt2GamPath; }
         void SetAutoSaveInterval(int min) { _autoSaveInterval = min; }
-        int GetAutoSaveInterval() { return _autoSaveInterval; }
+        int GetAutoSaveInterval() const { return _autoSaveInterval; }
         void SetHeightsCoeff(double h) { _heightsCoeff = h; }
-        double GetHeightsCoeff() { return _heightsCoeff; }
+        double GetHeightsCoeff() const { return _heightsCoeff; }
         void SetWidthsCoeff1(double w) { _widthsCoeff1 = w; }
-        double GetWidthsCoeff1() { return _widthsCoeff1; }
+        double GetWidthsCoeff1() const { return _widthsCoeff1; }
         void SetWidthsCoeff2(double w) { _widthsCoeff2 = w; }
-        double GetWidthsCoeff2() { return _widthsCoeff2; }
+        double GetWidthsCoeff2() const { return _widthsCoeff2; }
         void SetTabSize(int sz) { _tabSize = sz; }
-        int GetTabSize() { return _tabSize; }
-        wxFont GetFont(SyntaxType type) { return _font[type]; }
+        int GetTabSize() const { return _tabSize; }
+        wxFont GetFont(SyntaxType type) const { return _font[type]; }
         void SetFont(SyntaxType type, const wxFont &font) { _font[type] = font; }
-        wxColour GetColour(SyntaxType type) { return _colour[type]; }
+        wxColour GetColour(SyntaxType type) const { return _colour[type]; }
         void SetColour(SyntaxType type, const wxColour &col) { _colour[type] = col; }
-        wxColour GetTextBackColour() { return _textBackColour; }
+        wxColour GetTextBackColour() const { return _textBackColour; }
         void SetTextBackColour(const wxColour &col) { _textBackColour = col; }
-        wxColour GetAltTextBackColour() { return _altTextBackColour; }
+        wxColour GetAltTextBackColour() const { return _altTextBackColour; }
         void SetAltTextBackColour(const wxColour &col) { _altTextBackColour = col; }
-        wxColour GetBaseBackColour() { return _baseBackColour; }
+        wxColour GetBaseBackColour() const { return _baseBackColour; }
         void SetBaseBackColour(const wxColour &col) { _baseBackColour = col; }
         void SetLeftFramePos(int left) { _leftFramePos = left; }
-        int GetLeftFramePos() { return _leftFramePos; }
+        int GetLeftFramePos() const { return _leftFramePos; }
         void SetTopFramePos(int top) { _topFramePos = top; }
-        int GetTopFramePos() { return _topFramePos; }
+        int GetTopFramePos() const { return _topFramePos; }
         void SetFrameWidth(int width) { _frameWidth = width; }
-        int GetFrameWidth() { return _frameWidth; }
+        int GetFrameWidth() const { return _frameWidth; }
         void SetFrameHeight(int height) { _frameHeight = height; }
-        int GetFrameHeight() { return _frameHeight; }
+        int GetFrameHeight() const { return _frameHeight; }
         void SetOptionsDialogWidth(int width) { _optionsDialogWidth = width; }
-        int GetOptionsDialogWidth() { return _optionsDialogWidth; }
+        int GetOptionsDialogWidth() const { return _optionsDialogWidth; }
         void SetOptionsDialogHeight(int height) { _optionsDialogHeight = height; }
-        int GetOptionsDialogHeight() { return _optionsDialogHeight; }
+        int GetOptionsDialogHeight() const { return _optionsDialogHeight; }
         void SetMaximizeFrame(bool status) { _isFrameMaximized = status; }
-        bool GetMaximizeFrame() { return _isFrameMaximized; }
-        void SetShowStatusBar(bool status) { _isShowStatusBar = status; }
-        bool GetShowStatusBar() { return _isShowStatusBar; }
-        void SetPanelsPos(const wxString &panels) { _panelsPos = panels; }
-        wxString GetSetPanelsPos() { return _panelsPos; }
+        bool GetMaximizeFrame() const { return _isFrameMaximized; }
+        void SetShowStatusBar(bool status) { _toShowStatusBar = status; }
+        bool GetShowStatusBar() const { return _toShowStatusBar; }
+        void SetPanelsConfig(const wxString &panels) { _panelsConfig = panels; }
+        wxString GetPanelsConfig() const { return _panelsConfig; }
 
         HotkeysStore *GetHotKeys() { return &_hotkeysStore; }
         SearchDataStore *GetSearchDataStore() { return &_searchDataStore; }
         void SetIdLang(int id) { _idLang = id; }
-        int GetLangId() { return _idLang; }
+        int GetLangId() const { return _idLang; }
     };
 
 #endif

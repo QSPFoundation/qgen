@@ -747,6 +747,9 @@ msgstr "Show game statistics (Ctrl+I)"
 msgid "Show line numbers"
 msgstr "Show line numbers"
 
+msgid "Show hidden characters"
+msgstr "Show hidden characters"
+
 msgid "Show location icons"
 msgstr "Show location icons"
 

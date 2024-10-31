@@ -150,6 +150,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _chkWrapLines = new wxCheckBox(_editor, wxID_ANY, wxEmptyString);
     _chkShowLinesNums = new wxCheckBox(_editor, wxID_ANY, wxEmptyString);
     _chkCollapseCode = new wxCheckBox(_editor, wxID_ANY, wxEmptyString);
+    _chkShowHiddenChars = new wxCheckBox(_editor, wxID_ANY, wxEmptyString);
 
     _stTextTabSize = new wxStaticText(_editor, wxID_ANY, wxEmptyString);
     _spnTabSize = new wxSpinCtrl(_editor, wxID_ANY, wxT("8"), wxDefaultPosition, wxSize(50, wxDefaultCoord), wxSP_ARROW_KEYS, 2, 8, 8);
@@ -159,6 +160,8 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     topSizerEditor->Add(_chkShowLinesNums, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerEditor->AddStretchSpacer(0);
     topSizerEditor->Add(_chkCollapseCode, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerEditor->AddStretchSpacer(0);
+    topSizerEditor->Add(_chkShowHiddenChars, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerEditor->AddStretchSpacer(0);
     topSizerEditor->Add(_stTextTabSize, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerEditor->Add(_spnTabSize, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
@@ -492,6 +495,7 @@ void OptionsDialog::ReCreateGUI()
     _chkWrapLines->SetLabel(_("Wrap lines by words"));
     _chkShowLinesNums->SetLabel(_("Show line numbers"));
     _chkCollapseCode->SetLabel(_("Collapse blocks of code when location gets opened"));
+    _chkShowHiddenChars->SetLabel(_("Show hidden characters"));
     // Page Sizes
     _notebook->SetPageText(2, _("Sizes"));
     _stTextHeights->SetLabel(_("Relative height of description and location\ncode fields to the tab height (%):"));
@@ -747,6 +751,7 @@ void OptionsDialog::ApplySettings()
     _settings->SetCreateFirstLoc(_chkFirstLoc->GetValue());
     _settings->SetShowLocsIcons(_chkOnLocActIcons->GetValue());
     _settings->SetCollapseCode(_chkCollapseCode->GetValue());
+    _settings->SetShowHiddenChars(_chkShowHiddenChars->GetValue());
     _settings->SetHeightsCoeff((double)_spnHeights->GetValue() / 100);
     _settings->SetWidthsCoeff1((double)_spnWidth1->GetValue() / 100);
     _settings->SetWidthsCoeff2((double)_spnWidth2->GetValue() / 100);
@@ -801,6 +806,7 @@ void OptionsDialog::InitOptionsDialog()
     _txtFirstLocName->SetValue(_settings->GetFirstLocName());
     _chkOnLocActIcons->SetValue(_settings->GetShowLocsIcons());
     _chkCollapseCode->SetValue(_settings->GetCollapseCode());
+    _chkShowHiddenChars->SetValue(_settings->GetShowHiddenChars());
 
     _spnHeights->SetValue(_settings->GetHeightsCoeff() * 100);
     _spnWidth1->SetValue(_settings->GetWidthsCoeff1() * 100);
