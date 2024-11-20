@@ -750,9 +750,21 @@ bool Controls::SaveGame(const wxString &filename, const wxString &password)
 {
     SyncWithLocationsList();
     _locNotebook->SaveOpenedPages();
+
     // We save game to a temporary file & replace the target file if everything goes well
     wxString tempFile(wxFileName::CreateTempFileName(QGEN_APPNAME));
-    if (qspSaveQuest(tempFile.wx_str(), password, this))
+
+    bool wasSaved = false;
+    char *buf;
+    long fileSize = qspSaveQuest(password, this, &buf);
+    if (fileSize > 0)
+    {
+        wxFile file;
+        if (file.Open(tempFile, wxFile::write))
+            wasSaved = (file.Write(buf, fileSize) == fileSize);
+        free(buf);
+    }
+    if (wasSaved)
     {
         if (wxRenameFile(tempFile, filename, true))
         {
@@ -771,31 +783,57 @@ bool Controls::SaveGame(const wxString &filename, const wxString &password)
 bool Controls::LoadGame(const wxString &filename)
 {
     _locNotebook->ClosePages(CLOSE_ALL);
-    if (qspOpenQuest(filename.wx_str(), GetCurrentTopLevelWindow(), this, _currentGamePass, false))
+
+    bool wasOpened = false;
+    wxFile file;
+    if (file.Open(filename, wxFile::read))
     {
-        wxFileName file(filename);
-        OpenConfigFile(_container, file.GetPathWithSep() + file.GetName() + wxT(".qproj"));
-        InitSearchData();
-        _currentGamePath = filename;
-        UpdateLocationsList();
-        _container->Save();
-        _lastSaveTime = wxGetLocalTimeMillis();
-        return true;
+        long fileSize = file.Length();
+        long bufSize = fileSize + QSP_LEN(QSP_STRSDELIM);
+        char *buf = (char *)malloc(bufSize);
+        if (file.Read(buf, fileSize) == fileSize)
+        {
+            if (qspOpenQuest(buf, bufSize, GetCurrentTopLevelWindow(), this, _currentGamePass, false))
+            {
+                wxFileName configFile(filename);
+                configFile.SetExt("qproj");
+                OpenConfigFile(_container, configFile.GetFullPath());
+                InitSearchData();
+                _currentGamePath = filename;
+                UpdateLocationsList();
+                _container->Save();
+                _lastSaveTime = wxGetLocalTimeMillis();
+                wasOpened = true;
+            }
+        }
+        free(buf);
     }
-    return false;
+    return wasOpened;
 }
 
 bool Controls::JoinGame(const wxString &filename)
 {
-    wxString dummy;
-    if (qspOpenQuest(filename.wx_str(), GetCurrentTopLevelWindow(), this, dummy, true))
+    bool wasOpened = false;
+    wxFile file;
+    if (file.Open(filename, wxFile::read))
     {
-        InitSearchData();
-        UpdateLocationsList();
-        _locNotebook->LoadOpenedPages();
-        return true;
+        long fileSize = file.Length();
+        long bufSize = fileSize + QSP_LEN(QSP_STRSDELIM);
+        char *buf = (char *)malloc(bufSize);
+        if (file.Read(buf, fileSize) == fileSize)
+        {
+            wxString dummy;
+            if (qspOpenQuest(buf, bufSize, GetCurrentTopLevelWindow(), this, dummy, true))
+            {
+                InitSearchData();
+                UpdateLocationsList();
+                _locNotebook->LoadOpenedPages();
+                wasOpened = true;
+            }
+        }
+        free(buf);
     }
-    return false;
+    return wasOpened;
 }
 
 void Controls::UpdateLocationsList()
@@ -1466,14 +1504,42 @@ bool Controls::ExportTxt(const wxString &filename)
 {
     SyncWithLocationsList();
     _locNotebook->SaveOpenedPages();
-    return qspExportTxt(filename.wx_str(), this);
+
+    bool wasSaved = false;
+    char *buf;
+    long fileSize = qspExportTxt(this, &buf);
+    if (fileSize > 0)
+    {
+        wxFile file;
+        if (file.Open(filename, wxFile::write))
+        {
+            file.Write(QGEN_BOM, sizeof(QGEN_BOM) - 1);
+            wasSaved = (file.Write(buf, fileSize) == fileSize);
+        }
+        free(buf);
+    }
+    return wasSaved;
 }
 
 bool Controls::ExportTxt2Gam(const wxString &filename)
 {
     SyncWithLocationsList();
     _locNotebook->SaveOpenedPages();
-    return qspExportTxt2Gam(filename.wx_str(), this);
+
+    bool wasSaved = false;
+    char *buf;
+    long fileSize = qspExportTxt2Gam(this, &buf);
+    if (fileSize > 0)
+    {
+        wxFile file;
+        if (file.Open(filename, wxFile::write))
+        {
+            file.Write(QGEN_BOM, sizeof(QGEN_BOM) - 1);
+            wasSaved = (file.Write(buf, fileSize) == fileSize);
+        }
+        free(buf);
+    }
+    return wasSaved;
 }
 
 bool Controls::ImportTxt2Gam(const wxString &filename)

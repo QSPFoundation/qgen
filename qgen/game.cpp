@@ -124,14 +124,6 @@ char *qspUCS2StrStr(char *str, char *subStr)
     return 0;
 }
 
-char *qspFromQSPString(const QSP_CHAR *s)
-{
-    long len = (long)QSP_WCSTOMBSLEN(s) + 1;
-    char *ret = (char *)malloc(len);
-    QSP_WCSTOMBS(ret, s, len);
-    return ret;
-}
-
 char *qspQSPToGameString(const QSP_CHAR *s, bool isUCS2, bool isCode)
 {
     unsigned short uCh, *ptr;
@@ -304,34 +296,16 @@ bool qspCheckQuest(char **strs, long count, bool isUCS2)
     return true;
 }
 
-bool qspOpenQuest(const QSP_CHAR *fileName, wxWindow *parent, Controls *controls, wxString &password, bool merge)
+bool qspOpenQuest(char *buf, long bufSize, wxWindow *parent, Controls *controls, wxString &password, bool merge)
 {
-    FILE *f;
     bool isOldFormat, isUCS2;
-    long i, j, ind, fileSize, dataSize, count, locsCount, actsCount;
+    long i, j, ind, count, locsCount, actsCount;
     QSP_CHAR *data;
     wxString temp;
-    char **strs, *buf, *file = qspFromQSPString(fileName);
-    if (!(f = fopen(file, "rb")))
-    {
-        free(file);
-        return false;
-    }
-    free(file);
-    fseek(f, 0, SEEK_END);
-    if (!(fileSize = ftell(f)))
-    {
-        fclose(f);
-        return false;
-    }
-    dataSize = fileSize + 1;
-    buf = (char *)malloc(dataSize);
-    fseek(f, 0, SEEK_SET);
-    fread(buf, 1, fileSize, f);
-    fclose(f);
-    buf[fileSize] = 0;
+    char **strs;
+    if (bufSize < QSP_LEN(QSP_STRSDELIM)) return false;
+    buf[bufSize - 1] = buf[bufSize - 2] = 0;
     count = qspSplitGameStr(buf, isUCS2 = !buf[1], QSP_STRSDELIM, &strs);
-    free(buf);
     if (!qspCheckQuest(strs, count, isUCS2))
     {
         qspFreeStrs(strs, count, false);
@@ -563,178 +537,149 @@ long qspGameCodeWriteVal(char **s, long len, wxString &val, bool isUCS2, bool is
     return len;
 }
 
-bool qspSaveQuest(const QSP_CHAR *fileName, const wxString &passwd, Controls *controls)
+long qspSaveQuest(const wxString &passwd, Controls *controls, char **buf)
 {
     long i, j, len, locsCount, actsCount;
-    FILE *f;
-    char *buf, *file = qspFromQSPString(fileName);
     wxString str;
-    if (!(f = fopen(file, "wb")))
-    {
-        free(file);
-        return false;
-    }
-    free(file);
     DataContainer *container = controls->GetContainer();
     locsCount = container->GetLocationsCount();
-    buf = 0;
+    *buf = 0;
     str = wxString(QSP_GAMEID);
-    len = qspGameCodeWriteVal(&buf, 0, str, true, false);
+    len = qspGameCodeWriteVal(buf, 0, str, true, false);
     str = wxString(QGEN_VER);
-    len = qspGameCodeWriteVal(&buf, len, str, true, false);
+    len = qspGameCodeWriteVal(buf, len, str, true, false);
     str = wxString(passwd);
-    len = qspGameCodeWriteVal(&buf, len, str, true, true);
-    len = qspGameCodeWriteIntVal(&buf, len, locsCount, true, true);
+    len = qspGameCodeWriteVal(buf, len, str, true, true);
+    len = qspGameCodeWriteIntVal(buf, len, locsCount, true, true);
     for (i = 0; i < locsCount; ++i)
     {
         str = container->GetLocationName(i);
-        len = qspGameCodeWriteVal(&buf, len, str, true, true);
+        len = qspGameCodeWriteVal(buf, len, str, true, true);
         str = container->GetLocationDesc(i);
-        len = qspGameCodeWriteVal(&buf, len, str, true, true);
+        len = qspGameCodeWriteVal(buf, len, str, true, true);
         str = container->GetLocationCode(i);
-        len = qspGameCodeWriteVal(&buf, len, str, true, true);
+        len = qspGameCodeWriteVal(buf, len, str, true, true);
         actsCount = container->GetActionsCount(i);
-        len = qspGameCodeWriteIntVal(&buf, len, actsCount, true, true);
+        len = qspGameCodeWriteIntVal(buf, len, actsCount, true, true);
         for (j = 0; j < actsCount; ++j)
         {
             str = container->GetActionPicturePath(i, j);
-            len = qspGameCodeWriteVal(&buf, len, str, true, true);
+            len = qspGameCodeWriteVal(buf, len, str, true, true);
             str = container->GetActionName(i, j);
-            len = qspGameCodeWriteVal(&buf, len, str, true, true);
+            len = qspGameCodeWriteVal(buf, len, str, true, true);
             str = container->GetActionCode(i, j);
-            len = qspGameCodeWriteVal(&buf, len, str, true, true);
+            len = qspGameCodeWriteVal(buf, len, str, true, true);
         }
     }
-    fwrite(buf, 2, len, f);
-    free(buf);
-    fclose(f);
-    return true;
+    return len * 2;
 }
 
-bool qspExportTxt(const QSP_CHAR *fileName, Controls *controls)
+long qspExportTxt(Controls *controls, char **buf)
 {
     DataContainer *container = controls->GetContainer();
-    char *buf = 0, *file = qspFromQSPString(fileName);
-    FILE *f;
-    long len = 0;
     wxString str, actPictPath;
-    wxArrayString masStrings;
-    if (!(f = fopen(file, "wb")))
-    {
-        free(file);
-        return false;
-    }
-    free(file);
+    wxArrayString lines;
+    long len = 0;
+    *buf = 0;
     for (size_t idxLoc = 0; idxLoc < container->GetLocationsCount(); ++idxLoc)
     {
         str = wxString::Format(_("Location: \"%s\""), container->GetLocationName(idxLoc).wx_str());
-        len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        len = qspGameCodeWriteVal(buf, len, str, true, false);
         str = wxString(wxT("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
-        len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        len = qspGameCodeWriteVal(buf, len, str, true, false);
         str = container->GetLocationDesc(idxLoc);
         if (str.Length())
         {
-            masStrings = wxSplit(str, '\n');
+            lines = wxSplit(str, '\n');
             str = wxString(_("Location description:\n"));
-            len = qspGameCodeWriteVal(&buf, len, str, true, false);
-            for (size_t i = 0; i < masStrings.GetCount(); ++i)
+            len = qspGameCodeWriteVal(buf, len, str, true, false);
+            for (size_t i = 0; i < lines.GetCount(); ++i)
             {
-                str = wxString::Format(wxT("\t%s"), masStrings[i].wx_str());
-                len = qspGameCodeWriteVal(&buf, len, str, true, false);
+                str = wxString::Format(wxT("\t%s"), lines[i].wx_str());
+                len = qspGameCodeWriteVal(buf, len, str, true, false);
             }
             str = wxEmptyString;
-            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            len = qspGameCodeWriteVal(buf, len, str, true, false);
         }
         if (container->GetActionsCount(idxLoc))
         {
             str = wxString(_("Location actions:\n"));
-            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            len = qspGameCodeWriteVal(buf, len, str, true, false);
             for (size_t idxAct = 0; idxAct < container->GetActionsCount(idxLoc); ++idxAct)
             {
                 str = wxString::Format(wxT("\t%s:"), container->GetActionName(idxLoc, idxAct).wx_str());
-                len = qspGameCodeWriteVal(&buf, len, str, true, false);
+                len = qspGameCodeWriteVal(buf, len, str, true, false);
                 actPictPath = container->GetActionPicturePath(idxLoc, idxAct);
                 if (actPictPath.Length())
                 {
                     str = wxString::Format(_("\tAction image: %s"), actPictPath);
-                    len = qspGameCodeWriteVal(&buf, len, str, true, false);
+                    len = qspGameCodeWriteVal(buf, len, str, true, false);
                 }
-                masStrings = wxSplit(container->GetActionCode(idxLoc, idxAct), '\n');
-                for (size_t i = 0; i < masStrings.GetCount(); ++i)
+                lines = wxSplit(container->GetActionCode(idxLoc, idxAct), '\n');
+                for (size_t i = 0; i < lines.GetCount(); ++i)
                 {
-                    str = wxString::Format(wxT("\t\t%s"), masStrings[i].wx_str());
-                    len = qspGameCodeWriteVal(&buf, len, str, true, false);
+                    str = wxString::Format(wxT("\t\t%s"), lines[i].wx_str());
+                    len = qspGameCodeWriteVal(buf, len, str, true, false);
                 }
             }
             str = wxEmptyString;
-            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            len = qspGameCodeWriteVal(buf, len, str, true, false);
         }
         str = container->GetLocationCode(idxLoc);
         if (str.Length())
         {
-            masStrings = wxSplit(str, '\n');
-            str = wxString(_("Location description:\n"));
-            len = qspGameCodeWriteVal(&buf, len, str, true, false);
-            for (size_t i = 0; i < masStrings.GetCount(); ++i)
+            lines = wxSplit(str, '\n');
+            str = wxString(_("Location code:\n"));
+            len = qspGameCodeWriteVal(buf, len, str, true, false);
+            for (size_t i = 0; i < lines.GetCount(); ++i)
             {
-                str = wxString::Format(wxT("\t%s"), masStrings[i].wx_str());
-                len = qspGameCodeWriteVal(&buf, len, str, true, false);
+                str = wxString::Format(wxT("\t%s"), lines[i].wx_str());
+                len = qspGameCodeWriteVal(buf, len, str, true, false);
             }
             str = wxEmptyString;
-            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            len = qspGameCodeWriteVal(buf, len, str, true, false);
         }
         str = wxString::Format(_("------------ End of location: \"%s\" ------------\n"),
                 container->GetLocationName(idxLoc).wx_str());
-        len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        len = qspGameCodeWriteVal(buf, len, str, true, false);
     }
-    fwrite(QGEN_BOM, 1, sizeof(QGEN_BOM) - 1, f);
-    fwrite(buf, 2, len, f);
-    free(buf);
-    fclose(f);
-    return true;
+    return len * 2;
 }
 
-bool qspExportTxt2Gam(const QSP_CHAR *fileName, Controls *controls)
+long qspExportTxt2Gam(Controls *controls, char **buf)
 {
-    FILE *f;
     wxString str, actPictPath;
-    wxArrayString masStrings;
-    int masCount;
+    wxArrayString lines;
+    int linesCount;
     size_t actCount;
     DataContainer *container = controls->GetContainer();
     long len = 0;
-    char *buf = 0, *file = qspFromQSPString(fileName);
-    if (!(f = fopen(file, "wb")))
-    {
-        free(file);
-        return false;
-    }
-    free(file);
+    *buf = 0;
     for (size_t idxLoc = 0; idxLoc < container->GetLocationsCount(); ++idxLoc)
     {
         str = wxString::Format(wxT("# %s"), container->GetLocationName(idxLoc).wx_str());
-        len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        len = qspGameCodeWriteVal(buf, len, str, true, false);
         str = container->GetLocationDesc(idxLoc);
         str.Replace(wxT("'"), wxT("''"));
-        masStrings = wxSplit(str, '\n');
-        masCount = masStrings.GetCount();
+        lines = wxSplit(str, '\n');
+        linesCount = lines.GetCount();
 
-        for (int i = 0; i < masCount - 1; ++i)
+        for (int i = 0; i < linesCount - 1; ++i)
         {
-            str = masStrings[i];
+            str = lines[i];
             if (str.Length())
                 str = wxString::Format(wxT("*PL '%s'"), str.wx_str());
             else
                 str = wxT("*NL");
-            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            len = qspGameCodeWriteVal(buf, len, str, true, false);
         }
-        if (masCount)
+        if (linesCount)
         {
-            str = masStrings[masCount - 1];
+            str = lines[linesCount - 1];
             if (str.Length())
             {
                 str = wxString::Format(wxT("*P '%s'"), str.wx_str());
-                len = qspGameCodeWriteVal(&buf, len, str, true, false);
+                len = qspGameCodeWriteVal(buf, len, str, true, false);
             }
         }
 
@@ -754,35 +699,36 @@ bool qspExportTxt2Gam(const QSP_CHAR *fileName, Controls *controls)
             else
                 str = wxString::Format(wxT("ACT '%s':"), str.wx_str());
 
-            len = qspGameCodeWriteVal(&buf, len, str, true, false);
-            masStrings = wxSplit(container->GetActionCode(idxLoc, idxAct), '\n');
+            len = qspGameCodeWriteVal(buf, len, str, true, false);
+            lines = wxSplit(container->GetActionCode(idxLoc, idxAct), '\n');
 
-            for (size_t i = 0; i < masStrings.GetCount(); ++i)
+            for (size_t i = 0; i < lines.GetCount(); ++i)
             {
-                str = wxString::Format(wxT("\t%s"), masStrings[i].wx_str());
-                len = qspGameCodeWriteVal(&buf, len, str, true, false);
+                str = wxString::Format(wxT("\t%s"), lines[i].wx_str());
+                len = qspGameCodeWriteVal(buf, len, str, true, false);
             }
             str = wxString(wxT("END"));
-            len = qspGameCodeWriteVal(&buf, len, str, true, false);
+            len = qspGameCodeWriteVal(buf, len, str, true, false);
         }
         str = container->GetLocationCode(idxLoc);
-        len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        len = qspGameCodeWriteVal(buf, len, str, true, false);
         str = wxString::Format(wxT("--- %s ---------------------------------\n"),
                 container->GetLocationName(idxLoc).wx_str());
-        len = qspGameCodeWriteVal(&buf, len, str, true, false);
+        len = qspGameCodeWriteVal(buf, len, str, true, false);
     }
-    fwrite(QGEN_BOM, 1, sizeof(QGEN_BOM) - 1, f);
-    fwrite(buf, 2, len, f);
-    free(buf);
-    fclose(f);
-    return true;
+    return len * 2;
 }
 
-bool qspImportTxt2Game(const QSP_CHAR *fileName, Controls  *controls)
+bool qspImportTxt2Game(const wxString &fileName, Controls  *controls)
 {
-    if (!wxExecute(wxString::Format(wxT("\"%s\" \"%s\" \"%s\" u"),
-            controls->GetSettings()->GetCurrentTxt2GamPath(),
-            fileName, controls->GetGamePath()), wxEXEC_SYNC))
+    wxString txt2gamPath = controls->GetSettings()->GetCurrentTxt2GamPath();
+    wxString gamePath = controls->GetGamePath();
+    wxString commandLine = wxString::Format(wxT("\"%s\" \"%s\" \"%s\" u"),
+            txt2gamPath.wx_str(),
+            fileName.wx_str(),
+            gamePath.wx_str());
+
+    if (!wxExecute(commandLine, wxEXEC_SYNC))
         return true;
     return false;
 }

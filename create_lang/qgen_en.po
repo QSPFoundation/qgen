@@ -472,6 +472,9 @@ msgstr "Location code:"
 msgid "Location description:\n"
 msgstr "Location description:\n"
 
+msgid "Location code:\n"
+msgstr "Location code:\n"
+
 msgid "Location name can't contain more than %i characters!"
 msgstr "Location name can't contain more than %i characters!"
 

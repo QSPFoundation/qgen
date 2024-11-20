@@ -50,8 +50,6 @@
         #define QSP_STRCOLL wcscmp
         #define QSP_STRPBRK wcspbrk
         #define QSP_ISDIGIT iswdigit
-        #define QSP_WCSTOMBSLEN(a) wcstombs(0, a, 0)
-        #define QSP_WCSTOMBS wcstombs
         #define QSP_MBTOSB(a) ((a) % 256)
         #define QSP_FROM_OS_CHAR(a) qspReverseConvertUC(a, qspCP1251ToUnicodeTable)
         #define QSP_TO_OS_CHAR(a) qspDirectConvertUC(a, qspCP1251ToUnicodeTable)
@@ -67,8 +65,6 @@
         #define QSP_STRCMP strcmp
         #define QSP_STRPBRK strpbrk
         #define QSP_ISDIGIT isdigit
-        #define QSP_WCSTOMBSLEN strlen
-        #define QSP_WCSTOMBS strncpy
         #define QSP_MBTOSB
         #ifdef _WINDOWS
             #define QSP_FROM_OS_CHAR
@@ -113,11 +109,11 @@
 
     class Controls;
 
-    bool qspOpenQuest(const QSP_CHAR *fileName, wxWindow *parent, Controls *controls, wxString &password, bool merge);
-    bool qspSaveQuest(const QSP_CHAR *fileName, const wxString &passwd, Controls *controls);
-    bool qspExportTxt(const QSP_CHAR *fileName, Controls *controls);
-    bool qspExportTxt2Gam(const QSP_CHAR *fileName, Controls *controls);
-    bool qspImportTxt2Game(const QSP_CHAR *fileName, Controls *controls);
+    bool qspOpenQuest(char *buf, long bufSize, wxWindow *parent, Controls *controls, wxString &password, bool merge);
+    long qspSaveQuest(const wxString &passwd, Controls *controls, char **buf);
+    long qspExportTxt(Controls *controls, char **buf);
+    long qspExportTxt2Gam(Controls *controls, char **buf);
+    bool qspImportTxt2Game(const wxString &fileName, Controls *controls);
 
     bool OpenConfigFile(DataContainer *container, const wxString &file);
     bool SaveConfigFile(DataContainer *container, const wxString &file);

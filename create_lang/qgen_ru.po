@@ -472,6 +472,9 @@ msgstr "Код локации:"
 msgid "Location description:\n"
 msgstr "Описание локации:\n"
 
+msgid "Location code:\n"
+msgstr "Код локации:\n"
+
 msgid "Location name can't contain more than %i characters!"
 msgstr "Название локации не может содержать более %i символов."
 
