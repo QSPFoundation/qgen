@@ -768,8 +768,9 @@ bool Controls::SaveGame(const wxString &filename, const wxString &password)
     {
         if (wxRenameFile(tempFile, filename, true))
         {
-            wxFileName file(filename);
-            SaveConfigFile(_container, file.GetPathWithSep() + file.GetName() + wxT(".qproj"));
+            wxFileName configFile(filename);
+            configFile.SetExt("qproj");
+            SaveConfigFile(_container, configFile.GetFullPath());
             _container->Save();
             _lastSaveTime = wxGetLocalTimeMillis();
             _currentGamePath = filename;
