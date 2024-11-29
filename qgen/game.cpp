@@ -540,13 +540,13 @@ long qspGameCodeWriteVal(char **s, long len, wxString &val, bool isUCS2, bool is
 long qspSaveQuest(const wxString &passwd, Controls *controls, char **buf)
 {
     long i, j, len, locsCount, actsCount;
-    wxString str;
+    wxString str, currentDate = wxDateTime::Now().FormatISODate();
     DataContainer *container = controls->GetContainer();
     locsCount = container->GetLocationsCount();
     *buf = 0;
     str = wxString(QSP_GAMEID);
     len = qspGameCodeWriteVal(buf, 0, str, true, false);
-    str = wxString(QGEN_VER);
+    str = wxString::Format(wxT("%s (%s %s)"), currentDate.wx_str(), QGEN_APPNAME, QGEN_VER);
     len = qspGameCodeWriteVal(buf, len, str, true, false);
     str = wxString(passwd);
     len = qspGameCodeWriteVal(buf, len, str, true, true);

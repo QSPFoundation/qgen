@@ -83,7 +83,7 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, IControls *c
     SetAutoLayout(true);
 
     int maxHeight = GetClientSize().GetHeight();
-    SetMaxClientSize(wxSize(2048, maxHeight));
+    SetMaxClientSize(wxSize(900, maxHeight));
     SetClientSize(350, maxHeight);
 
     OnUpdFindText(dummy);

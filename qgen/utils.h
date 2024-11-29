@@ -31,7 +31,8 @@
     #include "qgen_config.h"
 
     #define QGEN_VER QSP_FMT(QGEN_VER_STR)
-    #define QGEN_APPNAME wxT("qgen")
+    #define QGEN_APPNAME wxT("QGen")
+    #define QGEN_FILEPREFIX wxT("qgen")
     #define QGEN_CONFIG wxT("qgen.cfg")
     #define QGEN_KEYWORDS wxT("keywords.xml")
     #define QGEN_TRANSLATIONS wxT("langs")

@@ -42,7 +42,7 @@ wxString Utils::GetResourcePath(const wxString &path, const wxString &file)
     resourcePathList.Add(wxStandardPaths::Get().GetResourcesDir());
 
     wxArrayString prefixes;
-    prefixes.Add(QGEN_APPNAME);
+    prefixes.Add(QGEN_FILEPREFIX);
     prefixes.Add(wxEmptyString);
 
     for (wxPathList::iterator it = resourcePathList.begin(); it != resourcePathList.end(); ++it)

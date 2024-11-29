@@ -752,7 +752,7 @@ bool Controls::SaveGame(const wxString &filename, const wxString &password)
     _locNotebook->SaveOpenedPages();
 
     // We save game to a temporary file & replace the target file if everything goes well
-    wxString tempFile(wxFileName::CreateTempFileName(QGEN_APPNAME));
+    wxString tempFile(wxFileName::CreateTempFileName(QGEN_FILEPREFIX));
 
     bool wasSaved = false;
     char *buf;
@@ -947,7 +947,7 @@ bool Controls::SearchNextLoc()
 {
     size_t locsCount = _container->GetLocationsCount();
     _dataSearch.FindAt = SEARCH_LOCNAME;
-    _dataSearch.StartPos = 0;
+    _dataSearch.StartPos = -1;
     if (++_dataSearch.LocIndex >= locsCount) _dataSearch.LocIndex = 0;
     if (++_dataSearch.LocsChecked >= locsCount)
     {
@@ -1033,7 +1033,7 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
         if (_dataSearch.FindAt == SEARCH_LOCNAME)
         {
             _dataSearch.FindAt = SEARCH_LOCDESC;
-            _dataSearch.StartPos = 0;
+            _dataSearch.StartPos = -1;
             if (FindSubString(ConvertSearchString(locName, isMatchCase), textToSearch, isWholeString) >= 0)
             {
                 _locListBox->Select(locName);
@@ -1047,13 +1047,13 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
         if (_dataSearch.FindAt == SEARCH_LOCDESC)
         {
             data = _container->GetLocationDesc(_dataSearch.LocIndex);
-            int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos);
+            int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos + 1);
             if (startPos >= 0)
             {
                 _locListBox->Select(locName);
                 page = ShowLocation(locName);
                 page->SelectLocDescString(startPos, startPos + textToSearch.Length());
-                _dataSearch.StartPos = startPos + 1;
+                _dataSearch.StartPos = startPos;
                 _dataSearch.FoundAt = SEARCH_LOCDESC;
                 _dataSearch.FoundAny = true;
                 return true;
@@ -1061,20 +1061,20 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
             else
             {
                 _dataSearch.FindAt = SEARCH_LOCCODE;
-                _dataSearch.StartPos = 0;
+                _dataSearch.StartPos = -1;
             }
         }
 
         if (_dataSearch.FindAt == SEARCH_LOCCODE)
         {
             data = _container->GetLocationCode(_dataSearch.LocIndex);
-            int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos);
+            int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos + 1);
             if (startPos >= 0)
             {
                 _locListBox->Select(locName);
                 page = ShowLocation(locName);
                 page->SelectLocCodeString(startPos, startPos + textToSearch.Length());
-                _dataSearch.StartPos = startPos + 1;
+                _dataSearch.StartPos = startPos;
                 _dataSearch.FoundAt = SEARCH_LOCCODE;
                 _dataSearch.FoundAny = true;
                 return true;
@@ -1082,19 +1082,19 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
             else
             {
                 _dataSearch.FindAt = SEARCH_ACTNAME;
-                _dataSearch.StartPos = 0;
+                _dataSearch.StartPos = -1;
                 _dataSearch.ActIndex = 0;
             }
         }
 
         size_t actsCount = _container->GetActionsCount(_dataSearch.LocIndex);
 
-        for(; _dataSearch.ActIndex < actsCount; ++_dataSearch.ActIndex)
+        for (; _dataSearch.ActIndex < actsCount; ++_dataSearch.ActIndex)
         {
             if (_dataSearch.FindAt == SEARCH_ACTNAME)
             {
                 _dataSearch.FindAt = SEARCH_PATHPICT;
-                _dataSearch.StartPos = 0;
+                _dataSearch.StartPos = -1;
                 actName = _container->GetActionName(_dataSearch.LocIndex, _dataSearch.ActIndex);
                 if (FindSubString(ConvertSearchString(actName, isMatchCase), textToSearch, isWholeString) >= 0)
                 {
@@ -1109,14 +1109,14 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
             if (_dataSearch.FindAt == SEARCH_PATHPICT)
             {
                 data = _container->GetActionPicturePath(_dataSearch.LocIndex, _dataSearch.ActIndex);
-                int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos);
+                int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos + 1);
                 if (startPos >= 0)
                 {
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
                     page->SelectAction(_dataSearch.ActIndex);
                     page->SelectPicturePathString(startPos, startPos + textToSearch.Length());
-                    _dataSearch.StartPos = startPos + 1;
+                    _dataSearch.StartPos = startPos;
                     _dataSearch.FoundAt = SEARCH_PATHPICT;
                     _dataSearch.FoundAny = true;
                     return true;
@@ -1124,20 +1124,20 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
                 else
                 {
                     _dataSearch.FindAt = SEARCH_ACTCODE;
-                    _dataSearch.StartPos = 0;
+                    _dataSearch.StartPos = -1;
                 }
             }
             if (_dataSearch.FindAt == SEARCH_ACTCODE)
             {
                 data = _container->GetActionCode(_dataSearch.LocIndex, _dataSearch.ActIndex);
-                int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos);
+                int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos + 1);
                 if (startPos >= 0)
                 {
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
                     page->SelectAction( _dataSearch.ActIndex);
                     page->SelectActionCodeString(startPos, startPos + textToSearch.Length());
-                    _dataSearch.StartPos = startPos + 1;
+                    _dataSearch.StartPos = startPos;
                     _dataSearch.FoundAt = SEARCH_ACTCODE;
                     _dataSearch.FoundAny = true;
                     return true;
@@ -1145,7 +1145,7 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
                 else
                 {
                     _dataSearch.FindAt = SEARCH_ACTNAME;
-                    _dataSearch.StartPos = 0;
+                    _dataSearch.StartPos = -1;
                 }
             }
         }
@@ -1189,7 +1189,7 @@ void Controls::ReplaceSearchString(const wxString& replaceString)
             page->ReplaceActionCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.SearchString.length(), replaceString);
         break;
     }
-    _dataSearch.StartPos += replaceString.Length();
+    _dataSearch.StartPos += (int)replaceString.length() - 1; /* point to the last char of replacement */
     _dataSearch.FoundAt = SEARCH_NONE;
 }
 
@@ -1202,7 +1202,7 @@ void Controls::InitSearchData()
 
     _dataSearch.LocIndex = 0;
     _dataSearch.ActIndex = 0;
-    _dataSearch.StartPos = 0;
+    _dataSearch.StartPos = -1;
 
     _dataSearch.LocsChecked = 0;
     _dataSearch.FoundAny = false;
@@ -1701,6 +1701,6 @@ void Controls::UpdateLocale(int lang)
     wxString langsPath(Utils::GetResourcePath(QGEN_TRANSLATIONS));
     _locale->AddCatalogLookupPathPrefix(langsPath);
 
-    if (!_locale->AddCatalog(QGEN_APPNAME))
-        _locale->AddCatalog(wxString(QGEN_APPNAME) + wxT('_') + _locale->GetCanonicalName().BeforeFirst(wxT('_')));
+    if (!_locale->AddCatalog(QGEN_FILEPREFIX))
+        _locale->AddCatalog(wxString(QGEN_FILEPREFIX) + wxT('_') + _locale->GetCanonicalName().BeforeFirst(wxT('_')));
 }

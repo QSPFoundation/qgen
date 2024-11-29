@@ -43,7 +43,7 @@
         wxString    SearchString;
         size_t      LocIndex;
         size_t      ActIndex;
-        size_t      StartPos;
+        int         StartPos; // position of the found text
         size_t      LocsChecked;
         SearchPlace FoundAt;
         SearchPlace FindAt;
