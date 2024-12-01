@@ -69,7 +69,7 @@ void SearchDataStore::AddSearchString(const wxString &text)
     if (_searchStrings.Index(text) == wxNOT_FOUND)
     {
         size_t count = _searchStrings.GetCount();
-        if (count >= 10) _searchStrings.RemoveAt(count - 1);
+        if (count >= 15) _searchStrings.RemoveAt(count - 1);
     }
     else
         _searchStrings.Remove(text);
@@ -81,7 +81,7 @@ void SearchDataStore::AddReplaceString(const wxString &text)
     if (_replaceStrings.Index(text) == wxNOT_FOUND)
     {
         size_t count = _replaceStrings.GetCount();
-        if (count >= 10) _replaceStrings.RemoveAt(count - 1);
+        if (count >= 15) _replaceStrings.RemoveAt(count - 1);
     }
     else
         _replaceStrings.Remove(text);

@@ -1014,8 +1014,7 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
 
     if (findAgain
         || str != _dataSearch.SearchString
-        || _dataSearch.LocsChecked >= locsCount
-        || _dataSearch.LocIndex >= locsCount)
+        || _dataSearch.LocsChecked >= locsCount)
     {
         InitSearchData();
         int locIndex = GetSelectedLocationIndex();

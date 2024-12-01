@@ -605,21 +605,20 @@ void MainFrame::OnToggleStatusbar(wxCommandEvent &event)
 
 void MainFrame::OnFindDialog(wxCommandEvent& event)
 {
+    wxString word = _controls->GetSelectedWord();
     if (!_findDlg)
     {
         _findDlg = new SearchDialog(this, _("Find / Replace"), _controls, wxRESIZE_BORDER);
         _findDlg->CenterOnParent();
         _controls->InitSearchData();
     }
+    if (!word.IsEmpty())
+        _findDlg->SetTextToSearch(word);
+
     if (_findDlg->IsShown())
         _findDlg->SetFocus();
     else
-    {
-        wxString word = _controls->GetSelectedWord();
-        if (!word.IsEmpty())
-            _findDlg->SetTextToSearch(word);
         _findDlg->Show();
-    }
 }
 
 void MainFrame::OnCreateLocation(wxCommandEvent &event)

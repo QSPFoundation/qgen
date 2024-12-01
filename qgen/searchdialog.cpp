@@ -169,16 +169,30 @@ void SearchDialog::OnSkipLoc(wxCommandEvent &event)
 void SearchDialog::AddSearchText(const wxString &text)
 {
     _searchDataStore->AddSearchString(text);
-    if (_textFind->GetCount() && _textFind->GetString(0) == text)
-        return;
+
+    int itemIndex = _textFind->FindString(text, true);
+    if (itemIndex == wxNOT_FOUND)
+    {
+        int count = _textFind->GetCount();
+        if (count >= 15) _textFind->Delete(count - 1);
+    }
+    else
+        _textFind->Delete(itemIndex);
     _textFind->Insert(text, 0);
 }
 
 void SearchDialog::AddReplaceText(const wxString &text)
 {
     _searchDataStore->AddReplaceString(text);
-    if (_textRepl->GetCount() && _textRepl->GetString(0) == text)
-        return;
+
+    int itemIndex = _textRepl->FindString(text, true);
+    if (itemIndex == wxNOT_FOUND)
+    {
+        int count = _textRepl->GetCount();
+        if (count >= 15) _textRepl->Delete(count - 1);
+    }
+    else
+        _textRepl->Delete(itemIndex);
     _textRepl->Insert(text, 0);
 }
 
