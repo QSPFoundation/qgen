@@ -1012,6 +1012,9 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
 
     _locNotebook->SaveOpenedPages();
 
+    if (_dataSearch.LocIndex >= locsCount)
+        _dataSearch.LocIndex = 0;
+
     if (findAgain
         || str != _dataSearch.SearchString
         || _dataSearch.LocsChecked >= locsCount)
