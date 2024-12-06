@@ -460,6 +460,8 @@ void MainFrame::OnLoadFile(wxCommandEvent &event)
         {
             if (_controls->LoadGame(dialog.GetPath()))
                 UpdateTitle();
+            else
+                _controls->ShowMessage(QGEN_MSG_CANTLOADGAME);
         }
     }
 }
@@ -722,34 +724,6 @@ void MainFrame::OnDeleteText(wxCommandEvent &event)
     _controls->DeleteSelectedText();
 }
 
-void MainFrame::OnMergeQuest(wxCommandEvent &event )
-{
-    wxFileDialog dialog(this,
-        _("Merge game file"), wxEmptyString, wxEmptyString,
-        _("QSP games (*.qsp;*.gam)|*.qsp;*.gam"), wxFD_OPEN);
-    dialog.CenterOnParent();
-    if (dialog.ShowModal() == wxID_OK)
-    _controls->JoinGame(dialog.GetPath());
-}
-
-void MainFrame::OnPlayQuest(wxCommandEvent &event )
-{
-    wxCommandEvent dummy;
-    Settings *settings = _controls->GetSettings();
-    if (!wxFile::Exists(settings->GetCurrentPlayerPath()))
-    {
-        wxFileDialog dialog(this,
-            _("Select player file"), wxEmptyString, wxEmptyString,
-            _("Executables (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
-        dialog.CenterOnParent();
-        if (dialog.ShowModal() == wxID_CANCEL) return;
-        settings->SetCurrentPlayerPath(dialog.GetPath());
-    }
-    OnSaveQuest(dummy);
-    if (_controls->IsGameSaved())
-        wxExecute(wxString::Format("\"%s\" \"%s\"", settings->GetCurrentPlayerPath(), _controls->GetGamePath()));
-}
-
 void MainFrame::OnChmHelp(wxCommandEvent &event )
 {
 #ifdef __WXMSW__
@@ -782,6 +756,37 @@ void MainFrame::OnSearchHelp(wxCommandEvent &event )
     delete chmHelp;
 }
 
+void MainFrame::OnMergeQuest(wxCommandEvent &event )
+{
+    wxFileDialog dialog(this,
+        _("Merge game file"), wxEmptyString, wxEmptyString,
+        _("QSP games (*.qsp;*.gam)|*.qsp;*.gam"), wxFD_OPEN);
+    dialog.CenterOnParent();
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        if (!_controls->JoinGame(dialog.GetPath()))
+            _controls->ShowMessage(QGEN_MSG_CANTLOADGAME);
+    }
+}
+
+void MainFrame::OnPlayQuest(wxCommandEvent &event )
+{
+    wxCommandEvent dummy;
+    Settings *settings = _controls->GetSettings();
+    if (!wxFile::Exists(settings->GetCurrentPlayerPath()))
+    {
+        wxFileDialog dialog(this,
+            _("Select player file"), wxEmptyString, wxEmptyString,
+            _("Executables (*.exe)|*.exe|All files (*.*)|*"), wxFD_OPEN);
+        dialog.CenterOnParent();
+        if (dialog.ShowModal() == wxID_CANCEL) return;
+        settings->SetCurrentPlayerPath(dialog.GetPath());
+    }
+    OnSaveQuest(dummy);
+    if (_controls->IsGameSaved())
+        wxExecute(wxString::Format("\"%s\" \"%s\"", settings->GetCurrentPlayerPath(), _controls->GetGamePath()));
+}
+
 void MainFrame::OnExportTxtFile( wxCommandEvent &event )
 {
     wxFileDialog dialog(this,
@@ -803,8 +808,14 @@ void MainFrame::OnExportTxt2Gam( wxCommandEvent &event )
     dialog.CenterOnParent();
     if (dialog.ShowModal() == wxID_OK)
     {
-        if (!_controls->ExportTxt2Gam(dialog.GetPath()))
-            _controls->ShowMessage(QGEN_MSG_CANTSAVEGAME);
+        wxCommandEvent dummy;
+        if (!SelectTxt2Gam()) return;
+        OnSaveQuest(dummy);
+        if (_controls->IsGameSaved())
+        {
+            if (!_controls->ExportTxt2Gam(dialog.GetPath()))
+                _controls->ShowMessage(QGEN_MSG_CANTSAVEGAME);
+        }
     }
 }
 
@@ -824,17 +835,9 @@ void MainFrame::OnImportTxt2Gam( wxCommandEvent &event )
     dialog.CenterOnParent();
     if (dialog.ShowModal() == wxID_OK)
     {
-        Settings *settings = _controls->GetSettings();
-        if (!wxFile::Exists(settings->GetCurrentTxt2GamPath()))
-        {
-            wxFileDialog dialog2(this,
-                _("Select converter file"), wxEmptyString, wxEmptyString,
-                _("Executables (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
-            dialog2.CenterOnParent();
-            if (dialog2.ShowModal() == wxID_CANCEL) return;
-            settings->SetCurrentTxt2GamPath(dialog2.GetPath());
-        }
-        _controls->ImportTxt2Gam(dialog.GetPath());
+        if (!SelectTxt2Gam()) return;
+        if (!_controls->ImportTxt2Gam(dialog.GetPath()))
+            _controls->ShowMessage(QGEN_MSG_CANTLOADGAME);
     }
 }
 
@@ -888,6 +891,21 @@ void MainFrame::OnTimerUpdToolBar(wxTimerEvent &event)
     _toolBar->EnableTool(ID_TEXT_REDO, isCanRedoText);
     _toolBar->Refresh();
     UpdateTitle();
+}
+
+bool MainFrame::SelectTxt2Gam()
+{
+    Settings *settings = _controls->GetSettings();
+    if (!wxFile::Exists(settings->GetCurrentTxt2GamPath()))
+    {
+        wxFileDialog dialog(this,
+            _("Select converter file"), wxEmptyString, wxEmptyString,
+            _("Executables (*.exe)|*.exe|All files (*.*)|*"), wxFD_OPEN);
+        dialog.CenterOnParent();
+        if (dialog.ShowModal() == wxID_CANCEL) return false;
+        settings->SetCurrentTxt2GamPath(dialog.GetPath());
+    }
+    return true;
 }
 
 bool MainFrame::QuestChange()

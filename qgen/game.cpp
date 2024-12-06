@@ -388,8 +388,7 @@ bool qspOpenQuest(char *buf, long bufSize, wxWindow *parent, Controls *controls,
         {
             container->Clear();
             qspFreeStrs(strs, count, false);
-            controls->ShowMessage(QGEN_MSG_CANTLOADGAME);
-            return true;
+            return false;
         }
         data = qspGameToQSPString(strs[ind++], isUCS2, true);
         (temp = data).Replace(QSP_STRSDELIM, wxT("\n"));
@@ -646,84 +645,27 @@ long qspExportTxt(Controls *controls, char **buf)
     return len * 2;
 }
 
-long qspExportTxt2Gam(Controls *controls, char **buf)
-{
-    wxString str, actPictPath;
-    wxArrayString lines;
-    int linesCount;
-    size_t actCount;
-    DataContainer *container = controls->GetContainer();
-    long len = 0;
-    *buf = 0;
-    for (size_t idxLoc = 0; idxLoc < container->GetLocationsCount(); ++idxLoc)
-    {
-        str = wxString::Format(wxT("# %s"), container->GetLocationName(idxLoc).wx_str());
-        len = qspGameCodeWriteVal(buf, len, str, true, false);
-        str = container->GetLocationDesc(idxLoc);
-        str.Replace(wxT("'"), wxT("''"));
-        lines = wxSplit(str, '\n');
-        linesCount = lines.GetCount();
-
-        for (int i = 0; i < linesCount - 1; ++i)
-        {
-            str = lines[i];
-            if (str.Length())
-                str = wxString::Format(wxT("*PL '%s'"), str.wx_str());
-            else
-                str = wxT("*NL");
-            len = qspGameCodeWriteVal(buf, len, str, true, false);
-        }
-        if (linesCount)
-        {
-            str = lines[linesCount - 1];
-            if (str.Length())
-            {
-                str = wxString::Format(wxT("*P '%s'"), str.wx_str());
-                len = qspGameCodeWriteVal(buf, len, str, true, false);
-            }
-        }
-
-        actCount = container->GetActionsCount(idxLoc);
-
-        for (size_t idxAct = 0; idxAct < actCount ; ++idxAct)
-        {
-            str = container->GetActionName(idxLoc, idxAct);
-            str.Replace(wxT("'"), wxT("''"));
-            actPictPath = container->GetActionPicturePath(idxLoc, idxAct);
-
-            if (actPictPath.Length())
-            {
-                actPictPath.Replace(wxT("'"), wxT("''"));
-                str = wxString::Format(wxT("ACT '%s', '%s':"), str.wx_str(), actPictPath.wx_str());
-            }
-            else
-                str = wxString::Format(wxT("ACT '%s':"), str.wx_str());
-
-            len = qspGameCodeWriteVal(buf, len, str, true, false);
-            lines = wxSplit(container->GetActionCode(idxLoc, idxAct), '\n');
-
-            for (size_t i = 0; i < lines.GetCount(); ++i)
-            {
-                str = wxString::Format(wxT("\t%s"), lines[i].wx_str());
-                len = qspGameCodeWriteVal(buf, len, str, true, false);
-            }
-            str = wxString(wxT("END"));
-            len = qspGameCodeWriteVal(buf, len, str, true, false);
-        }
-        str = container->GetLocationCode(idxLoc);
-        len = qspGameCodeWriteVal(buf, len, str, true, false);
-        str = wxString::Format(wxT("--- %s ---------------------------------\n"),
-                container->GetLocationName(idxLoc).wx_str());
-        len = qspGameCodeWriteVal(buf, len, str, true, false);
-    }
-    return len * 2;
-}
-
-bool qspImportTxt2Game(const wxString &fileName, Controls  *controls)
+long qspExportTxt2Gam(const wxString &fileName, Controls *controls)
 {
     wxString txt2gamPath = controls->GetSettings()->GetCurrentTxt2GamPath();
     wxString gamePath = controls->GetGamePath();
-    wxString commandLine = wxString::Format(wxT("\"%s\" \"%s\" \"%s\" u"),
+    wxString password = controls->GetGamePass();
+    wxString commandLine = wxString::Format(wxT("\"%s\" \"%s\" \"%s\" \"p%s\" d"),
+            txt2gamPath.wx_str(),
+            gamePath.wx_str(),
+            fileName.wx_str(),
+            password.wx_str());
+
+    if (!wxExecute(commandLine, wxEXEC_SYNC))
+        return true;
+    return false;
+}
+
+bool qspImportTxt2Gam(const wxString &fileName, Controls *controls)
+{
+    wxString txt2gamPath = controls->GetSettings()->GetCurrentTxt2GamPath();
+    wxString gamePath = controls->GetGamePath();
+    wxString commandLine = wxString::Format(wxT("\"%s\" \"%s\" \"%s\" c u"),
             txt2gamPath.wx_str(),
             fileName.wx_str(),
             gamePath.wx_str());

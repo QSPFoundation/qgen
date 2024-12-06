@@ -292,8 +292,8 @@ wxString Controls::GetMessageDesc(long errorNum)
         case QGEN_MSG_EXISTS_S_HKEY: str = _("This key combination is used already by the system! Select another combination."); break;
         case QGEN_MSG_EMPTYDATA: str = _("An empty field, input the value!"); break;
         case QGEN_MSG_WRONGPASSWORD: str = _("Wrong password!"); break;
-        case QGEN_MSG_CANTSAVEGAME: str = _("Can't write file!"); break;
-        case QGEN_MSG_CANTLOADGAME: str = _("Can't load game. Locations with the same name are found!"); break;
+        case QGEN_MSG_CANTSAVEGAME: str = _("Can't save game!"); break;
+        case QGEN_MSG_CANTLOADGAME: str = _("Can't load game!"); break;
         case QGEN_MSG_NOTFOUND: str = _("The specified text was not found"); break;
         case QGEN_MSG_SEARCHENDED: str = _("The specified text was not found anymore."); break;
         case QGEN_MSG_WRONGFORMAT: str = _("Incorrect format!"); break;
@@ -715,7 +715,7 @@ void Controls::SelectAllText()
 wxString Controls::SelectPicturePath()
 {
     wxFileDialog fileDlg(GetCurrentTopLevelWindow(), _("Select image file"),
-        wxEmptyString, wxEmptyString, _("Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*.*"), wxFD_OPEN);
+        wxEmptyString, wxEmptyString, _("Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*"), wxFD_OPEN);
     fileDlg.CentreOnParent();
     if (fileDlg.ShowModal() == wxID_OK)
     {
@@ -1526,28 +1526,13 @@ bool Controls::ExportTxt(const wxString &filename)
 
 bool Controls::ExportTxt2Gam(const wxString &filename)
 {
-    SyncWithLocationsList();
-    _locNotebook->SaveOpenedPages();
-
-    bool wasSaved = false;
-    char *buf;
-    long fileSize = qspExportTxt2Gam(this, &buf);
-    if (fileSize > 0)
-    {
-        wxFile file;
-        if (file.Open(filename, wxFile::write))
-        {
-            file.Write(QGEN_BOM, sizeof(QGEN_BOM) - 1);
-            wasSaved = (file.Write(buf, fileSize) == fileSize);
-        }
-        free(buf);
-    }
-    return wasSaved;
+    if (!IsGameSaved()) return false;
+    return qspExportTxt2Gam(filename.wx_str(), this);
 }
 
 bool Controls::ImportTxt2Gam(const wxString &filename)
 {
-    if (qspImportTxt2Game(filename.wx_str(), this))
+    if (qspImportTxt2Gam(filename.wx_str(), this))
         return LoadGame(_currentGamePath);
     return false;
 }
@@ -1681,7 +1666,7 @@ bool Controls::SearchHelpFile()
     {
         wxFileDialog dialog(GetCurrentTopLevelWindow(),
             _("Select help file"), wxEmptyString, wxEmptyString,
-            _("Help file (*.chm)|*.chm|All files (*.*)|*.*"), wxFD_OPEN);
+            _("Help file (*.chm)|*.chm|All files (*.*)|*"), wxFD_OPEN);
         dialog.CenterOnParent();
         if (dialog.ShowModal() == wxID_CANCEL) return false;
         _settings->SetCurrentHelpPath(dialog.GetPath());

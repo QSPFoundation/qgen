@@ -640,7 +640,7 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event)
     {
     case ID_PATH_PLAYER:
         dialog.Create(this, _("Select player file"), wxEmptyString, wxEmptyString,
-            _("Player file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
+            _("Player file (*.exe)|*.exe|All files (*.*)|*"), wxFD_OPEN);
         if (dialog.ShowModal() == wxID_OK)
         {
             _txtPathPlayer->SetValue(dialog.GetPath());
@@ -649,7 +649,7 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event)
         break;
     case ID_PATH_HELP:
         dialog.Create(this, _("Select help file"), wxEmptyString, wxEmptyString,
-            _("Help file (*.chm)|*.chm|All files (*.*)|*.*"), wxFD_OPEN);
+            _("Help file (*.chm)|*.chm|All files (*.*)|*"), wxFD_OPEN);
         if (dialog.ShowModal() == wxID_OK)
         {
             _txtPathHelp->SetValue(dialog.GetPath());
@@ -658,7 +658,7 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event)
         break;
     case ID_PATH_TXT2GAM:
         dialog.Create(this, _("Select converter file"), wxEmptyString, wxEmptyString,
-            _("Converter file (*.exe)|*.exe|All files (*.*)|*.*"), wxFD_OPEN);
+            _("Converter file (*.exe)|*.exe|All files (*.*)|*"), wxFD_OPEN);
         if (dialog.ShowModal() == wxID_OK)
         {
             _txtPathTxt2Gam->SetValue(dialog.GetPath());

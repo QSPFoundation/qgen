@@ -220,6 +220,7 @@
         void LoadLayout();
         void SaveLayout();
         bool QuestChange();
+        bool SelectTxt2Gam();
         void TogglePaneVisibility(const wxString &pane_name);
     public:
         MainFrame(IControls *controls);
