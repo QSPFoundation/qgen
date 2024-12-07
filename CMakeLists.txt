@@ -68,7 +68,6 @@ else()
 	# Disable wxWidgets features we don't need
 	set(wxUSE_ACTIVEX OFF)
 	set(wxUSE_LIBTIFF OFF)
-	set(wxUSE_REGEX OFF)
 	set(wxUSE_SECRETSTORE OFF)
 	set(wxUSE_LIBSDL OFF)
 	set(wxUSE_LIBMSPACK OFF)

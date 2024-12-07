@@ -43,7 +43,7 @@
         DECLARE_EVENT_TABLE()
 
         wxComboBox * _textFind, * _textRepl;
-        wxCheckBox * _chkMatchCase, * _chkWholeWord;
+        wxCheckBox * _chkMatchCase, * _chkWholeWord, * _chkRegEx;
         wxButton * _btnClose, * _btnNextSearch, * _btnSearchAgain, * _btnReplace, * _btnReplaceAll, * _btnSkipLoc;
         wxWindow * _parent;
         IControls * _controls;

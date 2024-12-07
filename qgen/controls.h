@@ -25,6 +25,7 @@
     #include <wx/wx.h>
     #include <wx/clipbrd.h>
     #include <wx/filename.h>
+    #include <wx/regex.h>
     #include "mainframe.h"
     #include "datacontainer.h"
     #include "locationslistbox.h"
@@ -44,10 +45,31 @@
         size_t      LocIndex;
         size_t      ActIndex;
         int         StartPos; // position of the found text
+        wxString    FoundString;
         size_t      LocsChecked;
         SearchPlace FoundAt;
         SearchPlace FindAt;
         bool        FoundAny; // true if we found anything during the search session
+    };
+
+    struct SearchResult
+    {
+        int Position;
+        wxString FoundString;
+        bool IsError;
+
+        SearchResult(bool isError = false)
+        {
+            Position = -1;
+            IsError = isError;
+        }
+
+        SearchResult(int position, const wxString& foundString)
+        {
+            Position = position;
+            FoundString = foundString;
+            IsError = false;
+        }
     };
 
     class Controls : public IControls
@@ -71,8 +93,9 @@
         long _execHotkeyEnters;
         wxLocale * _locale;
 
-        static wxString ConvertSearchString(const wxString& s, bool isMatchCase);
-        static int FindSubString(const wxString& s, const wxString& sub, bool isWholeString, size_t startInd = 0);
+        SearchResult FindSubString(const wxString& s, const wxString& sub,
+            bool isCaseSensitive, bool isWholeString, bool isRegExp,
+            size_t startInd = 0);
         static wxWindow *GetCurrentTopLevelWindow();
 
         void InitData();
@@ -166,8 +189,10 @@
 
         wxString GetSelectedWord() const;
         void JumpToSelectedLoc();
-        bool SearchString(const wxString &str, bool findAgain, bool isMatchCase = false, bool isWholeString = false);
-        void ReplaceSearchString(const wxString& replaceString);
+        bool SearchString(const wxString &str, bool findAgain,
+            bool isCaseSensitive = false, bool isWholeString = false, bool isRegExp = false);
+        void ReplaceSearchString(const wxString& replaceString,
+            bool isCaseSensitive = false, bool isRegExp = false);
         bool SearchNextLoc();
         void InitSearchData();
         wxString GetGameInfo() const;

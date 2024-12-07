@@ -296,7 +296,8 @@ wxString Controls::GetMessageDesc(long errorNum)
         case QGEN_MSG_CANTLOADGAME: str = _("Can't load game!"); break;
         case QGEN_MSG_NOTFOUND: str = _("The specified text was not found"); break;
         case QGEN_MSG_SEARCHENDED: str = _("The specified text was not found anymore."); break;
-        case QGEN_MSG_WRONGFORMAT: str = _("Incorrect format!"); break;
+        case QGEN_MSG_INVALIDREGEXP: str = _("Invalid regular expression!"); break;
+        case QGEN_MSG_WRONGFORMAT: str = _("Incorrect data format!"); break;
         case QGEN_MSG_MAXACTIONSCOUNTREACHED: str = wxString::Format(_("Can't add more than %i actions."), QGEN_MAXACTIONS); break;
         case QGEN_MSG_TOOLONGLOCATIONNAME: str = wxString::Format(_("Location name can't contain more than %i characters!"), QGEN_MAXLOCATIONNAMELEN); break;
         case QGEN_MSG_TOOLONGACTIONNAME: str = wxString::Format(_("Action name can't contain more than %i characters!"), QGEN_MAXACTIONNAMELEN); break;
@@ -914,33 +915,62 @@ bool Controls::IsCorrectDataFormat(const wxString &str)
     return true;
 }
 
-wxString Controls::ConvertSearchString(const wxString& s, bool isMatchCase)
+SearchResult Controls::FindSubString(const wxString& s, const wxString& sub, bool isCaseSensitive, bool isWholeString, bool isRegExp, size_t startInd)
 {
-    return (isMatchCase ? s : s.Lower());
-}
-
-int Controls::FindSubString(const wxString& s, const wxString& sub, bool isWholeString, size_t startInd)
-{
-    if (isWholeString)
+    size_t subLen, textEndInd, length = s.length();
+    if (isRegExp)
     {
-        size_t length = s.length(), subLen = sub.length(), textEndInd;
-        while (true)
+        wxRegEx regExp(sub, isCaseSensitive ? wxRE_DEFAULT : wxRE_DEFAULT | wxRE_ICASE);
+        if (!regExp.IsValid())
         {
-            startInd = s.find(sub, startInd);
-            if (startInd == wxString::npos) return -1;
+            ShowMessage(QGEN_MSG_INVALIDREGEXP);
+            return SearchResult(true);
+        }
+
+        size_t subStart;
+        wxString textToSearch(s.Mid(startInd));
+        while (regExp.Matches(textToSearch))
+        {
+            if (!regExp.GetMatch(&subStart, &subLen))
+                break;
+            startInd += subStart;
+
+            if (!isWholeString)
+                return SearchResult((int)startInd, textToSearch.Mid(subStart, subLen));
+
             textEndInd = startInd + subLen;
             if ((startInd == 0 || QSP_STRCHR(QSP_DELIMS, s[startInd - 1])) &&
                 (textEndInd >= length || QSP_STRCHR(QSP_DELIMS, s[textEndInd])))
-                return (int)startInd;
+                return SearchResult((int)startInd, textToSearch.Mid(subStart, subLen));
+
             ++startInd;
+            textToSearch = s.Mid(startInd);
         }
     }
     else
     {
-        startInd = s.find(sub, startInd);
-        if (startInd == wxString::npos) return -1;
-        return (int)startInd;
+        wxString sourceText(isCaseSensitive ? s : s.Upper());
+        wxString textToFind(isCaseSensitive ? sub : sub.Upper());
+        subLen = sub.length();
+        while (true)
+        {
+            /* We search depending on casing setting, but the found text always matches the source */
+            startInd = sourceText.find(textToFind, startInd);
+            if (startInd == wxString::npos)
+                break;
+
+            if (!isWholeString)
+                return SearchResult((int)startInd, s.Mid(startInd, subLen));
+
+            textEndInd = startInd + subLen;
+            if ((startInd == 0 || QSP_STRCHR(QSP_DELIMS, s[startInd - 1])) &&
+                (textEndInd >= length || QSP_STRCHR(QSP_DELIMS, s[textEndInd])))
+                return SearchResult((int)startInd, s.Mid(startInd, subLen));
+
+            ++startInd;
+        }
     }
+    return SearchResult();
 }
 
 bool Controls::SearchNextLoc()
@@ -948,6 +978,7 @@ bool Controls::SearchNextLoc()
     size_t locsCount = _container->GetLocationsCount();
     _dataSearch.FindAt = SEARCH_LOCNAME;
     _dataSearch.StartPos = -1;
+    _dataSearch.FoundString.Clear();
     if (++_dataSearch.LocIndex >= locsCount) _dataSearch.LocIndex = 0;
     if (++_dataSearch.LocsChecked >= locsCount)
     {
@@ -1000,7 +1031,7 @@ wxString Controls::GetSelectedWord() const
     return str;
 }
 
-bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCase, bool isWholeString)
+bool Controls::SearchString(const wxString &str, bool findAgain, bool isCaseSensitive, bool isWholeString, bool isRegExp)
 {
     wxString data;
     wxString locName;
@@ -1028,7 +1059,7 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
     _dataSearch.FoundAt = SEARCH_NONE;
     _dataSearch.SearchString = str;
 
-    wxString textToSearch = ConvertSearchString(str, isMatchCase);
+    SearchResult searchRes;
     while (true) // we stop when _dataSearch.LocsChecked >= locsCount
     {
         locName = _container->GetLocationName(_dataSearch.LocIndex);
@@ -1036,7 +1067,10 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
         {
             _dataSearch.FindAt = SEARCH_LOCDESC;
             _dataSearch.StartPos = -1;
-            if (FindSubString(ConvertSearchString(locName, isMatchCase), textToSearch, isWholeString) >= 0)
+            _dataSearch.FoundString.Clear();
+            searchRes = FindSubString(locName, str, isCaseSensitive, isWholeString, isRegExp);
+            if (searchRes.IsError) return false;
+            if (searchRes.Position >= 0)
             {
                 _locListBox->Select(locName);
                 ShowLocation(locName);
@@ -1049,13 +1083,15 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
         if (_dataSearch.FindAt == SEARCH_LOCDESC)
         {
             data = _container->GetLocationDesc(_dataSearch.LocIndex);
-            int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos + 1);
-            if (startPos >= 0)
+            searchRes = FindSubString(data, str, isCaseSensitive, isWholeString, isRegExp, _dataSearch.StartPos + 1);
+            if (searchRes.IsError) return false;
+            if (searchRes.Position >= 0)
             {
                 _locListBox->Select(locName);
                 page = ShowLocation(locName);
-                page->SelectLocDescString(startPos, startPos + textToSearch.Length());
-                _dataSearch.StartPos = startPos;
+                page->SelectLocDescString(searchRes.Position, searchRes.Position + searchRes.FoundString.length());
+                _dataSearch.StartPos = searchRes.Position;
+                _dataSearch.FoundString = searchRes.FoundString;
                 _dataSearch.FoundAt = SEARCH_LOCDESC;
                 _dataSearch.FoundAny = true;
                 return true;
@@ -1064,19 +1100,22 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
             {
                 _dataSearch.FindAt = SEARCH_LOCCODE;
                 _dataSearch.StartPos = -1;
+                _dataSearch.FoundString.Clear();
             }
         }
 
         if (_dataSearch.FindAt == SEARCH_LOCCODE)
         {
             data = _container->GetLocationCode(_dataSearch.LocIndex);
-            int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos + 1);
-            if (startPos >= 0)
+            searchRes = FindSubString(data, str, isCaseSensitive, isWholeString, isRegExp, _dataSearch.StartPos + 1);
+            if (searchRes.IsError) return false;
+            if (searchRes.Position >= 0)
             {
                 _locListBox->Select(locName);
                 page = ShowLocation(locName);
-                page->SelectLocCodeString(startPos, startPos + textToSearch.Length());
-                _dataSearch.StartPos = startPos;
+                page->SelectLocCodeString(searchRes.Position, searchRes.Position + searchRes.FoundString.length());
+                _dataSearch.StartPos = searchRes.Position;
+                _dataSearch.FoundString = searchRes.FoundString;
                 _dataSearch.FoundAt = SEARCH_LOCCODE;
                 _dataSearch.FoundAny = true;
                 return true;
@@ -1085,6 +1124,7 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
             {
                 _dataSearch.FindAt = SEARCH_ACTNAME;
                 _dataSearch.StartPos = -1;
+                _dataSearch.FoundString.Clear();
                 _dataSearch.ActIndex = 0;
             }
         }
@@ -1097,8 +1137,11 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
             {
                 _dataSearch.FindAt = SEARCH_PATHPICT;
                 _dataSearch.StartPos = -1;
+                _dataSearch.FoundString.Clear();
                 actName = _container->GetActionName(_dataSearch.LocIndex, _dataSearch.ActIndex);
-                if (FindSubString(ConvertSearchString(actName, isMatchCase), textToSearch, isWholeString) >= 0)
+                searchRes = FindSubString(actName, str, isCaseSensitive, isWholeString, isRegExp);
+                if (searchRes.IsError) return false;
+                if (searchRes.Position >= 0)
                 {
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
@@ -1111,14 +1154,16 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
             if (_dataSearch.FindAt == SEARCH_PATHPICT)
             {
                 data = _container->GetActionPicturePath(_dataSearch.LocIndex, _dataSearch.ActIndex);
-                int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos + 1);
-                if (startPos >= 0)
+                searchRes = FindSubString(data, str, isCaseSensitive, isWholeString, isRegExp, _dataSearch.StartPos + 1);
+                if (searchRes.IsError) return false;
+                if (searchRes.Position >= 0)
                 {
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
                     page->SelectAction(_dataSearch.ActIndex);
-                    page->SelectPicturePathString(startPos, startPos + textToSearch.Length());
-                    _dataSearch.StartPos = startPos;
+                    page->SelectPicturePathString(searchRes.Position, searchRes.Position + searchRes.FoundString.length());
+                    _dataSearch.StartPos = searchRes.Position;
+                    _dataSearch.FoundString = searchRes.FoundString;
                     _dataSearch.FoundAt = SEARCH_PATHPICT;
                     _dataSearch.FoundAny = true;
                     return true;
@@ -1127,19 +1172,22 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
                 {
                     _dataSearch.FindAt = SEARCH_ACTCODE;
                     _dataSearch.StartPos = -1;
+                    _dataSearch.FoundString.Clear();
                 }
             }
             if (_dataSearch.FindAt == SEARCH_ACTCODE)
             {
                 data = _container->GetActionCode(_dataSearch.LocIndex, _dataSearch.ActIndex);
-                int startPos = FindSubString(ConvertSearchString(data, isMatchCase), textToSearch, isWholeString, _dataSearch.StartPos + 1);
-                if (startPos >= 0)
+                searchRes = FindSubString(data, str, isCaseSensitive, isWholeString, isRegExp, _dataSearch.StartPos + 1);
+                if (searchRes.IsError) return false;
+                if (searchRes.Position >= 0)
                 {
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
                     page->SelectAction( _dataSearch.ActIndex);
-                    page->SelectActionCodeString(startPos, startPos + textToSearch.Length());
-                    _dataSearch.StartPos = startPos;
+                    page->SelectActionCodeString(searchRes.Position, searchRes.Position + searchRes.FoundString.length());
+                    _dataSearch.StartPos = searchRes.Position;
+                    _dataSearch.FoundString = searchRes.FoundString;
                     _dataSearch.FoundAt = SEARCH_ACTCODE;
                     _dataSearch.FoundAny = true;
                     return true;
@@ -1148,6 +1196,7 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
                 {
                     _dataSearch.FindAt = SEARCH_ACTNAME;
                     _dataSearch.StartPos = -1;
+                    _dataSearch.FoundString.Clear();
                 }
             }
         }
@@ -1155,43 +1204,61 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isMatchCas
     }
 }
 
-void Controls::ReplaceSearchString(const wxString& replaceString)
+void Controls::ReplaceSearchString(const wxString& replaceString, bool isCaseSensitive, bool isRegExp)
 {
-    wxString temp;
     if (_dataSearch.FoundAt == SEARCH_NONE) return;
     LocationPage *page = _locNotebook->GetPageByLocName(_container->GetLocationName(_dataSearch.LocIndex));
+    wxString temp, newSubString;
+
+    if (isRegExp)
+    {
+        wxRegEx regExp(_dataSearch.SearchString, isCaseSensitive ? wxRE_DEFAULT : wxRE_DEFAULT | wxRE_ICASE);
+        if (!regExp.IsValid())
+        {
+            ShowMessage(QGEN_MSG_INVALIDREGEXP);
+            return;
+        }
+
+        wxString newString = _dataSearch.FoundString;
+        regExp.ReplaceFirst(&newString, replaceString);
+        newSubString = newString;
+    }
+    else
+        newSubString = replaceString;
+
     switch (_dataSearch.FoundAt)
     {
     case SEARCH_LOCDESC:
         temp = _container->GetLocationDesc(_dataSearch.LocIndex);
-        temp.replace(_dataSearch.StartPos, _dataSearch.SearchString.length(), replaceString);
+        temp.replace(_dataSearch.StartPos, _dataSearch.FoundString.length(), newSubString);
         _container->SetLocationDesc(_dataSearch.LocIndex, temp);
         if (page)
-            page->ReplaceLocDescString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.SearchString.length(), replaceString);
+            page->ReplaceLocDescString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.FoundString.length(), newSubString);
         break;
     case SEARCH_LOCCODE:
         temp = _container->GetLocationCode(_dataSearch.LocIndex);
-        temp.replace(_dataSearch.StartPos, _dataSearch.SearchString.length(), replaceString);
+        temp.replace(_dataSearch.StartPos, _dataSearch.FoundString.length(), newSubString);
         _container->SetLocationCode(_dataSearch.LocIndex, temp);
         if (page)
-            page->ReplaceLocCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.SearchString.length(), replaceString);
+            page->ReplaceLocCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.FoundString.length(), newSubString);
         break;
     case SEARCH_PATHPICT:
         temp = _container->GetActionPicturePath(_dataSearch.LocIndex, _dataSearch.ActIndex);
-        temp.replace(_dataSearch.StartPos, _dataSearch.SearchString.length(), replaceString);
+        temp.replace(_dataSearch.StartPos, _dataSearch.FoundString.length(), newSubString);
         _container->SetActionPicturePath(_dataSearch.LocIndex, _dataSearch.ActIndex, temp);
         if (page)
-            page->ReplacePicturePathString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.SearchString.length(), replaceString);
+            page->ReplacePicturePathString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.FoundString.length(), newSubString);
         break;
     case SEARCH_ACTCODE:
         temp = _container->GetActionCode(_dataSearch.LocIndex, _dataSearch.ActIndex);
-        temp.replace(_dataSearch.StartPos, _dataSearch.SearchString.length(), replaceString);
+        temp.replace(_dataSearch.StartPos, _dataSearch.FoundString.length(), newSubString);
         _container->SetActionCode(_dataSearch.LocIndex, _dataSearch.ActIndex, temp);
         if (page)
-            page->ReplaceActionCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.SearchString.length(), replaceString);
+            page->ReplaceActionCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.FoundString.length(), newSubString);
         break;
     }
-    _dataSearch.StartPos += (int)replaceString.length() - 1; /* point to the last char of replacement */
+    _dataSearch.StartPos += (int)newSubString.length() - 1; /* point to the last char of replacement */
+    _dataSearch.FoundString.Clear();
     _dataSearch.FoundAt = SEARCH_NONE;
 }
 
@@ -1205,6 +1272,7 @@ void Controls::InitSearchData()
     _dataSearch.LocIndex = 0;
     _dataSearch.ActIndex = 0;
     _dataSearch.StartPos = -1;
+    _dataSearch.FoundString.Clear();
 
     _dataSearch.LocsChecked = 0;
     _dataSearch.FoundAny = false;

@@ -57,6 +57,7 @@ class LocationPage;
         QGEN_MSG_CANTLOADGAME,
         QGEN_MSG_NOTFOUND,
         QGEN_MSG_SEARCHENDED,
+        QGEN_MSG_INVALIDREGEXP,
         QGEN_MSG_WRONGFORMAT,
         QGEN_MSG_MAXACTIONSCOUNTREACHED,
         QGEN_MSG_TOOLONGFOLDERNAME,
@@ -101,8 +102,10 @@ class LocationPage;
         virtual void NewGame() = 0;
         virtual bool SaveGame(const wxString &path, const wxString &password) = 0;
         virtual bool SaveGameWithCheck() = 0;
-        virtual bool SearchString(const wxString &str, bool findAgain, bool isMatchCase = false, bool isWholeString = false) = 0;
-        virtual void ReplaceSearchString(const wxString& replaceString) = 0;
+        virtual bool SearchString(const wxString &str, bool findAgain,
+            bool isCaseSensitive = false, bool isWholeString = false, bool isRegExp = false) = 0;
+        virtual void ReplaceSearchString(const wxString& replaceString,
+            bool isCaseSensitive = false, bool isRegExp = false) = 0;
         virtual bool SearchNextLoc() = 0;
         virtual void InitSearchData() = 0;
         virtual int AddLocation(const wxString &name = wxEmptyString) = 0;

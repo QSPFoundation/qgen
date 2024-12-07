@@ -418,8 +418,8 @@ msgstr "Файлы изображений (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;
 msgid "Import"
 msgstr "Импорт"
 
-msgid "Incorrect format!"
-msgstr "Неверный формат!"
+msgid "Incorrect data format!"
+msgstr "Неверный формат данных!"
 
 msgid "Info"
 msgstr "Инфо"
@@ -708,6 +708,9 @@ msgstr "Сохранить файл"
 msgid "Search only word"
 msgstr "Только слово целиком"
 
+msgid "Regular expression"
+msgstr "Регулярное выражение"
+
 msgid "Select all"
 msgstr "Выделить всё"
 
@@ -842,6 +845,9 @@ msgstr "Ничего не найдено!"
 
 msgid "The specified text was not found anymore."
 msgstr "Указанный текст больше не найден."
+
+msgid "Invalid regular expression!"
+msgstr "Ошибка в регулярном выражении!"
 
 msgid "This game contains %i location(s)\n"
 msgstr "Игра содержит %i локаци(ю/и/й)\n"

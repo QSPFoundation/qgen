@@ -418,8 +418,8 @@ msgstr "Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)
 msgid "Import"
 msgstr "Import"
 
-msgid "Incorrect format!"
-msgstr "Incorrect format!"
+msgid "Incorrect data format!"
+msgstr "Incorrect data format!"
 
 msgid "Info"
 msgstr "Info"
@@ -708,6 +708,9 @@ msgstr "Save text file"
 msgid "Search only word"
 msgstr "Search only word"
 
+msgid "Regular expression"
+msgstr "Regular expression"
+
 msgid "Select all"
 msgstr "Select all"
 
@@ -842,6 +845,9 @@ msgstr "The specified text was not found"
 
 msgid "The specified text was not found anymore."
 msgstr "The specified text was not found anymore."
+
+msgid "Invalid regular expression!"
+msgstr "Invalid regular expression!"
 
 msgid "This game contains %i location(s)\n"
 msgstr "This game contains %i location(s)\n"
