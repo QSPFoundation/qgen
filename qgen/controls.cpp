@@ -1135,20 +1135,25 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isCaseSens
         {
             if (_dataSearch.FindAt == SEARCH_ACTNAME)
             {
-                _dataSearch.FindAt = SEARCH_PATHPICT;
-                _dataSearch.StartPos = -1;
-                _dataSearch.FoundString.Clear();
                 actName = _container->GetActionName(_dataSearch.LocIndex, _dataSearch.ActIndex);
-                searchRes = FindSubString(actName, str, isCaseSensitive, isWholeString, isRegExp);
+                searchRes = FindSubString(actName, str, isCaseSensitive, isWholeString, isRegExp, _dataSearch.StartPos + 1);
                 if (searchRes.IsError) return false;
                 if (searchRes.Position >= 0)
                 {
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
                     page->SelectAction(_dataSearch.ActIndex);
+                    _dataSearch.StartPos = searchRes.Position;
+                    _dataSearch.FoundString = searchRes.FoundString;
                     _dataSearch.FoundAt = SEARCH_ACTNAME;
                     _dataSearch.FoundAny = true;
                     return true;
+                }
+                else
+                {
+                    _dataSearch.FindAt = SEARCH_PATHPICT;
+                    _dataSearch.StartPos = -1;
+                    _dataSearch.FoundString.Clear();
                 }
             }
             if (_dataSearch.FindAt == SEARCH_PATHPICT)
@@ -1241,6 +1246,21 @@ void Controls::ReplaceSearchString(const wxString& replaceString, bool isCaseSen
         _container->SetLocationCode(_dataSearch.LocIndex, temp);
         if (page)
             page->ReplaceLocCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.FoundString.length(), newSubString);
+        break;
+    case SEARCH_ACTNAME:
+        temp = _container->GetActionName(_dataSearch.LocIndex, _dataSearch.ActIndex);
+        temp.replace(_dataSearch.StartPos, _dataSearch.FoundString.length(), newSubString);
+        if (_container->RenameAction(_dataSearch.LocIndex, _dataSearch.ActIndex, temp))
+        {
+            if (page)
+                page->RenameAction(_dataSearch.ActIndex, temp);
+            _locListBox->UpdateLocationActions(_container->GetLocationName(_dataSearch.LocIndex));
+        }
+        else
+        {
+            ShowMessage(QGEN_MSG_EXISTS);
+            return;
+        }
         break;
     case SEARCH_PATHPICT:
         temp = _container->GetActionPicturePath(_dataSearch.LocIndex, _dataSearch.ActIndex);
