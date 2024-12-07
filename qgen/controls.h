@@ -189,9 +189,9 @@
 
         wxString GetSelectedWord() const;
         void JumpToSelectedLoc();
-        bool SearchString(const wxString &str, bool findAgain,
+        bool SearchString(const wxString &str, bool toFindAgain,
             bool isCaseSensitive = false, bool isWholeString = false, bool isRegExp = false);
-        void ReplaceSearchString(const wxString& replaceString,
+        bool ReplaceSearchString(const wxString& replaceString,
             bool isCaseSensitive = false, bool isRegExp = false);
         bool SearchNextLoc();
         void InitSearchData();

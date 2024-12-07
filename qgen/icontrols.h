@@ -102,9 +102,9 @@ class LocationPage;
         virtual void NewGame() = 0;
         virtual bool SaveGame(const wxString &path, const wxString &password) = 0;
         virtual bool SaveGameWithCheck() = 0;
-        virtual bool SearchString(const wxString &str, bool findAgain,
+        virtual bool SearchString(const wxString &str, bool toFindAgain,
             bool isCaseSensitive = false, bool isWholeString = false, bool isRegExp = false) = 0;
-        virtual void ReplaceSearchString(const wxString& replaceString,
+        virtual bool ReplaceSearchString(const wxString& replaceString,
             bool isCaseSensitive = false, bool isRegExp = false) = 0;
         virtual bool SearchNextLoc() = 0;
         virtual void InitSearchData() = 0;

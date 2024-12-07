@@ -1031,7 +1031,7 @@ wxString Controls::GetSelectedWord() const
     return str;
 }
 
-bool Controls::SearchString(const wxString &str, bool findAgain, bool isCaseSensitive, bool isWholeString, bool isRegExp)
+bool Controls::SearchString(const wxString &str, bool toFindAgain, bool isCaseSensitive, bool isWholeString, bool isRegExp)
 {
     wxString data;
     wxString locName;
@@ -1046,7 +1046,7 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isCaseSens
     if (_dataSearch.LocIndex >= locsCount)
         _dataSearch.LocIndex = 0;
 
-    if (findAgain
+    if (toFindAgain
         || str != _dataSearch.SearchString
         || _dataSearch.LocsChecked >= locsCount)
     {
@@ -1209,9 +1209,9 @@ bool Controls::SearchString(const wxString &str, bool findAgain, bool isCaseSens
     }
 }
 
-void Controls::ReplaceSearchString(const wxString& replaceString, bool isCaseSensitive, bool isRegExp)
+bool Controls::ReplaceSearchString(const wxString& replaceString, bool isCaseSensitive, bool isRegExp)
 {
-    if (_dataSearch.FoundAt == SEARCH_NONE) return;
+    if (_dataSearch.FoundAt == SEARCH_NONE) return true;
     LocationPage *page = _locNotebook->GetPageByLocName(_container->GetLocationName(_dataSearch.LocIndex));
     wxString temp, newSubString;
 
@@ -1221,7 +1221,7 @@ void Controls::ReplaceSearchString(const wxString& replaceString, bool isCaseSen
         if (!regExp.IsValid())
         {
             ShowMessage(QGEN_MSG_INVALIDREGEXP);
-            return;
+            return false;
         }
 
         wxString newString = _dataSearch.FoundString;
@@ -1259,7 +1259,7 @@ void Controls::ReplaceSearchString(const wxString& replaceString, bool isCaseSen
         else
         {
             ShowMessage(QGEN_MSG_EXISTS);
-            return;
+            return false;
         }
         break;
     case SEARCH_PATHPICT:
@@ -1280,6 +1280,7 @@ void Controls::ReplaceSearchString(const wxString& replaceString, bool isCaseSen
     _dataSearch.StartPos += (int)newSubString.length() - 1; /* point to the last char of replacement */
     _dataSearch.FoundString.Clear();
     _dataSearch.FoundAt = SEARCH_NONE;
+    return true;
 }
 
 void Controls::InitSearchData()
