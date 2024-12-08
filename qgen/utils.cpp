@@ -23,7 +23,7 @@
 
 wxString Utils::GetDocumentPath(const wxString &path, const wxString &file)
 {
-    wxFileName docFullPath(wxStandardPaths::Get().GetUserDir(wxStandardPaths::Dir_Documents));
+    wxFileName docFullPath(wxFileName::DirName(wxStandardPaths::Get().GetUserDir(wxStandardPaths::Dir_Documents)));
     wxFileName docPath(docFullPath.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + path, file);
     return docPath.GetFullPath();
 }
