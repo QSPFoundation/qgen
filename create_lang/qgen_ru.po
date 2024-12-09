@@ -181,9 +181,6 @@ msgstr "Среднее число базовых действий на 1 лок�
 msgid "Average location size: %i characters\n"
 msgstr "Средний размер локации: %i символ(а/ов)\n"
 
-msgid "Base actions:"
-msgstr "Базовые действия:"
-
 msgid "Base font color:"
 msgstr "Цвет основного шрифта:"
 
@@ -325,8 +322,11 @@ msgstr "Удалить действие"
 msgid "Delete selected location (F8)"
 msgstr "Удалить выделенную локацию (F8)"
 
-msgid "Description:"
-msgstr "Описание:"
+msgid "Base description:"
+msgstr "Базовое описание:"
+
+msgid "Base actions:"
+msgstr "Базовые действия:"
 
 msgid "Edit macro"
 msgstr "Редактирование команды"

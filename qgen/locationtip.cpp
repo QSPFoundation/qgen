@@ -37,7 +37,7 @@ LocationTip::LocationTip(wxWindow *parent, IControls *controls) :
     _title->SetFont(_title->GetFont().MakeBold().MakeLarger());
     _title->SetForegroundColour(textColor);
 
-    _desc = new wxStaticText(this, wxID_ANY, _("Description:"));
+    _desc = new wxStaticText(this, wxID_ANY, _("Base description:"));
     _desc->SetFont(_desc->GetFont().MakeBold());
     _desc->SetForegroundColour(textColor);
     _locDesc = new SyntaxTextBox(this, _controls, SYNTAX_STYLE_NOSCROLLBARS | SYNTAX_STYLE_SIMPLE |

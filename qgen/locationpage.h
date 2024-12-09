@@ -51,7 +51,7 @@
         ~LocationPage();
 
         void Update(bool isFromObservable = false);
-        void SetFixed(bool isFix);
+        void SetFixed(bool isFixed);
         bool IsFixed() const { return _isFixed; }
         int GetPageWidth() const { return GetParent()->GetClientSize().GetWidth(); }
         int GetPageHeight() const { return GetParent()->GetClientSize().GetHeight(); }

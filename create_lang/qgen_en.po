@@ -181,9 +181,6 @@ msgstr "Average number of actions per location: %.2f\n"
 msgid "Average location size: %i characters\n"
 msgstr "Average location size: %i characters\n"
 
-msgid "Base actions:"
-msgstr "Base actions:"
-
 msgid "Base font color:"
 msgstr "Base font color:"
 
@@ -325,8 +322,11 @@ msgstr "Delete selected action"
 msgid "Delete selected location (F8)"
 msgstr "Delete selected location (F8)"
 
-msgid "Description:"
-msgstr "Description:"
+msgid "Base description:"
+msgstr "Base description:"
+
+msgid "Base actions:"
+msgstr "Base actions:"
 
 msgid "Edit macro"
 msgstr "Edit macro"

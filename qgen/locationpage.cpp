@@ -107,9 +107,9 @@ void LocationPage::LocActsVisible(bool isVisible)
     }
 }
 
-void LocationPage::SetFixed(bool isFix)
+void LocationPage::SetFixed(bool isFixed)
 {
-    _isFixed = isFix;
+    _isFixed = isFixed;
 }
 
 void LocationPage::SavePage()

@@ -78,6 +78,6 @@ void LocationDesc::ReplaceString(long start, long end, const wxString& str)
 
 void LocationDesc::Update(bool isFromObservable /*= false*/)
 {
-    _stTextDesc->SetLabel(_("Description:"));
+    _stTextDesc->SetLabel(_("Base description:"));
     GetSizer()->Layout();
 }
