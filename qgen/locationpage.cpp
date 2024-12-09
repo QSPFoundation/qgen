@@ -80,7 +80,7 @@ void LocationPage::LocDescVisible(bool isVisible)
         _splitterv_up->SetSashPosition(_descWidth);
         Thaw();
     }
-    else
+    else if (_splitterv_up->IsSplit())
     {
         _descWidth = _splitterv_up->GetSashPosition();
         _splitterv_up->Unsplit(_locDesc);
@@ -100,7 +100,7 @@ void LocationPage::LocActsVisible(bool isVisible)
         _splitterh->SetSashPosition(_actsHeight);
         Thaw();
     }
-    else
+    else if (_splitterh->IsSplit())
     {
         _actsHeight = _splitterh->GetSashPosition();
         _splitterh->Unsplit(_locActs);
