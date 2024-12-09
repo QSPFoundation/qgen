@@ -192,6 +192,7 @@ void SearchDialog::AddSearchText(const wxString &text)
     _searchDataStore->AddSearchString(text);
 
     int itemIndex = _textFind->FindString(text, true);
+    if (itemIndex == 0) return;
     if (itemIndex == wxNOT_FOUND)
     {
         int count = _textFind->GetCount();
@@ -200,6 +201,7 @@ void SearchDialog::AddSearchText(const wxString &text)
     else
         _textFind->Delete(itemIndex);
     _textFind->Insert(text, 0);
+    _textFind->SetValue(text);
 }
 
 void SearchDialog::AddReplaceText(const wxString &text)
@@ -207,6 +209,7 @@ void SearchDialog::AddReplaceText(const wxString &text)
     _searchDataStore->AddReplaceString(text);
 
     int itemIndex = _textRepl->FindString(text, true);
+    if (itemIndex == 0) return;
     if (itemIndex == wxNOT_FOUND)
     {
         int count = _textRepl->GetCount();
@@ -215,6 +218,7 @@ void SearchDialog::AddReplaceText(const wxString &text)
     else
         _textRepl->Delete(itemIndex);
     _textRepl->Insert(text, 0);
+    _textRepl->SetValue(text);
 }
 
 bool SearchDialog::Show(bool show)
