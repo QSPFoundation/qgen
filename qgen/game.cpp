@@ -61,17 +61,11 @@ char qspReverseConvertUC(wchar_t ch, wchar_t *table)
     return 0x20;
 }
 
-void qspFreeStrs(char **strs, long count, bool isVerify)
+void qspFreeStrs(char **strs, long count)
 {
     if (strs)
     {
-        if (isVerify)
-        {
-            while (--count >= 0)
-                if (strs[count]) free(strs[count]);
-        }
-        else
-            while (--count >= 0) free(strs[count]);
+        while (--count >= 0) free(strs[count]);
         free(strs);
     }
 }
@@ -308,7 +302,7 @@ bool qspOpenQuest(char *buf, long bufSize, wxWindow *parent, Controls *controls,
     count = qspSplitGameStr(buf, isUCS2 = !buf[1], QSP_STRSDELIM, &strs);
     if (!qspCheckQuest(strs, count, isUCS2))
     {
-        qspFreeStrs(strs, count, false);
+        qspFreeStrs(strs, count);
         return false;
     }
     data = qspGameToQSPString(strs[0], isUCS2, false);
@@ -326,7 +320,7 @@ bool qspOpenQuest(char *buf, long bufSize, wxWindow *parent, Controls *controls,
             if (dlgEntry.GetValue() != data)
             {
                 free(data);
-                qspFreeStrs(strs, count, false);
+                qspFreeStrs(strs, count);
                 controls->ShowMessage(QGEN_MSG_WRONGPASSWORD);
                 return false;
             }
@@ -334,7 +328,7 @@ bool qspOpenQuest(char *buf, long bufSize, wxWindow *parent, Controls *controls,
         else
         {
             free(data);
-            qspFreeStrs(strs, count, false);
+            qspFreeStrs(strs, count);
             return false;
         }
     }
@@ -370,7 +364,7 @@ bool qspOpenQuest(char *buf, long bufSize, wxWindow *parent, Controls *controls,
                     if (mergeType & MERGE_CANCEL)
                     {
                         free(data);
-                        qspFreeStrs(strs, count, false);
+                        qspFreeStrs(strs, count);
                         return true;
                     }
                 }
@@ -387,7 +381,7 @@ bool qspOpenQuest(char *buf, long bufSize, wxWindow *parent, Controls *controls,
         if (locIndex < 0)
         {
             container->Clear();
-            qspFreeStrs(strs, count, false);
+            qspFreeStrs(strs, count);
             return false;
         }
         data = qspGameToQSPString(strs[ind++], isUCS2, true);
@@ -411,7 +405,7 @@ bool qspOpenQuest(char *buf, long bufSize, wxWindow *parent, Controls *controls,
             free(data);
         }
 
-        wxString nameAct, actImage;
+        wxString actName, actImage;
         for (j = 0; j < actsCount; ++j)
         {
             if (!isOldFormat)
@@ -421,27 +415,24 @@ bool qspOpenQuest(char *buf, long bufSize, wxWindow *parent, Controls *controls,
                 free(data);
             }
             data = qspGameToQSPString(strs[ind++], isUCS2, true);
-            (nameAct = data).Replace(QSP_STRSDELIM, wxT("\n"));
+            (actName = data).Replace(QSP_STRSDELIM, wxT("\n"));
             free(data);
-            if (!nameAct.empty() && canAddLoc)
+            if (!actName.empty() && canAddLoc)
             {
-                actIndex = container->AddAction(locIndex, nameAct);
-                if (actIndex < 0)
+                actIndex = container->AddAction(locIndex, actName);
+                if (actIndex >= 0)
                 {
-                    container->Clear();
-                    qspFreeStrs(strs, count, false);
-                    return true;
+                    container->SetActionPicturePath(locIndex, actIndex, actImage);
+                    data = qspGameToQSPString(strs[ind], isUCS2, true);
+                    (temp = data).Replace(QSP_STRSDELIM, wxT("\n"));
+                    free(data);
+                    container->SetActionCode(locIndex, actIndex, temp);
                 }
-                container->SetActionPicturePath(locIndex, actIndex, actImage);
-                data = qspGameToQSPString(strs[ind], isUCS2, true);
-                (temp = data).Replace(QSP_STRSDELIM, wxT("\n"));
-                free(data);
-                container->SetActionCode(locIndex, actIndex, temp);
             }
             ++ind;
         }
     }
-    qspFreeStrs(strs, count, false);
+    qspFreeStrs(strs, count);
     return true;
 }
 
