@@ -103,7 +103,7 @@
         bool RenameFolder(size_t folderIndex, const wxString &newName);
         void DeleteFolder(size_t folderIndex);
         int FindFolderIndex(const wxString &name) const;
-        void MoveFolder(size_t folderIndex, size_t moveToSecPos);
+        void MoveFolder(size_t folderIndex, size_t moveToPos);
         void SetFolderPos(size_t folderIndex, long pos);
         int FindFolderForPos(size_t pos) const;
     };

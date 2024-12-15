@@ -62,11 +62,11 @@
         LocationPage *OpenLocationPage(const wxString& namePage, bool isSelect);
         bool ClosePage(size_t page);
         bool ClosePages(CloseTypePage closeType);
-        void LoadOpenedPages();
-        void SaveOpenedPages();
+        void LoadOpenPages();
+        void SaveOpenPages();
         void Update(bool isFromObservable = false);
         void AdvanceSelection(bool forward = true);
-        void SwitchPageFixed(size_t selPage);
+        void SwitchPageFixed(size_t pageInd);
     };
 
 #endif

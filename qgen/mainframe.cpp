@@ -961,8 +961,7 @@ void MainFrame::OnTabMenu( wxCommandEvent &event )
 void MainFrame::OnFixPage( wxCommandEvent &event )
 {
     int selPage = _locNotebook->GetSelection();
-    if (selPage < 0) return;
-    _locNotebook->SwitchPageFixed(selPage);
+    if (selPage >= 0) _locNotebook->SwitchPageFixed(selPage);
 }
 
 void MainFrame::OnLocDescVisible(wxCommandEvent &event)

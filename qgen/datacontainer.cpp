@@ -295,11 +295,11 @@ void DataContainer::DeleteFolder(size_t folderIndex)
     _isSaved = false;
 }
 
-void DataContainer::MoveFolder(size_t folderIndex, size_t moveToSecPos)
+void DataContainer::MoveFolder(size_t folderIndex, size_t moveToPos)
 {
-    if (folderIndex == moveToSecPos) return;
+    if (folderIndex == moveToPos) return;
     FolderData *data = _folders.Detach(folderIndex);
-    _folders.Insert(data, moveToSecPos);
+    _folders.Insert(data, moveToPos);
     _isSaved = false;
 }
 

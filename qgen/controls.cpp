@@ -60,6 +60,7 @@ int Controls::GetSelectedLocationIndex() const
 {
     LocationPage *page = _locNotebook->GetSelectedPage();
     if (page && !_locListBox->HasFocus()) return page->GetLocationIndex();
+
     wxString locName(_locListBox->GetStringSelection());
     if (!locName.IsEmpty()) return _container->FindLocationIndex(locName);
     return -1;
@@ -146,8 +147,8 @@ bool Controls::DeleteSelectedLocation()
         _("Remove location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
     if (dlgMsg.ShowModal() == wxID_YES)
     {
-        int index = _locNotebook->FindPageIndex(locName);
-        if (index >= 0) _locNotebook->ClosePage(index);
+        int pageIndex = _locNotebook->FindPageIndex(locName);
+        if (pageIndex >= 0) _locNotebook->ClosePage(pageIndex);
         _locListBox->Delete(locName);
         _container->DeleteLocation(locIndex);
         UpdateOpenedLocationsIndexes();
@@ -309,14 +310,14 @@ wxString Controls::GetMessageDesc(long errorNum)
 
 LocationPage *Controls::ShowLocation(const wxString& locName)
 {
-    int indexPage = _locNotebook->FindPageIndex(locName);
-    if (indexPage >= 0)
+    int pageIndex = _locNotebook->FindPageIndex(locName);
+    if (pageIndex >= 0)
     {
-        _locNotebook->SetSelection(indexPage);
-        return (LocationPage *)_locNotebook->GetPage(indexPage);
+        _locNotebook->SetSelection(pageIndex);
+        return (LocationPage *)_locNotebook->GetPage(pageIndex);
     }
     LocationPage *page = _locNotebook->OpenLocationPage(locName, true);
-    if (_settings->GetCollapseCode())
+    if (page && _settings->GetCollapseCode())
         page->ExpandCollapseAll(false);
     return page;
 }
@@ -341,7 +342,8 @@ bool Controls::IsSelectedLocationEmpty() const
 {
     int locIndex = GetSelectedLocationIndex();
     if (locIndex < 0) return true;
-    _locNotebook->SaveOpenedPages();
+
+    _locNotebook->SaveOpenPages();
     return _container->IsEmptyLoc(locIndex);
 }
 
@@ -478,7 +480,7 @@ void Controls::CopySelectedLocToClipboard()
 {
     int locIndex = GetSelectedLocationIndex();
     if (locIndex < 0) return;
-    _locNotebook->SaveOpenedPages();
+    _locNotebook->SaveOpenPages();
     if (_container->IsEmptyLoc(locIndex)) return;
 
     wxString buffer;
@@ -516,7 +518,7 @@ void Controls::PasteLocFromClipboard(PasteType type)
         if (locIndex >= 0)
         {
             locName = _container->GetLocationName(locIndex);
-            _locNotebook->SaveOpenedPages();
+            _locNotebook->SaveOpenPages();
             if (!_container->IsEmptyLoc(locIndex))
             {
                 wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
@@ -598,7 +600,7 @@ void Controls::ClearSelectedLocation()
 {
     int locIndex = GetSelectedLocationIndex();
     if (locIndex < 0) return;
-    _locNotebook->SaveOpenedPages();
+    _locNotebook->SaveOpenPages();
     if (_container->IsEmptyLoc(locIndex)) return;
 
     wxString locName(_container->GetLocationName(locIndex));
@@ -750,7 +752,7 @@ void Controls::SyncWithLocationsList()
 bool Controls::SaveGame(const wxString &filename, const wxString &password)
 {
     SyncWithLocationsList();
-    _locNotebook->SaveOpenedPages();
+    _locNotebook->SaveOpenPages();
 
     // We save game to a temporary file & replace the target file if everything goes well
     wxString tempFile(wxFileName::CreateTempFileName(QGEN_FILEPREFIX));
@@ -829,7 +831,7 @@ bool Controls::JoinGame(const wxString &filename)
             {
                 InitSearchData();
                 UpdateLocationsList();
-                _locNotebook->LoadOpenedPages();
+                _locNotebook->LoadOpenPages();
                 wasOpened = true;
             }
         }
@@ -845,7 +847,7 @@ void Controls::UpdateLocationsList()
     _locListBox->Clear();
     wxString folderName;
     wxArrayInt locs;
-    long oldPos = -1, pos = 0, folderIndex;
+    int oldPos = -1, pos = 0, folderIndex;
     while (pos != oldPos)
     {
         oldPos = pos;
@@ -1041,7 +1043,7 @@ bool Controls::SearchString(const wxString &str, bool toFindAgain, bool isCaseSe
     if (!locsCount) return false;
     SyncWithLocationsList();
 
-    _locNotebook->SaveOpenedPages();
+    _locNotebook->SaveOpenPages();
 
     if (_dataSearch.LocIndex >= locsCount)
         _dataSearch.LocIndex = 0;
@@ -1089,7 +1091,7 @@ bool Controls::SearchString(const wxString &str, bool toFindAgain, bool isCaseSe
             {
                 _locListBox->Select(locName);
                 page = ShowLocation(locName);
-                page->SelectLocDescString(searchRes.Position, searchRes.Position + searchRes.FoundString.length());
+                if (page) page->SelectLocDescString(searchRes.Position, searchRes.Position + searchRes.FoundString.length());
                 _dataSearch.StartPos = searchRes.Position;
                 _dataSearch.FoundString = searchRes.FoundString;
                 _dataSearch.FoundAt = SEARCH_LOCDESC;
@@ -1113,7 +1115,7 @@ bool Controls::SearchString(const wxString &str, bool toFindAgain, bool isCaseSe
             {
                 _locListBox->Select(locName);
                 page = ShowLocation(locName);
-                page->SelectLocCodeString(searchRes.Position, searchRes.Position + searchRes.FoundString.length());
+                if (page) page->SelectLocCodeString(searchRes.Position, searchRes.Position + searchRes.FoundString.length());
                 _dataSearch.StartPos = searchRes.Position;
                 _dataSearch.FoundString = searchRes.FoundString;
                 _dataSearch.FoundAt = SEARCH_LOCCODE;
@@ -1142,7 +1144,7 @@ bool Controls::SearchString(const wxString &str, bool toFindAgain, bool isCaseSe
                 {
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
-                    page->SelectAction(_dataSearch.ActIndex);
+                    if (page) page->SelectAction(_dataSearch.ActIndex);
                     _dataSearch.StartPos = searchRes.Position;
                     _dataSearch.FoundString = searchRes.FoundString;
                     _dataSearch.FoundAt = SEARCH_ACTNAME;
@@ -1165,8 +1167,11 @@ bool Controls::SearchString(const wxString &str, bool toFindAgain, bool isCaseSe
                 {
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
-                    page->SelectAction(_dataSearch.ActIndex);
-                    page->SelectPicturePathString(searchRes.Position, searchRes.Position + searchRes.FoundString.length());
+                    if (page)
+                    {
+                        page->SelectAction(_dataSearch.ActIndex);
+                        page->SelectPicturePathString(searchRes.Position, searchRes.Position + searchRes.FoundString.length());
+                    }
                     _dataSearch.StartPos = searchRes.Position;
                     _dataSearch.FoundString = searchRes.FoundString;
                     _dataSearch.FoundAt = SEARCH_PATHPICT;
@@ -1189,8 +1194,11 @@ bool Controls::SearchString(const wxString &str, bool toFindAgain, bool isCaseSe
                 {
                     _locListBox->Select(locName);
                     page = ShowLocation(locName);
-                    page->SelectAction( _dataSearch.ActIndex);
-                    page->SelectActionCodeString(searchRes.Position, searchRes.Position + searchRes.FoundString.length());
+                    if (page)
+                    {
+                        page->SelectAction( _dataSearch.ActIndex);
+                        page->SelectActionCodeString(searchRes.Position, searchRes.Position + searchRes.FoundString.length());
+                    }
                     _dataSearch.StartPos = searchRes.Position;
                     _dataSearch.FoundString = searchRes.FoundString;
                     _dataSearch.FoundAt = SEARCH_ACTCODE;
@@ -1237,23 +1245,20 @@ bool Controls::ReplaceSearchString(const wxString& replaceString, bool isCaseSen
         temp = _container->GetLocationDesc(_dataSearch.LocIndex);
         temp.replace(_dataSearch.StartPos, _dataSearch.FoundString.length(), newSubString);
         _container->SetLocationDesc(_dataSearch.LocIndex, temp);
-        if (page)
-            page->ReplaceLocDescString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.FoundString.length(), newSubString);
+        if (page) page->ReplaceLocDescString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.FoundString.length(), newSubString);
         break;
     case SEARCH_LOCCODE:
         temp = _container->GetLocationCode(_dataSearch.LocIndex);
         temp.replace(_dataSearch.StartPos, _dataSearch.FoundString.length(), newSubString);
         _container->SetLocationCode(_dataSearch.LocIndex, temp);
-        if (page)
-            page->ReplaceLocCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.FoundString.length(), newSubString);
+        if (page) page->ReplaceLocCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.FoundString.length(), newSubString);
         break;
     case SEARCH_ACTNAME:
         temp = _container->GetActionName(_dataSearch.LocIndex, _dataSearch.ActIndex);
         temp.replace(_dataSearch.StartPos, _dataSearch.FoundString.length(), newSubString);
         if (_container->RenameAction(_dataSearch.LocIndex, _dataSearch.ActIndex, temp))
         {
-            if (page)
-                page->RenameAction(_dataSearch.ActIndex, temp);
+            if (page) page->RenameAction(_dataSearch.ActIndex, temp);
             _locListBox->UpdateLocationActions(_container->GetLocationName(_dataSearch.LocIndex));
         }
         else
@@ -1266,15 +1271,13 @@ bool Controls::ReplaceSearchString(const wxString& replaceString, bool isCaseSen
         temp = _container->GetActionPicturePath(_dataSearch.LocIndex, _dataSearch.ActIndex);
         temp.replace(_dataSearch.StartPos, _dataSearch.FoundString.length(), newSubString);
         _container->SetActionPicturePath(_dataSearch.LocIndex, _dataSearch.ActIndex, temp);
-        if (page)
-            page->ReplacePicturePathString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.FoundString.length(), newSubString);
+        if (page) page->ReplacePicturePathString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.FoundString.length(), newSubString);
         break;
     case SEARCH_ACTCODE:
         temp = _container->GetActionCode(_dataSearch.LocIndex, _dataSearch.ActIndex);
         temp.replace(_dataSearch.StartPos, _dataSearch.FoundString.length(), newSubString);
         _container->SetActionCode(_dataSearch.LocIndex, _dataSearch.ActIndex, temp);
-        if (page)
-            page->ReplaceActionCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.FoundString.length(), newSubString);
+        if (page) page->ReplaceActionCodeString(_dataSearch.StartPos, _dataSearch.StartPos + _dataSearch.FoundString.length(), newSubString);
         break;
     }
     _dataSearch.StartPos += (int)newSubString.length() - 1; /* point to the last char of replacement */
@@ -1330,7 +1333,7 @@ bool Controls::IsGameSaved()
 {
     // We have to call SyncWithLocationsList because some locations could be moved in the locs list
     SyncWithLocationsList();
-    _locNotebook->SaveOpenedPages();
+    _locNotebook->SaveOpenPages();
     return _container->IsSaved();
 }
 
@@ -1595,7 +1598,7 @@ wxString Controls::GetGameInfo() const
 bool Controls::ExportTxt(const wxString &filename)
 {
     SyncWithLocationsList();
-    _locNotebook->SaveOpenedPages();
+    _locNotebook->SaveOpenPages();
 
     bool wasSaved = false;
     char *buf;

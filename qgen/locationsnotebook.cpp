@@ -106,7 +106,8 @@ int LocationsNotebook::FindPageIndex(const wxString& namePage)
 
 LocationPage * LocationsNotebook::OpenLocationPage(const wxString& namePage, bool isSelect)
 {
-    size_t locIndex = _controls->GetContainer()->FindLocationIndex(namePage);
+    int locIndex = _controls->GetContainer()->FindLocationIndex(namePage);
+    if (locIndex < 0) return NULL;
     LocationPage *page = new LocationPage(this, _controls);
     page->SetLocationIndex(locIndex);
     AddPage(page, namePage, isSelect);
@@ -127,14 +128,14 @@ LocationPage * LocationsNotebook::GetPageByLocName(const wxString &name)
     return (idx >= 0 ? (LocationPage *)GetPage(idx) : NULL);
 }
 
-void LocationsNotebook::LoadOpenedPages()
+void LocationsNotebook::LoadOpenPages()
 {
     size_t i, count = GetPageCount();
     for (i = 0; i < count; ++i)
         ((LocationPage *)GetPage(i))->LoadPage();
 }
 
-void LocationsNotebook::SaveOpenedPages()
+void LocationsNotebook::SaveOpenPages()
 {
     size_t i, count = GetPageCount();
     for (i = 0; i < count; ++i)
@@ -170,12 +171,13 @@ void LocationsNotebook::OnNavigationKeyNotebook(wxNavigationKeyEvent &event)
         wxAuiNotebook::OnNavigationKeyNotebook(event);
 }
 
-void LocationsNotebook::SwitchPageFixed(size_t selPage)
+void LocationsNotebook::SwitchPageFixed(size_t pageInd)
 {
-    LocationPage *page = (LocationPage *)GetPage(selPage);
+    LocationPage *page = (LocationPage *)GetPage(pageInd);
+    if (!page) return;
     bool isFixed = !page->IsFixed();
     page->SetFixed(isFixed);
-    SetPageBitmap(selPage, isFixed ? wxBitmap(locstabs_page_fixed_xpm) : wxNullBitmap);
+    SetPageBitmap(pageInd, isFixed ? wxBitmap(locstabs_page_fixed_xpm) : wxNullBitmap);
 }
 
 void LocationsNotebook::Update(bool isFromObservable)

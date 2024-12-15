@@ -49,7 +49,7 @@ index 969f32c304..c81987e328 100644
      wxHtmlListBoxStyle *m_htmlRendStyle;
  
 diff --git a/src/aui/floatpane.cpp b/src/aui/floatpane.cpp
-index 5fe6f64bab..5d7522ad3f 100644
+index f9e38fad05..6109abdcb1 100644
 --- a/src/aui/floatpane.cpp
 +++ b/src/aui/floatpane.cpp
 @@ -129,10 +129,6 @@ void wxAuiFloatingFrame::SetPaneWindow(const wxAuiPaneInfo& pane)
@@ -64,10 +64,10 @@ index 5fe6f64bab..5d7522ad3f 100644
      if ( hasFloatingSize )
      {
 diff --git a/src/aui/framemanager.cpp b/src/aui/framemanager.cpp
-index c88e3070da..466c8ba01e 100644
+index 630289f876..4810f836e1 100644
 --- a/src/aui/framemanager.cpp
 +++ b/src/aui/framemanager.cpp
-@@ -2394,6 +2394,7 @@ void wxAuiManager::Update()
+@@ -2543,6 +2543,7 @@ void wxAuiManager::Update()
                  p.window->Refresh();
                  p.window->Update();
              }
@@ -75,7 +75,7 @@ index c88e3070da..466c8ba01e 100644
          }
      }
  
-@@ -3773,6 +3774,13 @@ void wxAuiManager::OnLeftDown(wxMouseEvent& event)
+@@ -3954,6 +3955,13 @@ void wxAuiManager::OnLeftDown(wxMouseEvent& event)
  {
      m_currentDragItem = -1;
  
@@ -181,10 +181,10 @@ index 365ffd0579..52672ef8b4 100644
  }
  
 diff --git a/src/generic/scrlwing.cpp b/src/generic/scrlwing.cpp
-index 148722a598..e1b31fe583 100644
+index ee8c585094..089cba818e 100644
 --- a/src/generic/scrlwing.cpp
 +++ b/src/generic/scrlwing.cpp
-@@ -536,20 +536,11 @@ void wxScrollHelperBase::HandleOnScroll(wxScrollWinEvent& event)
+@@ -534,20 +534,11 @@ void wxScrollHelperBase::HandleOnScroll(wxScrollWinEvent& event)
          m_win->SetScrollPos(wxVERTICAL, m_yScrollPosition);
      }
  
@@ -208,7 +208,7 @@ index 148722a598..e1b31fe583 100644
  
  int wxScrollHelperBase::CalcScrollInc(wxScrollWinEvent& event)
 diff --git a/src/html/htmlwin.cpp b/src/html/htmlwin.cpp
-index 1f5f138fe9..eaa6db1809 100644
+index 5668784443..ca88f83710 100644
 --- a/src/html/htmlwin.cpp
 +++ b/src/html/htmlwin.cpp
 @@ -493,7 +493,6 @@ bool wxHtmlWindow::DoSetPage(const wxString& source)
@@ -220,10 +220,10 @@ index 1f5f138fe9..eaa6db1809 100644
  
      double pixelScale = 1.0;
 diff --git a/src/html/m_image.cpp b/src/html/m_image.cpp
-index cee2fdfc9d..67980a98ca 100644
+index 0d583c67b0..9d4c2de8ea 100644
 --- a/src/html/m_image.cpp
 +++ b/src/html/m_image.cpp
-@@ -312,6 +312,8 @@ private:
+@@ -319,6 +319,8 @@ private:
      wxBitmap           *m_bitmap;
      int                 m_align;
      int                 m_bmpW, m_bmpH;
@@ -232,7 +232,7 @@ index cee2fdfc9d..67980a98ca 100644
      bool                m_bmpWpercent:1;
      bool                m_bmpHpresent:1;
      bool                m_showFrame:1;
-@@ -365,6 +367,7 @@ wxHtmlImageCell::wxHtmlImageCell(wxHtmlWindowInterface *windowIface,
+@@ -373,6 +375,7 @@ wxHtmlImageCell::wxHtmlImageCell(const wxHtmlTag& tag,
      m_bitmap = nullptr;
      m_bmpW   = w;
      m_bmpH   = h;
@@ -240,7 +240,7 @@ index cee2fdfc9d..67980a98ca 100644
      m_align  = align;
      m_bmpWpercent = wpercent;
      m_bmpHpresent = hpresent;
-@@ -395,20 +398,21 @@ wxHtmlImageCell::wxHtmlImageCell(wxHtmlWindowInterface *windowIface,
+@@ -403,20 +406,21 @@ wxHtmlImageCell::wxHtmlImageCell(const wxHtmlTag& tag,
                      if ( m_gifDecoder->LoadGIF(*s) == wxGIF_OK )
                      {
                          wxImage img;
@@ -266,7 +266,7 @@ index cee2fdfc9d..67980a98ca 100644
                          {
                              wxDELETE(m_gifDecoder);
                          }
-@@ -430,19 +434,8 @@ wxHtmlImageCell::wxHtmlImageCell(wxHtmlWindowInterface *windowIface,
+@@ -438,19 +442,8 @@ wxHtmlImageCell::wxHtmlImageCell(const wxHtmlTag& tag,
          }
          else // input==nullptr, use "broken image" bitmap
          {
@@ -288,7 +288,7 @@ index cee2fdfc9d..67980a98ca 100644
          }
      }
      //else: ignore the 0-sized images used sometimes on the Web pages
-@@ -460,14 +453,26 @@ void wxHtmlImageCell::SetImage(const wxImage& img, double scaleHDPI)
+@@ -468,14 +461,26 @@ void wxHtmlImageCell::SetImage(const wxImage& img, double scaleHDPI)
          ww = img.GetWidth();
          hh = img.GetHeight();
  
@@ -320,7 +320,7 @@ index cee2fdfc9d..67980a98ca 100644
      }
  #endif
  }
-@@ -492,7 +497,6 @@ void wxHtmlImageCell::AdvanceAnimation(wxTimer *timer)
+@@ -500,7 +505,6 @@ void wxHtmlImageCell::AdvanceAnimation(wxTimer *timer)
      if (m_nCurrFrame == m_gifDecoder->GetFrameCount())
          m_nCurrFrame = 0;
  
@@ -328,7 +328,7 @@ index cee2fdfc9d..67980a98ca 100644
      {
          m_physX = m_physY = 0;
          for (wxHtmlCell *cell = this; cell; cell = cell->GetParent())
-@@ -511,18 +515,24 @@ void wxHtmlImageCell::AdvanceAnimation(wxTimer *timer)
+@@ -519,18 +523,24 @@ void wxHtmlImageCell::AdvanceAnimation(wxTimer *timer)
           m_gifDecoder->ConvertToImage(m_nCurrFrame, &img) )
      {
  #if !defined(__WXMSW__) || wxUSE_WXDIB
@@ -358,7 +358,7 @@ index cee2fdfc9d..67980a98ca 100644
          win->Refresh(img.HasMask(), &rect);
      }
  
-@@ -549,6 +559,15 @@ void wxHtmlImageCell::Layout(int w)
+@@ -557,6 +567,15 @@ void wxHtmlImageCell::Layout(int w)
          m_Width  = static_cast<int>(m_scale*m_bmpW);
          m_Height = static_cast<int>(m_scale*m_bmpH);
      }
@@ -374,7 +374,7 @@ index cee2fdfc9d..67980a98ca 100644
  
      switch (m_align)
      {
-@@ -589,49 +608,9 @@ void wxHtmlImageCell::Draw(wxDC& dc, int x, int y,
+@@ -597,49 +616,9 @@ void wxHtmlImageCell::Draw(wxDC& dc, int x, int y,
          dc.SetBrush(*wxTRANSPARENT_BRUSH);
          dc.SetPen(*wxBLACK_PEN);
          dc.DrawRectangle(x + m_PosX, y + m_PosY, m_Width, m_Height);
@@ -427,7 +427,7 @@ index cee2fdfc9d..67980a98ca 100644
  
  wxHtmlLinkInfo *wxHtmlImageCell::GetLink( int x, int y ) const
 diff --git a/src/html/m_links.cpp b/src/html/m_links.cpp
-index f9e197f31e..963c2439a0 100644
+index 6a465b965b..bab13ae2f2 100644
 --- a/src/html/m_links.cpp
 +++ b/src/html/m_links.cpp
 @@ -81,7 +81,8 @@ TAG_HANDLER_BEGIN(A, "A")
@@ -441,7 +441,7 @@ index f9e197f31e..963c2439a0 100644
              m_WParser->SetLink(wxHtmlLinkInfo(href, target));
  
 diff --git a/src/html/winpars.cpp b/src/html/winpars.cpp
-index 07bc8ef592..dc0ec1310c 100644
+index adbdd14a0f..4034402b83 100644
 --- a/src/html/winpars.cpp
 +++ b/src/html/winpars.cpp
 @@ -47,6 +47,7 @@ wxHtmlWinParser::wxHtmlWinParser(wxHtmlWindowInterface *wndIface)
@@ -460,7 +460,7 @@ index 07bc8ef592..dc0ec1310c 100644
  
      // if an HTML window interface is connected to this parser,
      // then use its control background color and the system
-@@ -257,36 +257,6 @@ wxFSFile *wxHtmlWinParser::OpenURL(wxHtmlURLType type,
+@@ -271,36 +271,6 @@ wxFSFile *wxHtmlWinParser::OpenURL(wxHtmlURLType type,
      for (;;)
      {
          wxString myfullurl(myurl);
@@ -497,7 +497,6 @@ index 07bc8ef592..dc0ec1310c 100644
          wxString redirect;
          status = m_windowInterface->OnHTMLOpeningURL(type, myfullurl, &redirect);
          if ( status != wxHTML_REDIRECT )
-Submodule src/stc/lexilla contains modified content
 diff --git a/include/wx/stc/stc.h b/include/wx/stc/stc.h
 index d1d2af926a..cfa5682b5a 100644
 --- a/include/wx/stc/stc.h
