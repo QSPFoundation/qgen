@@ -214,9 +214,6 @@ msgstr "Очистить локацию"
 msgid "Clear"
 msgstr "Очистить"
 
-msgid "Clear location"
-msgstr "Очистить локацию"
-
 msgid "Clear selected location (Ctrl+Shift+D)"
 msgstr "Очистить выделенную локацию (Ctrl+Shift+D)"
 

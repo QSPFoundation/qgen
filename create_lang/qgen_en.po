@@ -214,9 +214,6 @@ msgstr "Clear location"
 msgid "Clear"
 msgstr "Clear"
 
-msgid "Clear location"
-msgstr "Clear location"
-
 msgid "Clear selected location (Ctrl+Shift+D)"
 msgstr "Clear selected location (Ctrl+Shift+D)"
 
