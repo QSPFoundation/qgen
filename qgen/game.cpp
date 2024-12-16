@@ -290,7 +290,7 @@ bool qspCheckQuest(char **strs, long count, bool isUCS2)
     return true;
 }
 
-bool qspOpenQuest(char *buf, long bufSize, wxWindow *parent, Controls *controls, wxString &password, bool merge)
+bool qspOpenQuest(char *buf, size_t bufSize, wxWindow *parent, Controls *controls, wxString &password, bool merge)
 {
     bool isOldFormat, isUCS2;
     long i, j, ind, count, locsCount, actsCount;

@@ -109,7 +109,7 @@
 
     class Controls;
 
-    bool qspOpenQuest(char *buf, long bufSize, wxWindow *parent, Controls *controls, wxString &password, bool merge);
+    bool qspOpenQuest(char *buf, size_t bufSize, wxWindow *parent, Controls *controls, wxString &password, bool merge);
     long qspSaveQuest(const wxString &passwd, Controls *controls, char **buf);
     long qspExportTxt(Controls *controls, char **buf);
     long qspExportTxt2Gam(const wxString &fileName, Controls *controls);

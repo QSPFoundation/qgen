@@ -84,7 +84,7 @@
         wxString GetLocationDesc(size_t locIndex) const;
         wxString GetLocationCode(size_t locIndex) const;
         void SortLocsInFolder(int folderIndex, bool isAscending);
-        bool IsEmptyLoc(size_t locIndex) const;
+        bool IsLocEmpty(size_t locIndex) const;
         wxString GetLocationName(const size_t &locIndex) const;
         bool SetActionPicturePath(size_t locIndex, size_t actIndex, const wxString &pathPict);
         wxString GetActionPicturePath(size_t locIndex, size_t actIndex) const;

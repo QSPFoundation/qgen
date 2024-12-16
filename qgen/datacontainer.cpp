@@ -177,7 +177,7 @@ void DataContainer::DeleteAllActions(size_t locIndex)
     _isSaved = false;
 }
 
-bool DataContainer::IsEmptyLoc(size_t locIndex) const
+bool DataContainer::IsLocEmpty(size_t locIndex) const
 {
     if (_locationArray[locIndex].Code.IsEmpty() &&
         _locationArray[locIndex].Description.IsEmpty() &&

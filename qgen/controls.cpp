@@ -344,134 +344,138 @@ bool Controls::IsSelectedLocationEmpty() const
     if (locIndex < 0) return true;
 
     _locNotebook->SaveOpenPages();
-    return _container->IsEmptyLoc(locIndex);
+    return _container->IsLocEmpty(locIndex);
 }
 
 bool Controls::IsClipboardEmpty()
 {
+    wxString buffer;
     wxTextDataObject data;
-    bool canGetData = false, res = true;
     if (!wxTheClipboard->IsOpened() && wxTheClipboard->Open())
     {
         if (wxTheClipboard->IsSupported(wxDF_TEXT))
         {
-            wxTheClipboard->GetData(data);
-            canGetData = true;
+            if (wxTheClipboard->GetData(data))
+                buffer = data.GetText();
         }
         wxTheClipboard->Close();
-        if (canGetData) res = !IsCorrectDataFormat(data.GetText());
-    }
-    return res;
-}
-
-bool Controls::SerializeLocData(size_t locIndex, wxString &buffer)
-{
-    size_t actsCount;
-    buffer.Append(QSP_GAMEID);
-    buffer.Append(QSP_STRSDELIM);
-    buffer.Append(QGEN_APPNAME);
-    buffer.Append(wxT(" "));
-    buffer.Append(QGEN_VER);
-    buffer.Append(QSP_STRSDELIM);
-    buffer.Append(_container->GetLocationName(locIndex));
-    buffer.Append(QSP_STRSDELIM);
-    buffer.Append(EncodeString(_container->GetLocationDesc(locIndex)));
-    buffer.Append(QSP_STRSDELIM);
-    buffer.Append(EncodeString(_container->GetLocationCode(locIndex)));
-    buffer.Append(QSP_STRSDELIM);
-    actsCount = _container->GetActionsCount(locIndex);
-    buffer.Append(EncodeString(wxString::Format(wxT("%ld"), actsCount)));
-    buffer.Append(QSP_STRSDELIM);
-    for (size_t i = 0; i < actsCount; ++i)
-    {
-        buffer.Append(EncodeString(_container->GetActionPicturePath(locIndex, i)));
-        buffer.Append(QSP_STRSDELIM);
-        buffer.Append(EncodeString(_container->GetActionName(locIndex, i)));
-        buffer.Append(QSP_STRSDELIM);
-        buffer.Append(EncodeString(_container->GetActionCode(locIndex, i)));
-        buffer.Append(QSP_STRSDELIM);
+        return !IsCorrectDataFormat(buffer);
     }
     return true;
 }
 
-bool Controls::GetBufferedLocName(const wxString &buffer, wxString &locName)
+bool Controls::IsCorrectDataFormat(const wxString &str)
 {
-    size_t first = 0, last = 0;
+    int actsCount;
+    size_t count = 0;
+    wxArrayString lineArray;
+    wxStringInputStream inputStream(str);
+    wxTextInputStream textStream(inputStream);
+    while (!inputStream.Eof())
+    {
+        wxString line = textStream.ReadLine();
+        if (!inputStream.IsOk()) break;
+        lineArray.Add(line);
+        ++count;
+    }
+
+    if (count < 6) return false;
+    if (!lineArray[0].IsSameAs(QSP_GAMEID)) return false;
+    wxString actsCountString = DecodeString(lineArray[5]);
+    if (!actsCountString.ToInt(&actsCount)) return false;
+    if (actsCount < 0) return false;
+    if (count < 5 + actsCount * 3) return false;
+    return true;
+}
+
+wxString Controls::GetBufferedLocName(const wxString &buffer)
+{
     if (!IsCorrectDataFormat(buffer))
     {
         ShowMessage(QGEN_MSG_WRONGFORMAT);
-        return false;
+        return wxEmptyString;
     }
+    wxStringInputStream inputStream(buffer);
+    wxTextInputStream textStream(inputStream);
+
     // skip game id
-    last = buffer.find(QSP_STRSDELIM);
+    textStream.ReadLine();
     // skip app name
-    last = buffer.find(QSP_STRSDELIM, last + QSP_LEN(QSP_STRSDELIM));
+    textStream.ReadLine();
     // get location name
-    first = last + QSP_LEN(QSP_STRSDELIM);
-    last = buffer.find(QSP_STRSDELIM, first);
-    locName = buffer.Mid(first, last - first);
-    return true;
+    return textStream.ReadLine();
+}
+
+wxString Controls::SerializeLocData(size_t locIndex)
+{
+    size_t i, actsCount;
+    wxStringOutputStream outputStream;
+    wxTextOutputStream textStream(outputStream);
+
+    textStream << QSP_GAMEID << wxT('\n');
+    textStream << wxString::Format(wxT("%s %s"), QGEN_APPNAME, QGEN_VER) << wxT('\n');
+    textStream << _container->GetLocationName(locIndex) << wxT('\n');
+    textStream << EncodeString(_container->GetLocationDesc(locIndex)) << wxT('\n');
+    textStream << EncodeString(_container->GetLocationCode(locIndex)) << wxT('\n');
+    actsCount = _container->GetActionsCount(locIndex);
+    textStream << EncodeString(wxString::Format(wxT("%ld"), actsCount)) << wxT('\n');
+    for (i = 0; i < actsCount; ++i)
+    {
+        textStream << EncodeString(_container->GetActionPicturePath(locIndex, i)) << wxT('\n');
+        textStream << EncodeString(_container->GetActionName(locIndex, i)) << wxT('\n');
+        textStream << EncodeString(_container->GetActionCode(locIndex, i)) << wxT('\n');
+    }
+    textStream.Flush();
+    return outputStream.GetString();
 }
 
 bool Controls::DeserializeLocData(size_t locIndex, const wxString &buffer)
 {
-    size_t first = 0, last = 0;
     wxString str;
     wxString actImage;
-    long actsCount;
-
+    int i, actsCount;
     if (!IsCorrectDataFormat(buffer))
     {
         ShowMessage(QGEN_MSG_WRONGFORMAT);
         return false;
     }
     _container->ClearLocation(locIndex);
+
+    wxStringInputStream inputStream(buffer);
+    wxTextInputStream textStream(inputStream);
+
     // skip game id
-    last = buffer.find(QSP_STRSDELIM);
+    textStream.ReadLine();
     // skip app name
-    last = buffer.find(QSP_STRSDELIM, last + QSP_LEN(QSP_STRSDELIM));
+    textStream.ReadLine();
     // skip location name
-    last = buffer.find(QSP_STRSDELIM, last + QSP_LEN(QSP_STRSDELIM));
+    textStream.ReadLine();
 
     // get location desc
-    first = last + QSP_LEN(QSP_STRSDELIM);
-    last = buffer.find(QSP_STRSDELIM, first);
-    str = buffer.Mid(first, last - first);
-    _container->SetLocationDesc(locIndex, DecodeString(str));
+    str = DecodeString(textStream.ReadLine());
+    _container->SetLocationDesc(locIndex, str);
 
     // get location code
-    first = last + QSP_LEN(QSP_STRSDELIM);
-    last = buffer.find(QSP_STRSDELIM, first);
-    str = buffer.Mid(first, last - first);
-    _container->SetLocationCode(locIndex, DecodeString(str));
+    str = DecodeString(textStream.ReadLine());
+    _container->SetLocationCode(locIndex, str);
 
     // get actions count
-    first = last + QSP_LEN(QSP_STRSDELIM);
-    last = buffer.find(QSP_STRSDELIM, first);
-    str = DecodeString(buffer.Mid(first, last - first));
-    str.ToLong(&actsCount);
+    str = DecodeString(textStream.ReadLine());
+    str.ToInt(&actsCount);
 
-    for (long i = 0; i < actsCount; ++i)
+    for (i = 0; i < actsCount; ++i)
     {
         // get action image
-        first = last + QSP_LEN(QSP_STRSDELIM);
-        last = buffer.find(QSP_STRSDELIM, first);
-        str = buffer.Mid(first, last - first);
-        actImage = DecodeString(str);
+        actImage = DecodeString(textStream.ReadLine());
 
         // get action name
-        first = last + QSP_LEN(QSP_STRSDELIM);
-        last = buffer.find(QSP_STRSDELIM, first);
-        str = buffer.Mid(first, last - first);
-
-        _container->AddAction(locIndex, DecodeString(str));
+        str = DecodeString(textStream.ReadLine());
+        _container->AddAction(locIndex, str);
         _container->SetActionPicturePath(locIndex, i, actImage);
 
         // get action code
-        first = last + QSP_LEN(QSP_STRSDELIM);
-        last = buffer.find(QSP_STRSDELIM, first);
-        str = buffer.Mid(first, last - first);
-        _container->SetActionCode(locIndex, i, DecodeString(str));
+        str = DecodeString(textStream.ReadLine());
+        _container->SetActionCode(locIndex, i, str);
     }
     return true;
 }
@@ -481,10 +485,9 @@ void Controls::CopySelectedLocToClipboard()
     int locIndex = GetSelectedLocationIndex();
     if (locIndex < 0) return;
     _locNotebook->SaveOpenPages();
-    if (_container->IsEmptyLoc(locIndex)) return;
+    if (_container->IsLocEmpty(locIndex)) return;
 
-    wxString buffer;
-    SerializeLocData(locIndex, buffer);
+    wxString buffer = SerializeLocData(locIndex);
     if (!wxTheClipboard->IsOpened() && wxTheClipboard->Open())
     {
         wxTheClipboard->SetData(new wxTextDataObject(buffer));
@@ -495,22 +498,20 @@ void Controls::CopySelectedLocToClipboard()
 void Controls::PasteLocFromClipboard(PasteType type)
 {
     int locIndex;
-    bool canGetData = false;
     wxTextDataObject data;
-    wxString locName, baseLocName, buffer;
-    if (IsClipboardEmpty()) return;
+    wxString sourceLocName, locName, buffer;
 
     if (!wxTheClipboard->IsOpened() && wxTheClipboard->Open())
     {
         if (wxTheClipboard->IsSupported(wxDF_TEXT))
         {
-            wxTheClipboard->GetData(data);
-            canGetData = true;
+            if (wxTheClipboard->GetData(data))
+                buffer = data.GetText();
         }
         wxTheClipboard->Close();
     }
-    if (!canGetData) return;
-    buffer = data.GetText();
+    if (!IsCorrectDataFormat(buffer)) return;
+
     switch (type)
     {
     case PASTE_REPLACE:
@@ -519,7 +520,7 @@ void Controls::PasteLocFromClipboard(PasteType type)
         {
             locName = _container->GetLocationName(locIndex);
             _locNotebook->SaveOpenPages();
-            if (!_container->IsEmptyLoc(locIndex))
+            if (!_container->IsLocEmpty(locIndex))
             {
                 wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
                     wxString::Format(_("Replace \"%s\" location?"), locName),
@@ -536,13 +537,14 @@ void Controls::PasteLocFromClipboard(PasteType type)
         if (locIndex >= 0) locName = _container->GetLocationName(locIndex);
         break;
     case PASTE_NEW_AUTO:
-        if (GetBufferedLocName(buffer, baseLocName))
+        sourceLocName = GetBufferedLocName(buffer);
+        if (!sourceLocName.IsEmpty())
         {
             unsigned long ind = 1;
-            locName = baseLocName;
+            locName = sourceLocName;
             while (_container->FindLocationIndex(locName) >= 0)
             {
-                locName = wxString::Format(wxT("%s%ld"), baseLocName, ind);
+                locName = wxString::Format(wxT("%s%ld"), sourceLocName, ind);
                 ++ind;
             }
             locIndex = AddLocationByName(locName);
@@ -601,7 +603,7 @@ void Controls::ClearSelectedLocation()
     int locIndex = GetSelectedLocationIndex();
     if (locIndex < 0) return;
     _locNotebook->SaveOpenPages();
-    if (_container->IsEmptyLoc(locIndex)) return;
+    if (_container->IsLocEmpty(locIndex)) return;
 
     wxString locName(_container->GetLocationName(locIndex));
     wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
@@ -821,13 +823,12 @@ bool Controls::JoinGame(const wxString &filename)
     wxFile file;
     if (file.Open(filename, wxFile::read))
     {
-        long fileSize = file.Length();
-        long bufSize = fileSize + QSP_LEN(QSP_STRSDELIM);
-        char *buf = (char *)malloc(bufSize);
+        size_t fileSize = file.Length();
+        char *buf = (char *)malloc(fileSize);
         if (file.Read(buf, fileSize) == fileSize)
         {
             wxString dummy;
-            if (qspOpenQuest(buf, bufSize, GetCurrentTopLevelWindow(), this, dummy, true))
+            if (qspOpenQuest(buf, fileSize, GetCurrentTopLevelWindow(), this, dummy, true))
             {
                 InitSearchData();
                 UpdateLocationsList();
@@ -892,29 +893,6 @@ bool Controls::IsActionsOnSelectedLocEmpty() const
 bool Controls::IsAllLocsClosed() const
 {
     return (_locNotebook->GetPageCount() == 0);
-}
-
-bool Controls::IsCorrectDataFormat(const wxString &str)
-{
-    size_t count = 0;
-    wxArrayString strArray;
-    size_t last, first = 0;
-    last = str.find(QSP_STRSDELIM);
-    if (last == wxString::npos) return false;
-    do
-    {
-        ++count;
-        strArray.Add(str.Mid(first, last - first));
-        first = last + QSP_LEN(QSP_STRSDELIM);
-        last = str.find(QSP_STRSDELIM, first);
-    } while (last != wxString::npos);
-
-    if (count <= 5) return false;
-    if (!strArray[0].IsSameAs(QSP_GAMEID)) return false;
-    int actsCount = wxAtoi(strArray[5]);
-    if (actsCount < 0) return false;
-    if (count < 5 + (size_t)actsCount * 3) return false;
-    return true;
 }
 
 SearchResult Controls::FindSubString(const wxString& s, const wxString& sub, bool isCaseSensitive, bool isWholeString, bool isRegExp, size_t startInd)

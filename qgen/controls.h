@@ -26,6 +26,8 @@
     #include <wx/clipbrd.h>
     #include <wx/filename.h>
     #include <wx/regex.h>
+    #include <wx/sstream.h>
+    #include <wx/txtstrm.h>
     #include "mainframe.h"
     #include "datacontainer.h"
     #include "locationslistbox.h"
@@ -143,7 +145,7 @@
         void ShowMessage(long errorNum);
         static wxString GetMessageDesc(long errorNum);
 
-        bool GetBufferedLocName(const wxString &buffer, wxString &locName);
+        wxString GetBufferedLocName(const wxString &buffer);
         void CopySelectedLocToClipboard();
         void PasteLocFromClipboard(PasteType type);
 
@@ -173,7 +175,7 @@
         void DeleteSelectedText();
         void SelectAllText();
 
-        bool SerializeLocData(size_t locIndex, wxString &buffer);
+        wxString SerializeLocData(size_t locIndex);
         bool DeserializeLocData(size_t locIndex, const wxString &buffer);
 
         wxString SelectPicturePath();
