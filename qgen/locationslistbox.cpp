@@ -194,10 +194,8 @@ wxTreeItemId LocationsListBox::GetFolderByName(const wxString &name)
     wxTreeItemId idCur(GetFirstChild(parent, cookie));
     while (idCur.IsOk())
     {
-        if (IsFolderItem(idCur))
-        {
-            if (GetItemText(idCur) == name) break;
-        }
+        if (IsFolderItem(idCur) && GetItemText(idCur) == name)
+            break;
         idCur = GetNextChild(parent, cookie);
     }
     return idCur;
@@ -349,9 +347,8 @@ void LocationsListBox::OnEndLabelEdit(wxTreeEvent &event)
 
 void LocationsListBox::OnBeginDrag(wxTreeEvent &event)
 {
-    int flags;
-    wxTreeItemId draggedItemId(HitTest(event.GetPoint(), flags));
-    if (IsItemOk(draggedItemId, flags))
+    wxTreeItemId draggedItemId(event.GetItem());
+    if (draggedItemId != GetRootItem() && draggedItemId.IsOk())
     {
         _draggedId = draggedItemId;
         _draggedType = GetItemType(draggedItemId);
@@ -363,29 +360,36 @@ void LocationsListBox::OnBeginDrag(wxTreeEvent &event)
 void LocationsListBox::OnEndDrag(wxTreeEvent &event)
 {
     ApplyStatesImageList();
-    wxTreeItemId id(event.GetItem());
-    wxString name(GetItemText(_draggedId));
-    long image = GetItemImage(_draggedId);
-    if (!id.IsOk())
+    wxTreeItemId destItemId(event.GetItem());
+    wxString sourceItemName(GetItemText(_draggedId));
+    long sourceItemImage = GetItemImage(_draggedId);
+    if (!destItemId.IsOk())
     {
         if (_draggedType == DRAG_LOCATION)
         {
-            wxPoint p = event.GetPoint();
             wxSize size = GetSize();
-            if (p.x >= 0 && p.y >= 0 && p.x < size.GetWidth() && p.y < size.GetHeight())
+            wxPoint point = event.GetPoint();
+            if (point.x >= 0 && point.y >= 0 && point.x < size.GetWidth() && point.y < size.GetHeight())
             {
-                wxTreeCtrl::Delete(_draggedId);
-                SelectItem(AppendItem(GetRootItem(), name, image));
-                UpdateLocationActions(name);
-                _needForUpdate = true;
+                wxRect lastItemRect;
+                if (GetBoundingRect(GetLastChild(GetRootItem()), lastItemRect))
+                {
+                    if (point.y > lastItemRect.GetBottom())
+                    {
+                        wxTreeCtrl::Delete(_draggedId);
+                        SelectItem(AppendItem(GetRootItem(), sourceItemName, sourceItemImage));
+                        UpdateLocationActions(sourceItemName);
+                        _needForUpdate = true;
+                    }
+                }
             }
         }
         return;
     }
-    long pos;
-    wxTreeItemId parent(GetItemParent(id));
-    long dropOnType = GetItemType(id);
-    long openedImage = GetItemImage(_draggedId, wxTreeItemIcon_Expanded);
+    long destItemPos;
+    wxTreeItemId parent(GetItemParent(destItemId));
+    long dropOnType = GetItemType(destItemId);
+    long openImage = GetItemImage(_draggedId, wxTreeItemIcon_Expanded);
     switch (_draggedType)
     {
     case DRAG_FOLDER:
@@ -395,12 +399,12 @@ void LocationsListBox::OnEndDrag(wxTreeEvent &event)
             if (parent != GetRootItem()) break;
         case DRAG_FOLDER:
             _controls->SyncWithLocationsList();
-            pos = GetItemPos(parent, id);
+            destItemPos = GetItemPos(parent, destItemId);
             wxTreeCtrl::Delete(_draggedId);
-            id = InsertItem(parent, pos, name, image, -1, new FolderItem());
-            SelectItem(id);
-            SetItemImage(id, openedImage, wxTreeItemIcon_Expanded);
-            UpdateFolderLocations(name);
+            destItemId = InsertItem(parent, destItemPos, sourceItemName, sourceItemImage, -1, new FolderItem());
+            SelectItem(destItemId);
+            SetItemImage(destItemId, openImage, wxTreeItemIcon_Expanded);
+            UpdateFolderLocations(sourceItemName);
             _needForUpdate = true;
             break;
         }
@@ -410,15 +414,15 @@ void LocationsListBox::OnEndDrag(wxTreeEvent &event)
         {
         case DRAG_FOLDER:
             wxTreeCtrl::Delete(_draggedId);
-            SelectItem(InsertItem(id, -1, name, image));
-            UpdateLocationActions(name);
+            SelectItem(InsertItem(destItemId, -1, sourceItemName, sourceItemImage));
+            UpdateLocationActions(sourceItemName);
             _needForUpdate = true;
             break;
         case DRAG_LOCATION:
-            pos = GetItemPos(parent, id);
+            destItemPos = GetItemPos(parent, destItemId);
             wxTreeCtrl::Delete(_draggedId);
-            SelectItem(InsertItem(parent, pos, name, image));
-            UpdateLocationActions(name);
+            SelectItem(InsertItem(parent, destItemPos, sourceItemName, sourceItemImage));
+            UpdateLocationActions(sourceItemName);
             _needForUpdate = true;
             break;
         }
@@ -430,7 +434,7 @@ void LocationsListBox::OnEndDrag(wxTreeEvent &event)
             if (parent == GetItemParent(_draggedId))
             {
                 long locIndex = _controls->GetContainer()->FindLocationIndex(GetItemText(parent));
-                _controls->MoveActionTo(locIndex, GetItemPos(parent, _draggedId), GetItemPos(parent, id));
+                _controls->MoveActionTo(locIndex, GetItemPos(parent, _draggedId), GetItemPos(parent, destItemId));
             }
             break;
         }
