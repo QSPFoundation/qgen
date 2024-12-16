@@ -205,11 +205,11 @@ msgstr "Can't save game!"
 msgid "Cancel"
 msgstr "Cancel"
 
-msgid "Clean \"%s\" location?"
-msgstr "Clean \"%s\" location?"
+msgid "Clear location \"%s\"?"
+msgstr "Clear location \"%s\"?"
 
-msgid "Clean location"
-msgstr "Clean location"
+msgid "Clear location"
+msgstr "Clear location"
 
 msgid "Clear"
 msgstr "Clear"
@@ -612,14 +612,14 @@ msgstr "Remember game file on exit"
 msgid "Remove \"%s\" folder?"
 msgstr "Remove \"%s\" folder?"
 
-msgid "Remove \"%s\" location?"
-msgstr "Remove \"%s\" location?"
+msgid "Remove location \"%s\"?"
+msgstr "Remove location \"%s\"?"
 
 msgid "Remove all actions"
 msgstr "Remove all actions"
 
-msgid "Remove all actions on \"%s\" location?"
-msgstr "Remove all actions on \"%s\" location?"
+msgid "Remove all actions at location \"%s\"?"
+msgstr "Remove all actions at location \"%s\"?"
 
 msgid "Remove folder"
 msgstr "Remove folder"
@@ -654,8 +654,8 @@ msgstr "Rename..."
 msgid "Replace"
 msgstr "Replace"
 
-msgid "Replace \"%s\" location?"
-msgstr "Replace \"%s\" location?"
+msgid "Replace location \"%s\"?"
+msgstr "Replace location \"%s\"?"
 
 msgid "Replace all"
 msgstr "Replace all"

@@ -143,7 +143,7 @@ bool Controls::DeleteSelectedLocation()
 
     wxString locName(_container->GetLocationName(locIndex));
     wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
-        wxString::Format(_("Remove \"%s\" location?"), locName),
+        wxString::Format(_("Remove location \"%s\"?"), locName),
         _("Remove location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
     if (dlgMsg.ShowModal() == wxID_YES)
     {
@@ -231,7 +231,7 @@ bool Controls::DeleteAllActions()
     wxString locName(_container->GetLocationName(locIndex));
 
     wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
-        wxString::Format(_("Remove all actions on \"%s\" location?"), locName),
+        wxString::Format(_("Remove all actions at location \"%s\"?"), locName),
         _("Remove all actions"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
     if (dlgMsg.ShowModal() == wxID_YES)
     {
@@ -523,7 +523,7 @@ void Controls::PasteLocFromClipboard(PasteType type)
             if (!_container->IsLocEmpty(locIndex))
             {
                 wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
-                    wxString::Format(_("Replace \"%s\" location?"), locName),
+                    wxString::Format(_("Replace location \"%s\"?"), locName),
                     _("Replace location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
                 if (dlgMsg.ShowModal() == wxID_YES)
                     InitSearchData();
@@ -605,8 +605,8 @@ void Controls::ClearSelectedLocation()
 
     wxString locName(_container->GetLocationName(locIndex));
     wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
-        wxString::Format(_("Clean \"%s\" location?"), locName),
-        _("Clean location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
+        wxString::Format(_("Clear location \"%s\"?"), locName),
+        _("Clear location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
     if (dlgMsg.ShowModal() == wxID_YES)
     {
         _container->ClearLocation(locIndex);

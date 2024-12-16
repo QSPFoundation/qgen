@@ -205,10 +205,10 @@ msgstr "Нельзя сохранить игру!"
 msgid "Cancel"
 msgstr "Отмена"
 
-msgid "Clean \"%s\" location?"
+msgid "Clear location \"%s\"?"
 msgstr "Желаете очистить локацию %s?"
 
-msgid "Clean location"
+msgid "Clear location"
 msgstr "Очистить локацию"
 
 msgid "Clear"
@@ -612,13 +612,13 @@ msgstr "Запоминать игру при выходе"
 msgid "Remove \"%s\" folder?"
 msgstr "Желаете удалить папку %s?"
 
-msgid "Remove \"%s\" location?"
+msgid "Remove location \"%s\"?"
 msgstr "Желаете удалить локацию %s?"
 
 msgid "Remove all actions"
 msgstr "Удалить все действия"
 
-msgid "Remove all actions on \"%s\" location?"
+msgid "Remove all actions at location \"%s\"?"
 msgstr "Желаете удалить все действия на локации %s?"
 
 msgid "Remove folder"
@@ -654,7 +654,7 @@ msgstr "Переименовать..."
 msgid "Replace"
 msgstr "Заменить"
 
-msgid "Replace \"%s\" location?"
+msgid "Replace location \"%s\"?"
 msgstr "Желаете заменить локацию %s?"
 
 msgid "Replace all"
