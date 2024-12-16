@@ -942,7 +942,7 @@ void MainFrame::UpdateTitle()
 
 void MainFrame::OnTabMenu( wxCommandEvent &event )
 {
-    CloseTypePage type;
+    CloseTypePage type = CLOSE_ALL;
     switch (event.GetId())
     {
     case ID_TAB_CLOSEALL:

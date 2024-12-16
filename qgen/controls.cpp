@@ -497,9 +497,9 @@ void Controls::CopySelectedLocToClipboard()
 
 void Controls::PasteLocFromClipboard(PasteType type)
 {
-    int locIndex;
     wxTextDataObject data;
     wxString sourceLocName, locName, buffer;
+    int locIndex = -1;
 
     if (!wxTheClipboard->IsOpened() && wxTheClipboard->Open())
     {
@@ -549,8 +549,6 @@ void Controls::PasteLocFromClipboard(PasteType type)
             }
             locIndex = AddLocationByName(locName);
         }
-        else
-            locIndex = -1;
         break;
     }
     if (locIndex >= 0 && DeserializeLocData(locIndex, buffer))
