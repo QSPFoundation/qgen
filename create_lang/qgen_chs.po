@@ -1,0 +1,886 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Chinese Simplified 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-30 19:35+1100\n"
+"PO-Revision-Date: 2025-01-26 21:21+0800\n"
+"Last-Translator: BaxZzZz <baxzzzz@gmail.com>\n"
+"Language-Team: Chinese Simplified <dunquzhiyi@gmail.com>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 3.5\n"
+
+msgid "\tAction image: %s"
+msgstr "\t活动图像：%s"
+
+msgid "&About..."
+msgstr "&关于..."
+
+msgid "&Actions"
+msgstr "&行为"
+
+msgid "&Close all tabs\tCtrl+Alt+F4"
+msgstr "&关闭所有标签\tCtrl+Alt+F4"
+
+msgid "&Copy\tCtrl+Shift+C"
+msgstr "&复制\tCtrl+Shift+C"
+
+msgid "&Create...\tAlt+F7"
+msgstr "&创建...\tAlt+F7"
+
+msgid "&Create...\tF7"
+msgstr "&创建...\tF7"
+
+msgid "&Cut\tCtrl+X"
+msgstr "&剪切\tCtrl+X"
+
+msgid "&Delete\tAlt+F8"
+msgstr "&删除\tAlt+F8"
+
+msgid "&Delete\tCtrl+D"
+msgstr "&删除\tCtrl+D"
+
+msgid "&Delete\tF8"
+msgstr "&删除\tF8"
+
+msgid "&Exit\tAlt+X"
+msgstr "&退出\tAlt+X"
+
+msgid "&Export"
+msgstr "&输出"
+
+msgid "&Find / Replace\tCtrl+F"
+msgstr "&查找/替换\tCtrl+F"
+
+msgid "&Game"
+msgstr "&游戏"
+
+msgid "&Game info\tCtrl+I"
+msgstr "&游戏信息\tCtrl+I"
+
+msgid "&Help"
+msgstr "&帮助"
+
+msgid "&Help\tF1"
+msgstr "&帮助\tF1"
+
+msgid "&Import"
+msgstr "&导入"
+
+msgid "&Locations"
+msgstr "&场景"
+
+msgid "&Location list"
+msgstr "&场景列表"
+
+msgid "&Merge game...\tCtrl+M"
+msgstr "&合并游戏...\tCtrl+M"
+
+msgid "&New\tCtrl+N"
+msgstr "&新建\tCtrl+N"
+
+msgid "&Open...\tCtrl+O"
+msgstr "&打开...\tCtrl+O"
+
+msgid "&Paste\tCtrl+Shift+V"
+msgstr "&粘贴\tCtrl+Shift+V"
+
+msgid "&Paste\tCtrl+V"
+msgstr "&粘贴\tCtrl+V"
+
+msgid "&Redo\tCtrl+Y"
+msgstr "&恢复\tCtrl+Y"
+
+msgid "&Rename...\tAlt+F6"
+msgstr "&重命名...\tAlt+F6"
+
+msgid "&Rename...\tF6"
+msgstr "&重命名...\tF6"
+
+msgid "&Replace\tCtrl+Shift+R"
+msgstr "&替换\tCtrl+Shift+R"
+
+msgid "&Save\tCtrl+S"
+msgstr "&保存\tCtrl+S"
+
+msgid "&Settings...\tCtrl+P"
+msgstr "&设置...\tCtrl+P"
+
+msgid "&Statusbar"
+msgstr "&状态栏"
+
+msgid "&Text"
+msgstr "&文本"
+
+msgid "&Toolbar"
+msgstr "&工具栏"
+
+msgid "&Undo\tCtrl+Z"
+msgstr "&撤销\tCtrl+Z"
+
+msgid "&Utilities"
+msgstr "&工具"
+
+msgid "&View"
+msgstr "&显示"
+
+msgid "&Window list"
+msgstr "&窗口列表"
+
+msgid "(empty)"
+msgstr "(empty)"
+
+msgid "------------ End of location: \"%s\" ------------\n"
+msgstr "------------ 结束位置: \"%s\" ------------\n"
+
+msgid "Action code:"
+msgstr "行为代码:"
+
+msgid "Action name can't contain more than %i characters!"
+msgstr "行为名称不能包含超过 %i 个字符！"
+
+msgid "Actions without code: %i\n"
+msgstr "无代码的行为: %i\n"
+
+msgid "Add action"
+msgstr "添加行为"
+
+msgid "Add folder"
+msgstr "添加文件夹"
+
+msgid "Add location"
+msgstr "添加场景"
+
+msgid "Add locations from another game"
+msgstr "添加来自其他游戏的地点"
+
+msgid "Add macro"
+msgstr "添加宏"
+
+msgid "Add..."
+msgstr "添加..."
+
+msgid "An empty field, input the value!"
+msgstr "字段为空，请输入值！"
+
+msgid "Apply"
+msgstr "应用"
+
+msgid "Auto create first location:"
+msgstr "自动创建第一个场景:"
+
+msgid "Auto save every"
+msgstr "自动保存"
+
+msgid "Average number of actions per location: %.2f\n"
+msgstr "每个场景的平均动作次数：%.2f\n"
+
+msgid "Average location size: %i characters\n"
+msgstr "平均场景大小：%i 个字符\n"
+
+msgid "Base font color:"
+msgstr "基础字体颜色r:"
+
+msgid "Line numbers color:"
+msgstr "行号颜色:"
+
+msgid "C&lear\tCtrl+Shift+D"
+msgstr "清&理\tCtrl+Shift+D"
+
+msgid "C&opy\tCtrl+C"
+msgstr "复&制\tCtrl+C"
+
+msgid "Can't add more than %i actions."
+msgstr "不能添加超过 %i 个动作。"
+
+msgid "Can't load game!"
+msgstr "无法加载游戏！"
+
+msgid "Can't save game!"
+msgstr "无法保存游戏！"
+
+msgid "Cancel"
+msgstr "关闭"
+
+msgid "Clear location \"%s\"?"
+msgstr "清除场景 \"%s\"？"
+
+msgid "Clear location"
+msgstr "清除场景"
+
+msgid "Clear"
+msgstr "清除"
+
+msgid "Clear selected location (Ctrl+Shift+D)"
+msgstr "清除选中场景 (Ctrl+Shift+D)"
+
+msgid "Close all"
+msgstr "关闭所有"
+
+msgid "Close all except selected"
+msgstr "关闭所有选中项以外的"
+
+msgid "Close all tabs &except current"
+msgstr "关闭&当前以外的选项卡"
+
+msgid "Close c&urrent tab\tCtrl+F4"
+msgstr "关闭&当前选项卡\tCtrl+F4"
+
+msgid "Close program"
+msgstr "关闭程序"
+
+msgid "Close selected tab"
+msgstr "关闭选中选项卡"
+
+msgid "Code editor"
+msgstr "代码编辑器"
+
+msgid "Collapse all"
+msgstr "折叠所有"
+
+msgid "Collapse blocks of code when location gets opened"
+msgstr "在打开场景时折叠代码块"
+
+msgid "Colors"
+msgstr "颜色"
+
+msgid "Comments color:"
+msgstr "注释颜色:"
+
+msgid "Comments font:"
+msgstr "注释字体:"
+
+msgid "Continue search"
+msgstr "继续搜索"
+
+msgid "Converter file (*.exe)|*.exe|All files (*.*)|*"
+msgstr "转换文件 (*.exe)|*.exe|All files (*.*)|*"
+
+msgid "Copy"
+msgstr "复制"
+
+msgid "Copy selected location (Ctrl+Shift+C)"
+msgstr "复制选中场景 (Ctrl+Shift+C)"
+
+msgid "Copy selected location to clipboard"
+msgstr "复制选中的场景到剪贴板"
+
+msgid "Create action on selected location"
+msgstr "在选中的场景创建动作"
+
+msgid "Create folder for locations"
+msgstr "为场景创建文件夹"
+
+msgid "Create folder..."
+msgstr "创建文件夹..."
+
+msgid "Create location"
+msgstr "创建场景"
+
+msgid "Create location... (F7)"
+msgstr "创建场景... (F7)"
+
+msgid "Create new game"
+msgstr "创建新游戏"
+
+msgid "Create..."
+msgstr "创建..."
+
+msgid "Cut"
+msgstr "剪切"
+
+msgid "D&elete all\tAlt+F10"
+msgstr "删&除全部\tAlt+F10"
+
+msgid "Default"
+msgstr "默认"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid "Delete all"
+msgstr "删除全部"
+
+msgid "Delete folder"
+msgstr "删除文件夹"
+
+msgid "Delete folder, but keep locations"
+msgstr "删除文件夹, 但保留场景"
+
+msgid "Delete location"
+msgstr "删除场景"
+
+msgid "Delete selected action"
+msgstr "删除选中行为"
+
+msgid "Delete selected location (F8)"
+msgstr "删除选中场景 (F8)"
+
+msgid "Base description:"
+msgstr "基础描述:"
+
+msgid "Base actions:"
+msgstr "基础行为:"
+
+msgid "Edit macro"
+msgstr "编辑宏"
+
+msgid "Edit..."
+msgstr "编辑..."
+
+msgid "Executables (*.exe)|*.exe|All files (*.*)|*"
+msgstr "可执行文件 (*.exe)|*.exe|All files (*.*)|*"
+
+msgid "Execute"
+msgstr "执行"
+
+msgid "Execute on visit:"
+msgstr "访问时执行:"
+
+msgid "Expand all"
+msgstr "展开全部"
+
+msgid "File was changed"
+msgstr "文件已经改变"
+
+msgid "Find / Replace"
+msgstr "查找 / 替换"
+
+msgid "Find / Replace... (Ctrl+F)"
+msgstr "查找/ 替换... (Ctrl+F)"
+
+msgid "Find / replace some text"
+msgstr "查找 / 替换某些文本"
+
+msgid "Folder"
+msgstr "文件夹"
+
+msgid "Folder name can't contain more than %i characters!"
+msgstr "文件夹名称不能超过 %i 个字符！"
+
+msgid "Fonts"
+msgstr "字体"
+
+msgid "Functions color:"
+msgstr "函数颜色:"
+
+msgid "Functions font:"
+msgstr "函数字体:"
+
+msgid "G&o to selected location\tCtrl+G"
+msgstr "跳&转到选中的场景\tCtrl+G"
+
+msgid "Game password"
+msgstr "游戏密码"
+
+msgid "Game statistics"
+msgstr "游戏统计数据"
+
+msgid "General"
+msgstr "常规"
+
+msgid "Go to selected location"
+msgstr "跳转到选中的场景"
+
+msgid "Help"
+msgstr "帮助"
+
+msgid "Help by &keyword\tCtrl+F1"
+msgstr "关键字&帮助\tCtrl+F1"
+
+msgid "Help file (*.chm)|*.chm|All files (*.*)|*"
+msgstr "帮助文件 (*.chm)|*.chm|All files (*.*)|*"
+
+msgid "Hotkey"
+msgstr "热键"
+
+msgid "Hotkeys"
+msgstr "热键"
+
+msgid "Hotkeys list:"
+msgstr "热键列表:"
+
+msgid "Hotkeys:"
+msgstr "热键:"
+
+msgid "Image..."
+msgstr "图像..."
+
+msgid "Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*"
+msgstr "图像 (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*"
+
+msgid "Import"
+msgstr "导入"
+
+msgid "Incorrect data format!"
+msgstr "数据格式不正确！"
+
+msgid "Info"
+msgstr "信息"
+
+msgid "Input name for a new action"
+msgstr "输出新行为的名称"
+
+msgid "Input name for a new folder:"
+msgstr "输入新文件夹的名称:"
+
+msgid "Input name for a new location:"
+msgstr "输入新场景的名称:"
+
+msgid "Input new action name:"
+msgstr "输入新的行为名称:"
+
+msgid "Input new folder name:"
+msgstr "输入新的文件夹名称:"
+
+msgid "Input new location name:"
+msgstr "输入新的场景名称:"
+
+msgid "Input password:"
+msgstr "输入密码:"
+
+msgid "Merge game file"
+msgstr "合并游戏文件"
+
+msgid "Labels color:"
+msgstr "标签颜色:"
+
+msgid "Labels font:"
+msgstr "标签字体:"
+
+msgid ""
+"Location with the same name already exists!\n"
+"Location: \"%s\"\n"
+"Replace existing location?"
+msgstr ""
+"已存在相同的场景名称\n"
+"场景: \"%s\"\n"
+"是否替换已存在场景?"
+
+msgid "Location actions:\n"
+msgstr "场景行为:\n"
+
+msgid "Location code:"
+msgstr "场景代码:"
+
+msgid "Location description:\n"
+msgstr "场景描述:\n"
+
+msgid "Location code:\n"
+msgstr "场景代码:\n"
+
+msgid "Location name can't contain more than %i characters!"
+msgstr "场景名称不能包含超过 %i 个字符!"
+
+msgid "Location: \"%s\""
+msgstr "场景: \"%s\""
+
+msgid "Locations"
+msgstr "场景"
+
+msgid "Locations without \"on visit\" code: %i\n"
+msgstr "场景没有 \"on visit\" 代码: %i\n"
+
+msgid "Locations without base description: %i\n"
+msgstr "场景没有基础描述: %i\n"
+
+msgid "Main background color:"
+msgstr "主要背景颜色:"
+
+msgid "Main font:"
+msgstr "主要字体:"
+
+msgid "Line numbers font:"
+msgstr "行号字体:"
+
+msgid "Match case"
+msgstr "匹配大小写"
+
+msgid "Max location size: %i characters\n"
+msgstr "最大场景大小: %i 个字符\n"
+
+msgid "New search"
+msgstr "新的搜索"
+
+msgid "Numbers color:"
+msgstr "数字颜色:"
+
+msgid "Numbers font:"
+msgstr "数字字体:"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Open action after creation"
+msgstr "创建后打开行为"
+
+msgid "Open game file"
+msgstr "打开游戏文件"
+
+msgid "Open game... (Ctrl+O)"
+msgstr "打开游戏... (Ctrl+O)"
+
+msgid "Open location after creation"
+msgstr "创建后打开场景"
+
+msgid "Open text file"
+msgstr "打开文本文件"
+
+msgid "Operations color:"
+msgstr "Operations 颜色:"
+
+msgid "Operations font:"
+msgstr "Operations 字体:"
+
+msgid "P&aste in...\tCtrl+Shift+N"
+msgstr "粘&贴到...\tCtrl+Shift+N"
+
+msgid "Paste"
+msgstr "粘贴"
+
+msgid "Paste clipboard data to the new location"
+msgstr "将剪贴板数据粘贴到新场景"
+
+msgid "Paste in..."
+msgstr "粘贴到..."
+
+msgid "Paste location (Ctrl+Shift+V)"
+msgstr "粘贴场景 (Ctrl+Shift+V)"
+
+msgid "Paste location from clipboard"
+msgstr "从剪贴板粘贴场景"
+
+msgid "Path to TXT2GAM:"
+msgstr "TXT2GAM路径:"
+
+msgid "Path to help:"
+msgstr "帮助路径:"
+
+msgid "Path to player:"
+msgstr "玩家路径:"
+
+msgid "Paths"
+msgstr "路径"
+
+msgid "Pin tab"
+msgstr "固定选项卡"
+
+msgid "Pin/Unpin &tab"
+msgstr "固定/解除固定 &选项卡"
+
+msgid "Player file (*.exe)|*.exe|All files (*.*)|*"
+msgstr "玩家文件 (*.exe)|*.exe|All files (*.*)|*"
+
+msgid "QSP games (*.qsp)|*.qsp"
+msgstr "QSP 游戏 (*.qsp)|*.qsp"
+
+msgid "QSP games (*.qsp;*.gam)|*.qsp;*.gam"
+msgstr "QSP 游戏 (*.qsp;*.gam)|*.qsp;*.gam"
+
+msgid "Redo"
+msgstr "恢复"
+
+msgid "Redo (Ctrl+Y)"
+msgstr "恢复 (Ctrl+Y)"
+
+msgid ""
+"Relative height of description and location\n"
+"code fields to the tab height (%):"
+msgstr ""
+"描述、位置和代码字段\n"
+"相对于标签高度的相对高度 (%):"
+
+msgid "Relative width of actions list to the tab width (%):"
+msgstr "动作列表相对于标签宽度的相对宽度 (%):"
+
+msgid ""
+"Relative width of location description field\n"
+"to the tab width (%):"
+msgstr ""
+"位置描述字段\n"
+"相对于标签宽度的相对宽度 (%):"
+
+msgid "Remember game file on exit"
+msgstr "退出时保存游戏文件"
+
+msgid "Remove \"%s\" folder?"
+msgstr "移除 \"%s\" 文件夹?"
+
+msgid "Remove location \"%s\"?"
+msgstr "移除场景 \"%s\"?"
+
+msgid "Remove all actions"
+msgstr "移除所有行为"
+
+msgid "Remove all actions at location \"%s\"?"
+msgstr "移除场景 \"%s\" 上的所有动作"
+
+msgid "Remove folder"
+msgstr "移除文件夹"
+
+msgid "Remove location"
+msgstr "移除场景"
+
+msgid "Rename action"
+msgstr "移除行为"
+
+msgid "Rename folder"
+msgstr "移除文件夹"
+
+msgid "Rename folder..."
+msgstr "移除文件夹..."
+
+msgid "Rename location"
+msgstr "移除场景"
+
+msgid "Rename selected action"
+msgstr "移除选中的行为"
+
+msgid "Rename selected folder"
+msgstr "移除选中的文件夹"
+
+msgid "Rename selected location... (F6)"
+msgstr "移除选中的场景... (F6)"
+
+msgid "Rename..."
+msgstr "重命名..."
+
+msgid "Replace"
+msgstr "替换"
+
+msgid "Replace location \"%s\"?"
+msgstr "替换场景 \"%s\"?"
+
+msgid "Replace all"
+msgstr "替换全部"
+
+msgid "Replace location"
+msgstr "替换场景"
+
+msgid "Replace selected location with clipboard data"
+msgstr "用剪贴板数据替换选中的场景"
+
+msgid "Reset"
+msgstr "重置"
+
+msgid "Run current game"
+msgstr "运行当前游戏"
+
+msgid "&Run game\tF5"
+msgstr "&运行游戏\tF5"
+
+msgid "Run game (F5)"
+msgstr "运行游戏 (F5)"
+
+msgid "S&elect all\tCtrl+A"
+msgstr "选&中全部\tCtrl+A"
+
+msgid "Save &as...\tCtrl+W"
+msgstr "另&存为...\tCtrl+W"
+
+msgid "Save game"
+msgstr "保存游戏"
+
+msgid "Save game (Ctrl+S)"
+msgstr "保存游戏 (Ctrl+S)"
+
+msgid "Save game file"
+msgstr "保存游戏文件"
+
+msgid "Do you want to save the game file?"
+msgstr "你想要保存游戏文件吗?"
+
+msgid "Save game into another file..."
+msgstr "将游戏保存到另一个文件..."
+
+msgid "Save game into another file... (Ctrl+W)"
+msgstr "将游戏保存到另一个文件... (Ctrl+W)"
+
+msgid "Save text file"
+msgstr "保存文本文件"
+
+msgid "Search only word"
+msgstr "仅搜索单词"
+
+msgid "Regular expression"
+msgstr "正则表达式"
+
+msgid "Select all"
+msgstr "选中全部"
+
+msgid "Select color..."
+msgstr "选中颜色..."
+
+msgid "Select converter file"
+msgstr "选中转换器文件"
+
+msgid "Select font..."
+msgstr "选中字体..."
+
+msgid "Select help file"
+msgstr "选中帮助文件"
+
+msgid "Select image file"
+msgstr "选中图像文件"
+
+msgid "Select path..."
+msgstr "选中路径..."
+
+msgid "Select player file"
+msgstr "选中玩家文件"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid "Settings... (Ctrl+P)"
+msgstr "设置... (Ctrl+P)"
+
+msgid "Show base actions on location tab"
+msgstr "显示场景选项卡中的基础行为"
+
+msgid "Show base description on location tab"
+msgstr "显示场景选项卡中的基础描述"
+
+msgid "Show game statistics (Ctrl+I)"
+msgstr "显示游戏统计数据 (Ctrl+I)"
+
+msgid "Show line numbers"
+msgstr "显示行号"
+
+msgid "Show hidden characters"
+msgstr "显示隐藏字符"
+
+msgid "Show location icons"
+msgstr "显示场景图标"
+
+msgid "Show short location descriptions"
+msgstr "显示简短场景描述"
+
+msgid "Show short statistics"
+msgstr "显示简短统计信息"
+
+msgid "Show/Hide location &actions\tCtrl+Alt+A"
+msgstr "显示/隐藏 场景&行为\tCtrl+Alt+A"
+
+msgid "Show/Hide location &description\tCtrl+Alt+D"
+msgstr "显示/隐藏 场景&描述\tCtrl+Alt+D"
+
+msgid "Size of TAB:"
+msgstr "选项卡大小:"
+
+msgid "Sizes"
+msgstr "大小"
+
+msgid "Skip"
+msgstr "跳过"
+
+msgid "Skip location"
+msgstr "跳过场景"
+
+msgid "So&rt ascending\tCtrl+Shift+O"
+msgstr "升序&排序\tCtrl+Shift+O"
+
+msgid "Sor&t descending\tCtrl+Shift+P"
+msgstr "降序&排序\tCtrl+Shift+P"
+
+msgid "Sort ascending"
+msgstr "升序排序"
+
+msgid "Sort descending"
+msgstr "降序排序"
+
+msgid "Start"
+msgstr "开始"
+
+msgid "Statements color:"
+msgstr "声明颜色:"
+
+msgid "Statements font:"
+msgstr "声明字体:"
+
+msgid "Strings color:"
+msgstr "字符串颜色:"
+
+msgid "Strings font:"
+msgstr "字符串字体:"
+
+msgid "Such name already exists! Input another name."
+msgstr "该名称已存在！请输入其他名称"
+
+msgid "System variables color:"
+msgstr "系统变量颜色r:"
+
+msgid "System variables font:"
+msgstr "系统变量字体:"
+
+msgid "Background color of location tabs:"
+msgstr "场景选项卡背景颜色:"
+
+msgid "Background color of line numbers:"
+msgstr "行号背景颜色:"
+
+msgid "Text file in TXT2GAM format..."
+msgstr "文本文件在TXT2GAM中格式化..."
+
+msgid "Text file..."
+msgstr "文本文件..."
+
+msgid "Text files (*.txt)|*.txt"
+msgstr "文件文件 (*.txt)|*.txt"
+
+msgid "Text:"
+msgstr "文本:"
+
+msgid "The new file will replace the current game file. Continue?"
+msgstr "新文件将替换当前游戏文件。是否继续？"
+
+msgid "The specified text was not found"
+msgstr "指定文本未找到"
+
+msgid "The specified text was not found anymore."
+msgstr "指定文本不存在"
+
+msgid "Invalid regular expression!"
+msgstr "正则表达式无效!"
+
+msgid "This game contains %i location(s)\n"
+msgstr "游戏包含 %i 个场景\n"
+
+msgid "This key combination is used already by the system! Select another combination."
+msgstr "该快捷键组合已被系统占用！请选择其他组合"
+
+msgid "This key combination is used already! Select another combination."
+msgstr "该快捷键组合已被占用！请选择其他组合"
+
+msgid "Total game size: %i characters"
+msgstr "游戏总大小：%i 个字符"
+
+msgid "UI language"
+msgstr "界面语言"
+
+msgid "Undo"
+msgstr "撤销”"
+
+msgid "Undo (Ctrl+Z)"
+msgstr "撤销” (Ctrl+Z)"
+
+msgid "Unknown error!"
+msgstr "未知错误!"
+
+msgid "Unpin"
+msgstr "解除固定"
+
+msgid "Wrap lines by words"
+msgstr "按单词换行"
+
+msgid "Wrong password!"
+msgstr "错误的密码!"
+
+msgid "for all"
+msgstr "全局设置"
+
+msgid "minutes"
+msgstr "分钟"
