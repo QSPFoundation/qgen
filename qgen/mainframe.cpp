@@ -1,4 +1,4 @@
-// Copyright (C) 2005-2012
+// Copyright (C) 2005-2025
 // Vladimir Bauer (baxzzzz AT gmail DOT com)
 // Nex (nex AT otaku DOT ru)
 // Shchannikov Dmitry (rrock DOT ru AT gmail DOT com)
@@ -437,7 +437,7 @@ void MainFrame::OnAbout(wxCommandEvent &event)
     wxAboutDialogInfo info;
     info.SetIcon(wxIcon(about_logo_xpm));
     info.SetName(QGEN_TITLE);
-    info.SetCopyright(wxT("QSP Foundation, 2001-2024"));
+    info.SetCopyright(wxT("QSP Foundation, 2001-2025"));
     info.SetDescription(wxString::Format(_("Version: %s\nCompiled: %s\n\nUsed: %s"),
         QGEN_VER, wxT(__DATE__) wxT(", ") wxT(__TIME__), wxGetLibraryVersionInfo().ToString()));
     info.SetWebSite(wxT("https://qsp.org"));
