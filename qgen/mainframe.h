@@ -206,9 +206,9 @@
         void OnLocDescVisible(wxCommandEvent &event);
         void OnLocActsVisible(wxCommandEvent &event);
         void OnPaneClose(wxAuiManagerEvent& event);
-        void OnUpdMenuItems(wxMenuEvent& event);
+        void OnUpdateMenuItems(wxMenuEvent& event);
         void OnTimerAutoSave(wxTimerEvent &event);
-        void OnTimerUpdToolBar(wxTimerEvent &event);
+        void OnTimerUpdateToolBar(wxTimerEvent &event);
         void OnKeyDown(wxKeyEvent& event);
 
         void CreateControls();
@@ -219,7 +219,7 @@
         void CreateNotebook();
         void LoadLayout();
         void SaveLayout();
-        bool QuestChange();
+        bool CloseCurrentGame();
         bool SelectTxt2Gam();
         void TogglePaneVisibility(const wxString &pane_name);
     public:

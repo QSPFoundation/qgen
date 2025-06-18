@@ -78,9 +78,9 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_GAME_EXPORTTXT2GAM, MainFrame::OnExportTxt2Gam)
     EVT_MENU(ID_GAME_IMPORTTXT2GAM, MainFrame::OnImportTxt2Gam)
     EVT_MENU(ID_ABOUT, MainFrame::OnAbout)
-    EVT_MENU_OPEN(MainFrame::OnUpdMenuItems)
+    EVT_MENU_OPEN(MainFrame::OnUpdateMenuItems)
     EVT_TIMER(ID_TIMER_AUTO_SAVE, MainFrame::OnTimerAutoSave)
-    EVT_TIMER(ID_TIMER_UPD_TOOLBAR, MainFrame::OnTimerUpdToolBar)
+    EVT_TIMER(ID_TIMER_UPD_TOOLBAR, MainFrame::OnTimerUpdateToolBar)
     EVT_KEY_DOWN(MainFrame::OnKeyDown)
 END_EVENT_TABLE()
 
@@ -416,7 +416,7 @@ void MainFrame::OnExit(wxCommandEvent &event)
 
 void MainFrame::OnNewGame(wxCommandEvent &event)
 {
-    if (QuestChange())
+    if (CloseCurrentGame())
     {
         _controls->NewGame();
         UpdateTitle();
@@ -425,7 +425,7 @@ void MainFrame::OnNewGame(wxCommandEvent &event)
 
 void MainFrame::OnQuit(wxCloseEvent &event)
 {
-    if (QuestChange())
+    if (CloseCurrentGame())
     {
         SaveLayout();
         event.Skip();
@@ -450,7 +450,7 @@ void MainFrame::OnAbout(wxCommandEvent &event)
 
 void MainFrame::OnLoadFile(wxCommandEvent &event)
 {
-    if (QuestChange())
+    if (CloseCurrentGame())
     {
         wxFileDialog dialog(this,
             _("Open game file"), wxEmptyString, wxEmptyString,
@@ -855,7 +855,7 @@ void MainFrame::OnOptionsDialog( wxCommandEvent &event )
     dialog.ShowModal();
 }
 
-void MainFrame::OnUpdMenuItems(wxMenuEvent& event)
+void MainFrame::OnUpdateMenuItems(wxMenuEvent& event)
 {
     _controls->UpdateMenuItems(event.GetMenu());
 }
@@ -867,7 +867,7 @@ void MainFrame::OnTimerAutoSave(wxTimerEvent &event)
         _controls->SaveGameWithCheck();
 }
 
-void MainFrame::OnTimerUpdToolBar(wxTimerEvent &event)
+void MainFrame::OnTimerUpdateToolBar(wxTimerEvent &event)
 {
     bool isLocSelected = _controls->GetSelectedLocationIndex() >= 0;
     bool isSelLocNotEmpty = !_controls->IsSelectedLocationEmpty();
@@ -908,7 +908,7 @@ bool MainFrame::SelectTxt2Gam()
     return true;
 }
 
-bool MainFrame::QuestChange()
+bool MainFrame::CloseCurrentGame()
 {
     wxCommandEvent dummy;
     if (!_controls->IsGameSaved())
