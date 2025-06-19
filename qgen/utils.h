@@ -34,8 +34,11 @@
     #define QGEN_APPNAME wxT("QGen")
     #define QGEN_FILEPREFIX wxT("qgen")
     #define QGEN_CONFIG wxT("qgen.cfg")
-    #define QGEN_KEYWORDS wxT("keywords.xml")
     #define QGEN_TRANSLATIONS wxT("langs")
+    #define QGEN_DEFLOCALEFILE wxT("qgen")
+    #define QGEN_LOCALEFILE wxT("qgen_%s")
+    #define QGEN_DEFKEYWORDSFILE wxT("keywords.xml")
+    #define QGEN_KEYWORDSFILE wxT("keywords_%s.xml")
 
     class Utils
     {

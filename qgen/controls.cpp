@@ -37,8 +37,6 @@ Controls::Controls()
 #endif
 
     _keywordsStore = new KeywordsStore();
-    wxString keywordsFile(Utils::GetResourcePath(wxEmptyString, QGEN_KEYWORDS));
-    _keywordsStore->Load(keywordsFile);
 
     InitData();
 }
@@ -1753,9 +1751,22 @@ void Controls::UpdateLocale(int lang)
     _locale = new wxLocale;
     _locale->Init(lang);
 
-    wxString langsPath(Utils::GetResourcePath(QGEN_TRANSLATIONS));
-    _locale->AddCatalogLookupPathPrefix(langsPath);
+    wxString langCode(_locale->GetCanonicalName().BeforeFirst(wxT('_')));
 
-    if (!_locale->AddCatalog(QGEN_FILEPREFIX))
-        _locale->AddCatalog(wxString(QGEN_FILEPREFIX) + wxT('_') + _locale->GetCanonicalName().BeforeFirst(wxT('_')));
+    // Load general UI translations
+    _locale->AddCatalogLookupPathPrefix(Utils::GetResourcePath(QGEN_TRANSLATIONS));
+
+    wxString specificLangFile;
+    specificLangFile.Printf(QGEN_LOCALEFILE, langCode.wx_str());
+    if (!_locale->AddCatalog(QGEN_DEFLOCALEFILE))
+        _locale->AddCatalog(specificLangFile);
+
+    // Load keywords
+    wxString specificKeywordsFile;
+    specificKeywordsFile.Printf(QGEN_KEYWORDSFILE, langCode.wx_str());
+    if (!_keywordsStore->Load(Utils::GetResourcePath(wxEmptyString, QGEN_DEFKEYWORDSFILE)))
+    {
+        if (!_keywordsStore->Load(Utils::GetResourcePath(QGEN_TRANSLATIONS, specificKeywordsFile)))
+            _keywordsStore->Load(Utils::GetResourcePath(QGEN_TRANSLATIONS, QGEN_DEFKEYWORDSFILE));
+    }
 }

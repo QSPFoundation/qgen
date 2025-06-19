@@ -738,6 +738,10 @@ void OptionsDialog::OnCloseDialog(wxCloseEvent &event)
 
 void OptionsDialog::ApplySettings()
 {
+    int lang = _langTable[_cmbLang->GetStringSelection()];
+    _controls->UpdateLocale(lang);
+    _settings->SetIdLang(lang);
+
     _settings->SetAutoSave(_chkAutoSave->GetValue());
     _settings->SetAutoSaveInterval(_spnAutoSaveMin->GetValue());
     _settings->SetShowShortLocsDescs(_chkDescOfLoc->GetValue());
@@ -775,17 +779,15 @@ void OptionsDialog::ApplySettings()
     for (size_t i = 0; i < count; ++i)
         hotKeysStore->AddHotkeyData(_hotkeysData[i]);
 #endif
-    int lang = _langTable[_cmbLang->GetStringSelection()];
-     _controls->UpdateLocale(lang);
-    _settings->SetIdLang(lang);
+
     if (_chkFirstLoc->GetValue())
         _settings->SetFirstLocName(_txtFirstLocName->GetValue());
     else
-    {
         _settings->SetFirstLocName(wxEmptyString);
-        _settings->PostInitLocaleSettings();
-        _txtFirstLocName->SetValue(_settings->GetFirstLocName());
-    }
+
+    _settings->PostInitLocaleSettings();
+    _txtFirstLocName->SetValue(_settings->GetFirstLocName());
+
     _settings->NotifyAll();
     _btnApply->Enable(false);
 }

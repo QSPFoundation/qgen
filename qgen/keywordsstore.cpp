@@ -32,9 +32,9 @@ int CmpWordsAsc(Keyword **first, Keyword **second)
 bool KeywordsStore::Load(const wxString &filename)
 {
     wxXmlDocument doc;
-    wxXmlNode *node;
+    _keywords.Clear();
     if (!(wxFileExists(filename) && doc.Load(filename))) return false;
-    node = doc.GetRoot();
+    wxXmlNode *node = doc.GetRoot();
     if (node == NULL || node->GetName() != wxT("QGen-keywords")) return false;
     node = node->GetChildren();
     if (node == NULL) return false;
