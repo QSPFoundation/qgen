@@ -236,7 +236,7 @@ elseif (UNIX)
 endif()
 
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/misc/common/langs" DESTINATION "${DATADIR}" COMPONENT Main)
-install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/misc/common/keywords.xml" DESTINATION "${DATADIR}" COMPONENT Main)
+#install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/misc/common/keywords.xml" DESTINATION "${DATADIR}" COMPONENT Main)
 
 # Packaging
 

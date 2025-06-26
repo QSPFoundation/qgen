@@ -112,20 +112,17 @@ void SyntaxTextBox::Update(bool isFromObservable)
     Settings *settings = _controls->GetSettings();
     wxColour backColor = settings->GetTextBackColour();
     wxColour altBackColor = settings->GetAltTextBackColour();
-    wxFont font;
-    int tabSize;
+    wxColour baseFontColor = settings->GetColour(SYNTAX_BASE);
 
     SetViewEOL(settings->GetShowHiddenChars());
     SetViewWhiteSpace(settings->GetShowHiddenChars());
-    SetCaretForeground((backColor.Blue() << 16 | backColor.Green() << 8 | backColor.Red()) ^ 0xFFFFFF);
+    SetCaretForeground(baseFontColor);
     SetSelBackground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT));
     SetSelForeground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHTTEXT));
-    StyleSetForeground(wxSTC_STYLE_DEFAULT, settings->GetColour(SYNTAX_BASE));
+    StyleSetForeground(wxSTC_STYLE_DEFAULT, baseFontColor);
     StyleSetBackground(wxSTC_STYLE_DEFAULT, backColor);
-    font = settings->GetFont(SYNTAX_BASE);
-    StyleSetFont(wxSTC_STYLE_DEFAULT, font);
-    tabSize = settings->GetTabSize();
-    SetTabWidth(tabSize);
+    StyleSetFont(wxSTC_STYLE_DEFAULT, settings->GetFont(SYNTAX_BASE));
+    SetTabWidth(settings->GetTabSize());
     StyleClearAll();
 
     if (_style & SYNTAX_STYLE_CODE)
@@ -133,40 +130,32 @@ void SyntaxTextBox::Update(bool isFromObservable)
         SetWrapMode(settings->GetWrapLines() ? wxSTC_WRAP_WORD : wxSTC_WRAP_NONE);
 
         // Keywords
-        font = settings->GetFont(SYNTAX_STATEMENTS);
-        StyleSetFont(wxSTC_B_KEYWORD, font);
+        StyleSetFont(wxSTC_B_KEYWORD, settings->GetFont(SYNTAX_STATEMENTS));
         StyleSetForeground(wxSTC_B_KEYWORD, settings->GetColour(SYNTAX_STATEMENTS));
-        font = settings->GetFont(SYNTAX_FUNCTIONS);
-        StyleSetFont(wxSTC_B_KEYWORD2, font);
+        StyleSetFont(wxSTC_B_KEYWORD2, settings->GetFont(SYNTAX_FUNCTIONS));
         StyleSetForeground(wxSTC_B_KEYWORD2, settings->GetColour(SYNTAX_FUNCTIONS));
-        font = settings->GetFont(SYNTAX_SYS_VARIABLES);
-        StyleSetFont(wxSTC_B_KEYWORD3, font);
+        StyleSetFont(wxSTC_B_KEYWORD3, settings->GetFont(SYNTAX_SYS_VARIABLES));
         StyleSetForeground(wxSTC_B_KEYWORD3, settings->GetColour(SYNTAX_SYS_VARIABLES));
         // Strings
-        font = settings->GetFont(SYNTAX_STRINGS);
-        StyleSetFont(wxSTC_B_STRING, font);
+        StyleSetFont(wxSTC_B_STRING, settings->GetFont(SYNTAX_STRINGS));
         StyleSetForeground(wxSTC_B_STRING, settings->GetColour(SYNTAX_STRINGS));
-        StyleSetFont(wxSTC_B_STRINGEOL, font);
+        StyleSetFont(wxSTC_B_STRINGEOL, settings->GetFont(SYNTAX_STRINGS));
         StyleSetForeground(wxSTC_B_STRINGEOL, settings->GetColour(SYNTAX_STRINGS));
         // Numbers
-        font = settings->GetFont(SYNTAX_NUMBERS);
-        StyleSetFont(wxSTC_B_NUMBER, font);
+        StyleSetFont(wxSTC_B_NUMBER, settings->GetFont(SYNTAX_NUMBERS));
         StyleSetForeground(wxSTC_B_NUMBER, settings->GetColour(SYNTAX_NUMBERS));
         // Operations
-        font = settings->GetFont(SYNTAX_OPERATIONS);
-        StyleSetFont(wxSTC_B_OPERATOR, font);
+        StyleSetFont(wxSTC_B_OPERATOR, settings->GetFont(SYNTAX_OPERATIONS));
         StyleSetForeground(wxSTC_B_OPERATOR, settings->GetColour(SYNTAX_OPERATIONS));
         // Labels
-        font = settings->GetFont(SYNTAX_LABELS);
-        StyleSetFont(wxSTC_B_LABEL, font);
+        StyleSetFont(wxSTC_B_LABEL, settings->GetFont(SYNTAX_LABELS));
         StyleSetForeground(wxSTC_B_LABEL, settings->GetColour(SYNTAX_LABELS));
         // Comments
-        font = settings->GetFont(SYNTAX_COMMENTS);
-        StyleSetFont(wxSTC_B_COMMENT, font);
+        StyleSetFont(wxSTC_B_COMMENT, settings->GetFont(SYNTAX_COMMENTS));
         StyleSetForeground(wxSTC_B_COMMENT, settings->GetColour(SYNTAX_COMMENTS));
-        StyleSetFont(wxSTC_B_PREPROCESSOR, font);
+        StyleSetFont(wxSTC_B_PREPROCESSOR, settings->GetFont(SYNTAX_COMMENTS));
         StyleSetForeground(wxSTC_B_PREPROCESSOR, settings->GetColour(SYNTAX_COMMENTS));
-        StyleSetFont(wxSTC_B_DATE, font);
+        StyleSetFont(wxSTC_B_DATE, settings->GetFont(SYNTAX_COMMENTS));
         StyleSetForeground(wxSTC_B_DATE, settings->GetColour(SYNTAX_COMMENTS));
 
         if (!(_style & SYNTAX_STYLE_NOMARGINS))
@@ -176,8 +165,7 @@ void SyntaxTextBox::Update(bool isFromObservable)
             SetFoldMarginHiColour(true, altBackColor);
 
             // Line numbers
-            font = settings->GetFont(SYNTAX_LINE_NUMBERS);
-            StyleSetFont(wxSTC_STYLE_LINENUMBER, font);
+            StyleSetFont(wxSTC_STYLE_LINENUMBER, settings->GetFont(SYNTAX_LINE_NUMBERS));
             StyleSetForeground(wxSTC_STYLE_LINENUMBER, settings->GetColour(SYNTAX_LINE_NUMBERS));
             StyleSetBackground(wxSTC_STYLE_LINENUMBER, altBackColor);
             SetMarginWidth(SYNTAX_NUM_MARGIN, settings->GetShowLinesNums() ? 40 : 0);
@@ -463,7 +451,7 @@ wxString SyntaxTextBox::GetWordFromPos(long pos)
 
 void SyntaxTextBox::Tip(long pos)
 {
-    wxString str = GetWordFromPos(pos).Lower();
+    wxString str = GetWordFromPos(pos);
     if (!str.IsEmpty())
         _controls->SetStatusText(_keywordsStore->FindTip(str));
 }

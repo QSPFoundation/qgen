@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<QGen-keywords>
+  <Statements>
+    <Keyword name="loop|while|step" desc="LOOP [initialization code] WHILE [#condition] STEP [step code]: [loop body code] - loop"/>
+    <Keyword name="pl" desc="PL [value] / *PL [value] - output text to the secondary / main description window, then move to a new line"/>
+    <Keyword name="clear" desc="CLEAR / *CLEAR - clear the secondary / main description window"/>
+    <Keyword name="clr" desc="CLR / *CLR - clear the secondary / main description window"/>
+    <Keyword name="p" desc="P [value] / *P [value] - output text to the secondary / main description window"/>
+    <Keyword name="nl" desc="NL [value] / *NL [value] - move to a new line, then output text to the secondary / main description window"/>
+    <Keyword name="msg" desc="MSG [$message] - display a message in the information window"/>
+    <Keyword name="wait" desc="WAIT [#delay] - pause program execution for the specified number of milliseconds"/>
+    <Keyword name="act" desc="ACT [$name],[$image file]:[action code] - add an action"/>
+    <Keyword name="delact" desc="DELACT [$name] / DEL ACT [$name] - delete an action"/>
+    <Keyword name="cla" desc="CLA - clear the action list"/>
+    <Keyword name="cls" desc="CLS - clears the screen leaving only the inventory"/>
+    <Keyword name="cmdclear" desc="CMDCLEAR - clear the input line"/>
+    <Keyword name="cmdclr" desc="CMDCLR - clear the input line"/>
+    <Keyword name="menu" desc="MENU [$array name] - show a menu from the array with the given name"/>
+    <Keyword name="settimer" desc="SETTIMER [#interval] - set the timer interval in milliseconds for the counter location"/>
+    <Keyword name="dynamic" desc="DYNAMIC [$code string],[parameter 1],[parameter 2], ... - dynamically execute code"/>
+    <Keyword name="local" desc="LOCAL [variable names]=[variable values] - declare local variables and set their values"/>
+    <Keyword name="set" desc="SET [variable names]=[variable values] - set variable values"/>
+    <Keyword name="let" desc="LET [variable names]=[variable values] - set variable values"/>
+    <Keyword name="setvar" desc="SETVAR [$variable name],[value],[index] - assign a value to the specified array element at the given index"/>
+    <Keyword name="killvar" desc="KILLVAR [$variable name],[index] - delete all variables / the specified variable / the value at the specified index"/>
+    <Keyword name="copyarr" desc="COPYARR [$destination array],[$source array],[#start index],[#count] - copy the contents of one array into another array"/>
+    <Keyword name="sortarr" desc="SORTARR [$array name],[#reverse order] - sort an array"/>
+    <Keyword name="scanstr" desc="SCANSTR [$array name],[$string],[$pattern],[#group number] - find all substrings matching the regular expression"/>
+    <Keyword name="unpackarr" desc="UNPACKARR [$array name],[%tuple],[#start],[#length] - create an array from the elements of the specified slice of a tuple"/>
+    <Keyword name="addobj" desc="ADDOBJ [$name],[$image file],[#position] / ADD OBJ [$name],[$image file],[#position] - add an inventory object"/>
+    <Keyword name="delobj" desc="DELOBJ [$name] / DEL OBJ [$name] - delete an inventory object"/>
+    <Keyword name="killobj" desc="KILLOBJ [#position] - clear the inventory / remove the inventory object at the specified position"/>
+    <Keyword name="unselect" desc="UNSELECT - cancel the selection of an inventory object"/>
+    <Keyword name="unsel" desc="UNSEL - cancel the selection of an inventory object"/>
+    <Keyword name="killall" desc="KILLALL - delete all variables and clear the inventory"/>
+    <Keyword name="opengame" desc="OPENGAME [$file] - load the game state"/>
+    <Keyword name="savegame" desc="SAVEGAME [$file] - save the game state"/>
+    <Keyword name="openqst" desc="OPENQST [$file] - open and run a game file"/>
+    <Keyword name="inclib" desc="INCLIB [$file] - add locations from the specified file"/>
+    <Keyword name="freelib" desc="FREELIB - remove all locations added via INCLIB"/>
+    <Keyword name="refint" desc="REFINT - refresh the user interface"/>
+    <Keyword name="showacts" desc="SHOWACTS [#show] - show / hide the action list"/>
+    <Keyword name="showinput" desc="SHOWINPUT [#show] - show / hide the input line"/>
+    <Keyword name="showobjs" desc="SHOWOBJS [#show] - show / hide the inventory"/>
+    <Keyword name="showstat" desc="SHOWSTAT [#show] - show / hide the secondary description window"/>
+    <Keyword name="if|else" desc="IF [#condition]:[code for true condition] ELSE [code to execute otherwise] - conditional statement"/>
+    <Keyword name="elseif" desc="ELSEIF [#condition]:[code for true condition] - alternative condition"/>
+    <Keyword name="end" desc="END - end the multi-line form of IF / ACT / LOOP"/>
+    <Keyword name="exit" desc="EXIT - terminate execution of the current code"/>
+    <Keyword name="jump" desc="JUMP [$label] - jump to the specified label"/>
+    <Keyword name="gosub" desc="GOSUB [$location],[parameter 1],[parameter 2], ... - process the specified location"/>
+    <Keyword name="gs" desc="GS [$location],[parameter 1],[parameter 2], ... - process the specified location"/>
+    <Keyword name="goto" desc="GOTO [$location],[parameter 1],[parameter 2], ... - go to the specified location"/>
+    <Keyword name="gt" desc="GT [$location],[parameter 1],[parameter 2], ... - go to the specified location"/>
+    <Keyword name="xgoto" desc="XGOTO [$location],[parameter 1],[parameter 2], ... - go to the specified location without clearing the main description window"/>
+    <Keyword name="xgt" desc="XGT [$location],[parameter 1],[parameter 2], ... - go to the specified location without clearing the main description window"/>
+    <Keyword name="play" desc="PLAY [$file],[#volume] - play a sound file at the specified volume"/>
+    <Keyword name="close" desc="CLOSE [$file] / CLOSE ALL - stop playing the specified sound file / all sound files"/>
+    <Keyword name="view" desc="VIEW [$file] - show an image / hide the current image"/>
+  </Statements>
+  <Expressions>
+    <Keyword name="and" desc="[#condition 1] AND [#condition 2] - operation &quot;AND&quot;. The resulting expression is true if both conditions are true"/>
+    <Keyword name="or" desc="[#condition 1] OR [#condition 2] - logical &quot;OR&quot;. The resulting expression is true if at least one condition is true"/>
+    <Keyword name="obj" desc="OBJ [$object] - check if the object is in the inventory"/>
+    <Keyword name="loc" desc="LOC [$location] - check if the location exists"/>
+    <Keyword name="no" desc="NO [#condition] - negation. The resulting expression is true if the specified condition is not true"/>
+    <Keyword name="mod" desc="[#expression 1] MOD [#expression 2] - calculate the remainder of division"/>
+    <Keyword name="desc|$desc" desc="DESC([$location]) - returns the base description text of the location"/>
+    <Keyword name="iif|$iif|%iif" desc="IIF([#condition],[true expression],[false expression]) - returns one of the expressions based on the condition"/>
+    <Keyword name="input|$input" desc="INPUT([$message]) - shows a text input window and returns the entered value"/>
+    <Keyword name="isplay" desc="ISPLAY([$file]) - checks whether the specified sound file is currently playing"/>
+    <Keyword name="max|$max|%max" desc="MAX([expression 1],[expression 2], ...) - returns the maximum value among the arguments"/>
+    <Keyword name="min|$min|%min" desc="MIN([expression 1],[expression 2], ...) - returns the minimum value among the arguments"/>
+    <Keyword name="rand" desc="RAND([#expression 1],[#expression 2],[#normal distribution mode]) - returns a random number between the specified values"/>
+    <Keyword name="rgb" desc="RGB([#red],[#green],[#blue]) - returns a color code based on the 3 components"/>
+    <Keyword name="getobj|$getobj" desc="GETOBJ([#position]) - returns the name of the inventory object located at the specified position"/>
+    <Keyword name="dyneval|$dyneval|%dyneval" desc="DYNEVAL([$code string],[parameter 1],[parameter 2], ...) - returns the value of the dynamically evaluated expression"/>
+    <Keyword name="func|$func|%func" desc="FUNC([$location],[parameter 1],[parameter 2], ...) - process the specified location as a function"/>
+    <Keyword name="arrsize" desc="ARRSIZE([$array name]) - returns the number of elements in the specified array"/>
+    <Keyword name="arrtype|$arrtype" desc="ARRTYPE([$array name],[index]) - returns the type prefix (''/'#'/'$'/'%') of the value of the element in the specified array"/>
+    <Keyword name="arritem|$arritem|%arritem" desc="ARRITEM([$array name],[index]) - returns the value of the element in the specified array"/>
+    <Keyword name="arrpack|%arrpack" desc="ARRPACK([$array name],[#start],[#length]) - returns a tuple obtained from the specified part of the array"/>
+    <Keyword name="arrpos" desc="ARRPOS([$array name],[value],[#start index]) - search the array for an element with the specified value"/>
+    <Keyword name="instr" desc="INSTR([$text],[$search text],[#start position]) - search for a substring"/>
+    <Keyword name="isnum" desc="ISNUM(expression) - checks whether the specified expression is a number"/>
+    <Keyword name="trim|$trim" desc="TRIM([$text]) - removes adjacent spaces and tab characters from the text"/>
+    <Keyword name="ucase|$ucase" desc="UCASE([$text]) - converts lowercase letters of the text to uppercase"/>
+    <Keyword name="lcase|$lcase" desc="LCASE([$text]) - converts uppercase letters of the text to lowercase"/>
+    <Keyword name="len" desc="LEN([$text]) / LEN([%tuple]) - returns the length of the specified string or the number of elements in the tuple"/>
+    <Keyword name="mid|$mid" desc="MID([$text],[#start],[#length]) - cuts from the text a string of the specified length starting from the given position"/>
+    <Keyword name="replace|$replace" desc="REPLACE([$text],[$search text],[$replacement text],[#replace count]) - replace the specified substring in the text"/>
+    <Keyword name="str|$str" desc="STR(expression) - converts an expression to a string"/>
+    <Keyword name="val" desc="VAL(expression) - converts an expression to a number"/>
+    <Keyword name="arrcomp" desc="ARRCOMP([$array name],[$pattern],[#start index]) - search the array for an element matching the regular expression"/>
+    <Keyword name="strcomp" desc="STRCOMP([$text],[$pattern]) - checks whether the specified text matches the regular expression"/>
+    <Keyword name="strfind|$strfind" desc="STRFIND([$text],[$pattern],[#group number]) - returns the substring corresponding to group [#group number] of the regular expression"/>
+    <Keyword name="strpos" desc="STRPOS([$text],[$pattern],[#group number]) - returns the position of the substring corresponding to group [#group number] of the regular expression"/>
+    <Keyword name="countobj" desc="COUNTOBJ - returns the current number of objects in the inventory"/>
+    <Keyword name="msecscount" desc="MSECSCOUNT - returns the number of milliseconds elapsed since the start of the game"/>
+    <Keyword name="rnd" desc="RND - returns a random value from 1 to 1000 inclusive"/>
+    <Keyword name="curloc|$curloc" desc="CURLOC - returns the name of the current location"/>
+    <Keyword name="qspver|$qspver" desc="QSPVER - returns the interpreter version"/>
+    <Keyword name="selobj|$selobj" desc="SELOBJ - returns the name of the selected inventory object"/>
+    <Keyword name="selact|$selact" desc="SELACT - returns the name of the selected action"/>
+    <Keyword name="curacts|$curacts" desc="CURACTS - returns all current actions as code"/>
+    <Keyword name="curobjs|$curobjs" desc="CUROBJS - returns all current inventory objects as code"/>
+    <Keyword name="user_text|$user_text" desc="USER_TEXT - returns the text in the input line"/>
+    <Keyword name="usrtxt|$usrtxt" desc="USRTXT - returns the text in the input line"/>
+    <Keyword name="maintxt|$maintxt" desc="MAINTXT - returns the text in the main description window"/>
+    <Keyword name="stattxt|$stattxt" desc="STATTXT - returns the text in the secondary description window"/>
+  </Expressions>
+  <Variables>
+    <Keyword name="args|$args|%args" desc="ARGS - array with procedure/function parameters"/>
+    <Keyword name="result|$result|%result" desc="RESULT - variable contains the result returned by the current function"/>
+    <Keyword name="disablescroll" desc="DISABLESCROLL - if the variable is not 0, it forbids automatic text scrolling when outputting"/>
+    <Keyword name="nosave" desc="NOSAVE - if the variable is not 0, saving the game state by the user is impossible"/>
+    <Keyword name="debug" desc="DEBUG - if the variable is not 0, the game identifier check is disabled when loading the state"/>
+    <Keyword name="$counter" desc="$COUNTER - variable contains the name of the counter location"/>
+    <Keyword name="$ongload" desc="$ONGLOAD - variable contains the name of the state-loading handler location"/>
+    <Keyword name="$ongsave" desc="$ONGSAVE - variable contains the name of the state-saving handler location"/>
+    <Keyword name="$onnewloc" desc="$ONNEWLOC - variable contains the name of the new-location transition handler location"/>
+    <Keyword name="$onactsel" desc="$ONACTSEL - variable contains the name of the action-selection handler location"/>
+    <Keyword name="$onobjsel" desc="$ONOBJSEL - variable contains the name of the object-selection handler location"/>
+    <Keyword name="$onobjadd" desc="$ONOBJADD - variable contains the name of the object-addition handler location"/>
+    <Keyword name="$onobjdel" desc="$ONOBJDEL - variable contains the name of the object-deletion handler location"/>
+    <Keyword name="$usercom" desc="$USERCOM - variable contains the name of the input-line handler location"/>
+    <Keyword name="usehtml" desc="USEHTML - if the variable is not 0, enables the use of HTML"/>
+    <Keyword name="bcolor" desc="BCOLOR - variable contains the background color"/>
+    <Keyword name="fcolor" desc="FCOLOR - variable contains the main font color"/>
+    <Keyword name="lcolor" desc="LCOLOR - variable contains the main link color"/>
+    <Keyword name="fsize" desc="FSIZE - variable contains the main font size"/>
+    <Keyword name="$fname" desc="$FNAME - variable contains the name of the main font"/>
+    <Keyword name="$backimage" desc="$BACKIMAGE - variable contains the path to the background image"/>
+  </Variables>
+</QGen-keywords>

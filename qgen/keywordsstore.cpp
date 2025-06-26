@@ -60,18 +60,22 @@ bool KeywordsStore::Load(const wxString &filename)
 
 void KeywordsStore::ParseKeywords(wxXmlNode *node, KeywordType type)
 {
-    Keyword *keyword;
-
     node = node->GetChildren();
     while (node)
     {
         if (node->GetName() == wxT("Keyword"))
         {
-            keyword = new Keyword();
-            keyword->word = node->GetAttribute(wxT("name")).Lower();
-            keyword->desc = node->GetAttribute(wxT("desc"));
-            keyword->type = type;
-            _keywords.Add(keyword);
+            wxArrayString names = wxSplit(node->GetAttribute(wxT("name")), wxT('|'));
+            wxString desc = node->GetAttribute(wxT("desc"));
+
+            for (wxArrayString::iterator it = names.begin(); it != names.end(); ++it)
+            {
+                Keyword *keyword = new Keyword();
+                keyword->word = it->Upper();
+                keyword->desc = desc;
+                keyword->type = type;
+                _keywords.Add(keyword);
+            }
         }
         node = node->GetNext();
     }
@@ -113,7 +117,7 @@ wxString KeywordsStore::FindTip(const wxString &word) const
     size_t count = _keywords.GetCount();
     if (count == 0) return result;
     int last = count - 1;
-    wxString w = word.Lower();
+    wxString w = word.Upper();
     wxString str;
     do
     {
