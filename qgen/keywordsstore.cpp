@@ -90,13 +90,13 @@ wxString KeywordsStore::GetWords(KeywordType type) const
     {
         if (_keywords[idx].type == type)
         {
-            if (result.Length() == 0)
+            if (result.IsEmpty())
                 result = _keywords[idx].word;
             else
                 result += wxT(' ') + _keywords[idx].word;
         }
     }
-    return result;
+    return result.Lower();
 }
 
 size_t KeywordsStore::GetCount()
