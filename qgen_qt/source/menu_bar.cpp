@@ -35,12 +35,12 @@ void MenuBar::createGameMenu()
 
     _saveGameAct = new QAction(QIcon(":/main_window/menu_file_save.xpm"), tr("&Save"), this);
     _saveGameAct->setShortcuts(QKeySequence::Save);
-    _saveGameAct->setStatusTip(tr("Save game"));
+    _saveGameAct->setStatusTip(tr("Save the game"));
     connect(_saveGameAct, SIGNAL(triggered()), this, SIGNAL(saveGame()));
 
     _saveAsGameAct = new QAction(tr("Save &as..."), this);
     _saveAsGameAct->setShortcuts(QKeySequence::SaveAs);
-    _saveAsGameAct->setStatusTip(tr("Save game into another file..."));
+    _saveAsGameAct->setStatusTip(tr("Save the game into another file..."));
     connect(_saveAsGameAct, SIGNAL(triggered()), this, SIGNAL(saveAsGame()));
 
     _exportTextAct = new QAction(tr("Text file..."), this);
@@ -82,7 +82,7 @@ void MenuBar::createUtilsMenu()
 {
     _runGameAct = new QAction(QIcon(":/main_window/menu_game_play.xpm"), tr("&Run game"), this);
     _runGameAct->setShortcuts(QKeySequence::Refresh);
-    _runGameAct->setStatusTip(tr("Run current game"));
+    _runGameAct->setStatusTip(tr("Run the current game"));
     connect(_runGameAct, SIGNAL(triggered()), this, SIGNAL(runGame()));
 
     _findAct = new QAction(QIcon(":/main_window/menu_text_search.xpm"), tr("&Find / Replace"), this);
@@ -117,69 +117,69 @@ void MenuBar::createLocsMenu()
 {
     _createLocAct = new QAction(tr("&Create..."), this);
     _createLocAct->setShortcut(Qt::Key_F7);
-    _createLocAct->setStatusTip(tr("Create location"));
+    _createLocAct->setStatusTip(tr("Create a location"));
     connect(_createLocAct, SIGNAL(triggered()), this, SIGNAL(createLocation()));
 
     _renameLocAct = new QAction(tr("&Rename..."), this);
     _renameLocAct->setShortcut(Qt::Key_F6);
-    _renameLocAct->setStatusTip(tr("Rename location"));
+    _renameLocAct->setStatusTip(tr("Rename the location"));
     connect(_renameLocAct, SIGNAL(triggered()), this, SIGNAL(renameLocation()));
 
     _deleteLocAct = new QAction(tr("&Delete"), this);
     _deleteLocAct->setShortcut(Qt::Key_F8);
-    _deleteLocAct->setStatusTip(tr("Delete location"));
+    _deleteLocAct->setStatusTip(tr("Delete the location"));
     connect(_deleteLocAct, SIGNAL(triggered()), this, SIGNAL(deleteLocation()));
 
     _createFolderAct = new QAction(tr("Create folder..."), this);
-    _createFolderAct->setStatusTip(tr("Create folder for locations"));
+    _createFolderAct->setStatusTip(tr("Create a folder for locations"));
     connect(_createFolderAct, SIGNAL(triggered()), this, SIGNAL(createFolder()));
 
     _renameFolderAct = new QAction(tr("Rename folder..."), this);
-    _renameFolderAct->setStatusTip(tr("Rename selected folder"));
+    _renameFolderAct->setStatusTip(tr("Rename the selected folder"));
     connect(_renameFolderAct, SIGNAL(triggered()), this, SIGNAL(renameFolder()));
 
     _deleteFolderAct = new QAction(tr("Delete folder"), this);
-    _deleteFolderAct->setStatusTip(tr("Delete folder, but keep locations"));
+    _deleteFolderAct->setStatusTip(tr("Delete the folder, but keep locations"));
     connect(_deleteFolderAct, SIGNAL(triggered()), this, SIGNAL(deleteFolder()));
 
     _copyLocAct = new QAction(tr("&Copy"), this);
     _copyLocAct->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_C);
-    _copyLocAct->setStatusTip(tr("Copy selected location to clipboard"));
+    _copyLocAct->setStatusTip(tr("Copy the selected location to the clipboard"));
     connect(_copyLocAct, SIGNAL(triggered()), this, SIGNAL(copyLocation()));
 
     _pasteLocAct = new QAction(tr("&Paste"), this);
     _pasteLocAct->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
-    _pasteLocAct->setStatusTip(tr("Paste location from clipboard"));
+    _pasteLocAct->setStatusTip(tr("Paste location from the clipboard"));
     connect(_pasteLocAct, SIGNAL(triggered()), this, SIGNAL(pasteLocation()));
 
     _replaceLocAct = new QAction(tr("&Replace"), this);
     _replaceLocAct->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_R);
-    _replaceLocAct->setStatusTip(tr("Replace selected location with clipboard data"));
+    _replaceLocAct->setStatusTip(tr("Replace the selected location with the clipboard data"));
     connect(_replaceLocAct, SIGNAL(triggered()), this, SIGNAL(replaceLocation()));
 
     _pasteInLocAct = new QAction(tr("P&aste in..."), this);
     _pasteInLocAct->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
-    _pasteInLocAct->setStatusTip(tr("Paste clipboard data to the new location"));
+    _pasteInLocAct->setStatusTip(tr("Paste the clipboard data to a new location"));
     connect(_pasteInLocAct, SIGNAL(triggered()), this, SIGNAL(pasteInLocation()));
 
     _clearLocAct = new QAction(tr("C&lear"), this);
     _clearLocAct->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
-    _clearLocAct->setStatusTip(tr("Clear location"));
+    _clearLocAct->setStatusTip(tr("Clear the location"));
     connect(_clearLocAct, SIGNAL(triggered()), this, SIGNAL(clearLocation()));
 
     _createActAct = new QAction(tr("&Create"), this);
     _createActAct->setShortcut(Qt::ALT + Qt::Key_F7);
-    _createActAct->setStatusTip(tr("Create action on selected location"));
+    _createActAct->setStatusTip(tr("Create an action at the selected location"));
     connect(_createActAct, SIGNAL(triggered()), this, SIGNAL(createAction()));
 
     _renameActAct = new QAction(tr("&Rename..."), this);
     _renameActAct->setShortcut(Qt::ALT + Qt::Key_F6);
-    _renameActAct->setStatusTip(tr("Rename selected action"));
+    _renameActAct->setStatusTip(tr("Rename the selected action"));
     connect(_renameActAct, SIGNAL(triggered()), this, SIGNAL(renameAction()));
 
     _deleteActAct = new QAction(tr("&Delete"), this);
     _deleteActAct->setShortcut(Qt::ALT + Qt::Key_F8);
-    _deleteActAct->setStatusTip("Delete selected action");
+    _deleteActAct->setStatusTip("Delete the selected action");
     connect(_deleteActAct, SIGNAL(triggered()), this, SIGNAL(deleteAction()));
 
     _deleteAllActAct = new QAction(tr("D&elete all"), this);

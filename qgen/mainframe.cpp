@@ -316,15 +316,15 @@ void MainFrame::Update(bool isFromObservable /*= false*/)
     menuBar->SetMenuLabel(5, _("&Help"));
     //Game
     menuBar->SetLabel(ID_GAME_NEW, _("&New\tCtrl+N"));
-    menuBar->SetHelpString(ID_GAME_NEW, _("Create new game"));
+    menuBar->SetHelpString(ID_GAME_NEW, _("Create a new game"));
     menuBar->SetLabel(ID_GAME_OPEN, _("&Open...\tCtrl+O"));
-    menuBar->SetHelpString(ID_GAME_OPEN, _("Open game file"));
+    menuBar->SetHelpString(ID_GAME_OPEN, _("Open a game file"));
     menuBar->SetLabel(ID_GAME_MERGE, _("&Merge game...\tCtrl+M"));
     menuBar->SetHelpString(ID_GAME_MERGE, _("Add locations from another game"));
     menuBar->SetLabel(ID_GAME_SAVE, _("&Save\tCtrl+S"));
-    menuBar->SetHelpString(ID_GAME_SAVE, _("Save game"));
+    menuBar->SetHelpString(ID_GAME_SAVE, _("Save the game"));
     menuBar->SetLabel(ID_GAME_SAVEAS, _("Save &as...\tCtrl+W"));
-    menuBar->SetHelpString(ID_GAME_SAVEAS, _("Save game into another file..."));
+    menuBar->SetHelpString(ID_GAME_SAVEAS, _("Save the game into another file..."));
     //Sub menu Export
     menuBar->SetLabel(ID_GAME_EXPORT, _("&Export"));
     menuBar->SetLabel(ID_GAME_EXPORTTXT, _("Text file..."));
@@ -336,7 +336,7 @@ void MainFrame::Update(bool isFromObservable /*= false*/)
     menuBar->SetHelpString(ID_QGEN_EXIT, _("Close program"));
     //Utilities
     menuBar->SetLabel(ID_GAME_PLAY, _("&Run game\tF5"));
-    menuBar->SetHelpString(ID_GAME_PLAY, _("Run current game"));
+    menuBar->SetHelpString(ID_GAME_PLAY, _("Run the current game"));
     menuBar->SetLabel(ID_UTIL_FIND, _("&Find / Replace\tCtrl+F"));
     menuBar->SetHelpString(ID_UTIL_FIND, _("Find / replace some text"));
     menuBar->SetLabel(ID_UTIL_INF, _("&Game info\tCtrl+I"));
@@ -344,34 +344,34 @@ void MainFrame::Update(bool isFromObservable /*= false*/)
     menuBar->SetLabel(ID_UTIL_OPTIONS, _("&Settings...\tCtrl+P"));
     //Locations
     menuBar->SetLabel(ID_LOC_CREATE, _("&Create...\tF7"));
-    menuBar->SetHelpString(ID_LOC_CREATE, _("Create location"));
+    menuBar->SetHelpString(ID_LOC_CREATE, _("Create a location"));
     menuBar->SetLabel(ID_LOC_RENAME, _("&Rename...\tF6"));
-    menuBar->SetHelpString(ID_LOC_RENAME,  _("Rename location"));
+    menuBar->SetHelpString(ID_LOC_RENAME,  _("Rename the location"));
     menuBar->SetLabel(ID_LOC_DEL, _("&Delete\tF8"));
-    menuBar->SetHelpString(ID_LOC_DEL, _("Delete location"));
+    menuBar->SetHelpString(ID_LOC_DEL, _("Delete the location"));
     menuBar->SetLabel(ID_FOLDER_CREAT, _("Create folder..."));
-    menuBar->SetHelpString(ID_FOLDER_CREAT, _("Create folder for locations"));
+    menuBar->SetHelpString(ID_FOLDER_CREAT, _("Create a folder for locations"));
     menuBar->SetLabel(ID_FOLDER_RENAME, _("Rename folder..."));
-    menuBar->SetHelpString(ID_FOLDER_RENAME, _("Rename selected folder"));
+    menuBar->SetHelpString(ID_FOLDER_RENAME, _("Rename the selected folder"));
     menuBar->SetLabel(ID_FOLDER_DEL, _("Delete folder"));
-    menuBar->SetHelpString(ID_FOLDER_DEL, _("Delete folder, but keep locations"));
+    menuBar->SetHelpString(ID_FOLDER_DEL, _("Delete the folder, but keep locations"));
     menuBar->SetLabel(ID_LOC_COPY, _("&Copy\tCtrl+Shift+C"));
-    menuBar->SetHelpString(ID_LOC_COPY, _("Copy selected location to clipboard"));
+    menuBar->SetHelpString(ID_LOC_COPY, _("Copy the selected location to the clipboard"));
     menuBar->SetLabel(ID_LOC_PASTE, _("&Paste\tCtrl+Shift+V"));
-    menuBar->SetHelpString(ID_LOC_PASTE, _("Paste location from clipboard"));
+    menuBar->SetHelpString(ID_LOC_PASTE, _("Paste location from the clipboard"));
     menuBar->SetLabel(ID_LOC_REPLACE, _("&Replace\tCtrl+Shift+R"));
-    menuBar->SetHelpString(ID_LOC_REPLACE, _("Replace selected location with clipboard data"));
+    menuBar->SetHelpString(ID_LOC_REPLACE, _("Replace the selected location with the clipboard data"));
     menuBar->SetLabel(ID_LOC_PASTENEW, _("P&aste in...\tCtrl+Shift+N"));
-    menuBar->SetHelpString(ID_LOC_PASTENEW, _("Paste clipboard data to the new location"));
+    menuBar->SetHelpString(ID_LOC_PASTENEW, _("Paste the clipboard data to a new location"));
     menuBar->SetLabel(ID_LOC_CLEAR, _("C&lear\tCtrl+Shift+D"));
-    menuBar->SetHelpString(ID_LOC_CLEAR, _("Clear location"));
+    menuBar->SetHelpString(ID_LOC_CLEAR, _("Clear the location"));
     menuBar->SetLabel(ID_ACTION_SUBMENU, _("&Actions"));
     menuBar->SetLabel(ID_ACTION_ADD, _("&Create...\tAlt+F7"));
-    menuBar->SetHelpString(ID_ACTION_ADD, _("Create action on selected location"));
+    menuBar->SetHelpString(ID_ACTION_ADD, _("Create an action at the selected location"));
     menuBar->SetLabel(ID_ACTION_REN, _("&Rename...\tAlt+F6"));
-    menuBar->SetHelpString(ID_ACTION_REN, _("Rename selected action"));
+    menuBar->SetHelpString(ID_ACTION_REN, _("Rename the selected action"));
     menuBar->SetLabel(ID_ACTION_DEL, _("&Delete\tAlt+F8"));
-    menuBar->SetHelpString(ID_ACTION_DEL, _("Delete selected action"));
+    menuBar->SetHelpString(ID_ACTION_DEL, _("Delete the selected action"));
     menuBar->SetLabel(ID_ACTION_DELALL, _("D&elete all\tAlt+F10"));
     menuBar->SetLabel(ID_LOC_SORTASC, _("So&rt ascending\tCtrl+Shift+O"));
     menuBar->SetLabel(ID_LOC_SORTDESC, _("Sor&t descending\tCtrl+Shift+P"));
@@ -386,9 +386,9 @@ void MainFrame::Update(bool isFromObservable /*= false*/)
     menuBar->SetLabel(ID_TEXT_SELALL, _("S&elect all\tCtrl+A"));
     //View
     menuBar->SetLabel(ID_TOGGLE, _("&Window list"));
-    menuBar->SetLabel(ID_TOGGLE_TOOLBAR, _("&Toolbar"));
-    menuBar->SetLabel(ID_TOGGLE_LISTBOX, _("&Location list"));
-    menuBar->SetLabel(ID_TOGGLE_STATUSBAR, _("&Statusbar"));
+    menuBar->SetLabel(ID_TOGGLE_TOOLBAR, _("&Toolbar\tCtrl+Alt+T"));
+    menuBar->SetLabel(ID_TOGGLE_LISTBOX, _("&Location list\tCtrl+Alt+L"));
+    menuBar->SetLabel(ID_TOGGLE_STATUSBAR, _("&Statusbar\tCtrl+Alt+S"));
     menuBar->SetLabel(ID_TAB_CLOSEALL, _("&Close all tabs\tCtrl+Alt+F4"));
     menuBar->SetLabel(ID_TAB_CLOSEEXCEPTSELECTED, _("Close all tabs &except current"));
     menuBar->SetLabel(ID_TAB_CLOSESELECTED, _("Close c&urrent tab\tCtrl+F4"));
@@ -476,7 +476,7 @@ void MainFrame::OnSaveQuestAs(wxCommandEvent &event)
     {
         wxString password;
         wxPasswordEntryDialog dlgEntry(this,
-            _("Input password:"),
+            _("Enter the password:"),
             _("Game password"), wxEmptyString);
         if (dlgEntry.ShowModal() != wxID_CANCEL) password = dlgEntry.GetValue();
         if (password.IsEmpty()) password = QGEN_PASSWD;
@@ -825,7 +825,7 @@ void MainFrame::OnImportTxt2Gam( wxCommandEvent &event )
     {
         wxMessageDialog dlgMsg(this,
             _("The new file will replace the current game file. Continue?"),
-            _("Import"),
+            _("Import text file"),
             wxYES_NO | wxCENTRE | wxICON_QUESTION);
         if (dlgMsg.ShowModal() == wxID_NO) return;
     }

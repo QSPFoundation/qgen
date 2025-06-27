@@ -313,7 +313,7 @@ bool qspOpenQuest(char *buf, size_t bufSize, wxWindow *parent, Controls *control
     if (QSP_STRCMP(data, QGEN_PASSWD))
     {
         wxPasswordEntryDialog dlgEntry(parent,
-            _("Input password:"),
+            _("Enter the password:"),
             _("Game password"), wxEmptyString);
         if (dlgEntry.ShowModal() == wxID_OK)
         {

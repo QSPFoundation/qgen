@@ -86,7 +86,7 @@ int Controls::AddLocation(const wxString &name)
     while (true)
     {
         wxTextEntryDialog dlgEntry(GetCurrentTopLevelWindow(),
-            _("Input name for a new location:"),
+            _("Enter name for the new location:"),
             _("Add location"), locName);
         if (dlgEntry.ShowModal() == wxID_OK)
         {
@@ -115,7 +115,7 @@ bool Controls::RenameSelectedLocation()
     while (true)
     {
         wxTextEntryDialog dlgEntry(GetCurrentTopLevelWindow(),
-            _("Input new location name:"),
+            _("Enter new name of the location:"),
             _("Rename location"), name);
         if (dlgEntry.ShowModal() == wxID_OK)
         {
@@ -141,7 +141,7 @@ bool Controls::DeleteSelectedLocation()
 
     wxString locName(_container->GetLocationName(locIndex));
     wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
-        wxString::Format(_("Remove location \"%s\"?"), locName),
+        wxString::Format(_("Remove the location \"%s\"?"), locName),
         _("Remove location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
     if (dlgMsg.ShowModal() == wxID_YES)
     {
@@ -172,7 +172,7 @@ bool Controls::AddActionOnSelectedLoc()
     while (true)
     {
         wxTextEntryDialog dlgEntry(GetCurrentTopLevelWindow(),
-            _("Input name for a new action"),
+            _("Enter name for the new action:"),
             _("Add action"), name);
 
         if (dlgEntry.ShowModal() == wxID_OK)
@@ -229,7 +229,7 @@ bool Controls::DeleteAllActions()
     wxString locName(_container->GetLocationName(locIndex));
 
     wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
-        wxString::Format(_("Remove all actions at location \"%s\"?"), locName),
+        wxString::Format(_("Remove all actions at the location \"%s\"?"), locName),
         _("Remove all actions"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
     if (dlgMsg.ShowModal() == wxID_YES)
     {
@@ -255,7 +255,7 @@ bool Controls::RenameSelectedAction()
     while (true)
     {
         wxTextEntryDialog dlgEntry(GetCurrentTopLevelWindow(),
-            _("Input new action name:"),
+            _("Enter new name of the action:"),
             _("Rename action"), name);
         if (dlgEntry.ShowModal() == wxID_OK)
         {
@@ -286,13 +286,13 @@ wxString Controls::GetMessageDesc(long errorNum)
     wxString str;
     switch (errorNum)
     {
-        case QGEN_MSG_EXISTS: str = _("Such name already exists! Input another name."); break;
+        case QGEN_MSG_EXISTS: str = _("Such name already exists! Enter another name."); break;
         case QGEN_MSG_EXISTS_HKEY: str = _("This key combination is used already! Select another combination."); break;
         case QGEN_MSG_EXISTS_S_HKEY: str = _("This key combination is used already by the system! Select another combination."); break;
-        case QGEN_MSG_EMPTYDATA: str = _("An empty field, input the value!"); break;
+        case QGEN_MSG_EMPTYDATA: str = _("Empty values aren't allowed! Enter the value."); break;
         case QGEN_MSG_WRONGPASSWORD: str = _("Wrong password!"); break;
-        case QGEN_MSG_CANTSAVEGAME: str = _("Can't save game!"); break;
-        case QGEN_MSG_CANTLOADGAME: str = _("Can't load game!"); break;
+        case QGEN_MSG_CANTSAVEGAME: str = _("Can't save the game!"); break;
+        case QGEN_MSG_CANTLOADGAME: str = _("Can't load the game!"); break;
         case QGEN_MSG_NOTFOUND: str = _("The specified text was not found"); break;
         case QGEN_MSG_SEARCHENDED: str = _("The specified text was not found anymore."); break;
         case QGEN_MSG_INVALIDREGEXP: str = _("Invalid regular expression!"); break;
@@ -521,7 +521,7 @@ void Controls::PasteLocFromClipboard(PasteType type)
             if (!_container->IsLocEmpty(locIndex))
             {
                 wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
-                    wxString::Format(_("Replace location \"%s\"?"), locName),
+                    wxString::Format(_("Replace the location \"%s\"?"), locName),
                     _("Replace location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
                 if (dlgMsg.ShowModal() == wxID_YES)
                     InitSearchData();
@@ -603,7 +603,7 @@ void Controls::ClearSelectedLocation()
 
     wxString locName(_container->GetLocationName(locIndex));
     wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
-        wxString::Format(_("Clear location \"%s\"?"), locName),
+        wxString::Format(_("Clear the location \"%s\"?"), locName),
         _("Clear location"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
     if (dlgMsg.ShowModal() == wxID_YES)
     {
@@ -1643,7 +1643,7 @@ bool Controls::AddFolder()
     while (true)
     {
         wxTextEntryDialog dlgEntry(GetCurrentTopLevelWindow(),
-            _("Input name for a new folder:"),
+            _("Enter name for the new folder:"),
             _("Add folder"), name);
         if (dlgEntry.ShowModal() == wxID_OK)
         {
@@ -1676,7 +1676,7 @@ bool Controls::DeleteSelectedFolder()
 
     wxString folderName(_container->GetFolderName(folder));
     wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
-        wxString::Format(_("Remove \"%s\" folder?"), folderName),
+        wxString::Format(_("Remove the \"%s\" folder?"), folderName),
         _("Remove folder"), wxYES_NO|wxCENTRE|wxICON_QUESTION);
     if (dlgMsg.ShowModal() == wxID_YES)
     {
@@ -1697,7 +1697,7 @@ bool Controls::RenameSelectedFolder()
     while (true)
     {
         wxTextEntryDialog dlgEntry(GetCurrentTopLevelWindow(),
-            _("Input new folder name:"),
+            _("Enter new name of the folder:"),
             _("Rename folder"), name);
         if (dlgEntry.ShowModal() == wxID_OK)
         {

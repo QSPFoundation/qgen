@@ -482,8 +482,8 @@ void OptionsDialog::ReCreateGUI()
     _chkAutoSave->SetLabel(_("Auto save every"));
     _chkFirstLoc->SetLabel(_("Auto create first location:"));
     _chkDescOfLoc->SetLabel(_("Show short location descriptions"));
-    _chkOpeningLoc->SetLabel(_("Open location after creation"));
-    _chkOpeningAct->SetLabel(_("Open action after creation"));
+    _chkOpeningLoc->SetLabel(_("Open a location after creation"));
+    _chkOpeningAct->SetLabel(_("Open an action after creation"));
     _chkOnLocActIcons->SetLabel(_("Show location icons"));
     _chkLocDescVisible->SetLabel(_("Show base description on location tab"));
     _chkLocActsVisible->SetLabel(_("Show base actions on location tab"));

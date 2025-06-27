@@ -73,9 +73,6 @@ msgstr "&Импорт"
 msgid "&Locations"
 msgstr "&Локации"
 
-msgid "&Location list"
-msgstr "&Окно списка локаций"
-
 msgid "&Merge game...\tCtrl+M"
 msgstr "&Присоединить игру...\tCtrl+M"
 
@@ -109,14 +106,17 @@ msgstr "&Сохранить\tCtrl+S"
 msgid "&Settings...\tCtrl+P"
 msgstr "&Настройки...\tCtrl+P"
 
-msgid "&Statusbar"
-msgstr "&Строка состояния"
+msgid "&Toolbar\tCtrl+Alt+T"
+msgstr "&Панель инструментов\tCtrl+Alt+T"
+
+msgid "&Location list\tCtrl+Alt+L"
+msgstr "&Окно списка локаций\tCtrl+Alt+L"
+
+msgid "&Statusbar\tCtrl+Alt+S"
+msgstr "&Строка состояния\tCtrl+Alt+S"
 
 msgid "&Text"
 msgstr "&Текст"
-
-msgid "&Toolbar"
-msgstr "&Панель инструментов"
 
 msgid "&Undo\tCtrl+Z"
 msgstr "&Отменить\tCtrl+Z"
@@ -163,7 +163,7 @@ msgstr "Добавление команды"
 msgid "Add..."
 msgstr "Добавить..."
 
-msgid "An empty field, input the value!"
+msgid "Empty values aren't allowed! Enter the value."
 msgstr "Пустое поле, введите значение!"
 
 msgid "Apply"
@@ -196,19 +196,22 @@ msgstr "&Копировать\tCtrl+C"
 msgid "Can't add more than %i actions."
 msgstr "Вы не можете добавить на локацию более чем %i действий."
 
-msgid "Can't load game!"
+msgid "Can't load the game!"
 msgstr "Нельзя загрузить игру!"
 
-msgid "Can't save game!"
+msgid "Can't save the game!"
 msgstr "Нельзя сохранить игру!"
 
 msgid "Cancel"
 msgstr "Отмена"
 
-msgid "Clear location \"%s\"?"
+msgid "Clear the location \"%s\"?"
 msgstr "Желаете очистить локацию %s?"
 
 msgid "Clear location"
+msgstr "Очистить локацию"
+
+msgid "Clear the location"
 msgstr "Очистить локацию"
 
 msgid "Clear"
@@ -265,25 +268,25 @@ msgstr "Копировать"
 msgid "Copy selected location (Ctrl+Shift+C)"
 msgstr "Копировать выделенную локацию (Ctrl+Shift+C)"
 
-msgid "Copy selected location to clipboard"
+msgid "Copy the selected location to the clipboard"
 msgstr "Копировать локацию в буфер"
 
-msgid "Create action on selected location"
+msgid "Create an action at the selected location"
 msgstr "Создать действие на локации"
 
-msgid "Create folder for locations"
+msgid "Create a folder for locations"
 msgstr "Создать папку для локаций"
 
 msgid "Create folder..."
 msgstr "Создать папку..."
 
-msgid "Create location"
+msgid "Create a location"
 msgstr "Создать локацию"
 
 msgid "Create location... (F7)"
 msgstr "Создать локацию... (F7)"
 
-msgid "Create new game"
+msgid "Create a new game"
 msgstr "Создать новую игру"
 
 msgid "Create..."
@@ -307,13 +310,13 @@ msgstr "Удалить всё"
 msgid "Delete folder"
 msgstr "Удалить папку"
 
-msgid "Delete folder, but keep locations"
+msgid "Delete the folder, but keep locations"
 msgstr "Удалить папку, но сохранить локации"
 
-msgid "Delete location"
+msgid "Delete the location"
 msgstr "Удалить локацию"
 
-msgid "Delete selected action"
+msgid "Delete the selected action"
 msgstr "Удалить действие"
 
 msgid "Delete selected location (F8)"
@@ -412,7 +415,7 @@ msgstr "Изображение..."
 msgid "Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*"
 msgstr "Файлы изображений (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|Все файлы (*.*)|*"
 
-msgid "Import"
+msgid "Import text file"
 msgstr "Импорт"
 
 msgid "Incorrect data format!"
@@ -421,25 +424,25 @@ msgstr "Неверный формат данных!"
 msgid "Info"
 msgstr "Инфо"
 
-msgid "Input name for a new action"
+msgid "Enter name for the new action:"
 msgstr "Введите название действия:"
 
-msgid "Input name for a new folder:"
+msgid "Enter name for the new folder:"
 msgstr "Введите название новой папки:"
 
-msgid "Input name for a new location:"
+msgid "Enter name for the new location:"
 msgstr "Введите название новой локации:"
 
-msgid "Input new action name:"
+msgid "Enter new name of the action:"
 msgstr "Введите новое название действия:"
 
-msgid "Input new folder name:"
+msgid "Enter new name of the folder:"
 msgstr "Введите новое название папки:"
 
-msgid "Input new location name:"
+msgid "Enter new name of the location:"
 msgstr "Введите новое название локации:"
 
-msgid "Input password:"
+msgid "Enter the password:"
 msgstr "Введите пароль:"
 
 msgid "Merge game file"
@@ -514,16 +517,19 @@ msgstr "Шрифт чисел:"
 msgid "OK"
 msgstr "OK"
 
-msgid "Open action after creation"
+msgid "Open an action after creation"
 msgstr "Открытие действия при создании"
 
 msgid "Open game file"
-msgstr "Открыть файл"
+msgstr "Открыть игровой файл"
+
+msgid "Open a game file"
+msgstr "Открыть игровой файл"
 
 msgid "Open game... (Ctrl+O)"
 msgstr "Открыть игру... (Ctrl+O)"
 
-msgid "Open location after creation"
+msgid "Open a location after creation"
 msgstr "Открытие локации при создании"
 
 msgid "Open text file"
@@ -541,7 +547,7 @@ msgstr "Вс&тавить в...\tCtrl+Shift+N"
 msgid "Paste"
 msgstr "Вставить"
 
-msgid "Paste clipboard data to the new location"
+msgid "Paste the clipboard data to a new location"
 msgstr "Вставить локацию из буфера в новую локацию"
 
 msgid "Paste in..."
@@ -550,7 +556,7 @@ msgstr "Вставить в..."
 msgid "Paste location (Ctrl+Shift+V)"
 msgstr "Вставить локацию (Ctrl+Shift+V)"
 
-msgid "Paste location from clipboard"
+msgid "Paste location from the clipboard"
 msgstr "Вставить локацию из буфера"
 
 msgid "Path to TXT2GAM:"
@@ -606,16 +612,16 @@ msgstr ""
 msgid "Remember game file on exit"
 msgstr "Запоминать игру при выходе"
 
-msgid "Remove \"%s\" folder?"
+msgid "Remove the \"%s\" folder?"
 msgstr "Желаете удалить папку %s?"
 
-msgid "Remove location \"%s\"?"
+msgid "Remove the location \"%s\"?"
 msgstr "Желаете удалить локацию %s?"
 
 msgid "Remove all actions"
 msgstr "Удалить все действия"
 
-msgid "Remove all actions at location \"%s\"?"
+msgid "Remove all actions at the location \"%s\"?"
 msgstr "Желаете удалить все действия на локации %s?"
 
 msgid "Remove folder"
@@ -636,10 +642,13 @@ msgstr "Переименовать папку..."
 msgid "Rename location"
 msgstr "Переименовать локацию"
 
-msgid "Rename selected action"
+msgid "Rename the location"
+msgstr "Переименовать локацию"
+
+msgid "Rename the selected action"
 msgstr "Переименовать действие"
 
-msgid "Rename selected folder"
+msgid "Rename the selected folder"
 msgstr "Переименовать выбранную папку"
 
 msgid "Rename selected location... (F6)"
@@ -651,7 +660,7 @@ msgstr "Переименовать..."
 msgid "Replace"
 msgstr "Заменить"
 
-msgid "Replace location \"%s\"?"
+msgid "Replace the location \"%s\"?"
 msgstr "Желаете заменить локацию %s?"
 
 msgid "Replace all"
@@ -660,13 +669,13 @@ msgstr "Заменить все"
 msgid "Replace location"
 msgstr "Заменить локацию"
 
-msgid "Replace selected location with clipboard data"
+msgid "Replace the selected location with the clipboard data"
 msgstr "Заменить выбранную локацию локацией из буфера"
 
 msgid "Reset"
 msgstr "Сброс"
 
-msgid "Run current game"
+msgid "Run the current game"
 msgstr "Запустить текущую игру"
 
 msgid "&Run game\tF5"
@@ -681,7 +690,7 @@ msgstr "В&ыделить всё\tCtrl+A"
 msgid "Save &as...\tCtrl+W"
 msgstr "Сохранить &как...\tCtrl+W"
 
-msgid "Save game"
+msgid "Save the game"
 msgstr "Сохранить игру"
 
 msgid "Save game (Ctrl+S)"
@@ -693,7 +702,7 @@ msgstr "Сохранить игру"
 msgid "Do you want to save the game file?"
 msgstr "Сохранить игру?"
 
-msgid "Save game into another file..."
+msgid "Save the game into another file..."
 msgstr "Сохранить игру под другим именем..."
 
 msgid "Save game into another file... (Ctrl+W)"
@@ -807,7 +816,7 @@ msgstr "Цвет строк:"
 msgid "Strings font:"
 msgstr "Шрифт строк:"
 
-msgid "Such name already exists! Input another name."
+msgid "Such name already exists! Enter another name."
 msgstr "Такое название уже существует, введите другое название!"
 
 msgid "System variables color:"

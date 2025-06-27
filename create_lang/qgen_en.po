@@ -73,9 +73,6 @@ msgstr "&Import"
 msgid "&Locations"
 msgstr "&Locations"
 
-msgid "&Location list"
-msgstr "&Location list"
-
 msgid "&Merge game...\tCtrl+M"
 msgstr "&Merge game...\tCtrl+M"
 
@@ -109,14 +106,17 @@ msgstr "&Save\tCtrl+S"
 msgid "&Settings...\tCtrl+P"
 msgstr "&Settings...\tCtrl+P"
 
-msgid "&Statusbar"
-msgstr "&Statusbar"
+msgid "&Toolbar\tCtrl+Alt+T"
+msgstr "&Toolbar\tCtrl+Alt+T"
+
+msgid "&Location list\tCtrl+Alt+L"
+msgstr "&Location list\tCtrl+Alt+L"
+
+msgid "&Statusbar\tCtrl+Alt+S"
+msgstr "&Statusbar\tCtrl+Alt+S"
 
 msgid "&Text"
 msgstr "&Text"
-
-msgid "&Toolbar"
-msgstr "&Toolbar"
 
 msgid "&Undo\tCtrl+Z"
 msgstr "&Undo\tCtrl+Z"
@@ -163,8 +163,8 @@ msgstr "Add macro"
 msgid "Add..."
 msgstr "Add..."
 
-msgid "An empty field, input the value!"
-msgstr "An empty field, input the value!"
+msgid "Empty values aren't allowed! Enter the value."
+msgstr "Empty values aren't allowed! Enter the value."
 
 msgid "Apply"
 msgstr "Apply"
@@ -196,20 +196,23 @@ msgstr "C&opy\tCtrl+C"
 msgid "Can't add more than %i actions."
 msgstr "Can't add more than %i actions."
 
-msgid "Can't load game!"
-msgstr "Can't load game!"
+msgid "Can't load the game!"
+msgstr "Can't load the game!"
 
-msgid "Can't save game!"
-msgstr "Can't save game!"
+msgid "Can't save the game!"
+msgstr "Can't save the game!"
 
 msgid "Cancel"
 msgstr "Cancel"
 
-msgid "Clear location \"%s\"?"
-msgstr "Clear location \"%s\"?"
+msgid "Clear the location \"%s\"?"
+msgstr "Clear the location \"%s\"?"
 
 msgid "Clear location"
 msgstr "Clear location"
+
+msgid "Clear the location"
+msgstr "Clear the location"
 
 msgid "Clear"
 msgstr "Clear"
@@ -265,26 +268,26 @@ msgstr "Copy"
 msgid "Copy selected location (Ctrl+Shift+C)"
 msgstr "Copy selected location (Ctrl+Shift+C)"
 
-msgid "Copy selected location to clipboard"
-msgstr "Copy selected location to clipboard"
+msgid "Copy the selected location to the clipboard"
+msgstr "Copy the selected location to the clipboard"
 
-msgid "Create action on selected location"
-msgstr "Create action on selected location"
+msgid "Create an action at the selected location"
+msgstr "Create an action at the selected location"
 
-msgid "Create folder for locations"
-msgstr "Create folder for locations"
+msgid "Create a folder for locations"
+msgstr "Create a folder for locations"
 
 msgid "Create folder..."
 msgstr "Create folder..."
 
-msgid "Create location"
-msgstr "Create location"
+msgid "Create a location"
+msgstr "Create a location"
 
 msgid "Create location... (F7)"
 msgstr "Create location... (F7)"
 
-msgid "Create new game"
-msgstr "Create new game"
+msgid "Create a new game"
+msgstr "Create a new game"
 
 msgid "Create..."
 msgstr "Create..."
@@ -307,14 +310,14 @@ msgstr "Delete all"
 msgid "Delete folder"
 msgstr "Delete folder"
 
-msgid "Delete folder, but keep locations"
-msgstr "Delete folder, but keep locations"
+msgid "Delete the folder, but keep locations"
+msgstr "Delete the folder, but keep locations"
 
-msgid "Delete location"
-msgstr "Delete location"
+msgid "Delete the location"
+msgstr "Delete the location"
 
-msgid "Delete selected action"
-msgstr "Delete selected action"
+msgid "Delete the selected action"
+msgstr "Delete the selected action"
 
 msgid "Delete selected location (F8)"
 msgstr "Delete selected location (F8)"
@@ -412,8 +415,8 @@ msgstr "Image..."
 msgid "Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*"
 msgstr "Images (*.png;*.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp;*.gif|All files (*.*)|*"
 
-msgid "Import"
-msgstr "Import"
+msgid "Import text file"
+msgstr "Import text file"
 
 msgid "Incorrect data format!"
 msgstr "Incorrect data format!"
@@ -421,26 +424,26 @@ msgstr "Incorrect data format!"
 msgid "Info"
 msgstr "Info"
 
-msgid "Input name for a new action"
-msgstr "Input name for a new action"
+msgid "Enter name for the new action:"
+msgstr "Enter name for the new action:"
 
-msgid "Input name for a new folder:"
-msgstr "Input name for a new folder:"
+msgid "Enter name for the new folder:"
+msgstr "Enter name for the new folder:"
 
-msgid "Input name for a new location:"
-msgstr "Input name for a new location:"
+msgid "Enter name for the new location:"
+msgstr "Enter name for the new location:"
 
-msgid "Input new action name:"
-msgstr "Input new action name:"
+msgid "Enter new name of the action:"
+msgstr "Enter new name of the action:"
 
-msgid "Input new folder name:"
-msgstr "Input new folder name:"
+msgid "Enter new name of the folder:"
+msgstr "Enter new name of the folder:"
 
-msgid "Input new location name:"
-msgstr "Input new location name:"
+msgid "Enter new name of the location:"
+msgstr "Enter new name of the location:"
 
-msgid "Input password:"
-msgstr "Input password:"
+msgid "Enter the password:"
+msgstr "Enter the password:"
 
 msgid "Merge game file"
 msgstr "Merge game file"
@@ -514,17 +517,20 @@ msgstr "Numbers font:"
 msgid "OK"
 msgstr "OK"
 
-msgid "Open action after creation"
-msgstr "Open action after creation"
+msgid "Open an action after creation"
+msgstr "Open an action after creation"
 
 msgid "Open game file"
 msgstr "Open game file"
 
+msgid "Open a game file"
+msgstr "Open a game file"
+
 msgid "Open game... (Ctrl+O)"
 msgstr "Open game... (Ctrl+O)"
 
-msgid "Open location after creation"
-msgstr "Open location after creation"
+msgid "Open a location after creation"
+msgstr "Open a location after creation"
 
 msgid "Open text file"
 msgstr "Open text file"
@@ -541,8 +547,8 @@ msgstr "P&aste in...\tCtrl+Shift+N"
 msgid "Paste"
 msgstr "Paste"
 
-msgid "Paste clipboard data to the new location"
-msgstr "Paste clipboard data to the new location"
+msgid "Paste the clipboard data to a new location"
+msgstr "Paste the clipboard data to a new location"
 
 msgid "Paste in..."
 msgstr "Paste in..."
@@ -550,8 +556,8 @@ msgstr "Paste in..."
 msgid "Paste location (Ctrl+Shift+V)"
 msgstr "Paste location (Ctrl+Shift+V)"
 
-msgid "Paste location from clipboard"
-msgstr "Paste location from clipboard"
+msgid "Paste location from the clipboard"
+msgstr "Paste location from the clipboard"
 
 msgid "Path to TXT2GAM:"
 msgstr "Path to TXT2GAM:"
@@ -606,17 +612,17 @@ msgstr ""
 msgid "Remember game file on exit"
 msgstr "Remember game file on exit"
 
-msgid "Remove \"%s\" folder?"
-msgstr "Remove \"%s\" folder?"
+msgid "Remove the \"%s\" folder?"
+msgstr "Remove the \"%s\" folder?"
 
-msgid "Remove location \"%s\"?"
-msgstr "Remove location \"%s\"?"
+msgid "Remove the location \"%s\"?"
+msgstr "Remove the location \"%s\"?"
 
 msgid "Remove all actions"
 msgstr "Remove all actions"
 
-msgid "Remove all actions at location \"%s\"?"
-msgstr "Remove all actions at location \"%s\"?"
+msgid "Remove all actions at the location \"%s\"?"
+msgstr "Remove all actions at the location \"%s\"?"
 
 msgid "Remove folder"
 msgstr "Remove folder"
@@ -636,11 +642,14 @@ msgstr "Rename folder..."
 msgid "Rename location"
 msgstr "Rename location"
 
-msgid "Rename selected action"
-msgstr "Rename selected action"
+msgid "Rename the location"
+msgstr "Rename the location"
 
-msgid "Rename selected folder"
-msgstr "Rename selected folder"
+msgid "Rename the selected action"
+msgstr "Rename the selected action"
+
+msgid "Rename the selected folder"
+msgstr "Rename the selected folder"
 
 msgid "Rename selected location... (F6)"
 msgstr "Rename selected location... (F6)"
@@ -651,8 +660,8 @@ msgstr "Rename..."
 msgid "Replace"
 msgstr "Replace"
 
-msgid "Replace location \"%s\"?"
-msgstr "Replace location \"%s\"?"
+msgid "Replace the location \"%s\"?"
+msgstr "Replace the location \"%s\"?"
 
 msgid "Replace all"
 msgstr "Replace all"
@@ -660,14 +669,14 @@ msgstr "Replace all"
 msgid "Replace location"
 msgstr "Replace location"
 
-msgid "Replace selected location with clipboard data"
-msgstr "Replace selected location with clipboard data"
+msgid "Replace the selected location with the clipboard data"
+msgstr "Replace the selected location with the clipboard data"
 
 msgid "Reset"
 msgstr "Reset"
 
-msgid "Run current game"
-msgstr "Run current game"
+msgid "Run the current game"
+msgstr "Run the current game"
 
 msgid "&Run game\tF5"
 msgstr "&Run game\tF5"
@@ -681,8 +690,8 @@ msgstr "S&elect all\tCtrl+A"
 msgid "Save &as...\tCtrl+W"
 msgstr "Save &as...\tCtrl+W"
 
-msgid "Save game"
-msgstr "Save game"
+msgid "Save the game"
+msgstr "Save the game"
 
 msgid "Save game (Ctrl+S)"
 msgstr "Save game (Ctrl+S)"
@@ -693,8 +702,8 @@ msgstr "Save game file"
 msgid "Do you want to save the game file?"
 msgstr "Do you want to save the game file?"
 
-msgid "Save game into another file..."
-msgstr "Save game into another file..."
+msgid "Save the game into another file..."
+msgstr "Save the game into another file..."
 
 msgid "Save game into another file... (Ctrl+W)"
 msgstr "Save game into another file... (Ctrl+W)"
@@ -807,8 +816,8 @@ msgstr "Strings color:"
 msgid "Strings font:"
 msgstr "Strings font:"
 
-msgid "Such name already exists! Input another name."
-msgstr "Such name already exists! Input another name."
+msgid "Such name already exists! Enter another name."
+msgstr "Such name already exists! Enter another name."
 
 msgid "System variables color:"
 msgstr "System variables color:"
