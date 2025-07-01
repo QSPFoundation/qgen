@@ -59,15 +59,15 @@
     <Keyword name="view" desc="VIEW [$file] - show an image / hide the current image"/>
   </Statements>
   <Expressions>
-    <Keyword name="and" desc="[#condition 1] AND [#condition 2] - operation &quot;AND&quot;. The resulting expression is true if both conditions are true"/>
+    <Keyword name="and" desc="[#condition 1] AND [#condition 2] - logical &quot;AND&quot;. The resulting expression is true if both conditions are true"/>
     <Keyword name="or" desc="[#condition 1] OR [#condition 2] - logical &quot;OR&quot;. The resulting expression is true if at least one condition is true"/>
+    <Keyword name="no" desc="NO [#condition] - logical negation. The resulting expression is true if the specified condition is not true"/>
     <Keyword name="obj" desc="OBJ [$object] - check if the object is in the inventory"/>
     <Keyword name="loc" desc="LOC [$location] - check if the location exists"/>
-    <Keyword name="no" desc="NO [#condition] - negation. The resulting expression is true if the specified condition is not true"/>
     <Keyword name="mod" desc="[#expression 1] MOD [#expression 2] - calculate the remainder of division"/>
     <Keyword name="desc|$desc" desc="DESC([$location]) - returns the base description text of the location"/>
     <Keyword name="iif|$iif|%iif" desc="IIF([#condition],[true expression],[false expression]) - returns one of the expressions based on the condition"/>
-    <Keyword name="input|$input" desc="INPUT([$message]) - shows a text input window and returns the entered value"/>
+    <Keyword name="input|$input" desc="INPUT([$message]) - shows the text input window and returns the entered value"/>
     <Keyword name="isplay" desc="ISPLAY([$file]) - checks whether the specified sound file is currently playing"/>
     <Keyword name="max|$max|%max" desc="MAX([expression 1],[expression 2], ...) - returns the maximum value among the arguments"/>
     <Keyword name="min|$min|%min" desc="MIN([expression 1],[expression 2], ...) - returns the minimum value among the arguments"/>

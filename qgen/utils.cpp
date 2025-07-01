@@ -20,6 +20,7 @@
 */
 
 #include "utils.h"
+#include "game.h"
 
 wxString Utils::GetDocumentPath(const wxString &path, const wxString &file)
 {
@@ -72,4 +73,30 @@ wxString Utils::GetConfigPath(const wxString &path, const wxString &file)
         configPath.Assign(configPath.GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR) + path, file);
 
     return configPath.GetFullPath();
+}
+
+wxString Utils::GetWordFromPos(const wxString &text, long pos)
+{
+    long beginPos, lastPos;
+    if (pos >= text.Length())
+        pos = text.Length() - 1;
+    if (pos > 0 && QSP_STRCHR(QSP_DELIMS, text[pos]))
+        --pos;
+    beginPos = pos;
+    lastPos = pos;
+    while (beginPos >= 0)
+    {
+        if (QSP_STRCHR(QSP_DELIMS, text[beginPos]))
+            break;
+        --beginPos;
+    }
+    while (lastPos < text.Length())
+    {
+        if (QSP_STRCHR(QSP_DELIMS, text[lastPos]))
+            break;
+        ++lastPos;
+    }
+    if (lastPos > beginPos)
+        return text.Mid(beginPos + 1, lastPos - beginPos - 1);
+    return wxEmptyString;
 }

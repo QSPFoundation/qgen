@@ -31,6 +31,8 @@ BEGIN_EVENT_TABLE(SyntaxTextBox, wxStyledTextCtrl)
     EVT_RIGHT_DOWN(SyntaxTextBox::OnRightClick)
     EVT_STC_MARGINCLICK(wxID_ANY, SyntaxTextBox::OnMarginClicked)
     EVT_STC_CHARADDED(wxID_ANY, SyntaxTextBox::OnCharAdded)
+    EVT_STC_DWELLSTART(wxID_ANY, SyntaxTextBox::OnDwellStart)
+    EVT_STC_DWELLEND(wxID_ANY, SyntaxTextBox::OnDwellEnd)
     EVT_MOTION(SyntaxTextBox::OnMouseMove)
 END_EVENT_TABLE()
 
@@ -51,6 +53,10 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
     if (!(_style & SYNTAX_STYLE_SIMPLEMENU))
     {
         UsePopUp(wxSTC_POPUP_NEVER);
+    }
+    if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
+    {
+        SetMouseDwellTime(250);
     }
     if (_style & SYNTAX_STYLE_CODE)
     {
@@ -217,20 +223,23 @@ void SyntaxTextBox::OnMarginClicked(wxStyledTextEvent &event)
 
 void SyntaxTextBox::OnCharAdded(wxStyledTextEvent &event)
 {
-    if ((_style & SYNTAX_STYLE_CODE) && event.GetKey() == '\n' && !_controls->IsInHotkeyExecution())
+    if (!_controls->IsInHotkeyExecution() && (_style & SYNTAX_STYLE_CODE))
     {
-        // Use indentation of the previous line
-        int curLine = GetCurrentLine();
-        if (curLine > 0 && GetLineLength(curLine) <= 2)
+        if (event.GetKey() == '\n')
         {
-            wxString line = GetLine(curLine - 1);
-            for (wxString::iterator i = line.begin(); i != line.end(); ++i)
-                if (*i != wxT(' ') && *i != wxT('\t'))
-                {
-                    line.erase(i, line.end());
-                    break;
-                }
-            ReplaceSelection(line);
+            // Use indentation of the previous line
+            int curLine = GetCurrentLine();
+            if (curLine > 0 && GetLineLength(curLine) <= 2)
+            {
+                wxString line = GetLine(curLine - 1);
+                for (wxString::iterator i = line.begin(); i != line.end(); ++i)
+                    if (*i != wxT(' ') && *i != wxT('\t'))
+                    {
+                        line.erase(i, line.end());
+                        break;
+                    }
+                ReplaceSelection(line);
+            }
         }
     }
 }
@@ -413,52 +422,73 @@ void SyntaxTextBox::ExpandCollapseAll(bool isExpanded)
     Thaw();
 }
 
-void SyntaxTextBox::OnMouseMove(wxMouseEvent& event)
-{
-    wxStyledTextCtrl::OnMouseMove(event);
-    if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
-        Tip(PositionFromPoint(event.GetPosition()));
-}
-
 wxString SyntaxTextBox::GetWordFromPos(long pos)
 {
-    wxString str;
-    long beginPos, lastPos;
     int lineInd = LineFromPosition(pos);
-    long realPos = GetCharIndexFromPosition(PositionFromLine(lineInd), pos);
     wxString lineStr = GetLine(lineInd).Trim();
     if (!lineStr.IsEmpty())
     {
-        if (realPos >= lineStr.Length())
-            realPos = lineStr.Length() - 1;
-        beginPos = realPos;
-        lastPos = realPos;
-        while (beginPos >= 0)
-            if (QSP_STRCHR(QSP_DELIMS, lineStr[beginPos]))
-                break;
-            else
-                --beginPos;
-        while ((size_t)lastPos < lineStr.Length())
-            if (QSP_STRCHR(QSP_DELIMS, lineStr[lastPos]))
-                break;
-            else
-                ++lastPos;
-        if (lastPos > beginPos) str = lineStr.Mid(beginPos + 1, lastPos - beginPos - 1);
+        long realPos = GetCharIndexFromPosition(PositionFromLine(lineInd), pos);
+        return Utils::GetWordFromPos(lineStr, realPos);
     }
 
-    return str;
+    return wxEmptyString;
 }
 
-void SyntaxTextBox::Tip(long pos)
+void SyntaxTextBox::Tip(long pos, bool showCallTip)
 {
-    wxString str = GetWordFromPos(pos);
-    if (!str.IsEmpty())
-        _controls->SetStatusText(_keywordsStore->FindTip(str));
+    bool isShown = false;
+
+    if (pos >= 0)
+    {
+        wxString str = GetWordFromPos(pos);
+        if (!str.IsEmpty())
+        {
+            wxString tipDesc = _keywordsStore->FindTip(str);
+            if (!tipDesc.IsEmpty())
+            {
+                _controls->SetStatusText(tipDesc);
+                if (showCallTip) CallTipShow(pos, tipDesc);
+                isShown = true;
+            }
+        }
+    }
+
+    if (!isShown)
+    {
+        _controls->SetStatusText(wxEmptyString);
+        CallTipCancel();
+    }
 }
 
 void SyntaxTextBox::OnKeyUp(wxKeyEvent& event)
 {
     if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
-        Tip(GetCurrentPos());
+    {
+        bool isNavigationKey = event.IsKeyInCategory(WXK_CATEGORY_NAVIGATION);
+        bool isCancellation = event.GetKeyCode() == WXK_ESCAPE;
+        Tip(GetCurrentPos(), !(isNavigationKey || isCancellation));
+    }
+    event.Skip();
+}
+
+void SyntaxTextBox::OnDwellStart(wxStyledTextEvent& event)
+{
+    if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
+        Tip(event.GetPosition(), true);
+    event.Skip();
+}
+
+void SyntaxTextBox::OnDwellEnd(wxStyledTextEvent& event)
+{
+    if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
+        CallTipCancel();
+    event.Skip();
+}
+
+void SyntaxTextBox::OnMouseMove(wxMouseEvent& event)
+{
+    if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
+        Tip(PositionFromPoint(event.GetPosition()), false);
     event.Skip();
 }

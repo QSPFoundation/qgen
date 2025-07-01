@@ -59,13 +59,15 @@
         bool StartAutoComplete();
         void Expand(int &line, bool doExpand, bool force = false, int visLevels = 0, int level = -1);
         wxString GetWordFromPos(long pos);
-        void Tip(long pos);
+        void Tip(long pos, bool showCallTip);
 
         void OnKeyDown(wxKeyEvent& event);
         void OnKeyUp(wxKeyEvent& event);
         void OnRightClick(wxMouseEvent& event);
         void OnMarginClicked(wxStyledTextEvent &event);
         void OnCharAdded(wxStyledTextEvent &event);
+        void OnDwellStart(wxStyledTextEvent& event);
+        void OnDwellEnd(wxStyledTextEvent& event);
         void OnMouseMove(wxMouseEvent& event);
     public:
         SyntaxTextBox(wxWindow *owner, IControls *controls, int style);

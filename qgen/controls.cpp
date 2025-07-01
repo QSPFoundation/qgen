@@ -978,33 +978,18 @@ void Controls::JumpToSelectedLoc()
 
 wxString Controls::GetSelectedWord() const
 {
-    wxString str, data;
-    long beginPos, lastPos, curPos;
     wxTextEntryBase *txt = GetCurrentTextBox();
     if (txt)
     {
-        str = txt->GetStringSelection();
-        data = txt->GetValue();
-        curPos = txt->GetInsertionPoint();
-        if (str.IsEmpty() && !data.IsEmpty())
-        {
-            if (curPos == data.Length()) --curPos;
-            beginPos = curPos;
-            lastPos = curPos;
-            while (beginPos >= 0)
-                if (QSP_STRCHR(QSP_DELIMS, data[beginPos]))
-                    break;
-                else
-                    --beginPos;
-            while ((size_t)lastPos < data.Length())
-                if (QSP_STRCHR(QSP_DELIMS, data[lastPos]))
-                    break;
-                else
-                    ++lastPos;
-            if (lastPos > beginPos) str = data.Mid(beginPos + 1, lastPos - beginPos - 1);
-        }
+        wxString selStr = txt->GetStringSelection();
+        if (!selStr.IsEmpty())
+            return selStr;
+
+        wxString text = txt->GetValue();
+        if (!text.IsEmpty())
+            return Utils::GetWordFromPos(text, txt->GetInsertionPoint());
     }
-    return str;
+    return wxEmptyString;
 }
 
 bool Controls::SearchString(const wxString &str, bool toFindAgain, bool isCaseSensitive, bool isWholeString, bool isRegExp)

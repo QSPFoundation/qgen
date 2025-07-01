@@ -47,6 +47,7 @@
         static wxString GetAppPath(const wxString &path = wxEmptyString, const wxString &file = wxEmptyString);
         static wxString GetResourcePath(const wxString &path = wxEmptyString, const wxString &file = wxEmptyString);
         static wxString GetConfigPath(const wxString &path = wxEmptyString, const wxString &file = wxEmptyString);
+        static wxString GetWordFromPos(const wxString &text, long pos);
     };
 
 #endif
