@@ -468,8 +468,9 @@ void SyntaxTextBox::OnKeyUp(wxKeyEvent& event)
     if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
     {
         bool isNavigationKey = event.IsKeyInCategory(WXK_CATEGORY_NAVIGATION);
-        bool isCancellation = event.GetKeyCode() == WXK_ESCAPE;
-        Tip(GetCurrentPos(), !(isNavigationKey || isCancellation));
+        bool isSpecial = event.GetKeyCode() == WXK_ESCAPE || event.GetKeyCode() >= WXK_START;
+        bool hasModifiers = event.HasModifiers();
+        Tip(GetCurrentPos(), !(isNavigationKey || isSpecial || hasModifiers));
     }
     event.Skip();
 }
