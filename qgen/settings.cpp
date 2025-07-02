@@ -66,6 +66,7 @@ void Settings::InitSettings()
     _toOpenLastGame = true;
     _toShowLinesNums = true;
     _toShowHiddenChars = false;
+    _toShowCallTips = false;
     _toCreateFirstLoc = false;
     _firstLocName = wxEmptyString;
     _toShowLocsIcons = true;
@@ -150,6 +151,7 @@ void Settings::LoadSettings()
     cfg.Read(wxT("Editor/ShowLinesNums"), &_toShowLinesNums);
     cfg.Read(wxT("Editor/CollapseCode"), &_toCollapseCode);
     cfg.Read(wxT("Editor/ShowHiddenChars"), &_toShowHiddenChars);
+    cfg.Read(wxT("Editor/ShowCallTips"), &_toShowCallTips);
     cfg.Read(wxT("Editor/TabSize"), &_tabSize);
     cfg.Read(wxT("Fonts/Statements"), &_font[SYNTAX_STATEMENTS]);
     cfg.Read(wxT("Fonts/Functions"), &_font[SYNTAX_FUNCTIONS]);
@@ -231,6 +233,7 @@ void Settings::SaveSettings()
     cfg.Write(wxT("Editor/ShowLinesNums"), _toShowLinesNums);
     cfg.Write(wxT("Editor/CollapseCode"), _toCollapseCode);
     cfg.Write(wxT("Editor/ShowHiddenChars"), _toShowHiddenChars);
+    cfg.Write(wxT("Editor/ShowCallTips"), _toShowCallTips);
     cfg.Write(wxT("Editor/TabSize"), _tabSize);
     cfg.Write(wxT("Fonts/Statements"), _font[SYNTAX_STATEMENTS]);
     cfg.Write(wxT("Fonts/Functions"), _font[SYNTAX_FUNCTIONS]);

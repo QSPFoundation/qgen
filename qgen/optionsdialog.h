@@ -130,6 +130,7 @@
         wxCheckBox * _chkLocActsVisible;
         wxCheckBox * _chkWrapLines;
         wxCheckBox * _chkShowHiddenChars;
+        wxCheckBox * _chkShowCallTips;
         wxCheckBox * _chkOpenLastGame;
         wxCheckBox * _chkShowLinesNums;
         wxCheckBox * _chkCollapseCode;

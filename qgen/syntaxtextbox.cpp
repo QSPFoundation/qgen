@@ -54,10 +54,6 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
     {
         UsePopUp(wxSTC_POPUP_NEVER);
     }
-    if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
-    {
-        SetMouseDwellTime(250);
-    }
     if (_style & SYNTAX_STYLE_CODE)
     {
         SetScrollWidth(-1);
@@ -176,6 +172,11 @@ void SyntaxTextBox::Update(bool isFromObservable)
             StyleSetBackground(wxSTC_STYLE_LINENUMBER, altBackColor);
             SetMarginWidth(SYNTAX_NUM_MARGIN, settings->GetShowLinesNums() ? 40 : 0);
         }
+    }
+
+    if (!(_style & SYNTAX_STYLE_NOHELPTIPS))
+    {
+        SetMouseDwellTime(settings->GetShowCallTips() ? 250 : wxSTC_TIME_FOREVER);
     }
 }
 
@@ -448,7 +449,8 @@ void SyntaxTextBox::Tip(long pos, bool showCallTip)
             if (!tipDesc.IsEmpty())
             {
                 _controls->SetStatusText(tipDesc);
-                if (showCallTip) CallTipShow(pos, tipDesc);
+                if (showCallTip && GetMouseDwellTime() != wxSTC_TIME_FOREVER)
+                    CallTipShow(pos, tipDesc);
                 isShown = true;
             }
         }

@@ -73,6 +73,7 @@
         bool _toOpenLastGame;
         bool _toShowLinesNums;
         bool _toShowHiddenChars;
+        bool _toShowCallTips;
         bool _toCreateFirstLoc;
         bool _toShowLocsIcons;
         bool _toCollapseCode;
@@ -129,6 +130,8 @@
         bool GetShowLinesNums() const { return _toShowLinesNums; }
         void SetShowHiddenChars(bool status) { _toShowHiddenChars = status; }
         bool GetShowHiddenChars() const { return _toShowHiddenChars; }
+        void SetShowCallTips(bool status) { _toShowCallTips = status; }
+        bool GetShowCallTips() const { return _toShowCallTips; }
         void SetLastGamePath(const wxString &path) { _lastGamePath = path; }
         wxString GetLastGamePath() const { return _lastGamePath; }
         void SetCreateFirstLoc(bool status) { _toCreateFirstLoc = status; }

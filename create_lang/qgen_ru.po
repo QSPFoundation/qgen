@@ -762,6 +762,9 @@ msgstr "Показывать номера строк"
 msgid "Show hidden characters"
 msgstr "Показывать скрытые символы"
 
+msgid "Show call tips"
+msgstr "Показывать всплывающие подсказки"
+
 msgid "Show location icons"
 msgstr "Отображать иконки в списке локаций"
 
