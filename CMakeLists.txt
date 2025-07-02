@@ -4,7 +4,9 @@ if ("${APP_VERSION}" STREQUAL "")
 	set(APP_VERSION "0.0.0" CACHE STRING "App version" FORCE)
 endif()
 
-project(qgen VERSION ${APP_VERSION} HOMEPAGE_URL "https://qsp.org")
+string(REGEX MATCH "^[0-9]+\\.[0-9]+\\.[0-9]+" CMAKE_APP_VERSION "${APP_VERSION}")
+
+project(qgen VERSION ${CMAKE_APP_VERSION} HOMEPAGE_URL "https://qsp.org")
 
 include(CMakePackageConfigHelpers)
 include(GenerateExportHeader)
