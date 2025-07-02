@@ -593,7 +593,10 @@ void LocationsListBox::OnMouseMove(wxMouseEvent &event)
 {
     event.Skip();
 
-    if (!_mainFrame->IsActive() || !_controls->GetSettings()->GetShowShortLocsDescs())
+    if (!_mainFrame->IsActive() && !HasFocus())
+        return;
+
+    if (!_controls->GetSettings()->GetShowShortLocsDescs())
         return;
 
     int flags;
@@ -643,8 +646,12 @@ void LocationsListBox::OnLeaveWindow(wxMouseEvent &event)
 {
     event.Skip();
 
-    if (!_mainFrame->IsActive() || !_controls->GetSettings()->GetShowShortLocsDescs())
+    if (!_mainFrame->IsActive() && !HasFocus())
         return;
+
+    if (!_controls->GetSettings()->GetShowShortLocsDescs())
+        return;
+
     if (_showTimer.IsRunning())
         _showTimer.Stop();
     _tip->HideTip();
