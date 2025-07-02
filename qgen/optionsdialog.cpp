@@ -499,7 +499,7 @@ void OptionsDialog::ReCreateGUI()
     _chkShowLinesNums->SetLabel(_("Show line numbers"));
     _chkCollapseCode->SetLabel(_("Collapse blocks of code when location gets opened"));
     _chkShowHiddenChars->SetLabel(_("Show hidden characters"));
-    _chkShowCallTips->SetLabel(_("Show call tips"));
+    _chkShowCallTips->SetLabel(_("Show call tip popups"));
     // Page Sizes
     _notebook->SetPageText(2, _("Sizes"));
     _stTextHeights->SetLabel(_("Relative height of description and location\ncode fields to the tab height (%):"));

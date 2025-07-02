@@ -762,7 +762,7 @@ msgstr "Показывать номера строк"
 msgid "Show hidden characters"
 msgstr "Показывать скрытые символы"
 
-msgid "Show call tips"
+msgid "Show call tip popups"
 msgstr "Показывать всплывающие подсказки"
 
 msgid "Show location icons"
