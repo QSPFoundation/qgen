@@ -54,6 +54,7 @@
         int _style;
 
         static wxString GetArrayAsString(const wxArrayString &arr);
+        void DisableSpecialKeys();
         long GetCharPosition(long startPos, long chars);
         long GetCharIndexFromPosition(long fromPos, long pos);
         bool StartAutoComplete();

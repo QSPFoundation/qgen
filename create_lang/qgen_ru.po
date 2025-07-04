@@ -22,8 +22,8 @@ msgstr "&О программе..."
 msgid "&Actions"
 msgstr "&Действия"
 
-msgid "&Close all tabs\tCtrl+Alt+F4"
-msgstr "&Закрыть все вкладки\tCtrl+Alt+F4"
+msgid "&Close all tabs\tCtrl+Shift+F4"
+msgstr "&Закрыть все вкладки\tCtrl+Shift+F4"
 
 msgid "&Copy\tCtrl+Shift+C"
 msgstr "&Копировать\tCtrl+Shift+C"
@@ -106,14 +106,14 @@ msgstr "&Сохранить\tCtrl+S"
 msgid "&Settings...\tCtrl+P"
 msgstr "&Настройки...\tCtrl+P"
 
-msgid "&Toolbar\tCtrl+Alt+T"
-msgstr "&Панель инструментов\tCtrl+Alt+T"
+msgid "&Toolbar\tAlt+Shift+T"
+msgstr "&Панель инструментов\tAlt+Shift+T"
 
-msgid "&Location list\tCtrl+Alt+L"
-msgstr "&Окно списка локаций\tCtrl+Alt+L"
+msgid "&Location list\tAlt+Shift+L"
+msgstr "&Окно списка локаций\tAlt+Shift+L"
 
-msgid "&Statusbar\tCtrl+Alt+S"
-msgstr "&Строка состояния\tCtrl+Alt+S"
+msgid "&Statusbar\tAlt+Shift+S"
+msgstr "&Строка состояния\tAlt+Shift+S"
 
 msgid "&Text"
 msgstr "&Текст"
@@ -774,11 +774,11 @@ msgstr "Показывать краткие описания локаций"
 msgid "Show short statistics"
 msgstr "Показать краткую статистику"
 
-msgid "Show/Hide location &actions\tCtrl+Alt+A"
-msgstr "Показать/скрыть &действия локации\tCtrl+Alt+A"
+msgid "Show/Hide location &actions\tAlt+Shift+A"
+msgstr "Показать/скрыть &действия локации\tAlt+Shift+A"
 
-msgid "Show/Hide location &description\tCtrl+Alt+D"
-msgstr "Показать/скрыть &описание локации\tCtrl+Alt+D"
+msgid "Show/Hide location &description\tAlt+Shift+D"
+msgstr "Показать/скрыть &описание локации\tAlt+Shift+D"
 
 msgid "Size of TAB:"
 msgstr "Размер TAB:"

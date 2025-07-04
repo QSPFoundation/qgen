@@ -312,14 +312,14 @@ void MainFrame::CreateToolBar()
 void MainFrame::Update(bool isFromObservable /*= false*/)
 {
     wxMenuBar *menuBar = GetMenuBar();
-    //Menu
+    // Menu
     menuBar->SetMenuLabel(0, _("&Game"));
     menuBar->SetMenuLabel(1, _("&Utilities"));
     menuBar->SetMenuLabel(2, _("&Locations"));
     menuBar->SetMenuLabel(3, _("&Text"));
     menuBar->SetMenuLabel(4, _("&View"));
     menuBar->SetMenuLabel(5, _("&Help"));
-    //Game
+    // Game
     menuBar->SetLabel(ID_GAME_NEW, _("&New\tCtrl+N"));
     menuBar->SetHelpString(ID_GAME_NEW, _("Create a new game"));
     menuBar->SetLabel(ID_GAME_OPEN, _("&Open...\tCtrl+O"));
@@ -330,16 +330,14 @@ void MainFrame::Update(bool isFromObservable /*= false*/)
     menuBar->SetHelpString(ID_GAME_SAVE, _("Save the game"));
     menuBar->SetLabel(ID_GAME_SAVEAS, _("Save &as...\tCtrl+W"));
     menuBar->SetHelpString(ID_GAME_SAVEAS, _("Save the game into another file..."));
-    //Sub menu Export
     menuBar->SetLabel(ID_GAME_EXPORT, _("&Export"));
     menuBar->SetLabel(ID_GAME_EXPORTTXT, _("Text file..."));
     menuBar->SetLabel(ID_GAME_EXPORTTXT2GAM,  _("Text file in TXT2GAM format..."));
-    //Sub menu Import
     menuBar->SetLabel(ID_GAME_IMPORT, _("&Import"));
     menuBar->SetLabel(ID_GAME_IMPORTTXT2GAM,  _("Text file in TXT2GAM format..."));
     menuBar->SetLabel(ID_QGEN_EXIT, _("&Exit\tAlt+X"));
     menuBar->SetHelpString(ID_QGEN_EXIT, _("Close program"));
-    //Utilities
+    // Utilities
     menuBar->SetLabel(ID_GAME_PLAY, _("&Run game\tF5"));
     menuBar->SetHelpString(ID_GAME_PLAY, _("Run the current game"));
     menuBar->SetLabel(ID_UTIL_FIND, _("&Find / Replace\tCtrl+F"));
@@ -347,7 +345,7 @@ void MainFrame::Update(bool isFromObservable /*= false*/)
     menuBar->SetLabel(ID_UTIL_INF, _("&Game info\tCtrl+I"));
     menuBar->SetHelpString(ID_UTIL_INF, _("Show short statistics"));
     menuBar->SetLabel(ID_UTIL_OPTIONS, _("&Settings...\tCtrl+P"));
-    //Locations
+    // Locations
     menuBar->SetLabel(ID_LOC_CREATE, _("&Create...\tF7"));
     menuBar->SetHelpString(ID_LOC_CREATE, _("Create a location"));
     menuBar->SetLabel(ID_LOC_RENAME, _("&Rename...\tF6"));
@@ -381,7 +379,7 @@ void MainFrame::Update(bool isFromObservable /*= false*/)
     menuBar->SetLabel(ID_LOC_SORTASC, _("So&rt ascending\tCtrl+Shift+O"));
     menuBar->SetLabel(ID_LOC_SORTDESC, _("Sor&t descending\tCtrl+Shift+P"));
     menuBar->SetLabel(ID_LOC_JUMPLOC, _("G&o to selected location\tCtrl+G"));
-    //Text
+    // Text
     menuBar->SetLabel(ID_TEXT_UNDO, _("&Undo\tCtrl+Z"));
     menuBar->SetLabel(ID_TEXT_REDO, _("&Redo\tCtrl+Y"));
     menuBar->SetLabel(ID_TEXT_CUT, _("&Cut\tCtrl+X"));
@@ -389,23 +387,23 @@ void MainFrame::Update(bool isFromObservable /*= false*/)
     menuBar->SetLabel(ID_TEXT_PASTE, _("&Paste\tCtrl+V"));
     menuBar->SetLabel(ID_TEXT_DEL, _("&Delete\tCtrl+D"));
     menuBar->SetLabel(ID_TEXT_SELALL, _("S&elect all\tCtrl+A"));
-    //View
+    // View
     menuBar->SetLabel(ID_TOGGLE, _("&Window list"));
-    menuBar->SetLabel(ID_TOGGLE_TOOLBAR, _("&Toolbar\tCtrl+Alt+T"));
-    menuBar->SetLabel(ID_TOGGLE_LISTBOX, _("&Location list\tCtrl+Alt+L"));
-    menuBar->SetLabel(ID_TOGGLE_STATUSBAR, _("&Statusbar\tCtrl+Alt+S"));
-    menuBar->SetLabel(ID_TAB_CLOSEALL, _("&Close all tabs\tCtrl+Alt+F4"));
+    menuBar->SetLabel(ID_TOGGLE_TOOLBAR, _("&Toolbar\tAlt+Shift+T"));
+    menuBar->SetLabel(ID_TOGGLE_LISTBOX, _("&Location list\tAlt+Shift+L"));
+    menuBar->SetLabel(ID_TOGGLE_STATUSBAR, _("&Statusbar\tAlt+Shift+S"));
+    menuBar->SetLabel(ID_TAB_CLOSEALL, _("&Close all tabs\tCtrl+Shift+F4"));
     menuBar->SetLabel(ID_TAB_CLOSEEXCEPTSELECTED, _("Close all tabs &except current"));
     menuBar->SetLabel(ID_TAB_CLOSESELECTED, _("Close c&urrent tab\tCtrl+F4"));
     menuBar->SetLabel(ID_TAB_FIX, _("Pin/Unpin &tab"));
-    menuBar->SetLabel(ID_LOC_DESCVISIBLE, _("Show/Hide location &description\tCtrl+Alt+D"));
-    menuBar->SetLabel(ID_LOC_ACTVISIBLE, _("Show/Hide location &actions\tCtrl+Alt+A"));
-    //Help
+    menuBar->SetLabel(ID_LOC_DESCVISIBLE, _("Show/Hide location &description\tAlt+Shift+D"));
+    menuBar->SetLabel(ID_LOC_ACTVISIBLE, _("Show/Hide location &actions\tAlt+Shift+A"));
+    // Help
     menuBar->SetLabel(ID_HELP, _("&Help\tF1"));
     menuBar->SetLabel(ID_HELP_SEARCH, _("Help by &keyword\tCtrl+F1"));
     menuBar->SetLabel(ID_HELP_CHECKUPDATES, _("Check for latest version"));
     menuBar->SetLabel(ID_ABOUT, _("&About..."));
-    //AUI controls
+
     _manager.GetPane(_locListBox).Caption(_("Locations"));
     _manager.Update();
 }

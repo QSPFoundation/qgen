@@ -42,6 +42,8 @@ SyntaxTextBox::SyntaxTextBox(wxWindow *owner, IControls *controls, int style) :
     _controls = controls;
     _keywordsStore = controls->GetKeywordsStore();
     _style = style;
+
+    DisableSpecialKeys();
     SetEOLMode(wxSTC_EOL_LF);
     SetWrapMode(wxSTC_WRAP_WORD);
     SetMarginWidth(1, 0);
@@ -318,6 +320,15 @@ wxString SyntaxTextBox::GetArrayAsString(const wxArrayString &arr)
             res += wxT(" ") + arr[i];
     }
     return res;
+}
+
+void SyntaxTextBox::DisableSpecialKeys()
+{
+    for (char key = 'A'; key <= 'Z'; ++key)
+    {
+        CmdKeyClear(key, wxSTC_KEYMOD_CTRL | wxSTC_KEYMOD_ALT);
+        CmdKeyClear(key, wxSTC_KEYMOD_CTRL | wxSTC_KEYMOD_ALT | wxSTC_KEYMOD_SHIFT);
+    }
 }
 
 long SyntaxTextBox::GetCharPosition(long startPos, long chars)

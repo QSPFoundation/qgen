@@ -22,8 +22,8 @@ msgstr "&About..."
 msgid "&Actions"
 msgstr "&Actions"
 
-msgid "&Close all tabs\tCtrl+Alt+F4"
-msgstr "&Close all tabs\tCtrl+Alt+F4"
+msgid "&Close all tabs\tCtrl+Shift+F4"
+msgstr "&Close all tabs\tCtrl+Shift+F4"
 
 msgid "&Copy\tCtrl+Shift+C"
 msgstr "&Copy\tCtrl+Shift+C"
@@ -106,14 +106,14 @@ msgstr "&Save\tCtrl+S"
 msgid "&Settings...\tCtrl+P"
 msgstr "&Settings...\tCtrl+P"
 
-msgid "&Toolbar\tCtrl+Alt+T"
-msgstr "&Toolbar\tCtrl+Alt+T"
+msgid "&Toolbar\tAlt+Shift+T"
+msgstr "&Toolbar\tAlt+Shift+T"
 
-msgid "&Location list\tCtrl+Alt+L"
-msgstr "&Location list\tCtrl+Alt+L"
+msgid "&Location list\tAlt+Shift+L"
+msgstr "&Location list\tAlt+Shift+L"
 
-msgid "&Statusbar\tCtrl+Alt+S"
-msgstr "&Statusbar\tCtrl+Alt+S"
+msgid "&Statusbar\tAlt+Shift+S"
+msgstr "&Statusbar\tAlt+Shift+S"
 
 msgid "&Text"
 msgstr "&Text"
@@ -774,11 +774,11 @@ msgstr "Show short location descriptions"
 msgid "Show short statistics"
 msgstr "Show short statistics"
 
-msgid "Show/Hide location &actions\tCtrl+Alt+A"
-msgstr "Show/Hide location &actions\tCtrl+Alt+A"
+msgid "Show/Hide location &actions\tAlt+Shift+A"
+msgstr "Show/Hide location &actions\tAlt+Shift+A"
 
-msgid "Show/Hide location &description\tCtrl+Alt+D"
-msgstr "Show/Hide location &description\tCtrl+Alt+D"
+msgid "Show/Hide location &description\tAlt+Shift+D"
+msgstr "Show/Hide location &description\tAlt+Shift+D"
 
 msgid "Size of TAB:"
 msgstr "Size of TAB:"
