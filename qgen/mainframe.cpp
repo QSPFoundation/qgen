@@ -36,6 +36,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_TAB_FIX, MainFrame::OnFixPage)
     EVT_MENU(ID_HELP, MainFrame::OnChmHelp)
     EVT_MENU(ID_HELP_SEARCH, MainFrame::OnSearchHelp)
+    EVT_MENU(ID_HELP_CHECKUPDATES, MainFrame::OnCheckUpdates)
     EVT_MENU(ID_FOLDER_CREAT, MainFrame::OnCreateFolder)
     EVT_MENU(ID_FOLDER_RENAME, MainFrame::OnRenameFolder)
     EVT_MENU(ID_FOLDER_DEL, MainFrame::OnDeleteFolder)
@@ -88,6 +89,8 @@ MainFrame::MainFrame(IControls *controls) :
     _timerAutoSave(this, ID_TIMER_AUTO_SAVE),
     _timerUpdToolBar(this, ID_TIMER_UPD_TOOLBAR)
 {
+    Bind(wxEVT_WEBREQUEST_STATE, &MainFrame::OnVersionRequestState, this);
+
     _controls = controls;
     Create(wxSize(640, 480), wxDEFAULT_FRAME_STYLE);
     _timerAutoSave.Start(1000);
@@ -103,14 +106,14 @@ MainFrame::~MainFrame()
     _manager.UnInit();
 }
 
-bool MainFrame::Create(const wxSize& size, long style)
+bool MainFrame::Create(const wxSize &size, long style)
 {
     bool res = wxFrame::Create(NULL, wxID_ANY, wxEmptyString, wxDefaultPosition, size, style);
     if (res)
     {
-        #ifdef __WXMSW__
-            SetIcon(wxICON(qgen));
-        #endif
+#ifdef __WXMSW__
+        SetIcon(wxICON(qgen));
+#endif
         SetMinSize(wxSize(550, 300));
         CreateControls();
     }
@@ -286,6 +289,8 @@ void MainFrame::CreateMenuBar()
     indexSearchHelpItem->SetBitmap(wxBitmap(menu_help_search_xpm));
     help_menu->Append(indexSearchHelpItem);
 
+    help_menu->Append(ID_HELP_CHECKUPDATES, wxT("-"));
+
     help_menu->AppendSeparator();
     help_menu->Append(ID_ABOUT, wxT("-"));
 
@@ -398,6 +403,7 @@ void MainFrame::Update(bool isFromObservable /*= false*/)
     //Help
     menuBar->SetLabel(ID_HELP, _("&Help\tF1"));
     menuBar->SetLabel(ID_HELP_SEARCH, _("Help by &keyword\tCtrl+F1"));
+    menuBar->SetLabel(ID_HELP_CHECKUPDATES, _("Check for latest version"));
     menuBar->SetLabel(ID_ABOUT, _("&About..."));
     //AUI controls
     _manager.GetPane(_locListBox).Caption(_("Locations"));
@@ -406,12 +412,27 @@ void MainFrame::Update(bool isFromObservable /*= false*/)
 
 void MainFrame::OnInit(InitEvent &event)
 {
-    if (_controls->LoadGame(event.GetInitString())) UpdateTitle();
+    if (_controls->LoadGame(event.GetInitString()))
+        UpdateTitle();
 }
 
 void MainFrame::OnExit(wxCommandEvent &event)
 {
     Close();
+}
+
+void MainFrame::OnVersionRequestState(wxWebRequestEvent &event)
+{
+    switch (event.GetState())
+    {
+        case wxWebRequest::State_Completed:
+            _controls->ProcessVersionResult(event.GetResponse().AsString(), event.GetId());
+            break;
+        case wxWebRequest::State_Failed:
+        case wxWebRequest::State_Unauthorized:
+            _controls->ProcessVersionResult(wxEmptyString, event.GetId());
+            break;
+    }
 }
 
 void MainFrame::OnNewGame(wxCommandEvent &event)
@@ -568,7 +589,7 @@ void MainFrame::TogglePaneVisibility(const wxString &pane_name)
     }
 }
 
-void MainFrame::OnPaneClose(wxAuiManagerEvent& event)
+void MainFrame::OnPaneClose(wxAuiManagerEvent &event)
 {
     switch (event.GetPane()->window->GetId())
     {
@@ -724,7 +745,7 @@ void MainFrame::OnDeleteText(wxCommandEvent &event)
     _controls->DeleteSelectedText();
 }
 
-void MainFrame::OnChmHelp(wxCommandEvent &event )
+void MainFrame::OnChmHelp(wxCommandEvent &event)
 {
 #ifdef __WXMSW__
     DesktopWindow desktop;
@@ -740,7 +761,7 @@ void MainFrame::OnChmHelp(wxCommandEvent &event )
     delete chmHelp;
 }
 
-void MainFrame::OnSearchHelp(wxCommandEvent &event )
+void MainFrame::OnSearchHelp(wxCommandEvent &event)
 {
 #ifdef __WXMSW__
     DesktopWindow desktop;
@@ -756,7 +777,12 @@ void MainFrame::OnSearchHelp(wxCommandEvent &event )
     delete chmHelp;
 }
 
-void MainFrame::OnMergeQuest(wxCommandEvent &event )
+void MainFrame::OnCheckUpdates(wxCommandEvent &event)
+{
+    _controls->CheckLatestVersion(this, UPDATE_SHOW_ALL_RESULTS);
+}
+
+void MainFrame::OnMergeQuest(wxCommandEvent &event)
 {
     wxFileDialog dialog(this,
         _("Merge game file"), wxEmptyString, wxEmptyString,
@@ -769,7 +795,7 @@ void MainFrame::OnMergeQuest(wxCommandEvent &event )
     }
 }
 
-void MainFrame::OnPlayQuest(wxCommandEvent &event )
+void MainFrame::OnPlayQuest(wxCommandEvent &event)
 {
     wxCommandEvent dummy;
     Settings *settings = _controls->GetSettings();
@@ -787,7 +813,7 @@ void MainFrame::OnPlayQuest(wxCommandEvent &event )
         wxExecute(wxString::Format("\"%s\" \"%s\"", settings->GetCurrentPlayerPath(), _controls->GetGamePath()));
 }
 
-void MainFrame::OnExportTxtFile( wxCommandEvent &event )
+void MainFrame::OnExportTxtFile(wxCommandEvent &event)
 {
     wxFileDialog dialog(this,
         _("Save text file"), wxEmptyString, wxT("game.txt"),
@@ -800,7 +826,7 @@ void MainFrame::OnExportTxtFile( wxCommandEvent &event )
     }
 }
 
-void MainFrame::OnExportTxt2Gam( wxCommandEvent &event )
+void MainFrame::OnExportTxt2Gam(wxCommandEvent &event)
 {
     wxFileDialog dialog(this,
         _("Save text file"), wxEmptyString, wxT("game.txt"),
@@ -819,7 +845,7 @@ void MainFrame::OnExportTxt2Gam( wxCommandEvent &event )
     }
 }
 
-void MainFrame::OnImportTxt2Gam( wxCommandEvent &event )
+void MainFrame::OnImportTxt2Gam(wxCommandEvent &event)
 {
     if (!_controls->GetContainer()->IsEmpty())
     {
@@ -841,14 +867,14 @@ void MainFrame::OnImportTxt2Gam( wxCommandEvent &event )
     }
 }
 
-void MainFrame::OnQuestInformation( wxCommandEvent &event )
+void MainFrame::OnQuestInformation(wxCommandEvent &event)
 {
     wxMessageDialog dialog(this, _controls->GetGameInfo(),
         _("Game statistics"), wxOK | wxCENTRE | wxICON_INFORMATION);
     dialog.ShowModal();
 }
 
-void MainFrame::OnOptionsDialog( wxCommandEvent &event )
+void MainFrame::OnOptionsDialog(wxCommandEvent &event)
 {
     OptionsDialog dialog(this, _("Settings"), _controls);
     dialog.CenterOnParent();
@@ -940,7 +966,7 @@ void MainFrame::UpdateTitle()
     SetTitle(title);
 }
 
-void MainFrame::OnTabMenu( wxCommandEvent &event )
+void MainFrame::OnTabMenu(wxCommandEvent &event)
 {
     CloseTypePage type = CLOSE_ALL;
     switch (event.GetId())
@@ -958,7 +984,7 @@ void MainFrame::OnTabMenu( wxCommandEvent &event )
     _locNotebook->ClosePages(type);
 }
 
-void MainFrame::OnFixPage( wxCommandEvent &event )
+void MainFrame::OnFixPage(wxCommandEvent &event)
 {
     int selPage = _locNotebook->GetSelection();
     if (selPage >= 0) _locNotebook->SwitchPageFixed(selPage);
@@ -974,17 +1000,17 @@ void MainFrame::OnLocActsVisible(wxCommandEvent &event)
     _controls->SwitchLocActs();
 }
 
-void MainFrame::OnExpandLocation( wxCommandEvent &event )
+void MainFrame::OnExpandLocation(wxCommandEvent &event)
 {
     _locListBox->ExpandCollapseItems(true);
 }
 
-void MainFrame::OnCollapseLocation( wxCommandEvent &event )
+void MainFrame::OnCollapseLocation(wxCommandEvent &event)
 {
     _locListBox->ExpandCollapseItems(false);
 }
 
-void MainFrame::OnJumpLocation( wxCommandEvent &event )
+void MainFrame::OnJumpLocation(wxCommandEvent &event)
 {
     _controls->JumpToSelectedLoc();
 }
@@ -995,17 +1021,17 @@ void MainFrame::OnKeyDown( wxKeyEvent& event )
         event.Skip();
 }
 
-void MainFrame::OnCreateFolder( wxCommandEvent &event )
+void MainFrame::OnCreateFolder(wxCommandEvent &event)
 {
     _controls->AddFolder();
 }
 
-void MainFrame::OnRenameFolder( wxCommandEvent &event )
+void MainFrame::OnRenameFolder(wxCommandEvent &event)
 {
     _controls->RenameSelectedFolder();
 }
 
-void MainFrame::OnDeleteFolder( wxCommandEvent &event )
+void MainFrame::OnDeleteFolder(wxCommandEvent &event)
 {
     _controls->DeleteSelectedFolder();
 }

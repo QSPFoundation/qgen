@@ -40,6 +40,9 @@
     #define QGEN_DEFKEYWORDSFILE wxT("keywords.xml")
     #define QGEN_KEYWORDSFILE wxT("keywords_%s.xml")
 
+    #define QGEN_LATESTVERAPI wxT("https://api.github.com/repos/QSPFoundation/qgen/releases/latest")
+    #define QGEN_LATESTVERPAGE wxT("https://github.com/QSPFoundation/qgen/releases/latest")
+
     class Utils
     {
     public:

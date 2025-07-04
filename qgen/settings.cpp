@@ -64,6 +64,7 @@ void Settings::InitSettings()
     _toOpenNewLoc = true;
     _toOpenNewAct = true;
     _toOpenLastGame = true;
+    _toCheckUpdates = true;
     _toShowLinesNums = true;
     _toShowHiddenChars = false;
     _toShowCallTips = false;
@@ -143,6 +144,7 @@ void Settings::LoadSettings()
     cfg.Read(wxT("General/OpenNewLoc"), &_toOpenNewLoc);
     cfg.Read(wxT("General/OpenNewAct"), &_toOpenNewAct);
     cfg.Read(wxT("General/OpenLastGame"), &_toOpenLastGame);
+    cfg.Read(wxT("General/CheckUpdates"), &_toCheckUpdates);
     cfg.Read(wxT("General/CreateFirstLoc"), &_toCreateFirstLoc);
     cfg.Read(wxT("General/FirstLocName"), &_firstLocName);
     cfg.Read(wxT("General/ShowLocsIcons"), &_toShowLocsIcons);
@@ -225,6 +227,7 @@ void Settings::SaveSettings()
     cfg.Write(wxT("General/OpenNewLoc"), _toOpenNewLoc);
     cfg.Write(wxT("General/OpenNewAct"), _toOpenNewAct);
     cfg.Write(wxT("General/OpenLastGame"), _toOpenLastGame);
+    cfg.Write(wxT("General/CheckUpdates"), _toCheckUpdates);
     cfg.Write(wxT("General/CreateFirstLoc"), _toCreateFirstLoc);
     cfg.Write(wxT("General/FirstLocName"), _firstLocName);
     cfg.Write(wxT("General/ShowLocsIcons"), _toShowLocsIcons);

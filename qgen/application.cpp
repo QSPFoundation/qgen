@@ -60,6 +60,8 @@ bool Application::OnInit()
             initEvent.SetInitString(settings->GetLastGamePath());
             wxPostEvent(mainFrame, initEvent);
         }
+        if (settings->GetCheckUpdates())
+            _controls->CheckLatestVersion(mainFrame, UPDATE_SHOW_ONLY_NEW);
     }
     return true;
 }

@@ -101,6 +101,7 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     _chkLocDescVisible = new wxCheckBox(_general, wxID_ANY, wxEmptyString);
     _chkLocActsVisible = new wxCheckBox(_general, wxID_ANY, wxEmptyString);
     _chkOpenLastGame = new wxCheckBox(_general, wxID_ANY, wxEmptyString);
+    _chkCheckUpdatesOnStartup = new wxCheckBox(_general, wxID_ANY, wxEmptyString);
 
     _stTextCmbLang = new wxStaticText(_general, wxID_ANY, wxEmptyString);
 
@@ -133,6 +134,8 @@ OptionsDialog::OptionsDialog(wxFrame *parent, const wxString &title, IControls *
     topSizerGeneral->Add(_chkLocActsVisible, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerGeneral->AddStretchSpacer(0);
     topSizerGeneral->Add(_chkOpenLastGame, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
+    topSizerGeneral->AddStretchSpacer(0);
+    topSizerGeneral->Add(_chkCheckUpdatesOnStartup, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerGeneral->AddStretchSpacer(0);
     topSizerGeneral->Add(_stTextCmbLang, 1, wxALL|wxALIGN_CENTER_VERTICAL|wxGROW, 5);
     topSizerGeneral->Add(_cmbLang, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2);
@@ -491,6 +494,7 @@ void OptionsDialog::ReCreateGUI()
     _chkLocDescVisible->SetLabel(_("Show base description on location tab"));
     _chkLocActsVisible->SetLabel(_("Show base actions on location tab"));
     _chkOpenLastGame->SetLabel(_("Remember game file on exit"));
+    _chkCheckUpdatesOnStartup->SetLabel(_("Check for the latest app version on startup"));
     _stTextCmbLang->SetLabel(_("UI language"));
     _autoSaveUnits->SetLabel(_("minutes"));
     // Page Editor
@@ -755,6 +759,7 @@ void OptionsDialog::ApplySettings()
     _settings->SetOpenNewLoc(_chkOpeningLoc->GetValue());
     _settings->SetOpenNewAct(_chkOpeningAct->GetValue());
     _settings->SetOpenLastGame(_chkOpenLastGame->GetValue());
+    _settings->SetCheckUpdates(_chkCheckUpdatesOnStartup->GetValue());
     _settings->SetShowLinesNums(_chkShowLinesNums->GetValue());
     _settings->SetCreateFirstLoc(_chkFirstLoc->GetValue());
     _settings->SetShowLocsIcons(_chkOnLocActIcons->GetValue());
@@ -808,6 +813,7 @@ void OptionsDialog::InitOptionsDialog()
     _chkOpeningLoc->SetValue(_settings->GetOpenNewLoc());
     _chkOpeningAct->SetValue(_settings->GetOpenNewAct());
     _chkOpenLastGame->SetValue(_settings->GetOpenLastGame());
+    _chkCheckUpdatesOnStartup->SetValue(_settings->GetCheckUpdates());
     _chkShowLinesNums->SetValue(_settings->GetShowLinesNums());
     _chkFirstLoc->SetValue(_settings->GetCreateFirstLoc());
     _txtFirstLocName->SetValue(_settings->GetFirstLocName());

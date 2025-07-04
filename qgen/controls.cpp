@@ -1755,3 +1755,57 @@ void Controls::UpdateLocale(int lang)
             _keywordsStore->Load(Utils::GetResourcePath(QGEN_TRANSLATIONS, QGEN_DEFKEYWORDSFILE));
     }
 }
+
+void Controls::CheckLatestVersion(wxEvtHandler *handler, int type)
+{
+    wxWebRequest verRequest = wxWebSession::GetDefault().CreateRequest(handler, QGEN_LATESTVERAPI, type);
+
+    verRequest.Start();
+}
+
+void Controls::ProcessVersionResult(const wxString &versionInfo, int type)
+{
+    bool isSuccess = false;
+
+    if (!versionInfo.IsEmpty())
+    {
+        wxRegEx versionRegEx("\"name\"\\s*:\\s*\"((?:[^\"\\\\]|\\\\.)*)\"");
+        if (versionRegEx.Matches(versionInfo))
+        {
+            isSuccess = true;
+            wxString latestVersion = versionRegEx.GetMatch(versionInfo, 1);
+            if (latestVersion > QGEN_VER)
+            {
+                wxString releaseNotes;
+                wxRegEx releaseNotesRegEx("\"body\"\\s*:\\s*\"((?:[^\"\\\\]|\\\\.)*)\"");
+                if (releaseNotesRegEx.Matches(versionInfo))
+                {
+                    releaseNotes = releaseNotesRegEx.GetMatch(versionInfo, 1);
+                    releaseNotes.Replace("\\r\\n", "\n");
+                    releaseNotes.Replace("\\n", "\n");
+                }
+
+                UpdateAppDialog dialog(GetCurrentTopLevelWindow(), _("Update available"),
+                    latestVersion, releaseNotes, QGEN_LATESTVERPAGE);
+                dialog.CenterOnParent();
+                if (dialog.ShowModal() == wxID_OK)
+                    wxLaunchDefaultBrowser(QGEN_LATESTVERPAGE);
+            }
+            else if (type == UPDATE_SHOW_ALL_RESULTS)
+            {
+                wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
+                    _("Your app is already up to date."),
+                    _("Info"), wxOK | wxCENTRE | wxICON_INFORMATION);
+                dlgMsg.ShowModal();
+            }
+        }
+    }
+
+    if (!isSuccess && type == UPDATE_SHOW_ALL_RESULTS)
+    {
+        wxMessageDialog dlgMsg(GetCurrentTopLevelWindow(),
+            _("Can't check the latest version!"),
+            _("Error"), wxOK | wxCENTRE | wxICON_ERROR);
+        dlgMsg.ShowModal();
+    }
+}

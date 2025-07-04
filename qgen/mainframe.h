@@ -28,12 +28,14 @@
     #include <wx/aboutdlg.h>
     #include <wx/help.h>
     #include <wx/aui/aui.h>
+    #include <wx/webrequest.h>
     #include "initevent.h"
     #include "icontrols.h"
     #include "locationslistbox.h"
     #include "locationsnotebook.h"
     #include "searchdialog.h"
     #include "optionsdialog.h"
+    #include "updateappdialog.h"
     #include "toolbar.h"
     #ifdef __WXMSW__
         #include "desktopwindow.h"
@@ -126,6 +128,7 @@
         ID_ACTION_SUBMENU,
         ID_HELP,
         ID_HELP_SEARCH,
+        ID_HELP_CHECKUPDATES,
         ID_ABOUT,
         ID_TEXT_UNDO,
         ID_TEXT_REDO,
@@ -154,11 +157,13 @@
         IControls * _controls;
         SearchDialog * _findDlg;
 
+        void OnVersionRequestState(wxWebRequestEvent &event);
         void OnInit(InitEvent &event);
         void OnExit(wxCommandEvent &event);
         void OnQuit(wxCloseEvent &event);
         void OnChmHelp(wxCommandEvent &event);
         void OnSearchHelp(wxCommandEvent &event);
+        void OnCheckUpdates(wxCommandEvent &event);
         void OnAbout(wxCommandEvent &event);
         void OnLoadFile(wxCommandEvent &event);
         void OnSaveQuestAs(wxCommandEvent &event);
@@ -186,10 +191,10 @@
         void OnToggleToolbar(wxCommandEvent &event);
         void OnToggleLocations(wxCommandEvent &event);
         void OnToggleStatusbar(wxCommandEvent &event);
-        void OnFindDialog(wxCommandEvent&event);
+        void OnFindDialog(wxCommandEvent &event);
         void OnQuestInformation(wxCommandEvent &event);
         void OnOptionsDialog(wxCommandEvent &event);
-        void OnOpenMenu(wxMenuEvent& event);
+        void OnOpenMenu(wxMenuEvent &event);
         void OnCreateAction(wxCommandEvent &event);
         void OnDeleteAction(wxCommandEvent &event);
         void OnDeleteAllActions(wxCommandEvent &event);
@@ -205,11 +210,11 @@
         void OnFixPage(wxCommandEvent &event);
         void OnLocDescVisible(wxCommandEvent &event);
         void OnLocActsVisible(wxCommandEvent &event);
-        void OnPaneClose(wxAuiManagerEvent& event);
-        void OnUpdateMenuItems(wxMenuEvent& event);
+        void OnPaneClose(wxAuiManagerEvent &event);
+        void OnUpdateMenuItems(wxMenuEvent &event);
         void OnTimerAutoSave(wxTimerEvent &event);
         void OnTimerUpdateToolBar(wxTimerEvent &event);
-        void OnKeyDown(wxKeyEvent& event);
+        void OnKeyDown(wxKeyEvent &event);
 
         void CreateControls();
         void CreateStatusBar();
@@ -222,6 +227,7 @@
         bool CloseCurrentGame();
         bool SelectTxt2Gam();
         void TogglePaneVisibility(const wxString &pane_name);
+
     public:
         MainFrame(IControls *controls);
         ~MainFrame();

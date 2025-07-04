@@ -71,6 +71,7 @@
         bool _toOpenNewLoc;
         bool _toOpenNewAct;
         bool _toOpenLastGame;
+        bool _toCheckUpdates;
         bool _toShowLinesNums;
         bool _toShowHiddenChars;
         bool _toShowCallTips;
@@ -126,6 +127,8 @@
         bool GetOpenNewAct() const { return _toOpenNewAct; }
         void SetOpenLastGame(bool status) { _toOpenLastGame = status; }
         bool GetOpenLastGame() const { return _toOpenLastGame; }
+        void SetCheckUpdates(bool status) { _toCheckUpdates = status; }
+        bool GetCheckUpdates() const { return _toCheckUpdates; }
         void SetShowLinesNums(bool status) { _toShowLinesNums = status; }
         bool GetShowLinesNums() const { return _toShowLinesNums; }
         void SetShowHiddenChars(bool status) { _toShowHiddenChars = status; }

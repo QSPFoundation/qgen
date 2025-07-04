@@ -28,6 +28,7 @@
     #include <wx/regex.h>
     #include <wx/sstream.h>
     #include <wx/txtstrm.h>
+    #include <wx/webrequest.h>
     #include "mainframe.h"
     #include "datacontainer.h"
     #include "locationslistbox.h"
@@ -101,6 +102,7 @@
         static wxWindow *GetCurrentTopLevelWindow();
 
         void InitData();
+
     public:
         Controls();
         ~Controls();
@@ -216,6 +218,9 @@
 
         bool SearchHelpFile();
         void UpdateLocale(int lang);
+
+        void CheckLatestVersion(wxEvtHandler *handler, int type);
+        void ProcessVersionResult(const wxString &versionInfo, int type);
     };
 
 #endif

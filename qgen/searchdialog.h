@@ -19,7 +19,7 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef    _QGEN_SEARCH_REPLACE_DIALOG_H_
+#ifndef _QGEN_SEARCH_REPLACE_DIALOG_H_
     #define _QGEN_SEARCH_REPLACE_DIALOG_H_
 
     #include <wx/wx.h>

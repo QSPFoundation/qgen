@@ -65,6 +65,12 @@ class LocationPage;
         QGEN_MSG_TOOLONGACTIONNAME
     };
 
+    enum AppUpdateType
+    {
+        UPDATE_SHOW_ONLY_NEW,
+        UPDATE_SHOW_ALL_RESULTS
+    };
+
     class IControls
     {
     public:
@@ -145,6 +151,8 @@ class LocationPage;
         virtual bool AddFolder() = 0;
         virtual bool DeleteSelectedFolder() = 0;
         virtual bool RenameSelectedFolder() = 0;
+        virtual void CheckLatestVersion(wxEvtHandler *handler, int type) = 0;
+        virtual void ProcessVersionResult(const wxString &versionInfo, int type) = 0;
     };
 
 #endif

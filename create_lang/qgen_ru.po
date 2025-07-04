@@ -897,3 +897,35 @@ msgstr "для всех"
 msgid "minutes"
 msgstr "минут"
 
+msgid "Update available"
+msgstr "Доступно обновление"
+
+msgid "Your app is already up to date."
+msgstr "Приложение уже обновлено до последней версии."
+
+msgid "Can't check the latest version!"
+msgstr "Не удалось проверить последнюю версию!"
+
+msgid "Error"
+msgstr "Ошибка"
+
+msgid "A new version (%s) is available!"
+msgstr "Доступна новая версия (%s)!"
+
+msgid "Click here to download the update"
+msgstr "Нажмите здесь, чтобы загрузить обновление"
+
+msgid "Release notes:"
+msgstr "Примечания к выпуску:"
+
+msgid "Get the latest version"
+msgstr "Получить последнюю версию"
+
+msgid "Later"
+msgstr "Позже"
+
+msgid "Check for latest version"
+msgstr "Проверить обновление"
+
+msgid "Check for the latest app version on startup"
+msgstr "Проверять наличие обновления при запуске"

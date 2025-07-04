@@ -132,6 +132,7 @@
         wxCheckBox * _chkShowHiddenChars;
         wxCheckBox * _chkShowCallTips;
         wxCheckBox * _chkOpenLastGame;
+        wxCheckBox * _chkCheckUpdatesOnStartup;
         wxCheckBox * _chkShowLinesNums;
         wxCheckBox * _chkCollapseCode;
 

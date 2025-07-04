@@ -561,7 +561,7 @@ long qspSaveQuest(const wxString &passwd, Controls *controls, char **buf)
             len = qspGameCodeWriteVal(buf, len, str, true, true);
         }
     }
-    return len * 2;
+    return len * 2; /* UCS-2 */
 }
 
 long qspExportTxt(Controls *controls, char **buf)
@@ -633,7 +633,7 @@ long qspExportTxt(Controls *controls, char **buf)
                 container->GetLocationName(idxLoc).wx_str());
         len = qspGameCodeWriteVal(buf, len, str, true, false);
     }
-    return len * 2;
+    return len * 2; /* UCS-2 */
 }
 
 long qspExportTxt2Gam(const wxString &fileName, Controls *controls)

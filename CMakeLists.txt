@@ -48,7 +48,7 @@ else()
 endif()
 
 if (USE_INSTALLED_WX)
-	find_package(wxWidgets REQUIRED base core adv aui html stc)
+	find_package(wxWidgets REQUIRED base core adv aui html stc net)
 	include(${wxWidgets_USE_FILE})
 else()
 	# Download and unpack wxWidgets at configure time
@@ -80,10 +80,6 @@ else()
 	set(wxUSE_MEDIACTRL OFF)
 	set(wxUSE_PROPGRID OFF)
 	set(wxUSE_DEBUGREPORT OFF)
-	set(wxUSE_SOCKETS OFF)
-	set(wxUSE_PROTOCOL OFF)
-	set(wxUSE_URL OFF)
-	set(wxUSE_FS_INET OFF)
 	set(wxUSE_WEBVIEW OFF)
 
 	set(wxBUILD_MONOLITHIC OFF)
@@ -133,6 +129,7 @@ set(QGEN_SOURCES
 	qgen/keysparser.cpp
 	qgen/locationsnotebook.cpp
 	qgen/searchdialog.cpp
+	qgen/updateappdialog.cpp
 	qgen/hotkeysstore.cpp
 	qgen/locationtip.cpp
 	qgen/game.cpp
@@ -174,7 +171,7 @@ endif()
 target_compile_definitions(qgen PRIVATE _UNICODE)
 target_compile_options(qgen PRIVATE ${PROJECT_COMPILER_FLAGS})
 target_link_options(qgen PRIVATE ${PROJECT_LINKER_FLAGS})
-target_link_libraries(qgen PRIVATE wxbase wxcore wxadv wxaui wxhtml wxstc wxxml)
+target_link_libraries(qgen PRIVATE wxbase wxcore wxadv wxaui wxhtml wxstc wxnet wxxml)
 
 # Installation
 
@@ -216,8 +213,8 @@ install(TARGETS qgen
 		PUBLIC_HEADER DESTINATION ${HEADERDIR}
 		BUNDLE DESTINATION .)
 if (NOT USE_INSTALLED_WX)
-	set_target_properties(wxbase wxcore wxadv wxaui wxhtml wxstc PROPERTIES INSTALL_RPATH "${INSTALL_RPATH}")
-	install(TARGETS wxbase wxcore wxadv wxaui wxhtml wxstc
+	set_target_properties(wxbase wxcore wxadv wxaui wxhtml wxstc wxnet PROPERTIES INSTALL_RPATH "${INSTALL_RPATH}")
+	install(TARGETS wxbase wxcore wxadv wxaui wxhtml wxstc wxnet
 			COMPONENT Libs
 			RUNTIME DESTINATION ${BINDIR}
 			LIBRARY DESTINATION ${RLIBDIR}

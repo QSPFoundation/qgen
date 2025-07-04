@@ -897,3 +897,35 @@ msgstr "for all"
 msgid "minutes"
 msgstr "minutes"
 
+msgid "Update available"
+msgstr "Update available"
+
+msgid "Your app is already up to date."
+msgstr "Your app is already up to date."
+
+msgid "Can't check the latest version!"
+msgstr "Can't check the latest version!"
+
+msgid "Error"
+msgstr "Error"
+
+msgid "A new version (%s) is available!"
+msgstr "A new version (%s) is available!"
+
+msgid "Click here to download the update"
+msgstr "Click here to download the update"
+
+msgid "Release notes:"
+msgstr "Release notes:"
+
+msgid "Get the latest version"
+msgstr "Get the latest version"
+
+msgid "Later"
+msgstr "Later"
+
+msgid "Check for latest version"
+msgstr "Check for latest version"
+
+msgid "Check for the latest app version on startup"
+msgstr "Check for the latest app version on startup"
