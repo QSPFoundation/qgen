@@ -20,13 +20,12 @@ jobs:
       - name: Get annotation and cleaned tag
         id: tag-data
         env:
-          TAG_NAME: ${{ github.ref_name }}
           PREFIX: "v"
         run: |
-          if [[ "$TAG_NAME" == "$PREFIX"* ]]; then
-            CLEAN_TAG="${TAG_NAME#$PREFIX}"
+          if [[ "$GITHUB_REF_NAME" == "$PREFIX"* ]]; then
+            CLEAN_TAG="${GITHUB_REF_NAME#$PREFIX}"
           else
-            CLEAN_TAG="$TAG_NAME"
+            CLEAN_TAG="$GITHUB_REF_NAME"
           fi
 
           echo "clean_tag=$CLEAN_TAG" >> "$GITHUB_OUTPUT"
