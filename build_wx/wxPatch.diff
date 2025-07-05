@@ -391,7 +391,7 @@ index 0d583c67b0..9d4c2de8ea 100644
 -            image.Rescale(m_Width, m_Height, wxIMAGE_QUALITY_HIGH);
 -            (*m_bitmap) = wxBitmap(image);
 -        }
--#endif 
+-#endif
 -
 -        if (m_Width != m_bitmap->GetLogicalWidth())
 -            imageScaleX = (double) m_Width / (double) m_bitmap->GetLogicalWidth();
