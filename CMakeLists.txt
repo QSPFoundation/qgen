@@ -63,7 +63,7 @@ else()
 	execute_process(COMMAND git checkout --recurse-submodules -- .
 			WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/wxWidgets-src"
 	)
-	execute_process(COMMAND git apply --ignore-whitespace --reject "${CMAKE_SOURCE_DIR}/build_wx/wxPatch.diff"
+	execute_process(COMMAND git apply --check --apply --ignore-whitespace "${CMAKE_SOURCE_DIR}/build_wx/wxPatch.diff"
 			WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/wxWidgets-src"
 	)
 
