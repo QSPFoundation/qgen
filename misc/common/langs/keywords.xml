@@ -28,7 +28,7 @@
     <Keyword name="scanstr" desc="SCANSTR [$array name],[$string],[$pattern],[#group number] - find all substrings matching the regular expression"/>
     <Keyword name="unpackarr" desc="UNPACKARR [$array name],[%tuple],[#start],[#length] - create an array from the elements of the specified slice of a tuple"/>
     <Keyword name="addobj" desc="ADDOBJ [$name],[$image file],[#position] / ADD OBJ [$name],[$image file],[#position] - add an inventory object"/>
-    <Keyword name="delobj" desc="DELOBJ [$name] / DEL OBJ [$name] - delete an inventory object"/>
+    <Keyword name="delobj" desc="DELOBJ [$name],[#objects count] / DEL OBJ [$name],[#objects count] - delete inventory objects with the specified name"/>
     <Keyword name="killobj" desc="KILLOBJ [#position] - clear the inventory / remove the inventory object at the specified position"/>
     <Keyword name="unselect" desc="UNSELECT - cancel the selection of an inventory object"/>
     <Keyword name="unsel" desc="UNSEL - cancel the selection of an inventory object"/>
@@ -62,7 +62,7 @@
     <Keyword name="and" desc="[#condition 1] AND [#condition 2] - logical &quot;AND&quot;. The resulting expression is true if both conditions are true"/>
     <Keyword name="or" desc="[#condition 1] OR [#condition 2] - logical &quot;OR&quot;. The resulting expression is true if at least one condition is true"/>
     <Keyword name="no" desc="NO [#condition] - logical negation. The resulting expression is true if the specified condition is not true"/>
-    <Keyword name="obj" desc="OBJ [$object] - check if the object is in the inventory"/>
+    <Keyword name="obj" desc="OBJ [$object] - returns the number of objects with the specified name in the inventory"/>
     <Keyword name="loc" desc="LOC [$location] - check if the location exists"/>
     <Keyword name="mod" desc="[#expression 1] MOD [#expression 2] - calculate the remainder of division"/>
     <Keyword name="desc|$desc" desc="DESC([$location]) - returns the base description text of the location"/>
