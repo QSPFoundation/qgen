@@ -51,14 +51,14 @@ body:
         - Windows
         - Linux
         - macOS
-        - Other (please specify in Additional Context)
+        - Other (please specify in Additional Information)
     validations:
       required: true
 
   - type: textarea
     id: extra
     attributes:
-      label: Additional Context
+      label: Additional Information
       description: Add any other context about the problem here.
       placeholder: Any additional information that might help us understand or reproduce the issue (screenshots, links to similar issues, config files, log files, etc)...
     validations:

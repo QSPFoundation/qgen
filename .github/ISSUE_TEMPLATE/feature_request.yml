@@ -33,7 +33,7 @@ body:
   - type: textarea
     id: extra
     attributes:
-      label: Additional Context
+      label: Additional Information
       description: Add any relevant screenshots, links, or resources.
       placeholder: Include mockups, examples from other apps, links, screenshots, or any other relevant information...
     validations:
