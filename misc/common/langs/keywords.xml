@@ -10,7 +10,7 @@
     <Keyword name="msg" desc="MSG [$message] - display a message in the information window"/>
     <Keyword name="wait" desc="WAIT [#delay] - pause program execution for the specified number of milliseconds"/>
     <Keyword name="act" desc="ACT [$name],[$image file]:[action code] - add an action"/>
-    <Keyword name="delact" desc="DELACT [$name] / DEL ACT [$name] - delete an action"/>
+    <Keyword name="delact" desc="DELACT [$name] - delete an action"/>
     <Keyword name="cla" desc="CLA - clear the action list"/>
     <Keyword name="cls" desc="CLS - clears the screen leaving only the inventory"/>
     <Keyword name="cmdclear" desc="CMDCLEAR - clear the input line"/>
@@ -27,8 +27,9 @@
     <Keyword name="sortarr" desc="SORTARR [$array name],[#reverse order] - sort an array"/>
     <Keyword name="scanstr" desc="SCANSTR [$array name],[$string],[$pattern],[#group number] - find all substrings matching the regular expression"/>
     <Keyword name="unpackarr" desc="UNPACKARR [$array name],[%tuple],[#start],[#length] - create an array from the elements of the specified slice of a tuple"/>
-    <Keyword name="addobj" desc="ADDOBJ [$name],[$image file],[#position] / ADD OBJ [$name],[$image file],[#position] - add an inventory object"/>
-    <Keyword name="delobj" desc="DELOBJ [$name],[#objects count] / DEL OBJ [$name],[#objects count] - delete inventory objects with the specified name"/>
+    <Keyword name="addobj" desc="ADDOBJ [$name],[$image file],[#position] - add an inventory object"/>
+    <Keyword name="delobj" desc="DELOBJ [$name],[#objects count] - delete inventory objects with the specified name"/>
+    <Keyword name="modobj" desc="MODOBJ [$name],[$title],[$image file] - update inventory objects with the specified name"/>
     <Keyword name="killobj" desc="KILLOBJ [#position] - clear the inventory / remove the inventory object at the specified position"/>
     <Keyword name="unselect" desc="UNSELECT - cancel the selection of an inventory object"/>
     <Keyword name="unsel" desc="UNSEL - cancel the selection of an inventory object"/>
@@ -95,7 +96,7 @@
     <Keyword name="strcomp" desc="STRCOMP([$text],[$pattern]) - checks whether the specified text matches the regular expression"/>
     <Keyword name="strfind|$strfind" desc="STRFIND([$text],[$pattern],[#group number]) - returns the substring corresponding to group [#group number] of the regular expression"/>
     <Keyword name="strpos" desc="STRPOS([$text],[$pattern],[#group number]) - returns the position of the substring corresponding to group [#group number] of the regular expression"/>
-    <Keyword name="countobj" desc="COUNTOBJ - returns the current number of objects in the inventory"/>
+    <Keyword name="countobj" desc="COUNTOBJ - returns the number of objects in the inventory"/>
     <Keyword name="msecscount" desc="MSECSCOUNT - returns the number of milliseconds elapsed since the start of the game"/>
     <Keyword name="rnd" desc="RND - returns a random value from 1 to 1000 inclusive"/>
     <Keyword name="curloc|$curloc" desc="CURLOC - returns the name of the current location"/>
