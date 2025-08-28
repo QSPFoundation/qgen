@@ -36,8 +36,8 @@ body:
   - type: input
     id: version
     attributes:
-      label: App Version
-      description: What version of the app are you using?
+      label: QGen Version
+      description: What version of the QGen are you using?
       placeholder: "e.g. 4.0.0"
     validations:
       required: true
