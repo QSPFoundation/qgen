@@ -95,7 +95,7 @@ void ActionCode::ClearAction()
     Enable(false);
 }
 
-void ActionCode::OnOpenPicture(wxCommandEvent &event)
+void ActionCode::OnOpenPicture(wxCommandEvent &WXUNUSED(event))
 {
     wxString str = _controls->SelectPicturePath();
     if (!str.IsEmpty())

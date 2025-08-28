@@ -25,8 +25,6 @@
     #include <wx/aui/aui.h>
     #include "locationpage.h"
 
-    #include "bitmaps/locstabs_page_fixed.xpm"
-
     enum CloseTypePage
     {
         CLOSE_ALL,
@@ -58,8 +56,8 @@
 
         LocationPage *GetSelectedPage();
         LocationPage *GetPageByLocName(const wxString &name);
-        int FindPageIndex(const wxString& namePage);
-        LocationPage *OpenLocationPage(const wxString& namePage, bool isSelect);
+        int FindPageIndex(const wxString& pageName);
+        LocationPage *OpenLocationPage(const wxString& pageName, bool toSelect);
         bool ClosePage(size_t page);
         bool ClosePages(CloseTypePage closeType);
         void LoadOpenPages();

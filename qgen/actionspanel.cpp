@@ -22,6 +22,10 @@
 #include "actionspanel.h"
 #include "mainframe.h"
 
+#include "bitmaps/toolbar_action_new.xpm"
+#include "bitmaps/toolbar_action_rename.xpm"
+#include "bitmaps/toolbar_action_delete.xpm"
+
 IMPLEMENT_CLASS(ActionsPanel, wxPanel)
 
 BEGIN_EVENT_TABLE(ActionsPanel, wxPanel)
@@ -53,17 +57,17 @@ ActionsPanel::ActionsPanel(wxWindow *owner, ILocationPage *locPage, ActionCode *
     SetAutoLayout(true);
 }
 
-void ActionsPanel::OnAddAction(wxCommandEvent &event)
+void ActionsPanel::OnAddAction(wxCommandEvent &WXUNUSED(event))
 {
     _controls->AddActionOnSelectedLoc();
 }
 
-void ActionsPanel::OnRenAction(wxCommandEvent &event)
+void ActionsPanel::OnRenAction(wxCommandEvent &WXUNUSED(event))
 {
     _controls->RenameSelectedAction();
 }
 
-void ActionsPanel::OnDelAction(wxCommandEvent &event)
+void ActionsPanel::OnDelAction(wxCommandEvent &WXUNUSED(event))
 {
     _controls->DeleteSelectedAction();
 }

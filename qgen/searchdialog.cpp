@@ -92,7 +92,7 @@ SearchDialog::SearchDialog(wxWindow *parent, const wxString &title, IControls *c
     _btnNextSearch->SetDefault();
 }
 
-void SearchDialog::OnFindNext(wxCommandEvent &event)
+void SearchDialog::OnFindNext(wxCommandEvent &WXUNUSED(event))
 {
     wxString searchString = _textFind->GetValue();
     AddSearchText(searchString);
@@ -105,7 +105,7 @@ void SearchDialog::OnFindNext(wxCommandEvent &event)
     _btnNextSearch->SetDefault();
 }
 
-void SearchDialog::OnFindAgain(wxCommandEvent &event)
+void SearchDialog::OnFindAgain(wxCommandEvent &WXUNUSED(event))
 {
     wxString searchString = _textFind->GetValue();
     AddSearchText(searchString);
@@ -118,7 +118,7 @@ void SearchDialog::OnFindAgain(wxCommandEvent &event)
     _btnNextSearch->SetDefault();
 }
 
-void SearchDialog::OnFindRepl(wxCommandEvent &event)
+void SearchDialog::OnFindRepl(wxCommandEvent &WXUNUSED(event))
 {
     wxCommandEvent dummy;
     wxString replaceWithString = _textRepl->GetValue();
@@ -134,7 +134,7 @@ void SearchDialog::OnFindRepl(wxCommandEvent &event)
     _btnNextSearch->SetDefault();
 }
 
-void SearchDialog::OnFindReplAll(wxCommandEvent &event)
+void SearchDialog::OnFindReplAll(wxCommandEvent &WXUNUSED(event))
 {
     wxString searchString = _textFind->GetValue();
     wxString replaceWithString = _textRepl->GetValue();
@@ -161,7 +161,7 @@ void SearchDialog::OnFindReplAll(wxCommandEvent &event)
     _btnNextSearch->SetDefault();
 }
 
-void SearchDialog::OnUpdFindText(wxCommandEvent& event)
+void SearchDialog::OnUpdFindText(wxCommandEvent &WXUNUSED(event))
 {
     bool hasSearchString = !_textFind->GetValue().IsEmpty();
     _btnNextSearch->Enable(hasSearchString);
@@ -171,7 +171,7 @@ void SearchDialog::OnUpdFindText(wxCommandEvent& event)
     _btnReplaceAll->Enable(hasSearchString);
 }
 
-void SearchDialog::OnSkipLoc(wxCommandEvent &event)
+void SearchDialog::OnSkipLoc(wxCommandEvent &WXUNUSED(event))
 {
     wxString searchString = _textFind->GetValue();
     AddSearchText(searchString);

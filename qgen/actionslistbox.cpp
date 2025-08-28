@@ -413,7 +413,7 @@ void ActionsListBox::OnMouseMove(wxMouseEvent &event)
     }
 }
 
-void ActionsListBox::OnMouseCaptureLost(wxMouseCaptureLostEvent &event)
+void ActionsListBox::OnMouseCaptureLost(wxMouseCaptureLostEvent &WXUNUSED(event))
 {
     SetCursor(wxNullCursor);
     _isDragging = false;

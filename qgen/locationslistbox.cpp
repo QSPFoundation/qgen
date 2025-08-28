@@ -22,6 +22,12 @@
 #include "locationslistbox.h"
 #include "mainframe.h"
 
+#include "bitmaps/locslist_folder_closed.xpm"
+#include "bitmaps/locslist_folder_opened.xpm"
+#include "bitmaps/locslist_location_ball_closed.xpm"
+#include "bitmaps/locslist_location_ball_opened.xpm"
+#include "bitmaps/locslist_action_ball.xpm"
+
 IMPLEMENT_CLASS(LocationsListBox, wxTreeCtrl)
 
 BEGIN_EVENT_TABLE(LocationsListBox, wxTreeCtrl)

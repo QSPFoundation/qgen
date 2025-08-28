@@ -22,6 +22,22 @@
 #include "toolbar.h"
 #include "mainframe.h"
 
+#include "bitmaps/toolbar_game_play.xpm"
+#include "bitmaps/toolbar_game_info.xpm"
+#include "bitmaps/toolbar_file_saveas.xpm"
+#include "bitmaps/toolbar_file_save.xpm"
+#include "bitmaps/toolbar_location_copy.xpm"
+#include "bitmaps/toolbar_file_open.xpm"
+#include "bitmaps/toolbar_location_new.xpm"
+#include "bitmaps/toolbar_location_rename.xpm"
+#include "bitmaps/toolbar_location_delete.xpm"
+#include "bitmaps/toolbar_location_clear.xpm"
+#include "bitmaps/toolbar_location_paste.xpm"
+#include "bitmaps/toolbar_text_search.xpm"
+#include "bitmaps/toolbar_options.xpm"
+#include "bitmaps/toolbar_redo.xpm"
+#include "bitmaps/toolbar_undo.xpm"
+
 IMPLEMENT_CLASS(ToolBar, wxAuiToolBar)
 
 BEGIN_EVENT_TABLE(ToolBar, wxAuiToolBar)

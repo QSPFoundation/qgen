@@ -641,7 +641,7 @@ void OptionsDialog::OnFontSelect(wxCommandEvent &event)
     }
 }
 
-void OptionsDialog::OnPathSelect( wxCommandEvent &event)
+void OptionsDialog::OnPathSelect(wxCommandEvent &event)
 {
     wxFileDialog dialog(this);
     switch (event.GetId())
@@ -676,19 +676,19 @@ void OptionsDialog::OnPathSelect( wxCommandEvent &event)
     }
 }
 
-void OptionsDialog::OnOkSettings(wxCommandEvent &event)
+void OptionsDialog::OnOkSettings(wxCommandEvent &WXUNUSED(event))
 {
     ApplySettings();
     Close();
 }
 
-void OptionsDialog::OnApplySettings(wxCommandEvent &event)
+void OptionsDialog::OnApplySettings(wxCommandEvent &WXUNUSED(event))
 {
     ApplySettings();
     ReCreateGUI();
 }
 
-void OptionsDialog::OnResetSettings(wxCommandEvent &event)
+void OptionsDialog::OnResetSettings(wxCommandEvent &WXUNUSED(event))
 {
     _settings->InitSettings();
     _controls->UpdateLocale(_settings->GetLangId());
@@ -712,27 +712,27 @@ void OptionsDialog::OnStateChanged(wxCommandEvent &event)
     _btnApply->Enable(true);
 }
 
-void OptionsDialog::OnStateChangedSpinCtrl(wxSpinEvent &event)
+void OptionsDialog::OnStateChangedSpinCtrl(wxSpinEvent &WXUNUSED(event))
 {
     _btnApply->Enable(true);
 }
 
-void OptionsDialog::OnAddHotKey(wxCommandEvent &event)
+void OptionsDialog::OnAddHotKey(wxCommandEvent &WXUNUSED(event))
 {
     AddHotKey();
 }
 
-void OptionsDialog::OnEditHotKey(wxCommandEvent &event)
+void OptionsDialog::OnEditHotKey(wxCommandEvent &WXUNUSED(event))
 {
     EditHotKey();
 }
 
-void OptionsDialog::OnDeleteHotKey(wxCommandEvent &event)
+void OptionsDialog::OnDeleteHotKey(wxCommandEvent &WXUNUSED(event))
 {
     DeleteHotKey();
 }
 
-void OptionsDialog::OnDblClickHotKeysList(wxListEvent &event)
+void OptionsDialog::OnDblClickHotKeysList(wxListEvent &WXUNUSED(event))
 {
     EditHotKey();
 }
@@ -978,7 +978,7 @@ void OptionsDialog::UpdateLanguagesList()
     {
         for (bool cont = dir.GetFirst(&filename, wxT("*"), wxDIR_DEFAULT); cont; cont = dir.GetNext(&filename))
         {
-            if (langinfo = wxLocale::FindLanguageInfo(filename))
+            if ((langinfo = wxLocale::FindLanguageInfo(filename)))
             {
                 _langTable[langinfo->Description] = langinfo->Language;
                 _cmbLang->Append(langinfo->Description);

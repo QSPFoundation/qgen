@@ -29,12 +29,6 @@
     #include "locationpage.h"
     #include "locationtip.h"
 
-    #include "bitmaps/locslist_folder_closed.xpm"
-    #include "bitmaps/locslist_folder_opened.xpm"
-    #include "bitmaps/locslist_location_ball_closed.xpm"
-    #include "bitmaps/locslist_location_ball_opened.xpm"
-    #include "bitmaps/locslist_action_ball.xpm"
-
     enum
     {
         ICON_FOLDER,

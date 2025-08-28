@@ -27,10 +27,6 @@
     #include "actioncode.h"
     #include "actionslistbox.h"
 
-    #include "bitmaps/toolbar_action_new.xpm"
-    #include "bitmaps/toolbar_action_rename.xpm"
-    #include "bitmaps/toolbar_action_delete.xpm"
-
     class ActionsPanel : public wxPanel
     {
         DECLARE_CLASS(ActionsPanel)

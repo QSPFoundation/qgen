@@ -43,29 +43,29 @@ DataContainer::DataContainer()
 
 int DataContainer::FindFolderIndex(const wxString &name) const
 {
-    wxString lwrName(name.Lower());
+    wxString lwrName(name.Upper());
     int i, count = _folders.GetCount();
     for (i = 0; i < count; ++i)
-        if (lwrName == _folders[i].Name.Lower()) return i;
+        if (lwrName == _folders[i].Name.Upper()) return i;
     return -1;
 }
 
 int DataContainer::FindLocationIndex(const wxString& locName) const
 {
-    wxString lwrName(locName.Lower());
+    wxString lwrName(locName.Upper());
     int i, count = _locationArray.GetCount();
     for (i = 0; i < count; ++i)
-        if (lwrName == _locationArray[i].Name.Lower()) return i;
+        if (lwrName == _locationArray[i].Name.Upper()) return i;
     return -1;
 }
 
 int DataContainer::FindActionIndex(size_t locIndex, const wxString& actName) const
 {
-    wxString lwrName(actName.Lower());
+    wxString lwrName(actName.Upper());
     LocationData &loc = _locationArray[locIndex];
     int i, count = loc.Actions.GetCount();
     for (i = 0; i < count; ++i)
-        if (lwrName == loc.Actions[i].Description.Lower()) return i;
+        if (lwrName == loc.Actions[i].Description.Upper()) return i;
     return -1;
 }
 

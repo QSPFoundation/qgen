@@ -22,6 +22,8 @@
 #include "locationsnotebook.h"
 #include "mainframe.h"
 
+#include "bitmaps/locstabs_page_fixed.xpm"
+
 IMPLEMENT_CLASS(LocationsNotebook, wxAuiNotebook)
 
 BEGIN_EVENT_TABLE(LocationsNotebook, wxAuiNotebook)
@@ -96,21 +98,21 @@ bool LocationsNotebook::ClosePages(CloseTypePage closeType)
     return true;
 }
 
-int LocationsNotebook::FindPageIndex(const wxString& namePage)
+int LocationsNotebook::FindPageIndex(const wxString& pageName)
 {
     size_t i, count = GetPageCount();
     for (i = 0; i < count; ++i)
-        if (namePage == GetPageText(i)) return (int)i;
+        if (pageName == GetPageText(i)) return (int)i;
     return -1;
 }
 
-LocationPage * LocationsNotebook::OpenLocationPage(const wxString& namePage, bool isSelect)
+LocationPage * LocationsNotebook::OpenLocationPage(const wxString& pageName, bool toSelect)
 {
-    int locIndex = _controls->GetContainer()->FindLocationIndex(namePage);
+    int locIndex = _controls->GetContainer()->FindLocationIndex(pageName);
     if (locIndex < 0) return NULL;
     LocationPage *page = new LocationPage(this, _controls);
     page->SetLocationIndex(locIndex);
-    AddPage(page, namePage, isSelect);
+    AddPage(page, pageName, toSelect);
     page->LoadPage();
     _controls->UpdateLocationIcon(locIndex, true);
     return page;
@@ -190,7 +192,7 @@ void LocationsNotebook::Update(bool isFromObservable)
 void LocationsNotebook::AdvanceSelection(bool forward)
 {
     int lastIndex = GetPageCount() - 1;
-    if (lastIndex <= 0)
+    if (lastIndex < 0)
         return;
     int currentSelection = GetSelection();
     if (forward)
