@@ -59,7 +59,7 @@ body:
     id: extra
     attributes:
       label: Additional Information
-      description: Add any other context about the problem here.
-      placeholder: Any additional information that might help us understand or reproduce the issue (screenshots, links to similar issues, config files, log files, etc)...
+      description: Add any additional information that might help us understand or reproduce the issue (screenshots, links to similar issues, config files, log files, etc).
+      placeholder: Any other context about the problem...
     validations:
       required: false
