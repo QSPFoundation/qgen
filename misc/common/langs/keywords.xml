@@ -29,7 +29,8 @@
     <Keyword name="unpackarr" desc="UNPACKARR [$array name],[%tuple],[#start],[#length] - create an array from the elements of the specified slice of a tuple"/>
     <Keyword name="addobj" desc="ADDOBJ [$name],[$image file],[#position] - add an inventory object"/>
     <Keyword name="delobj" desc="DELOBJ [$name],[#objects count] - delete inventory objects with the specified name"/>
-    <Keyword name="modobj" desc="MODOBJ [$name],[$title],[$image file] - update inventory objects with the specified name"/>
+    <Keyword name="modobj" desc="MODOBJ [$name],[$title],[$image file] - changes how inventory objects with the specified name are visually represented"/>
+    <Keyword name="resetobj" desc="RESETOBJ [$name] - reverts all modifications made to inventory objects by MODOBJ"/>
     <Keyword name="killobj" desc="KILLOBJ [#position] - clear the inventory / remove the inventory object at the specified position"/>
     <Keyword name="unselect" desc="UNSELECT - cancel the selection of an inventory object"/>
     <Keyword name="unsel" desc="UNSEL - cancel the selection of an inventory object"/>
