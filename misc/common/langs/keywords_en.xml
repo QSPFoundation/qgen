@@ -22,7 +22,7 @@
     <Keyword name="set" desc="SET [variable names]=[variable values] - set variable values"/>
     <Keyword name="let" desc="LET [variable names]=[variable values] - set variable values"/>
     <Keyword name="setvar" desc="SETVAR [$variable name],[value],[index] - assign a value to the specified array element at the given index"/>
-    <Keyword name="killvar" desc="KILLVAR [$variable name],[index] - delete all variables / the specified variable / the value at the specified index"/>
+    <Keyword name="killvar" desc="KILLVAR [$variable name],[index] - delete all global variables / the specified variable / the value at the specified index"/>
     <Keyword name="copyarr" desc="COPYARR [$destination array],[$source array],[#start index],[#count] - copy the contents of one array into another array"/>
     <Keyword name="sortarr" desc="SORTARR [$array name],[#reverse order] - sort an array"/>
     <Keyword name="scanstr" desc="SCANSTR [$array name],[$string],[$pattern],[#group number] - find all substrings matching the regular expression"/>
@@ -64,7 +64,7 @@
     <Keyword name="and" desc="[#condition 1] AND [#condition 2] - logical &quot;AND&quot;. The resulting expression is true if both conditions are true"/>
     <Keyword name="or" desc="[#condition 1] OR [#condition 2] - logical &quot;OR&quot;. The resulting expression is true if at least one condition is true"/>
     <Keyword name="no" desc="NO [#condition] - logical negation. The resulting expression is true if the specified condition is not true"/>
-    <Keyword name="obj" desc="OBJ [$object] - returns the number of objects with the specified name in the inventory"/>
+    <Keyword name="obj" desc="OBJ [$object] - check if the object with the specified name exists in the inventory"/>
     <Keyword name="loc" desc="LOC [$location] - check if the location exists"/>
     <Keyword name="mod" desc="[#expression 1] MOD [#expression 2] - calculate the remainder of division"/>
     <Keyword name="desc|$desc" desc="DESC([$location]) - returns the base description text of the location"/>
@@ -81,6 +81,7 @@
     <Keyword name="arrsize" desc="ARRSIZE([$array name]) - returns the number of elements in the specified array"/>
     <Keyword name="arrtype|$arrtype" desc="ARRTYPE([$array name],[index]) - returns the type prefix (''/'#'/'$'/'%') of the value of the element in the specified array"/>
     <Keyword name="arritem|$arritem|%arritem" desc="ARRITEM([$array name],[index]) - returns the value of the element in the specified array"/>
+    <Keyword name="arrkey|$arrkey|%arrkey" desc="ARRKEY([$array name],[#index]) - returns the key of the element at the specified index in the array"/>
     <Keyword name="arrpack|%arrpack" desc="ARRPACK([$array name],[#start],[#length]) - returns a tuple obtained from the specified part of the array"/>
     <Keyword name="arrpos" desc="ARRPOS([$array name],[value],[#start index]) - search the array for an element with the specified value"/>
     <Keyword name="instr" desc="INSTR([$text],[$search text],[#start position]) - search for a substring"/>
@@ -97,7 +98,7 @@
     <Keyword name="strcomp" desc="STRCOMP([$text],[$pattern]) - checks whether the specified text matches the regular expression"/>
     <Keyword name="strfind|$strfind" desc="STRFIND([$text],[$pattern],[#group number]) - returns the substring corresponding to group [#group number] of the regular expression"/>
     <Keyword name="strpos" desc="STRPOS([$text],[$pattern],[#group number]) - returns the position of the substring corresponding to group [#group number] of the regular expression"/>
-    <Keyword name="countobj" desc="COUNTOBJ - returns the number of objects in the inventory"/>
+    <Keyword name="countobj" desc="COUNTOBJ([$object]) - returns the number of objects in the inventory / the number of objects with the specified name"/>
     <Keyword name="msecscount" desc="MSECSCOUNT - returns the number of milliseconds elapsed since the start of the game"/>
     <Keyword name="rnd" desc="RND - returns a random value from 1 to 1000 inclusive"/>
     <Keyword name="curloc|$curloc" desc="CURLOC - returns the name of the current location"/>

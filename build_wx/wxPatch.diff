@@ -718,7 +718,7 @@ index 0000000000..22f635b086
 +            }
 +        }
 +        if (sc.state == SCE_B_DEFAULT || sc.state == SCE_B_CONSTANT) {
-+            if (sc.ch == ' ' && sc.chNext == '_') {
++            if ((sc.ch == ' ' || sc.ch == '\t') && sc.chNext == '_') {
 +                sc.SetState(SCE_B_ASM); // Continue line
 +                sc.Forward();
 +            } else if (sc.ch == '\'') {
@@ -741,7 +741,7 @@ index 0000000000..22f635b086
 +                }
 +            }
 +        } else if (sc.state == SCE_B_COMMENT) {
-+            if (sc.ch == ' ' && sc.chNext == '_') {
++            if ((sc.ch == ' ' || sc.ch == '\t') && sc.chNext == '_') {
 +                sc.SetState(SCE_B_ERROR); // Continue line in the comment
 +                sc.Forward();
 +            } else if (sc.ch == '\'') {
